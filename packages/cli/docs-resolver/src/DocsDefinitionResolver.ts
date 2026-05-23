@@ -71,6 +71,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
+import { getDocsYmlSlug } from "./utils/getDocsYmlSlug.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
@@ -1074,7 +1075,7 @@ export class DocsDefinitionResolver {
     ): FernNavigation.V1.LandingPageNode {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(landingPageConfig.absolutePath));
         const slug = parentSlug.apply({
-            urlSlug: landingPageConfig.slug ?? kebabCase(landingPageConfig.title),
+            urlSlug: getDocsYmlSlug(landingPageConfig.slug, kebabCase(landingPageConfig.title)),
             fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/")
         });
         return {
@@ -1176,7 +1177,7 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
         if (product.type === "internal") {
-            const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
+            const slug = parentSlug.setProductSlug(getDocsYmlSlug(product.slug, kebabCase(product.product)));
             let child: FernNavigation.V1.ProductChild;
             switch (product.navigation.type) {
                 case "tabbed":
@@ -1259,7 +1260,7 @@ export class DocsDefinitionResolver {
         isDefault: boolean
     ): Promise<FernNavigation.V1.VersionNode> {
         const id = this.#idgen.get(version.version);
-        const slug = parentSlug.setVersionSlug(version.slug ?? kebabCase(version.version));
+        const slug = parentSlug.setVersionSlug(getDocsYmlSlug(version.slug, kebabCase(version.version)));
         const child =
             version.navigation.type === "tabbed"
                 ? await this.convertTabbedNavigation(id, version.navigation.items, slug)
@@ -1364,9 +1365,10 @@ export class DocsDefinitionResolver {
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.VariantNode> {
-        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
+        const urlSlug = getDocsYmlSlug(item.slug, kebabCase(item.title));
+        const id = this.#idgen.get(`${prefix}/variant/${urlSlug}`);
         const variantSlug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug,
             skipUrlSlug: item.skipUrlSlug
         });
         const childrenWithNulls = await Promise.all(
@@ -1843,7 +1845,7 @@ export class DocsDefinitionResolver {
 
         const sectionTitle = item.title ?? item.libraryName;
         const sectionSlug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(sectionTitle)
+            urlSlug: getDocsYmlSlug(item.slug, kebabCase(sectionTitle))
         });
         const sectionId = this.#idgen.get(`library/${item.libraryName}`);
 
@@ -2029,7 +2031,7 @@ export class DocsDefinitionResolver {
     }): Promise<FernNavigation.V1.PageNode> {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath));
         const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: getDocsYmlSlug(item.slug, kebabCase(item.title)),
             fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/")
         });
         const id = this.#idgen.get(pageId);
@@ -2072,7 +2074,7 @@ export class DocsDefinitionResolver {
             ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
             : undefined;
 
-        const urlSlug = item.slug ?? kebabCase(item.title);
+        const urlSlug = getDocsYmlSlug(item.slug, kebabCase(item.title));
 
         // When skip-slug is true AND the overview page declares a frontmatter slug,
         // the section needs two distinct slugs:
@@ -2228,7 +2230,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: getDocsYmlSlug(item.slug, kebabCase(item.title)),
             skipUrlSlug: item.skipUrlSlug
         });
         return {
@@ -2256,7 +2258,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: getDocsYmlSlug(item.slug, kebabCase(item.title)),
             skipUrlSlug: item.skipUrlSlug
         });
         return {

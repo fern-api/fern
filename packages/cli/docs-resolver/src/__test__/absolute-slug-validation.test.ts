@@ -122,4 +122,37 @@ describe("absolute slug validation", () => {
             expect(pageNode.slug).not.toMatch(/^\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
         }
     });
+
+    it("should interpret docs.yml slug slash as the parent path", async () => {
+        const docsWorkspace = await loadDocsWorkspace({
+            fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/absolute-slug-validation/fern"),
+            context
+        });
+
+        if (!docsWorkspace) {
+            throw new Error("Failed to load docs workspace");
+        }
+
+        const resolver = new DocsDefinitionResolver({
+            domain: "https://example.com",
+            docsWorkspace,
+            ossWorkspaces: [],
+            apiWorkspaces: [],
+            taskContext: context,
+            uploadFiles: async () => [],
+            registerApi: async () => ""
+        });
+
+        const resolvedDocs = await resolver.resolve();
+
+        if (!resolvedDocs.config.root) {
+            throw new Error("Failed to resolve docs root");
+        }
+
+        const pageNodes = findPageNodesInTree(resolvedDocs.config.root as FernNavigation.V1.NavigationNode);
+        const learnHomePage = pageNodes.find((node) => node.pageId.includes("learn-home.mdx"));
+
+        expect(learnHomePage).toBeDefined();
+        expect(learnHomePage?.slug).toBe("learn");
+    });
 });

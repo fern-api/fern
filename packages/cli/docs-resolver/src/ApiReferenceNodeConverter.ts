@@ -23,6 +23,7 @@ import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings.js";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild.js";
 import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages.js";
+import { getDocsYmlSlug } from "./utils/getDocsYmlSlug.js";
 import { isSubpackage } from "./utils/isSubpackage.js";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
@@ -94,7 +95,7 @@ export class ApiReferenceNodeConverter {
         this.#slug = parentSlug.apply({
             fullSlug: maybeFullSlug?.split("/"),
             skipUrlSlug: this.apiSection.skipUrlSlug,
-            urlSlug: this.apiSection.slug ?? kebabCase(this.apiSection.title)
+            urlSlug: getDocsYmlSlug(this.apiSection.slug, kebabCase(this.apiSection.title))
         });
 
         const apiSectionAvailability = this.apiSection.availability ?? this.parentAvailability;
@@ -313,11 +314,12 @@ export class ApiReferenceNodeConverter {
 
             this.#visitedSubpackages.add(subpackageId);
             this.#nodeIdToSubpackageId.set(subpackageNodeId, [subpackageId]);
-            const urlSlug =
-                pkg.slug ??
-                (isSubpackage(subpackage)
+            const urlSlug = getDocsYmlSlug(
+                pkg.slug,
+                isSubpackage(subpackage)
                     ? subpackage.urlSlug
-                    : (this.apiSection.slug ?? kebabCase(this.apiSection.title)));
+                    : getDocsYmlSlug(this.apiSection.slug, kebabCase(this.apiSection.title))
+            );
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -359,7 +361,7 @@ export class ApiReferenceNodeConverter {
             this.taskContext.logger.warn(
                 cannotFindSubpackageByLocatorError(pkg.package, this.#holder.subpackageLocators)
             );
-            const urlSlug = pkg.slug ?? kebabCase(pkg.package);
+            const urlSlug = getDocsYmlSlug(pkg.slug, kebabCase(pkg.package));
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -439,7 +441,7 @@ export class ApiReferenceNodeConverter {
             this.#visitedSubpackages.add(subPackageTuple.subpackageId);
         });
 
-        const urlSlug = section.slug ?? kebabCase(section.title);
+        const urlSlug = getDocsYmlSlug(section.slug, kebabCase(section.title));
         const slug = parentSlug.apply({
             fullSlug: maybeFullSlug?.split("/"),
             skipUrlSlug: section.skipUrlSlug,
