@@ -89,4 +89,24 @@ describe("convertSecurityScheme", () => {
         expect(result.tokenVariableName).toBeUndefined();
         expect(result.tokenEnvVar).toBeUndefined();
     });
+
+    it("should convert HTTP security schemes case-insensitively", () => {
+        const bearerSecurityScheme: OpenAPIV3.SecuritySchemeObject = {
+            type: "http",
+            scheme: "Bearer",
+            bearerFormat: "JWT"
+        };
+        const basicSecurityScheme: OpenAPIV3.SecuritySchemeObject = {
+            type: "http",
+            scheme: "BaSiC"
+        };
+
+        const bearerResult = convertSecurityScheme(bearerSecurityScheme, source, mockTaskContext);
+        const basicResult = convertSecurityScheme(basicSecurityScheme, source, mockTaskContext);
+
+        expect.assert(bearerResult != null);
+        expect.assert(bearerResult.type === "bearer");
+        expect.assert(basicResult != null);
+        expect.assert(basicResult.type === "basic");
+    });
 });
