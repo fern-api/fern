@@ -157,7 +157,6 @@
               "typeId": "type_:Settings",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {

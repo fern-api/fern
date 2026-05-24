@@ -1,7 +1,6 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
+import { formatNavigationConfigError, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
 
-import { formatNavigationConfigError } from "./formatNavigationConfigError.js";
 import * as DocsYmlJsonSchema from "./products-yml.schema.json";
 
 export type ProductParseResult = ProductFileSuccessParseResult | ProductFileFailureParseResult;

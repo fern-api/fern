@@ -313,7 +313,6 @@
               "typeId": "type_:PostTestRequest",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {

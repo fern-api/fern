@@ -84,8 +84,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
 
         clazz.addMethod(this.jsonSerializeMethod());
 
-        clazz.addMethod(this.fromJsonMethod());
-
         clazz.addMethod(this.jsonDeserializeMethod());
 
         return new PhpFile({
@@ -944,60 +942,6 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             );
 
             writer.endControlFlow();
-        });
-    }
-
-    private fromJsonMethod(): php.Method {
-        return php.method({
-            name: "fromJson",
-            access: "public",
-            parameters: [
-                php.parameter({
-                    name: "json",
-                    type: php.Type.string()
-                })
-            ],
-            return_: STATIC,
-            body: php.codeblock((writer) => {
-                writer.write("$decodedJson = ");
-                writer.writeNodeStatement(
-                    php.invokeMethod({
-                        method: "decode",
-                        arguments_: [php.codeblock("$json")],
-                        static_: true,
-                        on: this.context.getJsonDecoderClassReference()
-                    })
-                );
-
-                const negation = php.codeblock((_writer) => {
-                    _writer.write("!");
-                    _writer.writeNode(
-                        php.invokeMethod({
-                            method: "is_array",
-                            arguments_: [php.codeblock("$decodedJson")],
-                            static_: true
-                        })
-                    );
-                });
-                writer.controlFlow("if", negation);
-                writer.writeNodeStatement(
-                    php.throwException({
-                        classReference: this.context.getExceptionClassReference(),
-                        arguments_: [php.codeblock('"Unexpected non-array decoded type: " . gettype($decodedJson)')]
-                    })
-                );
-                writer.endControlFlow();
-                writer.write("return ");
-                writer.writeNodeStatement(
-                    php.invokeMethod({
-                        method: "jsonDeserialize",
-                        arguments_: [php.codeblock("$decodedJson")],
-                        static_: true,
-                        on: php.codeblock("self")
-                    })
-                );
-            }),
-            static_: true
         });
     }
 

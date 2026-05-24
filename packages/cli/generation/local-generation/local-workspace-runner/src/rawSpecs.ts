@@ -22,6 +22,15 @@ export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
     specPath: string;
     overridePaths?: string[];
+    /**
+     * The namespace the user declared for this spec in `generators.yml`
+     * (per-spec `namespace:` field on each entry of `api.specs`). Carried
+     * through to the generator so a generator that wants to organize
+     * multi-spec output by namespace can do so without inferring one from
+     * the filename. Undefined when the spec was declared at the root with
+     * no namespace.
+     */
+    namespace?: string;
 }
 
 export interface RawSpecsManifest {
@@ -161,7 +170,8 @@ async function resolveOpenAPIOrAsyncAPI({
 
     return {
         type: isAsync ? "asyncapi" : "openapi",
-        specPath: toContainerPath(filename, containerBaseDir)
+        specPath: toContainerPath(filename, containerBaseDir),
+        namespace: spec.namespace
     };
 }
 
@@ -213,7 +223,8 @@ async function resolveOpenRPC({
 
     return {
         type: "openrpc",
-        specPath: toContainerPath(filename, containerBaseDir)
+        specPath: toContainerPath(filename, containerBaseDir),
+        namespace: spec.namespace
     };
 }
 
@@ -276,7 +287,8 @@ async function copyGraphQL({
 
     const entry: RawSpecsManifestEntry = {
         type: "graphql",
-        specPath: toContainerPath(filename, containerBaseDir)
+        specPath: toContainerPath(filename, containerBaseDir),
+        namespace: spec.namespace
     };
 
     const overrides = normalizeOverrides(spec.absoluteFilepathToOverrides);

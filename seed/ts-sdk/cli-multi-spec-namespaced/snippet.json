@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_v1.listUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-multi-spec-namespaced\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\" });\nawait client.v1.listUsers();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_v2.listUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-multi-spec-namespaced\";\n\nconst client = new SeedApiClient({ token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\" });\nawait client.v2.listUsers();\n"
+            }
+        }
+    ],
+    "types": {}
+}

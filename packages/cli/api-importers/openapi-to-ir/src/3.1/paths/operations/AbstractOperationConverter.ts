@@ -29,6 +29,7 @@ export declare namespace AbstractOperationConverter {
         operation: OpenAPIV3_1.OperationObject;
         method: OpenAPIV3_1.HttpMethods;
         path: string;
+        pathItemParameters?: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[];
     }
 
     export interface Output {
@@ -51,13 +52,22 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly operation: OpenAPIV3_1.OperationObject;
     protected readonly method: OpenAPIV3_1.HttpMethods;
     protected readonly path: string;
+    protected readonly pathItemParameters: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[];
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        operation,
+        method,
+        path,
+        pathItemParameters
+    }: AbstractOperationConverter.Args) {
         super({ context, breadcrumbs });
         this.operation = operation;
         this.method = method;
         this.path = path;
+        this.pathItemParameters = pathItemParameters ?? [];
     }
 
     public abstract convert(): AbstractOperationConverter.Output | undefined;
@@ -90,12 +100,14 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        if (!this.operation.parameters) {
+        const mergedParameters = this.mergeParameters(this.pathItemParameters, this.operation.parameters ?? []);
+
+        if (mergedParameters.length === 0) {
             this.checkMissingPathParameters(pathParameters);
             return { pathParameters, queryParameters, headers };
         }
 
-        for (const parameter of this.operation.parameters) {
+        for (const parameter of mergedParameters) {
             const resolvedParameter = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
                 schemaOrReference: parameter,
                 breadcrumbs
@@ -159,6 +171,46 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
         this.checkMissingPathParameters(pathParameters);
         return { pathParameters, queryParameters, headers };
+    }
+
+    /**
+     * Per the OpenAPI spec, path-level parameters are inherited by all operations
+     * unless overridden by an operation-level parameter with the same name and location.
+     */
+    protected mergeParameters(
+        pathItemParams: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[],
+        operationParams: (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[]
+    ): (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ParameterObject)[] {
+        if (pathItemParams.length === 0) {
+            return operationParams;
+        }
+        if (operationParams.length === 0) {
+            return pathItemParams;
+        }
+
+        const resolvedOperationParams = new Set<string>();
+        for (const param of operationParams) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: param,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (resolved != null) {
+                resolvedOperationParams.add(`${resolved.in}:${resolved.name}`);
+            }
+        }
+
+        const inheritedParams = pathItemParams.filter((param) => {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: param,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (resolved == null) {
+                return false;
+            }
+            return !resolvedOperationParams.has(`${resolved.in}:${resolved.name}`);
+        });
+
+        return [...inheritedParams, ...operationParams];
     }
 
     protected checkMissingPathParameters(pathParameters: PathParameter[]): void {

@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Handle docs preview file watcher startup failures as local environment errors.
+  type: fix

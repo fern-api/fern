@@ -22,7 +22,8 @@ export class ShowCommand {
                     base: cache.absoluteFilePath,
                     ir: cache.ir.absoluteFilePath,
                     logs: cache.logs.absoluteFilePath,
-                    docsPreview: cache.docsPreview.absoluteFilePath
+                    docsPreview: cache.docsPreview.absoluteFilePath,
+                    versions: cache.versions.absoluteFilePath
                 },
                 stats: {
                     totalSize: stats.totalSize,
@@ -47,6 +48,16 @@ export class ShowCommand {
                         bundleCount: stats.docsPreview.bundleCount,
                         totalSize: stats.docsPreview.totalSize,
                         totalSizeFormatted: formatBytes(stats.docsPreview.totalSize)
+                    },
+                    versions: {
+                        entryCount: stats.versions.entryCount,
+                        totalSize: stats.versions.totalSize,
+                        totalSizeFormatted: formatBytes(stats.versions.totalSize),
+                        byVersion: Object.entries(stats.versions.byVersion).map(([version, versionStats]) => ({
+                            version,
+                            size: versionStats.totalSize,
+                            sizeFormatted: formatBytes(versionStats.totalSize)
+                        }))
                     }
                 }
             };
@@ -60,12 +71,17 @@ export class ShowCommand {
         context.stdout.info(`IR:           ${cache.ir.absoluteFilePath}`);
         context.stdout.info(`Logs:         ${cache.logs.absoluteFilePath}`);
         context.stdout.info(`Docs Preview: ${cache.docsPreview.absoluteFilePath}`);
+        context.stdout.info(`Versions:     ${cache.versions.absoluteFilePath}`);
         context.stdout.info("");
 
         context.stdout.info("Cache Statistics");
         context.stdout.info("================");
 
-        const isEmpty = stats.ir.entryCount === 0 && stats.logs.fileCount === 0 && stats.docsPreview.bundleCount === 0;
+        const isEmpty =
+            stats.ir.entryCount === 0 &&
+            stats.logs.fileCount === 0 &&
+            stats.docsPreview.bundleCount === 0 &&
+            stats.versions.entryCount === 0;
         if (isEmpty) {
             context.stdout.info("Cache is empty");
             return;
@@ -106,6 +122,16 @@ export class ShowCommand {
             context.stdout.info(
                 `  ${stats.docsPreview.bundleCount} bundles (${formatBytes(stats.docsPreview.totalSize)})`
             );
+            context.stdout.info("");
+        }
+
+        if (stats.versions.entryCount > 0) {
+            context.stdout.info("Versions:");
+            context.stdout.info(`  ${stats.versions.entryCount} installed (${formatBytes(stats.versions.totalSize)})`);
+            const sortedVersions = Object.entries(stats.versions.byVersion).sort(([a], [b]) => b.localeCompare(a));
+            for (const [version, versionStats] of sortedVersions) {
+                context.stdout.info(`    ${version}: ${formatBytes(versionStats.totalSize)}`);
+            }
         }
     }
 }

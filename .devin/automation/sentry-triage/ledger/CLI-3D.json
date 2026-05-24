@@ -1,9 +1,9 @@
 {
   "title": "Mintlify import navigation is not iterable",
-  "disposition": "keep_sentry",
-  "rationale": "Importer TypeError indicates missing validation or compatibility handling in Mintlify import code.",
-  "fixSummary": "—",
-  "prOrIssue": "Keep in Sentry until product fix",
-  "lastAnalyzed": "2026-05-04",
+  "disposition": "shipped",
+  "rationale": "Mintlify docs import now validates user-authored mint.json navigation at the importer boundary and reports invalid shape as a non-reportable config error instead of throwing an internal TypeError.",
+  "fixSummary": "Validate Mintlify navigation before iteration and fail with CliError.Code.ConfigError when it is not an array.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15954",
+  "lastAnalyzed": "2026-05-16",
   "problemSignature": "Mintlify docs import TypeError while reading navigation; true importer robustness bug until fixed."
 }

@@ -15,6 +15,7 @@ export { withMinimumTime } from "./delay/withMinimumTime.js";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty.js";
 export * as Examples from "./examples.js";
 export { extractErrorMessage } from "./extractErrorMessage.js";
+export { formatNavigationConfigError } from "./formatNavigationConfigError.js";
 export { getDuplicates } from "./getDuplicates.js";
 export { identity } from "./identity.js";
 export { isNonNullish } from "./isNonNullish.js";

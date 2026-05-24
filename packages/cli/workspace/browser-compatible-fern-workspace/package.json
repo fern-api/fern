@@ -37,7 +37,7 @@
     "@fern-api/asyncapi-to-ir": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "1.2.4-f661387fb2",
+    "@fern-api/fdr-sdk": "1.2.16-3b754a56be",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
     "@fern-api/openapi-ir-parser": "workspace:*",
