@@ -25,6 +25,7 @@ const SDK_IGNORE = [
     // internal __fixtures__ spec) still ship.
     "tests/cli_integration.rs",
     "tests/openapi_fixture_wire.rs",
+    "tests/overlay_fixture.rs",
     "tests/fixtures/**",
 
     // Template-author dev bin. `copySpecs` writes the whole folder
@@ -33,11 +34,11 @@ const SDK_IGNORE = [
     "cli/openapi-fixture/**",
 
     // Rich (33 KB) test fixture used only by the template's own dev
-    // bin and `cli_integration.rs` / `openapi_fixture_wire.rs` (also
-    // ignored above). User output ships only the slimmer
-    // `__fixtures__/openapi.json` (≈ 1 KB) referenced by the
-    // lib-level overlay tests in src/openapi/overlay.rs and
-    // tests/lib_api.rs.
+    // bin and the fixture-coupled integration tests under tests/
+    // (`cli_integration.rs`, `openapi_fixture_wire.rs`,
+    // `overlay_fixture.rs`, all ignored above). User output ships
+    // none of this — the overlay/discovery code paths are exercised
+    // in src/ unit tests against inline JSON literals.
     "src/openapi/__fixtures__/rich.json",
 
     // Fern's own CI workflows for the SDK template repo — ci.yml runs
