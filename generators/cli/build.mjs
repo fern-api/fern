@@ -23,8 +23,6 @@ const SDK_IGNORE = [
     // not meaningful in the user's generated output. The generic
     // library tests (auth, websocket, tls, lib_api against the
     // internal __fixtures__ spec) still ship.
-    "tests/cli_integration.rs",
-    "tests/openapi_fixture_wire.rs",
     "tests/overlay_fixture.rs",
     "tests/fixtures/**",
 
@@ -34,11 +32,10 @@ const SDK_IGNORE = [
     "cli/openapi-fixture/**",
 
     // Rich (33 KB) test fixture used only by the template's own dev
-    // bin and the fixture-coupled integration tests under tests/
-    // (`cli_integration.rs`, `openapi_fixture_wire.rs`,
-    // `overlay_fixture.rs`, all ignored above). User output ships
-    // none of this — the overlay/discovery code paths are exercised
-    // in src/ unit tests against inline JSON literals.
+    // bin and the `overlay_fixture.rs` integration test (ignored
+    // above). User output ships none of this — the overlay/discovery
+    // code paths are exercised in src/ unit tests against inline JSON
+    // literals.
     "src/openapi/__fixtures__/rich.json",
 
     // Fern's own CI workflows for the SDK template repo — ci.yml runs
