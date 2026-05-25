@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Pin transitive `mute-stream` to `^3.0.0` via yarn `resolutions` /
+    pnpm `overrides` before `install` runs. `mute-stream@4.0.0` declares
+    `engines.node: ^22.22.2 || ^24.15.0 || >=26.0.0`, and
+    `@inquirer/core@11.2.0` (2026-05-25) bumped its `mute-stream` range
+    from `^3.0.0` to `^4.0.0` — reachable transitively via
+    `msw` → `@inquirer/confirm` → `@inquirer/core` in the generated
+    SDK's `package.json`. On generator images running Node 20.x the
+    engine check tripped, aborting `yarn install` / `pnpm install` and
+    breaking generation. The pin is idempotent (user-supplied
+    resolutions/overrides for the same key are preserved).
+  type: fix

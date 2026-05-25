@@ -4,7 +4,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
 import decompress from "decompress";
-import { cp, readdir, rm, writeFile } from "fs/promises";
+import { cp, readdir, readFile, rm, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { promisify } from "util";
 
@@ -107,6 +107,8 @@ export class PersistedTypescriptProject {
             return;
         }
 
+        await this.pinKnownProblematicTransitiveDeps(logger);
+
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
@@ -134,6 +136,8 @@ export class PersistedTypescriptProject {
             return;
         }
 
+        await this.pinKnownProblematicTransitiveDeps(logger);
+
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
@@ -154,6 +158,78 @@ export class PersistedTypescriptProject {
                   }
               }));
         logger.debug(`[TIMING] installDependencies took ${Date.now() - startTime}ms`);
+    }
+
+    /**
+     * Inject yarn `resolutions` (or pnpm `overrides`) into the on-disk
+     * `package.json` to cap transitive deps that have shipped releases
+     * incompatible with the Node version bundled in the generator images.
+     *
+     * Idempotent: entries already present in the target field are left alone,
+     * so users supplying their own resolutions are not overwritten.
+     */
+    private async pinKnownProblematicTransitiveDeps(logger: Logger): Promise<void> {
+        // `mute-stream@4.0.0` (published 2026-05-08) declared
+        // `engines.node: ^22.22.2 || ^24.15.0 || >=26.0.0`. On
+        // 2026-05-25 `@inquirer/core@11.2.0` bumped its `mute-stream`
+        // range from `^3.0.0` to `^4.0.0`, which is reachable
+        // transitively through `msw` → `@inquirer/confirm` →
+        // `@inquirer/core`. On generator images running Node 20.x the
+        // engine check trips and yarn/pnpm install aborts. Pinning the
+        // transitive at `^3.0.0` keeps installs Node-20 compatible
+        // without bumping the image baseline.
+        const TRANSITIVE_PINS: Record<string, string> = {
+            "mute-stream": "^3.0.0"
+        };
+
+        const packageJsonPath = join(this.directory, RelativeFilePath.of("package.json"));
+        let packageJson: Record<string, unknown>;
+        try {
+            packageJson = JSON.parse(await readFile(packageJsonPath, "utf-8"));
+        } catch (e) {
+            logger.debug(`Skipping transitive dep pin — could not read ${packageJsonPath}: ${e}`);
+            return;
+        }
+
+        const pinned: string[] = [];
+        if (this.packageManager === "yarn") {
+            const resolutions: Record<string, string> = {
+                ...((packageJson.resolutions as Record<string, string> | undefined) ?? {})
+            };
+            for (const [pkg, range] of Object.entries(TRANSITIVE_PINS)) {
+                if (!(pkg in resolutions)) {
+                    resolutions[pkg] = range;
+                    pinned.push(pkg);
+                }
+            }
+            if (pinned.length > 0) {
+                packageJson.resolutions = resolutions;
+            }
+        } else {
+            const pnpm: Record<string, unknown> = {
+                ...((packageJson.pnpm as Record<string, unknown> | undefined) ?? {})
+            };
+            const overrides: Record<string, string> = {
+                ...((pnpm.overrides as Record<string, string> | undefined) ?? {})
+            };
+            for (const [pkg, range] of Object.entries(TRANSITIVE_PINS)) {
+                if (!(pkg in overrides)) {
+                    overrides[pkg] = range;
+                    pinned.push(pkg);
+                }
+            }
+            if (pinned.length > 0) {
+                pnpm.overrides = overrides;
+                packageJson.pnpm = pnpm;
+            }
+        }
+
+        if (pinned.length === 0) {
+            return;
+        }
+
+        await writeFile(packageJsonPath, JSON.stringify(packageJson, undefined, 4) + "\n");
+        logger.debug(`Pinned transitive deps (${this.packageManager}): ${pinned.join(", ")}`);
     }
 
     /**

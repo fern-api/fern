@@ -1,6 +1,8 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
-import { readFile, rm } from "fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "fs/promises";
+import os from "os";
+import path from "path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { PersistedTypescriptProject } from "../PersistedTypescriptProject.js";
@@ -309,6 +311,88 @@ describe("PersistedTypescriptProject", () => {
 
             const logContent = await readFile("/tmp/fern-checkFix.log", "utf-8");
             expect(logContent).toBe("all checks passed");
+        });
+    });
+
+    describe("installDependencies (transitive dep pin)", () => {
+        let tmpDir: string;
+
+        beforeEach(async () => {
+            tmpDir = await mkdtemp(path.join(os.tmpdir(), "persisted-ts-install-"));
+        });
+
+        afterEach(async () => {
+            await rm(tmpDir, { recursive: true, force: true });
+        });
+
+        it("injects yarn resolutions.mute-stream@^3 before yarn install", async () => {
+            await writeFile(
+                path.join(tmpDir, "package.json"),
+                JSON.stringify({ name: "x", devDependencies: { msw: "2.11.2" } }, undefined, 4)
+            );
+            const mockYarn = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockYarn);
+
+            const { logger } = collectLogs();
+            const project = makeProject({ directory: AbsoluteFilePath.of(tmpDir), packageManager: "yarn" });
+
+            await project.installDependencies(logger);
+
+            const pkg = JSON.parse(await readFile(path.join(tmpDir, "package.json"), "utf-8"));
+            expect(pkg.resolutions).toEqual({ "mute-stream": "^3.0.0" });
+            // package.json was mutated *before* yarn install ran
+            expect(mockYarn).toHaveBeenCalledTimes(1);
+        });
+
+        it("injects pnpm.overrides.mute-stream@^3 before pnpm install", async () => {
+            await writeFile(
+                path.join(tmpDir, "package.json"),
+                JSON.stringify({ name: "x", devDependencies: { msw: "2.11.2" } }, undefined, 4)
+            );
+            const mockPnpm = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockPnpm);
+
+            const { logger } = collectLogs();
+            const project = makeProject({ directory: AbsoluteFilePath.of(tmpDir), packageManager: "pnpm" });
+
+            await project.installDependencies(logger);
+
+            const pkg = JSON.parse(await readFile(path.join(tmpDir, "package.json"), "utf-8"));
+            expect(pkg.pnpm).toEqual({ overrides: { "mute-stream": "^3.0.0" } });
+        });
+
+        it("does not overwrite a user-supplied resolution for the same key", async () => {
+            await writeFile(
+                path.join(tmpDir, "package.json"),
+                JSON.stringify({ name: "x", resolutions: { "mute-stream": "3.0.0" } }, undefined, 4)
+            );
+            const mockYarn = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockYarn);
+
+            const { logger } = collectLogs();
+            const project = makeProject({ directory: AbsoluteFilePath.of(tmpDir), packageManager: "yarn" });
+
+            await project.installDependencies(logger);
+
+            const pkg = JSON.parse(await readFile(path.join(tmpDir, "package.json"), "utf-8"));
+            expect(pkg.resolutions).toEqual({ "mute-stream": "3.0.0" });
+        });
+
+        it("skips entirely when runScripts is false", async () => {
+            await writeFile(path.join(tmpDir, "package.json"), JSON.stringify({ name: "x" }, undefined, 4));
+            const mockExecutable = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockExecutable);
+
+            const { logger } = collectLogs();
+            const project = makeProject({ directory: AbsoluteFilePath.of(tmpDir), runScripts: false });
+
+            await project.installDependencies(logger);
+
+            // package.json untouched, no install spawned
+            const pkg = JSON.parse(await readFile(path.join(tmpDir, "package.json"), "utf-8"));
+            expect(pkg.resolutions).toBeUndefined();
+            expect(pkg.pnpm).toBeUndefined();
+            expect(mockExecutable).not.toHaveBeenCalled();
         });
     });
 
