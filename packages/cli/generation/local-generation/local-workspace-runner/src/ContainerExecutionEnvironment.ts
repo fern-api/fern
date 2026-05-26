@@ -78,7 +78,17 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             binds.push(`${sourceMount.hostPath}:${sourceMount.containerPath}:ro`);
         }
 
-        const envVars: Record<string, string> = {};
+        const envVars: Record<string, string> = {
+            // Suppress yarn v1 / npm engine checks inside generator containers.
+            // Generators bundle their own Node baseline; engine declarations on
+            // transitive deps regularly drift ahead of that baseline (e.g.
+            // `mute-stream@4` declaring Node 22+ reaching the TS SDK image via
+            // `msw → @inquirer/confirm → @inquirer/core`) and trip yarn's
+            // install-time check even when the package runs fine at the
+            // bundled Node version.
+            YARN_IGNORE_ENGINES: "true",
+            npm_config_engine_strict: "false"
+        };
         const ports: Record<string, string> = {};
         if (inspect) {
             envVars["NODE_OPTIONS"] = `--inspect-brk=0.0.0.0:${DEFAULT_NODE_DEBUG_PORT}`;

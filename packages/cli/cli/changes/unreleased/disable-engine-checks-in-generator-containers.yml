@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Disable yarn v1 / npm engine checks inside generator containers by passing
+    `YARN_IGNORE_ENGINES=true` and `npm_config_engine_strict=false` to every
+    container the CLI runs in `--local` mode. Generator images bundle their
+    own Node baseline, but transitive deps regularly declare newer
+    `engines.node` ranges (e.g. `mute-stream@4` declaring Node 22+ reaching
+    the TS SDK image via `msw → @inquirer/confirm → @inquirer/core`), which
+    tripped yarn's install-time check and aborted generation even though the
+    packages run fine at the bundled Node version.
+  type: fix
