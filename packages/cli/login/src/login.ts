@@ -91,7 +91,8 @@ async function loginWithDeviceCodeFallback(
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
-            context
+            context,
+            connection
         });
     }
 }
@@ -142,7 +143,14 @@ async function promptForEmail(context: TaskContext): Promise<string> {
             {
                 type: "input",
                 name: "email",
-                message: "Enter your email address:"
+                message: "Enter your email address:",
+                validate: (input: string) => {
+                    const trimmed = input.trim();
+                    if (trimmed.length === 0 || !trimmed.includes("@")) {
+                        return "Please enter a valid email address.";
+                    }
+                    return true;
+                }
             }
         ]);
         result = email;
