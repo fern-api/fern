@@ -1,4 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.38.0
+  changelogEntry:
+    - summary: |
+        Add interactive login prompt to `fern login`. When no active Auth0 session
+        exists, the CLI now presents a menu to choose a login provider (GitHub,
+        Google, Postman, or SSO). Selecting SSO prompts for an email address and
+        routes directly to the organization's identity provider. If an active
+        session already exists, authentication completes silently as before.
+      type: feat
+  createdAt: "2026-05-26"
+  irVersion: 66
+- version: 5.37.12
+  changelogEntry:
+    - summary: |
+        Fix false "page was moved" warnings in `fern check` and `fern docs dev` when the same
+        file is referenced across multiple doc versions. The missing-redirects rule now tracks
+        all slugs per pageId instead of only the last one encountered.
+      type: fix
+  createdAt: "2026-05-26"
+  irVersion: 66
+- version: 5.37.11
+  changelogEntry:
+    - summary: |
+        Bump the `fern init` fallback version for `fern-typescript-sdk` / `fern-typescript-node-sdk` from `2.3.2` to `3.71.2`.
+        The `2.3.2` container runs Node 20 and started failing `yarn install` after `mute-stream@4.0.0` (Node ≥22) was published as a transitive dep. The fallback only triggers when FDR cannot resolve a compatible generator version, so released CLIs are unaffected — this restores a working default for fresh `fern init` and for dev builds.
+      type: fix
+  createdAt: "2026-05-26"
+  irVersion: 66
+- version: 5.37.10
+  changelogEntry:
+    - summary: |
+        Fix x-fern-audiences filtering dropping transitively-referenced named types when an outer
+        schema reaches its descendants through a chain of $refs. Audience filtering now walks the
+        full type-dependency closure instead of a single level, so deeply nested object types are
+        preserved in the docs IR and no longer render as `any` in the docs site.
+      type: fix
+  createdAt: "2026-05-26"
+  irVersion: 66
 - version: 5.37.9
   changelogEntry:
     - summary: |

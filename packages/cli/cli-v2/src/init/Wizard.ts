@@ -198,7 +198,6 @@ export class Wizard {
                 return undefined;
             }
 
-            this.context.stderr.info(`  ${Icons.info} Opening browser to log in to Fern...`);
             const taskContext = new TaskContextAdapter({ context: this.context, logLevel: LogLevel.Info });
             const { accessToken, idToken } = await getTokenFromAuth0(taskContext, {
                 useDeviceCodeFlow: false,
