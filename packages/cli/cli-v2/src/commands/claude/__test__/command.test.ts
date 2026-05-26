@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { mkdir, rm } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createTestContextWithCapture } from "../../../__test__/utils/createTestContext.js";
 import { InstallCommand } from "../install/command.js";
 import { SkillsCommand } from "../skills/command.js";
@@ -56,15 +56,13 @@ describe("fern claude", () => {
     });
 
     describe("status", () => {
-        const originalEnv = { ...process.env };
-
         afterEach(() => {
-            process.env = { ...originalEnv };
+            vi.unstubAllEnvs();
         });
 
         it("reports 'not in Claude Code session' when env vars are absent", async () => {
-            delete process.env["CLAUDECODE"];
-            delete process.env["CLAUDE_CODE_ENTRYPOINT"];
+            vi.stubEnv("CLAUDECODE", undefined);
+            vi.stubEnv("CLAUDE_CODE_ENTRYPOINT", undefined);
 
             const { context, getStdout } = await createTestContextWithCapture({
                 cwd: testDir
@@ -79,8 +77,8 @@ describe("fern claude", () => {
         });
 
         it("reports 'in Claude Code session' when CLAUDECODE=1", async () => {
-            process.env["CLAUDECODE"] = "1";
-            process.env["CLAUDE_CODE_ENTRYPOINT"] = "cli";
+            vi.stubEnv("CLAUDECODE", "1");
+            vi.stubEnv("CLAUDE_CODE_ENTRYPOINT", "cli");
 
             const { context, getStdout } = await createTestContextWithCapture({
                 cwd: testDir
@@ -95,8 +93,8 @@ describe("fern claude", () => {
         });
 
         it("emits JSON when --json is passed", async () => {
-            delete process.env["CLAUDECODE"];
-            delete process.env["CLAUDE_CODE_ENTRYPOINT"];
+            vi.stubEnv("CLAUDECODE", undefined);
+            vi.stubEnv("CLAUDE_CODE_ENTRYPOINT", undefined);
 
             const { context, getStdout } = await createTestContextWithCapture({
                 cwd: testDir

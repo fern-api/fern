@@ -67,7 +67,7 @@ The most common cause is a generator version older than the IR version in
 the project. Run:
 
 ```bash
-fern generator upgrade
+fern sdk update
 ```
 
 to bump the locally pinned generators to versions compatible with the

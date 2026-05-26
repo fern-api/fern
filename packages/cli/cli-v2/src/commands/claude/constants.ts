@@ -58,7 +58,7 @@ export const FERN_SKILLS: readonly FernSkill[] = [
  * Fern plugin. Returned as an array so callers can join with newlines or
  * print one per line as needed.
  */
-export function getInstallSlashCommands(): readonly string[] {
+export function getInstallSlashCommands(): readonly [string, string] {
     return [
         `/plugin marketplace add ${FERN_CLAUDE_PLUGIN.marketplaceRepo}`,
         `/plugin install ${FERN_CLAUDE_PLUGIN.pluginName}@${FERN_CLAUDE_PLUGIN.marketplaceName}`

@@ -23,19 +23,10 @@ existing API definition.
 
 ## Bootstrap
 
-If the project does not have a docs config yet, the simplest way is to use
-the docs preview flow which generates a starter on first run:
-
-```bash
-fern docs dev
-```
-
-This creates `fern/docs.yml` and `fern/pages/` with sensible defaults
-(welcome page, API reference, simple navigation, Fern default theme) and
-then serves the site on `http://localhost:3000`.
-
-If you need a non-interactive scaffold (e.g. running inside CI), you can
-fall back to hand-writing a minimal `fern/docs.yml`:
+If the project does not have a docs config yet, create a minimal
+`fern/docs.yml` by hand (or let `fern docs dev` generate it interactively
+on first run if the CLI version supports it). The safe non-interactive
+approach is to write the file directly:
 
 ```yaml
 instances:
@@ -79,8 +70,7 @@ Tell the user:
 
 1. Preview locally: `fern docs dev`
 2. Validate: `fern docs check`
-3. Publish: `fern generate --group docs` (or whatever group is defined for
-   docs in `generators.yml`).
+3. Publish: `fern docs publish`
 
 For Fern's customization options (colors, fonts, logos, custom domain),
 point them to https://buildwithfern.com/learn/docs.

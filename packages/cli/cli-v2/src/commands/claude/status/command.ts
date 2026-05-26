@@ -2,7 +2,7 @@ import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { isClaudeCodeSession } from "../../../context/isClaudeCodeSession.js";
+import { getClaudeCodeEntrypoint, isClaudeCodeSession } from "../../../context/isClaudeCodeSession.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { FERN_CLAUDE_PLUGIN, FERN_SKILLS, getInstallSlashCommands } from "../constants.js";
@@ -16,7 +16,7 @@ export declare namespace StatusCommand {
 export class StatusCommand {
     public async handle(context: Context, args: StatusCommand.Args): Promise<void> {
         const inSession = isClaudeCodeSession();
-        const entrypoint = process.env["CLAUDE_CODE_ENTRYPOINT"] ?? null;
+        const entrypoint = getClaudeCodeEntrypoint();
 
         if (args.json) {
             context.stdout.info(
