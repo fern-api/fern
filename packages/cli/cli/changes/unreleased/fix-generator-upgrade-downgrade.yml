@@ -1,0 +1,7 @@
+- summary: |
+    Prevent `fern generator upgrade` from downgrading generators when the registry
+    returns an older version due to CLI IR version constraints. Previously, if the
+    latest compatible version was lower than the currently pinned version, the command
+    would overwrite it with the older version. Now it skips the update and reports the
+    generator as already up to date.
+  type: fix
