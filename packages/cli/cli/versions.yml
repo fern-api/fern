@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.12
+  changelogEntry:
+    - summary: |
+        Fix false "page was moved" warnings in `fern check` and `fern docs dev` when the same
+        file is referenced across multiple doc versions. The missing-redirects rule now tracks
+        all slugs per pageId instead of only the last one encountered.
+      type: fix
+  createdAt: "2026-05-26"
+  irVersion: 66
 - version: 5.37.11
   changelogEntry:
     - summary: |
