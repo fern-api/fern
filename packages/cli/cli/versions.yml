@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.38.0
+  changelogEntry:
+    - summary: |
+        Add interactive login prompt to `fern login`. When no active Auth0 session
+        exists, the CLI now presents a menu to choose a login provider (GitHub,
+        Google, Postman, or SSO). Selecting SSO prompts for an email address and
+        routes directly to the organization's identity provider. If an active
+        session already exists, authentication completes silently as before.
+      type: feat
+  createdAt: "2026-05-26"
+  irVersion: 66
 - version: 5.37.12
   changelogEntry:
     - summary: |
