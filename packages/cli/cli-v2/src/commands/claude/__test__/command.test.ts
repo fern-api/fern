@@ -13,142 +13,137 @@ import { StatusCommand } from "../status/command.js";
 // `toContain("text")` matches without stripping. We do still need to JSON.parse
 // the `--json` outputs, but those bypass chalk entirely.
 describe("fern claude", () => {
-  let testDir: AbsoluteFilePath;
+    let testDir: AbsoluteFilePath;
 
-  beforeEach(async () => {
-    testDir = AbsoluteFilePath.of(
-      join(tmpdir(), `fern-claude-test-${randomUUID()}`),
-    );
-    await mkdir(testDir, { recursive: true });
-  });
-
-  afterEach(async () => {
-    await rm(testDir, { recursive: true, force: true });
-  });
-
-  describe("install", () => {
-    it("prints the slash commands needed to install the plugin", async () => {
-      const { context, getStdout } = await createTestContextWithCapture({
-        cwd: testDir,
-      });
-      const cmd = new InstallCommand();
-
-      await cmd.handle(context, { "log-level": "info", json: false });
-
-      const output = getStdout();
-      expect(output).toContain("/plugin marketplace add fern-api/fern");
-      expect(output).toContain("/plugin install fern@fern-api");
+    beforeEach(async () => {
+        testDir = AbsoluteFilePath.of(join(tmpdir(), `fern-claude-test-${randomUUID()}`));
+        await mkdir(testDir, { recursive: true });
     });
 
-    it("emits JSON metadata when --json is passed", async () => {
-      const { context, getStdout } = await createTestContextWithCapture({
-        cwd: testDir,
-      });
-      const cmd = new InstallCommand();
-
-      await cmd.handle(context, { "log-level": "info", json: true });
-
-      const parsed = JSON.parse(getStdout());
-      expect(parsed.marketplace.repo).toBe("fern-api/fern");
-      expect(parsed.marketplace.name).toBe("fern-api");
-      expect(parsed.plugin.name).toBe("fern");
-      expect(parsed.commands).toEqual([
-        "/plugin marketplace add fern-api/fern",
-        "/plugin install fern@fern-api",
-      ]);
-      expect(parsed.skills).toContain("init-fern-project");
-    });
-  });
-
-  describe("status", () => {
-    const originalEnv = { ...process.env };
-
-    afterEach(() => {
-      process.env = { ...originalEnv };
+    afterEach(async () => {
+        await rm(testDir, { recursive: true, force: true });
     });
 
-    it("reports 'not in Claude Code session' when env vars are absent", async () => {
-      delete process.env["CLAUDECODE"];
-      delete process.env["CLAUDE_CODE_ENTRYPOINT"];
+    describe("install", () => {
+        it("prints the slash commands needed to install the plugin", async () => {
+            const { context, getStdout } = await createTestContextWithCapture({
+                cwd: testDir
+            });
+            const cmd = new InstallCommand();
 
-      const { context, getStdout } = await createTestContextWithCapture({
-        cwd: testDir,
-      });
-      const cmd = new StatusCommand();
+            await cmd.handle(context, { "log-level": "info", json: false });
 
-      await cmd.handle(context, { "log-level": "info", json: false });
+            const output = getStdout();
+            expect(output).toContain("/plugin marketplace add fern-api/fern");
+            expect(output).toContain("/plugin install fern@fern-api");
+        });
 
-      const output = getStdout();
-      expect(output).toContain("Not running inside a Claude Code session");
-      expect(output).toContain("/plugin marketplace add fern-api/fern");
+        it("emits JSON metadata when --json is passed", async () => {
+            const { context, getStdout } = await createTestContextWithCapture({
+                cwd: testDir
+            });
+            const cmd = new InstallCommand();
+
+            await cmd.handle(context, { "log-level": "info", json: true });
+
+            const parsed = JSON.parse(getStdout());
+            expect(parsed.marketplace.repo).toBe("fern-api/fern");
+            expect(parsed.marketplace.name).toBe("fern-api");
+            expect(parsed.plugin.name).toBe("fern");
+            expect(parsed.commands).toEqual(["/plugin marketplace add fern-api/fern", "/plugin install fern@fern-api"]);
+            expect(parsed.skills).toContain("init-fern-project");
+        });
     });
 
-    it("reports 'in Claude Code session' when CLAUDECODE=1", async () => {
-      process.env["CLAUDECODE"] = "1";
-      process.env["CLAUDE_CODE_ENTRYPOINT"] = "cli";
+    describe("status", () => {
+        const originalEnv = { ...process.env };
 
-      const { context, getStdout } = await createTestContextWithCapture({
-        cwd: testDir,
-      });
-      const cmd = new StatusCommand();
+        afterEach(() => {
+            process.env = { ...originalEnv };
+        });
 
-      await cmd.handle(context, { "log-level": "info", json: false });
+        it("reports 'not in Claude Code session' when env vars are absent", async () => {
+            delete process.env["CLAUDECODE"];
+            delete process.env["CLAUDE_CODE_ENTRYPOINT"];
 
-      const output = getStdout();
-      expect(output).toContain("Running inside a Claude Code session");
-      expect(output).toContain("(cli)");
+            const { context, getStdout } = await createTestContextWithCapture({
+                cwd: testDir
+            });
+            const cmd = new StatusCommand();
+
+            await cmd.handle(context, { "log-level": "info", json: false });
+
+            const output = getStdout();
+            expect(output).toContain("Not running inside a Claude Code session");
+            expect(output).toContain("/plugin marketplace add fern-api/fern");
+        });
+
+        it("reports 'in Claude Code session' when CLAUDECODE=1", async () => {
+            process.env["CLAUDECODE"] = "1";
+            process.env["CLAUDE_CODE_ENTRYPOINT"] = "cli";
+
+            const { context, getStdout } = await createTestContextWithCapture({
+                cwd: testDir
+            });
+            const cmd = new StatusCommand();
+
+            await cmd.handle(context, { "log-level": "info", json: false });
+
+            const output = getStdout();
+            expect(output).toContain("Running inside a Claude Code session");
+            expect(output).toContain("(cli)");
+        });
+
+        it("emits JSON when --json is passed", async () => {
+            delete process.env["CLAUDECODE"];
+            delete process.env["CLAUDE_CODE_ENTRYPOINT"];
+
+            const { context, getStdout } = await createTestContextWithCapture({
+                cwd: testDir
+            });
+            const cmd = new StatusCommand();
+
+            await cmd.handle(context, { "log-level": "info", json: true });
+
+            const parsed = JSON.parse(getStdout());
+            expect(parsed.inClaudeCodeSession).toBe(false);
+            expect(parsed.plugin.name).toBe("fern");
+            expect(parsed.skillCount).toBeGreaterThan(0);
+        });
     });
 
-    it("emits JSON when --json is passed", async () => {
-      delete process.env["CLAUDECODE"];
-      delete process.env["CLAUDE_CODE_ENTRYPOINT"];
+    describe("skills", () => {
+        it("lists every shipped skill with its description", async () => {
+            const { context, getStdout } = await createTestContextWithCapture({
+                cwd: testDir
+            });
+            const cmd = new SkillsCommand();
 
-      const { context, getStdout } = await createTestContextWithCapture({
-        cwd: testDir,
-      });
-      const cmd = new StatusCommand();
+            await cmd.handle(context, { "log-level": "info", json: false });
 
-      await cmd.handle(context, { "log-level": "info", json: true });
+            const output = getStdout();
+            expect(output).toContain("init-fern-project");
+            expect(output).toContain("generate-sdk");
+            expect(output).toContain("scaffold-docs-site");
+            expect(output).toContain("check-fern-config");
+            expect(output).toContain("preview-docs");
+        });
 
-      const parsed = JSON.parse(getStdout());
-      expect(parsed.inClaudeCodeSession).toBe(false);
-      expect(parsed.plugin.name).toBe("fern");
-      expect(parsed.skillCount).toBeGreaterThan(0);
+        it("emits a JSON skills array when --json is passed", async () => {
+            const { context, getStdout } = await createTestContextWithCapture({
+                cwd: testDir
+            });
+            const cmd = new SkillsCommand();
+
+            await cmd.handle(context, { "log-level": "info", json: true });
+
+            const parsed = JSON.parse(getStdout());
+            expect(Array.isArray(parsed.skills)).toBe(true);
+            expect(parsed.skills.length).toBeGreaterThanOrEqual(5);
+            for (const skill of parsed.skills) {
+                expect(typeof skill.name).toBe("string");
+                expect(typeof skill.description).toBe("string");
+            }
+        });
     });
-  });
-
-  describe("skills", () => {
-    it("lists every shipped skill with its description", async () => {
-      const { context, getStdout } = await createTestContextWithCapture({
-        cwd: testDir,
-      });
-      const cmd = new SkillsCommand();
-
-      await cmd.handle(context, { "log-level": "info", json: false });
-
-      const output = getStdout();
-      expect(output).toContain("init-fern-project");
-      expect(output).toContain("generate-sdk");
-      expect(output).toContain("scaffold-docs-site");
-      expect(output).toContain("check-fern-config");
-      expect(output).toContain("preview-docs");
-    });
-
-    it("emits a JSON skills array when --json is passed", async () => {
-      const { context, getStdout } = await createTestContextWithCapture({
-        cwd: testDir,
-      });
-      const cmd = new SkillsCommand();
-
-      await cmd.handle(context, { "log-level": "info", json: true });
-
-      const parsed = JSON.parse(getStdout());
-      expect(Array.isArray(parsed.skills)).toBe(true);
-      expect(parsed.skills.length).toBeGreaterThanOrEqual(5);
-      for (const skill of parsed.skills) {
-        expect(typeof skill.name).toBe("string");
-        expect(typeof skill.description).toBe("string");
-      }
-    });
-  });
 });

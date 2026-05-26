@@ -7,10 +7,10 @@ import { addSkillsCommand } from "./skills/index.js";
 import { addStatusCommand } from "./status/index.js";
 
 export function addClaudeCommand(cli: Argv<GlobalArgs>): void {
-  commandGroup({
-    cli,
-    name: "claude",
-    description: "Install and inspect the Fern plugin for Claude Code",
-    subcommands: [addInstallCommand, addStatusCommand, addSkillsCommand],
-  });
+    commandGroup({
+        cli,
+        name: "claude",
+        description: "Install and inspect the Fern plugin for Claude Code",
+        subcommands: [addInstallCommand, addStatusCommand, addSkillsCommand]
+    });
 }
