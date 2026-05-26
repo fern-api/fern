@@ -1,5 +1,0 @@
-- summary: |
-    Include jsFiles (custom React components, referenced markdown snippets, and
-    custom header/footer components) in the ledger publish payload so they are
-    stored in CAS and available on the ledger read path.
-  type: fix

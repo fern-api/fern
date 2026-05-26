@@ -1,6 +1,0 @@
-- summary: |
-    Refactor docs-ledger publish client to use unified locales[] wire format.
-    Base locale and translations are now sent as a single locales array where
-    all entries go through the same register/finish pipeline, eliminating the
-    separate translation bolt-on codepath.
-  type: fix
