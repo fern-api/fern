@@ -1,12 +1,13 @@
 /**
- * TODO(kafkas): This file is an exact copy of the canonical implementation in fdr-sdk.
- * Once this repo upgrades to the latest fdr-sdk version that contains this utility,
- * replace the usage in missing-redirects.ts with:
+ * TODO(kafkas): This intentionally differs from fdr-sdk's canonical helper:
+ * this returns all slugs per pageId to avoid false move warnings for versioned
+ * docs. Before deleting this copy, update fdr-sdk and migrate its slug-table
+ * writer + dashboard link-checker callers to handle multiple slugs per pageId.
  *
  *   import { FernNavigation } from "@fern-api/fdr-sdk";
  *   const pageIdToSlug = FernNavigation.utils.buildPageIdToSlugMap(root);
  *
- * and delete this file.
+ * Then delete this file.
  */
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
