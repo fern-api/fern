@@ -153,7 +153,7 @@ async function promptForEmail(context: TaskContext): Promise<string> {
                 }
             }
         ]);
-        result = email;
+        result = email.trim();
     });
     return result;
 }
