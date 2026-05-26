@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.37.10
+  changelogEntry:
+    - summary: |
+        Fix x-fern-audiences filtering dropping transitively-referenced named types when an outer
+        schema reaches its descendants through a chain of $refs. Audience filtering now walks the
+        full type-dependency closure instead of a single level, so deeply nested object types are
+        preserved in the docs IR and no longer render as `any` in the docs site.
+      type: fix
+  createdAt: "2026-05-26"
+  irVersion: 66
 - version: 5.37.9
   changelogEntry:
     - summary: |
