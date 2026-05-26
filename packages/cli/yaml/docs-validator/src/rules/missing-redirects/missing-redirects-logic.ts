@@ -73,7 +73,7 @@ function isSlugCoveredByRedirect(oldSlug: string, redirects: Redirect[], basePat
 }
 
 /**
- * Compares published slug table entries against the local pageId->slug map
+ * Compares published slug table entries against the local pageId->slugs map
  * and returns entries whose slug disappeared or changed.
  *
  * Skips entries whose old slug is still actively served by another page in
@@ -83,21 +83,27 @@ function isSlugCoveredByRedirect(oldSlug: string, redirects: Redirect[], basePat
  */
 export function findRemovedSlugs(
     publishedEntries: MarkdownEntry[],
-    localPageIdToSlug: Map<string, string>
+    localPageIdToSlugs: Map<string, Set<string>>
 ): RemovedSlug[] {
-    const activeSlugs = new Set(localPageIdToSlug.values());
+    const activeSlugs = new Set<string>();
+    for (const slugs of localPageIdToSlugs.values()) {
+        for (const slug of slugs) {
+            activeSlugs.add(slug);
+        }
+    }
     const removed: RemovedSlug[] = [];
     for (const publishedEntry of publishedEntries) {
-        const newSlug = localPageIdToSlug.get(publishedEntry.pageId);
-        if (newSlug === undefined) {
+        const localSlugs = localPageIdToSlugs.get(publishedEntry.pageId);
+        if (localSlugs == null) {
             if (activeSlugs.has(publishedEntry.slug)) {
                 continue;
             }
             removed.push({ pageId: publishedEntry.pageId, oldSlug: publishedEntry.slug, newSlug: undefined });
-        } else if (newSlug !== publishedEntry.slug) {
+        } else if (!localSlugs.has(publishedEntry.slug)) {
             if (activeSlugs.has(publishedEntry.slug)) {
                 continue;
             }
+            const newSlug = localSlugs.values().next().value;
             removed.push({ pageId: publishedEntry.pageId, oldSlug: publishedEntry.slug, newSlug });
         }
     }
