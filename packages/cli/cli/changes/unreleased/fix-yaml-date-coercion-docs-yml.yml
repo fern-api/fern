@@ -1,0 +1,5 @@
+- summary: |
+    Fix docs.yml parsing failure when values like repo names resemble dates (e.g. `2026-05-26`).
+    YAML 1.1 auto-converts date-like strings into Date objects; the parser now uses JSON_SCHEMA
+    to prevent this coercion.
+  type: fix

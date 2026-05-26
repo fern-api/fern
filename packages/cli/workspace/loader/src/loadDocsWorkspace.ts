@@ -67,7 +67,7 @@ export async function loadRawDocsConfiguration({
     const contentsStr = await readFile(absolutePathOfConfiguration);
     let contentsJson: unknown;
     try {
-        contentsJson = yaml.load(contentsStr.toString());
+        contentsJson = yaml.load(contentsStr.toString(), { schema: yaml.JSON_SCHEMA });
     } catch (error) {
         if (!(error instanceof yaml.YAMLException)) {
             throw error;

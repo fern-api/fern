@@ -7,6 +7,45 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { loadRawDocsConfiguration } from "../loadDocsWorkspace.js";
 
+describe("loadRawDocsConfiguration — YAML date coercion", () => {
+    let tmpDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "fern-docs-yml-test-"));
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    async function writeDocsYml(contents: string): Promise<AbsoluteFilePath> {
+        const docsYmlPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(docsYmlPath, contents);
+        return docsYmlPath;
+    }
+
+    it("parses date-like repo names as strings, not Date objects", async () => {
+        const docsYmlPath = await writeDocsYml(
+            [
+                "instances:",
+                "  - url: acme.docs.buildwithfern.com",
+                "    edit-this-page:",
+                "      github:",
+                "        owner: my-org",
+                "        repo: 2026-05-26",
+                "        branch: main"
+            ].join("\n")
+        );
+        const result = await loadRawDocsConfiguration({
+            absolutePathOfConfiguration: docsYmlPath,
+            context: createMockTaskContext()
+        });
+        const editThisPage = result.instances[0]?.editThisPage;
+        expect(editThisPage?.github?.repo).toBe("2026-05-26");
+        expect(typeof editThisPage?.github?.repo).toBe("string");
+    });
+});
+
 describe("loadRawDocsConfiguration — translation locales", () => {
     let tmpDir: string;
 
