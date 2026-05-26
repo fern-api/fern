@@ -4,6 +4,7 @@ import {
     createDocsLedgerClient,
     type DocsPublishGitInput,
     type FileManifestEntry,
+    type LedgerPreviewRegisterResponse,
     type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -66,10 +67,9 @@ export async function publishDocsViaLedgerPreview({
     resolver?: DocsDefinitionResolver;
 }): Promise<LedgerPreviewResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
-    // Translated DocsDefinitions are built before any network calls so a
-    // single locale failure aborts the entire preview publish. The cheap
-    // sync buildLedgerInput for translations is deferred until after
-    // previewRegister because we need the server-assigned domain.
+    // Every locale must be present in previewRegister so the ledger can
+    // compute missing CAS blobs and return upload URLs for translation-only
+    // content before finish references those blobs.
 
     const { localeEntry: baseLocale, blobs } = buildLedgerInput({
         docsDefinition,
@@ -85,36 +85,6 @@ export async function publishDocsViaLedgerPreview({
         context
     });
 
-    // ── Phase 2: Single register → upload → finish ─────────────────────
-
-    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
-
-    context.logger.debug("[ledger-preview] Registering preview deployment...");
-    const registerStart = performance.now();
-    const registerResult = await client.previewRegister({
-        orgId: organization,
-        previewId: previewId ?? null,
-        basePath: basePath ?? "",
-        root: baseLocale.root,
-        pages: baseLocale.pages,
-        apiManifest: baseLocale.apiManifest,
-        config: baseLocale.config,
-        fileManifest: baseLocale.fileManifest,
-        jsFiles: baseLocale.jsFiles,
-        redirects: baseLocale.redirects,
-        locale: baseLocale.locale,
-        version: baseLocale.version,
-        repo: baseLocale.repo,
-        git
-    });
-    const registerTime = performance.now() - registerStart;
-    context.logger.debug(
-        `[ledger-preview] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, ` +
-            `preview=${registerResult.previewUrl}, missing=${registerResult.missingContent.length} blobs`
-    );
-
-    // Build translation ledger inputs now that we have the server domain.
-    // This is a cheap sync operation (serialization only).
     const translationInputs = builtTranslationDefs.map((t) => {
         const { localeEntry, blobs: translationBlobs } = buildLedgerInput({
             docsDefinition: t.translatedDefinition,
@@ -127,17 +97,54 @@ export async function publishDocsViaLedgerPreview({
         return { ...t, localeEntry, blobs: translationBlobs };
     });
 
-    // Merge all translation blobs into the base pool for the upload phase.
+    // Merge all translation blobs into the base pool before register/upload.
     for (const t of translationInputs) {
         for (const [hash, buf] of t.blobs) {
             blobs.set(hash, buf);
         }
     }
 
-    await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
-
-    // Build the unified locales array for the finish call.
     const locales: LocaleEntry[] = [baseLocale, ...translationInputs.map((t) => t.localeEntry)];
+
+    // ── Phase 2: Single register → upload → finish ─────────────────────
+
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
+
+    context.logger.debug("[ledger-preview] Registering preview deployment...");
+    const registerStart = performance.now();
+    const previewRegisterInput = {
+        orgId: organization,
+        previewId: previewId ?? null,
+        basePath: basePath ?? "",
+        defaultLocale: baseLocale.locale,
+        locales,
+        // Keep the base-locale fields for compatibility with SDKs/servers that
+        // still type previewRegister as the single-locale preview init shape.
+        root: baseLocale.root,
+        pages: baseLocale.pages,
+        apiManifest: baseLocale.apiManifest,
+        config: baseLocale.config,
+        fileManifest: baseLocale.fileManifest,
+        jsFiles: baseLocale.jsFiles,
+        redirects: baseLocale.redirects,
+        locale: baseLocale.locale,
+        version: baseLocale.version,
+        repo: baseLocale.repo,
+        git
+    };
+    const registerResult = await previewRegisterWithLocales({
+        fdrOrigin,
+        token,
+        headers,
+        input: previewRegisterInput
+    });
+    const registerTime = performance.now() - registerStart;
+    context.logger.debug(
+        `[ledger-preview] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, ` +
+            `preview=${registerResult.previewUrl}, missing=${registerResult.missingContent.length} blobs`
+    );
+
+    await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);
 
     // Finish — server persists the preview deployment + all locale segments
     // in a single call.
@@ -149,6 +156,7 @@ export async function publishDocsViaLedgerPreview({
         basepath: registerResult.basepath,
         customDomains: [],
         previewId: registerResult.previewId,
+        defaultLocale: baseLocale.locale,
         locales
     });
     const finishTime = performance.now() - finishStart;
@@ -186,8 +194,8 @@ interface BuiltTranslationDef {
  * entire publish.
  *
  * This only builds the DocsDefinitions (the expensive async part). The
- * cheap sync `buildLedgerInput` is deferred by the caller because the
- * preview flow needs the server-assigned domain first.
+ * caller converts them to ledger locale entries before previewRegister so
+ * translation blobs are included in missingContent.
  */
 async function buildAllTranslationDefinitions({
     docsDefinition,
@@ -225,4 +233,33 @@ async function buildAllTranslationDefinitions({
             return { locale, localePages, translatedDefinition };
         })
     );
+}
+
+async function previewRegisterWithLocales({
+    fdrOrigin,
+    token,
+    headers,
+    input
+}: {
+    fdrOrigin: string;
+    token: string;
+    headers: Record<string, string>;
+    input: Record<string, unknown>;
+}): Promise<LedgerPreviewRegisterResponse> {
+    const response = await fetch(`${fdrOrigin.replace(/\/+$/, "")}/docs-ledger/preview/init`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            ...headers
+        },
+        body: JSON.stringify(input)
+    });
+
+    if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`[ledger-preview] Preview register failed: HTTP ${response.status}: ${body}`);
+    }
+
+    return (await response.json()) as LedgerPreviewRegisterResponse;
 }
