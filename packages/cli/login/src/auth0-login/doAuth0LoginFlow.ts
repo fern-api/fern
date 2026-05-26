@@ -5,6 +5,13 @@ import open from "open";
 import { LOGIN_SUCCESS_PAGE } from "../pages/login-success-page.js";
 import { createServer } from "./createServer.js";
 
+export class NoSessionError extends Error {
+    constructor() {
+        super("No active Auth0 session");
+        this.name = "NoSessionError";
+    }
+}
+
 /**
  * Returns the base URL for Auth0, using HTTP for localhost (local dev) and HTTPS otherwise.
  */
@@ -97,12 +104,24 @@ function getCode({
     });
 }
 
-function parseCodeFromUrl(request: IncomingMessage, origin: string): string | undefined {
+interface ParsedAuthResponse {
+    code?: string;
+    error?: string;
+}
+
+function parseAuthResponse(request: IncomingMessage, origin: string): ParsedAuthResponse {
     if (request.url == null) {
-        return undefined;
+        return {};
     }
     const { searchParams } = new URL(request.url, origin);
-    return searchParams.get("code") ?? undefined;
+    return {
+        code: searchParams.get("code") ?? undefined,
+        error: searchParams.get("error") ?? undefined
+    };
+}
+
+function parseCodeFromUrl(request: IncomingMessage, origin: string): string | undefined {
+    return parseAuthResponse(request, origin).code;
 }
 
 async function getTokenFromCode({
@@ -138,13 +157,77 @@ async function getTokenFromCode({
     return { accessToken, idToken };
 }
 
+/**
+ * Attempt silent authentication using an existing Auth0 session.
+ * Opens the browser with `prompt=none`; if Auth0 has a valid session it
+ * redirects back with an authorization code immediately. If not, Auth0
+ * redirects with `error=login_required` and we throw `NoSessionError`.
+ */
+export async function trySilentAuth({
+    context,
+    auth0Domain,
+    auth0ClientId,
+    audience
+}: {
+    context: TaskContext;
+    auth0Domain: string;
+    auth0ClientId: string;
+    audience: string;
+}): Promise<Auth0TokenResponse> {
+    const { origin, server } = await createServer();
+
+    const silentUrl = constructAuth0Url({
+        auth0ClientId,
+        auth0Domain,
+        origin,
+        audience,
+        forceReauth: false,
+        promptNone: true
+    });
+
+    const result = await new Promise<{ code?: string; error?: string }>((resolve) => {
+        const timeout = setTimeout(() => {
+            resolve({ error: "timeout" });
+        }, 5_000);
+
+        server.addListener("request", (request, response) => {
+            const parsed = parseAuthResponse(request, origin);
+            if (parsed.code != null || parsed.error != null) {
+                clearTimeout(timeout);
+                response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+                if (parsed.code != null) {
+                    response.end(LOGIN_SUCCESS_PAGE, () => resolve(parsed));
+                } else {
+                    response.end("<html><body><script>window.close()</script></body></html>", () => resolve(parsed));
+                }
+            } else {
+                request.socket.end();
+            }
+        });
+
+        void open(silentUrl).catch(() => {
+            clearTimeout(timeout);
+            resolve({ error: "browser_open_failed" });
+        });
+    });
+
+    server.close();
+
+    if (result.code != null) {
+        return await getTokenFromCode({ auth0Domain, auth0ClientId, code: result.code, origin });
+    }
+
+    throw new NoSessionError();
+}
+
 function constructAuth0Url({
     origin,
     auth0Domain,
     auth0ClientId,
     audience,
     forceReauth,
-    connection
+    connection,
+    promptNone
 }: {
     origin: string;
     auth0Domain: string;
@@ -152,6 +235,7 @@ function constructAuth0Url({
     audience: string;
     forceReauth: boolean;
     connection?: string;
+    promptNone?: boolean;
 }) {
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
@@ -165,8 +249,9 @@ function constructAuth0Url({
         queryParams.set("connection", connection);
     }
 
-    // Force re-authentication to allow switching accounts.
-    if (forceReauth) {
+    if (promptNone) {
+        queryParams.set("prompt", "none");
+    } else if (forceReauth) {
         queryParams.set("prompt", "login");
     }
 
