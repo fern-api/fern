@@ -26,6 +26,7 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
+        omitEmptyArrays?: boolean;
     }
     type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {

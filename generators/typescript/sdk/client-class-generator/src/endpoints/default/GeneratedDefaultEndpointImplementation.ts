@@ -28,6 +28,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        omitEmptyArrays: boolean;
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
@@ -45,6 +46,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
+    private readonly omitEmptyArrays: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
@@ -58,6 +60,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         includeSerdeLayer,
         retainOriginalCasing,
         omitUndefined,
+        omitEmptyArrays,
         generateEndpointMetadata,
         parameterNaming
     }: GeneratedDefaultEndpointImplementation.Init) {
@@ -70,6 +73,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.omitEmptyArrays = omitEmptyArrays;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
     }
@@ -933,7 +937,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                : undefined
+                : undefined,
+            omitEmptyArrays: this.omitEmptyArrays
         };
 
         if (this.endpoint.response?.body?.type === "text") {

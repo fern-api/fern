@@ -1,0 +1,4 @@
+- summary: |
+    Add `omitEmptyArrays` config option that strips empty arrays from request bodies before serialization.
+    This is opt-in (defaults to false) and works for both serde and non-serde code paths.
+  type: feat

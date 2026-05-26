@@ -24,6 +24,7 @@ export declare namespace SdkClientClassGenerator {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        omitEmptyArrays: boolean;
         allowExtraFields: boolean;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
@@ -63,6 +64,7 @@ export class SdkClientClassGenerator {
     private readonly retainOriginalCasing: boolean;
     private readonly inlineFileProperties: boolean;
     private readonly omitUndefined: boolean;
+    private readonly omitEmptyArrays: boolean;
     private readonly allowExtraFields: boolean;
     private readonly streamType: "wrapper" | "web";
     private readonly formDataSupport: "Node16" | "Node18";
@@ -91,6 +93,7 @@ export class SdkClientClassGenerator {
         retainOriginalCasing,
         inlineFileProperties,
         omitUndefined,
+        omitEmptyArrays,
         allowExtraFields,
         streamType,
         fileResponseType,
@@ -118,6 +121,7 @@ export class SdkClientClassGenerator {
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.omitUndefined = omitUndefined;
+        this.omitEmptyArrays = omitEmptyArrays;
         this.allowExtraFields = allowExtraFields;
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
@@ -157,6 +161,7 @@ export class SdkClientClassGenerator {
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
             omitUndefined: this.omitUndefined,
+            omitEmptyArrays: this.omitEmptyArrays,
             allowExtraFields: this.allowExtraFields,
             streamType: this.streamType,
             fileResponseType: this.fileResponseType,

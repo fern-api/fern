@@ -66,6 +66,7 @@ function createGenerator(opts?: Partial<SdkClientClassGenerator.Init>): SdkClien
         retainOriginalCasing: false,
         inlineFileProperties: false,
         omitUndefined: false,
+        omitEmptyArrays: false,
         allowExtraFields: false,
         streamType: "wrapper",
         fileResponseType: "stream",
@@ -135,6 +136,7 @@ describe("SdkClientClassGenerator", () => {
                 retainOriginalCasing: true,
                 inlineFileProperties: true,
                 omitUndefined: true,
+                omitEmptyArrays: false,
                 allowExtraFields: true,
                 useDefaultRequestParameterValues: true,
                 generateEndpointMetadata: true

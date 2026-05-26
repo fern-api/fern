@@ -13,11 +13,19 @@ exports.getRequestBody = getRequestBody;
 const json_js_1 = require("../json.js");
 const qs_js_1 = require("../url/qs.js");
 function getRequestBody(_a) {
-    return __awaiter(this, arguments, void 0, function* ({ body, type }) {
+    return __awaiter(this, arguments, void 0, function* ({ body, type, omitEmptyArrays, }) {
         if (type === "form") {
             return (0, qs_js_1.toQueryString)(body, { arrayFormat: "repeat", encode: true });
         }
         if (type.includes("json")) {
+            if (omitEmptyArrays) {
+                return (0, json_js_1.toJson)(body, (_key, value) => {
+                    if (Array.isArray(value) && value.length === 0) {
+                        return undefined;
+                    }
+                    return value;
+                });
+            }
             return (0, json_js_1.toJson)(body);
         }
         else {

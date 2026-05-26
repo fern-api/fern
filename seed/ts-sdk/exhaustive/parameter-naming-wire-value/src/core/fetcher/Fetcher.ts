@@ -39,6 +39,7 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
+        omitEmptyArrays?: boolean;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
@@ -264,6 +265,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
         type: args.requestType ?? "other",
+        omitEmptyArrays: args.omitEmptyArrays,
     });
     const fetchFn = args.fetchFn ?? (await getFetchFn());
     const headers = await getHeaders(args);

@@ -209,6 +209,7 @@ function createImpl(opts?: {
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
     omitUndefined?: boolean;
+    omitEmptyArrays?: boolean;
     generateEndpointMetadata?: boolean;
     parameterNaming?: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     // biome-ignore lint/suspicious/noExplicitAny: test mock
@@ -224,6 +225,7 @@ function createImpl(opts?: {
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
+        omitEmptyArrays: opts?.omitEmptyArrays ?? false,
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,
         parameterNaming: opts?.parameterNaming ?? "default"
     });

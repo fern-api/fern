@@ -29,6 +29,7 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        omitEmptyArrays: boolean;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         generateEndpointMetadata: boolean;
@@ -46,6 +47,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
+    private readonly omitEmptyArrays: boolean;
     private readonly streamType: "wrapper" | "web";
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly generateEndpointMetadata: boolean;
@@ -61,6 +63,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         includeSerdeLayer,
         retainOriginalCasing,
         omitUndefined,
+        omitEmptyArrays,
         streamType,
         fileResponseType,
         generateEndpointMetadata,
@@ -75,6 +78,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.omitEmptyArrays = omitEmptyArrays;
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
         this.generateEndpointMetadata = generateEndpointMetadata;
@@ -249,7 +253,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             })(),
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                : undefined
+                : undefined,
+            omitEmptyArrays: this.omitEmptyArrays
         };
 
         return [
