@@ -4969,8 +4969,8 @@ importers:
         specifier: 'catalog:'
         version: 7.0.1
       posthog-node:
-        specifier: ^5.28.6
-        version: 5.29.1(rxjs@7.8.2)
+        specifier: ^5.35.1
+        version: 5.35.1(rxjs@7.8.2)
       semver:
         specifier: ^7.6.2
         version: 7.7.4
@@ -6689,8 +6689,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       posthog-node:
-        specifier: ^5.28.6
-        version: 5.29.1(rxjs@7.8.2)
+        specifier: ^5.35.1
+        version: 5.35.1(rxjs@7.8.2)
       uuid:
         specifier: 'catalog:'
         version: 14.0.0
@@ -10351,8 +10351,11 @@ packages:
     resolution: {integrity: sha512-h104Kh26rR8tm+a3Qkc5S4VLYint3FE48as7+/5oCEcKR2idC/pF1G6AhIXKI+eHPJa/3J9i5z0Al47IeGHPkA==}
     engines: {node: '>=12'}
 
-  '@posthog/core@1.25.1':
-    resolution: {integrity: sha512-76enEGwLVtcCTbfAr1wJ6zi4tYzVkGsqJx+H9JiX0K8/VxuKdbOtVShsOJhTD9uvFfTeW3DX+PSCelcqWrRRkw==}
+  '@posthog/core@1.29.9':
+    resolution: {integrity: sha512-DjvuIyBZ2Z/gBhtZlITlM2D8PlnMsHSQ1D78dbUYoVsgGguvanpJTobZObjLlFkybyvfZFYkpoJkFNI/2Pw4IQ==}
+
+  '@posthog/types@1.376.0':
+    resolution: {integrity: sha512-gbFfxCuZDs/D4QZMwdE+smD1jsuqgGpS6yKGHZZ19foxMy8RYHsU1E47iG1b88n/uN02fAabLibVwuxLtq8juw==}
 
   '@prisma/instrumentation@7.6.0':
     resolution: {integrity: sha512-ZPW2gRiwpPzEfgeZgaekhqXrbW+Y2RJKHVqUmlhZhKzRNCcvR6DykzylDrynpArKKRQtLxoZy36fK7U0p3pdgQ==}
@@ -13831,8 +13834,8 @@ packages:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
 
-  posthog-node@5.29.1:
-    resolution: {integrity: sha512-XA1OGrE8SAmO3JkfWjeVg7XxEN/6M6ZXzYmBJKl3uXv/xxk7ru0oeoqi/rcWJ6z5+nFP9wUFVoS37//qaPxwFg==}
+  posthog-node@5.35.1:
+    resolution: {integrity: sha512-F9S3pEIYfGEVjLYIFHKaqfTIhn5IpS02Dkp7C/f1rqr4Z67Iqbt4jbKO8raWsT0veEI3rUp+DKuXLW1hN07FQA==}
     engines: {node: ^20.20.0 || >=22.22.0}
     peerDependencies:
       rxjs: ^7.0.0
@@ -17443,7 +17446,11 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@posthog/core@1.25.1': {}
+  '@posthog/core@1.29.9':
+    dependencies:
+      '@posthog/types': 1.376.0
+
+  '@posthog/types@1.376.0': {}
 
   '@prisma/instrumentation@7.6.0(@opentelemetry/api@1.9.1)':
     dependencies:
@@ -21328,9 +21335,9 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  posthog-node@5.29.1(rxjs@7.8.2):
+  posthog-node@5.35.1(rxjs@7.8.2):
     dependencies:
-      '@posthog/core': 1.25.1
+      '@posthog/core': 1.29.9
     optionalDependencies:
       rxjs: 7.8.2
 
