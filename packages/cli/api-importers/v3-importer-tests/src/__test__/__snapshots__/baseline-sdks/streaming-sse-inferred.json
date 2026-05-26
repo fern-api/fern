@@ -195,7 +195,6 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -268,7 +267,6 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -342,7 +340,6 @@
               "typeId": "type_:CompletionRequest",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {

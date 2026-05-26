@@ -20,9 +20,9 @@ import express from "express";
 import { readFile } from "fs/promises";
 import http from "http";
 import path from "path";
-import Watcher from "watcher";
 import { type WebSocket, WebSocketServer } from "ws";
 
+import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
@@ -352,11 +352,10 @@ export async function runPreviewServer({
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
     const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({ cacheDir });
 
-    const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
-        recursive: true,
-        ignoreInitial: true,
-        debounce: 100,
-        renameDetection: true
+    const watcher = await createDocsPreviewWatcher({
+        absoluteFilePathToFern,
+        additionalFilepaths,
+        context
     });
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];

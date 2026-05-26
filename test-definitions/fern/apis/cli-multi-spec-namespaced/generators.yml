@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Multi-spec fixture exercising the per-spec `namespace:` field. Two
+# OpenAPI specs, each declared under a different namespace, so the
+# CLI generator surfaces them as `.spec_under(<ns>, ...)` calls and the
+# end user sees `<binary> v1 ...` and `<binary> v2 ...` sub-commands.
+api:
+  specs:
+    - openapi: ./users-v1.yml
+      namespace: v1
+    - openapi: ./users-v2.yml
+      namespace: v2
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli
+        version: latest
+        ir-version: latest

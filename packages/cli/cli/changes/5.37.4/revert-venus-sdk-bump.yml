@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Revert the @fern-api/venus-api-sdk bump from 5.35.5 (0.22.34 -> 4.0.0).
+  type: chore

@@ -37,6 +37,10 @@ on:
         description: Rebuild Go seed container
         type: boolean
         default: false
+      cli:
+        description: Rebuild CLI seed container
+        type: boolean
+        default: false
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -57,6 +61,7 @@ jobs:
       csharp: ${{ steps.set-output.outputs.csharp }}
       php: ${{ steps.set-output.outputs.php }}
       go: ${{ steps.set-output.outputs.go }}
+      cli: ${{ steps.set-output.outputs.cli }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -99,6 +104,12 @@ jobs:
         with:
           files: docker/seed/Dockerfile.go
 
+      - name: Check for cli changes
+        id: cli
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: docker/seed/Dockerfile.cli
+
       - name: Check for workflow changes
         id: workflow
         uses: ./.github/actions/check-for-changed-files
@@ -117,6 +128,7 @@ jobs:
               echo "csharp=true" >> $GITHUB_OUTPUT
               echo "php=true" >> $GITHUB_OUTPUT
               echo "go=true" >> $GITHUB_OUTPUT
+              echo "cli=true" >> $GITHUB_OUTPUT
               echo "Manual run: rebuilding all images"
             else
               echo "ts=${{ inputs.ts }}" >> $GITHUB_OUTPUT
@@ -125,6 +137,7 @@ jobs:
               echo "csharp=${{ inputs.csharp }}" >> $GITHUB_OUTPUT
               echo "php=${{ inputs.php }}" >> $GITHUB_OUTPUT
               echo "go=${{ inputs.go }}" >> $GITHUB_OUTPUT
+              echo "cli=${{ inputs.cli }}" >> $GITHUB_OUTPUT
               echo "Manual run: selected images set from inputs"
             fi
           else
@@ -136,6 +149,7 @@ jobs:
               echo "csharp=true" >> $GITHUB_OUTPUT
               echo "php=true" >> $GITHUB_OUTPUT
               echo "go=true" >> $GITHUB_OUTPUT
+              echo "cli=true" >> $GITHUB_OUTPUT
               echo "Workflow changed, rebuilding all images"
             else
               echo "ts=${{ steps.ts.outputs.any_changed }}" >> $GITHUB_OUTPUT
@@ -144,6 +158,7 @@ jobs:
               echo "csharp=${{ steps.csharp.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "php=${{ steps.php.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "go=${{ steps.go.outputs.any_changed }}" >> $GITHUB_OUTPUT
+              echo "cli=${{ steps.cli.outputs.any_changed }}" >> $GITHUB_OUTPUT
               echo "Set outputs based on individual file changes"
             fi
           fi
@@ -452,9 +467,58 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+  build-cli:
+    if: ${{ needs.changes.outputs.cli == 'true' }}
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        arch: [amd64, arm64]
+        exclude:
+          - runner: ubuntu-latest
+            arch: arm64
+          - runner: ubuntu-24.04-arm
+            arch: amd64
+    runs-on: ${{ matrix.runner }}
+    needs: [changes, generate-sha]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: fernapi/cli-seed
+          tags: |
+            type=raw,value=${{ needs.generate-sha.outputs.sha }}-${{ matrix.arch }}
+            type=raw,value=latest-${{ matrix.arch }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./docker/seed/Dockerfile.cli
+          platforms: linux/${{ matrix.arch }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
   merge-manifests:
-    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true' || needs.changes.outputs.php == 'true' || needs.changes.outputs.go == 'true') }}
-    needs: [changes, build-ts, build-java, build-python, build-csharp, build-php, build-go, generate-sha]
+    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true' || needs.changes.outputs.php == 'true' || needs.changes.outputs.go == 'true' || needs.changes.outputs.cli == 'true') }}
+    needs: [changes, build-ts, build-java, build-python, build-csharp, build-php, build-go, build-cli, generate-sha]
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
@@ -487,6 +551,9 @@ jobs:
           fi
           if [[ "${{ needs.changes.outputs.go }}" == "true" ]]; then
             packages+="go "
+          fi
+          if [[ "${{ needs.changes.outputs.cli }}" == "true" ]]; then
+            packages+="cli "
           fi
           echo "packages=${packages% }" >> $GITHUB_OUTPUT
           echo "Building manifests for: ${packages% }"

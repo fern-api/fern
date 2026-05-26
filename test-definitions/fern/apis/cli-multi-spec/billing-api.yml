@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Billing API
+  version: "1.0.0"
+  description: Second spec in the multi-spec fixture — provides the billing surface.
+servers:
+  - url: https://billing.example.com/v1
+paths:
+  /invoices:
+    get:
+      operationId: listInvoices
+      summary: List invoices
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Invoice"
+  /invoices/{invoiceId}:
+    get:
+      operationId: getInvoice
+      summary: Fetch a single invoice
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+components:
+  schemas:
+    Invoice:
+      type: object
+      required:
+        - id
+        - amountCents
+      properties:
+        id:
+          type: string
+        amountCents:
+          type: integer
+          format: int64
+        currency:
+          type: string
+          example: USD

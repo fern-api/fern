@@ -24,7 +24,7 @@ groups:
         output:
           location: npm
           package-name: "@fern-api/dynamic-ir-sdk"
-          token: ${NPM_TOKEN}
+          token: OIDC
         config:
           noOptionalProperties: false
         smart-casing: false

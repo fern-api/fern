@@ -1,4 +1,4 @@
-FROM node:24.15-alpine3.23
+FROM node:24.16-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 RUN apk --no-cache add bash curl git zip
@@ -8,7 +8,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 # Patch picomatch to 4.0.4 (GHSA-c2c7-rcm5-vvqj ReDoS via extglob quantifiers,
 # GHSA-3v7f-55p6-f55p method injection in POSIX character classes) and
 # brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2 zero-step sequence hangs)
-# in npm's bundled node_modules. node:24.15 ships npm 11.12.1 with
+# in npm's bundled node_modules. node:24.16 ships npm 11.12.1 with
 # picomatch@4.0.3 and brace-expansion@5.0.4.
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/picomatch \

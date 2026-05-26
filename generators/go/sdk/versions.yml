@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.42.3
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
+- version: 1.42.2
+  changelogEntry:
+    - summary: |
+        Generated `wiremock-mappings.json` now matches nullable date-time query and header parameters with millisecond precision so the stub matches what the Go SDK actually sends. Previously, when a date-time field was wrapped in a nullable container (e.g. with `respect-nullable-schemas: true` and `coerce-optional-schemas-to-nullable: true`), the stub matcher used `"2024-01-15T09:30:00Z"` while the SDK serialized `"2024-01-15T09:30:00.000Z"`, causing WireMock to return 404.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 66
 - version: 1.42.1
   changelogEntry:
     - summary: |

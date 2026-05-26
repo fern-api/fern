@@ -17,6 +17,7 @@ export {
     FernRcAiSchema,
     FernRcAuthSchema,
     FernRcCacheSchema,
+    FernRcCliSchema,
     FernRcSchema
 } from "./fernrc/index.js";
 export { GeneratorImageObjectSchema, GeneratorImageSchema } from "./GeneratorImageSchema.js";

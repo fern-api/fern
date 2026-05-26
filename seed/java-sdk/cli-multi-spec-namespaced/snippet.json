@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "8620fdec",
+            "id": {
+                "method": "GET",
+                "path": "/users",
+                "identifier_override": "endpoint_v1.listUsers"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.v1().listUsers();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.v1().listUsers();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c2416d37",
+            "id": {
+                "method": "GET",
+                "path": "/users",
+                "identifier_override": "endpoint_v2.listUsers"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.v1().listUsers();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .apiKey(\"<X-Api-Key>\")\n            .build();\n\n        client.v1().listUsers();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

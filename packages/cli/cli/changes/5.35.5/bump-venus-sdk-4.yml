@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump @fern-api/venus-api-sdk from 0.22.34 to 4.0.0, fixing a bug where
+    Authorization headers were silently dropped on org GET endpoints.
+  type: chore

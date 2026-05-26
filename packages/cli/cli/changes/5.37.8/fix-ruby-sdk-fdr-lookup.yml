@@ -1,0 +1,6 @@
+- summary: |
+    Fix FDR generator version lookup for Ruby SDK to use the correct registry ID
+    (`ruby-sdk-v2`) instead of the stale legacy ID (`ruby-sdk`). This ensures
+    `fern generator upgrade` and IR version resolution return the actual latest
+    Ruby SDK generator version.
+  type: fix

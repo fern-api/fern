@@ -1,9 +1,9 @@
 {
   "title": "ENOSPC file watcher unhandled rejection",
-  "disposition": "keep_sentry",
-  "rationale": "ENOSPC from file watcher escapes normal error handling as unhandled rejection; reaches Sentry via onUnhandledRejectionIntegration. Needs boundary-level wrapping at the file watcher call site.",
-  "fixSummary": "—",
-  "prOrIssue": "Keep in Sentry until boundary-level fix",
-  "lastAnalyzed": "2026-05-16",
-  "problemSignature": "Unhandled rejection with ENOSPC errno from file watcher bypassed resolveErrorCode and reached Sentry as raw exception."
+  "problemSignature": "Unhandled rejection with ENOSPC errno from docs preview file watcher initialization bypassed the docs preview boundary.",
+  "disposition": "shipped",
+  "rationale": "ENOSPC is a clear errno-style user environment syscall failure. The docs preview watcher boundary now handles watcher error events and reports them as non-reportable environment errors instead of letting EventEmitter surface them as unhandled rejections.",
+  "fixSummary": "Wrapped docs preview watcher startup and runtime errors in an environment-error boundary.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15949",
+  "lastAnalyzed": "2026-05-16"
 }

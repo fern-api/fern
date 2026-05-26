@@ -5,22 +5,21 @@ RUN apk add --no-cache curl && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
-# Stage 2: Rebuild containerd v2.3.0 + runc v1.3.5 + moby (dockerd, docker-proxy)
+# Stage 2: Rebuild containerd v2.3.1 + runc v1.3.5 + moby (dockerd, docker-proxy)
 # + docker CLI from source with go1.26.3 and golang.org/x/net v0.53.0.
-# Upstream `docker:29.4.3-dind-alpine3.23` ships dockerd / docker / docker-proxy
+# Upstream `docker:29.5.2-dind-alpine3.23` ships dockerd / docker / docker-proxy
 # built with go1.26.2, which grype flags for the unpatched go/stdlib 1.26.2
 # CVEs (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
 # CVE-2026-42499). Rebuilding under GOTOOLCHAIN=go1.26.3 swaps the embedded
 # stdlib without changing functionality. The containerd/runc rebuild also
-# picks up the grpc / otel / go-jose bumps from the v2.3.0 release line.
+# picks up the grpc / otel / go-jose bumps from the v2.3.x release line.
 FROM golang:1.26.3-alpine3.23 AS overlay-binaries
-ARG CONTAINERD_VERSION=2.3.0
+ARG CONTAINERD_VERSION=2.3.1
 ARG RUNC_VERSION=1.3.5
-# moby v29.5.1 fixes CVE-2026-41567, CVE-2026-41568, CVE-2026-42306
-# (GHSA-x86f-5xw2-fm2r, GHSA-vp62-88p7-qqf5, GHSA-rg2x-37c3-w2rh)
-# and includes the earlier CVE-2026-33997 / CVE-2026-34040 fixes.
-ARG MOBY_VERSION=29.5.1
-ARG DOCKER_CLI_VERSION=29.5.1
+# moby v29.5.2 includes fixes for CVE-2026-33997, CVE-2026-34040,
+# CVE-2026-41567, CVE-2026-41568, CVE-2026-42306 and later patches.
+ARG MOBY_VERSION=29.5.2
+ARG DOCKER_CLI_VERSION=29.5.2
 ARG XNET_VERSION=0.53.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
@@ -54,9 +53,11 @@ RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontain
     cp runc /overlay/usr/local/bin/runc
 RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby/moby.git /src/moby && \
     cd /src/moby && \
-    # Force patched x/net (CVE-2026-33814), otel SDK + OTLP HTTP exporters
-    # (CVE-2026-39882, CVE-2026-39883) before vendoring dockerd/docker-proxy.
+    # Force patched x/net (CVE-2026-33814), containerd (GHSA-fqw6-gf59-qr4w),
+    # otel SDK + OTLP HTTP exporters (CVE-2026-39882, CVE-2026-39883)
+    # before vendoring dockerd/docker-proxy.
     go get golang.org/x/net@v${XNET_VERSION} \
+           github.com/containerd/containerd/v2@v${CONTAINERD_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
@@ -87,7 +88,7 @@ RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docke
       -o /overlay/usr/local/bin/docker ./cmd/docker
 
 # Stage 3: Build the seed image
-FROM docker:29.4.3-dind-alpine3.23
+FROM docker:29.5.2-dind-alpine3.23
 
 # Overlay rebuilt containerd + runc + moby (dockerd, docker-proxy) + docker CLI
 # binaries (see stage 2). These replace the upstream go1.26.2 builds.
