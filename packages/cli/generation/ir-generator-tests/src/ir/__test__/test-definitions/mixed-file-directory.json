@@ -4147,6 +4147,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_user": {
@@ -4171,6 +4172,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_user/events": {
@@ -4198,6 +4200,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_user/events/metadata": {
@@ -4225,6 +4228,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -4247,6 +4251,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

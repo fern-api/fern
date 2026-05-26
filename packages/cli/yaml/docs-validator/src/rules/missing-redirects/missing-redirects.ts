@@ -1,10 +1,10 @@
 import { getToken } from "@fern-api/auth";
-import { noop } from "@fern-api/core-utils";
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { createLogger } from "@fern-api/logger";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { createLogger, type LogLevel } from "@fern-api/logger";
+import { createMockTaskContext, type TaskContext } from "@fern-api/task-context";
 
+import { formatInitError } from "../../formatInitError.js";
 import { Rule } from "../../Rule.js";
 import { getInstanceUrls, toBaseUrl } from "../valid-markdown-link/url-utils.js";
 import { buildPageIdToSlugMap } from "./buildPageIdToSlugMap.js";
@@ -15,7 +15,24 @@ import {
     type MarkdownEntry
 } from "./missing-redirects-logic.js";
 
-const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
+/**
+ * Captures the last `error`-level message routed through the mock task context
+ * so we can surface it in the warning when `DocsDefinitionResolver.resolve()`
+ * aborts via `failAndThrow`. The mock's `failAndThrow` throws a
+ * `TaskAbortSignal` (a non-Error class) and logs the actual reason — without
+ * this capture the rule would only see `[object Object]`.
+ */
+function createResolverContext(): { context: TaskContext; getLastErrorMessage: () => string | undefined } {
+    let lastErrorMessage: string | undefined;
+    const context = createMockTaskContext({
+        logger: createLogger((level: LogLevel, ...args: string[]) => {
+            if (level === "error") {
+                lastErrorMessage = args.join(" ");
+            }
+        })
+    });
+    return { context, getLastErrorMessage: () => lastErrorMessage };
+}
 
 // The FDR SDK types config.root as {} via zod inference, but at runtime it is FernNavigation.V1.RootNode.
 // This type guard checks the "type" discriminant to safely narrow the type without a blind cast.
@@ -28,6 +45,7 @@ type FetchResult =
     | { type: "no-token" }
     | { type: "no-instance-url" }
     | { type: "fetch-failed"; reason: string }
+    | { type: "resolve-failed"; reason: string }
     | { type: "first-publish" };
 
 /**
@@ -103,28 +121,40 @@ export const MissingRedirectsRule: Rule = {
             return makeSkipVisitor({ type: "first-publish" });
         }
 
-        const docsDefinitionResolver = new DocsDefinitionResolver({
-            domain: url,
-            docsWorkspace: workspace,
-            ossWorkspaces,
-            apiWorkspaces,
-            taskContext: NOOP_CONTEXT,
-            editThisPage: undefined,
-            uploadFiles: undefined,
-            registerApi: undefined,
-            targetAudiences: undefined
-        });
+        let removedSlugs: ReturnType<typeof findRemovedSlugs>;
+        const { context: resolverContext, getLastErrorMessage } = createResolverContext();
+        try {
+            const docsDefinitionResolver = new DocsDefinitionResolver({
+                domain: url,
+                docsWorkspace: workspace,
+                ossWorkspaces,
+                apiWorkspaces,
+                taskContext: resolverContext,
+                editThisPage: undefined,
+                uploadFiles: undefined,
+                registerApi: undefined,
+                targetAudiences: undefined
+            });
 
-        const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
-        const configRoot = resolvedDocsDefinition.config.root;
-        if (!configRoot || !isV1RootNode(configRoot)) {
-            return {};
+            const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+            const configRoot = resolvedDocsDefinition.config.root;
+            if (!configRoot || !isV1RootNode(configRoot)) {
+                return {};
+            }
+
+            const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
+            const localPageIdToSlug = buildPageIdToSlugMap(root);
+            const latestEntries = keepLatestEntryPerPageId(result.entries);
+            removedSlugs = findRemovedSlugs(latestEntries, localPageIdToSlug);
+        } catch (error) {
+            // `DocsDefinitionResolver` reports fatal errors via `taskContext.failAndThrow`,
+            // which throws a `TaskAbortSignal` (a non-Error sentinel class) after logging
+            // the real reason. Prefer the captured log message over `String(error)` so the
+            // warning includes something actionable instead of `[object Object]`.
+            const reason = getLastErrorMessage() ?? formatInitError(error);
+            logger.debug(`[missing-redirects] Failed to resolve local docs navigation: ${reason}`);
+            return makeSkipVisitor({ type: "resolve-failed", reason });
         }
-
-        const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(configRoot);
-        const localPageIdToSlug = buildPageIdToSlugMap(root);
-        const latestEntries = keepLatestEntryPerPageId(result.entries);
-        const removedSlugs = findRemovedSlugs(latestEntries, localPageIdToSlug);
 
         if (removedSlugs.length === 0) {
             return {};
@@ -175,6 +205,17 @@ function makeSkipVisitor(fetchResult: Exclude<FetchResult, { type: "success" }>)
                         message:
                             `Missing redirects check skipped: could not reach FDR (${fetchResult.reason}). ` +
                             "The check requires network access to compare against previously published docs."
+                    }
+                ]
+            };
+        case "resolve-failed":
+            return {
+                file: () => [
+                    {
+                        severity: "warning",
+                        message:
+                            `Missing redirects check skipped: failed to resolve local docs navigation (${fetchResult.reason}). ` +
+                            "Run `fern check --log-level=debug` for more detail."
                     }
                 ]
             };

@@ -29,6 +29,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceEnumsToLiterals: undefined,
     objectQueryParameters: undefined,
     respectReadonlySchemas: undefined,
+    useReadVariantForResponses: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
     useBytesForBinaryResponse: undefined,
@@ -135,6 +136,7 @@ function parseOpenApiDefinitionSettingsSchema(
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         objectQueryParameters: settings?.["object-query-parameters"],
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
+        useReadVariantForResponses: settings?.["use-read-variant-for-responses"],
         inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
@@ -464,7 +466,8 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "graphql",
-                    path: spec.graphql
+                    path: spec.graphql,
+                    examples: spec.examples
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
@@ -815,7 +818,19 @@ async function convertOutputMode({
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github) {
         const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
-        const { owner, repo } = parseRepository(repoString);
+        let owner: string;
+        let repo: string;
+        let remote: string;
+        try {
+            ({ owner, repo, remote } = parseRepository(repoString));
+        } catch {
+            throw new CliError({
+                message: `Invalid GitHub repository "${repoString}" in generators.yml. Expected a repository like "owner/repo", "github.com/owner/repo", or "https://github.com/owner/repo.git".`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const host = remote !== "github.com" ? remote : undefined;
+
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
@@ -832,15 +847,21 @@ async function convertOutputMode({
         switch (mode) {
             case "commit":
             case "release":
+            case "commit-and-release": {
+                const releaseConfig = generator.github as generatorsYml.GithubCommitAndReleaseSchema;
+                const commitAndReleaseValue = {
+                    owner,
+                    repo,
+                    host,
+                    branch: releaseConfig.branch,
+                    license,
+                    publishInfo,
+                    downloadSnippets
+                };
                 return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.commitAndRelease({
-                        owner,
-                        repo,
-                        license,
-                        publishInfo,
-                        downloadSnippets
-                    })
+                    FernFiddle.GithubOutputModeV2.commitAndRelease(commitAndReleaseValue)
                 );
+            }
             case "pull-request": {
                 const pullRequestConfig = generator.github as generatorsYml.GithubPullRequestSchema;
                 const reviewers = _getReviewers({
@@ -848,29 +869,30 @@ async function convertOutputMode({
                     groupLevelReviewers: maybeGroupLevelReviewers,
                     outputModeReviewers: pullRequestConfig.reviewers
                 });
-                return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.pullRequest({
-                        owner,
-                        repo,
-                        license,
-                        publishInfo,
-                        downloadSnippets,
-                        reviewers,
-                        branch: pullRequestConfig.branch
-                    })
-                );
+                const pullRequestValue = {
+                    owner,
+                    repo,
+                    host,
+                    license,
+                    publishInfo,
+                    downloadSnippets,
+                    reviewers,
+                    branch: pullRequestConfig.branch
+                };
+                return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.pullRequest(pullRequestValue));
             }
-            case "push":
-                return FernFiddle.OutputMode.githubV2(
-                    FernFiddle.GithubOutputModeV2.push({
-                        owner,
-                        repo,
-                        branch: generator.github.mode === "push" ? generator.github.branch : undefined,
-                        license,
-                        publishInfo,
-                        downloadSnippets
-                    })
-                );
+            case "push": {
+                const pushValue = {
+                    owner,
+                    repo,
+                    host,
+                    branch: generator.github.mode === "push" ? generator.github.branch : undefined,
+                    license,
+                    publishInfo,
+                    downloadSnippets
+                };
+                return FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push(pushValue));
+            }
             default:
                 assertNever(mode);
         }

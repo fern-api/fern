@@ -1,5 +1,5 @@
-import { ClientRegistry } from "@boundaryml/baml";
-import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
+import type { BamlClientInstance, ClientRegistryInstance } from "@fern-api/cli-ai";
+import { loadBamlDependencies, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -21,7 +21,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, readdir, readFile, rm, stat } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -426,6 +426,7 @@ export class LocalTaskHandler {
                                     previousVersion,
                                     bestBump as VersionBump
                                 );
+                                const { BamlClient } = await loadBamlDependencies();
                                 const rollup = await BamlClient.withOptions({
                                     clientRegistry: await this.getClientRegistry()
                                 }).ConsolidateChangelog(
@@ -565,7 +566,8 @@ export class LocalTaskHandler {
     ): Promise<CachedAnalysis | null> {
         const doAnalysis = async (): Promise<CachedAnalysis | null> => {
             const clientRegistry = await this.getClientRegistry();
-            const bamlClient = BamlClient.withOptions({ clientRegistry });
+            const { BamlClient } = await loadBamlDependencies();
+            const bamlClient: BamlClientInstance = BamlClient.withOptions({ clientRegistry });
             const analysis = await bamlClient.AnalyzeSdkDiff(
                 cleanedDiff,
                 language,
@@ -707,7 +709,7 @@ export class LocalTaskHandler {
      * Gets the BAML client registry for AI analysis.
      * This method is adapted from sdkDiffCommand.ts but needs project configuration.
      */
-    private async getClientRegistry(): Promise<ClientRegistry> {
+    private async getClientRegistry(): Promise<ClientRegistryInstance> {
         if (this.ai == null) {
             throw new CliError({
                 message:
@@ -718,7 +720,15 @@ export class LocalTaskHandler {
         }
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);
-        return configureBamlClient(this.ai);
+        const { configureBamlClient } = await loadBamlDependencies();
+        try {
+            return configureBamlClient(this.ai);
+        } catch (error) {
+            throw new CliError({
+                message: `Invalid AI service configuration: ${extractErrorMessage(error)}`,
+                code: CliError.Code.ConfigError
+            });
+        }
     }
 
     private addFernBranding(message: string): string {
@@ -890,8 +900,15 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetJSON: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath;
     }): Promise<void> {
+        const outcome = await copySnippetJsonIfNonEmpty({
+            src: absolutePathToTmpSnippetJSON,
+            dest: absolutePathToLocalSnippetJSON
+        });
+        if (outcome === "skipped-empty") {
+            this.context.logger.debug(`Skipping empty snippet.json copy from ${absolutePathToTmpSnippetJSON}`);
+            return;
+        }
         this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`);
-        await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON);
     }
 
     /**
@@ -927,11 +944,18 @@ export class LocalTaskHandler {
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
-        const response = await loggingExeca(this.context.logger, "git", options, {
-            cwd,
-            doNotPipeOutput: true
-        });
-        return response.stdout;
+        try {
+            const response = await loggingExeca(this.context.logger, "git", options, {
+                cwd,
+                doNotPipeOutput: true
+            });
+            return response.stdout;
+        } catch (error) {
+            throw new CliError({
+                message: `Git command failed in generated output directory: ${extractErrorMessage(error)}`,
+                code: CliError.Code.UserError
+            });
+        }
     }
 
     private async runThrowawayGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
@@ -1067,4 +1091,29 @@ export class LocalTaskHandler {
         this.context.logger.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;
     }
+}
+
+/**
+ * Copies `src` to `dest` only when `src` has non-zero size; returns
+ * `"copied"` or `"skipped-empty"`. Extracted from `LocalTaskHandler` so
+ * the skip-empty behavior can be unit-tested without standing up the
+ * full handler. `runGenerator` pre-creates an empty `snippet.json` in
+ * the workspace tmp dir and bind-mounts it into the generator
+ * container; generators that don't emit per-endpoint snippets leave it
+ * empty, and we don't want that zero-byte stub leaking into the user's
+ * output dir.
+ */
+export async function copySnippetJsonIfNonEmpty({
+    src,
+    dest
+}: {
+    src: AbsoluteFilePath;
+    dest: AbsoluteFilePath;
+}): Promise<"copied" | "skipped-empty"> {
+    const tmpStat = await stat(src);
+    if (tmpStat.size === 0) {
+        return "skipped-empty";
+    }
+    await cp(src, dest);
+    return "copied";
 }

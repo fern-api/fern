@@ -2,7 +2,8 @@
   "type": "object",
   "properties": {
     "region": {
-      "type": "string"
+      "type": "string",
+      "description": "Deployment region from BaseOrg."
     },
     "tier": {
       "oneOf": [
@@ -12,7 +13,8 @@
         {
           "type": "null"
         }
-      ]
+      ],
+      "description": "Subscription tier."
     }
   },
   "required": [

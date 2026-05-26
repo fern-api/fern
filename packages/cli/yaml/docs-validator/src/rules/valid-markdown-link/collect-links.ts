@@ -86,7 +86,15 @@ export function collectLinksAndSources({
             visitedAbsoluteFilepaths.add(absoluteFilepath);
         }
 
-        const mdast = parseMarkdownToTree(content);
+        let mdast: ReturnType<typeof parseMarkdownToTree>;
+        try {
+            mdast = parseMarkdownToTree(content);
+        } catch {
+            // If the file has a parse error, skip link collection for it.
+            // The valid-markdown rule (and MdxParseValidator in cli-v2) will
+            // surface the parse failure as a proper diagnostic.
+            break;
+        }
 
         const hast = toHast(mdast, {
             allowDangerousHtml: true,

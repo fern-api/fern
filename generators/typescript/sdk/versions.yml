@@ -1,4 +1,166 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.2
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 67
+- version: 3.71.1
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.35, which disables minimatch negation
+        on `.fernignore` patterns so a stray `!pattern` no longer silently inverts
+        the match and discards generator output.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 67
+- version: 3.71.0
+  changelogEntry:
+    - summary: |
+        Apply `client-default` to root path parameters at runtime. When omitted
+        at client construction, the configured default now lands in the URL
+        instead of `undefined`.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 3.70.9
+  changelogEntry:
+    - summary: |
+        Use `hasWebSocketInTree` IR field to wire WebSocket sub-clients into the
+        root client, even when the WebSocket channel lives on a nested sub-resource
+        rather than the top-level namespace package.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 3.70.8
+  changelogEntry:
+    - summary: |
+        Update OS packages in the TypeScript SDK generator container from Debian sid to fix
+        krb5 (CVE-2026-40355, CVE-2026-40356), curl (CVE-2026-1965, CVE-2026-4873,
+        CVE-2026-5545, CVE-2026-6253, CVE-2026-6429), gnutls28 (CVE-2026-3832),
+        and expat (CVE-2026-45186).
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 67
+- version: 3.70.7
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 3.70.6
+  changelogEntry:
+    - summary: |
+        Patch TypeScript SDK generator container CVEs flagged in the AWS ECR /
+        grype scan. Rebuild the embedded `oxlint-tsgolint@0.22.1` Go binary from
+        source under `GOTOOLCHAIN=go1.26.3` so the published image no longer
+        ships the upstream go1.26.2 binary that grype flags for CVE-2026-33811,
+        CVE-2026-33814, CVE-2026-39820, CVE-2026-39836, and CVE-2026-42499.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 3.70.5
+  changelogEntry:
+    - summary: |
+        Bump the TypeScript SDK validator container's Node base image to
+        `node:24.15-trixie-slim`. Aligns the validator with the rest of the
+        Fern generator containers on a single Node major version (Node 24) on
+        top of the trixie-slim base introduced for `typescript-sdk-cli` and
+        `typescript-sdk-validator` by PR #15779.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 3.70.4
+  changelogEntry:
+    - summary: |
+        Bump the typescript-sdk-cli and typescript-sdk-validator container base
+        images from `node:*-bookworm-slim` to `node:*-trixie-slim`. Trixie ships
+        patched versions of glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+        krb5, curl, and expat that are not available on bookworm, so dist-upgrade
+        alone is a no-op for those AWS Inspector findings — the base-image bump
+        is what actually clears them.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 3.70.3
+  changelogEntry:
+    - summary: |
+        Honor the auth scheme `prefix` for `HeaderAuthScheme` when generating `HeaderAuthProvider`.
+        Previously, the generator emitted the raw header value into the configured header (e.g.
+        `Authorization`) and dropped any prefix declared in the API definition (e.g. `Bearer`).
+        The provider now emits a `HEADER_PREFIX` constant and prepends it to the header value,
+        matching the behavior of the Java, Python, Go, C#, PHP, Rust, and Ruby v2 generators.
+      type: fix
+  createdAt: "2026-05-08"
+  irVersion: 66
+- version: 3.70.2
+  changelogEntry:
+    - summary: |
+        Bump the typescript-sdk-validator container's `node:20-slim` base image
+        to `node:22.22-bookworm-slim`. Node 20 went EOL March 24, 2026, and the
+        container was carrying the Node 20 EOL alert plus CVE-2025-55130
+        (Node 20 permission-model symlink bypass).
+      type: chore
+  createdAt: "2026-05-08"
+  irVersion: 66
+- version: 3.70.1
+  changelogEntry:
+    - summary: |
+        Update `@types/node` from `^18.19.70` to `^20.0.0` in generated SDKs to
+        satisfy vitest 4.x peer dependency requirements. Previously, `npm install`
+        failed with `ERESOLVE` because vitest 4.x requires
+        `@types/node@^20.0.0 || ^22.0.0 || >=24.0.0`.
+      type: fix
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 3.70.0
+  changelogEntry:
+    - summary: |
+        Emit `.fern/verify.sh` (mode 0755) alongside `.fern/metadata.json`. The script
+        runs `<packageManager> install`, `<packageManager> build`, and
+        `<packageManager> test` against the generated SDK, with the package manager
+        matching the value pinned in the project's `package.json#packageManager`
+        field (`pnpm` or `yarn`). The script is the contract executed by the paired
+        `fernapi/fern-typescript-sdk-validator` Docker image, which is published
+        alongside `fernapi/fern-typescript-sdk` with the same version tag. Customers
+        that `.fernignore` `.fern/verify.sh` retain their version on regeneration.
+      type: internal
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 3.69.3
+  changelogEntry:
+    - summary: |
+        Apply latest Debian security updates to the TypeScript SDK CLI container
+        (`node:24.14-slim`) at build time so OS-level package CVEs are picked up.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 3.69.2
+  changelogEntry:
+    - summary: |
+        Patch 9 transitive npm dependency vulnerabilities flagged by Grype in the
+        typescript-sdk generator container by upgrading the bundled `npm` to
+        11.13.0, the bundled `pnpm` to 10.33.3, and replacing npm's vendored
+        `ip-address@10.1.0` with the patched `10.1.1` release. Addresses
+        GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74 (minimatch), GHSA-c2c7-rcm5-vvqj,
+        GHSA-3v7f-55p6-f55p (picomatch), GHSA-9ppj-qmqm-q256, GHSA-qffp-2rhf-9h96
+        (tar), GHSA-f886-m6hf-6m8v (brace-expansion), and GHSA-v2v4-37r5-5v8g
+        (ip-address).
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 3.69.1
+  changelogEntry:
+    - summary: |
+        Update oxfmt from 0.42.0 to 0.48.0, oxlint from 1.57.0 to 1.63.0, and oxlint-tsgolint from 0.17.4 to 0.22.1.
+      type: chore
+  createdAt: "2026-05-05"
+  irVersion: 66
 - version: 3.69.0
   changelogEntry:
     - summary: |

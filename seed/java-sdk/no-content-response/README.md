@@ -68,7 +68,6 @@ public class Example {
             CreateContactRequest
                 .builder()
                 .name("name")
-                .email("email")
                 .build()
         );
     }

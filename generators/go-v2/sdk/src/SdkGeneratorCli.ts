@@ -9,6 +9,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ClientGenerator } from "./client/ClientGenerator.js";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { InternalFilesGenerator } from "./internal/InternalFilesGenerator.js";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
@@ -16,6 +17,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
+import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/WireTestGenerator.js";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -81,6 +83,14 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             await this.generateReference({ context });
         } catch (error) {
             throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+        }
+
+        if (!context.config.whitelabel) {
+            try {
+                this.generateContributing({ context });
+            } catch (e) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+            }
         }
 
         await context.project.persist({ tidy: true });
@@ -184,7 +194,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 endpointSnippets.push({
                     exampleIdentifier: endpointExample.id,
                     id: {
@@ -241,6 +251,12 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
+    }
+
+    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of("."), content));
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {

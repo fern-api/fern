@@ -1,0 +1,11 @@
+- summary: |
+    Patch the C# SDK generator container to remediate the 40 vulnerabilities
+    reported by the 2026-05-06 grype scan. Bump the Node.js base image to
+    22.22.2-alpine3.22 (fixes Node binary CVEs and upgrades npm-bundled
+    cross-spawn, minimatch, glob, tar, and diff), remove the unused PowerShell
+    install bundled with `dotnet/sdk:10.0-alpine` to drop the vulnerable
+    System.Security.Cryptography.Xml 10.0.5 DLL flagged by GHSA-37gx-xxp4-5rgx
+    and GHSA-w3x6-4m5h-cxqf, run `apk upgrade` to pick up the nghttp2-libs
+    CVE-2026-27135 fix, and patch npm's bundled ip-address (10.1.1),
+    picomatch (4.0.4), and brace-expansion (2.0.3).
+  type: chore

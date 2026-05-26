@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Bump the rust toolchain stage in the rust-sdk and rust-model generator
+    containers from `rust:1.82-alpine3.20` to `rust:1.91-alpine3.23`. Alpine
+    3.20 is EOL and ships outdated openssl/musl/busybox/zlib/curl/git; 1.91
+    is the lowest rust version Docker Hub publishes for alpine3.23. The
+    Node runtime stage was already on `node:22.22-alpine3.23`, so there is
+    no longer any Alpine 3.20 layer anywhere in these images.
+  type: chore

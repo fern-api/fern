@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
-import { isRawAliasDefinition } from "@fern-api/fern-definition-schema";
+import { isRawAliasDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernDefinition } from "@fern-api/importer-commons";
 import { Schema } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
@@ -148,12 +148,45 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     if (context.ir.basePath != null) {
         context.builder.setBasePath(context.ir.basePath);
     }
+    if (context.ir.basePathParameters != null && context.ir.basePathParameters.length > 0) {
+        const params: Record<string, RawSchemas.HttpPathParameterSchema> = {};
+        for (const p of context.ir.basePathParameters) {
+            const entry: RawSchemas.HttpPathParameterSchema = {
+                type: "string"
+            };
+            if (p.description != null) {
+                entry.docs = p.description;
+            }
+            if (p.clientDefault != null) {
+                entry["client-default"] = p.clientDefault;
+            }
+            params[p.name] = entry;
+        }
+        context.builder.setRootPathParameters(params);
+    }
     if (context.ir.hasEndpointsMarkedInternal) {
         context.builder.addAudience(EXTERNAL_AUDIENCE);
     }
 
+    // Compute reachability-based variant plan before building services only when
+    // useReadVariantForResponses is enabled, so that endpoint response type references
+    // can use the correct Read variant. Otherwise, compute after buildServices (old behavior).
+    if (context.options.respectReadonlySchemas && context.options.useReadVariantForResponses) {
+        const reachability = computeSchemaReachability(context.ir);
+        const variantPlan = computeVariantPlan(context.ir, reachability);
+        context.setVariantPlan(variantPlan, reachability);
+    }
+
     const convertedServices = buildServices(context);
     const sdkGroups = convertedServices.sdkGroups;
+
+    // If useReadVariantForResponses is not enabled, compute the variant plan now (old behavior).
+    // This ensures addSchemas still has the variant plan for type declarations.
+    if (context.options.respectReadonlySchemas && !context.options.useReadVariantForResponses) {
+        const reachability = computeSchemaReachability(context.ir);
+        const variantPlan = computeVariantPlan(context.ir, reachability);
+        context.setVariantPlan(variantPlan, reachability);
+    }
 
     context.setInState(State.Webhook);
     buildWebhooks(context);
@@ -172,13 +205,6 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
         context,
         schemaIdsToExcludeFromServices: convertedServices.schemaIdsToExclude
     });
-
-    // Compute reachability-based variant plan for readonly schema handling
-    if (context.options.respectReadonlySchemas) {
-        const reachability = computeSchemaReachability(context.ir);
-        const variantPlan = computeVariantPlan(context.ir, reachability);
-        context.setVariantPlan(variantPlan, reachability);
-    }
 
     // Build type declarations
     addSchemas({ schemas: context.ir.groupedSchemas.rootSchemas, schemaIdsToExclude, namespace: undefined, context });

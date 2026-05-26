@@ -44,6 +44,6 @@ Pick the narrowest matching **`softwareDirectory`** when several could apply (e.
 2. Use a new filename that describes the change (e.g. `fix-streaming-timeout.yml`).
 3. Each file is a **YAML array** of objects. Only these fields are allowed (see **`fern-changes-yml.schema.json`**):
    - **`summary`**: string (multi-line `|` allowed).
-   - **`type`**: `fix` | `chore` | `feat` | `internal` | `break`
+   - **`type`**: `fix` | `chore` | `feat` | `internal`
 
-Those types drive semver bumps when releases run (`fix`/`chore` → patch, `feat`/`internal` → minor, `break` → major). You do not need to bump versions yourself.
+Those types drive semver bumps when releases run (`fix`/`chore` → patch, `feat`/`internal` → minor). The automated release flow does **not** produce major version bumps. To ship a major release, a human edits the relevant `versions.yml` directly so the breaking change is explicitly acknowledged in review. The validator rejects `type: break` in `unreleased/`.

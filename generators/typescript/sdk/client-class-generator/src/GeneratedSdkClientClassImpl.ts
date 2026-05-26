@@ -385,7 +385,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
             (acc: GeneratedWrappedService[], wrappedSubpackageId: FernIr.SubpackageId) => {
                 const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
-                if (subpackage.hasEndpointsInTree || (this.generateWebSocketClients && subpackage.websocket != null)) {
+                const hasWebSocketInTree =
+                    (subpackage as { hasWebSocketInTree?: boolean }).hasWebSocketInTree ?? subpackage.websocket != null;
+                if (subpackage.hasEndpointsInTree || (this.generateWebSocketClients && hasWebSocketInTree)) {
                     acc.push(
                         new GeneratedWrappedService({
                             wrappedSubpackageId,

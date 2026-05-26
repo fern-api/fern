@@ -746,7 +746,7 @@ export class IntermediateRepresentationChangeDetector {
         });
     }
 
-    private areObjectTypesCompatible({ from, to }: { from: Type.Object_; to: Type.Object_ }): boolean {
+    private areObjectTypesCompatible({ from, to }: { from: Type.Object; to: Type.Object }): boolean {
         const fromProperties = Object.fromEntries([
             ...from.properties.map((property) => [getWireValue(property.name), property] as const),
             ...(from.extendedProperties?.map((property) => [getWireValue(property.name), property] as const) ?? [])

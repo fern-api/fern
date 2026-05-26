@@ -138,8 +138,8 @@ Every CLI change (`packages/cli/` tree) **must** include an unreleased changelog
 1. Create a new YAML file under `packages/cli/cli/changes/unreleased/` with a descriptive filename (e.g., `fix-global-headers.yml`). Copy `.template.yml` from that folder as a starting point.
 2. Each file is a YAML array of objects with two fields:
    - `summary`: description of the change (multi-line `|` allowed)
-   - `type`: one of `fix`, `chore`, `feat`, `internal`, `break`
-3. These types drive semver bumps automatically: `fix`/`chore` → patch, `feat`/`internal` → minor, `break` → major.
+   - `type`: one of `fix`, `chore`, `feat`, `internal`
+3. These types drive semver bumps automatically: `fix`/`chore` → patch, `feat`/`internal` → minor. Major version bumps are not produced by the automated release flow; edit `versions.yml` directly to ship a major release.
 
 ```yaml
 # Example: packages/cli/cli/changes/unreleased/fix-global-headers.yml

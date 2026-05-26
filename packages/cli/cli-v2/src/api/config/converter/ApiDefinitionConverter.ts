@@ -458,6 +458,13 @@ export class ApiDefinitionConverter {
                 sourced: sourced.overrides
             });
         }
+        if (spec.examples != null && !isNullish(sourced.examples)) {
+            result.examples = await this.resolvePath({
+                absoluteFernYmlPath,
+                path: spec.examples,
+                sourced: sourced.examples
+            });
+        }
         if (spec.name != null) {
             result.name = spec.name;
         }

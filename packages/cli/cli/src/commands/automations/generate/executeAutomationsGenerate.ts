@@ -1,3 +1,4 @@
+import { withSuppressedLoggerAnnotations } from "@fern-api/cli-logger";
 import { TaskAbortSignal } from "@fern-api/task-context";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
@@ -5,6 +6,7 @@ import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons
 import { parseGeneratorArg } from "../../generate/filterGenerators.js";
 import { generateAPIWorkspaces } from "../../generate/generateAPIWorkspaces.js";
 import { GeneratorRunCollector } from "./GeneratorRunResult.js";
+import { renderGithubAnnotationsForResults } from "./renderGithubAnnotationsForResults.js";
 import { renderStdoutSummary, writeResults, writeResultsSync } from "./reportGenerateResults.js";
 
 export interface AutomationsGenerateOptions {
@@ -49,49 +51,69 @@ export async function executeAutomationsGenerate({
         }
         outputsFlushed = true;
         writeResultsSync({ results: collector.results(), jsonOutputPath });
+        // Best-effort annotation emit on the signal path. Node's `process.stdout.write` typically
+        // lands synchronously for small writes to a pipe, but it's not guaranteed — if the runner
+        // tears us down before the kernel buffer drains, the user just doesn't see annotations.
+        // The summary table written above is the durable artifact.
+        emitStructuredAnnotations(collector);
     };
     process.once("SIGINT", flushOnSignal);
     process.once("SIGTERM", flushOnSignal);
 
+    // Suppress the generic logger-driven GHA annotation hook for the duration of this run, so
+    // per-generator failures don't get annotated twice (once with raw text from `logger.error`,
+    // once with structured `file=` / `line=` metadata from the collector emitter below). The
+    // scoped runner restores the previous suppression state even if the body throws.
     try {
-        await cliContext.runTask(async () => {
-            await generateAPIWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: options.api,
-                    defaultToAllApiWorkspaces: true
-                }),
-                cliContext,
-                version: options.version,
-                groupNames: options.group != null ? [options.group] : undefined,
-                generatorName,
-                generatorIndex,
-                shouldLogS3Url: false,
-                keepDocker: false,
-                useLocalDocker: false,
-                preview: false,
-                mode: undefined,
-                force: true,
-                runner: undefined,
-                inspect: false,
-                lfsOverride: undefined,
-                fernignorePath: undefined,
-                skipFernignore: false,
-                dynamicIrOnly: false,
-                outputDir: undefined,
-                noReplay: false,
-                retryRateLimited: false,
-                requireEnvVars: false,
-                automationMode: true,
-                autoMerge: options.autoMerge,
-                skipIfNoDiff: true,
-                automation: { recorder: collector }
-            });
+        await withSuppressedLoggerAnnotations(async () => {
+            try {
+                await cliContext.runTask(async () => {
+                    await generateAPIWorkspaces({
+                        project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                            commandLineApiWorkspace: options.api,
+                            defaultToAllApiWorkspaces: true
+                        }),
+                        cliContext,
+                        version: options.version,
+                        groupNames: options.group != null ? [options.group] : undefined,
+                        generatorName,
+                        generatorIndex,
+                        shouldLogS3Url: false,
+                        keepDocker: false,
+                        useLocalDocker: false,
+                        preview: false,
+                        mode: undefined,
+                        force: true,
+                        runner: undefined,
+                        inspect: false,
+                        lfsOverride: undefined,
+                        fernignorePath: undefined,
+                        skipFernignore: false,
+                        dynamicIrOnly: false,
+                        outputDir: undefined,
+                        noReplay: false,
+                        verify: false,
+                        // Automation runs are unattended; transient 429s should be retried
+                        // automatically rather than failing the run and asking a human to
+                        // re-trigger with a flag. The retry policy is bounded (5 attempts,
+                        // 2s→120s exponential backoff with jitter, respecting server
+                        // retryAfter hints) so a real outage still surfaces as a failure
+                        // rather than a hang.
+                        retryRateLimited: true,
+                        requireEnvVars: false,
+                        automationMode: true,
+                        autoMerge: options.autoMerge,
+                        skipIfNoDiff: true,
+                        automation: { recorder: collector }
+                    });
+                });
+            } catch (error) {
+                if (!(error instanceof TaskAbortSignal)) {
+                    throw error;
+                }
+                taskAborted = true;
+            }
         });
-    } catch (error) {
-        if (!(error instanceof TaskAbortSignal)) {
-            throw error;
-        }
-        taskAborted = true;
     } finally {
         // `process.once` self-removes if fired; these are no-ops on the signal path.
         process.off("SIGINT", flushOnSignal);
@@ -99,10 +121,18 @@ export async function executeAutomationsGenerate({
         if (!outputsFlushed) {
             outputsFlushed = true;
             await reportFinalOutputs({ collector, jsonOutputPath, taskAborted });
+            emitStructuredAnnotations(collector);
         }
         if (collector.hasFailures()) {
             process.exitCode = 1;
         }
+    }
+}
+
+function emitStructuredAnnotations(collector: GeneratorRunCollector): void {
+    const annotations = renderGithubAnnotationsForResults(collector.results());
+    if (annotations.length > 0) {
+        process.stdout.write(annotations);
     }
 }
 

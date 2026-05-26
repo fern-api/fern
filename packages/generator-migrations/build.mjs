@@ -24,8 +24,13 @@ async function buildPackage(config = {}) {
         sourcemap: true,
         clean: true,
         // Bundle all dependencies (including workspace dependencies) into the output
-        noExternal: [/.*/],
-        inlineOnly: false
+        deps: {
+            alwaysBundle: [/.*/]
+        },
+        // Shim type-only imports that rolldown cannot resolve as value exports
+        inputOptions: {
+            shimMissingExports: true
+        }
     });
 
     const outputPackageJson = {

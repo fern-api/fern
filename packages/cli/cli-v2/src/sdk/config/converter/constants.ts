@@ -56,7 +56,8 @@ export const DOCKER_IMAGE_TO_GENERATOR_ID: Record<string, string> = {
     "fernapi/fern-go-model": "go-model",
     "fernapi/fern-csharp-sdk": "csharp-sdk",
     "fernapi/fern-csharp-model": "csharp-model",
-    "fernapi/fern-ruby-sdk": "ruby-sdk",
+    "fernapi/fern-ruby-sdk": "ruby-sdk-v2",
+    "fernapi/fern-ruby-sdk-v2": "ruby-sdk-v2",
     "fernapi/fern-php-sdk": "php-sdk",
     "fernapi/fern-php-model": "php-model",
     "fernapi/fern-rust-sdk": "rust-sdk",
@@ -64,7 +65,8 @@ export const DOCKER_IMAGE_TO_GENERATOR_ID: Record<string, string> = {
     "fernapi/fern-swift-sdk": "swift-sdk",
     "fernapi/fern-swift-model": "swift-model",
     "fernapi/fern-postman": "postman",
-    "fernapi/fern-openapi": "openapi"
+    "fernapi/fern-openapi": "openapi",
+    "fernapi/fern-cli": "cli"
 };
 
 /**

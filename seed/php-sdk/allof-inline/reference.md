@@ -57,7 +57,7 @@ $client->searchRuleTypes(
 $client->createRule(
     new RuleCreateRequest([
         'name' => 'name',
-        'executionContext' => RuleExecutionContext::Prod->value,
+        'executionContext' => RuleCreateRequestExecutionContext::Prod->value,
     ]),
 );
 ```
@@ -82,7 +82,7 @@ $client->createRule(
 <dl>
 <dd>
 
-**$executionContext:** `string` 
+**$executionContext:** `string` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>

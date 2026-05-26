@@ -5,9 +5,9 @@ package com.seed._enum.resources.queryparam.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -48,22 +48,22 @@ public final class SendEnumListAsQueryParamRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("operand")
     public List<Operand> getOperand() {
         return operand;
     }
 
-    @JsonIgnore
+    @JsonProperty("maybeOperand")
     public Optional<List<Operand>> getMaybeOperand() {
         return maybeOperand;
     }
 
-    @JsonIgnore
+    @JsonProperty("operandOrColor")
     public List<ColorOrOperand> getOperandOrColor() {
         return operandOrColor;
     }
 
-    @JsonIgnore
+    @JsonProperty("maybeOperandOrColor")
     public Optional<List<ColorOrOperand>> getMaybeOperandOrColor() {
         return maybeOperandOrColor;
     }

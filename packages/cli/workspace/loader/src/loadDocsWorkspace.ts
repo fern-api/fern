@@ -65,7 +65,18 @@ export async function loadRawDocsConfiguration({
     context: TaskContext;
 }): Promise<docsYml.RawSchemas.DocsConfiguration> {
     const contentsStr = await readFile(absolutePathOfConfiguration);
-    const contentsJson = yaml.load(contentsStr.toString());
+    let contentsJson: unknown;
+    try {
+        contentsJson = yaml.load(contentsStr.toString());
+    } catch (error) {
+        if (!(error instanceof yaml.YAMLException)) {
+            throw error;
+        }
+        throw new CliError({
+            message: `Failed to parse ${absolutePathOfConfiguration}: ${extractErrorMessage(error)}`,
+            code: CliError.Code.ParseError
+        });
+    }
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const result = validateAgainstJsonSchema(contentsJson, DocsYmlJsonSchema as any, {
         filePath: absolutePathOfConfiguration

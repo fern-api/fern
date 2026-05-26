@@ -97,7 +97,8 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
             return "csharp-model";
         // Ruby
         case "fern-ruby-sdk":
-            return "ruby-sdk";
+        case "fern-ruby-sdk-v2":
+            return "ruby-sdk-v2";
         // Misc.
         case "fern-postman":
             return "postman";
@@ -121,6 +122,10 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
             return "swift-sdk";
         case "fern-swift-model":
             return "swift-model";
+
+        // CLI
+        case "fern-cli":
+            return "cli";
 
         default: {
             context?.logger.warn(`Unrecognized generator name found, attempting to parse manually: ${generatorName}`);

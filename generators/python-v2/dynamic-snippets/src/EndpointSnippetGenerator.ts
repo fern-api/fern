@@ -129,12 +129,6 @@ export class EndpointSnippetGenerator {
             }
         }
 
-        this.context.errors.scope(Scope.PathParameters);
-        if (this.context.ir.pathParameters != null) {
-            fields.push(...this.getPathParameters({ namedParameters: this.context.ir.pathParameters, snippet }));
-        }
-        this.context.errors.unscope();
-
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
             fields.push(
@@ -633,8 +627,23 @@ export class EndpointSnippetGenerator {
         switch (named.type) {
             case "alias":
                 return this.getBodyRequestArgsForTypeReference({ typeReference: named.typeReference, value });
-            case "enum":
             case "discriminatedUnion":
+                if (this.context.customConfig.flatten_union_request_bodies === true) {
+                    const flatKwargs = this.context.dynamicTypeLiteralMapper.convertDiscriminatedUnionToFlatKwargs({
+                        discriminatedUnion: named,
+                        value
+                    });
+                    if (flatKwargs != null) {
+                        return flatKwargs;
+                    }
+                }
+                return [
+                    {
+                        name: REQUEST_BODY_ARG_NAME,
+                        value: this.context.dynamicTypeLiteralMapper.convert({ typeReference, value })
+                    }
+                ];
+            case "enum":
             case "undiscriminatedUnion":
                 return [
                     {
@@ -785,9 +794,13 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.shouldInlinePathParameters();
 
         this.context.errors.scope(Scope.PathParameters);
+        // Generated Python SDKs surface both root-level and endpoint-level path
+        // parameters as positional / keyword arguments on the endpoint method, so
+        // merge them here in IR / URL order (mirroring `getMethodArgsForBodyRequest`).
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         const pathParameterFields: python.NamedValue[] = [];
-        if (request.pathParameters != null) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+        if (pathParameters.length > 0) {
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
         }
         this.context.errors.unscope();
 

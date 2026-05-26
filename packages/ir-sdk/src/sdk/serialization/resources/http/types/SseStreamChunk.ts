@@ -11,6 +11,7 @@ export const SseStreamChunk: core.serialization.ObjectSchema<serializers.SseStre
         .objectWithoutOptionalProperties({
             payload: core.serialization.lazy(() => serializers.TypeReference),
             terminator: core.serialization.string().optional(),
+            resumable: core.serialization.boolean().optional(),
         })
         .extend(WithDocs)
         .extend(WithV2Examples);
@@ -19,5 +20,6 @@ export declare namespace SseStreamChunk {
     export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
         payload: serializers.TypeReference.Raw;
         terminator?: string | null;
+        resumable?: boolean | null;
     }
 }

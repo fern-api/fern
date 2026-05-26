@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Report absolute OpenAPI spec paths as user-facing workspace configuration errors.
+  type: fix

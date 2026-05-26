@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Literal, Optional, Union, cast
 
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
+from fern_python.codegen.project import OutputDirectory
 from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
 
 
@@ -66,7 +67,16 @@ class SDKCustomConfig(pydantic.BaseModel):
     package_name: Optional[str] = None
     package_path: Optional[str] = None
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
+    # Deprecated: prefer `output_directory`. `flat_layout` toggles only the `src/`
+    # prefix and never skips project scaffolding; `output_directory: source-root`
+    # additionally skips pyproject.toml / requirements.txt / README.md / py.typed.
     flat_layout: bool = False
+    # Controls project layout. `project-root` (default when unset) emits the
+    # standard `src/<package>/...` tree with a pyproject.toml at root.
+    # `source-root` writes source files directly without the `src/` prefix and
+    # skips project scaffolding — useful when embedding into an existing project.
+    # When unset, `flat_layout` continues to drive behavior for backwards compat.
+    output_directory: Optional[OutputDirectory] = None
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
     additional_init_exports: Optional[List[ModuleExport]] = None
     exclude_types_from_init_exports: Optional[bool] = False
@@ -82,6 +92,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
     inline_request_params: bool = True
+
+    # When True, endpoints whose referenced request body is a discriminated
+    # union are inlined as flat kwargs (variants' fields merged, discriminator
+    # collapsed to a Literal of all values, conflicting field types unioned),
+    # rather than emitting a single `request: Union[...]` parameter. Off by
+    # default — existing SDK output is unchanged unless this is opted in.
+    flatten_union_request_bodies: bool = False
 
     # Wire test configuration
     wire_tests: Optional[WireTestsConfig] = None

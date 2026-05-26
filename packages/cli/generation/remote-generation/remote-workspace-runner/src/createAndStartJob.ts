@@ -32,6 +32,7 @@ export async function createAndStartJob({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     irVersionOverride,
     absolutePathToPreview,
     fiddlePreview,
@@ -42,7 +43,9 @@ export async function createAndStartJob({
     automationMode,
     autoMerge,
     skipIfNoDiff,
-    loginCommand = "fern login"
+    verify,
+    loginCommand = "fern login",
+    specsTarGzBuffer
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -54,6 +57,7 @@ export async function createAndStartJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
@@ -67,10 +71,18 @@ export async function createAndStartJob({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     /**
+     * When true, Fiddle enables the generator-cli pipeline's VerificationStep,
+     * which runs `.fern/verify.sh` inside the language-specific validator
+     * container after the generator emits SDK files. Plumbed through from the
+     * CLI-level `--verify` flag. Default: false (verify off).
+     */
+    verify?: boolean;
+    /**
      * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    specsTarGzBuffer?: Buffer;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -101,6 +113,7 @@ export async function createAndStartJob({
                 shouldLogS3Url,
                 token,
                 whitelabel,
+                replay,
                 absolutePathToPreview,
                 fiddlePreview,
                 pushPreviewBranch,
@@ -108,6 +121,7 @@ export async function createAndStartJob({
                 automationMode,
                 autoMerge,
                 skipIfNoDiff,
+                verify,
                 loginCommand
             }),
         retryRateLimited,
@@ -119,7 +133,14 @@ export async function createAndStartJob({
                 { code: CliError.Code.NetworkError }
             )
     });
-    await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
+    await startJob({
+        intermediateRepresentation,
+        job,
+        context,
+        generatorInvocation,
+        irVersionOverride,
+        specsTarGzBuffer
+    });
     return job;
 }
 
@@ -133,11 +154,13 @@ async function createJob({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     absolutePathToPreview,
     fiddlePreview,
     pushPreviewBranch,
     fernignoreContents,
     skipIfNoDiff,
+    verify,
     loginCommand
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -149,6 +172,7 @@ async function createJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
     fiddlePreview?: boolean;
@@ -158,6 +182,7 @@ async function createJob({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    verify?: boolean;
     loginCommand: string;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
@@ -170,7 +195,9 @@ async function createJob({
         publishMetadata: generatorInvocation.publishMetadata
     };
 
-    const createResponse = await remoteGenerationService.remoteGen.createJobV3({
+    // Const-typed payload ducks the TS excess-property check; `replay` isn't on
+    // fiddle-sdk's CreateJobRequestV2 yet (FER-10343).
+    const createJobRequest = {
         apiName: workspace.definition.rootApiFile.contents.name,
         version,
         organizationName: organization,
@@ -182,6 +209,7 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
+        replay: replay != null ? { enabled: replay.enabled } : undefined,
         // fiddlePreview overrides what we send to Fiddle as `preview`.
         // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true
         //   (Fiddle uses `dryRun = generatePreview`, so preview=false → actual publish).
@@ -192,14 +220,16 @@ async function createJob({
         preview: fiddlePreview ?? absolutePathToPreview != null,
         pushPreviewBranch,
         fernignoreContents,
-        skipIfNoDiff
+        skipIfNoDiff,
+        verify
         // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
         //   automationMode,
         //   autoMerge,
         //   runId: process.env.FERN_RUN_ID
         // Fiddle will use these for separate PRs, automerge, run_id correlation,
         // and breaking change handling. (skipIfNoDiff is forwarded above — see fern-api/fiddle#708.)
-    });
+    };
+    const createResponse = await remoteGenerationService.remoteGen.createJobV3(createJobRequest);
 
     if (!createResponse.ok) {
         // Check for 429 Too Many Requests before processing the error through the visitor.
@@ -208,8 +238,20 @@ async function createJob({
         // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
         const rawError = createResponse.error as any;
         if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
-            throw new TooManyRequestsError();
+            const retryAfter = extractRetryAfterSeconds(rawError);
+            throw new TooManyRequestsError(retryAfter);
         }
+
+        // GithubAppNotInstalled is not in the SDK's error union for createJobV3, so
+        // handle it before the visitor. Fiddle returns this when the Fern GitHub App
+        // is not installed on the target repository.
+        const githubAppNotInstalledMessage = extractGithubAppNotInstalledMessage(rawError);
+        if (githubAppNotInstalledMessage != null) {
+            return context.failAndThrow(githubAppNotInstalledMessage, undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow(
@@ -342,13 +384,15 @@ async function startJob({
     generatorInvocation,
     job,
     context,
-    irVersionOverride
+    irVersionOverride,
+    specsTarGzBuffer
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    specsTarGzBuffer: Buffer | undefined;
 }): Promise<void> {
     const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
         version == null ? undefined : "v" + version.toString()
@@ -387,7 +431,12 @@ async function startJob({
         `Compressed IR from ${irBytes.byteLength} bytes to ${compressed.length} bytes ` +
             `(${((1 - compressed.length / irBytes.byteLength) * 100).toFixed(1)}% reduction)`
     );
-    formData.append("file", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
+    formData.append("ir", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
+
+    if (specsTarGzBuffer != null) {
+        formData.append("specs", specsTarGzBuffer, { filename: "specs.tar.gz", contentType: "application/gzip" });
+        context.logger.debug(`Appended specs tar.gz (${specsTarGzBuffer.length} bytes)`);
+    }
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
@@ -432,6 +481,40 @@ export function extractErrorMessage(error: any): string | undefined {
         return body.message;
     }
     return undefined;
+}
+
+/**
+ * Checks whether a raw SDK error is a GithubAppNotInstalled response from Fiddle.
+ * The error body shape is: { error: "GithubAppNotInstalled", content: { message, repositoryName } }.
+ * Returns a user-friendly message if matched, undefined otherwise.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+function extractGithubAppNotInstalledMessage(error: any): string | undefined {
+    // biome-ignore lint/suspicious/noExplicitAny: intentional dynamic navigation
+    const body: any = error?.content?.reason === "status-code" ? error.content.body : undefined;
+    if (body?.error !== "GithubAppNotInstalled") {
+        return undefined;
+    }
+    if (typeof body?.content?.message === "string") {
+        return body.content.message;
+    }
+    const repo =
+        typeof body?.content?.repositoryName === "string" ? body.content.repositoryName : "the target repository";
+    return (
+        `The Fern GitHub App is not installed on ${repo}. ` +
+        "Please install it (https://github.com/apps/fern-api) and try again."
+    );
+}
+
+/**
+ * Extracts the retryAfter value (in seconds) from a 429 response body.
+ * Fiddle returns { body: { content: { retryAfter: <seconds> } } } inside
+ * the SDK's status-code error wrapper.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+function extractRetryAfterSeconds(rawError: any): number | undefined {
+    const retryAfter = rawError?.content?.body?.content?.retryAfter;
+    return typeof retryAfter === "number" && retryAfter > 0 ? retryAfter : undefined;
 }
 
 // Fiddle's ErrorBody serializes as { error: "<ErrorType>", content: <TypedBody> }.

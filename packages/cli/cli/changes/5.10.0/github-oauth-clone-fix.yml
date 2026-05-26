@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix self-hosted GitHub clone failing with "Invalid username or token" when
+    the user's `${GITHUB_TOKEN}` is an OAuth user token (gho_*) or personal
+    access token (ghp_*, github_pat_*). The clone URL hardcoded the
+    `x-access-token:` username, which is the format reserved for GitHub App
+    installation tokens (ghs_*). Now selects the format based on the token
+    prefix, so both auth modes work.
+  type: fix

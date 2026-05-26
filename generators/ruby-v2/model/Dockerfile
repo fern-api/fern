@@ -1,6 +1,7 @@
-FROM ruby:3.3-alpine3.20
+FROM ruby:3.3-alpine3.23
 
-RUN apk --no-cache add \
+RUN apk --no-cache upgrade && \
+    apk --no-cache add \
     bash \
     build-base \
     curl \

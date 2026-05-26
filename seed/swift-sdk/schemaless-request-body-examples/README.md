@@ -55,7 +55,17 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.createPlant(request: .object([
-        "key": .string("value")
+        "name": .string("Venus Flytrap"), 
+        "species": .string("Dionaea muscipula"), 
+        "care": .object([
+            "light": .string("full sun"), 
+            "water": .string("distilled only"), 
+            "humidity": .string("high")
+        ]), 
+        "tags": .array([
+            .string("carnivorous"),
+            .string("tropical")
+        ])
     ]))
 }
 

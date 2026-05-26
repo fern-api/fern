@@ -89,9 +89,6 @@ class RawSeedApi:
                 "normalField": normal_field,
                 "nullableField": nullable_field,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -189,9 +186,6 @@ class AsyncRawSeedApi:
             json={
                 "normalField": normal_field,
                 "nullableField": nullable_field,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

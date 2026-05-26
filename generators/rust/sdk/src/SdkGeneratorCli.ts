@@ -3,6 +3,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AbstractRustGeneratorCli,
+    AsIsFiles,
     formatRustCode,
     formatRustSnippet,
     RustDependencyType,
@@ -29,7 +30,7 @@ import { WebSocketChannelGenerator } from "./generators/WebSocketChannelGenerato
 import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils/index.js";
+import { convertDynamicEndpointSnippetRequest, convertIr, selectExamplesForSnippets } from "./utils/index.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 
 const execAsync = promisify(exec);
@@ -211,6 +212,14 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating reference.md documentation...");
         // Generate reference.md if configured
         await this.generateReference(context);
+
+        if (!context.config.whitelabel) {
+            try {
+                await this.generateContributing(context);
+            } catch (error) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+            }
+        }
 
         // Generate wire tests if enabled
         await this.generateWireTestFiles(context);
@@ -837,6 +846,17 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
     }
 
+    private async generateContributing(context: SdkGeneratorContext): Promise<void> {
+        const contributingFile = AsIsFiles.ContributingMd;
+        const content = await contributingFile.loadContents();
+        const file = new RustFile({
+            filename: contributingFile.filename,
+            directory: contributingFile.directory,
+            fileContents: content
+        });
+        context.project.addSourceFiles(file);
+    }
+
     private generateSnippets(context: SdkGeneratorContext) {
         const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
         const dynamicIr = context.ir.dynamic;
@@ -850,7 +870,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 const generatedSnippet = dynamicSnippetsGenerator.generateSync(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );
@@ -945,9 +965,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         let firstExample: FernIr.dynamic.EndpointSnippetRequest | undefined;
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            if (endpoint.examples && endpoint.examples.length > 0) {
+            const selected = selectExamplesForSnippets(endpoint.examples);
+            if (selected.length > 0) {
                 firstEndpointId = endpointId;
-                firstExample = endpoint.examples[0];
+                firstExample = selected[0];
                 break;
             }
         }

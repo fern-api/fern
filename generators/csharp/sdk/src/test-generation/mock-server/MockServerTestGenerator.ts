@@ -245,14 +245,16 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
     private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
         switch (exampleTypeReference.shape.type) {
-            case "container":
-                if (exampleTypeReference.shape.container.type !== "optional") {
-                    return undefined;
+            case "container": {
+                const container = exampleTypeReference.shape.container;
+                if (container.type === "optional") {
+                    return container.optional == null ? undefined : this.getDateTime(container.optional);
                 }
-                if (exampleTypeReference.shape.container.optional == null) {
-                    return undefined;
+                if (container.type === "nullable") {
+                    return container.nullable == null ? undefined : this.getDateTime(container.nullable);
                 }
-                return this.getDateTime(exampleTypeReference.shape.container.optional);
+                return undefined;
+            }
             case "named":
                 if (exampleTypeReference.shape.shape.type !== "alias") {
                     return undefined;

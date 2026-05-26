@@ -31,8 +31,24 @@ export function buildEndpointExample({
         example.docs = endpointExample.description;
     }
 
+    const pathParametersForExample: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
+    // Seed with values for any root-level path parameters declared via the
+    // structured `x-fern-base-path` extension. Use `clientDefault` when set;
+    // otherwise fall back to the parameter name so the emitted example is a
+    // valid string segment that satisfies the validator's required-param check.
+    if (context.ir.basePathParameters != null) {
+        for (const param of context.ir.basePathParameters) {
+            const value = param.clientDefault ?? param.name;
+            if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+                pathParametersForExample[param.name] = value;
+            }
+        }
+    }
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
-        example["path-parameters"] = convertPathParameterExample(endpointExample.pathParameters);
+        Object.assign(pathParametersForExample, convertPathParameterExample(endpointExample.pathParameters));
+    }
+    if (Object.keys(pathParametersForExample).length > 0) {
+        example["path-parameters"] = pathParametersForExample;
     }
 
     if (endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0) {

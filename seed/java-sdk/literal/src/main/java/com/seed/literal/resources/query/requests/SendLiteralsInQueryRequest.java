@@ -5,9 +5,9 @@ package com.seed.literal.resources.query.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -56,47 +56,47 @@ public final class SendLiteralsInQueryRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("prompt")
     public String getPrompt() {
         return "You are a helpful assistant";
     }
 
-    @JsonIgnore
+    @JsonProperty("optional_prompt")
     public Optional<String> getOptionalPrompt() {
         return optionalPrompt;
     }
 
-    @JsonIgnore
+    @JsonProperty("alias_prompt")
     public String getAliasPrompt() {
         return aliasPrompt;
     }
 
-    @JsonIgnore
+    @JsonProperty("alias_optional_prompt")
     public Optional<String> getAliasOptionalPrompt() {
         return aliasOptionalPrompt;
     }
 
-    @JsonIgnore
+    @JsonProperty("query")
     public String getQuery() {
         return query;
     }
 
-    @JsonIgnore
+    @JsonProperty("stream")
     public Boolean getStream() {
         return false;
     }
 
-    @JsonIgnore
+    @JsonProperty("optional_stream")
     public Optional<Boolean> getOptionalStream() {
         return optionalStream;
     }
 
-    @JsonIgnore
+    @JsonProperty("alias_stream")
     public Boolean getAliasStream() {
         return aliasStream;
     }
 
-    @JsonIgnore
+    @JsonProperty("alias_optional_stream")
     public Optional<Boolean> getAliasOptionalStream() {
         return aliasOptionalStream;
     }

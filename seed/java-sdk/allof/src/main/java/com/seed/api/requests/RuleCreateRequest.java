@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
-import com.seed.api.types.RuleExecutionContext;
+import com.seed.api.types.RuleCreateRequestExecutionContext;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,12 +22,12 @@ import org.jetbrains.annotations.NotNull;
 public final class RuleCreateRequest {
     private final String name;
 
-    private final RuleExecutionContext executionContext;
+    private final RuleCreateRequestExecutionContext executionContext;
 
     private final Map<String, Object> additionalProperties;
 
     private RuleCreateRequest(
-            String name, RuleExecutionContext executionContext, Map<String, Object> additionalProperties) {
+            String name, RuleCreateRequestExecutionContext executionContext, Map<String, Object> additionalProperties) {
         this.name = name;
         this.executionContext = executionContext;
         this.additionalProperties = additionalProperties;
@@ -38,8 +38,11 @@ public final class RuleCreateRequest {
         return name;
     }
 
+    /**
+     * @return Execution context for the rule, excluding the prod environment.
+     */
     @JsonProperty("executionContext")
-    public RuleExecutionContext getExecutionContext() {
+    public RuleCreateRequestExecutionContext getExecutionContext() {
         return executionContext;
     }
 
@@ -79,7 +82,10 @@ public final class RuleCreateRequest {
     }
 
     public interface ExecutionContextStage {
-        _FinalStage executionContext(@NotNull RuleExecutionContext executionContext);
+        /**
+         * <p>Execution context for the rule, excluding the prod environment.</p>
+         */
+        _FinalStage executionContext(@NotNull RuleCreateRequestExecutionContext executionContext);
     }
 
     public interface _FinalStage {
@@ -94,7 +100,7 @@ public final class RuleCreateRequest {
     public static final class Builder implements NameStage, ExecutionContextStage, _FinalStage {
         private String name;
 
-        private RuleExecutionContext executionContext;
+        private RuleCreateRequestExecutionContext executionContext;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -115,9 +121,14 @@ public final class RuleCreateRequest {
             return this;
         }
 
+        /**
+         * <p>Execution context for the rule, excluding the prod environment.</p>
+         * <p>Execution context for the rule, excluding the prod environment.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("executionContext")
-        public _FinalStage executionContext(@NotNull RuleExecutionContext executionContext) {
+        public _FinalStage executionContext(@NotNull RuleCreateRequestExecutionContext executionContext) {
             this.executionContext = Objects.requireNonNull(executionContext, "executionContext must not be null");
             return this;
         }

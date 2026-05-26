@@ -1,0 +1,5 @@
+- summary: |
+    Add `fern sdk list` command to list configured and available SDK generators.
+    Displays configured SDKs from local fern.yml and available generators from the
+    Fern registry. Supports `--language`, `--type`, and `--json` flags.
+  type: feat

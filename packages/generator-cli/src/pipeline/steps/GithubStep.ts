@@ -72,6 +72,8 @@ export class GithubStep extends BaseStep {
                     );
                 case "push":
                     return await this.executePushMode(repository, resolvedPrFields);
+                case "commit-and-release":
+                    return await this.executeCommitAndReleaseMode(repository, resolvedPrFields);
                 default: {
                     const exhaustive: never = mode;
                     throw new Error(`Unexpected GitHub mode: ${String(exhaustive)}`);
@@ -102,8 +104,8 @@ export class GithubStep extends BaseStep {
         resolved: ResolvedPrFields
     ): Promise<GithubStepResult> {
         const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
-        const octokit = new Octokit({ auth: this.config.token });
-        const { owner, repo } = parseRepository(this.config.uri);
+        const octokit = this.createOctokit();
+        const { owner, repo, remote } = parseRepository(this.config.uri);
 
         let prBranch: string;
         let isUpdatingExistingPR = false;
@@ -197,10 +199,11 @@ export class GithubStep extends BaseStep {
                 repo,
                 branch: prBranch,
                 force: isUpdatingExistingPR,
+                author: this.config.author,
                 logger: this.logger
             });
             const pushedBranch = await repository.getCurrentBranch();
-            result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
 
             if (generationBaseSha != null) {
@@ -219,7 +222,7 @@ export class GithubStep extends BaseStep {
 
         const headSha = await repository.getHeadSha();
         const changelogUrl = resolved.changelogEntry
-            ? `https://github.com/${this.config.uri}/blob/${headSha}/changelog.md`
+            ? `https://${remote}/${owner}/${repo}/blob/${headSha}/changelog.md`
             : undefined;
         const { prTitle, prBody } = parseCommitMessageForPR(
             resolved.commitMessage,
@@ -332,8 +335,8 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            const octokit = new Octokit({ auth: this.config.token });
-            const { owner, repo } = parseRepository(this.config.uri);
+            const octokit = this.createOctokit();
+            const { owner, repo, remote } = parseRepository(this.config.uri);
             await pushSignedCommit({
                 repository,
                 octokit,
@@ -342,15 +345,105 @@ export class GithubStep extends BaseStep {
                 branch: baseBranch,
                 force: false,
                 rebaseOnConflict: true,
+                author: this.config.author,
                 logger: this.logger
             });
 
             const pushedBranch = await repository.getCurrentBranch();
-            result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
             this.logger.info(`Pushed branch: ${result.branchUrl}`);
         }
 
         return result;
+    }
+
+    private async executeCommitAndReleaseMode(
+        repository: ClonedRepository,
+        resolved: ResolvedPrFields
+    ): Promise<GithubStepResult> {
+        const baseBranch = this.config.branch ?? (await repository.getDefaultBranch());
+
+        if (this.config.branch != null) {
+            this.logger.debug(`Checking out branch ${this.config.branch}`);
+            await repository.checkout(this.config.branch);
+        }
+
+        await this.ensureFernignore();
+
+        this.logger.debug("Committing changes...");
+        await repository.commitAllChanges(resolved.commitMessage);
+        this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+
+        // When skipIfNoDiff is enabled, detect no-diff before pushing
+        if (shouldCheckNoDiff(this.config)) {
+            const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
+            if (noDiff) {
+                this.logger.info("No changes detected after generation — skipping commit-and-release");
+                return { executed: true, success: true, skippedNoDiff: true };
+            }
+        }
+
+        const result: GithubStepResult = {
+            executed: true,
+            success: true
+        };
+
+        if (!this.config.previewMode) {
+            const octokit = this.createOctokit();
+            const { owner, repo, remote } = parseRepository(this.config.uri);
+            await pushSignedCommit({
+                repository,
+                octokit,
+                owner,
+                repo,
+                branch: baseBranch,
+                force: false,
+                rebaseOnConflict: true,
+                author: this.config.author,
+                logger: this.logger
+            });
+
+            const pushedBranch = await repository.getCurrentBranch();
+            result.branchUrl = `https://${remote}/${owner}/${repo}/tree/${pushedBranch}`;
+            this.logger.info(`Pushed branch: ${result.branchUrl}`);
+
+            // Create a GitHub release if a new version is available
+            if (resolved.newVersion == null) {
+                this.logger.warn(
+                    "No new version available — skipping release tag creation. " +
+                        "Pass --version <semver> or --version AUTO to fern generate to enable release tagging."
+                );
+            } else {
+                try {
+                    const tagName = resolved.newVersion;
+                    const headSha = await repository.getHeadSha();
+                    await octokit.repos.createRelease({
+                        owner,
+                        repo,
+                        tag_name: tagName,
+                        target_commitish: headSha,
+                        name: tagName,
+                        body: resolved.changelogEntry ?? resolved.commitMessage,
+                        draft: false,
+                        prerelease: false
+                    });
+                    this.logger.info(`Created GitHub release ${tagName}`);
+                    result.releaseUrl = `https://${remote}/${owner}/${repo}/releases/tag/${tagName}`;
+                } catch (error) {
+                    this.logger.warn(`Could not create GitHub release: ${extractErrorMessage(error)}`);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private createOctokit(): Octokit {
+        const opts: ConstructorParameters<typeof Octokit>[0] = { auth: this.config.token };
+        if (this.config.apiBaseUrl != null) {
+            opts.baseUrl = this.config.apiBaseUrl;
+        }
+        return new Octokit(opts);
     }
 
     private async ensureFernignore(): Promise<void> {
@@ -503,12 +596,17 @@ export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
 }
 
 /**
- * The fern-generation-base tag only has a consumer (next run's syncFromDivergentMerge)
- * when the current replay produced conflicts that a human will resolve during merge.
- * On clean replays, pushing the tag creates a stale pointer that poisons subsequent runs
- * if the PR is closed without merging — the forward-projected tree ends up diffed against
- * the still-unmerged main HEAD, producing a "customer patch" that encodes a version
- * downgrade as customization.
+ * Push the fern-generation-base tag only when the current replay produced conflicts
+ * that a human will resolve during merge. On clean replays, pushing the tag creates a
+ * stale pointer: if the PR is closed without merging, the forward-projected tree ends
+ * up diffed against the still-unmerged main HEAD, producing a "customer patch" that
+ * encodes a version downgrade as a customization.
+ *
+ * The tag is written for older deployed generator-cli versions whose bundled
+ * divergent-merge gauntlet still reads it. The current generator-cli no longer needs
+ * the tag — replay's derived scan boundary recovers from squash-merges via the
+ * first-parent walk in `findPreviousGenerationFromHistory`. Once the generator-cli
+ * catalog rolls forward across all generators, the write side can also be removed.
  * Exported for testing.
  */
 export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | undefined): boolean {

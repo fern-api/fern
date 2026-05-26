@@ -59,7 +59,7 @@ client.SearchRuleTypes(
 ```go
 request := &fern.RuleCreateRequest{
         Name: "name",
-        ExecutionContext: fern.RuleExecutionContextProd,
+        ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
     }
 client.CreateRule(
         context.TODO(),
@@ -88,7 +88,7 @@ client.CreateRule(
 <dl>
 <dd>
 
-**executionContext:** `*fern.RuleExecutionContext` 
+**executionContext:** `*fern.RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>

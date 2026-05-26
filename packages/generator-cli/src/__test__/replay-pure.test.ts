@@ -100,14 +100,16 @@ describe("logReplaySummary", () => {
         expect(logger.error).not.toHaveBeenCalled();
     });
 
-    it("logs debug line for first-generation flow", () => {
+    it("logs structured [replay] info line for first-generation flow", () => {
         const logger = makeLogger();
         logReplaySummary(
             { executed: true, success: true, flow: "first-generation", patchesDetected: 0, patchesApplied: 0 },
             logger
         );
-        expect(logger.debug).toHaveBeenCalledTimes(1);
-        expect(logger.debug.mock.calls[0]?.[0]).toContain("flow=first-generation");
+        // The first INFO is the operator-friendly structured line (`[replay] flow=...`).
+        expect(logger.info).toHaveBeenCalledTimes(1);
+        expect(logger.info.mock.calls[0]?.[0]).toContain("[replay] flow=first-generation");
+        expect(logger.debug).not.toHaveBeenCalled();
     });
 
     it("logs info when preserved patches > 0", () => {
@@ -122,8 +124,10 @@ describe("logReplaySummary", () => {
             },
             logger
         );
-        expect(logger.info).toHaveBeenCalledTimes(1);
-        expect(logger.info.mock.calls[0]?.[0]).toContain("customizations preserved");
+        // Two INFO calls: the structured `[replay]` line + the customer-friendly summary.
+        expect(logger.info).toHaveBeenCalledTimes(2);
+        expect(logger.info.mock.calls[0]?.[0]).toContain("[replay] flow=normal-regeneration");
+        expect(logger.info.mock.calls[1]?.[0]).toContain("customizations preserved");
     });
 
     it("logs info when only absorbed patches (all applied became part of generated code)", () => {
@@ -139,8 +143,10 @@ describe("logReplaySummary", () => {
             logger
         );
         // preserved = applied - absorbed = 0, absorbed > 0 => "now part of generated code"
-        expect(logger.info).toHaveBeenCalledTimes(1);
-        expect(logger.info.mock.calls[0]?.[0]).toContain("now part of generated code");
+        // Two INFO calls: the structured `[replay]` line + the customer-friendly summary.
+        expect(logger.info).toHaveBeenCalledTimes(2);
+        expect(logger.info.mock.calls[0]?.[0]).toContain("[replay] flow=normal-regeneration");
+        expect(logger.info.mock.calls[1]?.[0]).toContain("now part of generated code");
     });
 
     it("logs warn for unresolved patches with file details", () => {

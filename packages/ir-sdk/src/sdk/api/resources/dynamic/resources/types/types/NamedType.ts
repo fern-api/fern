@@ -8,7 +8,7 @@ import * as FernIr from "../../../../../index.js";
 export type NamedType =
     | FernIr.dynamic.NamedType.Alias
     | FernIr.dynamic.NamedType.Enum
-    | FernIr.dynamic.NamedType.Object_
+    | FernIr.dynamic.NamedType.Object
     | FernIr.dynamic.NamedType.DiscriminatedUnion
     | FernIr.dynamic.NamedType.UndiscriminatedUnion;
 
@@ -21,7 +21,7 @@ export namespace NamedType {
         type: "enum";
     }
 
-    export interface Object_ extends FernIr.dynamic.ObjectType, _Utils {
+    export interface Object extends FernIr.dynamic.ObjectType, _Utils {
         type: "object";
     }
 
@@ -74,12 +74,12 @@ export const NamedType = {
         };
     },
 
-    object: (value: FernIr.dynamic.ObjectType): FernIr.dynamic.NamedType.Object_ => {
+    object: (value: FernIr.dynamic.ObjectType): FernIr.dynamic.NamedType.Object => {
         return {
             ...value,
             type: "object",
             _visit: function <_Result>(
-                this: FernIr.dynamic.NamedType.Object_,
+                this: FernIr.dynamic.NamedType.Object,
                 visitor: FernIr.dynamic.NamedType._Visitor<_Result>,
             ) {
                 return FernIr.dynamic.NamedType._visit(this, visitor);

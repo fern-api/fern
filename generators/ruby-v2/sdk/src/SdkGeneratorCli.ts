@@ -7,6 +7,7 @@ import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
 import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator.js";
@@ -17,6 +18,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
+import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator.js";
 
@@ -61,6 +63,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             context.project.addRawFiles(file);
         }
 
+        const rootClient = new RootClientGenerator(context);
+        context.project.addRawFiles(rootClient.generate());
+
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
@@ -79,10 +84,6 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 this.generateRequests(context, service, subpackage.service);
             }
         });
-
-        // Generate root client (always, regardless of subpackages)
-        const rootClient = new RootClientGenerator(context);
-        context.project.addRawFiles(rootClient.generate());
 
         // Generate requests for root service
         if (context.ir.rootPackage.service != null) {
@@ -132,6 +133,14 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             await this.generateReference({ context });
         } catch (error) {
             throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+        }
+
+        if (!context.config.whitelabel) {
+            try {
+                this.generateContributing({ context });
+            } catch (e) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+            }
         }
 
         await this.generateWireTestFiles(context);
@@ -209,7 +218,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 endpointSnippets.push({
                     exampleIdentifier: endpointExample.id,
                     id: {
@@ -236,6 +245,12 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
+    }
+
+    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of("."), content));
     }
 
     private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {

@@ -243,7 +243,6 @@
               "typeId": "type_petsV1:Pet",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -410,7 +409,6 @@
               "typeId": "type_petsV2:Pet",
               "type": "named"
             },
-            "contentType": "application/json",
             "type": "reference"
           },
           "sdkRequest": {
@@ -1102,7 +1100,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     },
     "subpackage_petsV2": {
       "fernFilepath": {
@@ -1120,7 +1119,8 @@
       ],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -1134,7 +1134,8 @@
       "subpackage_petsV1",
       "subpackage_petsV2"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

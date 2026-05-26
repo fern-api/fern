@@ -8,12 +8,14 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { writeFile } from "fs/promises";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
 import { buildReference } from "./reference/buildReference.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
+import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -113,6 +115,14 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         const wireTestGenerator = new SdkWireTestGenerator(context);
         await wireTestGenerator.generate();
 
+        if (!context.config.whitelabel) {
+            try {
+                this.generateContributing({ context });
+            } catch (e) {
+                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
+            }
+        }
+
         await context.project.persist();
     }
 
@@ -131,7 +141,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
 
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 const generatedSnippet = await dynamicSnippetsGenerator.generate(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );
@@ -208,6 +218,12 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             snippetFilepath,
             JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
         );
+    }
+
+    private generateContributing({ context }: { context: SdkGeneratorContext }): void {
+        const contributingGenerator = new ContributingGenerator();
+        const content = contributingGenerator.generate();
+        context.project.addRawFiles(new File("CONTRIBUTING.md", RelativeFilePath.of("."), content));
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {

@@ -251,7 +251,9 @@ export class WireTestGenerator {
                     lines.push(`    };`);
                     // Override base_url and clear environment so requests go to WireMock
                     lines.push(`    config.base_url = wiremock_base_url.to_string();`);
-                    lines.push(`    config.environment = None;`);
+                    if (this.context.hasMultipleBaseUrls()) {
+                        lines.push(`    config.environment = None;`);
+                    }
                     inConfigStruct = false;
                 } else {
                     lines.push(`    ${trimmedLine}`);

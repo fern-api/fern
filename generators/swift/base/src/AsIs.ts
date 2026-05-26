@@ -91,6 +91,44 @@ function createSourceAsIsFiles(): SourceAsIsFileDefinitionsById {
     return result;
 }
 
+/**
+ * A resolved definition of a static root-level file (e.g. CONTRIBUTING.md).
+ */
+export interface RootAsIsFileDefinition {
+    filename: string;
+    loadContents: () => Promise<string>;
+}
+
+const RootAsIsFileSpecs = {
+    Contributing: {
+        filename: "CONTRIBUTING.md"
+    }
+} as const;
+
+export type RootAsIsFileId = keyof typeof RootAsIsFileSpecs;
+
+export type RootAsIsFileDefinitionsById = {
+    [K in RootAsIsFileId]: RootAsIsFileDefinition;
+};
+
+export const RootAsIsFiles: RootAsIsFileDefinitionsById = createRootAsIsFiles();
+
+function createRootAsIsFiles(): RootAsIsFileDefinitionsById {
+    const result = {} as RootAsIsFileDefinitionsById;
+
+    for (const [key, spec] of entries(RootAsIsFileSpecs)) {
+        result[key] = {
+            filename: spec.filename,
+            loadContents: () => {
+                const absolutePath = join(__dirname, "asIs", "Root", spec.filename);
+                return readFile(absolutePath, "utf-8");
+            }
+        };
+    }
+
+    return result;
+}
+
 const TestAsIsFileSpecs: Record<string, swift.AsIsFileSpec<string>> = {};
 
 export type TestAsIsFileId = keyof typeof TestAsIsFileSpecs;

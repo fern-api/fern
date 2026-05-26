@@ -1,4 +1,4 @@
-import type { configureBamlClient as ConfigureBamlClient, VersionBump as VersionBumpEnum } from "@fern-api/cli-ai";
+import type { VersionBump as VersionBumpEnum } from "@fern-api/cli-ai";
 import { execFileSync } from "child_process";
 import { existsSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
@@ -146,7 +146,12 @@ export class AutoVersionStep extends BaseStep {
 
         const rawDiff = this.gitDiff(previousGenerationSha, prepared.currentGenerationSha);
 
-        const previousVersion = await this.resolvePreviousVersion({ service, rawDiff, mappedMagicVersion });
+        const previousVersion = await this.resolvePreviousVersion({
+            service,
+            rawDiff,
+            mappedMagicVersion,
+            baseVersion: this.config.baseVersion
+        });
         if (previousVersion == null) {
             return await this.handleFirstGeneration({ service, language, mappedMagicVersion });
         }
@@ -336,8 +341,18 @@ export class AutoVersionStep extends BaseStep {
         service: AutoVersioningService;
         rawDiff: string;
         mappedMagicVersion: string;
+        baseVersion?: string;
     }): Promise<string | null> {
-        const { service, rawDiff, mappedMagicVersion } = params;
+        const { service, rawDiff, mappedMagicVersion, baseVersion } = params;
+
+        // Prefer the pipeline-supplied baseVersion (main tip's metadata.json) over
+        // diff extraction, which is blind to customer manual bumps. Semver-validate
+        // before use — it flows into bash + sed in replaceMagicVersion.
+        if (baseVersion != null && isValidSemver(baseVersion)) {
+            this.logger.debug(`AutoVersionStep: previous version from pipeline baseVersion: ${baseVersion}`);
+            return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);
+        }
+
         try {
             const extracted = service.extractPreviousVersion(rawDiff, mappedMagicVersion);
             if (extracted != null) {
@@ -560,17 +575,18 @@ export class AutoVersionStep extends BaseStep {
      * commands never reach this method, so dynamic import keeps them unaffected.
      */
     private async loadBaml(): Promise<{
-        client: ReturnType<typeof import("@fern-api/cli-ai").b.withOptions>;
+        client: import("@fern-api/cli-ai").BamlClientInstance;
         VersionBump: typeof import("@fern-api/cli-ai").VersionBump;
     }> {
         if (this.config.ai == null) {
             throw new Error("AutoVersionStep: ai config is missing. Set autoVersion.ai to a BAML provider+model pair.");
         }
-        const cliAi = await import("@fern-api/cli-ai");
-        const registry = cliAi.configureBamlClient(this.config.ai as Parameters<typeof ConfigureBamlClient>[0]);
+        const { loadBamlDependencies, VersionBump } = await import("@fern-api/cli-ai");
+        const { BamlClient, configureBamlClient } = await loadBamlDependencies();
+        const registry = configureBamlClient(this.config.ai as Parameters<typeof configureBamlClient>[0]);
         return {
-            client: cliAi.b.withOptions({ clientRegistry: registry }),
-            VersionBump: cliAi.VersionBump
+            client: BamlClient.withOptions({ clientRegistry: registry }),
+            VersionBump
         };
     }
 

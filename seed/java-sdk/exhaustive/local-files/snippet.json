@@ -300,19 +300,6 @@
             }
         },
         {
-            "example_identifier": "b9ba72a7",
-            "id": {
-                "method": "POST",
-                "path": "/object/get-and-return-with-unknown-field",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "75f55e6b",
             "id": {
                 "method": "POST",
@@ -352,19 +339,6 @@
             }
         },
         {
-            "example_identifier": "4ccb74bb",
-            "id": {
-                "method": "POST",
-                "path": "/object/get-and-return-with-mixed-required-and-optional-fields",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(\n            ObjectWithMixedRequiredAndOptionalFields\n                .builder()\n                .requiredString(\"requiredString\")\n                .requiredInteger(1)\n                .requiredLong(1000000L)\n                .optionalString(\"optionalString\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(\n            ObjectWithMixedRequiredAndOptionalFields\n                .builder()\n                .requiredString(\"requiredString\")\n                .requiredInteger(1)\n                .requiredLong(1000000L)\n                .optionalString(\"optionalString\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "NestedObjectMissing",
             "id": {
                 "method": "POST",
@@ -378,19 +352,6 @@
             }
         },
         {
-            "example_identifier": "8b319adf",
-            "id": {
-                "method": "POST",
-                "path": "/object/get-and-return-with-required-nested-object",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;\nimport com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;\nimport com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;\nimport java.math.BigInteger;\nimport java.time.OffsetDateTime;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.Optional;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithRequiredNestedObject(\n            ObjectWithRequiredNestedObject\n                .builder()\n                .requiredString(\"requiredString\")\n                .requiredObject(\n                    NestedObjectWithRequiredField\n                        .builder()\n                        .string(\"string\")\n                        .nestedObject(\n                            ObjectWithOptionalField\n                                .builder()\n                                .string(\"string\")\n                                .integer(1)\n                                .long_(1000000L)\n                                .double_(1.1)\n                                .bool(true)\n                                .datetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                                .date(\"2023-01-15\")\n                                .uuid(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                                .base64(\"SGVsbG8gd29ybGQh\".getBytes())\n                                .list(\n                                    Optional.of(\n                                        Arrays.asList(\"list\", \"list\")\n                                    )\n                                )\n                                .set(\n                                    new HashSet<String>(\n                                        Arrays.asList(\"set\")\n                                    )\n                                )\n                                .map(\n                                    new HashMap<Integer, String>() {{\n                                        put(1, \"map\");\n                                    }}\n                                )\n                                .bigint(new BigInteger(\"1000000\"))\n                                .build()\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;\nimport com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;\nimport com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;\nimport java.math.BigInteger;\nimport java.time.OffsetDateTime;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.Optional;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithRequiredNestedObject(\n            ObjectWithRequiredNestedObject\n                .builder()\n                .requiredString(\"requiredString\")\n                .requiredObject(\n                    NestedObjectWithRequiredField\n                        .builder()\n                        .string(\"string\")\n                        .nestedObject(\n                            ObjectWithOptionalField\n                                .builder()\n                                .string(\"string\")\n                                .integer(1)\n                                .long_(1000000L)\n                                .double_(1.1)\n                                .bool(true)\n                                .datetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                                .date(\"2023-01-15\")\n                                .uuid(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                                .base64(\"SGVsbG8gd29ybGQh\".getBytes())\n                                .list(\n                                    Optional.of(\n                                        Arrays.asList(\"list\", \"list\")\n                                    )\n                                )\n                                .set(\n                                    new HashSet<String>(\n                                        Arrays.asList(\"set\")\n                                    )\n                                )\n                                .map(\n                                    new HashMap<Integer, String>() {{\n                                        put(1, \"map\");\n                                    }}\n                                )\n                                .bigint(new BigInteger(\"1000000\"))\n                                .build()\n                        )\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "method": "POST",
@@ -401,19 +362,6 @@
                 "type": "java",
                 "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"2023-08-31T14:15:22Z\")\n                .actualDatetime(OffsetDateTime.parse(\"2023-08-31T14:15:22Z\"))\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"2023-08-31T14:15:22Z\")\n                .actualDatetime(OffsetDateTime.parse(\"2023-08-31T14:15:22Z\"))\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "63d6ab2b",
-            "id": {
-                "method": "POST",
-                "path": "/object/get-and-return-with-datetime-like-string",
-                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"datetimeLikeString\")\n                .actualDatetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithDatetimeLikeString(\n            ObjectWithDatetimeLikeString\n                .builder()\n                .datetimeLikeString(\"datetimeLikeString\")\n                .actualDatetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -561,19 +509,6 @@
         },
         {
             "example_identifier": "59976c27",
-            "id": {
-                "method": "GET",
-                "path": "/params/path/{param}",
-                "identifier_override": "endpoint_endpoints/params.getWithPathAndErrors"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().getWithPath(\"param\");\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "d1e82beb",
             "id": {
                 "method": "GET",
                 "path": "/params/path/{param}",
@@ -794,33 +729,7 @@
             }
         },
         {
-            "example_identifier": "392c4960",
-            "id": {
-                "method": "POST",
-                "path": "/req-bodies/object",
-                "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;\nimport com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;\nimport java.math.BigInteger;\nimport java.time.OffsetDateTime;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.Optional;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithObjectBodyandResponse(\n            PostWithObjectBody\n                .builder()\n                .string(\"string\")\n                .integer(1)\n                .nestedObject(\n                    ObjectWithOptionalField\n                        .builder()\n                        .string(\"string\")\n                        .integer(1)\n                        .long_(1000000L)\n                        .double_(1.1)\n                        .bool(true)\n                        .datetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .date(\"2023-01-15\")\n                        .uuid(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                        .base64(\"SGVsbG8gd29ybGQh\".getBytes())\n                        .list(\n                            Optional.of(\n                                Arrays.asList(\"list\", \"list\")\n                            )\n                        )\n                        .set(\n                            new HashSet<String>(\n                                Arrays.asList(\"set\")\n                            )\n                        )\n                        .map(\n                            new HashMap<Integer, String>() {{\n                                put(1, \"map\");\n                            }}\n                        )\n                        .bigint(new BigInteger(\"1000000\"))\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;\nimport com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;\nimport java.math.BigInteger;\nimport java.time.OffsetDateTime;\nimport java.util.Arrays;\nimport java.util.HashMap;\nimport java.util.HashSet;\nimport java.util.Optional;\nimport java.util.UUID;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithObjectBodyandResponse(\n            PostWithObjectBody\n                .builder()\n                .string(\"string\")\n                .integer(1)\n                .nestedObject(\n                    ObjectWithOptionalField\n                        .builder()\n                        .string(\"string\")\n                        .integer(1)\n                        .long_(1000000L)\n                        .double_(1.1)\n                        .bool(true)\n                        .datetime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .date(\"2023-01-15\")\n                        .uuid(UUID.fromString(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"))\n                        .base64(\"SGVsbG8gd29ybGQh\".getBytes())\n                        .list(\n                            Optional.of(\n                                Arrays.asList(\"list\", \"list\")\n                            )\n                        )\n                        .set(\n                            new HashSet<String>(\n                                Arrays.asList(\"set\")\n                            )\n                        )\n                        .map(\n                            new HashMap<Integer, String>() {{\n                                put(1, \"map\");\n                            }}\n                        )\n                        .bigint(new BigInteger(\"1000000\"))\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "91843eb7",
-            "id": {
-                "method": "POST",
-                "path": "/no-auth",
-                "identifier_override": "endpoint_no-auth.postWithNoAuth"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.noAuth().postWithNoAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.noAuth().postWithNoAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "b027791a",
             "id": {
                 "method": "POST",
                 "path": "/no-auth",

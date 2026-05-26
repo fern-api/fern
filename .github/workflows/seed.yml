@@ -109,6 +109,7 @@ jobs:
       swift-sdk: ${{ steps.create-dynamic-matrix.outputs.swift-sdk-test-matrix }}
       rust-model: ${{ steps.create-dynamic-matrix.outputs.rust-model-test-matrix }}
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
+      cli: ${{ steps.create-dynamic-matrix.outputs.cli-test-matrix }}
       benchmark-generators: ${{ steps.create-dynamic-matrix.outputs.benchmark-generators }}
       benchmark-docs: ${{ steps.create-dynamic-matrix.outputs.benchmark-docs }}
     steps:
@@ -847,6 +848,38 @@ jobs:
           dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
           dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
 
+  cli:
+    runs-on: Seed
+    timeout-minutes: 15
+    needs: [setup, get-all-test-matrices]
+    if: >-
+      ${{
+        (needs.get-all-test-matrices.outputs.cli != ''
+        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+      }}
+    strategy:
+      fail-fast: false
+      max-parallel: 15
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.cli) }}
+    steps:
+      - name: Checkout action file
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            .github/actions/run-seed-process
+
+      - name: Run All Seed Tests
+        uses: ./.github/actions/run-seed-process
+        with:
+          sdk-name: cli
+          generator-path: generators/cli
+          fixtures-to-run: ${{toJson(matrix.fixtures)}}
+          job-index: ${{ strategy.job-index }}
+          collect-metrics: ${{ needs.setup.outputs.post-metrics }}
+          dockerhub-username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          dockerhub-token: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
+
   # SDK Generation Benchmarks — runs affected SDK generators against large public OAS specs.
   # Uses --skip-scripts to measure generator-only time (no npm install/build/test noise).
   # Baseline timings come from the nightly benchmark-baseline.yml workflow (via artifacts API).
@@ -1002,18 +1035,22 @@ jobs:
 
           BASELINE_RUNS_TO_FETCH=5
 
-          # Fetch the last N successful runs of benchmark-baseline.yml on main
-          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
-            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+          # Fetch the last N completed runs of benchmark-baseline.yml on main.
+          # Use status=completed (not status=success) so we include runs where
+          # some generators failed but others produced valid artifacts. A single
+          # failing E2E job marks the whole workflow as "failure", which would
+          # hide valid baseline data from every other generator.
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=completed&per_page=20&branch=main" \
+            --jq '[.workflow_runs[] | select(.conclusion == "success" or .conclusion == "failure")] | .['":${BASELINE_RUNS_TO_FETCH}"']' 2>/dev/null || echo "[]")
 
           RUN_COUNT=$(echo "$RUNS" | jq 'length')
           if [ "$RUN_COUNT" -eq 0 ]; then
-            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
+            echo "::warning::No completed nightly baseline runs found. Report will show N/A for main timings."
             echo "Trigger the benchmark-baseline workflow manually to generate initial baselines."
             exit 0
           fi
 
-          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
+          echo "Found ${RUN_COUNT} nightly baseline run(s)"
 
           # Save metadata from the latest run for the report footer
           LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
@@ -1260,17 +1297,19 @@ jobs:
 
           BASELINE_RUNS_TO_FETCH=5
 
-          # Fetch the last N successful runs of benchmark-baseline.yml on main
-          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=success&per_page=${BASELINE_RUNS_TO_FETCH}&branch=main" \
-            --jq '.workflow_runs' 2>/dev/null || echo "[]")
+          # Fetch the last N completed runs of benchmark-baseline.yml on main.
+          # Use status=completed (not status=success) — see SDK benchmark step
+          # comment for rationale.
+          RUNS=$(gh api "repos/${{ github.repository }}/actions/workflows/benchmark-baseline.yml/runs?status=completed&per_page=20&branch=main" \
+            --jq '[.workflow_runs[] | select(.conclusion == "success" or .conclusion == "failure")] | .['":${BASELINE_RUNS_TO_FETCH}"']' 2>/dev/null || echo "[]")
 
           RUN_COUNT=$(echo "$RUNS" | jq 'length')
           if [ "$RUN_COUNT" -eq 0 ]; then
-            echo "::warning::No successful nightly baseline runs found. Report will show N/A for main timings."
+            echo "::warning::No completed nightly baseline runs found. Report will show N/A for main timings."
             exit 0
           fi
 
-          echo "Found ${RUN_COUNT} successful nightly baseline run(s)"
+          echo "Found ${RUN_COUNT} nightly baseline run(s)"
 
           # Save metadata from the latest run for the report footer
           LATEST_DATE=$(echo "$RUNS" | jq -r '.[0].created_at')
@@ -1443,7 +1482,8 @@ jobs:
         php-sdk,
         swift-sdk,
         rust-model,
-        rust-sdk
+        rust-sdk,
+        cli
       ]
     if: >-
       ${{
@@ -1469,7 +1509,8 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
+            cli
           ]
     outputs:
       ruby-sdk-v2-passing: ${{ steps.report-results.outputs.ruby-sdk-v2-passing }}
@@ -1488,6 +1529,7 @@ jobs:
       swift-sdk-passing: ${{ steps.report-results.outputs.swift-sdk-passing }}
       rust-model-passing: ${{ steps.report-results.outputs.rust-model-passing }}
       rust-sdk-passing: ${{ steps.report-results.outputs.rust-sdk-passing }}
+      cli-passing: ${{ steps.report-results.outputs.cli-passing }}
     steps:
       - name: Report ${{ matrix.job-name }} seed test results
         id: report-results
@@ -1540,7 +1582,8 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
+            cli
           ]
     outputs:
       ruby-sdk-v2-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.ruby-sdk-v2-total-fixtures-count }}
@@ -1607,6 +1650,10 @@ jobs:
       rust-sdk-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-total-fixtures-count }}
       rust-sdk-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-allowed-failures }}
       rust-sdk-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.rust-sdk-allowed-failures-count }}
+
+      cli-total-fixtures-count: ${{ steps.extract-all-fixture-info.outputs.cli-total-fixtures-count }}
+      cli-allowed-failures: ${{ steps.extract-all-fixture-info.outputs.cli-allowed-failures }}
+      cli-allowed-failures-count: ${{ steps.extract-all-fixture-info.outputs.cli-allowed-failures-count }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -1674,6 +1721,7 @@ jobs:
         swift-sdk,
         rust-model,
         rust-sdk,
+        cli,
         collect-allowed-failures
       ]
     if: ${{ always() && !cancelled() && needs.setup.outputs.post-metrics == 'true' }}
@@ -1697,7 +1745,8 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
+            cli
           ]
     steps:
       - name: Create Metrics Artifacts Info
@@ -1785,7 +1834,7 @@ jobs:
 
       - name: Post to PostHog
         # https://github.com/PostHog/posthog-github-action
-        uses: PostHog/posthog-github-action@v0.1
+        uses: PostHog/posthog-github-action@v1
         with:
           posthog-token: ${{ secrets.POSTHOG_API_KEY }}
           event: "gh-actions-seed-test-metrics-event"

@@ -1,0 +1,6 @@
+- summary: |
+    Make @boundaryml/baml an optional dependency. The CLI no longer requires BAML
+    to be installed unless AI features (auto-versioning, sdk-diff) are used.
+    Users who invoke AI features without BAML installed will see a clear error
+    message with installation instructions.
+  type: chore

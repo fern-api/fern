@@ -1,0 +1,9 @@
+{
+  "title": "Docs preview server failed to start: Server process exited with code 1",
+  "disposition": "shipped",
+  "rationale": "Next.js subprocess failing to start is an environment issue (port conflict, missing deps, etc.), not a Fern bug. Reclassified from InternalError to EnvironmentError.",
+  "fixSummary": "Change failAndThrow code from InternalError to EnvironmentError in runAppPreviewServer.ts.",
+  "prOrIssue": "This PR",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "startNextJsServer failure classified as InternalError instead of EnvironmentError."
+}

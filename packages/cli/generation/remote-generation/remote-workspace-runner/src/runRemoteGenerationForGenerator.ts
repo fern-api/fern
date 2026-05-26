@@ -13,6 +13,7 @@ import { createFdrService, createVenusService } from "@fern-api/core";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
@@ -38,6 +39,7 @@ export async function runRemoteGenerationForGenerator({
     shouldLogS3Url,
     token,
     whitelabel,
+    replay,
     irVersionOverride,
     absolutePathToPreview,
     isPreview: isPreviewOverride,
@@ -52,7 +54,11 @@ export async function runRemoteGenerationForGenerator({
     automationMode,
     autoMerge,
     skipIfNoDiff,
-    loginCommand
+    verify,
+    noReplay,
+    disableTelemetry,
+    loginCommand,
+    specsTarGzBuffer
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -64,6 +70,7 @@ export async function runRemoteGenerationForGenerator({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
@@ -82,10 +89,25 @@ export async function runRemoteGenerationForGenerator({
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
     /**
+     * Whether the user passed `--verify`. When true, Fiddle runs the generator-cli
+     * pipeline's VerificationStep against the language-specific validator after the
+     * generator emits SDK files. Forwarded to {@link createAndStartJob}. Default: false.
+     */
+    verify?: boolean;
+    /**
+     * Whether the user passed `--no-replay`. Currently a no-op on the cloud path
+     * (Fiddle doesn't honor it yet — FER-10343 out-of-scope), but plumbed through
+     * for telemetry so the `no_replay_flag` property reflects user intent.
+     */
+    noReplay?: boolean;
+    /** Suppresses the `replay` PostHog event when true. Honors FERN_DISABLE_TELEMETRY. */
+    disableTelemetry?: boolean;
+    /**
      * CLI command to reference in auth-failure hints (e.g. 'fern login' for v1,
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    specsTarGzBuffer?: Buffer;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -308,6 +330,7 @@ export async function runRemoteGenerationForGenerator({
         shouldLogS3Url,
         token,
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
+        replay,
         irVersionOverride,
         absolutePathToPreview,
         fiddlePreview,
@@ -318,7 +341,9 @@ export async function runRemoteGenerationForGenerator({
         automationMode,
         autoMerge,
         skipIfNoDiff,
-        loginCommand
+        verify,
+        loginCommand,
+        specsTarGzBuffer
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
@@ -336,7 +361,19 @@ export async function runRemoteGenerationForGenerator({
         taskId,
         generatorInvocation,
         interactiveTaskContext,
-        absolutePathToPreview
+        absolutePathToPreview,
+        telemetryContext: {
+            cliVersion: workspace.cliVersion,
+            orgId: projectConfig.organization,
+            automationMode: automationMode === true,
+            autoMerge: autoMerge === true,
+            skipIfNoDiff: skipIfNoDiff === true,
+            versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
+            versionBump: undefined,
+            replayConfigEnabled: replay?.enabled === true,
+            noReplayFlag: noReplay === true,
+            disableTelemetry: disableTelemetry === true
+        }
     });
 
     let result = await pollJobAndReportStatus({
@@ -480,12 +517,13 @@ async function uploadDynamicIRForSdkGeneration({
     try {
         uploadUrlsResponse = await fdr.api.register.getSdkDynamicIrUploadUrls({
             orgId: FdrAPI.OrgId(organization),
-            apiId: "",
-            irVersions: []
+            version,
+            snippetConfiguration: { [language]: packageName }
         });
     } catch (error) {
-        // Log warning but don't fail the generation - dynamic IR upload is optional
-        context.logger.warn(`Failed to get dynamic IR upload URLs: ${error}`);
+        context.logger.warn(
+            `Failed to get dynamic IR upload URLs (non-fatal, dynamic snippets may be stale): ${error}`
+        );
         return;
     }
 
@@ -506,19 +544,23 @@ async function uploadDynamicIRForSdkGeneration({
 
     // Upload the dynamic IR to S3
     const dynamicIRJson = JSON.stringify(dynamicIR);
-    const uploadResponse = await fetch(uploadUrl, {
-        method: "PUT",
-        body: dynamicIRJson,
-        headers: {
-            "Content-Type": "application/octet-stream",
-            "Content-Length": dynamicIRJson.length.toString()
-        }
-    });
+    try {
+        const uploadResponse = await fetch(uploadUrl, {
+            method: "PUT",
+            body: dynamicIRJson,
+            headers: {
+                "Content-Type": "application/octet-stream",
+                "Content-Length": dynamicIRJson.length.toString()
+            }
+        });
 
-    if (uploadResponse.ok) {
-        context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
-    } else {
-        context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+        if (uploadResponse.ok) {
+            context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
+        } else {
+            context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+        }
+    } catch (error) {
+        context.logger.warn(`Network error uploading dynamic IR for ${language}: ${error}`);
     }
 }
 

@@ -8,6 +8,7 @@ import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation/index.js";
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
+import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
@@ -38,7 +39,8 @@ const allRules = [
     ValidDocsEndpoints,
     AllRolesMustBeDeclaredRule,
     ValidFrontmatter,
-    TranslationDirectoriesExistRule
+    TranslationDirectoriesExistRule,
+    ValidChangelogSlugRule
     // ValidMarkdownFileReferences
 ];
 

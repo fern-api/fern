@@ -1,0 +1,9 @@
+{
+  "title": "Filesystem / errno / EPIPE-style false positive",
+  "disposition": "shipped",
+  "rationale": "User/env or pipe closure; EPIPE listener on TtyAwareLogger plus errno mapping.",
+  "fixSummary": "PR 15283: process.stdout/stderr error listener + errno mapping.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15283",
+  "lastAnalyzed": "2026-04-21",
+  "problemSignature": "EPIPE or broken pipe when user pipes CLI stdout/stderr to tools like head/jq; errno-style noise reaching error reporter."
+}

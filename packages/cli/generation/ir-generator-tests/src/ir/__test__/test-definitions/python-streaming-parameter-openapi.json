@@ -406,6 +406,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": false,
                                 "docs": "",
                                 "v2Examples": null
                             }
@@ -1919,6 +1920,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

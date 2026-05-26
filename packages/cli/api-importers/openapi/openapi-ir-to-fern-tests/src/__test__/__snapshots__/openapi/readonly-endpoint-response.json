@@ -1,0 +1,320 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createAWebhook": {
+              "auth": undefined,
+              "display-name": "Create a webhook",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "state": "enabled",
+                      "uri": "uri",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/webhooks",
+              "request": "Webhook",
+              "response": {
+                "docs": "Webhook created successfully",
+                "status-code": 200,
+                "type": "Webhook",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getAWebhook": {
+              "auth": undefined,
+              "display-name": "Get a webhook",
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "response": {
+                    "body": {
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "state": "enabled",
+                      "uri": "uri",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/webhooks/{id}",
+              "request": {
+                "name": "GetWebhooksIdRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "response": {
+                "docs": "Webhook retrieved successfully",
+                "status-code": 200,
+                "type": "Webhook",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "updateAWebhook": {
+              "auth": undefined,
+              "display-name": "Update a webhook",
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "state": "enabled",
+                      "uri": "uri",
+                    },
+                  },
+                },
+              ],
+              "method": "PATCH",
+              "pagination": undefined,
+              "path": "/webhooks/{id}",
+              "request": {
+                "body": {
+                  "properties": {
+                    "uri": {
+                      "docs": "The URI to which webhook events will be sent.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "WebhookUpdate",
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Webhook updated successfully",
+                "status-code": 200,
+                "type": "Webhook",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Webhook": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "uri": {
+                "docs": "The URI to which webhook events will be sent.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WebhookRead": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "created_at": {
+                "access": "read-only",
+                "docs": "Output only. When the webhook was created.",
+                "type": "optional<datetime>",
+              },
+              "id": {
+                "access": "read-only",
+                "docs": "Output only. The ID of the webhook.",
+                "type": "optional<string>",
+              },
+              "state": {
+                "access": "read-only",
+                "docs": "Output only. The state of the webhook.",
+                "type": "optional<WebhookState>",
+              },
+              "uri": {
+                "docs": "The URI to which webhook events will be sent.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WebhookState": {
+            "docs": "Output only. The state of the webhook.",
+            "enum": [
+              "enabled",
+              "disabled",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createAWebhook:
+      path: /webhooks
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create a webhook
+      request: Webhook
+      response:
+        docs: Webhook created successfully
+        type: Webhook
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              uri: uri
+              created_at: '2024-01-15T09:30:00Z'
+              state: enabled
+    getAWebhook:
+      path: /webhooks/{id}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: Get a webhook
+      request:
+        name: GetWebhooksIdRequest
+        path-parameters:
+          id: string
+      response:
+        docs: Webhook retrieved successfully
+        type: Webhook
+        status-code: 200
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: id
+              uri: uri
+              created_at: '2024-01-15T09:30:00Z'
+              state: enabled
+    updateAWebhook:
+      path: /webhooks/{id}
+      method: PATCH
+      source:
+        openapi: ../openapi.yml
+      display-name: Update a webhook
+      request:
+        name: WebhookUpdate
+        path-parameters:
+          id: string
+        body:
+          properties:
+            uri:
+              type: optional<string>
+              docs: The URI to which webhook events will be sent.
+        content-type: application/json
+      response:
+        docs: Webhook updated successfully
+        type: Webhook
+        status-code: 200
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              id: id
+              uri: uri
+              created_at: '2024-01-15T09:30:00Z'
+              state: enabled
+  source:
+    openapi: ../openapi.yml
+types:
+  WebhookState:
+    enum:
+      - enabled
+      - disabled
+    docs: Output only. The state of the webhook.
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  WebhookRead:
+    properties:
+      id:
+        type: optional<string>
+        docs: Output only. The ID of the webhook.
+        access: read-only
+      uri:
+        type: optional<string>
+        docs: The URI to which webhook events will be sent.
+      created_at:
+        type: optional<datetime>
+        docs: Output only. When the webhook was created.
+        access: read-only
+      state:
+        type: optional<WebhookState>
+        docs: Output only. The state of the webhook.
+        access: read-only
+    source:
+      openapi: ../openapi.yml
+  Webhook:
+    properties:
+      uri:
+        type: optional<string>
+        docs: The URI to which webhook events will be sent.
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Readonly Endpoint Response API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Readonly Endpoint Response API
+",
+  },
+}

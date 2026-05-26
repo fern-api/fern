@@ -158,6 +158,12 @@ public final class UndiscriminatedUnion1 {
                 } catch (RuntimeException e) {
                 }
             }
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("foo")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
+                } catch (RuntimeException e) {
+                }
+            }
             try {
                 return of(
                         ObjectMappers.JSON_MAPPER.convertValue(value, UndiscriminatedUnion1DiscriminatedUnion1.class));
@@ -185,12 +191,6 @@ public final class UndiscriminatedUnion1 {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(
                         value, new TypeReference<Map<String, UndiscriminatedUnion1InlineMapItem1>>() {}));
             } catch (RuntimeException e) {
-            }
-            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("foo")) {
-                try {
-                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, ReferenceType.class));
-                } catch (RuntimeException e) {
-                }
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

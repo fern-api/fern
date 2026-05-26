@@ -1,6 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
+import { isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 
 import { writeFile } from "fs/promises";
@@ -13,15 +14,15 @@ type RawDocsConfig = docsYml.RawSchemas.DocsConfiguration;
 // Theme-eligible fields that can contain local file paths (strings that become
 // { hash } sentinels on upload and presigned S3 URLs on GET from FDR).
 // Presigned S3 URLs are identified by the presence of "X-Amz-" in the query string.
-function isPresignedUrl(value: string): boolean {
+export function isPresignedUrl(value: string): boolean {
     return (value.startsWith("http://") || value.startsWith("https://")) && value.includes("X-Amz-");
 }
 
-function isRemoteUrl(value: string): boolean {
+export function isRemoteUrl(value: string): boolean {
     return value.startsWith("http://") || value.startsWith("https://");
 }
 
-function parseFilenameFromDisposition(value: string | null): string | undefined {
+export function parseFilenameFromDisposition(value: string | null): string | undefined {
     if (value == null) {
         return undefined;
     }
@@ -33,7 +34,7 @@ function parseFilenameFromDisposition(value: string | null): string | undefined 
     return name != null && path.extname(name) !== "" ? name : undefined;
 }
 
-function filenameFromUrl(url: string): string | undefined {
+export function filenameFromUrl(url: string): string | undefined {
     try {
         // S3 presigned URLs encode the intended filename in the
         // `response-content-disposition` query param, e.g.:
@@ -95,7 +96,7 @@ async function downloadToTemp(url: string, tmpDir: string, index: number): Promi
     return dest;
 }
 
-async function resolveThemeFileUrls(
+export async function resolveThemeFileUrls(
     themeConfig: Record<string, unknown>,
     tmpDir: string
 ): Promise<Record<string, unknown>> {
@@ -196,35 +197,24 @@ async function resolveThemeFileUrls(
     return cfg;
 }
 
-// "global" — the theme value always wins; local docs.yml cannot override it.
-// "local"  — the local docs.yml value wins when present; theme is the fallback.
-type ThemeFieldPolicy = "global" | "local";
+// Deep merge where global wins on conflicting keys; local-only sub-fields survive.
+export function deepMergeGlobalWins(
+    local: Record<string, unknown>,
+    global: Record<string, unknown>
+): Record<string, unknown> {
+    const result: Record<string, unknown> = { ...local };
+    for (const [key, globalValue] of Object.entries(global)) {
+        const localValue = local[key];
+        if (isPlainObject(globalValue) && isPlainObject(localValue)) {
+            result[key] = deepMergeGlobalWins(localValue, globalValue);
+        } else {
+            result[key] = globalValue;
+        }
+    }
+    return result;
+}
 
-// Controls, per eligible key, whether the global theme takes precedence or the
-// local docs.yml can override. Add new theme-eligible keys here.
-// Keys use the camelCase form that DocsConfiguration uses internally.
-const THEME_FIELD_POLICIES: Readonly<Record<string, ThemeFieldPolicy>> = {
-    logo: "global",
-    favicon: "global",
-    backgroundImage: "global",
-    colors: "global",
-    typography: "global",
-    layout: "global",
-    settings: "global",
-    theme: "global",
-    integrations: "global",
-    css: "global",
-    js: "global",
-    header: "global",
-    footer: "global",
-    navbarLinks: "global",
-    footerLinks: "global",
-    aiSearch: "global",
-    announcement: "global",
-    metadata: "global"
-};
-
-const THEME_ELIGIBLE_KEYS = Object.keys(THEME_FIELD_POLICIES) as ReadonlyArray<keyof RawDocsConfig>;
+const { THEME_ELIGIBLE_FIELDS, THEME_FIELD_POLICIES } = docsYml;
 
 function kebabToCamel(str: string): string {
     return str.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
@@ -254,11 +244,11 @@ function normalizeThemeKeys(raw: Record<string, unknown>): Record<string, unknow
     return deepNormalizeKeys(raw) as Record<string, unknown>;
 }
 
-function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, unknown>): RawDocsConfig {
+export function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, unknown>): RawDocsConfig {
     const normalized = normalizeThemeKeys(themeOverride);
     const localRecord = local as unknown as Record<string, unknown>;
     const merged: Record<string, unknown> = { ...localRecord };
-    for (const key of THEME_ELIGIBLE_KEYS) {
+    for (const key of THEME_ELIGIBLE_FIELDS) {
         const themeValue = normalized[key];
         const localValue = localRecord[key];
         const policy = THEME_FIELD_POLICIES[key] ?? "global";
@@ -268,8 +258,13 @@ function mergeThemeOverride(local: RawDocsConfig, themeOverride: Record<string, 
 
         if (policy === "global") {
             // Theme wins when present, otherwise keep the local value.
+            // Object fields are deep-merged so local-only sub-fields survive.
             if (themeHasValue) {
-                merged[key] = themeValue;
+                if (isPlainObject(themeValue) && isPlainObject(localValue)) {
+                    merged[key] = deepMergeGlobalWins(localValue, themeValue);
+                } else {
+                    merged[key] = themeValue;
+                }
             }
         } else {
             // "local" — local wins when present, otherwise fall back to theme
@@ -331,11 +326,15 @@ export async function stitchGlobalTheme({
         if (res.status === 404) {
             taskContext.failAndThrow(
                 `Global theme "${themeName}" not found for org "${organization}". ` +
-                    `Upload it first with: fern beta docs theme upload --name ${themeName}`
+                    `Upload it first with: fern beta docs theme upload --name ${themeName}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
         }
         if (!res.ok) {
-            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": HTTP ${res.status}`);
+            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": HTTP ${res.status}`, undefined, {
+                code: CliError.Code.ConfigError
+            });
         }
 
         let parsed: unknown;
@@ -344,7 +343,9 @@ export async function stitchGlobalTheme({
         } catch {
             taskContext.failAndThrow(
                 `Failed to fetch global theme "${themeName}": unexpected response from server` +
-                    (rawText.length > 0 ? ` — ${rawText.slice(0, 200)}` : " (empty body)")
+                    (rawText.length > 0 ? ` — ${rawText.slice(0, 200)}` : " (empty body)"),
+                undefined,
+                { code: CliError.Code.NetworkError }
             );
         }
 
@@ -357,23 +358,33 @@ export async function stitchGlobalTheme({
             if (body.error.code === "NOT_FOUND") {
                 taskContext.failAndThrow(
                     `Global theme "${themeName}" not found for org "${organization}". ` +
-                        `Upload it first with: fern beta docs theme upload --name ${themeName}`
+                        `Upload it first with: fern beta docs theme upload --name ${themeName}`,
+                    undefined,
+                    { code: CliError.Code.ConfigError }
                 );
             }
             taskContext.failAndThrow(
-                `Failed to fetch global theme "${themeName}": ${body.error.message ?? body.error.code ?? "unknown error"}`
+                `Failed to fetch global theme "${themeName}": ${body.error.message ?? body.error.code ?? "unknown error"}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
         }
 
         if (body.config == null) {
-            taskContext.failAndThrow(`Failed to fetch global theme "${themeName}": response missing "config" field`);
+            taskContext.failAndThrow(
+                `Failed to fetch global theme "${themeName}": response missing "config" field`,
+                undefined,
+                { code: CliError.Code.NetworkError }
+            );
             return docsWorkspace; // unreachable — TS needs this for definite-assignment of themeConfig
         }
 
         themeConfig = body.config;
     } catch (err) {
         if (err instanceof Error && err.message.includes("fetch failed")) {
-            taskContext.failAndThrow(`Could not reach FDR at ${fdrOrigin} to fetch global theme "${themeName}"`);
+            taskContext.failAndThrow(`Could not reach FDR at ${fdrOrigin} to fetch global theme "${themeName}"`, err, {
+                code: CliError.Code.NetworkError
+            });
         }
         throw err;
     }
@@ -387,7 +398,9 @@ export async function stitchGlobalTheme({
         resolvedConfig = await resolveThemeFileUrls(themeConfig, tmpDirPath);
     } catch (err) {
         const detail = err instanceof Error ? `: ${err.message}` : "";
-        taskContext.failAndThrow(`Failed to download assets for global theme "${themeName}"${detail}`);
+        taskContext.failAndThrow(`Failed to download assets for global theme "${themeName}"${detail}`, err, {
+            code: CliError.Code.NetworkError
+        });
         return docsWorkspace; // unreachable — TS needs this for definite-assignment of resolvedConfig
     }
 

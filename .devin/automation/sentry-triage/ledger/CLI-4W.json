@@ -1,0 +1,9 @@
+{
+  "title": "Failed to find NorthErrorType",
+  "disposition": "keep_sentry",
+  "rationale": "FDR SDK example generation failed to resolve a type; same product bug family as CLI-4T.",
+  "fixSummary": "—",
+  "prOrIssue": "Keep in Sentry until product fix",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "FDR SDK example generation failed to locate a referenced type during endpoint example call generation; true product bug."
+}

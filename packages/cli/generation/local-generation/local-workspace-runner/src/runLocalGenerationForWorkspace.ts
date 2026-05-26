@@ -15,8 +15,13 @@ import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
-import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli/pipeline";
-import { cloneRepository, parseRepository } from "@fern-api/github";
+import {
+    buildReplayTelemetryProps,
+    logReplaySummary,
+    type PipelineLogger,
+    PostGenerationPipeline
+} from "@fern-api/generator-cli/pipeline";
+import { cloneRepository, getGithubApiBaseUrl, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -32,6 +37,7 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -57,6 +63,7 @@ export async function runLocalGenerationForWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     disableTelemetry
 }: {
     token: FernToken | undefined;
@@ -73,6 +80,8 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    /** When true, run `.fern/verify.sh` (if emitted by the generator) inside a validator container after replay and before any GitHub push. Local generation only — remote/Fiddle pipelines do not honor this flag. */
+    verify?: boolean;
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
     publishToRegistry?: boolean;
@@ -296,12 +305,15 @@ export async function runLocalGenerationForWorkspace({
                             timeoutMs: 30000 // 30 seconds timeout for credential/network issues
                         });
 
-                        // For push mode and pull-request mode with a target branch,
+                        // For push, commit-and-release, and pull-request mode with a target branch,
                         // checkout the target branch while the working tree is clean.
                         // This prevents non-fast-forward errors that occur when trying to checkout
                         // after files have been generated (dirty working tree).
                         const mode = selfhostedGithubConfig.mode ?? "push";
-                        if ((mode === "push" || mode === "pull-request") && selfhostedGithubConfig.branch != null) {
+                        if (
+                            (mode === "push" || mode === "pull-request" || mode === "commit-and-release") &&
+                            selfhostedGithubConfig.branch != null
+                        ) {
                             interactiveTaskContext.logger.debug(
                                 `Checking out branch ${selfhostedGithubConfig.branch} before generation`
                             );
@@ -383,13 +395,21 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningCache,
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
-                    disableTelemetry
+                    disableTelemetry,
+                    rawApiSpecs:
+                        workspace instanceof OSSWorkspace && generatorWantsSpecs(generatorInvocation.name)
+                            ? workspace.allSpecs
+                            : undefined
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
-                // Run post-generation pipeline (replay + GitHub) when outputting to a self-hosted GitHub repo
-                if (selfhostedGithubConfig != null && shouldCommit) {
+                // Run post-generation pipeline when:
+                //   - outputting to a self-hosted GitHub repo (full replay + GitHub flow), or
+                //   - `--verify` is set (verify-only flow; no replay, no GitHub).
+                const githubPipelineEnabled = selfhostedGithubConfig != null && shouldCommit;
+                const verifyOnlyPipelineEnabled = !githubPipelineEnabled && verify === true;
+                if (githubPipelineEnabled || verifyOnlyPipelineEnabled) {
                     const pipelineLogger: PipelineLogger = {
                         debug: (msg) => interactiveTaskContext.logger.debug(msg),
                         info: (msg) => interactiveTaskContext.logger.info(msg),
@@ -402,29 +422,38 @@ export async function runLocalGenerationForWorkspace({
                     const pipeline = new PostGenerationPipeline(
                         {
                             outputDir: absolutePathToLocalOutput,
-                            replay: { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false },
-                            github: {
-                                enabled: true,
-                                uri: selfhostedGithubConfig.uri,
-                                token: selfhostedGithubConfig.token,
-                                mode: selfhostedGithubConfig.mode ?? "push",
-                                branch: selfhostedGithubConfig.branch,
-                                commitMessage: autoVersioningCommitMessage,
-                                changelogEntry: autoVersioningChangelogEntry,
-                                prDescription: autoVersioningPrDescription,
-                                versionBumpReason: autoVersioningVersionBumpReason,
-                                previousVersion: autoVersioningPreviousVersion,
-                                newVersion: autoVersioningNewVersion,
-                                versionBump: autoVersioningVersionBump,
-                                previewMode: selfhostedGithubConfig.previewMode,
-                                generatorName: generatorInvocation.name,
-                                automationMode,
-                                autoMerge,
-                                skipIfNoDiff,
-                                hasBreakingChanges,
-                                breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
-                                runId: process.env.FERN_RUN_ID
-                            },
+                            replay: githubPipelineEnabled
+                                ? { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false }
+                                : undefined,
+                            verify: { enabled: verify === true, runner },
+                            github:
+                                githubPipelineEnabled && selfhostedGithubConfig != null
+                                    ? {
+                                          enabled: true,
+                                          uri: selfhostedGithubConfig.uri,
+                                          token: selfhostedGithubConfig.token,
+                                          mode: selfhostedGithubConfig.mode ?? "push",
+                                          branch: selfhostedGithubConfig.branch,
+                                          commitMessage: autoVersioningCommitMessage,
+                                          changelogEntry: autoVersioningChangelogEntry,
+                                          prDescription: autoVersioningPrDescription,
+                                          versionBumpReason: autoVersioningVersionBumpReason,
+                                          previousVersion: autoVersioningPreviousVersion,
+                                          newVersion: autoVersioningNewVersion ?? version,
+                                          versionBump: autoVersioningVersionBump,
+                                          previewMode: selfhostedGithubConfig.previewMode,
+                                          generatorName: generatorInvocation.name,
+                                          automationMode,
+                                          autoMerge,
+                                          skipIfNoDiff,
+                                          hasBreakingChanges,
+                                          breakingChangesSummary: hasBreakingChanges
+                                              ? autoVersioningPrDescription
+                                              : undefined,
+                                          runId: process.env.FERN_RUN_ID,
+                                          apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
+                                      }
+                                    : undefined,
                             cliVersion: workspace.cliVersion ?? "unknown",
                             generatorVersions: {
                                 [generatorInvocation.name]: generatorInvocation.version
@@ -434,16 +463,68 @@ export async function runLocalGenerationForWorkspace({
                         pipelineLogger
                     );
 
+                    const pipelineStart = Date.now();
                     const pipelineResult = await pipeline.run();
+                    const pipelineDurationMs = Date.now() - pipelineStart;
 
                     // Log replay summary
-                    if (pipelineResult.steps.replay != null) {
+                    if (pipelineResult.steps.replay != null && selfhostedGithubConfig != null) {
                         logReplaySummary(pipelineResult.steps.replay, {
                             debug: (msg) => interactiveTaskContext.logger.debug(msg),
-                            info: (msg) => interactiveTaskContext.logger.info(chalk.cyan(msg)),
+                            info: (msg) => {
+                                // Don't ANSI-color structured machine-parseable lines
+                                // ("[replay] ..." emitted by replay-summary). Customer-friendly
+                                // status messages stay cyan for terminal readability.
+                                const isStructured = msg.startsWith("[replay] ") || msg.startsWith("[telemetry] ");
+                                interactiveTaskContext.logger.info(isStructured ? msg : chalk.cyan(msg));
+                            },
                             warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
                             error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
                         });
+
+                        // Telemetry: emit a single `replay` event with `action: pipeline_run`.
+                        // Wrapped in try/catch — a telemetry exception must never fail generation.
+                        // The `disableTelemetry` gate honors FERN_DISABLE_TELEMETRY (v1) and v2's
+                        // FERN_TELEMETRY_DISABLED / ~/.fernrc (which short-circuit inside the
+                        // TelemetryClient regardless).
+                        if (!disableTelemetry) {
+                            try {
+                                const replayTelemetryProps = buildReplayTelemetryProps({
+                                    pipelineResult,
+                                    generatorName: generatorInvocation.name,
+                                    generatorVersion: generatorInvocation.version,
+                                    cliVersion: workspace.cliVersion,
+                                    repoUri: selfhostedGithubConfig.uri,
+                                    automationMode: automationMode === true,
+                                    autoMerge: autoMerge === true,
+                                    skipIfNoDiff: skipIfNoDiff === true,
+                                    hasBreakingChanges,
+                                    versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
+                                    versionBump: autoVersioningVersionBump,
+                                    replayConfigEnabled: replay?.enabled === true,
+                                    noReplayFlag: noReplay === true,
+                                    githubMode: selfhostedGithubConfig.mode ?? "push",
+                                    previewMode: selfhostedGithubConfig.previewMode === true,
+                                    durationMs: pipelineDurationMs
+                                });
+                                const propsWithOverlay = {
+                                    ...replayTelemetryProps,
+                                    surface: "cli" as const,
+                                    org_id: projectConfig.organization
+                                };
+                                interactiveTaskContext.instrumentPostHogEvent({
+                                    command: "replay",
+                                    properties: propsWithOverlay
+                                });
+                                interactiveTaskContext.logger.debug(
+                                    `[telemetry] replay event sent: ${JSON.stringify(propsWithOverlay)}`
+                                );
+                            } catch (error) {
+                                interactiveTaskContext.logger.debug(
+                                    `[telemetry] failed to send replay event: ${String(error)}`
+                                );
+                            }
+                        }
                     }
 
                     if (pipelineResult.steps.github?.skippedNoDiff) {

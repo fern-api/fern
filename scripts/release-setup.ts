@@ -96,7 +96,7 @@ function createChangelogStructure(config: SoftwareConfig): void {
 - summary: |
     Brief description of your change.
     You can use multiple lines for longer descriptions.
-  type: feat  # Options: fix/chore (patch), feat/internal (minor), break (major)
+  type: feat  # Options: fix/chore (patch), feat/internal (minor). Major version bumps are not produced by the auto-release flow; edit versions.yml directly to ship a major release.
 `;
     writeFileSync(templatePath, templateContent);
 

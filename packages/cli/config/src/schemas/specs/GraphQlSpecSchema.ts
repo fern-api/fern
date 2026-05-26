@@ -13,6 +13,9 @@ export const GraphQlSpecSchema = z.object({
     /** Path to overrides file for the GraphQL spec. */
     overrides: z.union([z.string(), z.array(z.string()).nonempty()]).optional(),
 
+    /** Path to a YAML/JSON file containing named examples for GraphQL operations. */
+    examples: z.string().optional(),
+
     /** Name used to group this GraphQL spec in the docs (rendered as a top-level section). */
     name: z.string().optional()
 });

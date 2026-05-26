@@ -87,6 +87,7 @@ export interface ParsedDocsConfiguration {
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
     llmsFullTxtFile: AbsoluteFilePath | undefined;
+    robotsTxtFile: AbsoluteFilePath | undefined;
     languages: string[] | undefined;
     translations: TranslationConfig[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
@@ -579,11 +580,17 @@ export interface ProductOverlay {
     tabs: Record<string, TabOverlay> | undefined;
     /** Per-product navigation overlays from the referenced nav file */
     navigation: NavigationItemOverlay[] | undefined;
+    /** Per-product version overlays for products with multiple versions */
+    versions: VersionOverlay[] | undefined;
 }
 
 export interface VersionOverlay {
     slug: string | undefined;
     displayName: string | undefined;
+    /** Per-version tab overlays from the referenced nav file */
+    tabs: Record<string, TabOverlay> | undefined;
+    /** Per-version navigation overlays from the referenced nav file */
+    navigation: NavigationItemOverlay[] | undefined;
 }
 
 export interface AnnouncementOverlay {

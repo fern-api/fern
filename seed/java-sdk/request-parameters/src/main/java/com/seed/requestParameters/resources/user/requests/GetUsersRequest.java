@@ -5,9 +5,9 @@ package com.seed.requestParameters.resources.user.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -101,82 +101,82 @@ public final class GetUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("excludeUser")
     public List<User> getExcludeUser() {
         return excludeUser;
     }
 
-    @JsonIgnore
+    @JsonProperty("filter")
     public List<String> getFilter() {
         return filter;
     }
 
-    @JsonIgnore
+    @JsonProperty("limit")
     public int getLimit() {
         return limit;
     }
 
-    @JsonIgnore
+    @JsonProperty("id")
     public UUID getId() {
         return id;
     }
 
-    @JsonIgnore
+    @JsonProperty("date")
     public String getDate() {
         return date;
     }
 
-    @JsonIgnore
+    @JsonProperty("deadline")
     public OffsetDateTime getDeadline() {
         return deadline;
     }
 
-    @JsonIgnore
+    @JsonProperty("bytes")
     public byte[] getBytes() {
         return bytes;
     }
 
-    @JsonIgnore
+    @JsonProperty("user")
     public User getUser() {
         return user;
     }
 
-    @JsonIgnore
+    @JsonProperty("userList")
     public List<User> getUserList() {
         return userList;
     }
 
-    @JsonIgnore
+    @JsonProperty("optionalDeadline")
     public Optional<OffsetDateTime> getOptionalDeadline() {
         return optionalDeadline;
     }
 
-    @JsonIgnore
+    @JsonProperty("keyValue")
     public Map<String, String> getKeyValue() {
         return keyValue;
     }
 
-    @JsonIgnore
+    @JsonProperty("optionalString")
     public Optional<String> getOptionalString() {
         return optionalString;
     }
 
-    @JsonIgnore
+    @JsonProperty("nestedUser")
     public NestedUser getNestedUser() {
         return nestedUser;
     }
 
-    @JsonIgnore
+    @JsonProperty("optionalUser")
     public Optional<User> getOptionalUser() {
         return optionalUser;
     }
 
-    @JsonIgnore
+    @JsonProperty("longParam")
     public long getLongParam() {
         return longParam;
     }
 
-    @JsonIgnore
+    @JsonProperty("bigIntParam")
     public BigInteger getBigIntParam() {
         return bigIntParam;
     }

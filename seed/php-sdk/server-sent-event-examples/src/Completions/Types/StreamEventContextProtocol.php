@@ -4,7 +4,6 @@ namespace Seed\Completions\Types;
 
 use Seed\Core\Json\JsonSerializableType;
 use Exception;
-use Seed\Core\Json\JsonDecoder;
 
 class StreamEventContextProtocol extends JsonSerializableType
 {
@@ -199,18 +198,6 @@ class StreamEventContextProtocol extends JsonSerializableType
         }
 
         return $result;
-    }
-
-    /**
-     * @param string $json
-     */
-    public static function fromJson(string $json): static
-    {
-        $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
-            throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
-        }
-        return self::jsonDeserialize($decodedJson);
     }
 
     /**

@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Update the Swift SDK generator container base image from
+    `node:22.12-alpine3.20` to `node:22.22-alpine3.22` to address 92
+    container vulnerabilities (3 Critical, 48 High, 30 Medium, 11 Low)
+    reported by Grype. The bump pulls in newer Alpine packages
+    (libcrypto3/libssl3, musl, busybox, zlib), Node.js 22.22.x, and the
+    bundled npm transitive dependencies (cross-spawn, minimatch, glob,
+    tar, brace-expansion, ip-address, diff).
+  type: chore

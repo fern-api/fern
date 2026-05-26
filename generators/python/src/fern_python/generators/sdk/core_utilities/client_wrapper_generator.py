@@ -65,12 +65,14 @@ class ClientWrapperGenerator:
     GET_HEADERS_METHOD_NAME = "get_headers"
     GET_BASE_URL_METHOD_NAME = "get_base_url"
     GET_TIMEOUT_METHOD_NAME = "get_timeout"
+    GET_MAX_RETRIES_METHOD_NAME = "get_max_retries"
     GET_ENVIRONMENT_METHOD_NAME = "get_environment"
 
     BASE_URL_PARAMETER_NAME = "base_url"
     ENVIRONMENT_PARAMETER_NAME = "environment"
 
     TIMEOUT_PARAMETER_NAME = "timeout"
+    MAX_RETRIES_PARAMETER_NAME = "max_retries"
 
     HTTPX_CLIENT_MEMBER_NAME = "httpx_client"
 
@@ -105,10 +107,12 @@ class ClientWrapperGenerator:
         constructor_info = self._get_constructor_info()
         url_constructor_param = self._get_url_storage_info()
         timeout_param = self._get_timeout_constructor_parameter()
+        max_retries_param = self._get_max_retries_constructor_parameter()
         logging_param = self._get_logging_constructor_parameter()
         constructor_parameters = [param for param in constructor_info.constructor_parameters]
         constructor_parameters.append(url_constructor_param)
         constructor_parameters.append(timeout_param)
+        constructor_parameters.append(max_retries_param)
         constructor_parameters.append(logging_param)
 
         source_file.add_class_declaration(
@@ -167,6 +171,19 @@ class ClientWrapperGenerator:
                 name=ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME,
                 signature=AST.FunctionSignature(return_type=AST.TypeHint.optional(AST.TypeHint.float_())),
                 body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME}"),
+            ),
+        )
+
+    def _get_max_retries_constructor_parameter(self) -> ConstructorParameter:
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME,
+            type_hint=AST.TypeHint.int_(),
+            private_member_name=f"_{ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME}",
+            initializer=AST.Expression(str(self._context.custom_config.default_max_retries)),
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_MAX_RETRIES_METHOD_NAME,
+                signature=AST.FunctionSignature(return_type=AST.TypeHint.int_()),
+                body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME}"),
             ),
         )
 
@@ -424,6 +441,7 @@ class ClientWrapperGenerator:
                     base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}"),
                     base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=True,
+                    base_max_retries=AST.Expression(f"self.{ClientWrapperGenerator.GET_MAX_RETRIES_METHOD_NAME}()"),
                     async_base_headers=AST.Expression(f"self.{ClientWrapperGenerator.ASYNC_GET_HEADERS_METHOD_NAME}"),
                     logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
                 )
@@ -471,6 +489,7 @@ class ClientWrapperGenerator:
                     base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}"),
                     base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
                     is_async=is_async,
+                    base_max_retries=AST.Expression(f"self.{ClientWrapperGenerator.GET_MAX_RETRIES_METHOD_NAME}()"),
                     logging_config=AST.Expression(f"self.{ClientWrapperGenerator.LOGGING_MEMBER_NAME}"),
                 )
             )
@@ -484,6 +503,11 @@ class ClientWrapperGenerator:
             AST.NamedFunctionParameter(
                 name=param.constructor_parameter_name,
                 type_hint=param.type_hint,
+                initializer=(
+                    param.initializer
+                    if param.constructor_parameter_name == ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME
+                    else None
+                ),
             )
             for param in constructor_parameters
         ] + [
@@ -709,6 +733,33 @@ class ClientWrapperGenerator:
                         f'{constructor_parameter_name}="YOUR_{resolve_name(variable.name).screaming_snake_case.safe_name}"'
                     ),
                     docs=variable.docs,
+                )
+            )
+
+        for root_path_parameter in self._context.ir.path_parameters:
+            if root_path_parameter.location != ir_types.PathParameterLocation.ROOT:
+                continue
+            path_param_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                root_path_parameter.value_type
+            )
+            constructor_parameter_name = names.get_root_path_parameter_constructor_parameter_name(root_path_parameter)
+            client_default_initializer = self._get_client_default_initializer(root_path_parameter.client_default)
+            if client_default_initializer is not None and not path_param_type_hint.is_optional:
+                path_param_type_hint = AST.TypeHint.optional(path_param_type_hint)
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=constructor_parameter_name,
+                    private_member_name=names.get_root_path_parameter_member_name(root_path_parameter),
+                    type_hint=path_param_type_hint,
+                    initializer=(
+                        client_default_initializer
+                        if client_default_initializer is not None
+                        else AST.Expression(
+                            f'{constructor_parameter_name}="YOUR_{resolve_name(root_path_parameter.name).screaming_snake_case.safe_name}"',
+                        )
+                    ),
+                    client_default=client_default_initializer,
+                    docs=root_path_parameter.docs,
                 )
             )
 

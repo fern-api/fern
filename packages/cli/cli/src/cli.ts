@@ -1,9 +1,18 @@
 #!/usr/bin/env node
+import { spawnSync } from "node:child_process";
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
-import { runCliV2 } from "@fern-api/cli-v2";
+import type { OutputFormat } from "@fern-api/cli-v2";
+import {
+    LinkCheckClient,
+    LinkCheckError,
+    LinkCheckFormatter,
+    ProgressRenderer,
+    runCliV2,
+    SourceResolver
+} from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -32,9 +41,10 @@ import {
     loadOpenAPIFromUrl
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { askToLogin, login, logout } from "@fern-api/login";
+import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
+import chalk from "chalk";
 import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -75,6 +85,7 @@ import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOver
 import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
+import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
 import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
@@ -88,11 +99,30 @@ import { logMdxValidationResults, validateMdxFiles } from "./commands/validate/v
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
-import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
+import { installProcessHandlers } from "./telemetry/processHandlers.js";
+
+// Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
+// hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
+// reads it at init), so re-exec with it set. spawnSync doesn't use the event
+// loop, so the broken io_uring backend cannot stall the re-exec.
+if (
+    process.platform === "linux" &&
+    parseInt(process.versions.node.split(".")[0] ?? "0", 10) >= 26 &&
+    process.env.UV_USE_IO_URING !== "0"
+) {
+    const result = spawnSync(process.execPath, process.argv.slice(1), {
+        env: { ...process.env, UV_USE_IO_URING: "0" },
+        stdio: "inherit"
+    });
+    if (result.signal) {
+        process.kill(process.pid, result.signal);
+    }
+    process.exit(result.status ?? 1);
+}
 
 void runCli();
 
@@ -113,6 +143,10 @@ async function runCli() {
     if (isCompletion) {
         cliContext.suppressUpgradeMessage();
     }
+
+    // In packaged CLI runs, escaped errors (uncaughtException, unhandledRejection)
+    // would otherwise exit without firing and flushing telemetry.
+    installProcessHandlers(cliContext, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
@@ -224,6 +258,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addFdrCommand(cli, cliContext);
     addOpenAPIIrCommand(cli, cliContext);
+    addResolveSpecsCommand(cli, cliContext);
     addDynamicIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
@@ -249,7 +284,6 @@ async function tryRunCli(cliContext: CliContext) {
     addDowngradeCommand(cli, cliContext);
     addGenerateJsonschemaCommand(cli, cliContext);
     addWriteDocsDefinitionCommand(cli, cliContext);
-    addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
     addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
@@ -773,6 +807,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
                 })
+                .option("verify", {
+                    boolean: true,
+                    default: false,
+                    hidden: true,
+                    description:
+                        "Run the generator's verify.sh script in a validator container after generation (local generation only)"
+                })
                 .option("retry-rate-limited", {
                     boolean: true,
                     default: false,
@@ -906,6 +947,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
+                    verify: argv.verify,
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"]
@@ -967,6 +1009,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
+                verify: argv.verify,
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"]
@@ -1069,6 +1112,34 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
                 sdkLanguage: argv.language
+            });
+        }
+    );
+}
+
+function addResolveSpecsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "resolve-specs <path-to-output>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write resolved specs",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                }),
+        async (argv) => {
+            await resolveSpecsForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true
+                }),
+                outputDir: AbsoluteFilePath.of(resolve(cwd(), argv.pathToOutput)),
+                cliContext
             });
         }
     );
@@ -1287,16 +1358,27 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 }),
         async (argv) => {
+            // Docs validation may reference APIs outside `--api`; apply the filter
+            // only to API-level validation.
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+
             await validateWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: true
-                }),
+                project,
                 cliContext,
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
                 errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi
+                directFromOpenapi: argv.fromOpenapi,
+                commandLineApiWorkspace: argv.api
             });
         }
     );
@@ -1741,6 +1823,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("docs", "Commands for managing your docs", (yargs) => {
         addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
+        addDocsLinkCommand(yargs, cliContext);
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
@@ -2102,6 +2185,195 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
+function addDocsLinkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("link", "Manage and validate links on live docs sites", (yargs) => {
+        addDocsLinkCheckCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "check",
+        "Check for broken links on a live docs site",
+        (yargs) =>
+            yargs
+                .option("url", {
+                    type: "string",
+                    description: "Docs site URL to check (e.g. buildwithfern.com/learn)"
+                })
+                .option("output", {
+                    type: "string",
+                    description: "Output format: text, json, or csv",
+                    choices: ["text", "json", "csv"] as const,
+                    default: "text" as const
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
+
+            const { domain, docsConfigDir } = await resolveDocsLinkCheckContext(cliContext, argv.url);
+            const dashboardUrl = getDashboardBaseUrl();
+
+            const token = await cliContext.runTask((context) => askToLogin(context));
+
+            cliContext.stderr.info(`${chalk.cyan("\u25c6")} Checking links on ${chalk.cyan(domain)}...`);
+            cliContext.stderr.info("");
+
+            const client = new LinkCheckClient({
+                dashboardUrl,
+                token: token.value
+            });
+
+            const progress = new ProgressRenderer(process.stderr);
+
+            let streamInterrupted = false;
+
+            try {
+                const result = await client.run(domain, {
+                    onSitemapFetched: (data) => {
+                        progress.onSitemapFetched(data.totalPages);
+                    },
+                    onPageScraped: (data) => {
+                        progress.onPageScraped(data.pageIndex, data.totalPages);
+                    },
+                    onLinkChecked: (data) => {
+                        progress.onLinkChecked(data.linksChecked, data.totalLinks);
+                    },
+                    onStreamInterrupted: (data) => {
+                        streamInterrupted = true;
+                        progress.finish();
+                        cliContext.stderr.warn(
+                            `\u26a0 Connection lost while ${data.phase} ` +
+                                `(${data.pagesScraped} pages scraped, ${data.linksChecked}/${data.totalLinks} links checked). ` +
+                                "Showing partial results."
+                        );
+                    }
+                });
+
+                const resolver = new SourceResolver(docsConfigDir);
+                const resolved = resolver.resolve(result);
+
+                progress.finish();
+
+                const formatter = new LinkCheckFormatter(domain);
+                const output = formatter.format(resolved, argv.output as OutputFormat, {
+                    interrupted: streamInterrupted
+                });
+
+                if (argv.output === "json" || argv.output === "csv") {
+                    await writeAndDrain(process.stdout, output + "\n");
+                } else {
+                    await writeAndDrain(process.stderr, output + "\n");
+                }
+
+                if (resolved.brokenLinks.length > 0) {
+                    cliContext.failWithoutThrowing(undefined, undefined, {
+                        code: CliError.Code.ValidationError
+                    });
+                } else if (resolved.blockedLinks.length === 0 && !streamInterrupted) {
+                    cliContext.stderr.info(`${chalk.green("\u2713")} ${chalk.green("All links valid")}`);
+                }
+            } catch (error) {
+                progress.finish();
+                if (error instanceof LinkCheckError) {
+                    let code: CliError.Code;
+                    if (error.statusCode === 401 || error.statusCode === 403) {
+                        code = CliError.Code.AuthError;
+                    } else if (error.statusCode === 404) {
+                        code = CliError.Code.ConfigError;
+                    } else {
+                        code = CliError.Code.InternalError;
+                    }
+                    const message =
+                        code === CliError.Code.InternalError ? `Link check failed: ${error.message}` : error.message;
+                    cliContext.stderr.error(message);
+                    cliContext.failAndThrow(undefined, undefined, { code });
+                }
+                throw error;
+            } finally {
+                progress.finish();
+            }
+        }
+    );
+}
+
+interface DocsLinkCheckContext {
+    domain: string;
+    docsConfigDir?: string;
+}
+
+async function resolveDocsLinkCheckContext(
+    cliContext: CliContext,
+    url: string | undefined
+): Promise<DocsLinkCheckContext> {
+    const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//i, "").replace(/\/$/, "");
+
+    if (url != null) {
+        let docsConfigDir: string | undefined;
+        try {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+            docsConfigDir = project.docsWorkspaces?.absoluteFilePath;
+        } catch {
+            // Not in a fern project — that's fine, just skip local file resolution
+        }
+        return { domain: normalizeDomain(url), docsConfigDir };
+    }
+
+    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+        commandLineApiWorkspace: undefined,
+        defaultToAllApiWorkspaces: true
+    });
+
+    if (project.docsWorkspaces == null) {
+        cliContext.stderr.error(
+            "No docs configuration found.\n\n  Either add a 'docs:' section to your fern.yml, or use --url <url>."
+        );
+        return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
+    }
+
+    const instances = project.docsWorkspaces.config.instances;
+    if (instances == null || instances.length === 0) {
+        cliContext.stderr.error(
+            "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml, or use --url <url>."
+        );
+        return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
+    }
+
+    const docsConfigDir = project.docsWorkspaces.absoluteFilePath;
+
+    if (instances.length === 1 && instances[0] != null) {
+        return { domain: normalizeDomain(instances[0].url), docsConfigDir };
+    }
+
+    const available = instances.map((inst) => `  - ${inst.url}`).join("\n");
+    cliContext.stderr.error(
+        `Multiple docs instances configured. Please specify which one to check.\n\nAvailable instances:\n${available}\n\n  Use --url <url> to select one.`
+    );
+    return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
+}
+
+function writeAndDrain(stream: NodeJS.WriteStream, data: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const onError = (err: Error): void => {
+            stream.removeListener("drain", onDrain);
+            reject(err);
+        };
+        const onDrain = (): void => {
+            stream.removeListener("error", onError);
+            resolve();
+        };
+        if (stream.write(data)) {
+            resolve();
+        } else {
+            stream.once("error", onError);
+            stream.once("drain", onDrain);
+        }
+    });
+}
+
 function addDocsMdCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "check",
@@ -2210,34 +2482,6 @@ function addWriteDocsDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: 
                 }),
                 outputPath: resolve(cwd(), argv.outputPath),
                 cliContext
-            });
-        }
-    );
-}
-
-function addWriteTranslationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "write-translation",
-        "Generate translation directories for each language defined in docs.yml",
-        (yargs) =>
-            yargs.option("stub", {
-                alias: "s",
-                type: "boolean",
-                default: false,
-                description: "Return content as-is without calling the translation service"
-            }),
-        async (argv) => {
-            cliContext.instrumentPostHogEvent({
-                command: "fern write-translation"
-            });
-
-            await writeTranslationForProject({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    defaultToAllApiWorkspaces: true,
-                    commandLineApiWorkspace: undefined
-                }),
-                cliContext,
-                stub: argv.stub
             });
         }
     );
@@ -2637,7 +2881,12 @@ function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: 
  *       }
  *     ],
  *     "skippedMajor": [{ "name": "...", "current": "0.28.0", "latest": "1.37.0" }],
- *     "alreadyUpToDate": [{ "name": "...", "version": "3.65.5" }]
+ *     "alreadyUpToDate": [{ "name": "...", "version": "3.65.5" }],
+ *     "pr": {
+ *       "title": "chore(fern): upgrade CLI 4.66.0 → 4.96.0 and 1 generator",
+ *       "body": "## Fern Upgrade\n...",
+ *       "commitMessage": "chore: upgrade fern cli 4.66.0 -> 4.96.0, typescript-sdk 3.63.4 -> 3.65.5"
+ *     }
  *   }
  *
  * Example GitHub Actions usage:
@@ -3161,7 +3410,7 @@ function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                                 cliContext.failAndThrow(
                                     `Resolve failed: ${result.reason ?? "unknown error"}`,
                                     undefined,
-                                    { code: CliError.Code.InternalError }
+                                    { code: CliError.Code.UserError }
                                 );
                             }
                         }

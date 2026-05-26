@@ -189,12 +189,17 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 **Stages**:
 1. **API Schema**: Update `/fern/apis/<definition>/` → Run generator command (check `generators.yml` in each API folder)
 2. **IR Updates**: Modify `/packages/ir-sdk/fern/apis/ir-types-latest/definition/` → `pnpm ir:generate`
-3. **Versioning**: Update `CHANGELOG.md`, `VERSION`, and `/packages/cli/cli/versions.yml`
-4. **Compile**: `pnpm compile` and fix breaking changes (common: `switch` statements need new cases)
-5. **Generator Updates**: One PR for CLI/IR updates (merge first), then separate PR(s) for generator changes
-6. **IR Migrations**: Update `/packages/cli/generation/ir-migrations/` for backward compatibility
+3. **IR Versioning (REQUIRED for any change to `ir-types-latest`)**:
+   - Bump `packages/ir-sdk/fern/apis/ir-types-latest/VERSION` (minor for additive/optional fields, patch for non-schema, major only as a separate batched PR)
+   - Add an entry to `packages/ir-sdk/fern/apis/ir-types-latest/changelog/CHANGELOG.md` (hand-edited; no `changes/unreleased/` for IR)
+   - Do **not** edit `packages/cli/cli/versions.yml` `irVersion` for minor/patch — that field tracks the IR major and only changes during major bumps
+   - See `packages/ir-sdk/CLAUDE.md` for the full checklist
+4. **CLI Versioning**: Add a CLI changelog entry under `packages/cli/cli/changes/unreleased/` (drives CLI semver only — see `packages/cli/CLAUDE.md`)
+5. **Compile**: `pnpm compile` and fix breaking changes (common: `switch` statements need new cases)
+6. **Generator Updates**: One PR for CLI/IR updates (merge first), then separate PR(s) for generator changes
+7. **IR Migrations**: Only required for major IR bumps — add under `/packages/cli/generation/ir-migrations/`
 
-**Key Points**: Multiple PRs required, automatic publishing via `versions.yml`, generators use published (not workspace) IR versions
+**Key Points**: Multiple PRs required, automatic publishing via `versions.yml`, generators use published (not workspace) IR versions. Forgetting to bump `ir-types-latest/VERSION` means no new `@fern-fern/ir-sdk` is published and the new field is invisible to downstream consumers.
 
 ### Other Core Workflows
 
@@ -338,7 +343,7 @@ When creating pull requests in this repository:
 
    **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
 
-   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `openapi`, `deps`, `deps-dev`, `pydantic`, `ai-search`, `swift`, `rust`
+   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `openapi`, `deps`, `deps-dev`, `pydantic`, `ai-search`, `swift`, `rust`, `generator-cli`, `parser`, `ir`, `cli-v2`, `cli-generator`
 
    **Examples**: `chore(docs): update guidelines`, `feat(python): add new feature`, `fix(cli): resolve config loading bug`
 
@@ -346,7 +351,49 @@ When creating pull requests in this repository:
 3. **Description**: Follow the PR template in `.github/pull_request_template.md`
 4. **Testing**: Ensure all tests pass before marking PR as ready for review
 
+## Architecture Decision Records (ADRs)
+
+ADRs live in `docs/adr/` and are numbered sequentially (`0001-`, `0002-`, …).
+
+**Create an ADR when a change is cross-cutting — i.e., it affects how multiple components of the repo work together or sets a convention that all contributors must follow:**
+- A new repo-wide system or workflow (release pipelines, CI frameworks, build tooling)
+- A design decision that governs the IR or the contract between the CLI and generators broadly
+- A new architectural pattern or abstraction adopted across several packages
+- A policy change that constrains how all (or many) generators/packages must behave
+
+**Do NOT create an ADR for:**
+- Changes scoped to a single generator or package, even significant ones (new features, output format changes, config additions)
+- Bug fixes at any level
+- Dependency version bumps
+- Refactors that don't change observable behavior
+- IR additions that are additive and don't change existing generator contracts
+
+### ADR format
+
+```markdown
+# ADR NNNN: <Title>
+
+## Status
+Accepted — merged #<PR> on <date>.
+
+## Context
+Why this change was needed and what constraints shaped the design.
+
+## Decision
+What was decided and the key implementation details.
+
+## Alternatives Considered
+Other approaches evaluated and why they were rejected.
+
+## Consequences
+Trade-offs, limitations, and follow-on implications.
+```
+
+After writing the ADR, number it by finding the highest existing `docs/adr/NNNN-*.md` and incrementing by one.
+
 ## Troubleshooting
+
+For Sentry `buildwithfern` / `cli` false-positive triage, see the Devin skill at [`.devin/automation/sentry-triage/SKILL.md`](.devin/automation/sentry-triage/SKILL.md), plus [`.devin/automation/sentry-triage/DESIGN_CHOICES.md`](.devin/automation/sentry-triage/DESIGN_CHOICES.md) and the per-issue ledger files under [`.devin/automation/sentry-triage/ledger/`](.devin/automation/sentry-triage/ledger/).
 
 ### Quick Fixes by Issue Type
 - **Generator failures**: Check `docker ps` → Rebuild image → Check container logs

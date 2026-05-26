@@ -348,6 +348,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
 	f.P("MaxBufSize int")
+	f.P("MaxStreamReconnectAttempts uint")
+	f.P("DisableStreamReconnection bool")
+	f.P("DisableRetries bool")
 	if hasOAuth || hasInferred {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -361,6 +364,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		if authScheme.Bearer != nil {
 			name := authScheme.Bearer.Token.PascalCase.UnsafeName
 			f.P(name, " string")
+			f.P(name, "Func func() (string, error)")
 			declaredFields[name] = true
 		}
 		if authScheme.Basic != nil {
@@ -460,8 +464,13 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
-			f.P("if r.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" { `)
-			f.P(`header.Set("Authorization", `, `"Bearer " + r.`, authScheme.Bearer.Token.PascalCase.UnsafeName, ")")
+			name := authScheme.Bearer.Token.PascalCase.UnsafeName
+			f.P("if r.", name, ` != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.`, name, ")")
+			f.P("} else if r.", name, "Func != nil {")
+			f.P("if token, err := r.", name, `Func(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
@@ -662,6 +671,12 @@ func (f *fileWriter) writeRequestOptionStructs(
 	if err := f.writeOptionStruct("MaxBufSize", "int", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
+	if err := f.writeOptionStruct("MaxStreamReconnectAttempts", "uint", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	f.writeMarkerOptionStruct("WithoutStreamReconnectionOption", "DisableStreamReconnection", asIdempotentRequestOption)
+	f.writeMarkerOptionStruct("WithoutRetriesOption", "DisableRetries", asIdempotentRequestOption)
+
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
 			return err
@@ -682,7 +697,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
 				}
-					declaredOptionStructs[pascalCase] = true
+				declaredOptionStructs[pascalCase] = true
+
+				if err := f.writeOptionStruct(pascalCase+"Func", "func() (string, error)", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
 			}
 			if authScheme.Basic != nil {
 				usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
@@ -846,6 +865,27 @@ func (f *fileWriter) writeOptionStruct(
 	return nil
 }
 
+// writeMarkerOptionStruct emits an empty-struct option whose apply method
+// toggles boolField on RequestOptions to true. Used for opt-out options like
+// WithoutRetries / WithoutStreamReconnection where there is no user value to
+// carry, just a sentinel to flip a default.
+func (f *fileWriter) writeMarkerOptionStruct(typeName string, boolField string, asIdempotentRequestOption bool) {
+	receiver := typeNameToReceiver(typeName)
+	f.P("// ", typeName, " implements the RequestOption interface.")
+	f.P("type ", typeName, " struct{}")
+	f.P()
+	f.P("func (", receiver, " *", typeName, ") applyRequestOptions(opts *RequestOptions) {")
+	f.P("opts.", boolField, " = true")
+	f.P("}")
+	f.P()
+	if asIdempotentRequestOption {
+		f.P("func (", receiver, " *", typeName, ") applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {")
+		f.P("opts.", boolField, " = true")
+		f.P("}")
+		f.P()
+	}
+}
+
 type GeneratedAuth struct {
 	Option          ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
 	EnvironmentVars []string // e.g. ACME_API_KEY
@@ -966,6 +1006,29 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("}")
 	f.P("}")
 	f.P()
+	f.P("// WithMaxStreamReconnectAttempts caps the number of transparent mid-stream")
+	f.P("// reconnect attempts on streaming endpoints that support resumption. The")
+	f.P("// reconnect loop honors Last-Event-ID and any server-sent `retry:` directives.")
+	f.P("// Has no effect on endpoints that don't support resumption.")
+	f.P("func WithMaxStreamReconnectAttempts(attempts uint) *core.MaxStreamReconnectAttemptsOption {")
+	f.P("return &core.MaxStreamReconnectAttemptsOption{")
+	f.P("MaxStreamReconnectAttempts: attempts,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithoutStreamReconnection disables transparent mid-stream reconnection on")
+	f.P("// resumable SSE endpoints. Has no effect on non-resumable endpoints.")
+	f.P("func WithoutStreamReconnection() *core.WithoutStreamReconnectionOption {")
+	f.P("return &core.WithoutStreamReconnectionOption{}")
+	f.P("}")
+	f.P()
+	f.P("// WithoutRetries disables HTTP-level retry attempts for the request. Use this")
+	f.P("// instead of WithMaxAttempts(0), which falls through to the default of 2")
+	f.P("// attempts.")
+	f.P("func WithoutRetries() *core.WithoutRetriesOption {")
+	f.P("return &core.WithoutRetriesOption{}")
+	f.P("}")
+	f.P()
 
 	// Generate the WithEnvironment option for multi-URL environments.
 	if isMultipleBaseUrlsEnvironment(environmentsConfig) {
@@ -1023,6 +1086,16 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 			declaredPublicOptions[optionName] = true
+
+			funcOptionName := fmt.Sprintf("With%sFunc", pascalCase)
+			funcTypeName := "core." + pascalCase + "FuncOption"
+			f.P("// ", funcOptionName, " sets a function that returns the 'Authorization: Bearer' token at request time.")
+			f.P("func ", funcOptionName, "(fn func() (string, error)) *", funcTypeName, " {")
+			f.P("return &", funcTypeName, "{")
+			f.P(pascalCase, "Func: fn,")
+			f.P("}")
+			f.P("}")
+			f.P()
 		}
 		if authScheme.Basic != nil {
 			usernameOmitted := isBasicAuthUsernameOmitted(authScheme.Basic)
@@ -1448,6 +1521,7 @@ func (f *fileWriter) WriteClient(
 	f.P("&internal.CallerParams{")
 	f.P("Client: options.HTTPClient,")
 	f.P("MaxAttempts: options.MaxAttempts,")
+	f.P("DisableRetries: options.DisableRetries,")
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
@@ -1759,6 +1833,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1807,10 +1882,13 @@ func (f *fileWriter) WriteClient(
 				f.P("Terminator:", streamingInfo.Terminator, ",")
 			}
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
 			f.P("MaxBufSize: options.MaxBufSize,")
+			f.P("MaxStreamReconnectAttempts: options.MaxStreamReconnectAttempts,")
+			f.P("DisableStreamReconnection: options.DisableStreamReconnection,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
 			}
@@ -1835,6 +1913,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1953,6 +2032,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")
@@ -1991,6 +2071,7 @@ func (f *fileWriter) WriteClient(
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
 			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("DisableRetries: options.DisableRetries,")
 			f.P("BodyProperties: options.BodyProperties,")
 			f.P("QueryParameters: options.QueryParameters,")
 			f.P("Client: options.HTTPClient,")

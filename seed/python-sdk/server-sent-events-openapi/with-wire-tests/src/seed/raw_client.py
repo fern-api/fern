@@ -68,9 +68,6 @@ class RawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -172,9 +169,6 @@ class RawSeedApi:
             method="POST",
             json={
                 "query": query,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -278,9 +272,6 @@ class RawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -357,9 +348,6 @@ class RawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -435,9 +423,6 @@ class RawSeedApi:
             method="POST",
             json={
                 "query": query,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -519,9 +504,6 @@ class RawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -597,9 +579,6 @@ class RawSeedApi:
             method="POST",
             json={
                 "query": query,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1124,9 +1103,6 @@ class RawSeedApi:
                 "stream_response": stream_response,
                 "prompt": prompt,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1297,9 +1273,6 @@ class RawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -1380,9 +1353,6 @@ class AsyncRawSeedApi:
             method="POST",
             json={
                 "query": query,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1486,9 +1456,6 @@ class AsyncRawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -1591,9 +1558,6 @@ class AsyncRawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -1670,9 +1634,6 @@ class AsyncRawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -1748,9 +1709,6 @@ class AsyncRawSeedApi:
             method="POST",
             json={
                 "query": query,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1832,9 +1790,6 @@ class AsyncRawSeedApi:
             json={
                 "query": query,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
@@ -1910,9 +1865,6 @@ class AsyncRawSeedApi:
             method="POST",
             json={
                 "query": query,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -2437,9 +2389,6 @@ class AsyncRawSeedApi:
                 "stream_response": stream_response,
                 "prompt": prompt,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -2609,9 +2558,6 @@ class AsyncRawSeedApi:
             method="POST",
             json={
                 "query": query,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

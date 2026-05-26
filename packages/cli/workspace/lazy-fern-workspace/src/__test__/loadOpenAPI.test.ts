@@ -3,6 +3,7 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { tmpdir } from "os";
 import { join } from "path";
+import { vi } from "vitest";
 
 import { loadOpenAPI } from "../utils/loadOpenAPI.js";
 import { createMockTaskContext } from "./helpers/createMockTaskContext.js";
@@ -188,6 +189,28 @@ describe("loadOpenAPI", () => {
             }
         });
         expect(result.paths).toHaveProperty("/pets");
+    });
+
+    it("handles a null overlay document without throwing an internal error", async () => {
+        const specPath = join(tempDir, "openapi.yml");
+        await writeFile(specPath, yaml.dump(BASE_SPEC));
+
+        const overlayPath = join(tempDir, "overlay.yml");
+        await writeFile(overlayPath, "null\n");
+
+        const contextWithError = createMockTaskContext();
+        const error = vi.fn();
+        contextWithError.logger.error = error;
+
+        const result = await loadOpenAPI({
+            context: contextWithError,
+            absolutePathToOpenAPI: AbsoluteFilePath.of(specPath),
+            absolutePathToOpenAPIOverrides: undefined,
+            absolutePathToOpenAPIOverlays: AbsoluteFilePath.of(overlayPath)
+        });
+
+        expect(result).toMatchObject(BASE_SPEC);
+        expect(error).toHaveBeenCalledWith("Overlay file must be a YAML or JSON object");
     });
 
     it("uses x-fern-overrides-filepath extension as fallback", async () => {

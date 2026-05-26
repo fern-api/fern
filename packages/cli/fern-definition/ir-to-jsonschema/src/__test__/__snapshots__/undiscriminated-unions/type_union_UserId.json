@@ -1,4 +1,5 @@
 {
   "type": "string",
+  "description": "A user identifier (alias for string)",
   "definitions": {}
 }

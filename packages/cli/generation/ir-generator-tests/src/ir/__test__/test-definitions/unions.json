@@ -20671,6 +20671,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_types": {
@@ -20717,6 +20718,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": false,
+            "hasWebSocketInTree": false,
             "docs": null
         },
         "subpackage_union": {
@@ -20743,6 +20745,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -20764,6 +20767,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

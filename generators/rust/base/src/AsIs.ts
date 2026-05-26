@@ -96,6 +96,11 @@ const AsIsFileSpecs = {
     CiYml: {
         relativePathToDir: ".github/workflows",
         filename: "ci.yml"
+    },
+    // Documentation files
+    ContributingMd: {
+        relativePathToDir: "",
+        filename: "CONTRIBUTING.md"
     }
 } satisfies Record<string, AsIsFileSpec>;
 

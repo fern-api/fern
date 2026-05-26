@@ -1,0 +1,55 @@
+# Rust
+/target/
+**/*.rs.bk
+bin/
+!src/bin/
+lcov.info
+
+
+.emails/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# Build outputs
+/dist/
+*.tsbuildinfo
+/bin/gws-native*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Test artifacts
+*.log
+coverage/
+.nyc_output/
+download.txt
+files.jsonl
+
+# Plans (local design docs)
+docs/plans/
+
+# Generated
+demo.mp4
+download.html
+
+# Vitals OS time tracking
+.env.vitals-os
+

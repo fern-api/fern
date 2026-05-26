@@ -5,9 +5,9 @@ package com.seed.clientSideParams.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -62,7 +62,7 @@ public final class ListUsersRequest {
     /**
      * @return Page index of the results to return. First page is 0.
      */
-    @JsonIgnore
+    @JsonProperty("page")
     public Optional<Integer> getPage() {
         return page;
     }
@@ -70,7 +70,7 @@ public final class ListUsersRequest {
     /**
      * @return Number of results per page.
      */
-    @JsonIgnore
+    @JsonProperty("per_page")
     public Optional<Integer> getPerPage() {
         return perPage;
     }
@@ -78,7 +78,7 @@ public final class ListUsersRequest {
     /**
      * @return Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
      */
-    @JsonIgnore
+    @JsonProperty("include_totals")
     public Optional<Boolean> getIncludeTotals() {
         return includeTotals;
     }
@@ -86,7 +86,7 @@ public final class ListUsersRequest {
     /**
      * @return Field to sort by. Use field:order where order is 1 for ascending and -1 for descending.
      */
-    @JsonIgnore
+    @JsonProperty("sort")
     public Optional<String> getSort() {
         return sort;
     }
@@ -94,7 +94,7 @@ public final class ListUsersRequest {
     /**
      * @return Connection filter
      */
-    @JsonIgnore
+    @JsonProperty("connection")
     public Optional<String> getConnection() {
         return connection;
     }
@@ -102,7 +102,7 @@ public final class ListUsersRequest {
     /**
      * @return Query string following Lucene query string syntax
      */
-    @JsonIgnore
+    @JsonProperty("q")
     public Optional<String> getQ() {
         return q;
     }
@@ -110,7 +110,7 @@ public final class ListUsersRequest {
     /**
      * @return Search engine version (v1, v2, or v3)
      */
-    @JsonIgnore
+    @JsonProperty("search_engine")
     public Optional<String> getSearchEngine() {
         return searchEngine;
     }
@@ -118,7 +118,7 @@ public final class ListUsersRequest {
     /**
      * @return Comma-separated list of fields to include or exclude
      */
-    @JsonIgnore
+    @JsonProperty("fields")
     public Optional<String> getFields() {
         return fields;
     }

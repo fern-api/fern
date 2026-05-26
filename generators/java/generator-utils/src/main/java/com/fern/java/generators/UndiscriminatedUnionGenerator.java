@@ -601,12 +601,24 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                         .endControlFlow();
             }
         }
-        for (int i = 0; i < membersWithoutLiterals.size(); ++i) {
-            UndiscriminatedUnionMember member = membersWithoutLiterals.get(i);
+        // Sort: members with required key guards first, then unguarded (all-optional) members last.
+        // This prevents all-optional object types from greedily matching payloads intended for
+        // more specific members — e.g. PayMethodCloud (0 required keys) consuming {"achHolder":"x"}
+        // before Check (1 required key) gets a chance.
+        List<UndiscriminatedUnionMember> nonPrimitiveMembers = membersWithoutLiterals.stream()
+                .filter(m -> {
+                    TypeName tn = memberTypeNames.get(m);
+                    return !tn.isPrimitive() && !tn.isBoxedPrimitive();
+                })
+                .collect(Collectors.toList());
+        nonPrimitiveMembers.sort((a, b) -> {
+            boolean aHasGuard = !getRequiredWireKeys(a).isEmpty();
+            boolean bHasGuard = !getRequiredWireKeys(b).isEmpty();
+            if (aHasGuard == bHasGuard) return 0;
+            return aHasGuard ? -1 : 1;
+        });
+        for (UndiscriminatedUnionMember member : nonPrimitiveMembers) {
             TypeName typeName = memberTypeNames.get(member);
-            if (typeName.isPrimitive() || typeName.isBoxedPrimitive()) {
-                continue;
-            }
             List<String> requiredKeys = getRequiredWireKeys(member);
             boolean hasRequiredKeyGuard = !requiredKeys.isEmpty();
             if (hasRequiredKeyGuard) {

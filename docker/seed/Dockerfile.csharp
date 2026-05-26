@@ -1,9 +1,32 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0
 
+# Patch OS-level packages flagged by grype against the csharp-seed container.
+# The base image is Ubuntu 24.04 (noble). dist-upgrade pulls every available
+# noble-updates / noble-security fix on top of the base image, including:
+#   curl / libcurl3t64-gnutls / libcurl4t64
+#       (CVE-2026-5545, CVE-2026-6253, CVE-2026-6429, CVE-2026-7168,
+#        CVE-2026-4873, CVE-2026-5773, CVE-2026-6276)
+#   libnghttp2-14   (CVE-2026-27135)
+#   libcap2         (CVE-2026-4878)
+#   sed             (CVE-2026-5958)
+#   dpkg            (CVE-2026-2219)
+RUN apt-get update && \
+    apt-get -y --no-install-recommends dist-upgrade && \
+    apt-get -y autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 ENV PATH="$PATH:/root/.dotnet/tools"
 ENV DOTNET_NOLOGO=1
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 ENV DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+
+# PowerShell ships with the .NET SDK image but is not used by csharp-seed.
+# It vendors copies of System.Net.Http and System.Security.Cryptography.Xml
+# at vulnerable versions (System.Security.Cryptography.Xml 10.0.5 with
+# GHSA-37gx-xxp4-5rgx and GHSA-w3x6-4m5h-cxqf). Removing the PowerShell
+# install drops those DLLs without affecting seed functionality.
+RUN rm -rf /usr/share/powershell /usr/bin/pwsh
 
 WORKDIR /dotnet-warmup
 
@@ -19,22 +42,57 @@ RUN dotnet new console --output cli --no-restore && \
     dotnet build test --no-restore && \
     dotnet run --project cli --no-restore --no-build && \
     dotnet test test --no-restore --no-build && \
-    rm -rf cli lib test
+    rm -rf cli lib test && \
+    # The warm-up nunit template transitively pulls in System.Net.Http 4.3.0
+    # (CVE-2018-8292 DoS). The patched System.Net.Http [4.3.4,) is pinned
+    # in /dependencies.csproj below, so the 4.3.0 copy in the cache is dead
+    # weight that only causes grype to flag the image.
+    rm -rf /root/.nuget/packages/system.net.http/4.3.0
 
 WORKDIR /
 
-# Cache csharpier and common NuGet dependencies so generated SDK restores are fast
+# Cache csharpier and common NuGet dependencies so generated SDK restores are fast.
+#
+# Several package versions below are bumped to non-vulnerable releases per the
+# 2026-05-06 grype scan of csharp-seed:
+#   - Portable.System.DateTimeOnly  8.0.2 -> 9.0.1   (matches generator output)
+#   - System.Text.Json              8.0.5 -> 10.0.5  (also resolves transitive
+#                                                     downgrade vs Scriban.Signed)
+#   - Microsoft.Extensions.Logging.Abstractions
+#                                   8.0.2 -> 10.0.0  (resolves transitive
+#                                                     downgrade vs OpenTelemetry
+#                                                     and Grpc.Net.ClientFactory)
+#
+# Explicit overrides below pin transitively-pulled packages to fixed releases:
+#   - OpenTelemetry / OpenTelemetry.Api / OpenTelemetry.Exporter.OpenTelemetryProtocol
+#       1.14.0 (vulnerable, brought in by Microsoft.NET.Test.Sdk 18.3.0) -> 1.15.3
+#       (GHSA-q834-8qmm-v933, GHSA-g94r-2vxg-569j, GHSA-mr8r-92fq-pj8p,
+#        GHSA-4625-4j76-fww9)
+#   - Microsoft.AspNetCore.Http
+#       2.1.1-rtm (vulnerable, .NET Core 2.1 servicing) -> 2.3.9
+#       (GHSA-hxrm-9w7p-39cc)
+#   - Microsoft.AspNetCore.Server.Kestrel.Core
+#       2.3.0-rtm (vulnerable, .NET Core 2.3 servicing) -> 2.3.8
+#       (GHSA-5rrx-jjjq-q2r5 / CVE-2025-55315)
+#   - System.Text.Encodings.Web
+#       4.7.2 (whose netstandard1.0 fallback DLL still has FileVersion
+#              4.6.29812.01 and is reported by grype) -> 10.0.5
+#       (GHSA-ghhp-997w-qr28; aligned with System.Text.Json 10.0.5's transitive
+#        floor)
+#   - System.Formats.Asn1
+#       5.0.0 (transitively pulled by signing/cryptography deps) -> 10.0.5
+#       (GHSA-447r-wph3-92pm)
 RUN dotnet tool install -g csharpier --version "1.2.6" && \
     echo '<Project Sdk="Microsoft.NET.Sdk"> \
   <PropertyGroup> \
       <TargetFrameworks>net462;net8.0;net9.0;netstandard2.0</TargetFrameworks> \
   </PropertyGroup> \
   <ItemGroup> \
-      <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" /> \
+      <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.1" /> \
       <PackageReference Include="PolySharp" Version="1.15.0" /> \
       <PackageReference Include="OneOf" Version="3.0.271" /> \
       <PackageReference Include="OneOf.Extended" Version="3.0.271" /> \
-      <PackageReference Include="System.Text.Json" Version="8.0.5" /> \
+      <PackageReference Include="System.Text.Json" Version="10.0.5" /> \
       <PackageReference Include="System.Net.Http" Version="[4.3.4,)" /> \
       <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" /> \
       <PackageReference Include="Google.Protobuf" Version="3.27.2" /> \
@@ -47,12 +105,26 @@ RUN dotnet tool install -g csharpier --version "1.2.6" && \
       <PackageReference Include="NUnit.Analyzers" Version="4.12.0" /> \
       <PackageReference Include="coverlet.collector" Version="8.0.1" /> \
       <PackageReference Include="WireMock.Net" Version="2.2.0" /> \
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" /> \
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" /> \
       <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" /> \
       <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" /> \
+      <PackageReference Include="OpenTelemetry" Version="1.15.3" /> \
+      <PackageReference Include="OpenTelemetry.Api" Version="1.15.3" /> \
+      <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.3" /> \
+      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.9" /> \
+      <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.8" /> \
+      <PackageReference Include="System.Text.Encodings.Web" Version="10.0.5" /> \
+      <PackageReference Include="System.Formats.Asn1" Version="10.0.5" /> \
   </ItemGroup> \
 </Project>' > /dependencies.csproj && \
     dotnet restore /dependencies.csproj && \
-    rm /dependencies.csproj
+    rm /dependencies.csproj && \
+    # Drop System.Net.Http 4.3.0 (CVE-2018-8292): the cached package and any
+    # transitive deps.json referencing it (e.g. JmesPath.Net.Parser 1.1.0's
+    # netstandard1.3 build). Runtime only loads the newer-TFM builds.
+    rm -rf /root/.nuget/packages/system.net.http/4.3.0 && \
+    find /root/.nuget/packages -name '*.deps.json' \
+        -exec grep -l '"System.Net.Http/4.3.0"' {} + 2>/dev/null \
+        | xargs -r dirname | sort -u | xargs -r rm -rf
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]

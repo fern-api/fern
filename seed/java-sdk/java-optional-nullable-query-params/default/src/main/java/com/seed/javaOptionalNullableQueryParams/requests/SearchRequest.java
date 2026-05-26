@@ -5,13 +5,14 @@ package com.seed.javaOptionalNullableQueryParams.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.javaOptionalNullableQueryParams.core.Nullable;
+import com.seed.javaOptionalNullableQueryParams.core.NullableNonemptyFilter;
 import com.seed.javaOptionalNullableQueryParams.core.ObjectMappers;
 import com.seed.javaOptionalNullableQueryParams.core.OptionalNullable;
 import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
@@ -61,7 +62,8 @@ public final class SearchRequest {
     /**
      * @return Search query - defaults to empty string when absent
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("query")
     public OptionalNullable<String> getQuery() {
         if (query == null) {
             return OptionalNullable.absent();
@@ -72,7 +74,8 @@ public final class SearchRequest {
     /**
      * @return Max results - defaults to 10 when absent
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("limit")
     public OptionalNullable<Integer> getLimit() {
         if (limit == null) {
             return OptionalNullable.absent();
@@ -83,7 +86,8 @@ public final class SearchRequest {
     /**
      * @return Include archived items - defaults to false when absent
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("includeArchived")
     public OptionalNullable<Boolean> getIncludeArchived() {
         if (includeArchived == null) {
             return OptionalNullable.absent();
@@ -94,7 +98,8 @@ public final class SearchRequest {
     /**
      * @return Sort order - defaults to ASC when absent
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sortOrder")
     public OptionalNullable<SortOrder> getSortOrder() {
         if (sortOrder == null) {
             return OptionalNullable.absent();
@@ -105,7 +110,8 @@ public final class SearchRequest {
     /**
      * @return Optional nullable without default - should check wasSpecified
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalWithoutDefault")
     public OptionalNullable<String> getOptionalWithoutDefault() {
         if (optionalWithoutDefault == null) {
             return OptionalNullable.absent();
@@ -116,7 +122,8 @@ public final class SearchRequest {
     /**
      * @return Another optional nullable with default for comparison
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("regularOptional")
     public OptionalNullable<String> getRegularOptional() {
         if (regularOptional == null) {
             return OptionalNullable.absent();
@@ -127,11 +134,54 @@ public final class SearchRequest {
     /**
      * @return Another optional nullable without default for comparison
      */
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("regularOptionalNoDefault")
     public OptionalNullable<String> getRegularOptionalNoDefault() {
         if (regularOptionalNoDefault == null) {
             return OptionalNullable.absent();
         }
+        return regularOptionalNoDefault;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("query")
+    private OptionalNullable<String> _getQuery() {
+        return query;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("limit")
+    private OptionalNullable<Integer> _getLimit() {
+        return limit;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("includeArchived")
+    private OptionalNullable<Boolean> _getIncludeArchived() {
+        return includeArchived;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sortOrder")
+    private OptionalNullable<SortOrder> _getSortOrder() {
+        return sortOrder;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalWithoutDefault")
+    private OptionalNullable<String> _getOptionalWithoutDefault() {
+        return optionalWithoutDefault;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("regularOptional")
+    private OptionalNullable<String> _getRegularOptional() {
+        return regularOptional;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("regularOptionalNoDefault")
+    private OptionalNullable<String> _getRegularOptionalNoDefault() {
         return regularOptionalNoDefault;
     }
 

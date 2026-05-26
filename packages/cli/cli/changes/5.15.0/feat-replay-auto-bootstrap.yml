@@ -1,0 +1,5 @@
+- summary: |
+    Bake replay initialization into `fern generate`. Repos with a prior `[fern-generated]`
+    commit but no `.fern/replay.lock` now auto-bootstrap inline during the post-generation
+    pipeline — eliminating the need to run `fern replay init` as a separate step.
+  type: feat

@@ -1,4 +1,5 @@
-import { PosthogEvent } from "@fern-api/task-context";
+import { getRunIdProperties } from "@fern-api/cli-telemetry";
+import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 
 import { PosthogManager } from "./PosthogManager.js";
@@ -23,10 +24,19 @@ export class AccessTokenPosthogManager implements PosthogManager {
                     ...event,
                     ...event.properties,
                     version: process.env.CLI_VERSION,
-                    usingAccessToken: true
+                    usingAccessToken: true,
+                    ...getRunIdProperties()
                 }
             });
         }
+    }
+
+    public sendAutomationEvent(event: PosthogAutomationEvent): void {
+        this.posthog.capture({
+            distinctId: event.distinctId,
+            event: event.event,
+            properties: event.properties
+        });
     }
 
     public async flush(): Promise<void> {

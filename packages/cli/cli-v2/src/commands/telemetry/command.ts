@@ -6,9 +6,10 @@ import { addEnableCommand } from "./enable/index.js";
 import { addStatusCommand } from "./status/index.js";
 
 export function addTelemetryCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "telemetry", "Manage telemetry settings", [
-        addStatusCommand,
-        addEnableCommand,
-        addDisableCommand
-    ]);
+    commandGroup({
+        cli,
+        name: "telemetry",
+        description: "Manage telemetry settings",
+        subcommands: [addStatusCommand, addEnableCommand, addDisableCommand]
+    });
 }

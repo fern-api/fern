@@ -588,6 +588,64 @@ test_last_updated_timestamp() {
 }
 
 test_last_updated_timestamp
+
+# Test 25: Failed baseline runs (non-zero exit_code) are excluded from median
+test_excludes_failed_runs() {
+  echo "Test: History runs with non-zero exit_code are excluded from baseline"
+  setup_dirs
+  echo '{"generator":"swift-sdk","spec":"square","duration_seconds":50,"exit_code":0}' > "$PR_DIR/swift-sdk.jsonl"
+
+  # Create 5 history entries. 3 succeeded at ~700s, 2 failed mid-run at ~300s.
+  # Only the 3 successful runs should contribute to the median (700).
+  mkdir -p "$MAIN_DIR/history/run1/e2e"
+  mkdir -p "$MAIN_DIR/history/run2/e2e"
+  mkdir -p "$MAIN_DIR/history/run3/e2e"
+  mkdir -p "$MAIN_DIR/history/run4/e2e"
+  mkdir -p "$MAIN_DIR/history/run5/e2e"
+  # Generator-only baselines (all succeed)
+  for r in run1 run2 run3 run4 run5; do
+    echo '{"generator":"swift-sdk","spec":"square","duration_seconds":42,"exit_code":0}' > "$MAIN_DIR/history/$r/swift-sdk.jsonl"
+  done
+  # E2E: 3 successful runs at 690, 700, 710
+  echo '{"generator":"swift-sdk","spec":"square","duration_seconds":690,"exit_code":0}' > "$MAIN_DIR/history/run1/e2e/swift-sdk.jsonl"
+  echo '{"generator":"swift-sdk","spec":"square","duration_seconds":700,"exit_code":0}' > "$MAIN_DIR/history/run2/e2e/swift-sdk.jsonl"
+  echo '{"generator":"swift-sdk","spec":"square","duration_seconds":710,"exit_code":0}' > "$MAIN_DIR/history/run3/e2e/swift-sdk.jsonl"
+  # E2E: 2 failed runs with misleading short durations
+  echo '{"generator":"swift-sdk","spec":"square","duration_seconds":150,"exit_code":1}' > "$MAIN_DIR/history/run4/e2e/swift-sdk.jsonl"
+  echo '{"generator":"swift-sdk","spec":"square","duration_seconds":160,"exit_code":1}' > "$MAIN_DIR/history/run5/e2e/swift-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-05-08T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  # Median of [690, 700, 710] = 700, not polluted by failed runs.
+  # Generator-only column has n=5 (all succeeded), E2E column has n=3 (2 failed excluded).
+  assert_contains "$OUTPUT" "700s (n=3)" "E2E median excludes failed runs (n=3 not n=5)"
+  assert_contains "$OUTPUT" "42s (n=5)" "Generator-only baseline still includes all 5 runs"
+}
+
+test_excludes_failed_runs
+
+# Test 26: Generator-only baseline also excludes failed runs
+test_excludes_failed_gen_runs() {
+  echo "Test: Generator-only baseline excludes runs with non-zero exit_code"
+  setup_dirs
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":100,"exit_code":0}' > "$PR_DIR/ts-sdk.jsonl"
+
+  mkdir -p "$MAIN_DIR/history/run1"
+  mkdir -p "$MAIN_DIR/history/run2"
+  mkdir -p "$MAIN_DIR/history/run3"
+  # 2 successful runs: 80, 90 -> median = 85
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":80,"exit_code":0}' > "$MAIN_DIR/history/run1/ts-sdk.jsonl"
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":90,"exit_code":0}' > "$MAIN_DIR/history/run2/ts-sdk.jsonl"
+  # 1 failed run with short duration
+  echo '{"generator":"ts-sdk","spec":"square","duration_seconds":10,"exit_code":1}' > "$MAIN_DIR/history/run3/ts-sdk.jsonl"
+
+  OUTPUT=$(BASELINE_TIMESTAMP="2026-05-08T04:00:00Z" bash "$REPORT_SCRIPT" "$PR_DIR" "$MAIN_DIR")
+
+  assert_contains "$OUTPUT" "85s (n=2)" "Generator-only median excludes failed run"
+}
+
+test_excludes_failed_gen_runs
+
 echo ""
 echo "=== PostHog JSON validation tests ==="
 echo ""

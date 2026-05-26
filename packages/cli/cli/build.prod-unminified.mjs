@@ -10,7 +10,7 @@ buildCli({
         DEFAULT_VENUS_ORIGIN: "https://venus.buildwithfern.com",
         DEFAULT_FDR_ORIGIN: "https://registry.buildwithfern.com",
         VENUS_AUDIENCE: "venus-prod",
-        FERN_DASHBOARD_URL: "https://dashboard.buildwithfern.com",
+        FERN_DASHBOARD_URL_DEFAULT: "https://dashboard.buildwithfern.com",
         LOCAL_STORAGE_FOLDER: ".fern",
         POSTHOG_API_KEY: process.env.POSTHOG_API_KEY ?? "",
         SENTRY_DSN: process.env.SENTRY_DSN ?? "",
@@ -22,7 +22,7 @@ buildCli({
         CLI_NAME: "fern",
         CLI_PACKAGE_NAME: "fern-api"
     },
-    runtimeDependencies: ["@boundaryml/baml"],
+
     packageJsonOverrides: {
         name: "fern-api",
         bin: { fern: "cli.cjs" }

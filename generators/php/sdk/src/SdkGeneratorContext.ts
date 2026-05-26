@@ -222,6 +222,29 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
+    public getSseStreamClassReference(eventType: php.Type): php.ClassReference {
+        return php.classReference({
+            name: "SseStream",
+            namespace: this.getCoreClientNamespace(),
+            generics: [eventType]
+        });
+    }
+
+    public getJsonStreamClassReference(chunkType: php.Type): php.ClassReference {
+        return php.classReference({
+            name: "JsonStream",
+            namespace: this.getCoreClientNamespace(),
+            generics: [chunkType]
+        });
+    }
+
+    public getTextStreamClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "TextStream",
+            namespace: this.getCoreClientNamespace()
+        });
+    }
+
     public getOffsetPagerClassReference(): php.ClassReference {
         return php.classReference({
             name: "OffsetPager",
@@ -565,12 +588,17 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getRawAsIsFiles(): string[] {
+        const files: string[] = [];
+        if (!this.config.whitelabel) {
+            files.push(AsIsFiles.ContributingMd);
+        }
+        files.push(AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon);
         // When wire tests are enabled, we generate a custom phpunit.xml with the wire test bootstrap
         // so we exclude the default phpunit.xml here
-        if (this.customConfig.enableWireTests) {
-            return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon];
+        if (!this.customConfig.enableWireTests) {
+            files.push(AsIsFiles.PhpUnitXml);
         }
-        return [AsIsFiles.GitIgnore, AsIsFiles.PhpStanNeon, AsIsFiles.PhpUnitXml];
+        return files;
     }
 
     public getCoreAsIsFiles(): string[] {
@@ -586,7 +614,22 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.MultipartFormData,
             AsIsFiles.MultipartFormDataPart,
             ...this.getCorePagerAsIsFiles(),
+            ...this.getCoreStreamAsIsFiles(),
             ...this.getCoreSerializationAsIsFiles()
+        ];
+    }
+
+    private getCoreStreamAsIsFiles(): string[] {
+        if (!this.hasStreaming()) {
+            return [];
+        }
+        return [
+            AsIsFiles.Stream,
+            AsIsFiles.StreamFormat,
+            AsIsFiles.SseStream,
+            AsIsFiles.SseEvent,
+            AsIsFiles.JsonStream,
+            AsIsFiles.TextStream
         ];
     }
 
@@ -613,9 +656,14 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     public getCoreTestAsIsFiles(): string[] {
         return [
             AsIsFiles.RawClientTest,
+            ...this.getCoreStreamTestAsIsFiles(),
             ...this.getCorePagerTestAsIsFiles(),
             ...this.getCoreSerializationTestAsIsFiles()
         ];
+    }
+
+    private getCoreStreamTestAsIsFiles(): string[] {
+        return this.hasStreaming() ? [AsIsFiles.StreamTest] : [];
     }
 
     private getCorePagerTestAsIsFiles(): string[] {
@@ -750,6 +798,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public hasPagination(): boolean {
         return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
+    }
+
+    public hasStreaming(): boolean {
+        return this.ir.sdkConfig.hasStreamingEndpoints;
     }
 
     public hasCustomPagination(): boolean {

@@ -133,9 +133,12 @@ export class LegacyRemoteGenerationRunner {
                 skipFernignore: args.skipFernignore,
                 absolutePathToPreview,
                 whitelabel: undefined,
+                replay: fernWorkspace.generatorsConfiguration?.replay,
                 dynamicIrOnly: false,
                 retryRateLimited: false,
-                requireEnvVars: args.requireEnvVars ?? true
+                requireEnvVars: args.requireEnvVars ?? true,
+                verify: false,
+                disableTelemetry: !this.context.telemetry.isTelemetryEnabled()
             });
 
             if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {

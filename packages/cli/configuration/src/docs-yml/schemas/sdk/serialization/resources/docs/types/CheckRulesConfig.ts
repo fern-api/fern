@@ -16,6 +16,7 @@ export const CheckRulesConfig: core.serialization.ObjectSchema<
     noCircularRedirects: core.serialization.property("no-circular-redirects", CheckRuleSeverity.optional()),
     validDocsEndpoints: core.serialization.property("valid-docs-endpoints", CheckRuleSeverity.optional()),
     missingRedirects: core.serialization.property("missing-redirects", CheckRuleSeverity.optional()),
+    validChangelogSlug: core.serialization.property("valid-changelog-slug", CheckRuleSeverity.optional()),
 });
 
 export declare namespace CheckRulesConfig {
@@ -27,5 +28,6 @@ export declare namespace CheckRulesConfig {
         "no-circular-redirects"?: CheckRuleSeverity.Raw | null;
         "valid-docs-endpoints"?: CheckRuleSeverity.Raw | null;
         "missing-redirects"?: CheckRuleSeverity.Raw | null;
+        "valid-changelog-slug"?: CheckRuleSeverity.Raw | null;
     }
 }

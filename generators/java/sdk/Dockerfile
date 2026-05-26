@@ -1,8 +1,6 @@
 # Stage 1: Java V2
-# Updated: WebSocket feature support added
-# Updated Node.js to 24.14.1 to fix CVE-2026-21710, CVE-2026-21717, CVE-2026-21713,
-# CVE-2026-21714, CVE-2026-21712, CVE-2026-21715, CVE-2026-21716
-FROM node:24.14.1-bookworm AS node
+# Non-slim trixie because the patch RUN steps below shell out to curl and tar.
+FROM node:24.16-trixie AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
@@ -76,6 +74,11 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # Security update 2026-05-04: add glibc/glibc-common/glibc-minimal-langpack
 # (CVE-2026-4046, iconv() assertion failure when converting IBM1390/IBM1399
 # inputs; fixed in glibc 2.34-231.amzn2023.0.4)
+# Security update 2026-05-18: add libgcrypt (CVE-2026-41989, heap-based
+# buffer overflow in gcry_pk_decrypt; fixed in 1.10.2-1.amzn2023.0.3),
+# krb5-libs (CVE-2026-40356 integer underflow OOB read, CVE-2026-40355
+# NULL pointer dereference in gss_accept_sec_context; fixed in
+# 1.21.3-7.amzn2023.0.1)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -98,7 +101,9 @@ RUN dnf --releasever=latest update -y \
     libnghttp2 \
     glibc \
     glibc-common \
-    glibc-minimal-langpack && \
+    glibc-minimal-langpack \
+    libgcrypt \
+    krb5-libs && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
@@ -116,43 +121,6 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-# Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
-RUN npm install -g npm@11.12.0 && npm install -g glob@11.1.0
-
-# Patch npm's bundled glob to 11.1.0 (npm bundles its own copy at node_modules/npm/node_modules/glob)
-RUN cd /usr/local/lib/node_modules/npm/node_modules && \
-    rm -rf glob && \
-    npm pack glob@11.1.0 && \
-    tar -xzf glob-11.1.0.tgz && \
-    mv package glob && \
-    rm glob-11.1.0.tgz
-
-# Patch npm's bundled tar to 7.5.11 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx,
-# GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative Linkpath)
-# Note: We use curl instead of npm pack because npm pack depends on tar itself
-RUN cd /usr/local/lib/node_modules/npm/node_modules && \
-    rm -rf tar && \
-    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.11.tgz -o tar-7.5.11.tgz && \
-    tar -xzf tar-7.5.11.tgz && \
-    mv package tar && \
-    rm tar-7.5.11.tgz
-
-# Patch minimatch to 10.2.3 to fix GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74
-# (ReDoS via combinatorial backtracking in matchOne() and nested *() extglobs)
-RUN for dir in \
-      /usr/local/lib/node_modules/glob/node_modules/minimatch \
-      /usr/local/lib/node_modules/npm/node_modules/minimatch \
-      /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch; do \
-      if [ -d "$dir" ]; then \
-        rm -rf "$dir" && \
-        cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.3.tgz -o minimatch-10.2.3.tgz && \
-        tar -xzf minimatch-10.2.3.tgz && \
-        mv package minimatch && \
-        rm minimatch-10.2.3.tgz; \
-      fi; \
-    done
-
 # Patch picomatch to 4.0.4 to fix GHSA-c2c7-rcm5-vvqj (ReDoS via extglob quantifiers),
 # GHSA-3v7f-55p6-f55p (Method Injection in POSIX Character Classes)
 # Location: npm's bundled tinyglobby depends on picomatch
@@ -168,18 +136,32 @@ RUN for dir in \
       fi; \
     done
 
-# Patch brace-expansion to 5.0.5 to fix GHSA-f886-m6hf-6m8v
-# (Zero-step sequence causes process hang and memory exhaustion)
-# Location: npm bundles its own copy of brace-expansion
+# Patch brace-expansion to 5.0.6 to fix GHSA-jxxr-4gwj-5jf2
+# (zero-step sequence DoS; bundled by npm 11.12.1 at 5.0.4).
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
       if [ -d "$dir" ]; then \
         rm -rf "$dir" && \
         cd "$(dirname "$dir")" && \
-        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz -o brace-expansion-5.0.5.tgz && \
-        tar -xzf brace-expansion-5.0.5.tgz && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
-        rm brace-expansion-5.0.5.tgz; \
+        rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
+# Patch ip-address to 10.2.0 to fix GHSA-v2v4-37r5-5v8g (CVE-2026-42338)
+# (XSS in Address6 HTML-emitting methods; fixed in 10.1.1)
+# Location: npm bundles its own copy via socks-proxy-agent -> socks -> ip-address
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/ip-address; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/ip-address/-/ip-address-10.2.0.tgz -o ip-address-10.2.0.tgz && \
+        tar -xzf ip-address-10.2.0.tgz && \
+        mv package ip-address && \
+        rm ip-address-10.2.0.tgz; \
       fi; \
     done
 

@@ -54,10 +54,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.vendor.createVendor(request: .init(
-        name: "name",
-        address: "address"
-    ))
+    _ = try await client.vendor.createVendor(request: .init(name: "name"))
 }
 
 try await main()

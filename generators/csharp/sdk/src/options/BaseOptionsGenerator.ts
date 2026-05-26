@@ -94,13 +94,18 @@ export class BaseOptionsGenerator extends WithGeneration {
 
     public getTimeoutField(classOrInterface: ast.Interface | ast.Class, { optional, includeInitializer }: OptionArgs) {
         const type = this.System.TimeSpan;
+        const configured = this.settings.defaultTimeoutInSeconds;
+        const initializer =
+            configured === "infinity"
+                ? this.csharp.codeblock("System.Threading.Timeout.InfiniteTimeSpan")
+                : this.csharp.codeblock(`TimeSpan.FromSeconds(${configured ?? 30})`);
         classOrInterface.addField({
             origin: classOrInterface.explicit("Timeout"),
             access: ast.Access.Public,
             get: true,
             init: true,
             type: optional ? type.asOptional() : type,
-            initializer: includeInitializer ? this.csharp.codeblock("TimeSpan.FromSeconds(30)") : undefined,
+            initializer: includeInitializer ? initializer : undefined,
             summary: "The timeout for the request."
         });
     }

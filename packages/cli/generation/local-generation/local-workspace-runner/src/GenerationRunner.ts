@@ -3,16 +3,20 @@ import {
     detectInvocationSource,
     FernWorkspace,
     getOriginGitCommit,
-    getOriginGitCommitIsDirty
+    getOriginGitCommitIsDirty,
+    type Spec
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli/pipeline";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
+import { assertVerifyPipelineSucceeded } from "./assertVerifyPipelineSucceeded.js";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
@@ -33,6 +37,39 @@ export declare namespace GenerationRunner {
         ai: generatorsYml.AiServicesSchema | undefined;
         skipFernignore?: boolean;
         skipAutogenerationIfManualExamplesExist?: boolean;
+        /**
+         * When true, run `PostGenerationPipeline` with `VerificationStep` after the
+         * generator finishes writing files. Exercises the same validator-container
+         * code path that `fern generate --local --verify` (and Fiddle) use today, so
+         * seed CI catches regressions in the verify.sh + validator-image plumbing
+         * end-to-end.
+         *
+         * Currently wired only for the TypeScript SDK generator, because it is the
+         * only generator emitting `.fern/verify.sh` today (FER-9681 will extend
+         * emission to the remaining language generators).
+         */
+        verify?: boolean;
+        /**
+         * Raw API spec files (OpenAPI, protobuf, etc.) to pre-process and mount
+         * into the generator container. When provided, specs are bundled, overrides
+         * merged, overlays applied, and the result is written as compact JSON.
+         */
+        rawApiSpecs?: Spec[];
+        /**
+         * Container runtime to use when `verify` is true. Defaults to "docker".
+         * Ignored when `verify` is false.
+         */
+        verifyRunner?: ContainerRunner;
+        /**
+         * Optional override for the validator-image tag. `VerificationStep` derives
+         * the image as `{generatorName}-validator:{version}` from
+         * `generatorVersions[generatorName]`. Seed sets this to `"latest"` because
+         * the generator runs at the `:local` tag locally but no `:local` validator
+         * image is built today — the published `:latest` is the closest analog.
+         * When undefined, the generator invocation's own version is used (the
+         * behavior `runLocalGenerationForWorkspace` relies on).
+         */
+        verifyValidatorVersion?: string;
     }
 }
 
@@ -54,7 +91,11 @@ export class GenerationRunner {
         skipUnstableDynamicSnippetTests,
         inspect,
         skipFernignore,
-        skipAutogenerationIfManualExamplesExist
+        skipAutogenerationIfManualExamplesExist,
+        rawApiSpecs,
+        verify,
+        verifyRunner,
+        verifyValidatorVersion
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -82,7 +123,8 @@ export class GenerationRunner {
                                 absolutePathToFernConfig,
                                 inspect,
                                 skipFernignore,
-                                skipAutogenerationIfManualExamplesExist
+                                skipAutogenerationIfManualExamplesExist,
+                                rawApiSpecs
                             });
 
                             interactiveTaskContext.logger.info(
@@ -105,6 +147,17 @@ export class GenerationRunner {
                                 interactiveTaskContext.logger.info(
                                     `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${generatorInvocation.language}`
                                 );
+                            }
+
+                            if (verify === true) {
+                                await runVerifyPipeline({
+                                    outputDir: generatorInvocation.absolutePathToLocalOutput,
+                                    generatorName: generatorInvocation.name,
+                                    generatorVersion: verifyValidatorVersion ?? generatorInvocation.version,
+                                    cliVersion: workspace.cliVersion,
+                                    runner: verifyRunner ?? "docker",
+                                    context: interactiveTaskContext
+                                });
                             }
                         } catch (error) {
                             if (error instanceof TaskAbortSignal) {
@@ -134,7 +187,8 @@ export class GenerationRunner {
         absolutePathToFernConfig,
         inspect,
         skipFernignore,
-        skipAutogenerationIfManualExamplesExist
+        skipAutogenerationIfManualExamplesExist,
+        rawApiSpecs
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -147,6 +201,7 @@ export class GenerationRunner {
         inspect: boolean;
         skipFernignore?: boolean;
         skipAutogenerationIfManualExamplesExist?: boolean;
+        rawApiSpecs?: Spec[];
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -224,7 +279,55 @@ export class GenerationRunner {
             runner: undefined,
             ai: workspace.generatorsConfiguration?.ai,
             absolutePathToSpecRepo: undefined,
-            skipFernignore
+            skipFernignore,
+            rawApiSpecs
         });
     }
+}
+
+/**
+ * Mirrors the `verifyOnlyPipelineEnabled` branch of `runLocalGenerationForWorkspace`:
+ * instantiates `PostGenerationPipeline` with only `VerificationStep` enabled so the
+ * same validator-container + image-derivation + `execInContainer` flow used by
+ * `fern generate --local --verify` is exercised end-to-end by the seed runner.
+ *
+ * `VerificationStep` no-ops when `.fern/verify.sh` is absent, so wiring a generator
+ * that does not emit the script (today: anything other than the TypeScript SDK)
+ * is a safe no-op rather than a hard failure.
+ */
+async function runVerifyPipeline({
+    outputDir,
+    generatorName,
+    generatorVersion,
+    cliVersion,
+    runner,
+    context
+}: {
+    outputDir: AbsoluteFilePath;
+    generatorName: string;
+    generatorVersion: string;
+    cliVersion: string | undefined;
+    runner: ContainerRunner;
+    context: TaskContext;
+}): Promise<void> {
+    const pipelineLogger: PipelineLogger = {
+        debug: (msg) => context.logger.debug(msg),
+        info: (msg) => context.logger.info(msg),
+        warn: (msg) => context.logger.warn(msg),
+        error: (msg) => context.logger.error(msg)
+    };
+
+    const pipeline = new PostGenerationPipeline(
+        {
+            outputDir,
+            verify: { enabled: true, runner },
+            cliVersion: cliVersion ?? "unknown",
+            generatorVersions: { [generatorName]: generatorVersion },
+            generatorName
+        },
+        pipelineLogger
+    );
+
+    const pipelineResult = await pipeline.run();
+    assertVerifyPipelineSucceeded(pipelineResult, generatorName);
 }

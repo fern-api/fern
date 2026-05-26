@@ -5,5 +5,10 @@ import { addClearCommand } from "./clear/index.js";
 import { addShowCommand } from "./show/index.js";
 
 export function addCacheCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "cache", "Manage the local cache", [addShowCommand, addClearCommand]);
+    commandGroup({
+        cli,
+        name: "cache",
+        description: "Manage the local cache",
+        subcommands: [addShowCommand, addClearCommand]
+    });
 }

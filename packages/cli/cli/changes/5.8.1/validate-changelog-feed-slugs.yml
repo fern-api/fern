@@ -1,0 +1,7 @@
+- summary: |
+    Add a `valid-changelog-slug` rule to `fern check` that errors when a changelog's
+    effective URL slug is not one of the values served as an RSS/Atom/JSON feed by
+    the docs platform (`changelog`, `changelogs`, `release-notes`, `releasenotes`,
+    `whats-new`, `whatsnew`). Severity defaults to `error` and can be overridden
+    via `check.rules.valid-changelog-slug` in `docs.yml`.
+  type: fix

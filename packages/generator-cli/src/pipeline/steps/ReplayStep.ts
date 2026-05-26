@@ -21,8 +21,7 @@ export class ReplayStep extends BaseStep {
         logger: PipelineLogger,
         private readonly config: ReplayStepConfig,
         private readonly cliVersion?: string,
-        private readonly generatorVersions?: Record<string, string>,
-        private readonly generatorName?: string
+        private readonly generatorVersions?: Record<string, string>
     ) {
         super(outputDir, logger);
     }
@@ -31,12 +30,34 @@ export class ReplayStep extends BaseStep {
         const generationCommit = context.previousStepResults.generationCommit;
         const prepared = generationCommit?.preparedReplay;
 
-        if (generationCommit != null && prepared == null) {
-            // GenerationCommitStep ran but replay isn't initialized (no lockfile) or
-            // prepare failed. Mirror what replayRun would have returned in that case.
+        if (generationCommit != null && generationCommit.errorMessage != null && prepared == null) {
+            // Prepare crashed in the prior step (errorMessage is set; prepared is
+            // null). Surface as a replay failure but keep step.success === true so
+            // the orchestrator does NOT propagate to pipelineResult.success = false
+            // (which would abort generation). Telemetry and logs read replayCrashed.
             return {
                 executed: true,
                 success: true,
+                replayCrashed: true,
+                errorMessage: generationCommit.errorMessage,
+                autoBootstrapped: false,
+                bootstrapAttempted: generationCommit.bootstrapAttempted === true,
+                flow: "normal-regeneration",
+                patchesDetected: 0,
+                patchesApplied: 0,
+                patchesWithConflicts: 0
+            };
+        }
+
+        if (generationCommit != null && prepared == null) {
+            // GenerationCommitStep ran successfully but replay isn't initialized
+            // (no lockfile and bootstrap couldn't anchor on a prior generation).
+            // Legitimate first-generation flow.
+            return {
+                executed: true,
+                success: true,
+                autoBootstrapped: false,
+                bootstrapAttempted: generationCommit.bootstrapAttempted === true,
                 flow: "first-generation",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -55,10 +76,29 @@ export class ReplayStep extends BaseStep {
                       cliVersion: this.cliVersion,
                       generatorVersions: this.generatorVersions,
                       stageOnly: this.config.stageOnly ?? false,
-                      generatorName: this.generatorName,
                       skipApplication: this.config.skipApplication,
                       logger: this.logger
                   });
+
+        if (result.failureReason != null) {
+            // Prepare or apply crashed at runtime — surface via replayCrashed so
+            // telemetry/logs reflect reality, but keep step.success === true so
+            // the orchestrator does NOT abort generation on replay errors.
+            return {
+                executed: true,
+                success: true,
+                replayCrashed: true,
+                errorMessage: result.failureReason,
+                previousGenerationSha: result.previousGenerationSha ?? undefined,
+                currentGenerationSha: result.currentGenerationSha ?? undefined,
+                autoBootstrapped: result.autoBootstrapped,
+                bootstrapAttempted: result.bootstrapAttempted,
+                flow: "normal-regeneration",
+                patchesDetected: 0,
+                patchesApplied: 0,
+                patchesWithConflicts: 0
+            };
+        }
 
         if (result.report == null) {
             return {
@@ -66,7 +106,8 @@ export class ReplayStep extends BaseStep {
                 success: true,
                 previousGenerationSha: result.previousGenerationSha ?? undefined,
                 currentGenerationSha: result.currentGenerationSha ?? undefined,
-                baseBranchHead: result.baseBranchHead ?? undefined,
+                autoBootstrapped: result.autoBootstrapped,
+                bootstrapAttempted: result.bootstrapAttempted,
                 flow: "first-generation",
                 patchesDetected: 0,
                 patchesApplied: 0,
@@ -80,7 +121,8 @@ export class ReplayStep extends BaseStep {
             success: true,
             previousGenerationSha: result.previousGenerationSha ?? undefined,
             currentGenerationSha: result.currentGenerationSha ?? undefined,
-            baseBranchHead: result.baseBranchHead ?? undefined,
+            autoBootstrapped: result.autoBootstrapped,
+            bootstrapAttempted: result.bootstrapAttempted,
             flow: report.flow,
             patchesDetected: report.patchesDetected,
             patchesApplied: report.patchesApplied,
@@ -89,6 +131,11 @@ export class ReplayStep extends BaseStep {
             patchesRepointed: report.patchesRepointed,
             patchesContentRebased: report.patchesContentRebased,
             patchesKeptAsUserOwned: report.patchesKeptAsUserOwned,
+            patchesSkipped: report.patchesSkipped,
+            patchesPartiallyApplied: report.patchesPartiallyApplied,
+            patchesConflictResolved: report.patchesConflictResolved,
+            patchesReverted: report.patchesReverted,
+            patchesRefreshed: report.patchesRefreshed,
             unresolvedPatches: report.unresolvedPatches?.map((info) => ({
                 patchId: info.patchId,
                 patchMessage: info.patchMessage,

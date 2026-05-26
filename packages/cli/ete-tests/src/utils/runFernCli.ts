@@ -15,6 +15,11 @@ export async function runFernCli(
     { includeAuthToken = true, signal, ...execaOptions }: RunFernCliOptions = {}
 ): Promise<loggingExeca.ReturnValue> {
     const env = {
+        // When the test runner itself runs in GitHub Actions, `GITHUB_ACTIONS=true` would be
+        // inherited by the spawned CLI and trigger the GHA annotation hook, polluting stdout
+        // with `::error::` / `::warning::` lines that break exact-match assertions in ete tests.
+        // Tests that want to exercise annotation behavior can override this via the `env` arg.
+        GITHUB_ACTIONS: "",
         ...execaOptions?.env,
         ...(includeAuthToken ? { FERN_TOKEN: process.env.FERN_ORG_TOKEN_DEV } : {})
     };
@@ -48,6 +53,9 @@ export function captureFernCli(
         {
             ...execaOptions,
             env: {
+                // See `runFernCli` for the rationale — suppress inherited `GITHUB_ACTIONS=true`
+                // so the CLI doesn't emit annotation workflow commands on stdout under CI.
+                GITHUB_ACTIONS: "",
                 ...execaOptions?.env,
                 FERN_TOKEN: process.env.FERN_ORG_TOKEN_DEV
             },

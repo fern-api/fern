@@ -1,0 +1,13 @@
+{
+  "name": "fern-typescript-sdk-validator-warm-cache",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pre-installed during the validator image build so that common Fern-generated SDK devDependencies are present in the pnpm store. Must be kept in sync with the deps emitted by the TS SDK generator.",
+  "devDependencies": {
+    "@biomejs/biome": "2.4.10",
+    "@types/node": "^20.0.0",
+    "msw": "2.12.14",
+    "typescript": "~5.9.3",
+    "vitest": "^4.1.1"
+  }
+}

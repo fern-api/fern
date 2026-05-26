@@ -1,0 +1,116 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "/files/file-1",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"id\":\"file-1\",\"type\":\"file\",\"name\":\"sample.txt\"}"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/folders/folder-1",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"id\":\"folder-1\",\"type\":\"folder\",\"name\":\"my-docs\"}"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/users/me",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"id\":\"user-1\",\"type\":\"user\",\"name\":\"Test User\"}"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/users/user-1",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"id\":\"user-1\",\"type\":\"user\",\"name\":\"Test User\"}"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/users",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"total_count\":1,\"entries\":[{\"id\":\"user-1\",\"type\":\"user\",\"name\":\"Test User\"}]}"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/folders/folder-1/items",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"total_count\":1,\"entries\":[{\"id\":\"file-1\",\"type\":\"file\",\"name\":\"sample.txt\"}]}"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/reports",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"data\":[{\"id\":\"rpt-1\",\"name\":\"Q1\"},{\"id\":\"rpt-2\",\"name\":\"Q2\"}],\"meta\":{\"total\":2,\"page\":1}}"
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "/reports/stats",
+        "headers": {
+          "Authorization": {"matches": "Bearer .+"}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "{\"result\":{\"payload\":{\"value\":42,\"unit\":\"reports\"}},\"meta\":{\"server_time\":\"2024-01-01\"}}"
+      }
+    }
+  ]
+}

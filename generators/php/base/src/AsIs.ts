@@ -1,5 +1,6 @@
 export enum AsIsFiles {
     // Top-level files.
+    ContributingMd = "CONTRIBUTING.md",
     GithubCiYml = "github-ci.yml",
     GitIgnore = ".gitignore",
     PhpStanNeon = "phpstan.neon",
@@ -12,7 +13,14 @@ export enum AsIsFiles {
     RetryDecoratingClient = "Client/RetryDecoratingClient.Template.php",
     HttpClientBuilder = "Client/HttpClientBuilder.Template.php",
     RawClientTest = "Client/RawClientTest.Template.php",
+    StreamTest = "Client/StreamTest.Template.php",
     MockHttpClient = "Client/MockHttpClient.Template.php",
+    Stream = "Client/Stream.Template.php",
+    StreamFormat = "Client/StreamFormat.Template.php",
+    SseStream = "Client/SseStream.Template.php",
+    SseEvent = "Client/SseEvent.Template.php",
+    JsonStream = "Client/JsonStream.Template.php",
+    TextStream = "Client/TextStream.Template.php",
 
     // Core/Json files.
     JsonApiRequest = "Json/JsonApiRequest.Template.php",

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { buildGeneratorsYmlUrl } from "../GeneratorRunResult.js";
+import { buildGeneratorsYmlUrl, resolveGithubWorkspaceRelativePath } from "../GeneratorRunResult.js";
 
 const ENV_KEYS = ["GITHUB_SERVER_URL", "GITHUB_REPOSITORY", "GITHUB_REF_NAME", "GITHUB_WORKSPACE"] as const;
 
@@ -111,6 +111,53 @@ describe("buildGeneratorsYmlUrl", () => {
         process.env.GITHUB_REF_NAME = "feature/deep-branch";
         expect(buildGeneratorsYmlUrl("/workspace/fern/generators.yml", 1)).toBe(
             "https://github.com/acme/config/blob/feature/deep-branch/fern/generators.yml#L1"
+        );
+    });
+});
+
+describe("resolveGithubWorkspaceRelativePath", () => {
+    const saved = process.env.GITHUB_WORKSPACE;
+    afterEach(() => {
+        if (saved == null) {
+            delete process.env.GITHUB_WORKSPACE;
+        } else {
+            process.env.GITHUB_WORKSPACE = saved;
+        }
+    });
+
+    it("returns null when absolutePath is undefined", () => {
+        process.env.GITHUB_WORKSPACE = "/workspace";
+        expect(resolveGithubWorkspaceRelativePath(undefined)).toBeNull();
+    });
+
+    it("returns null when GITHUB_WORKSPACE is unset", () => {
+        delete process.env.GITHUB_WORKSPACE;
+        expect(resolveGithubWorkspaceRelativePath("/anywhere/file.yml")).toBeNull();
+    });
+
+    it("returns the workspace-relative path when the absolute path is inside the workspace", () => {
+        process.env.GITHUB_WORKSPACE = "/home/runner/work/config/config";
+        expect(resolveGithubWorkspaceRelativePath("/home/runner/work/config/config/fern/generators.yml")).toBe(
+            "fern/generators.yml"
+        );
+    });
+
+    it("returns null for absolute paths outside the workspace", () => {
+        process.env.GITHUB_WORKSPACE = "/home/runner/work/config/config";
+        expect(resolveGithubWorkspaceRelativePath("/tmp/outside/generators.yml")).toBeNull();
+    });
+
+    it("guards against the sibling-prefix collision (workspace=/a does not match /a2/...)", () => {
+        // Same defense as buildGeneratorsYmlUrl — we rely on appending a trailing slash before
+        // the startsWith check, otherwise `/work/foo` would match `/work/foo2/x.yml`.
+        process.env.GITHUB_WORKSPACE = "/home/runner/work/config";
+        expect(resolveGithubWorkspaceRelativePath("/home/runner/work/config2/fern/generators.yml")).toBeNull();
+    });
+
+    it("handles a trailing-slash workspace path without doubling the separator", () => {
+        process.env.GITHUB_WORKSPACE = "/workspace/";
+        expect(resolveGithubWorkspaceRelativePath("/workspace/fern/apis/foo/generators.yml")).toBe(
+            "fern/apis/foo/generators.yml"
         );
     });
 });

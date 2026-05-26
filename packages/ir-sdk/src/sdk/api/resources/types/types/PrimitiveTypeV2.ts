@@ -11,7 +11,7 @@ export type PrimitiveTypeV2 =
     | FernIr.PrimitiveTypeV2.Double
     | FernIr.PrimitiveTypeV2.Boolean
     | FernIr.PrimitiveTypeV2.String
-    | FernIr.PrimitiveTypeV2.Date_
+    | FernIr.PrimitiveTypeV2.Date
     | FernIr.PrimitiveTypeV2.DateTime
     | FernIr.PrimitiveTypeV2.DateTimeRfc2822
     | FernIr.PrimitiveTypeV2.Uuid
@@ -51,7 +51,7 @@ export namespace PrimitiveTypeV2 {
         type: "string";
     }
 
-    export interface Date_ extends FernIr.DateType, _Utils {
+    export interface Date extends FernIr.DateType, _Utils {
         type: "date";
     }
 
@@ -203,12 +203,12 @@ export const PrimitiveTypeV2 = {
         };
     },
 
-    date: (value: FernIr.DateType): FernIr.PrimitiveTypeV2.Date_ => {
+    date: (value: FernIr.DateType): FernIr.PrimitiveTypeV2.Date => {
         return {
             ...value,
             type: "date",
             _visit: function <_Result>(
-                this: FernIr.PrimitiveTypeV2.Date_,
+                this: FernIr.PrimitiveTypeV2.Date,
                 visitor: FernIr.PrimitiveTypeV2._Visitor<_Result>,
             ) {
                 return FernIr.PrimitiveTypeV2._visit(this, visitor);

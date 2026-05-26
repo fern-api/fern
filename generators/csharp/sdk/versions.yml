@@ -1,4 +1,115 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.66.7
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
+- version: 2.66.6
+  changelogEntry:
+    - summary: |
+        `MockServerTestGenerator` now normalizes nullable date-time query and header parameters to millisecond precision, matching the fix previously applied to `MockEndpointGenerator`. Without this, mock-server tests for nullable date-time fields emitted matchers like `"2024-01-15T09:30:00Z"` while the SDK actually sent `"2024-01-15T09:30:00.000Z"`.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 66
+- version: 2.66.5
+  changelogEntry:
+    - summary: |
+        Mock-server tests now serialize nullable date-time query and header parameters with millisecond precision so they match what the runtime sends. Previously, when a date-time field was wrapped in a nullable container (e.g. with `respect-nullable-schemas: true` and `coerce-optional-schemas-to-nullable: false`), the generated `WithParam("since", "2024-01-15T09:30:00Z")` omitted milliseconds while the SDK actually sent `2024-01-15T09:30:00.000Z`, causing WireMock to return 404.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 2.66.4
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 2.66.3
+  changelogEntry:
+    - summary: |
+        Bump WireMock.Net from 2.2.0 to 2.6.0 in generated test projects to resolve Snyk
+        vulnerability reports flagging the older version.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 2.66.2
+  changelogEntry:
+    - summary: |
+        Patch C# SDK generator container CVEs flagged in the AWS ECR / grype scan.
+        Switch the apk upgrade to pick up the latest Alpine 3.23 patches (nghttp2,
+        openssl, libcrypto, libssl, sqlite-libs, expat, etc.), pin a non-vulnerable
+        set of `System.*` NuGet dependencies, drop the bundled PowerShell warmup
+        so its vendored `System.Net.Http 4.3.0` / `System.Security.Cryptography.Xml`
+        DLLs are no longer included in the published image, and clear the
+        `System.Net.Http 4.3.0` artifact the `/dependencies.csproj` warmup leaves
+        in the NuGet cache after restore.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 2.66.1
+  changelogEntry:
+    - summary: |
+        Bump the C# SDK and C# model generator containers' Node base image from
+        `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+        with the rest of the Fern generator containers on a single Node major
+        version (Node 24) and picks up Node 24's CVE patches. The bundled npm
+        11.12.1 in `node:24.15` already ships patched `brace-expansion@5.0.4`, so
+        the C# SDK's `brace-expansion 2.0.3` replacement step is removed. The
+        `ip-address` and `picomatch` patches are retained because the bundled
+        versions in `node:24.15` (10.1.0 and 4.0.3 respectively) are still
+        vulnerable.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 2.66.0
+  changelogEntry:
+    - summary: |
+        Add a `default-timeout-in-seconds` config option to the C# SDK generator.
+        When set, the generated `ClientOptions.Timeout` defaults to the configured
+        value (or `Timeout.InfiniteTimeSpan` when set to `"infinity"`) instead of
+        the previously hardcoded 30 seconds. SDK users can still override the
+        timeout per-request via `RequestOptions.Timeout`.
+      type: feat
+    - summary: |
+        Add an opt-in `user-agent-name-from-package` custom config option. When set
+        to `true`, the generated client falls back to a
+        `<NuGetPackageId>/<version>` `User-Agent` header when no
+        `platformHeaders.userAgent` is set in the IR (e.g. for SDKs imported from
+        OpenAPI), matching the TypeScript generator's npm-package-name fallback.
+        Defaults to `false`, preserving the existing behavior of emitting no
+        `User-Agent` header in that case.
+      type: feat
+  createdAt: "2026-05-08"
+  irVersion: 66
+- version: 2.65.2
+  changelogEntry:
+    - summary: |
+        Bump generator container Node.js base image to `node:22.22-alpine3.23` and
+        apply latest Alpine package security updates at build time.
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
+- version: 2.65.1
+  changelogEntry:
+    - summary: |
+        Patch the C# SDK generator container to remediate the 40 vulnerabilities
+        reported by the 2026-05-06 grype scan. Bump the Node.js base image to
+        22.22.2-alpine3.22 (fixes Node binary CVEs and upgrades npm-bundled
+        cross-spawn, minimatch, glob, tar, and diff), remove the unused PowerShell
+        install bundled with `dotnet/sdk:10.0-alpine` to drop the vulnerable
+        System.Security.Cryptography.Xml 10.0.5 DLL flagged by GHSA-37gx-xxp4-5rgx
+        and GHSA-w3x6-4m5h-cxqf, run `apk upgrade` to pick up the nghttp2-libs
+        CVE-2026-27135 fix, and patch npm's bundled ip-address (10.1.1),
+        picomatch (4.0.4), and brace-expansion (2.0.3).
+      type: chore
+  createdAt: "2026-05-07"
+  irVersion: 66
 - version: 2.65.0
   changelogEntry:
     - summary: |

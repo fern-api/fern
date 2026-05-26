@@ -1,7 +1,7 @@
 import { File, GeneratorError, GeneratorNotificationService, getWireValue } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, RootAsIsFiles, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
@@ -29,6 +29,7 @@ import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCusto
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "./utils/convertIr.js";
+import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly defaultCustomConfig: SdkCustomConfigSchema = {
@@ -88,7 +89,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
         await Promise.all([
             this.generateReadme(context, dynamicIr, sharedSnippetsGenerator),
-            this.generateReference(context, sharedSnippetsGenerator)
+            this.generateReference(context, sharedSnippetsGenerator),
+            this.generateRootAsIsFiles(context)
         ]);
     }
 
@@ -134,6 +136,15 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         }
     }
 
+    private async generateRootAsIsFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.config.whitelabel) {
+            const content = await RootAsIsFiles.Contributing.loadContents();
+            context.project.addRootFiles(
+                new File(RootAsIsFiles.Contributing.filename, RelativeFilePath.of(""), content)
+            );
+        }
+    }
+
     private generateSnippets(
         dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
         snippetsGenerator: DynamicSnippetsGenerator
@@ -142,7 +153,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+            for (const endpointExample of selectExamplesForSnippets(endpoint.examples)) {
                 const generatedSnippet = snippetsGenerator.generateSync(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );

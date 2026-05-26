@@ -80,10 +80,13 @@ vi.mock("@fern-api/cli-ai", async () => {
     const actual = await vi.importActual("@fern-api/cli-ai");
     return {
         ...actual,
-        b: {
-            withOptions: mockWithOptions
-        },
-        configureBamlClient: vi.fn().mockReturnValue({})
+        loadBamlDependencies: vi.fn().mockResolvedValue({
+            BamlClient: {
+                withOptions: mockWithOptions
+            },
+            configureBamlClient: vi.fn().mockReturnValue({}),
+            ClientRegistry: class ClientRegistry {}
+        })
     };
 });
 
