@@ -214,6 +214,15 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 if (organization.ok) {
+                    if (isCliGenerationDisabled(organization.body)) {
+                        interactiveTaskContext.failWithoutThrowing(
+                            "CLI generator usage is not enabled for your organization. " +
+                                "Please contact support or your organization admin to enable this feature.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                        return;
+                    }
                     if (organization.body.isWhitelabled) {
                         if (intermediateRepresentation.readmeConfig == null) {
                             intermediateRepresentation.readmeConfig = emptyReadmeConfig;
@@ -830,4 +839,15 @@ function getSelfhostedGithubConfig(
         };
     }
     return undefined;
+}
+
+/**
+ * Checks if CLI generation is disabled for the organization.
+ * Forward-compatible with the `cliGeneratorsEnabled` field that Venus will add to
+ * the Organization response. The SDK's passthrough deserialization preserves it at runtime.
+ * Only gates when the property is explicitly `false`; absent/undefined means allowed.
+ */
+function isCliGenerationDisabled(org: FernVenusApi.Organization): boolean {
+    const extended = org as FernVenusApi.Organization & { cliGeneratorsEnabled?: boolean };
+    return extended.cliGeneratorsEnabled === false;
 }

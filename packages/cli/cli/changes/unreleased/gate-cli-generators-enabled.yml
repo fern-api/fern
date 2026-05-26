@@ -1,0 +1,5 @@
+- summary: |
+    Gate CLI generator usage with an org-level `cliGeneratorsEnabled` flag from Venus.
+    When the flag is explicitly `false`, generation is blocked with an actionable error message.
+    This is forward-compatible — existing organizations without the flag are unaffected.
+  type: feat

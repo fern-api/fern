@@ -20,6 +20,7 @@ import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
+import type { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
@@ -197,6 +198,14 @@ export async function runRemoteGenerationForGenerator({
         const orgResponse = await venus.organization.get(projectConfig.organization);
 
         if (orgResponse.ok) {
+            if (isCliGenerationDisabled(orgResponse.body)) {
+                interactiveTaskContext.failAndThrow(
+                    "CLI generator usage is not enabled for your organization. " +
+                        "Please contact support or your organization admin to enable this feature.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             if (orgResponse.body.isWhitelabled) {
                 if (ir.readmeConfig == null) {
                     ir.readmeConfig = emptyReadmeConfig;
@@ -577,4 +586,15 @@ export function resolveVersionFallback(resolvedVersion: string | undefined): str
         return undefined;
     }
     return resolvedVersion;
+}
+
+/**
+ * Checks if CLI generation is disabled for the organization.
+ * Forward-compatible with the `cliGeneratorsEnabled` field that Venus will add to
+ * the Organization response. The SDK's passthrough deserialization preserves it at runtime.
+ * Only gates when the property is explicitly `false`; absent/undefined means allowed.
+ */
+function isCliGenerationDisabled(org: FernVenusApi.Organization): boolean {
+    const extended = org as FernVenusApi.Organization & { cliGeneratorsEnabled?: boolean };
+    return extended.cliGeneratorsEnabled === false;
 }
