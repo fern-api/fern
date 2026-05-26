@@ -79,12 +79,15 @@ export function renderReadme(args: {
         lines.push("");
         lines.push("For example:");
         lines.push("");
-        const firstEnvVar = extractEnvVars(authBindings[0]!)[0];
-        lines.push("```bash");
-        lines.push(`export ${firstEnvVar}="your-token"`);
-        lines.push(`${binaryName} --help`);
-        lines.push("```");
-        lines.push("");
+        const firstBinding = authBindings[0];
+        const firstEnvVar = firstBinding != null ? extractEnvVars(firstBinding)[0] : undefined;
+        if (firstEnvVar != null) {
+            lines.push("```bash");
+            lines.push(`export ${firstEnvVar}="your-token"`);
+            lines.push(`${binaryName} --help`);
+            lines.push("```");
+            lines.push("");
+        }
     }
 
     return lines.join("\n");
@@ -100,7 +103,10 @@ function extractEnvVars(binding: DetectedAuthBinding): string[] {
     const envVars: string[] = [];
     let match: RegExpExecArray | null;
     while ((match = envVarPattern.exec(binding.rustCall)) !== null) {
-        envVars.push(match[1]!);
+        const captured = match[1];
+        if (captured != null) {
+            envVars.push(captured);
+        }
     }
     return envVars;
 }
