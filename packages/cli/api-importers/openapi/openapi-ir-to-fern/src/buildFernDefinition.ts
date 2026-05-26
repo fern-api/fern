@@ -53,10 +53,13 @@ function addSchemas({
                 declarationDepth: 0,
                 variant: "read"
             });
-            context.builder.addType(declarationFile, {
-                name: readDeclaration.name ?? id,
-                schema: readDeclaration.schema
-            });
+            const readName = readDeclaration.name ?? id;
+            if (!context.builder.isNameDeclaredInOtherFile(readName, declarationFile)) {
+                context.builder.addType(declarationFile, {
+                    name: readName,
+                    schema: readDeclaration.schema
+                });
+            }
 
             // Generate Write variant (without readOnly properties, original name)
             const writeDeclaration = buildObjectTypeDeclaration({
@@ -68,10 +71,13 @@ function addSchemas({
                 skipReadonlyProperties: true,
                 variant: "write"
             });
-            context.builder.addType(declarationFile, {
-                name: writeDeclaration.name ?? id,
-                schema: writeDeclaration.schema
-            });
+            const writeName = writeDeclaration.name ?? id;
+            if (!context.builder.isNameDeclaredInOtherFile(writeName, declarationFile)) {
+                context.builder.addType(declarationFile, {
+                    name: writeName,
+                    schema: writeDeclaration.schema
+                });
+            }
 
             continue;
         }
@@ -91,10 +97,13 @@ function addSchemas({
                 skipReadonlyProperties: true,
                 variant: "write"
             });
-            context.builder.addType(declarationFile, {
-                name: writeDeclaration.name ?? id,
-                schema: writeDeclaration.schema
-            });
+            const writeName = writeDeclaration.name ?? id;
+            if (!context.builder.isNameDeclaredInOtherFile(writeName, declarationFile)) {
+                context.builder.addType(declarationFile, {
+                    name: writeName,
+                    schema: writeDeclaration.schema
+                });
+            }
 
             continue;
         }
@@ -116,21 +125,32 @@ function addSchemas({
             variant
         });
 
+        const typeName = typeDeclaration.name ?? id;
+
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
         if (isRawAliasDefinition(typeDeclaration.schema)) {
             const aliasType = getTypeFromTypeReference(typeDeclaration.schema);
             if (
-                aliasType === (typeDeclaration.name ?? id) ||
-                aliasType === `optional<${typeDeclaration.name ?? id}>` ||
-                aliasType === `nullable<${typeDeclaration.name ?? id}>` ||
-                aliasType === `optional<nullable<${typeDeclaration.name ?? id}>>`
+                aliasType === typeName ||
+                aliasType === `optional<${typeName}>` ||
+                aliasType === `nullable<${typeName}>` ||
+                aliasType === `optional<nullable<${typeName}>>`
             ) {
                 continue;
             }
         }
 
+        // Skip component schemas whose name collides with a type or request wrapper
+        // already declared in a different file within the same package. This happens
+        // when an OpenAPI spec defines both a component schema and an identical inline
+        // request/response body on an endpoint — the endpoint-generated type takes
+        // precedence since it is associated with the correct service file.
+        if (context.builder.isNameDeclaredInOtherFile(typeName, declarationFile)) {
+            continue;
+        }
+
         context.builder.addType(declarationFile, {
-            name: typeDeclaration.name ?? id,
+            name: typeName,
             schema: typeDeclaration.schema
         });
     }

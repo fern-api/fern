@@ -1,6 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
-import { AbsoluteFilePath, basename, dirname, join, RelativeFilePath, relative } from "@fern-api/path-utils";
+import { AbsoluteFilePath, basename, dirname, join, RelativeFilePath, relative, sep } from "@fern-api/path-utils";
 import { camelCase, isEqual } from "lodash-es";
 
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory.js";
@@ -66,6 +66,12 @@ export interface FernDefinitionBuilder {
 
     addType(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }): void;
 
+    /**
+     * Returns true if a type or request wrapper with the given name is already
+     * declared in a different file within the same Fern package (directory).
+     */
+    isNameDeclaredInOtherFile(name: string, file: RelativeFilePath): boolean;
+
     addError(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
@@ -118,12 +124,26 @@ export interface FernDefinition {
     definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema>;
 }
 
+/**
+ * Returns the package (parent directory) for a given file path.
+ * Root-level files return an empty string.
+ */
+function getPackageForFile(file: RelativeFilePath): string {
+    const parts = file.split(sep);
+    if (parts.length <= 1) {
+        return "";
+    }
+    return parts.slice(0, -1).join(sep);
+}
+
 export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private root: FernDefinitionDirectory;
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
     private rootPathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined = undefined;
+    /** Tracks declared type/request-wrapper names per package to detect cross-file collisions. */
+    private declaredNamesByPackage = new Map<string, Map<string, RelativeFilePath>>();
 
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
@@ -346,6 +366,30 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.types = {};
         }
         fernFile.types[name] = schema;
+        this.trackDeclaredName(name, file);
+    }
+
+    public isNameDeclaredInOtherFile(name: string, file: RelativeFilePath): boolean {
+        const pkg = getPackageForFile(file);
+        const packageNames = this.declaredNamesByPackage.get(pkg);
+        if (packageNames == null) {
+            return false;
+        }
+        const existingFile = packageNames.get(name);
+        return existingFile != null && existingFile !== file;
+    }
+
+    private trackDeclaredName(name: string, file: RelativeFilePath): void {
+        const pkg = getPackageForFile(file);
+        let packageNames = this.declaredNamesByPackage.get(pkg);
+        if (packageNames == null) {
+            packageNames = new Map();
+            this.declaredNamesByPackage.set(pkg, packageNames);
+        }
+        // First declaration wins; don't overwrite
+        if (!packageNames.has(name)) {
+            packageNames.set(name, file);
+        }
     }
 
     public addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void {
@@ -431,6 +475,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.service.source = source;
         }
         fernFile.service.endpoints[name] = schema;
+
+        // Track request wrapper names so that addSchemas() can detect collisions
+        if (typeof schema.request !== "string" && schema.request?.name != null) {
+            this.trackDeclaredName(schema.request.name, file);
+        }
     }
 
     public addWebhook(

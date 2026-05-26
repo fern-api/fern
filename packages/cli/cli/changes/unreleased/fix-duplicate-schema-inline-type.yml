@@ -1,0 +1,6 @@
+- summary: |
+    Fix duplicate type declarations when an OpenAPI spec defines both a component
+    schema and an identical inline request/response body on an endpoint. The
+    endpoint-generated type now takes precedence and the redundant component schema
+    is skipped, preventing "already declared" errors during fern check.
+  type: fix

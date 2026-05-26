@@ -1,0 +1,197 @@
+openapi: 3.0.1
+info:
+  title: Duplicate Schema Inline Type Test
+  description: >
+    Tests that component schemas do not collide with inline request/response types
+    generated from endpoints. This reproduces a pattern where an OpenAPI spec defines
+    both a component schema and an identical inline request/response body on an endpoint,
+    causing duplicate type declarations across different Fern definition files.
+  version: v1
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    # These component schemas are defined but NOT referenced via $ref by any endpoint.
+    # Endpoints instead define identical inline bodies.
+    CreateConfigurationRequest:
+      type: object
+      description: Request body for creating a configuration.
+      properties:
+        displayName:
+          type: string
+          description: The display name.
+        rules:
+          type: array
+          items:
+            type: string
+      required:
+        - displayName
+        - rules
+    UpdateConfigurationRequest:
+      type: object
+      required:
+        - displayName
+        - rules
+      properties:
+        displayName:
+          type: string
+        rules:
+          type: array
+          items:
+            type: string
+    ListItemsResponse:
+      type: object
+      required:
+        - items
+        - meta
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+        meta:
+          type: object
+          properties:
+            pageSize:
+              type: integer
+            nextToken:
+              type: string
+          required:
+            - pageSize
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    OperatorVersion:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: integer
+servers:
+  - url: https://api.example.com
+tags:
+  - name: Configurations
+    description: Configuration management endpoints.
+  - name: Items
+    description: Item retrieval endpoints.
+paths:
+  /v1/configurations:
+    post:
+      summary: Create a Configuration
+      tags:
+        - Configurations
+      operationId: CreateConfiguration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Request body for creating a configuration.
+              properties:
+                displayName:
+                  type: string
+                  description: The display name.
+                rules:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - displayName
+                - rules
+      responses:
+        "201":
+          description: Configuration created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  displayName:
+                    type: string
+  /v1/configurations/{id}:
+    put:
+      summary: Update a Configuration
+      tags:
+        - Configurations
+      operationId: UpdateConfiguration
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - displayName
+                - rules
+              properties:
+                displayName:
+                  type: string
+                rules:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Configuration updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  displayName:
+                    type: string
+  /v1/items:
+    get:
+      summary: List Items
+      tags:
+        - Items
+      operationId: ListItems
+      parameters:
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A list of items.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - items
+                  - meta
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Item"
+                  meta:
+                    type: object
+                    properties:
+                      pageSize:
+                        type: integer
+                      nextToken:
+                        type: string
+                    required:
+                      - pageSize
