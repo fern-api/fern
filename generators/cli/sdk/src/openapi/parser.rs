@@ -2871,6 +2871,21 @@ fn flatten_body_params(
     flatten_body_params_prefix(schema, component_schemas, depth, "")
 }
 
+/// True when the schema admits JSON `null` *and* its base type is a scalar
+/// the CLI lowers to a single flag (`string` / `integer` / `number` /
+/// `boolean`). Composite types (`array`, `object`) stay false even when the
+/// schema marks them nullable — see ADR-0003 for why the null-sentinel
+/// surface is scalar-only.
+fn is_scalar_nullable(obj: &OpenApiSchemaObject) -> bool {
+    if !obj.is_nullable() {
+        return false;
+    }
+    matches!(
+        obj.schema_type(),
+        Some("string") | Some("integer") | Some("number") | Some("boolean"),
+    )
+}
+
 fn flatten_body_params_prefix(
     schema: &OpenApiSchemaObject,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,
@@ -2926,6 +2941,7 @@ fn flatten_body_params_prefix(
                         enum_values: effective_enum_values(resolved),
                         default_value: const_default,
                         repeated: is_array,
+                        nullable: is_scalar_nullable(resolved),
                         ..Default::default()
                     },
                 );
@@ -2963,6 +2979,7 @@ fn flatten_body_params_prefix(
                 enum_values: effective_enum_values(prop),
                 default_value: const_default,
                 repeated: is_array,
+                nullable: is_scalar_nullable(prop),
                 ..Default::default()
             },
         );
@@ -8551,6 +8568,126 @@ components:
         assert!(s_31.nullable);
         assert_eq!(s_30.schema_type.as_deref(), Some("object"));
         assert_eq!(s_31.schema_type.as_deref(), Some("object"));
+    }
+
+    #[test]
+    fn test_flatten_body_params_marks_scalar_nullable_30() {
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              userId:
+                type: string
+                nullable: true
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let user_id = params.get("userId").expect("userId flag should be emitted");
+        assert!(user_id.nullable, "scalar nullable (3.0) must propagate to MethodParameter");
+    }
+
+    #[test]
+    fn test_flatten_body_params_marks_scalar_nullable_31() {
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              userId:
+                type: ["string", "null"]
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let user_id = params.get("userId").expect("userId flag should be emitted");
+        assert!(user_id.nullable, "scalar nullable (3.1) must propagate to MethodParameter");
+    }
+
+    #[test]
+    fn test_flatten_body_params_non_nullable_scalar_stays_false() {
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              userId:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let user_id = params.get("userId").unwrap();
+        assert!(!user_id.nullable);
+    }
+
+    #[test]
+    fn test_flatten_body_params_nullable_integer_and_boolean_and_number() {
+        // Three scalar variants beyond string: all must propagate nullable.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              count:
+                type: ["integer", "null"]
+              active:
+                type: ["boolean", "null"]
+              ratio:
+                type: ["number", "null"]
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        assert!(params["count"].nullable);
+        assert!(params["active"].nullable);
+        assert!(params["ratio"].nullable);
+    }
+
+    #[test]
+    fn test_flatten_body_params_non_scalar_nullable_not_propagated() {
+        // type: [array, null] and type: [object, null] must NOT set
+        // param.nullable=true. Arrays + nullable would collide with
+        // ArgAction::Append; object-nullable has no parent flag to attach to.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              tags:
+                type: ["array", "null"]
+                items:
+                  type: string
+              metadata:
+                type: ["object", "null"]
+                properties:
+                  code:
+                    type: string
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        // tags is an array → repeated, single flag, nullable must be false.
+        assert!(!params["tags"].nullable, "nullable array must not set param.nullable");
+        // metadata is flattened to metadata.code; the only emitted flag is
+        // the inner scalar, which is non-nullable.
+        assert!(!params["metadata.code"].nullable);
+    }
+
+    #[test]
+    fn test_flatten_body_params_nested_nullable_via_dot_notation() {
+        // metadata.code where code is nullable: dot-notation should preserve
+        // the nullable flag on the leaf.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              metadata:
+                type: object
+                properties:
+                  code:
+                    type: ["string", "null"]
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        assert!(params["metadata.code"].nullable);
     }
 
     #[test]

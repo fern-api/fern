@@ -1785,10 +1785,15 @@ pub(crate) fn collect_params_from_flags(
         let json_value = match (from_default, &param_def.default_value) {
             (true, Some(typed)) => typed.clone(),
             _ => {
-                // For object-typed params (e.g. deepObject query parameters),
-                // attempt JSON parsing so deepObject serialization receives a
-                // Value::Object rather than a string.
-                if param_def.param_type.as_deref() == Some("object") {
+                // Null sentinel: on user-supplied input (not default-injected)
+                // to a nullable scalar param, the literal "null" becomes
+                // `Value::Null` on the wire. See ADR-0003.
+                if param_def.nullable && value == "null" {
+                    serde_json::Value::Null
+                } else if param_def.param_type.as_deref() == Some("object") {
+                    // For object-typed params (e.g. deepObject query parameters),
+                    // attempt JSON parsing so deepObject serialization receives a
+                    // Value::Object rather than a string.
                     serde_json::from_str(value.as_str())
                         .unwrap_or_else(|_| serde_json::Value::String(value.clone()))
                 } else {
@@ -2566,6 +2571,100 @@ mod tests {
         let override_str = matches.get_one::<String>("params").map(|s| s.as_str());
         let result = collect_params_from_flags(&matches, &method, override_str).unwrap();
         assert_eq!(result.get("uuid").unwrap().as_str().unwrap(), "from-json");
+    }
+
+    #[test]
+    fn test_collect_params_null_sentinel_on_nullable_param() {
+        // `--user-id null` on a nullable scalar body param must produce
+        // serde_json::Value::Null, not Value::String("null").
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "userId".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("userId").long("user-id"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--user-id", "null"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(result.get("userId"), Some(&serde_json::Value::Null));
+    }
+
+    #[test]
+    fn test_collect_params_null_string_on_non_nullable_param_unchanged() {
+        // `--field null` on a non-nullable string param keeps current
+        // behavior: passes the four-character string through unchanged.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "code".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: false,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("code").long("code"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--code", "null"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("code").and_then(|v| v.as_str()),
+            Some("null"),
+            "literal 'null' must pass through unchanged on non-nullable fields",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_null_sentinel_does_not_apply_to_defaults() {
+        // When clap injects an `x-fern-default` value that happens to be the
+        // string "null", we must NOT convert it to Value::Null — the user
+        // didn't ask for null, the default did. The value_source check is
+        // load-bearing here.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "userId".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: true,
+                default_value: Some(serde_json::Value::String("fallback".into())),
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("userId")
+                    .long("user-id")
+                    .default_value("fallback"),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        // Omit the flag → clap fills "fallback" from default.
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        // The typed default flows through, NOT a JSON null.
+        assert_eq!(
+            result.get("userId"),
+            Some(&serde_json::Value::String("fallback".into())),
+        );
     }
 
     #[test]

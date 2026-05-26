@@ -43,6 +43,12 @@ describe("applyCargoTomlPatch", () => {
         expect(patched).not.toContain('path = "src/bin/strip_schema.rs"');
     });
 
+    it("strips the openapi-31-fixture [[bin]] block — template-author dev bin, paired with cli/openapi-31-fixture/** in SDK_IGNORE", () => {
+        const patched = applyCargoTomlPatch(TEMPLATE_CARGO_TOML, "acme-cli");
+        expect(patched).not.toContain('name = "openapi-31-fixture"');
+        expect(patched).not.toContain('path = "cli/openapi-31-fixture/main.rs"');
+    });
+
     it("strips the template-author comment about Fern's package metadata", () => {
         // The comment block at the top of the file is meant for SDK
         // template authors, not customers.

@@ -2662,6 +2662,13 @@ fn validate_property(
         return;
     }
 
+    // Null on a nullable property is always valid — short-circuits type
+    // checking that would otherwise reject `null` for a `string` /
+    // `integer` / etc. base type.
+    if prop_schema.nullable && value.is_null() {
+        return;
+    }
+
     // 2. Type checking
     if let Some(expected_type) = &prop_schema.prop_type {
         let type_matches = match (expected_type.as_str(), value) {
@@ -3835,6 +3842,62 @@ mod tests {
 
         let body = json!({ "name": "My File" });
         assert!(validate_body_against_schema(&body, "File", &doc).is_ok());
+    }
+
+    #[test]
+    fn test_validate_body_accepts_null_on_nullable_property() {
+        // A property whose schema declares `nullable: true` must accept JSON
+        // null without raising "Expected type 'string', found null".
+        let mut properties = HashMap::new();
+        properties.insert(
+            "userId".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                nullable: true,
+                ..Default::default()
+            },
+        );
+        let schemas = HashMap::from([(
+            "Event".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({ "userId": null });
+        assert!(
+            validate_body_against_schema(&body, "Event", &doc).is_ok(),
+            "JSON null on a nullable: true property must validate",
+        );
+    }
+
+    #[test]
+    fn test_validate_body_rejects_null_on_non_nullable_property() {
+        // Regression guard: a property with no `nullable` flag must still
+        // reject JSON null. Keeps the validator strict outside the explicit
+        // nullable opt-in.
+        let mut properties = HashMap::new();
+        properties.insert(
+            "code".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        );
+        let schemas = HashMap::from([(
+            "Item".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({ "code": null });
+        let result = validate_body_against_schema(&body, "Item", &doc);
+        assert!(result.is_err(), "null on non-nullable property must still be rejected");
     }
 
     #[test]

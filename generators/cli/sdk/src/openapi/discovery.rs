@@ -914,6 +914,15 @@ pub struct MethodParameter {
     /// implicit default (no badge).
     #[serde(default)]
     pub availability: Option<Availability>,
+    /// True when this body parameter's schema admits JSON `null` as a valid
+    /// value (OpenAPI 3.0 `nullable: true` or 3.1 `type: [..., "null"]`).
+    /// Gated on scalar `param_type` (`string` / `integer` / `number` /
+    /// `boolean`) — composite types stay false because the null sentinel
+    /// surface is scalar-only (see ADR-0003). When true, the CLI accepts
+    /// the literal `null` as a flag value and converts it to `Value::Null`
+    /// at request-build time.
+    #[serde(default)]
+    pub nullable: bool,
     /// Optional environment variable that supplies a default value when
     /// the corresponding CLI flag is not passed. Populated for synthetic
     /// parameters injected by Fern extensions (e.g. idempotency headers);

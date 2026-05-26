@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI 3.1 Fixture API
+  version: "1.0"
+  description: |
+    Targeted spec exercising every 3.1-distinct surface area the parser captures:
+    `const`, `type: [..., "null"]` nullability, numeric `exclusiveMinimum/Maximum`,
+    top-level `webhooks`, `oneOf` composition with a null branch, schema-level
+    `examples` (array form). Used by tests/openapi_31_fixture_wire.rs for live
+    wiremock coverage.
+servers:
+  - url: https://api.example.com
+
+paths:
+  /events:
+    post:
+      operationId: createEvent
+      summary: Create an event; uses `const` for discriminator + nullable user ID.
+      tags: [Events]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type]
+              properties:
+                type:
+                  # 3.1 const → lowered to a single-element enum on the CLI flag,
+                  # so the flag accepts exactly one value (the const).
+                  type: string
+                  const: user.created
+                userId:
+                  # 3.1 nullability via type array. Required: false (omitted from
+                  # `required:`), so the flag is optional.
+                  type: ["string", "null"]
+                  description: User ID (nullable).
+                priority:
+                  # 3.1 numeric exclusiveMinimum / exclusiveMaximum (the 3.0
+                  # boolean form is exercised by unit tests).
+                  type: integer
+                  exclusiveMinimum: 0
+                  exclusiveMaximum: 100
+                  examples: [10, 50, 99]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+
+  /users/{userId}:
+    get:
+      operationId: getUser
+      tags: [Users]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+# 3.1 top-level webhooks block. The parser captures it but MUST NOT lower
+# webhook operations to CLI subcommands (inbound semantics). Asserted by
+# `test_webhook_operation_is_not_a_subcommand` below.
+webhooks:
+  userDeleted:
+    post:
+      operationId: handleUserDeleted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: OK
+
+components:
+  schemas:
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          # 3.1 nullable response field.
+          type: ["string", "null"]
+        role:
+          # 3.1 idiom: nullable union via oneOf with a `"null"` branch.
+          # Currently parse-only (composition isn't lowered to flags), so
+          # the test just verifies the spec loads and the field round-trips.
+          oneOf:
+            - type: string
+              const: admin
+            - type: string
+              const: user
+            - type: "null"

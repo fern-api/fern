@@ -54,6 +54,7 @@ export function applyCargoTomlPatch(cargoToml: string, binaryName: string): stri
     let patched = cargoToml;
     patched = requireReplace(patched, TEMPLATE_TOP_COMMENT, "");
     patched = requireReplace(patched, TEMPLATE_BIN_COMMENT, "");
+    patched = requireReplace(patched, OPENAPI_31_FIXTURE_BIN_BLOCK, "");
     patched = requireReplace(patched, STRIP_SCHEMA_BIN_BLOCK, "");
     patched = requireReplace(patched, README_FIELD, "");
     patched = requireReplace(patched, METADATA_DIST_FALSE, METADATA_DIST_TRUE);
@@ -92,6 +93,16 @@ const STRIP_SCHEMA_BIN_BLOCK = `# Internal tool used by the SDK template itself 
 [[bin]]
 name = "strip-schema"
 path = "src/bin/strip_schema.rs"
+
+`;
+
+const OPENAPI_31_FIXTURE_BIN_BLOCK = `# Template-author dev bin for the OpenAPI 3.1 fixture. Drives the wire
+# tests in \`tests/openapi_31_fixture_wire.rs\`. Stripped from customer
+# output by \`patchCargoToml\`; the directory itself is excluded by
+# \`SDK_IGNORE\` in \`build.mjs\`.
+[[bin]]
+name = "openapi-31-fixture"
+path = "cli/openapi-31-fixture/main.rs"
 
 `;
 

@@ -433,7 +433,7 @@ fn build_resource_command(
                 continue;
             }
 
-            let value_name = match param.param_type.as_deref() {
+            let base_value_name = match param.param_type.as_deref() {
                 Some("string") => "STRING",
                 Some("integer") => "NUMBER",
                 Some("number") => "NUMBER",
@@ -441,6 +441,15 @@ fn build_resource_command(
                 Some("array") => "JSON_ARRAY",
                 Some("object") => "JSON_OBJECT",
                 _ => "VALUE",
+            };
+            // Nullable scalar body flags advertise the null sentinel via the
+            // value_name (`STRING|null`, `NUMBER|null`, …). Composite types
+            // (`JSON_ARRAY` / `JSON_OBJECT`) never set `param.nullable`, so
+            // the suffix is automatically scalar-only.
+            let value_name: String = if param.nullable {
+                format!("{base_value_name}|null")
+            } else {
+                base_value_name.to_string()
             };
 
             let help_text = crate::text::truncate_description(
@@ -544,7 +553,7 @@ fn build_enum_value_parser(
     wire_values: &[String],
     param: &MethodParameter,
 ) -> PossibleValuesParser {
-    let possible: Vec<PossibleValue> = wire_values
+    let mut possible: Vec<PossibleValue> = wire_values
         .iter()
         .map(|wire| {
             let cfg = param
@@ -554,6 +563,12 @@ fn build_enum_value_parser(
             build_possible_value(wire, cfg)
         })
         .collect();
+    // Null sentinel: when the param is nullable, accept `null` as a
+    // fourth (etc.) possible value so clap admits it. The conversion to
+    // `Value::Null` happens later in `collect_params_from_flags`.
+    if param.nullable {
+        possible.push(PossibleValue::new("null").help("Send JSON null."));
+    }
     PossibleValuesParser::from(possible)
 }
 
@@ -774,6 +789,90 @@ mod tests {
         assert!(
             arg_ids.contains(&"zoneId".to_string()),
             "plain path param should still surface as a per-op flag, got: {arg_ids:?}",
+        );
+    }
+
+    #[test]
+    fn test_nullable_scalar_renders_value_name_with_null_suffix() {
+        // A nullable scalar body param renders its value_name as `<TYPE>|null`
+        // so users discover the null sentinel from `--help`.
+        let mut params = HashMap::new();
+        params.insert(
+            "userId".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "count".to_string(),
+            MethodParameter {
+                param_type: Some("integer".to_string()),
+                location: Some("body".to_string()),
+                nullable: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "code".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: false,
+                ..Default::default()
+            },
+        );
+        let mut methods = HashMap::new();
+        methods.insert(
+            "create".to_string(),
+            RestMethod {
+                http_method: "POST".to_string(),
+                path: "/things".to_string(),
+                parameters: params,
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "things".to_string(),
+            RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = RestDescription {
+            name: "test-cli".to_string(),
+            resources,
+            ..Default::default()
+        };
+        let cmd = build_cli(&doc);
+        let create = cmd
+            .find_subcommand("things")
+            .unwrap()
+            .find_subcommand("create")
+            .unwrap();
+
+        let value_name_for = |id: &str| -> String {
+            let arg = create
+                .get_arguments()
+                .find(|a| a.get_id().as_str() == id)
+                .unwrap_or_else(|| panic!("arg '{id}' missing"));
+            arg.get_value_names()
+                .unwrap_or(&[])
+                .iter()
+                .map(|s| s.to_string())
+                .collect::<Vec<_>>()
+                .join(",")
+        };
+
+        assert_eq!(value_name_for("userId"), "STRING|null");
+        assert_eq!(value_name_for("count"), "NUMBER|null");
+        assert_eq!(
+            value_name_for("code"),
+            "STRING",
+            "non-nullable scalar must NOT gain the |null suffix",
         );
     }
 
@@ -1014,6 +1113,69 @@ mod tests {
             .try_get_matches_from(vec!["test", "--status", "managed"])
             .expect("clap should accept a PossibleValue without a self-alias");
         assert_eq!(matches.get_one::<String>("status").unwrap(), "managed");
+    }
+
+    #[test]
+    fn test_build_enum_value_parser_accepts_null_when_param_nullable() {
+        // A nullable enum field must accept the literal `null` alongside its
+        // wire values. The sentinel→Value::Null transform happens later in
+        // collect_params_from_flags; clap's job is just to admit the string.
+        let param = MethodParameter {
+            param_type: Some("string".to_string()),
+            enum_values: Some(vec!["red".to_string(), "blue".to_string()]),
+            nullable: true,
+            ..Default::default()
+        };
+        let parser = build_enum_value_parser(param.enum_values.as_ref().unwrap(), &param);
+        let cmd = Command::new("test").arg(Arg::new("color").long("color").value_parser(parser));
+
+        for input in ["red", "blue", "null"] {
+            cmd.clone()
+                .try_get_matches_from(vec!["test", "--color", input])
+                .unwrap_or_else(|e| panic!("nullable enum should accept `{input}`; got: {e}"));
+        }
+
+        assert!(
+            cmd.clone()
+                .try_get_matches_from(vec!["test", "--color", "purple"])
+                .is_err(),
+            "values outside the enum (and not the null sentinel) must still be rejected",
+        );
+    }
+
+    #[test]
+    fn test_build_enum_value_parser_rejects_null_when_non_nullable() {
+        // Regression guard: a non-nullable enum field must NOT accept "null".
+        let param = MethodParameter {
+            param_type: Some("string".to_string()),
+            enum_values: Some(vec!["red".to_string(), "blue".to_string()]),
+            nullable: false,
+            ..Default::default()
+        };
+        let parser = build_enum_value_parser(param.enum_values.as_ref().unwrap(), &param);
+        let cmd = Command::new("test").arg(Arg::new("color").long("color").value_parser(parser));
+        assert!(
+            cmd.try_get_matches_from(vec!["test", "--color", "null"])
+                .is_err(),
+            "non-nullable enum must reject `null` (closed set)",
+        );
+    }
+
+    #[test]
+    fn test_build_enum_value_parser_nullable_lists_null_in_help() {
+        // The clap-rendered help must include `null` in the [possible values]
+        // listing so users can discover the sentinel from `--help` alone.
+        let param = MethodParameter {
+            param_type: Some("string".to_string()),
+            enum_values: Some(vec!["red".to_string(), "blue".to_string()]),
+            nullable: true,
+            ..Default::default()
+        };
+        let help = render_arg_long_help(&param);
+        assert!(
+            help.contains("null"),
+            "nullable enum's long help must list `null` as a possible value, got:\n{help}",
+        );
     }
 
     #[test]

@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated CLIs now let users send JSON `null` for body parameters whose
+    OpenAPI schema is nullable (3.0 `nullable: true` or 3.1
+    `type: [..., "null"]`, on `string` / `integer` / `number` / `boolean`):
+    `--field null` becomes JSON null on the wire. Non-nullable fields keep
+    the existing behavior — the four-character string `"null"` still passes
+    through. `--help` advertises the sentinel as `<TYPE>|null` in the value
+    name, and nullable enums list `null` as a possible value. The bundled
+    request-body validator no longer rejects JSON null on properties marked
+    nullable.
+
+    See ADR-0003 in the bundled SDK template
+    (`sdk/docs/adr/0003-null-sentinel-on-nullable-scalar-body-flags.md`)
+    for design trade-offs.
+  type: feat

@@ -1,0 +1,13 @@
+- summary: |
+    Per-field flags can now send JSON `null` on the wire for nullable scalar body parameters
+    (OpenAPI 3.0 `nullable: true` or 3.1 `type: [..., "null"]` on `string` / `integer` /
+    `number` / `boolean`). Pass the literal `null` as the value — `box events create-event
+    --user-id null --priority 7` sends `{ "userId": null, "priority": 7 }`. Non-nullable
+    fields are unchanged (the four-character string `"null"` still passes through). Help
+    renders `<TYPE>|null` in the value name, and nullable enums list `null` as a possible
+    value. Also fixes the request-body schema validator, which previously rejected JSON
+    null on properties marked nullable. See
+    `docs/adr/0003-null-sentinel-on-nullable-scalar-body-flags.md` for the design
+    trade-offs (context-sensitive sentinel vs. opt-out `--no-field` flag vs. strict
+    gating).
+  type: feat

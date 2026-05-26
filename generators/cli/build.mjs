@@ -15,6 +15,7 @@ const SDK_IGNORE = [
 
     // Internal planning / design docs (not for shipped CLI consumers).
     "docs/**",
+    "CONTEXT.md",
 
     // Integration tests that exec the openapi-fixture bin and assert
     // against the placeholder spec's specific content. `copySpecs`
@@ -25,12 +26,14 @@ const SDK_IGNORE = [
     // internal __fixtures__ spec) still ship.
     "tests/cli_integration.rs",
     "tests/openapi_fixture_wire.rs",
+    "tests/openapi_31_fixture_wire.rs",
     "tests/fixtures/**",
 
     // Template-author dev bin. `copySpecs` writes the whole folder
     // (main.rs + every mounted spec) from scratch at codegen time, so
     // none of the source-side files in here belong in user output.
     "cli/openapi-fixture/**",
+    "cli/openapi-31-fixture/**",
 
     // Rich (33 KB) test fixture used only by the template's own dev
     // bin and `cli_integration.rs` / `openapi_fixture_wire.rs` (also
