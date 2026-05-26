@@ -10,3 +10,12 @@
     tripped yarn's install-time check and aborted generation even though the
     packages run fine at the bundled Node version.
   type: fix
+- summary: |
+    Stop wrapping `docker -e KEY=VALUE` argument values in literal double
+    quotes when spawning generator containers. The quotes leaked into the
+    container as part of the env value, so consumers comparing via
+    `process.env.X === "true"` (FERN_DISABLE_TELEMETRY) or parsing
+    space-separated flags (NODE_OPTIONS) or doing key lookups
+    (FERN_STACK_TRACK) silently received the wrong value. With this fix,
+    those env vars are delivered cleanly to the container.
+  type: fix

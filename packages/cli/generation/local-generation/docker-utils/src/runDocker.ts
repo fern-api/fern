@@ -120,7 +120,7 @@ async function tryRunContainer({
         "--user",
         "root",
         ...binds.flatMap((bind) => ["-v", bind]),
-        ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
+        ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=${value}`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),
         removeAfterCompletion ? "--rm" : "",
         imageName,
