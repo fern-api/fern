@@ -19,8 +19,8 @@ export async function getRequestBody({
     }
     if (type.includes("json")) {
         if (omitEmptyArrays) {
-            return toJson(body, (_key, value) => {
-                if (Array.isArray(value) && value.length === 0) {
+            return toJson(body, (key, value) => {
+                if (key !== "" && Array.isArray(value) && value.length === 0) {
                     return undefined;
                 }
                 return value;
