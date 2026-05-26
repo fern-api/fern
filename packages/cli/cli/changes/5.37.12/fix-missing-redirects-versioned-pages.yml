@@ -1,0 +1,5 @@
+- summary: |
+    Fix false "page was moved" warnings in `fern check` and `fern docs dev` when the same
+    file is referenced across multiple doc versions. The missing-redirects rule now tracks
+    all slugs per pageId instead of only the last one encountered.
+  type: fix
