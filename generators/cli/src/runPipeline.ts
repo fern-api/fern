@@ -3,6 +3,7 @@ import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
+import { type GithubInfo, generateReadme } from "./generateReadme.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoToml } from "./patchCargoToml.js";
@@ -32,8 +33,9 @@ export async function runPipeline(args: {
     ir: IrSummary;
     sdkTemplateDir?: string;
     specsDir?: string;
+    github?: GithubInfo;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, sdkTemplateDir, specsDir, github } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -60,6 +62,10 @@ export async function runPipeline(args: {
     await patchCargoToml({ outputDir, binaryName });
     await patchDistWorkspaceToml({ outputDir });
     await copySpecs({ outputDir, binaryName, authBindings, specsDir });
+
+    if (github != null) {
+        await generateReadme({ outputDir, binaryName, authBindings, github });
+    }
 
     return { status: "generated", binaryName };
 }

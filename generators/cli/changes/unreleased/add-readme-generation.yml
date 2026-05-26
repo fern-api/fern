@@ -1,0 +1,5 @@
+- summary: |
+    Generate a README.md when the output target is a GitHub repository.
+    The README includes installation instructions, usage examples, and
+    authentication setup derived from the IR's auth schemes.
+  type: feat

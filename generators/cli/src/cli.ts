@@ -1,5 +1,6 @@
 import {
     ExitStatusUpdate,
+    FernGeneratorExec,
     GeneratorNotificationService,
     GeneratorUpdate,
     parseGeneratorConfig,
@@ -9,6 +10,7 @@ import {
     shouldTrackLocalVariablesInSentry
 } from "@fern-api/base-generator";
 import { getCustomConfig } from "./customConfig.js";
+import type { GithubInfo } from "./generateReadme.js";
 import { readIrSummary } from "./ir.js";
 import { runPipeline } from "./runPipeline.js";
 
@@ -45,10 +47,12 @@ async function generate(configPath: string): Promise<void> {
             );
 
             const ir = await readIrSummary(config.irFilepath);
+            const github = extractGithubInfo(config);
             const outcome = await runPipeline({
                 outputDir: config.output.path,
                 customConfig: getCustomConfig(config),
-                ir
+                ir,
+                github
             });
 
             if (outcome.status === "skipped") {
@@ -82,4 +86,16 @@ async function generate(configPath: string): Promise<void> {
         // Flush queued Sentry events before the process exits.
         await sentryClient?.flush();
     }
+}
+
+function extractGithubInfo(config: FernGeneratorExec.GeneratorConfig): GithubInfo | undefined {
+    return config.output.mode._visit<GithubInfo | undefined>({
+        publish: () => undefined,
+        downloadFiles: () => undefined,
+        github: (github) => ({
+            repoUrl: github.repoUrl,
+            version: github.version
+        }),
+        _other: () => undefined
+    });
 }

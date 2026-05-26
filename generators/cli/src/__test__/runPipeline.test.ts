@@ -211,4 +211,78 @@ describe("runPipeline", () => {
         // The error came BEFORE any output got created.
         await expect(access(outputDir)).rejects.toThrow();
     });
+
+    it("generates README.md when github config is provided", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([
+            { filename: "openapi0.json", body: { openapi: "3.0.0", info: { title: "Should Not Be Used" } } }
+        ]);
+
+        const outcome = await runPipeline({
+            outputDir,
+            customConfig: {},
+            ir: ir({ apiDisplayName: "My API" }),
+            sdkTemplateDir,
+            specsDir,
+            github: { repoUrl: "https://github.com/acme/my-api-cli", version: "1.0.0" }
+        });
+
+        expect(outcome).toEqual({ status: "generated", binaryName: "my-api" });
+
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).toContain("# my-api");
+        expect(readme).toContain("cargo install --git https://github.com/acme/my-api-cli");
+        expect(readme).toContain("my-api --help");
+    });
+
+    it("generates README.md with auth section when github config and auth bindings are present", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        const outcome = await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "close" },
+            ir: ir({
+                apiDisplayName: "Close API",
+                auth: {
+                    schemes: [
+                        FernIr.AuthScheme.header({
+                            key: "ApiKeyAuth",
+                            name: "Authorization",
+                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                            headerEnvVar: "CLOSE_API_KEY",
+                            headerPlaceholder: undefined,
+                            prefix: undefined,
+                            docs: undefined
+                        })
+                    ]
+                }
+            }),
+            sdkTemplateDir,
+            specsDir,
+            github: { repoUrl: "https://github.com/closeio/close-cli", version: "1.0.0" }
+        });
+
+        expect(outcome).toEqual({ status: "generated", binaryName: "close" });
+
+        const readme = await readFile(path.join(outputDir, "README.md"), "utf-8");
+        expect(readme).toContain("## Authentication");
+        expect(readme).toContain("`CLOSE_API_KEY`");
+        expect(readme).toContain('export CLOSE_API_KEY="your-token"');
+    });
+
+    it("does not generate README.md when no github config is provided", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: {},
+            ir: ir({ apiDisplayName: "My API" }),
+            sdkTemplateDir,
+            specsDir
+        });
+
+        await expect(access(path.join(outputDir, "README.md"))).rejects.toThrow();
+    });
 });
