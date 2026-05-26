@@ -70,13 +70,21 @@ export async function getTokenFromAuth0(
         return await promptAndLogin(context);
     }
 
+    return await loginWithDeviceCodeFallback(context, { forceReauth });
+}
+
+async function loginWithDeviceCodeFallback(
+    context: TaskContext,
+    { forceReauth = false, connection }: { forceReauth?: boolean; connection?: string } = {}
+): Promise<Auth0TokenResponse> {
     try {
         return await doAuth0LoginFlow({
             context,
             auth0Domain: AUTH0_DOMAIN,
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
-            forceReauth
+            forceReauth,
+            connection
         });
     } catch {
         return await doAuth0DeviceAuthorizationFlow({
@@ -102,22 +110,10 @@ async function promptAndLogin(context: TaskContext): Promise<Auth0TokenResponse>
             email: ssoEmail
         });
 
-        return await doAuth0LoginFlow({
-            context,
-            auth0Domain: AUTH0_DOMAIN,
-            auth0ClientId: AUTH0_CLIENT_ID,
-            audience: VENUS_AUDIENCE,
-            connection: resolvedConnection
-        });
+        return await loginWithDeviceCodeFallback(context, { connection: resolvedConnection });
     }
 
-    return await doAuth0LoginFlow({
-        context,
-        auth0Domain: AUTH0_DOMAIN,
-        auth0ClientId: AUTH0_CLIENT_ID,
-        audience: VENUS_AUDIENCE,
-        connection: selectedConnection
-    });
+    return await loginWithDeviceCodeFallback(context, { connection: selectedConnection });
 }
 
 async function promptForConnection(
