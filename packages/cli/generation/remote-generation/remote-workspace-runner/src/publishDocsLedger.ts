@@ -13,6 +13,7 @@ import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
+import { createGzipFetch } from "./compressedFetch.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
@@ -260,7 +261,7 @@ export async function publishDocsViaLedger({
     // entry and translations follow. The server processes all locales
     // through the same pipeline.
 
-    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch() });
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 

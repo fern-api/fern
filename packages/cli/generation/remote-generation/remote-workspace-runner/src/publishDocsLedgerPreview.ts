@@ -10,6 +10,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
+import { createGzipFetch } from "./compressedFetch.js";
 import { buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
 
 type DocsDefinition = DocsV1Write.DocsDefinition;
@@ -87,7 +88,7 @@ export async function publishDocsViaLedgerPreview({
 
     // ── Phase 2: Single register → upload → finish ─────────────────────
 
-    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers, fetch: createGzipFetch() });
 
     context.logger.debug("[ledger-preview] Registering preview deployment...");
     const registerStart = performance.now();
