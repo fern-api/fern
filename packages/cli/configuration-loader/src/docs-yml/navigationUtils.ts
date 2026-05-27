@@ -141,7 +141,10 @@ export async function buildNavigationForDirectory({
     // overview page instead of appearing as a separate page.
     const subdirectoryNames = new Set(subdirectories.map((dir) => dir.name.toLowerCase()));
 
-    const siblingOverviewPages = new Map<string, { page: docsYml.DocsNavigationItem.Page; metadata: FrontmatterMetadata }>();
+    const siblingOverviewPages = new Map<
+        string,
+        { page: docsYml.DocsNavigationItem.Page; metadata: FrontmatterMetadata }
+    >();
     const remainingPages: { page: docsYml.DocsNavigationItem; metadata: FrontmatterMetadata }[] = [];
     for (let i = 0; i < pages.length; i++) {
         const page = pages[i];
