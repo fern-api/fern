@@ -179,7 +179,7 @@ export class GraphQLConverter {
             result[operationId] = {
                 ...op.operation,
                 id: operationId
-            } as FdrAPI.api.v1.register.GraphQlOperation;
+            };
         }
         return result;
     }
