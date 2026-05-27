@@ -2,7 +2,9 @@ use std::ffi::OsString;
 use std::path::Path;
 use std::process::Command;
 
-use anyhow::{anyhow, Context, Result};
+#[cfg(unix)]
+use anyhow::anyhow;
+use anyhow::{Context, Result};
 
 use crate::runtime;
 
