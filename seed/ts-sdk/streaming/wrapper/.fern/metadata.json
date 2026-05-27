@@ -1,7 +1,7 @@
 {
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "local",
+    "generatorVersion": "latest",
     "generatorConfig": {
         "streamType": "wrapper",
         "testFramework": "jest"
@@ -9,6 +9,6 @@
     "originGitCommit": "DUMMY",
     "invokedBy": "ci",
     "requestedVersion": "0.0.1",
-    "ciProvider": "github",
+    "ciProvider": "unknown",
     "sdkVersion": "0.0.1"
 }
