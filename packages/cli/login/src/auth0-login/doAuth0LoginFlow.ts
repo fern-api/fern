@@ -165,7 +165,6 @@ function constructAuth0Url({
         queryParams.set("connection", connection);
     }
 
-    // Force re-authentication to allow switching accounts.
     if (forceReauth) {
         queryParams.set("prompt", "login");
     }
