@@ -2,6 +2,16 @@ import { fromJson } from "../json.js";
 import { getBinaryResponse } from "./BinaryResponse.js";
 
 
+// Pins the upstream Response so undici's FinalizationRegistry can't GC it and cancel the body stream.
+function retainResponse(target: object, response: Response): void {
+    Object.defineProperty(target, "__fern_response_ref", {
+        value: response,
+        enumerable: false,
+        configurable: true,
+        writable: false,
+    });
+}
+
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     switch (responseType) {
         case "binary-response":
@@ -20,6 +30,7 @@ export async function getResponseBody(response: Response, responseType?: string)
                     },
                 };
             }
+            retainResponse(response.body, response);
             return response.body;
         case "streaming":
             if (response.body == null) {
@@ -32,6 +43,7 @@ export async function getResponseBody(response: Response, responseType?: string)
                 };
             }
             
+            retainResponse(response.body, response);
             return response.body;
             
         case "text":
