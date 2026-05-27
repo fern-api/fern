@@ -12,6 +12,20 @@ rust-version = "1.82"
 name = "fern"
 path = "src/main.rs"
 
+# Test fixtures, built as standalone binaries so they run on every platform
+# in our CI matrix (no bash dependency). Only used by integration tests.
+[[bin]]
+name = "fake-fern-ts"
+path = "tests/fixtures/bin/fake-fern-ts.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "explode"
+path = "tests/fixtures/bin/explode.rs"
+test = false
+doc = false
+
 [lib]
 name = "cli_rust"
 path = "src/lib.rs"
