@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.40.0
+  changelogEntry:
+    - summary: |
+        Add hidden `fern docs theme delete --name <theme name>` CLI command to delete a named theme from an org. Includes a confirmation prompt (skippable with `--yes`).
+      type: feat
+  createdAt: "2026-05-27"
+  irVersion: 66
 - version: 5.39.0
   changelogEntry:
     - summary: |
