@@ -149,7 +149,7 @@ export async function buildNavigationForDirectory({
         if (page == null || metadata == null) {
             continue;
         }
-        if (page.type === "page") {
+        if (page.type === "page" && page.slug != null) {
             const baseName = page.slug;
             if (subdirectoryNames.has(baseName)) {
                 siblingOverviewPages.set(baseName, page);
