@@ -1,0 +1,6 @@
+/target
+/Cargo.lock.*
+
+# Vendored TS payload — populated by `scripts/build-fern-ts.sh` for local
+# builds with --features=embed-fern-ts. Never committed.
+/src/embed/payload/
