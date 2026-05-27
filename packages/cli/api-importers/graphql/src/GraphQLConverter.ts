@@ -38,6 +38,12 @@ export interface GraphQlOperationExamplesInput {
     examples: GraphQlExampleInput[];
 }
 
+interface PendingOperation {
+    flatId: string;
+    namespacedId: string;
+    operation: FdrAPI.api.v1.register.GraphQlOperation;
+}
+
 export class GraphQLConverter {
     private schema: GraphQLSchema | undefined;
     private context: TaskContext;
@@ -119,24 +125,48 @@ export class GraphQLConverter {
 
         this.collectTypeDefinitions();
 
-        const graphqlOperations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
+        const pendingOperations: PendingOperation[] = [];
 
         const queryType = this.schema.getQueryType();
         if (queryType) {
-            this.convertOperations(queryType, "QUERY", graphqlOperations);
+            this.convertOperations(queryType, "QUERY", pendingOperations);
         }
 
         const mutationType = this.schema.getMutationType();
         if (mutationType) {
-            this.convertOperations(mutationType, "MUTATION", graphqlOperations);
+            this.convertOperations(mutationType, "MUTATION", pendingOperations);
         }
 
         const subscriptionType = this.schema.getSubscriptionType();
         if (subscriptionType && this.isActualSubscriptionRootType(subscriptionType)) {
-            this.convertOperations(subscriptionType, "SUBSCRIPTION", graphqlOperations);
+            this.convertOperations(subscriptionType, "SUBSCRIPTION", pendingOperations);
         }
 
+        const graphqlOperations = this.resolveOperationIds(pendingOperations);
+
         return { graphqlOperations, types: this.types };
+    }
+
+    private resolveOperationIds(
+        pending: PendingOperation[]
+    ): Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> {
+        // Count how many operations share each flat ID to detect collisions
+        const flatIdCounts = new Map<string, number>();
+        for (const op of pending) {
+            flatIdCounts.set(op.flatId, (flatIdCounts.get(op.flatId) ?? 0) + 1);
+        }
+
+        const result: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
+        for (const op of pending) {
+            const hasCollision = (flatIdCounts.get(op.flatId) ?? 0) > 1;
+            const finalId = hasCollision ? op.namespacedId : op.flatId;
+            const operationId = this.getNamespacedOperationId(finalId);
+            result[operationId] = {
+                ...op.operation,
+                id: operationId
+            } as FdrAPI.api.v1.register.GraphQlOperation;
+        }
+        return result;
     }
 
     private collectTypeDefinitions(): void {
@@ -243,7 +273,7 @@ export class GraphQLConverter {
     private convertOperations(
         type: GraphQLObjectType,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
-        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>,
+        pending: PendingOperation[],
         parentFieldPath: string[] = []
     ): void {
         const fields = type.getFields();
@@ -254,13 +284,17 @@ export class GraphQLConverter {
                 field.args.length === 0 &&
                 this.isNamespaceType(returnRawType)
             ) {
-                this.convertNamespaceOperations(returnRawType, fieldName, operationType, operations, [
+                this.convertNamespaceOperations(returnRawType, fieldName, operationType, pending, [
                     ...parentFieldPath,
                     fieldName
                 ]);
             } else {
-                const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldName}`);
-                operations[operationId] = this.convertField(field, fieldName, operationType, parentFieldPath);
+                const flatId = `${operationType.toLowerCase()}_${fieldName}`;
+                pending.push({
+                    flatId,
+                    namespacedId: flatId,
+                    operation: this.convertField(field, fieldName, operationType, parentFieldPath)
+                });
             }
         }
     }
@@ -269,14 +303,18 @@ export class GraphQLConverter {
         namespaceType: GraphQLObjectType,
         _parentName: string,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
-        operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>,
+        pending: PendingOperation[],
         fieldPath: string[]
     ): void {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const fieldPathSegment = [...fieldPath, fieldName].join("_");
-            const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldPathSegment}`);
-            operations[operationId] = this.convertField(field, fieldName, operationType, fieldPath);
+            const flatId = `${operationType.toLowerCase()}_${fieldName}`;
+            const namespacedId = `${operationType.toLowerCase()}_${[...fieldPath, fieldName].join("_")}`;
+            pending.push({
+                flatId,
+                namespacedId,
+                operation: this.convertField(field, fieldName, operationType, fieldPath)
+            });
         }
     }
 
@@ -298,13 +336,12 @@ export class GraphQLConverter {
             this.examplesByOperation.get(`${operationType.toLowerCase()}:${name}`) ??
             this.examplesByOperation.get(name);
 
-        const idSegment = fieldPath.length > 0 ? `${[...fieldPath, name].join("_")}` : name;
         // fieldPath is not yet declared on GraphQlOperation in the current pinned
         // @fern-api/fdr-sdk. The `as` cast is required until the platform PR
         // (fern-platform#11183) ships a new SDK version that includes the field.
         // Once bumped, remove the cast and the field will pass Zod validation.
         return {
-            id: this.getNamespacedOperationId(`${operationType.toLowerCase()}_${idSegment}`),
+            id: FdrAPI.GraphQlOperationId(""), // placeholder, resolved in resolveOperationIds
             operationType,
             name,
             displayName: undefined,
