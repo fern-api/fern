@@ -19,13 +19,11 @@ async function confirmDeletion(themeName: string): Promise<boolean> {
 export async function deleteDocsTheme({
     cliContext,
     name,
-    org,
-    yes
+    force
 }: {
     cliContext: CliContext;
     name: string;
-    org?: string;
-    yes?: boolean;
+    force?: boolean;
 }): Promise<void> {
     const token: FernToken | null = await cliContext.runTask(async (context) => {
         return askToLogin(context);
@@ -43,9 +41,9 @@ export async function deleteDocsTheme({
         defaultToAllApiWorkspaces: true
     });
 
-    const orgId = org ?? project.config.organization;
+    const orgId = project.config.organization;
 
-    if (!yes) {
+    if (!force) {
         const confirmed = await confirmDeletion(name);
         if (!confirmed) {
             cliContext.logger.info("Deletion cancelled.");

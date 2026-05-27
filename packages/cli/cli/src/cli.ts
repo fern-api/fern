@@ -1855,20 +1855,16 @@ function addDocsThemeDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                     description: "Name of the theme to delete",
                     demandOption: true
                 })
-                .option("org", {
-                    type: "string",
-                    description: "Override the org ID from fern.config.json"
-                })
-                .option("yes", {
-                    alias: "y",
+                .option("force", {
+                    alias: "f",
                     type: "boolean",
                     description: "Skip the confirmation prompt"
                 })
                 .example("$0 docs theme delete --name dark", "Delete the theme named 'dark'")
-                .example("$0 docs theme delete --name dark --yes", "Delete without confirmation"),
+                .example("$0 docs theme delete --name dark --force", "Delete without confirmation"),
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs theme delete" });
-            await deleteDocsTheme({ cliContext, name: argv.name, org: argv.org, yes: argv.yes });
+            await deleteDocsTheme({ cliContext, name: argv.name, force: argv.force });
         }
     );
 }
