@@ -114,6 +114,46 @@ fn force_ts_flag_routes_doctor_to_fern_ts() {
         stdout.contains("argv[1]=doctor"),
         "--ts must force routing to fern-ts; got:\n{stdout}"
     );
+    // Regression: `--ts` is a dispatcher-only flag. yargs runs the TS CLI
+    // with `.strict()` and will reject unknown flags, so the dispatcher
+    // must strip `--ts` before delegating.
+    assert!(
+        !stdout.contains("--ts"),
+        "--ts flag must be stripped before delegating to fern-ts; got:\n{stdout}"
+    );
+}
+
+#[test]
+fn global_flag_with_value_does_not_confuse_dispatcher() {
+    // Regression: `fern --log-level debug doctor` must route to the Rust
+    // doctor command. A naive first-positional scan would treat `debug`
+    // as the subcommand name, miss the registry, and delegate to fern-ts.
+    let blocked_ts = fixture_bin("explode");
+
+    let output = Command::cargo_bin("fern")
+        .expect("cargo bin fern")
+        .env("FERN_TS_BIN", &blocked_ts)
+        .arg("--log-level")
+        .arg("debug")
+        .arg("doctor")
+        .output()
+        .expect("dispatcher invocation");
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let stderr = String::from_utf8_lossy(&output.stderr);
+
+    assert!(
+        output.status.success(),
+        "doctor failed:\nstdout: {stdout}\nstderr: {stderr}",
+    );
+    assert!(
+        stdout.contains("Rust dispatcher"),
+        "value-bearing flag must not divert routing away from Rust; got:\n{stdout}"
+    );
+    assert!(
+        !stdout.contains("EXPLODED"),
+        "value-bearing flag must not divert routing to fern-ts; got:\n{stdout}"
+    );
 }
 
 #[test]
