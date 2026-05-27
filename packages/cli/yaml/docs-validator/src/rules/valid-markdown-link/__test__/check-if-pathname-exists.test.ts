@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { isDynamicSpecialDocPage } from "../dynamic-special-doc-page.js";
 import { withBasePathPrepended } from "../with-base-path-prepended.js";
 
 describe("specialDocPages slug registration", () => {
@@ -84,5 +85,43 @@ describe("withBasePathPrepended", () => {
         // `docs-v2/about` must not match `docs/...` — the basePath segment must be
         // followed by `/` to be considered already-prefixed.
         expect(withBasePathPrepended("/docs-v2/about", "/docs")).toBe("docs/docs-v2/about");
+    });
+});
+
+describe("isDynamicSpecialDocPage", () => {
+    it("matches /openapi/<id>.json", () => {
+        expect(isDynamicSpecialDocPage("/openapi/51d85717-e70a-4282-b075-66851cd0af2b.json")).toBe(true);
+    });
+
+    it("matches /openapi/<id>.yaml and .yml", () => {
+        expect(isDynamicSpecialDocPage("/openapi/my-spec.yaml")).toBe(true);
+        expect(isDynamicSpecialDocPage("/openapi/my-spec.yml")).toBe(true);
+    });
+
+    it("matches /asyncapi/<id>.json", () => {
+        expect(isDynamicSpecialDocPage("/asyncapi/abc123.json")).toBe(true);
+    });
+
+    it("matches /asyncapi/<id>.yaml and .yml", () => {
+        expect(isDynamicSpecialDocPage("/asyncapi/abc123.yaml")).toBe(true);
+        expect(isDynamicSpecialDocPage("/asyncapi/abc123.yml")).toBe(true);
+    });
+
+    it("does not match bare /openapi.json (handled by static whitelist)", () => {
+        expect(isDynamicSpecialDocPage("/openapi.json")).toBe(false);
+    });
+
+    it("does not match unrelated paths", () => {
+        expect(isDynamicSpecialDocPage("/docs/about")).toBe(false);
+        expect(isDynamicSpecialDocPage("/api/v1/users.json")).toBe(false);
+    });
+
+    it("matches with basePath prefix", () => {
+        expect(isDynamicSpecialDocPage("/docs/openapi/spec-id.json", "/docs")).toBe(true);
+        expect(isDynamicSpecialDocPage("/docs/asyncapi/spec-id.yaml", "/docs")).toBe(true);
+    });
+
+    it("does not match basePath-prefixed path when inner path is invalid", () => {
+        expect(isDynamicSpecialDocPage("/docs/other/file.json", "/docs")).toBe(false);
     });
 });
