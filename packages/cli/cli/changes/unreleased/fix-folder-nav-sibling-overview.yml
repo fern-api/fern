@@ -1,0 +1,5 @@
+- summary: |
+    Folder-based navigation now merges a sibling markdown file (e.g. `adapters.mdx`)
+    with its matching directory (`adapters/`) as the section overview page, eliminating
+    duplicate entries in the sidebar for library autodocs output.
+  type: fix

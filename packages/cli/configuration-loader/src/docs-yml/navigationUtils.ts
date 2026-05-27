@@ -135,6 +135,30 @@ export async function buildNavigationForDirectory({
         position: number | undefined;
     }
 
+    // Build a set of subdirectory names (lowercased) for sibling-file matching.
+    // When a markdown file shares its base name with a sibling directory
+    // (e.g. adapters.mdx alongside adapters/), it becomes that section's
+    // overview page instead of appearing as a separate page.
+    const subdirectoryNames = new Set(subdirectories.map((dir) => dir.name.toLowerCase()));
+
+    const siblingOverviewPages = new Map<string, docsYml.DocsNavigationItem.Page>();
+    const remainingPages: { page: docsYml.DocsNavigationItem; metadata: FrontmatterMetadata }[] = [];
+    for (let i = 0; i < pages.length; i++) {
+        const page = pages[i];
+        const metadata = pageMetadata[i];
+        if (page == null || metadata == null) {
+            continue;
+        }
+        if (page.type === "page") {
+            const baseName = page.slug;
+            if (subdirectoryNames.has(baseName)) {
+                siblingOverviewPages.set(baseName, page);
+                continue;
+            }
+        }
+        remainingPages.push({ page, metadata });
+    }
+
     const sectionsWithPositions: SectionWithPosition[] = await Promise.all(
         subdirectories.map(async (dir) => {
             const subContents = await buildNavigationForDirectory({
@@ -144,6 +168,7 @@ export async function buildNavigationForDirectory({
                 readFileFn
             });
 
+            // Look for an index page inside the subdirectory first
             const indexPage = subContents.find(
                 (item) =>
                     item.type === "page" &&
@@ -152,15 +177,19 @@ export async function buildNavigationForDirectory({
                         item.absolutePath.toLowerCase().endsWith("/index.md"))
             );
 
+            // Fall back to a sibling markdown file with the same name as the directory
+            const siblingPage = siblingOverviewPages.get(dir.name.toLowerCase());
+            const overviewPage = indexPage ?? siblingPage;
+
             const filteredContents = indexPage ? subContents.filter((item) => item !== indexPage) : subContents;
 
-            const indexMetadata =
-                indexPage?.type === "page"
-                    ? await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath, readFileFn })
+            const overviewMetadata =
+                overviewPage?.type === "page"
+                    ? await getFrontmatterMetadata({ absolutePath: overviewPage.absolutePath, readFileFn })
                     : undefined;
 
             const sectionTitle = resolveTitle({
-                frontmatterTitle: indexMetadata?.title,
+                frontmatterTitle: overviewMetadata?.title,
                 useFrontmatterTitles,
                 fallbackName: dir.name
             });
@@ -175,24 +204,24 @@ export async function buildNavigationForDirectory({
                     collapsed: undefined,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    hidden: indexMetadata?.hidden,
+                    hidden: overviewMetadata?.hidden,
                     skipUrlSlug: false,
-                    overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
+                    overviewAbsolutePath: overviewPage?.type === "page" ? overviewPage.absolutePath : undefined,
                     viewers: undefined,
                     orphaned: undefined,
                     featureFlags: undefined,
                     availability: undefined
                 },
-                position: indexMetadata?.position
+                position: overviewMetadata?.position
             };
         })
     );
 
     const itemsWithMeta: NavigationItemWithMeta[] = [
-        ...pages.map((page, index) => ({
+        ...remainingPages.map(({ page, metadata }) => ({
             item: page,
             title: page.type === "page" ? page.title : "",
-            position: pageMetadata[index]?.position
+            position: metadata?.position
         })),
         ...sectionsWithPositions.map((s) => ({
             item: s.section,
