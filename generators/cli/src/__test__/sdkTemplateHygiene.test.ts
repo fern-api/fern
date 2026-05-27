@@ -32,9 +32,13 @@ describe("sdk template hygiene", () => {
             }
             const contents = readFileSync(absPath, "utf-8");
             for (const match of contents.matchAll(INCLUDE_MACRO)) {
-                const resolved = path.resolve(path.dirname(absPath), match[3]);
+                const includePath = match[3];
+                if (includePath == null) {
+                    continue;
+                }
+                const resolved = path.resolve(path.dirname(absPath), includePath);
                 if (resolved !== SDK_SRC_ROOT && !resolved.startsWith(SDK_SRC_ROOT + path.sep)) {
-                    violations.push(`${entry}: ${match[1]}!(${match[2] ?? ""}"${match[3]}") → ${resolved}`);
+                    violations.push(`${entry}: ${match[1]}!(${match[2] ?? ""}"${includePath}") → ${resolved}`);
                 }
             }
         }
