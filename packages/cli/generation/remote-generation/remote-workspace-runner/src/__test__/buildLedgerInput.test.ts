@@ -386,4 +386,37 @@ describe("buildLedgerInput", () => {
         expect(localeEntry.git).toEqual(git);
         expect(localeEntry.git?.commitSha).toBeUndefined();
     });
+
+    // ── integrations mapping ──────────────────────────────────────────
+
+    it("maps integrations.intercom into LedgerConfig (context7 excluded)", () => {
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                integrations: {
+                    intercom: "app_abc123",
+                    context7: "file-id-for-context7"
+                }
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.config?.integrations).toEqual({
+            intercom: "app_abc123"
+        });
+    });
+
+    it("omits integrations from LedgerConfig when absent in DocsConfig", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.config?.integrations).toBeUndefined();
+    });
 });

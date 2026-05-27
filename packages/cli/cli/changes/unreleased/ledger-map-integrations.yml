@@ -1,0 +1,3 @@
+- summary: |
+    Map integrations.intercom into LedgerConfig during ledger publish.
+  type: feat

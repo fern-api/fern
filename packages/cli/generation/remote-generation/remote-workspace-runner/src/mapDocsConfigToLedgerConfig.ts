@@ -230,6 +230,18 @@ function mapAgents(agents: DocsConfig["agents"]): LedgerConfig["agents"] {
     };
 }
 
+function mapIntegrations(integrations: DocsConfig["integrations"]): LedgerConfig["integrations"] {
+    if (integrations == null) {
+        return undefined;
+    }
+    // Only intercom is mapped. context7 is a well-known file artifact
+    // resolved on demand via resolveFiles (same convention as llms.txt,
+    // robots.txt, favicon — see LedgerConfigSchema doc comment).
+    return {
+        intercom: integrations.intercom
+    };
+}
+
 /**
  * Map a classic DocsConfig (FileId-based) into the ledger-native LedgerConfig
  * (path-based) shape.
@@ -246,7 +258,7 @@ function mapAgents(agents: DocsConfig["agents"]): LedgerConfig["agents"] {
  * has no measured dimensions, the corresponding logo field is dropped rather
  * than emitted with placeholder values.
  *
- * Fields that exist only in DocsConfig (favicon, agents.llmsTxt, integrations,
+ * Fields that exist only in DocsConfig (favicon, agents.llmsTxt,
  * languages, navigation, root, logoV2, colors, colorsV2, typography (v1),
  * hideNavLinks, globalTheme, backgroundImage at the top level, logo at the
  * top level) are intentionally omitted: LedgerConfig either exposes them by
@@ -285,6 +297,7 @@ export function mapDocsConfigToLedgerConfig({
         aiChatConfig: docsConfig.aiChatConfig,
         pageActions: docsConfig.pageActions,
         editThisPageLaunch: docsConfig.editThisPageLaunch,
+        integrations: mapIntegrations(docsConfig.integrations),
         header: docsConfig.header,
         footer: docsConfig.footer
     };
