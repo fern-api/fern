@@ -76,8 +76,8 @@
         "value": "System"
       }
     },
-    "mutation_addUserToAccount": {
-      "id": "mutation_addUserToAccount",
+    "mutation_account_addUserToAccount": {
+      "id": "mutation_account_addUserToAccount",
       "operationType": "MUTATION",
       "name": "addUserToAccount",
       "description": "Adds a user to an account.",
@@ -101,8 +101,8 @@
         }
       }
     },
-    "mutation_removeUserFromAccount": {
-      "id": "mutation_removeUserFromAccount",
+    "mutation_account_removeUserFromAccount": {
+      "id": "mutation_account_removeUserFromAccount",
       "operationType": "MUTATION",
       "name": "removeUserFromAccount",
       "description": "Removes a user from an account and all associated entities.",
@@ -126,8 +126,8 @@
         }
       }
     },
-    "mutation_createCheckout": {
-      "id": "mutation_createCheckout",
+    "mutation_checkout_createCheckout": {
+      "id": "mutation_checkout_createCheckout",
       "operationType": "MUTATION",
       "name": "createCheckout",
       "description": "Creates a Checkout for a Merchant.",
@@ -151,8 +151,8 @@
         }
       }
     },
-    "mutation_cancelSubscription": {
-      "id": "mutation_cancelSubscription",
+    "mutation_subscription_cancelSubscription": {
+      "id": "mutation_subscription_cancelSubscription",
       "operationType": "MUTATION",
       "name": "cancelSubscription",
       "description": "Cancels a Subscription for a Merchant.",
@@ -176,8 +176,8 @@
         }
       }
     },
-    "mutation_createUserWithPassword": {
-      "id": "mutation_createUserWithPassword",
+    "mutation_user_createUserWithPassword": {
+      "id": "mutation_user_createUserWithPassword",
       "operationType": "MUTATION",
       "name": "createUserWithPassword",
       "description": "Creates a user with password.",
@@ -201,8 +201,8 @@
         }
       }
     },
-    "mutation_createUser": {
-      "id": "mutation_createUser",
+    "mutation_user_createUser": {
+      "id": "mutation_user_createUser",
       "operationType": "MUTATION",
       "name": "createUser",
       "description": "Creates a user.",
@@ -226,8 +226,8 @@
         }
       }
     },
-    "mutation_addUserToStore": {
-      "id": "mutation_addUserToStore",
+    "mutation_user_addUserToStore": {
+      "id": "mutation_user_addUserToStore",
       "operationType": "MUTATION",
       "name": "addUserToStore",
       "description": "Adds a user to a store.",
@@ -251,8 +251,8 @@
         }
       }
     },
-    "mutation_removeUserFromStore": {
-      "id": "mutation_removeUserFromStore",
+    "mutation_user_removeUserFromStore": {
+      "id": "mutation_user_removeUserFromStore",
       "operationType": "MUTATION",
       "name": "removeUserFromStore",
       "description": "Removes user from a store.",
@@ -276,8 +276,8 @@
         }
       }
     },
-    "mutation_createEventSource": {
-      "id": "mutation_createEventSource",
+    "mutation_app_createEventSource": {
+      "id": "mutation_app_createEventSource",
       "operationType": "MUTATION",
       "name": "createEventSource",
       "description": "Creates an Amazon EventSource.",
@@ -301,8 +301,8 @@
         }
       }
     },
-    "mutation_deleteEventSource": {
-      "id": "mutation_deleteEventSource",
+    "mutation_app_deleteEventSource": {
+      "id": "mutation_app_deleteEventSource",
       "operationType": "MUTATION",
       "name": "deleteEventSource",
       "description": "Deletes an Amazon EventSource.",
@@ -326,8 +326,8 @@
         }
       }
     },
-    "mutation_addUsersToUserGroups": {
-      "id": "mutation_addUsersToUserGroups",
+    "mutation_userGroup_addUsersToUserGroups": {
+      "id": "mutation_userGroup_addUsersToUserGroups",
       "operationType": "MUTATION",
       "name": "addUsersToUserGroups",
       "description": "Adds users to user groups.",
@@ -351,8 +351,8 @@
         }
       }
     },
-    "mutation_removeUsersFromUserGroup": {
-      "id": "mutation_removeUsersFromUserGroup",
+    "mutation_userGroup_removeUsersFromUserGroup": {
+      "id": "mutation_userGroup_removeUsersFromUserGroup",
       "operationType": "MUTATION",
       "name": "removeUsersFromUserGroup",
       "description": "Removes users from a user group.",

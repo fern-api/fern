@@ -274,20 +274,11 @@ export class GraphQLConverter {
     ): void {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-            const returnRawType = this.unwrapNonNull(field.type);
-            if (
-                returnRawType instanceof GraphQLObjectType &&
-                field.args.length === 0 &&
-                this.isNamespaceType(returnRawType)
-            ) {
-                this.convertNamespaceOperations(returnRawType, fieldName, operationType, operations, [
-                    ...fieldPath,
-                    fieldName
-                ]);
-            } else {
-                const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldName}`);
-                operations[operationId] = this.convertField(field, fieldName, operationType, fieldPath);
-            }
+            const fieldPathSegment = [...fieldPath, fieldName].join("_");
+            const operationId = this.getNamespacedOperationId(
+                `${operationType.toLowerCase()}_${fieldPathSegment}`
+            );
+            operations[operationId] = this.convertField(field, fieldName, operationType, fieldPath);
         }
     }
 
@@ -309,8 +300,14 @@ export class GraphQLConverter {
             this.examplesByOperation.get(`${operationType.toLowerCase()}:${name}`) ??
             this.examplesByOperation.get(name);
 
+        const idSegment =
+            fieldPath.length > 0 ? `${[...fieldPath, name].join("_")}` : name;
+        // fieldPath is not yet declared on GraphQlOperation in the current pinned
+        // @fern-api/fdr-sdk. The `as` cast is required until the platform PR
+        // (fern-platform#11183) ships a new SDK version that includes the field.
+        // Once bumped, remove the cast and the field will pass Zod validation.
         return {
-            id: this.getNamespacedOperationId(`${operationType.toLowerCase()}_${name}`),
+            id: this.getNamespacedOperationId(`${operationType.toLowerCase()}_${idSegment}`),
             operationType,
             name,
             displayName: undefined,
