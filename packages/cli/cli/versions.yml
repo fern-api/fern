@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.38.2
+  changelogEntry:
+    - summary: |
+        Honor operation-level `x-fern-streaming.resumable` on SSE endpoints whose
+        streaming is auto-detected from a `text/event-stream` response. Previously,
+        setting `resumable: true` without an explicit `format` was silently dropped
+        and the endpoint generated as non-resumable.
+      type: fix
+  createdAt: "2026-05-27"
+  irVersion: 66
 - version: 5.38.1
   changelogEntry:
     - summary: |
