@@ -275,9 +275,7 @@ export class GraphQLConverter {
         const fields = namespaceType.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
             const fieldPathSegment = [...fieldPath, fieldName].join("_");
-            const operationId = this.getNamespacedOperationId(
-                `${operationType.toLowerCase()}_${fieldPathSegment}`
-            );
+            const operationId = this.getNamespacedOperationId(`${operationType.toLowerCase()}_${fieldPathSegment}`);
             operations[operationId] = this.convertField(field, fieldName, operationType, fieldPath);
         }
     }
@@ -300,8 +298,7 @@ export class GraphQLConverter {
             this.examplesByOperation.get(`${operationType.toLowerCase()}:${name}`) ??
             this.examplesByOperation.get(name);
 
-        const idSegment =
-            fieldPath.length > 0 ? `${[...fieldPath, name].join("_")}` : name;
+        const idSegment = fieldPath.length > 0 ? `${[...fieldPath, name].join("_")}` : name;
         // fieldPath is not yet declared on GraphQlOperation in the current pinned
         // @fern-api/fdr-sdk. The `as` cast is required until the platform PR
         // (fern-platform#11183) ships a new SDK version that includes the field.
