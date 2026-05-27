@@ -9,6 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { fromJson } from "../json.mjs";
 import { getBinaryResponse } from "./BinaryResponse.mjs";
+// Pins the upstream Response so undici's FinalizationRegistry can't GC it and cancel the body stream.
+function retainResponse(target, response) {
+    Object.defineProperty(target, "__fern_response_ref", {
+        value: response,
+        enumerable: false,
+        configurable: true,
+        writable: false,
+    });
+}
 export function getResponseBody(response, responseType) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (responseType) {
@@ -28,6 +37,7 @@ export function getResponseBody(response, responseType) {
                         },
                     };
                 }
+                retainResponse(response.body, response);
                 return response.body;
             case "streaming":
                 if (response.body == null) {
@@ -39,6 +49,7 @@ export function getResponseBody(response, responseType) {
                         },
                     };
                 }
+                retainResponse(response.body, response);
                 return response.body;
             case "text":
                 return yield response.text();
