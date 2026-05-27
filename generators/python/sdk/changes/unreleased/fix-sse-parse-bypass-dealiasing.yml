@@ -1,0 +1,8 @@
+- summary: |
+    Fix major SSE streaming performance bottleneck by bypassing `convert_and_respect_annotation_metadata`
+    in `parse_sse_obj`. This function recursively introspects all union variants on every event,
+    accounting for ~75% of parse time. SSE data arrives as wire-format JSON and does not need
+    the TypedDict dealiasing pass. Also caches discriminator/variant analysis and replaces
+    `dataclasses.asdict()` with direct attribute access. Benchmarked ~28x faster on
+    Cohere V2ChatStreamResponse (100k events: 4059 → 147 µs/event).
+  type: fix
