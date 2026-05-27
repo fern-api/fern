@@ -2127,14 +2127,19 @@ describe("buildNavigationForDirectory with underscore prefix exclusion", () => {
             getDir: mockGetDir
         });
 
-        // index.mdx should be preferred; guides.mdx should NOT appear as a separate page
-        // because it was consumed as a sibling overview candidate (even though index.mdx wins)
-        expect(result).toHaveLength(1);
-        const section = result[0];
+        // index.mdx should be preferred as overview; guides.mdx should be re-added as a regular page
+        expect(result).toHaveLength(2);
+        const section = result.find((item) => item.type === "section");
+        const page = result.find((item) => item.type === "page");
+
         expect(section).toMatchObject({
             type: "section",
             title: "Guides",
             overviewAbsolutePath: "/test/guides/index.mdx"
+        });
+        expect(page).toMatchObject({
+            type: "page",
+            title: "Guides"
         });
     });
 
@@ -2212,6 +2217,53 @@ describe("buildNavigationForDirectory with underscore prefix exclusion", () => {
         // No standalone pages — both .mdx files were consumed as overviews
         const pages = result.filter((item) => item.type === "page");
         expect(pages).toHaveLength(0);
+    });
+
+    it("should match sibling files with underscores to directories with underscores", async () => {
+        const mockGetDir = async (path: AbsoluteFilePath) => {
+            if (path === ("/test" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "api_reference.mdx",
+                        absolutePath: "/test/api_reference.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    },
+                    {
+                        type: "directory" as const,
+                        name: "api_reference",
+                        absolutePath: "/test/api_reference" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            }
+            if (path === ("/test/api_reference" as AbsoluteFilePath)) {
+                return [
+                    {
+                        type: "file" as const,
+                        name: "endpoints.mdx",
+                        absolutePath: "/test/api_reference/endpoints.mdx" as AbsoluteFilePath,
+                        contents: ""
+                    }
+                ];
+            }
+            return [];
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir
+        });
+
+        expect(result).toHaveLength(1);
+        const section = result[0];
+        expect(section).toMatchObject({
+            type: "section",
+            title: "Api Reference",
+            overviewAbsolutePath: "/test/api_reference.mdx"
+        });
+        expect.assert(section?.type === "section");
+        expect(section.contents).toHaveLength(1);
     });
 
     it("should not exclude files where underscore is not the first character", async () => {

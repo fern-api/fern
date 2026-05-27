@@ -141,7 +141,7 @@ export async function buildNavigationForDirectory({
     // overview page instead of appearing as a separate page.
     const subdirectoryNames = new Set(subdirectories.map((dir) => dir.name.toLowerCase()));
 
-    const siblingOverviewPages = new Map<string, docsYml.DocsNavigationItem.Page>();
+    const siblingOverviewPages = new Map<string, { page: docsYml.DocsNavigationItem.Page; metadata: FrontmatterMetadata }>();
     const remainingPages: { page: docsYml.DocsNavigationItem; metadata: FrontmatterMetadata }[] = [];
     for (let i = 0; i < pages.length; i++) {
         const page = pages[i];
@@ -149,15 +149,16 @@ export async function buildNavigationForDirectory({
         if (page == null || metadata == null) {
             continue;
         }
-        if (page.type === "page" && page.slug != null) {
-            const baseName = page.slug;
-            if (subdirectoryNames.has(baseName)) {
-                siblingOverviewPages.set(baseName, page);
+        if (page.type === "page") {
+            const baseName = markdownFiles[i]?.name.replace(/\.(md|mdx)$/i, "").toLowerCase();
+            if (baseName != null && subdirectoryNames.has(baseName)) {
+                siblingOverviewPages.set(baseName, { page, metadata });
                 continue;
             }
         }
         remainingPages.push({ page, metadata });
     }
+    const usedSiblingKeys = new Set<string>();
 
     const sectionsWithPositions: SectionWithPosition[] = await Promise.all(
         subdirectories.map(async (dir) => {
@@ -178,8 +179,13 @@ export async function buildNavigationForDirectory({
             );
 
             // Fall back to a sibling markdown file with the same name as the directory
-            const siblingPage = siblingOverviewPages.get(dir.name.toLowerCase());
+            const dirKey = dir.name.toLowerCase();
+            const siblingEntry = siblingOverviewPages.get(dirKey);
+            const siblingPage = siblingEntry?.page;
             const overviewPage = indexPage ?? siblingPage;
+            if (overviewPage === siblingPage && siblingPage != null) {
+                usedSiblingKeys.add(dirKey);
+            }
 
             const filteredContents = indexPage ? subContents.filter((item) => item !== indexPage) : subContents;
 
@@ -216,6 +222,13 @@ export async function buildNavigationForDirectory({
             };
         })
     );
+
+    // Re-add sibling pages that were not used as section overviews (e.g. when index.mdx existed)
+    for (const [key, entry] of siblingOverviewPages) {
+        if (!usedSiblingKeys.has(key)) {
+            remainingPages.push(entry);
+        }
+    }
 
     const itemsWithMeta: NavigationItemWithMeta[] = [
         ...remainingPages.map(({ page, metadata }) => ({
