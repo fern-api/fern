@@ -63,6 +63,7 @@ import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { deleteDocsTheme } from "./commands/docs-theme/deleteDocsTheme.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
@@ -1834,11 +1835,42 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
+        addDocsThemeDeleteCommand(yargs, cliContext);
         addDocsThemeExportCommand(yargs, cliContext);
         addDocsThemeListCommand(yargs, cliContext);
         addDocsThemeUploadCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsThemeDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "delete",
+        false,
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: "Name of the theme to delete",
+                    demandOption: true
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("yes", {
+                    alias: "y",
+                    type: "boolean",
+                    description: "Skip the confirmation prompt"
+                })
+                .example("$0 docs theme delete --name dark", "Delete the theme named 'dark'")
+                .example("$0 docs theme delete --name dark --yes", "Delete without confirmation"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme delete" });
+            await deleteDocsTheme({ cliContext, name: argv.name, org: argv.org, yes: argv.yes });
+        }
+    );
 }
 
 function addDocsThemeExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
