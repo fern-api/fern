@@ -1,0 +1,5 @@
+- summary: |
+    Add /openapi.json, /openapi.yaml, /openapi.yml, /asyncapi.json, /asyncapi.yaml, and /asyncapi.yml
+    to the link validator whitelist so `fern check` no longer reports false broken-link errors for these
+    special doc pages.
+  type: fix

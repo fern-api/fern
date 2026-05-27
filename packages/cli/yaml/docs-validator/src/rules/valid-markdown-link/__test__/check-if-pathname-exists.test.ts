@@ -2,6 +2,47 @@ import { describe, expect, it } from "vitest";
 
 import { withBasePathPrepended } from "../with-base-path-prepended.js";
 
+describe("specialDocPages slug registration", () => {
+    const specialDocPages = [
+        "/llms-full.txt",
+        "/llms.txt",
+        "/openapi.json",
+        "/openapi.yaml",
+        "/openapi.yml",
+        "/asyncapi.json",
+        "/asyncapi.yaml",
+        "/asyncapi.yml"
+    ];
+
+    function stripLeadingSlash(s: string): string {
+        return s.startsWith("/") ? s.slice(1) : s;
+    }
+
+    it("all special pages produce valid slugs without basePath", () => {
+        const visitableSlugs = new Set<string>();
+        for (const page of specialDocPages) {
+            visitableSlugs.add(stripLeadingSlash(page));
+        }
+        for (const page of specialDocPages) {
+            expect(visitableSlugs.has(stripLeadingSlash(page))).toBe(true);
+        }
+    });
+
+    it("all special pages produce valid slugs with basePath", () => {
+        const basePath = "/docs";
+        const visitableSlugs = new Set<string>();
+        for (const page of specialDocPages) {
+            const pageWithBasePath = `${stripLeadingSlash(basePath)}${page}`;
+            visitableSlugs.add(pageWithBasePath);
+        }
+        for (const page of specialDocPages) {
+            const prefixed = withBasePathPrepended(page, basePath);
+            expect(prefixed).not.toBeNull();
+            expect(visitableSlugs.has(prefixed!)).toBe(true);
+        }
+    });
+});
+
 describe("withBasePathPrepended", () => {
     it("returns null when no basePath is configured", () => {
         expect(withBasePathPrepended("/about", undefined)).toBeNull();
