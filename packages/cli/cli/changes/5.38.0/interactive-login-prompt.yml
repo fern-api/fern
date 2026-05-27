@@ -1,0 +1,7 @@
+- summary: |
+    Add interactive login prompt to `fern login`. When no active Auth0 session
+    exists, the CLI now presents a menu to choose a login provider (GitHub,
+    Google, Postman, or SSO). Selecting SSO prompts for an email address and
+    routes directly to the organization's identity provider. If an active
+    session already exists, authentication completes silently as before.
+  type: feat

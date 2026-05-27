@@ -8,3 +8,15 @@ export function getDashboardBaseUrl(): string {
         "https://dashboard.buildwithfern.com"
     );
 }
+
+export interface LoginOption {
+    label: string;
+    connection: string;
+}
+
+export const LOGIN_OPTIONS: LoginOption[] = [
+    { label: "Continue with GitHub", connection: "github" },
+    { label: "Continue with Google", connection: "google-oauth2" },
+    { label: "Continue with Postman", connection: "postman" },
+    { label: "Continue with SSO", connection: "enterprise-sso" }
+];

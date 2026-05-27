@@ -5,13 +5,30 @@ import {
     type MarkdownEntry
 } from "../missing-redirects-logic.js";
 
+/**
+ * Helper to build a Map<string, Set<string>> from [pageId, slug] pairs.
+ * Duplicate pageIds accumulate slugs into the same Set.
+ */
+function slugMap(entries: [string, string][]): Map<string, Set<string>> {
+    const map = new Map<string, Set<string>>();
+    for (const [pageId, slug] of entries) {
+        const existing = map.get(pageId);
+        if (existing != null) {
+            existing.add(slug);
+        } else {
+            map.set(pageId, new Set([slug]));
+        }
+    }
+    return map;
+}
+
 describe("findRemovedSlugs", () => {
     it("returns empty when published and local are identical", () => {
         const published: MarkdownEntry[] = [
             { pageId: "docs/welcome.mdx", slug: "welcome", lastUpdated: "2024-01-01T00:00:00.000Z" },
             { pageId: "docs/guide.mdx", slug: "guide", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["docs/welcome.mdx", "welcome"],
             ["docs/guide.mdx", "guide"]
         ]);
@@ -23,7 +40,7 @@ describe("findRemovedSlugs", () => {
             { pageId: "docs/welcome.mdx", slug: "welcome", lastUpdated: "2024-01-01T00:00:00.000Z" },
             { pageId: "docs/old-page.mdx", slug: "old-page", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([["docs/welcome.mdx", "welcome"]]);
+        const local = slugMap([["docs/welcome.mdx", "welcome"]]);
         const removed = findRemovedSlugs(published, local);
         expect(removed).toEqual([{ pageId: "docs/old-page.mdx", oldSlug: "old-page", newSlug: undefined }]);
     });
@@ -32,7 +49,7 @@ describe("findRemovedSlugs", () => {
         const published: MarkdownEntry[] = [
             { pageId: "docs/guide.mdx", slug: "getting-started", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([["docs/guide.mdx", "guides/quickstart"]]);
+        const local = slugMap([["docs/guide.mdx", "guides/quickstart"]]);
         const removed = findRemovedSlugs(published, local);
         expect(removed).toEqual([
             { pageId: "docs/guide.mdx", oldSlug: "getting-started", newSlug: "guides/quickstart" }
@@ -45,7 +62,7 @@ describe("findRemovedSlugs", () => {
             { pageId: "docs/b.mdx", slug: "b", lastUpdated: "2024-01-01T00:00:00.000Z" },
             { pageId: "docs/c.mdx", slug: "c", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["docs/a.mdx", "a"],
             ["docs/b.mdx", "new-b"]
         ]);
@@ -59,7 +76,7 @@ describe("findRemovedSlugs", () => {
         const published: MarkdownEntry[] = [
             { pageId: "docs/existing.mdx", slug: "existing", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["docs/existing.mdx", "existing"],
             ["docs/brand-new.mdx", "brand-new"]
         ]);
@@ -67,7 +84,7 @@ describe("findRemovedSlugs", () => {
     });
 
     it("returns empty for empty published entries (first publish)", () => {
-        const local = new Map([["docs/welcome.mdx", "welcome"]]);
+        const local = slugMap([["docs/welcome.mdx", "welcome"]]);
         expect(findRemovedSlugs([], local)).toEqual([]);
     });
 
@@ -76,7 +93,7 @@ describe("findRemovedSlugs", () => {
             { pageId: "docs/welcome.mdx", slug: "welcome", lastUpdated: "2024-01-01T00:00:00.000Z" },
             { pageId: "changelog/2024-01-15.mdx", slug: "changelog", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["docs/welcome.mdx", "welcome"],
             ["changelog/overview.mdx", "changelog"]
         ]);
@@ -87,7 +104,7 @@ describe("findRemovedSlugs", () => {
         const published: MarkdownEntry[] = [
             { pageId: "docs/guide.mdx", slug: "shared-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["docs/guide.mdx", "new-slug"],
             ["docs/other.mdx", "shared-slug"]
         ]);
@@ -108,7 +125,7 @@ describe("findRemovedSlugs", () => {
             },
             { pageId: "changelog/2024-02-01.mdx", slug: "whats-new/changelog", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([["changelog/2024-02-01.mdx", "whats-new/changelog"]]);
+        const local = slugMap([["changelog/2024-02-01.mdx", "whats-new/changelog"]]);
         expect(findRemovedSlugs(published, local)).toEqual([]);
     });
 
@@ -116,7 +133,7 @@ describe("findRemovedSlugs", () => {
         const published: MarkdownEntry[] = [
             { pageId: "changelog/2024-01-15.mdx", slug: "", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([["pages/landing.mdx", ""]]);
+        const local = slugMap([["pages/landing.mdx", ""]]);
         expect(findRemovedSlugs(published, local)).toEqual([]);
     });
 
@@ -124,9 +141,48 @@ describe("findRemovedSlugs", () => {
         const published: MarkdownEntry[] = [
             { pageId: "docs/old.mdx", slug: "unique-old-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }
         ];
-        const local = new Map([["docs/new.mdx", "different-slug"]]);
+        const local = slugMap([["docs/new.mdx", "different-slug"]]);
         const removed = findRemovedSlugs(published, local);
         expect(removed).toEqual([{ pageId: "docs/old.mdx", oldSlug: "unique-old-slug", newSlug: undefined }]);
+    });
+
+    it("does not flag a page when it appears under multiple version slugs locally", () => {
+        const published: MarkdownEntry[] = [
+            {
+                pageId: "versions/v2-2-77/pages/safety-notices.mdx",
+                slug: "infinia/v2-2-77/safety-notices",
+                lastUpdated: "2024-01-01T00:00:00.000Z"
+            }
+        ];
+        const local = slugMap([
+            ["versions/v2-2-77/pages/safety-notices.mdx", "infinia/v2-2-77/safety-notices"],
+            ["versions/v2-2-77/pages/safety-notices.mdx", "infinia/v2-3-2/safety-notices"]
+        ]);
+        expect(findRemovedSlugs(published, local)).toEqual([]);
+    });
+
+    it("does not flag any version when a file appears across many versions", () => {
+        const published: MarkdownEntry[] = [
+            {
+                pageId: "versions/shared/page.mdx",
+                slug: "docs/v1/page",
+                lastUpdated: "2024-01-01T00:00:00.000Z"
+            },
+            {
+                pageId: "versions/shared/page.mdx",
+                slug: "docs/v2/page",
+                lastUpdated: "2024-06-01T00:00:00.000Z"
+            }
+        ];
+        const local = slugMap([
+            ["versions/shared/page.mdx", "docs/v1/page"],
+            ["versions/shared/page.mdx", "docs/v2/page"],
+            ["versions/shared/page.mdx", "docs/v3/page"]
+        ]);
+        // After keepLatestEntryPerPageId, only the v2 entry survives (latest),
+        // but v2 is in the local set so no warning.
+        const deduped = keepLatestEntryPerPageId(published);
+        expect(findRemovedSlugs(deduped, local)).toEqual([]);
     });
 });
 
@@ -290,11 +346,6 @@ describe("keepLatestEntryPerPageId", () => {
 
 describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
     it("emits zero warnings when every stale row's pageId is at its latest slug locally", () => {
-        // Simulates the Close case: the slug table has accumulated multiple
-        // historical (pageId, slug) rows per pageId from past nav restructurings,
-        // but the customer has not changed anything since the most recent publish.
-        // After dedup, findRemovedSlugs should see one row per pageId at the
-        // current slug and produce zero warnings.
         const published: MarkdownEntry[] = [
             {
                 pageId: "docs/api-clients.md",
@@ -318,7 +369,7 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
             },
             { pageId: "docs/intro.md", slug: "api/overview", lastUpdated: "2024-12-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["docs/api-clients.md", "api/overview/api-clients"],
             ["docs/intro.md", "api/overview"]
         ]);
@@ -330,17 +381,12 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
     });
 
     it("flags only the most recent slug when there are stale rows AND a real slug change", () => {
-        // The customer restructured the nav multiple times historically (all those
-        // old slugs linger as stale rows in FDR). They have also just moved a page
-        // one more time locally, without publishing yet. We want exactly ONE
-        // warning about the latest transition — not additional warnings for each
-        // ancient slug.
         const published: MarkdownEntry[] = [
             { pageId: "docs/guide.md", slug: "v1/guide", lastUpdated: "2022-01-01T00:00:00.000Z" },
             { pageId: "docs/guide.md", slug: "v2/guide", lastUpdated: "2023-01-01T00:00:00.000Z" },
             { pageId: "docs/guide.md", slug: "v3/guide", lastUpdated: "2024-06-01T00:00:00.000Z" }
         ];
-        const local = new Map([["docs/guide.md", "v4/guide"]]);
+        const local = slugMap([["docs/guide.md", "v4/guide"]]);
 
         const deduped = keepLatestEntryPerPageId(published);
         const removed = findRemovedSlugs(deduped, local);
@@ -349,14 +395,12 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
     });
 
     it("flags the most recent slug when a pageId is removed entirely, ignoring stale history", () => {
-        // Similar to above but the page is fully gone locally, not just moved.
-        // Expect one warning about the most recent slug, not N warnings.
         const published: MarkdownEntry[] = [
             { pageId: "docs/deprecated.md", slug: "v1/deprecated", lastUpdated: "2022-01-01T00:00:00.000Z" },
             { pageId: "docs/deprecated.md", slug: "v2/deprecated", lastUpdated: "2023-01-01T00:00:00.000Z" },
             { pageId: "docs/deprecated.md", slug: "v3/deprecated", lastUpdated: "2024-06-01T00:00:00.000Z" }
         ];
-        const local = new Map<string, string>();
+        const local = new Map<string, Set<string>>();
 
         const deduped = keepLatestEntryPerPageId(published);
         const removed = findRemovedSlugs(deduped, local);
@@ -365,12 +409,6 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
     });
 
     it("emits zero warnings for a changelog whose parent slug has been renamed over time", () => {
-        // Direct analogue of Close's changelog situation: one row per entry per
-        // historical parent slug (api-reference/getting-started/changelog →
-        // api/getting-started/changelog → api/overview/changelog). Each row
-        // has a distinct pageId, so dedup alone doesn't collapse them — but
-        // the findRemovedSlugs activeSlugs skip does, because the current
-        // parent slug serves all entries.
         const published: MarkdownEntry[] = [
             {
                 pageId: "changelog/2024-01.mdx",
@@ -394,7 +432,7 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
             },
             { pageId: "changelog/2024-02.mdx", slug: "api/overview/changelog", lastUpdated: "2024-12-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["changelog/2024-01.mdx", "api/overview/changelog"],
             ["changelog/2024-02.mdx", "api/overview/changelog"]
         ]);
@@ -406,20 +444,14 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
     });
 
     it("handles a mix of stable pages, stale-only pages, and a real change in one table", () => {
-        // Realistic mixed scenario: most pages are stable, some have stale rows
-        // at their current slug (no-op), one page has a genuine pending move.
-        // The rule should fire exactly one warning — for the genuine move.
         const published: MarkdownEntry[] = [
-            // Stable page, one row.
             { pageId: "docs/a.md", slug: "a", lastUpdated: "2024-12-01T00:00:00.000Z" },
-            // Stable page but with historical stale rows.
             { pageId: "docs/b.md", slug: "old-b", lastUpdated: "2022-01-01T00:00:00.000Z" },
             { pageId: "docs/b.md", slug: "b", lastUpdated: "2024-12-01T00:00:00.000Z" },
-            // Pending move: last published slug is "c", but local has moved it to "new-c".
             { pageId: "docs/c.md", slug: "ancient-c", lastUpdated: "2022-01-01T00:00:00.000Z" },
             { pageId: "docs/c.md", slug: "c", lastUpdated: "2024-06-01T00:00:00.000Z" }
         ];
-        const local = new Map([
+        const local = slugMap([
             ["docs/a.md", "a"],
             ["docs/b.md", "b"],
             ["docs/c.md", "new-c"]
@@ -429,5 +461,27 @@ describe("integration: keepLatestEntryPerPageId + findRemovedSlugs", () => {
         const removed = findRemovedSlugs(deduped, local);
 
         expect(removed).toEqual([{ pageId: "docs/c.md", oldSlug: "c", newSlug: "new-c" }]);
+    });
+
+    it("emits zero warnings when a file is reused across multiple doc versions", () => {
+        // Reproduces the DDN Infinia case: the same .mdx file is referenced in
+        // navigation entries for multiple versions, producing distinct slugs for
+        // each version. This is intentional and should not trigger move warnings.
+        const published: MarkdownEntry[] = [
+            {
+                pageId: "versions/v2-2-77/pages/safety-notices.mdx",
+                slug: "infinia/v2-2-77/maintenance/safety-notices",
+                lastUpdated: "2024-12-01T00:00:00.000Z"
+            }
+        ];
+        const local = slugMap([
+            ["versions/v2-2-77/pages/safety-notices.mdx", "infinia/v2-2-77/maintenance/safety-notices"],
+            ["versions/v2-2-77/pages/safety-notices.mdx", "infinia/v2-3-2/maintenance/safety-notices"]
+        ]);
+
+        const deduped = keepLatestEntryPerPageId(published);
+        const removed = findRemovedSlugs(deduped, local);
+
+        expect(removed).toEqual([]);
     });
 });
