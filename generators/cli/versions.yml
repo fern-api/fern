@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.4.2
+  changelogEntry:
+    - summary: |
+        Move overlay fixture integration tests out of `src/openapi/overlay.rs`
+        into `tests/overlay_fixture.rs` (filtered from shipped output via
+        `SDK_IGNORE`). The previous in-source tests `include_str!`'d
+        `../../cli/openapi-fixture/openapi.yaml`, a path pruned by
+        `SDK_IGNORE`, so every generated CLI failed
+        `cargo build --locked --all-features --tests` at
+        `src/openapi/overlay.rs:1835` / `:1894` with
+        `couldn't read … openapi.yaml`.
+      type: fix
+  createdAt: "2026-05-25"
+  irVersion: 67
 - version: 0.4.1
   changelogEntry:
     - summary: |
