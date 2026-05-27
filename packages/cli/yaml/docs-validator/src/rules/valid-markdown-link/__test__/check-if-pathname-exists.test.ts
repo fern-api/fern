@@ -38,7 +38,9 @@ describe("specialDocPages slug registration", () => {
         for (const page of specialDocPages) {
             const prefixed = withBasePathPrepended(page, basePath);
             expect(prefixed).not.toBeNull();
-            expect(visitableSlugs.has(prefixed!)).toBe(true);
+            if (prefixed != null) {
+                expect(visitableSlugs.has(prefixed)).toBe(true);
+            }
         }
     });
 });
