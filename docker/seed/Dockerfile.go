@@ -130,6 +130,8 @@ RUN set -eux; \
 # Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
 # still pins old pseudo-versions of x/net and x/crypto, and an old x/sys.
 # Bump the SBOM files so grype no longer flags them.
+# Patch both src/go.mod (stdlib) and src/cmd/go.mod (toolchain commands)
+# so scanners like grype and AWS Inspector stop reporting CVE-2026-39824.
 RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum && \
@@ -138,7 +140,10 @@ RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
     sed -i '/golang.org\/x\/crypto v0.46.1-/d' /usr/local/go/src/go.sum && \
     sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.45.0|g' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
-    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.45.0|g' \
+        /usr/local/go/src/cmd/go.mod /usr/local/go/src/cmd/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/cmd/go.sum
 
 ENV PATH="/usr/local/go/bin:${PATH}" \
     GOPATH="/go" \
@@ -146,11 +151,17 @@ ENV PATH="/usr/local/go/bin:${PATH}" \
 
 RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin"
 
-# Install golangci-lint via `go install` so the binary embeds the just-installed
-# go1.26.3 stdlib instead of the older toolchain used by the upstream prebuilt.
+# Build golangci-lint from source so we can bump golang.org/x/sys to v0.45.0
+# (CVE-2026-39824). `go install` cannot override transitive deps, so we clone,
+# patch, and build.
 ENV GOLANGCI_LINT_VERSION=v2.12.2
-RUN GOBIN=/usr/local/bin CGO_ENABLED=0 go install -ldflags "-s -w" \
-      github.com/golangci/golangci-lint/v2/cmd/golangci-lint@${GOLANGCI_LINT_VERSION} && \
+RUN git clone --depth 1 --branch ${GOLANGCI_LINT_VERSION} \
+      https://github.com/golangci/golangci-lint.git /tmp/golangci-lint && \
+    cd /tmp/golangci-lint && \
+    go get golang.org/x/sys@v0.45.0 && go mod tidy && \
+    CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath \
+      -o /usr/local/bin/golangci-lint ./cmd/golangci-lint && \
+    cd / && rm -rf /tmp/golangci-lint && \
     go clean -modcache && \
     rm -rf /root/.cache/go-build
 
