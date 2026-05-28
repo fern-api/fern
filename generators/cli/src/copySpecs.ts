@@ -1,82 +1,154 @@
-import { cp, lstat, mkdir, readFile, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
+import type { DetectedAuthBinding } from "./detectAuth.js";
 
 export interface RawSpecsManifestEntry {
     type: "openapi" | "asyncapi" | "protobuf" | "openrpc" | "graphql";
     specPath: string;
     overridePaths?: string[];
+    /** Namespace the user declared in `generators.yml` for this spec, if any. */
+    namespace?: string;
 }
 
 export interface RawSpecsManifest {
     specs: RawSpecsManifestEntry[];
 }
 
+/** Where the local-workspace-runner mounts raw API specs inside the container. */
 export const SPECS_DIRECTORY = "/fern/specs";
 export const SPECS_MANIFEST_FILENAME = "specs-manifest.json";
 
-export async function copySpecs(outputDir: string, rawSpecsDir?: string): Promise<void> {
-    const specsDir = rawSpecsDir ?? SPECS_DIRECTORY;
-    const manifestPath = path.join(specsDir, SPECS_MANIFEST_FILENAME);
-    let manifestContent: string;
+/**
+ * Returns the parsed mounted-specs manifest, or `null` when no specs were
+ * mounted (e.g. a Fern-definition workspace). Lets the caller decide
+ * whether to short-circuit the entire generation step before any files
+ * get written.
+ */
+export async function readSpecsManifest(specsDir?: string): Promise<RawSpecsManifest | null> {
+    const dir = specsDir ?? SPECS_DIRECTORY;
     try {
-        manifestContent = await readFile(manifestPath, "utf-8");
+        const content = await readFile(path.join(dir, SPECS_MANIFEST_FILENAME), "utf-8");
+        return JSON.parse(content) as RawSpecsManifest;
     } catch {
-        // No manifest means no raw specs were mounted
-        return;
+        return null;
     }
-
-    const manifest: RawSpecsManifest = JSON.parse(manifestContent);
-    if (manifest.specs.length === 0) {
-        return;
-    }
-
-    const specsOutputDir = path.join(outputDir, "specs");
-    await mkdir(specsOutputDir, { recursive: true });
-
-    const copiedManifest: RawSpecsManifest = { specs: [] };
-
-    for (const entry of manifest.specs) {
-        const copiedEntry: RawSpecsManifestEntry = {
-            type: entry.type,
-            specPath: await copySpecFile(entry.specPath, specsOutputDir, specsDir)
-        };
-
-        if (entry.overridePaths != null && entry.overridePaths.length > 0) {
-            copiedEntry.overridePaths = [];
-            for (const overridePath of entry.overridePaths) {
-                copiedEntry.overridePaths.push(await copySpecFile(overridePath, specsOutputDir, specsDir));
-            }
-        }
-
-        copiedManifest.specs.push(copiedEntry);
-    }
-
-    await writeFile(path.join(specsOutputDir, SPECS_MANIFEST_FILENAME), JSON.stringify(copiedManifest, undefined, 4));
 }
 
-export async function copySpecFile(containerPath: string, specsOutputDir: string, specsDir?: string): Promise<string> {
-    const baseDir = specsDir ?? SPECS_DIRECTORY;
-    const relativePath = containerPath.startsWith(baseDir + "/")
-        ? containerPath.slice(baseDir.length + 1)
-        : path.basename(containerPath);
+/** Returns true iff at least one OpenAPI spec is mounted. */
+export async function hasOpenApiSpecs(specsDir?: string): Promise<boolean> {
+    const manifest = await readSpecsManifest(specsDir);
+    return manifest != null && manifest.specs.some((entry) => entry.type === "openapi");
+}
 
-    const destPath = path.join(specsOutputDir, relativePath);
-    let isDir = false;
-    try {
-        const stat = await lstat(containerPath);
-        isDir = stat.isDirectory();
-    } catch (err: unknown) {
-        if (err != null && typeof err === "object" && "code" in err && err.code === "ENOENT") {
-            throw new Error(`Spec file not found at mount path: ${containerPath}`);
+/**
+ * Write every mounted OpenAPI spec into the generated CLI's bin folder
+ * (`cli/<binaryName>/`) and emit a fresh `main.rs` that embeds each spec
+ * via `include_str!` and wires the auth bindings supplied by the caller
+ * (which read them from the Fern IR). The folder is named after the
+ * binary so the patched `Cargo.toml`'s `[[bin]] path =
+ * "cli/<binaryName>/main.rs"` resolves.
+ *
+ * Behavior for spec namespacing:
+ *   - Specs without a `namespace:` in `generators.yml` → emit
+ *     `.spec(include_str!(...))` per spec so they merge flat at the root
+ *     of the command tree.
+ *   - Specs with a `namespace:` in `generators.yml` → emit
+ *     `.spec_under("<namespace>", include_str!(...))` per spec so each
+ *     surfaces under its own sub-command. Mixed workspaces work too.
+ *
+ * No-op when no OpenAPI specs are mounted; the orchestrator's gate
+ * should have skipped before reaching this point.
+ */
+export async function copySpecs(args: {
+    outputDir: string;
+    binaryName: string;
+    authBindings: DetectedAuthBinding[];
+    specsDir?: string;
+}): Promise<void> {
+    const { outputDir, binaryName, authBindings, specsDir } = args;
+    const manifest = await readSpecsManifest(specsDir);
+    if (manifest == null) {
+        return;
+    }
+
+    const openapiSpecs = manifest.specs.filter((entry) => entry.type === "openapi");
+    if (openapiSpecs.length === 0) {
+        return;
+    }
+
+    const binDir = path.join(outputDir, "cli", binaryName);
+    await mkdir(binDir, { recursive: true });
+
+    const entries: SpecEntry[] = [];
+    for (const spec of openapiSpecs) {
+        const destFilename = path.basename(spec.specPath);
+        await cp(spec.specPath, path.join(binDir, destFilename), { force: true });
+        entries.push({ destFilename, namespace: spec.namespace });
+    }
+
+    await writeFile(path.join(binDir, "main.rs"), renderMainRs({ binaryName, entries, authBindings }));
+}
+
+interface SpecEntry {
+    destFilename: string;
+    namespace: string | undefined;
+}
+
+function renderMainRs(args: { binaryName: string; entries: SpecEntry[]; authBindings: DetectedAuthBinding[] }): string {
+    const { binaryName, entries, authBindings } = args;
+
+    // Separate root-level auth (typed builders) from binding-level auth
+    const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
+    const bindingAuthBindings = authBindings.filter((b) => b.placement === "binding");
+
+    // Collect needed imports
+    const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
+    const authTypeImports = new Set<string>();
+    for (const binding of [...rootAuthBindings, ...bindingAuthBindings]) {
+        if (binding.authTypeImport != null) {
+            for (const imp of binding.authTypeImport.split(",")) {
+                authTypeImports.add(imp.trim());
+            }
         }
-        throw err;
     }
-    if (isDir) {
-        await cp(containerPath, destPath, { recursive: true });
-    } else {
-        await mkdir(path.dirname(destPath), { recursive: true });
-        await cp(containerPath, destPath);
+    if (authTypeImports.size > 0) {
+        imports.push(`use fern_cli_sdk::auth::{${[...authTypeImports].sort().join(", ")}};`);
     }
 
-    return relativePath;
+    const lines: string[] = [
+        "// Auto-generated by @fern-api/cli-generator's copySpecs step.",
+        "// Edit the SDK template / generator if you need to change the shape.",
+        "",
+        ...imports,
+        "",
+        "fn main() {",
+        `    CliApp::new("${binaryName}")`
+    ];
+
+    // Root-level auth bindings (typed builders)
+    for (const binding of rootAuthBindings) {
+        lines.push(`        ${binding.rustCall}`);
+    }
+
+    // OpenApiBinding with specs and binding-level auth
+    lines.push("        .binding(");
+    lines.push("            OpenApiBinding::new()");
+    for (const entry of entries) {
+        const include = `include_str!("${entry.destFilename}")`;
+        if (entry.namespace != null && entry.namespace !== "") {
+            lines.push(`                .spec_under("${entry.namespace}", ${include})`);
+        } else {
+            lines.push(`                .spec(${include})`);
+        }
+    }
+    for (const binding of bindingAuthBindings) {
+        lines.push(`                ${binding.rustCall}`);
+    }
+    // Close the binding — use trailing comma for clean formatting
+    lines.push("        )");
+
+    lines.push("        .run()");
+    lines.push("}");
+    lines.push("");
+    return lines.join("\n");
 }

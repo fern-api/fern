@@ -134,6 +134,13 @@
             "inputs": [
                 "$TURBO_ARGS",
                 "src/**",
+                // The cli generator's `build.mjs` copies its hand-authored
+                // Rust SDK template at `sdk/**` into `dist/sdk/`. Without
+                // this glob, editing the template doesn't invalidate
+                // turbo's cache and `dist/sdk/` stays stale.
+                // Other generators don't have a top-level `sdk/` dir, so
+                // this is a no-match no-op for them.
+                "sdk/**",
                 "package.json",
                 "tsconfig.json",
                 "build.tsconfig.json",

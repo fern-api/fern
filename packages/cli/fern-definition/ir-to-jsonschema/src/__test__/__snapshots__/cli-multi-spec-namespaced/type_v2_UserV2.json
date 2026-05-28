@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "profile": {
+      "$ref": "#/definitions/v2.UserV2Profile"
+    }
+  },
+  "required": [
+    "id",
+    "profile"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "v2.UserV2Profile": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "displayName": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

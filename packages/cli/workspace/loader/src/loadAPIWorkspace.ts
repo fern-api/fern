@@ -15,6 +15,7 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
+import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
 
 export async function loadSingleNamespaceAPIWorkspace({
@@ -120,21 +121,53 @@ export async function loadSingleNamespaceAPIWorkspace({
                     }
                 };
             }
+            const absoluteFilepathToExamples =
+                definition.schema.examples != null
+                    ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.examples))
+                    : undefined;
+            if (
+                definition.schema.examples != null &&
+                absoluteFilepathToExamples != null &&
+                !(await doesPathExist(absoluteFilepathToExamples))
+            ) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(definition.schema.examples)]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
             specs.push({
                 type: "graphql",
                 absoluteFilepath: absoluteFilepathToGraphQL,
                 absoluteFilepathToOverrides,
+                absoluteFilepathToExamples,
                 namespace
             });
             continue;
         }
 
-        const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
+        if (path.isAbsolute(definition.schema.path)) {
+            return {
+                didSucceed: false,
+                failures: {
+                    [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
+                        type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+                        filepath: definition.schema.path
+                    }
+                }
+            };
+        }
+
+        const relativeFilepath = RelativeFilePath.of(definition.schema.path);
+        const absoluteFilepath = join(absolutePathToWorkspace, relativeFilepath);
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
                 didSucceed: false,
                 failures: {
-                    [RelativeFilePath.of(definition.schema.path)]: {
+                    [relativeFilepath]: {
                         type: WorkspaceLoaderFailureType.FILE_MISSING
                     }
                 }

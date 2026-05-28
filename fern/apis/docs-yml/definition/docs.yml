@@ -956,7 +956,15 @@ types:
           By default (`false`), search will display results for pages across all products and versions.
           If set to true, search will display results for pages within the current product and version.
 
+          Preserved for backwards compatibility. Equivalent to
+          `search.default-filter-by-current-product`.
+
           @default: false
+      search:
+        type: optional<SearchSettingsConfig>
+        docs: |
+          Controls product-aware search behavior. See `SearchSettingsConfig` for
+          individual options.
       http-snippets:
         type: optional<HttpSnippetsConfig>
         docs: |
@@ -1020,6 +1028,26 @@ types:
           - `grouped`: Messages are shown as a single parent entry with nested variants.
 
           @default: flat
+
+  SearchSettingsConfig:
+    properties:
+      prioritize-current-product:
+        type: optional<boolean>
+        docs: |
+          If set to true, search results from the current product/version are
+          boosted in Algolia's ranking (via `optionalFilters`) without excluding
+          results from other products/versions.
+
+          @default: false
+      default-filter-by-current-product:
+        type: optional<boolean>
+        docs: |
+          If set to true, the current product is automatically selected as a
+          facet filter, so only results from the current product are shown by
+          default. Equivalent to the legacy `settings.default-search-filters`
+          setting, which is preserved as an alias for backwards compatibility.
+
+          @default: false
 
   ThemeConfig:
     properties:

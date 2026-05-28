@@ -133,7 +133,8 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             breadcrumbs: operationBreadcrumbs,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
-            path: this.path
+            path: this.path,
+            pathItemParameters: this.pathItem.parameters
         });
         return webhookConverter.convert();
     }
@@ -203,6 +204,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path,
+            pathItemParameters: this.pathItem.parameters,
             idempotent: isIdempotent,
             idToAuthScheme: this.idToAuthScheme,
             topLevelServers: this.topLevelServers,

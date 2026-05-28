@@ -1,9 +1,9 @@
 {
   "title": "Failed to locate type",
-  "disposition": "keep_sentry",
-  "rationale": "Type resolution failed inside IR generation; needs product-level investigation instead of suppression.",
-  "fixSummary": "—",
-  "prOrIssue": "Keep in Sentry until product fix",
-  "lastAnalyzed": "2026-05-04",
+  "disposition": "shipped",
+  "rationale": "Unresolved Fern HTTP response type references come from user-authored API definitions and are now classified as validation errors at the response conversion boundary instead of reportable internal resolution failures.",
+  "fixSummary": "Convert response-type resolution failures during HTTP response conversion into non-reportable validation errors.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15945",
+  "lastAnalyzed": "2026-05-16",
   "problemSignature": "IR generation failed to locate a referenced Fern type; possible reference/resolution product bug until validated."
 }

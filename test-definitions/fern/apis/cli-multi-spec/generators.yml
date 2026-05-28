@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Multi-spec fixture for the CLI generator. Declares two OpenAPI specs in
+# the same workspace so the generator can verify that all mounted specs
+# land in the output (not just the first one).
+api:
+  specs:
+    - openapi: ./users-api.yml
+    - openapi: ./billing-api.yml
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli
+        version: latest
+        ir-version: latest

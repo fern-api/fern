@@ -5960,6 +5960,34 @@
       "additionalProperties": false,
       "description": "Configuration for the feedback widget displayed on documentation pages."
     },
+    "docs.SearchSettingsConfig": {
+      "type": "object",
+      "properties": {
+        "prioritize-current-product": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, search results from the current product/version are\nboosted in Algolia's ranking (via `optionalFilters`) without excluding\nresults from other products/versions.\n\n@default: false"
+        },
+        "default-filter-by-current-product": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, the current product is automatically selected as a\nfacet filter, so only results from the current product are shown by\ndefault. Equivalent to the legacy `settings.default-search-filters`\nsetting, which is preserved as an alias for backwards compatibility.\n\n@default: false"
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.HttpSnippetLanguage": {
       "type": "string",
       "enum": [
@@ -6040,7 +6068,18 @@
               "type": "null"
             }
           ],
-          "description": "By default (`false`), search will display results for pages across all products and versions.\nIf set to true, search will display results for pages within the current product and version.\n\n@default: false"
+          "description": "By default (`false`), search will display results for pages across all products and versions.\nIf set to true, search will display results for pages within the current product and version.\n\nPreserved for backwards compatibility. Equivalent to\n`search.default-filter-by-current-product`.\n\n@default: false"
+        },
+        "search": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SearchSettingsConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Controls product-aware search behavior. See `SearchSettingsConfig` for\nindividual options."
         },
         "http-snippets": {
           "oneOf": [

@@ -44,7 +44,8 @@ export async function createAndStartJob({
     autoMerge,
     skipIfNoDiff,
     verify,
-    loginCommand = "fern login"
+    loginCommand = "fern login",
+    specsTarGzBuffer
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -81,6 +82,7 @@ export async function createAndStartJob({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    specsTarGzBuffer?: Buffer;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -131,7 +133,14 @@ export async function createAndStartJob({
                 { code: CliError.Code.NetworkError }
             )
     });
-    await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
+    await startJob({
+        intermediateRepresentation,
+        job,
+        context,
+        generatorInvocation,
+        irVersionOverride,
+        specsTarGzBuffer
+    });
     return job;
 }
 
@@ -375,13 +384,15 @@ async function startJob({
     generatorInvocation,
     job,
     context,
-    irVersionOverride
+    irVersionOverride,
+    specsTarGzBuffer
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    specsTarGzBuffer: Buffer | undefined;
 }): Promise<void> {
     const irVersionFromFdr = await getIrVersionForGenerator(generatorInvocation).then((version) =>
         version == null ? undefined : "v" + version.toString()
@@ -420,7 +431,12 @@ async function startJob({
         `Compressed IR from ${irBytes.byteLength} bytes to ${compressed.length} bytes ` +
             `(${((1 - compressed.length / irBytes.byteLength) * 100).toFixed(1)}% reduction)`
     );
-    formData.append("file", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
+    formData.append("ir", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
+
+    if (specsTarGzBuffer != null) {
+        formData.append("specs", specsTarGzBuffer, { filename: "specs.tar.gz", contentType: "application/gzip" });
+        context.logger.debug(`Appended specs tar.gz (${specsTarGzBuffer.length} bytes)`);
+    }
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {

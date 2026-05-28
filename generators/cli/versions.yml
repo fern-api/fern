@@ -1,4 +1,93 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.4.2
+  changelogEntry:
+    - summary: |
+        Move overlay fixture integration tests out of `src/openapi/overlay.rs`
+        into `tests/overlay_fixture.rs` (filtered from shipped output via
+        `SDK_IGNORE`). The previous in-source tests `include_str!`'d
+        `../../cli/openapi-fixture/openapi.yaml`, a path pruned by
+        `SDK_IGNORE`, so every generated CLI failed
+        `cargo build --locked --all-features --tests` at
+        `src/openapi/overlay.rs:1835` / `:1894` with
+        `couldn't read … openapi.yaml`.
+      type: fix
+  createdAt: "2026-05-25"
+  irVersion: 67
+- version: 0.4.1
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 67
+- version: 0.4.0
+  changelogEntry:
+    - summary: |
+        Drive binary identity and auth wiring from the Fern IR instead of
+        the raw OpenAPI spec. Env-var names now come from
+        `generators.yml`'s `auth-schemes` block (e.g. `CLOSE_API_KEY`)
+        rather than the spec-derived `<BIN>_<SCHEME>_<KIND>`.
+
+        Fix silent auth drop for basic schemes with `password.omit: true`
+        (Close's "API key as username" pattern). Previously emitted
+        `auth_basic_scheme(..., literal(""))`, but `Literal("")` resolves
+        to `None`, tripping the SDK's "both halves must resolve" check and
+        sending the request unauthenticated. Now uses the new
+        `auth_basic_scheme_username_only` / `_password_only` builders
+        backed by `BasicAuthProvider::{username_only,password_only}`.
+        `--help` now reads `basic auth (username only) · username: …`
+        instead of the misleading `password: built-in literal`.
+
+        Output also no longer ships Fern's CI workflows, the strip-schema
+        dev bin, or the `@fern-api` cargo-dist scope;
+        `[package.metadata.dist].dist` defaults to `true`.
+      type: feat
+  createdAt: "2026-05-22"
+  irVersion: 67
+- version: 0.3.0
+  changelogEntry:
+    - summary: |
+        End-to-end Rust CLI generation. The generator copies the bundled
+        Rust SDK template into the user's output (recursive copy with a
+        curated `SDK_IGNORE`) and writes `cli/<binary>/main.rs` from
+        scratch alongside each mounted OpenAPI spec.
+
+        Binary identity is derived from one of:
+          - `customConfig.binaryName` in generators.yml
+          - else the spec's `info.title` (kebab-cased) for single-spec
+            workspaces
+          - else a clear error (multi-spec without override).
+        Patched into `Cargo.toml`'s `[[bin]] name`/`path`, the
+        `CliApp::new(...)` arg, and the env-var prefix for auth
+        credentials.
+
+        Auth detection: each declared `components.securitySchemes`
+        entry the SDK can lower (`http: bearer`, `oauth2`,
+        `apiKey: header`, `http: basic`) emits the matching
+        `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` call
+        against `<BIN>_<SCHEME>_<KIND>` env vars. Unsupported schemes
+        (apiKey in query/cookie, openIdConnect, mTLS) are silently
+        skipped to match the SDK's supported surface.
+
+        Multi-spec routing: specs without a `namespace:` in
+        `generators.yml` emit `.spec(include_str!(...))` so they merge
+        flat at the root of the command tree; specs with a namespace
+        emit `.spec_under("<ns>", include_str!(...))` so each surfaces
+        under its own sub-command. Mixed workspaces work.
+
+        Workspaces that mount no OpenAPI specs (e.g. Fern definitions)
+        skip cleanly with a log message — the output dir stays
+        untouched rather than receiving a half-wired template.
+
+        Operational: Sentry instrumentation matches the other
+        generators (no-op without `SENTRY_DSN` or with
+        `FERN_DISABLE_TELEMETRY=true`). Shipped lib test fixture
+        trimmed from 33 KB to 1.5 KB; the rich fixture remains in
+        source for template-author tests but is excluded from user
+        output via SDK_IGNORE.
+      type: feat
+  createdAt: "2026-05-21"
+  irVersion: 67
 - version: 0.2.0
   changelogEntry:
     - summary: |
@@ -7,7 +96,7 @@
         in generated CLI.
       type: feat
   createdAt: "2026-05-20"
-  irVersion: 66
+  irVersion: 67
 - version: 0.1.0
   changelogEntry:
     - summary: |

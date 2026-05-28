@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Classify unresolved Fern response type references as validation errors instead of reportable internal resolution failures.
+  type: fix

@@ -114,6 +114,7 @@ export * from "./RelativeProductPath.js";
 export * from "./Role.js";
 export * from "./RoleId.js";
 export * from "./SearchbarPlacement.js";
+export * from "./SearchSettingsConfig.js";
 export * from "./SectionConfiguration.js";
 export * from "./SegmentConfig.js";
 export * from "./SidebarThemeConfig.js";

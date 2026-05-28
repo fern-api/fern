@@ -343,7 +343,7 @@ When creating pull requests in this repository:
 
    **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
 
-   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `openapi`, `deps`, `deps-dev`, `pydantic`, `ai-search`, `swift`, `rust`
+   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `openapi`, `deps`, `deps-dev`, `pydantic`, `ai-search`, `swift`, `rust`, `generator-cli`, `parser`, `ir`, `cli-v2`, `cli-generator`
 
    **Examples**: `chore(docs): update guidelines`, `feat(python): add new feature`, `fix(cli): resolve config loading bug`
 

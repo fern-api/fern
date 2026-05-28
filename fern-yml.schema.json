@@ -2896,6 +2896,18 @@
             "default-search-filters": {
               "type": "boolean"
             },
+            "search": {
+              "type": "object",
+              "properties": {
+                "prioritize-current-product": {
+                  "type": "boolean"
+                },
+                "default-filter-by-current-product": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
             "http-snippets": {
               "anyOf": [
                 {
@@ -3888,6 +3900,9 @@
                       "respectReadonlySchemas": {
                         "type": "boolean"
                       },
+                      "useReadVariantForResponses": {
+                        "type": "boolean"
+                      },
                       "respectForwardCompatibleEnums": {
                         "type": "boolean"
                       },
@@ -4233,6 +4248,9 @@
                       }
                     ]
                   },
+                  "examples": {
+                    "type": "string"
+                  },
                   "name": {
                     "type": "string"
                   }
@@ -4454,6 +4472,9 @@
                           "type": "boolean"
                         },
                         "respectReadonlySchemas": {
+                          "type": "boolean"
+                        },
+                        "useReadVariantForResponses": {
                           "type": "boolean"
                         },
                         "respectForwardCompatibleEnums": {
@@ -4800,6 +4821,9 @@
                           }
                         }
                       ]
+                    },
+                    "examples": {
+                      "type": "string"
                     },
                     "name": {
                       "type": "string"

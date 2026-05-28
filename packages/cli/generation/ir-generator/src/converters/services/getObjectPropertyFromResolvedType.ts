@@ -47,8 +47,8 @@ export function getObjectPropertyFromResolvedType({
             assertNever(resolvedType);
     }
     throw new CliError({
-        message: "Internal error; response must be an object in order to return a property as a response",
-        code: CliError.Code.InternalError
+        message: `Response must be an object in order to return property ${property} as a response.`,
+        code: CliError.Code.ReferenceError
     });
 }
 

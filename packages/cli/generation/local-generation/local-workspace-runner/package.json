@@ -73,12 +73,14 @@
     "chalk": "catalog:",
     "decompress": "catalog:",
     "semver": "^7.6.3",
+    "tar": "catalog:",
     "tmp-promise": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/decompress": "catalog:",
     "@types/js-yaml": "catalog:",
+    "@types/tar": "catalog:",
     "@types/node": "catalog:",
     "@types/semver": "catalog:",
     "typescript": "catalog:",

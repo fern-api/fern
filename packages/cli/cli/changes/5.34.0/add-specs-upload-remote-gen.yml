@@ -1,0 +1,6 @@
+- summary: |
+    Support uploading raw API spec files alongside the IR during remote generation.
+    The CLI now sends the IR as the "ir" multipart field (with backward-compatible
+    "file" support on Fiddle) and optionally appends a "specs" tar.gz archive
+    containing pre-processed spec files for generators that need them.
+  type: feat

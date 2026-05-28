@@ -5,7 +5,6 @@ namespace Seed\Problem\Types;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Commons\Types\VariableValue;
 use Exception;
-use Seed\Core\Json\JsonDecoder;
 
 class ProblemDescriptionBoard extends JsonSerializableType
 {
@@ -198,18 +197,6 @@ class ProblemDescriptionBoard extends JsonSerializableType
         }
 
         return $result;
-    }
-
-    /**
-     * @param string $json
-     */
-    public static function fromJson(string $json): static
-    {
-        $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
-            throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
-        }
-        return self::jsonDeserialize($decodedJson);
     }
 
     /**

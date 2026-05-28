@@ -1,4 +1,4 @@
-import { CliError } from "@fern-api/task-context";
+import { CliError, type TaskContext } from "@fern-api/task-context";
 import axios from "axios";
 import { IncomingMessage, Server } from "http";
 import open from "open";
@@ -19,12 +19,14 @@ export interface Auth0TokenResponse {
 }
 
 export async function doAuth0LoginFlow({
+    context,
     auth0Domain,
     auth0ClientId,
     audience,
     forceReauth = false,
     connection
 }: {
+    context: TaskContext;
     auth0Domain: string;
     auth0ClientId: string;
     audience: string;
@@ -34,12 +36,22 @@ export async function doAuth0LoginFlow({
     connection?: string;
 }): Promise<Auth0TokenResponse> {
     const { origin, server } = await createServer();
-    const { code } = await getCode({ server, auth0Domain, auth0ClientId, origin, audience, forceReauth, connection });
+    const { code } = await getCode({
+        context,
+        server,
+        auth0Domain,
+        auth0ClientId,
+        origin,
+        audience,
+        forceReauth,
+        connection
+    });
     server.close();
     return await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
 }
 
 function getCode({
+    context,
     server,
     auth0Domain,
     auth0ClientId,
@@ -48,6 +60,7 @@ function getCode({
     forceReauth,
     connection
 }: {
+    context: TaskContext;
     server: Server;
     auth0Domain: string;
     auth0ClientId: string;
@@ -57,8 +70,7 @@ function getCode({
     connection?: string;
 }) {
     return new Promise<{ code: string }>((resolve) => {
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        server.addListener("request", async (request, response) => {
+        server.addListener("request", (request, response) => {
             const code = parseCodeFromUrl(request, origin);
             if (code == null) {
                 request.socket.end();
@@ -70,7 +82,18 @@ function getCode({
             }
         });
 
-        void open(constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth, connection }));
+        const loginUrl = constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth, connection });
+        void open(loginUrl).catch(() => {
+            context.logger.info(
+                [
+                    "",
+                    "Couldn't open a browser automatically.",
+                    "If you're running fern on this machine, open this link to log in:",
+                    loginUrl,
+                    ""
+                ].join("\n")
+            );
+        });
     });
 }
 
@@ -142,7 +165,6 @@ function constructAuth0Url({
         queryParams.set("connection", connection);
     }
 
-    // Force re-authentication to allow switching accounts.
     if (forceReauth) {
         queryParams.set("prompt", "login");
     }

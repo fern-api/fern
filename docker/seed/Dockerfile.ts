@@ -26,7 +26,7 @@ RUN git config --global user.email "build@example.com" && \
     CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
     ls -la /out/tsgolint
 
-FROM node:24.15.0-trixie-slim
+FROM node:24.16.0-trixie-slim
 
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
@@ -44,7 +44,7 @@ RUN apt-get update \
 
 # Upgrade bundled npm to 11.14.1 to pick up patched transitive dependencies
 # (picomatch 4.0.4, minimatch 10.2.5, tar 7.5.13).
-# node:24.15.0 ships npm 11.12.1 which still vendors picomatch 4.0.3 and
+# node:24.16.0 ships npm 11.12.1 which still vendors picomatch 4.0.3 and
 # brace-expansion 5.0.4. Replace ip-address with 10.1.1 to fix
 # GHSA-v2v4-37r5-5v8g (still bundled at 10.1.0 even in npm 11.14.1).
 # Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.14.1 vendors 5.0.5).
