@@ -1,8 +1,8 @@
 import { getPathToTokenFile } from "@fern-api/auth";
 import { FernRcSchema, schemas } from "@fern-api/config";
-import { createVenusService } from "@fern-api/core";
 import { doesPathExist } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
+import { createVenusServiceV2 } from "../../services/index.js";
 
 import { FernRcSchemaLoader } from "./FernRcSchemaLoader.js";
 
@@ -81,7 +81,7 @@ export class LegacyTokenMigrator {
      */
     private async fetchUserEmail(token: string): Promise<string> {
         try {
-            const venus = createVenusService({ token, headers: this.headers });
+            const venus = createVenusServiceV2({ token, headers: this.headers });
             const response = await venus.user.getMyself();
             if (response.ok && response.body.email != null) {
                 return response.body.email;

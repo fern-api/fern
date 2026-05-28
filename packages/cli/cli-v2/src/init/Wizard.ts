@@ -10,7 +10,6 @@ import { LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
-import { createVenusServiceV2 } from "../services/index.js";
 import { execSync } from "child_process";
 import inquirer from "inquirer";
 import path from "path";
@@ -19,6 +18,7 @@ import { FETCH_API_SPEC_REQUEST_TIMEOUT_MS } from "../constants";
 import { TaskContextAdapter } from "../context/adapter/TaskContextAdapter";
 import type { Context } from "../context/Context";
 import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, type Language } from "../sdk/config/Language";
+import { createVenusServiceV2 } from "../services/index.js";
 import { Icons } from "../ui/format";
 import { withSpinner } from "../ui/withSpinner";
 

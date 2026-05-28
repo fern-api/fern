@@ -1,11 +1,10 @@
-import { createFdrServiceV2 } from "../../../../services/index.js";
 import { buildPreviewDomain, isPreviewUrl as isPreviewUrlUtil } from "@fern-api/docs-preview";
 import { CliError } from "@fern-api/task-context";
-
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
+import { createFdrServiceV2 } from "../../../../services/index.js";
 import { command } from "../../../_internal/command.js";
 
 export declare namespace DeleteCommand {
