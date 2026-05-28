@@ -159,7 +159,6 @@ RUN mkdir /tmp/glw && cd /tmp/glw && \
     go mod init golangci-wrapper && \
     go get github.com/golangci/golangci-lint/v2/cmd/golangci-lint@${GOLANGCI_LINT_VERSION} && \
     go get golang.org/x/sys@v0.45.0 && \
-    go mod tidy && \
     CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath \
       -o /usr/local/bin/golangci-lint \
       github.com/golangci/golangci-lint/v2/cmd/golangci-lint && \
