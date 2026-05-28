@@ -45,6 +45,8 @@ WORKDIR /workspace
 # Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
 # still pins old pseudo-versions of x/net and x/crypto, and an old x/sys.
 # Bump the SBOM files so grype no longer flags them.
+# Patch both src/go.mod (stdlib) and src/cmd/go.mod (toolchain commands)
+# so scanners like grype and AWS Inspector stop reporting CVE-2026-39824.
 RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum && \
@@ -53,7 +55,10 @@ RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
     sed -i '/golang.org\/x\/crypto v0.46.1-/d' /usr/local/go/src/go.sum && \
     sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.45.0|g' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
-    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.45.0|g' \
+        /usr/local/go/src/cmd/go.mod /usr/local/go/src/cmd/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/cmd/go.sum
 
 RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache ca-certificates git libstdc++
