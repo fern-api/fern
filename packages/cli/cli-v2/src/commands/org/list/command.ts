@@ -1,10 +1,10 @@
+import { createVenusService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
 import type { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { spawn } from "child_process";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { createVenusServiceV2 } from "../../../services/index.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
@@ -23,7 +23,7 @@ export class ListCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusServiceV2({ token: token.value, headers: context.headers });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
 
         // Fetch the first page to check if there are any results.
         const firstPage = await this.fetchPage({ venus, pageId: 1 });

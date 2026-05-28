@@ -3,8 +3,8 @@ import { CliError } from "@fern-api/task-context";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ListTokensCommand } from "../command.js";
 
-vi.mock("../../../../../services/index.js", () => ({
-    createVenusServiceV2: vi.fn()
+vi.mock("@fern-api/core", () => ({
+    createVenusService: vi.fn()
 }));
 
 vi.mock("../../../../../ui/withSpinner.js", () => ({
@@ -49,7 +49,7 @@ describe("ListTokensCommand", () => {
     });
 
     it("should list tokens successfully", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: true,
@@ -68,15 +68,15 @@ describe("ListTokensCommand", () => {
                 }
             ]
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { org: "acme" } as ListTokensCommand.Args);
 
-        expect(createVenusServiceV2).toHaveBeenCalledWith(
+        expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
         expect(mockGet).toHaveBeenCalledWith("acme");
@@ -85,7 +85,7 @@ describe("ListTokensCommand", () => {
     });
 
     it("should output JSON when --json flag is set", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: true,
@@ -98,10 +98,10 @@ describe("ListTokensCommand", () => {
                 }
             ]
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { org: "acme", json: true } as ListTokensCommand.Args);
@@ -123,16 +123,16 @@ describe("ListTokensCommand", () => {
     });
 
     it("should show empty message when no tokens", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: true,
             body: []
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { org: "acme" } as ListTokensCommand.Args);
@@ -151,16 +151,16 @@ describe("ListTokensCommand", () => {
     });
 
     it("should handle org lookup failure", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
                 _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
@@ -171,7 +171,7 @@ describe("ListTokensCommand", () => {
     });
 
     it("should handle UnauthorizedError from getTokensForOrganization", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
@@ -179,10 +179,10 @@ describe("ListTokensCommand", () => {
                 _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
@@ -193,7 +193,7 @@ describe("ListTokensCommand", () => {
     });
 
     it("should handle OrganizationNotFoundError", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
@@ -201,10 +201,10 @@ describe("ListTokensCommand", () => {
                 _visit: (visitor: { organizationNotFoundError: () => void }) => visitor.organizationNotFoundError()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);
@@ -213,7 +213,7 @@ describe("ListTokensCommand", () => {
     });
 
     it("should handle unknown errors", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
@@ -221,10 +221,10 @@ describe("ListTokensCommand", () => {
                 _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
             apiKeys: { getTokensForOrganization: mockGetTokens }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { org: "acme" } as ListTokensCommand.Args)).rejects.toThrow(CliError);

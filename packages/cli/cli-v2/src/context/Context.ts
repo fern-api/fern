@@ -1,10 +1,10 @@
 import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
 import { schemas } from "@fern-api/config";
+import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
-
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import inquirer from "inquirer";
@@ -13,7 +13,6 @@ import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
 import { Target } from "../sdk/config/Target.js";
-import { createVenusServiceV2 } from "../services/index.js";
 import { TelemetryClient } from "../telemetry/index.js";
 import { Icons } from "../ui/format.js";
 import { TtyAwareLogger } from "../ui/TtyAwareLogger.js";
@@ -251,7 +250,7 @@ export class Context {
             return;
         }
 
-        const venus = createVenusServiceV2({ token: token.value, headers: this.headers });
+        const venus = createVenusService({ token: token.value, headers: this.headers });
 
         const isMemberResponse = await venus.organization.isMember(organization);
         if (isMemberResponse.ok && isMemberResponse.body) {

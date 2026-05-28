@@ -4,6 +4,7 @@ import {
     getOrganizationNameValidationError,
     verifyAndDecodeJwt
 } from "@fern-api/auth";
+import { createVenusService } from "@fern-api/core";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
@@ -18,7 +19,6 @@ import { FETCH_API_SPEC_REQUEST_TIMEOUT_MS } from "../constants";
 import { TaskContextAdapter } from "../context/adapter/TaskContextAdapter";
 import type { Context } from "../context/Context";
 import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, type Language } from "../sdk/config/Language";
-import { createVenusServiceV2 } from "../services/index.js";
 import { Icons } from "../ui/format";
 import { withSpinner } from "../ui/withSpinner";
 
@@ -237,7 +237,7 @@ export class Wizard {
         }
 
         try {
-            const venus = createVenusServiceV2({ token: token.value, headers: this.context.headers });
+            const venus = createVenusService({ token: token.value, headers: this.context.headers });
             const isMemberResponse = await venus.organization.isMember(organization);
             const result: { type: string } =
                 isMemberResponse.ok && isMemberResponse.body

@@ -1,10 +1,10 @@
+import { createFdrService } from "@fern-api/core";
 import { buildPreviewDomain, isPreviewUrl as isPreviewUrlUtil } from "@fern-api/docs-preview";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
-import { createFdrServiceV2 } from "../../../../services/index.js";
 import { command } from "../../../_internal/command.js";
 
 export declare namespace DeleteCommand {
@@ -29,7 +29,7 @@ export class DeleteCommand {
         }
 
         const token = await context.getTokenOrPrompt();
-        const fdr = createFdrServiceV2({ token: token.value, headers: context.headers });
+        const fdr = createFdrService({ token: token.value, headers: context.headers });
 
         context.stderr.debug(`Deleting preview site: ${resolvedUrl}`);
 

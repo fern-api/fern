@@ -1,10 +1,10 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { createVenusService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
 import type { Argv } from "yargs";
 import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
-import { createVenusServiceV2 } from "../../../services/index.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 
@@ -28,7 +28,7 @@ export class TokenCommand {
             });
         }
 
-        const venus = createVenusServiceV2({ token: token.value, headers: context.headers });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
         const response = await venus.registry.generateRegistryTokens({
             organizationId: orgId
         });

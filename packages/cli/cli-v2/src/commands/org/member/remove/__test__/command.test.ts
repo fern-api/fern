@@ -3,8 +3,8 @@ import { CliError } from "@fern-api/task-context";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RemoveMemberCommand } from "../command.js";
 
-vi.mock("../../../../../services/index.js", () => ({
-    createVenusServiceV2: vi.fn()
+vi.mock("@fern-api/core", () => ({
+    createVenusService: vi.fn()
 }));
 
 vi.mock("../../../../../ui/withSpinner.js", () => ({
@@ -49,17 +49,17 @@ describe("RemoveMemberCommand", () => {
     });
 
     it("should remove a member successfully", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({ ok: true });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args);
 
-        expect(createVenusServiceV2).toHaveBeenCalledWith(
+        expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
         expect(mockGet).toHaveBeenCalledWith("acme");
@@ -71,12 +71,12 @@ describe("RemoveMemberCommand", () => {
     });
 
     it("should output JSON when --json flag is set", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({ ok: true });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await cmd.handle(context, { userId: "user123", org: "acme", json: true } as RemoveMemberCommand.Args);
@@ -100,16 +100,16 @@ describe("RemoveMemberCommand", () => {
     });
 
     it("should handle org lookup failure", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
             error: {
                 _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
@@ -120,7 +120,7 @@ describe("RemoveMemberCommand", () => {
     });
 
     it("should handle UnauthorizedError from removeUser", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
@@ -128,9 +128,9 @@ describe("RemoveMemberCommand", () => {
                 _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
@@ -143,7 +143,7 @@ describe("RemoveMemberCommand", () => {
     });
 
     it("should handle UserIdDoesNotExistError", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
@@ -151,9 +151,9 @@ describe("RemoveMemberCommand", () => {
                 _visit: (visitor: { userIdDoesNotExistError: () => void }) => visitor.userIdDoesNotExistError()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(
@@ -164,7 +164,7 @@ describe("RemoveMemberCommand", () => {
     });
 
     it("should handle unknown errors", async () => {
-        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
+        const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
@@ -172,9 +172,9 @@ describe("RemoveMemberCommand", () => {
                 _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
-        vi.mocked(createVenusServiceV2).mockReturnValue({
+        vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
-        } as unknown as ReturnType<typeof createVenusServiceV2>);
+        } as unknown as ReturnType<typeof createVenusService>);
 
         const context = createMockContext();
         await expect(

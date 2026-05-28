@@ -1,8 +1,8 @@
+import { createVenusService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
-import { createVenusServiceV2 } from "../../../../services/index.js";
 import { Colors, Icons } from "../../../../ui/format.js";
 import { withSpinner } from "../../../../ui/withSpinner.js";
 import { command } from "../../../_internal/command.js";
@@ -25,7 +25,7 @@ export class ListMembersCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusServiceV2({ token: token.value, headers: context.headers });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
 
         const response = await withSpinner({
             message: `Fetching members of organization "${args.org}"`,
