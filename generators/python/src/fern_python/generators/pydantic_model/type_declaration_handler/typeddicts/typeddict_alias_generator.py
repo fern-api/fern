@@ -32,9 +32,7 @@ class TypedDictAliasGenerator(AbstractAliasGenerator):
         # Resolve the alias body with request-side semantics so that container
         # element types (List[T], Dict[K, V], Set[T]) reach for the TypedDict
         # `TParams` variant rather than the Pydantic model `T`.
-        self._type_hint = self._context.get_type_hint_for_type_reference(
-            self._alias.alias_of, in_endpoint=True
-        )
+        self._type_hint = self._context.get_type_hint_for_type_reference(self._alias.alias_of, in_endpoint=True)
 
     def generate(
         self,
