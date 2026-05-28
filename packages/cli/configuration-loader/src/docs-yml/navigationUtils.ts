@@ -135,34 +135,6 @@ export async function buildNavigationForDirectory({
         position: number | undefined;
     }
 
-    // Build a set of subdirectory names (lowercased) for sibling-file matching.
-    // When a markdown file shares its base name with a sibling directory
-    // (e.g. adapters.mdx alongside adapters/), it becomes that section's
-    // overview page instead of appearing as a separate page.
-    const subdirectoryNames = new Set(subdirectories.map((dir) => dir.name.toLowerCase()));
-
-    const siblingOverviewPages = new Map<
-        string,
-        { page: docsYml.DocsNavigationItem.Page; metadata: FrontmatterMetadata }
-    >();
-    const remainingPages: { page: docsYml.DocsNavigationItem; metadata: FrontmatterMetadata }[] = [];
-    for (let i = 0; i < pages.length; i++) {
-        const page = pages[i];
-        const metadata = pageMetadata[i];
-        if (page == null || metadata == null) {
-            continue;
-        }
-        if (page.type === "page") {
-            const baseName = markdownFiles[i]?.name.replace(/\.(md|mdx)$/i, "").toLowerCase();
-            if (baseName != null && subdirectoryNames.has(baseName)) {
-                siblingOverviewPages.set(baseName, { page, metadata });
-                continue;
-            }
-        }
-        remainingPages.push({ page, metadata });
-    }
-    const usedSiblingKeys = new Set<string>();
-
     const sectionsWithPositions: SectionWithPosition[] = await Promise.all(
         subdirectories.map(async (dir) => {
             const subContents = await buildNavigationForDirectory({
@@ -172,7 +144,6 @@ export async function buildNavigationForDirectory({
                 readFileFn
             });
 
-            // Look for an index page inside the subdirectory first
             const indexPage = subContents.find(
                 (item) =>
                     item.type === "page" &&
@@ -181,24 +152,15 @@ export async function buildNavigationForDirectory({
                         item.absolutePath.toLowerCase().endsWith("/index.md"))
             );
 
-            // Fall back to a sibling markdown file with the same name as the directory
-            const dirKey = dir.name.toLowerCase();
-            const siblingEntry = siblingOverviewPages.get(dirKey);
-            const siblingPage = siblingEntry?.page;
-            const overviewPage = indexPage ?? siblingPage;
-            if (overviewPage === siblingPage && siblingPage != null) {
-                usedSiblingKeys.add(dirKey);
-            }
-
             const filteredContents = indexPage ? subContents.filter((item) => item !== indexPage) : subContents;
 
-            const overviewMetadata =
-                overviewPage?.type === "page"
-                    ? await getFrontmatterMetadata({ absolutePath: overviewPage.absolutePath, readFileFn })
+            const indexMetadata =
+                indexPage?.type === "page"
+                    ? await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath, readFileFn })
                     : undefined;
 
             const sectionTitle = resolveTitle({
-                frontmatterTitle: overviewMetadata?.title,
+                frontmatterTitle: indexMetadata?.title,
                 useFrontmatterTitles,
                 fallbackName: dir.name
             });
@@ -213,31 +175,24 @@ export async function buildNavigationForDirectory({
                     collapsed: undefined,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    hidden: overviewMetadata?.hidden,
+                    hidden: indexMetadata?.hidden,
                     skipUrlSlug: false,
-                    overviewAbsolutePath: overviewPage?.type === "page" ? overviewPage.absolutePath : undefined,
+                    overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
                     viewers: undefined,
                     orphaned: undefined,
                     featureFlags: undefined,
                     availability: undefined
                 },
-                position: overviewMetadata?.position
+                position: indexMetadata?.position
             };
         })
     );
 
-    // Re-add sibling pages that were not used as section overviews (e.g. when index.mdx existed)
-    for (const [key, entry] of siblingOverviewPages) {
-        if (!usedSiblingKeys.has(key)) {
-            remainingPages.push(entry);
-        }
-    }
-
     const itemsWithMeta: NavigationItemWithMeta[] = [
-        ...remainingPages.map(({ page, metadata }) => ({
+        ...pages.map((page, index) => ({
             item: page,
             title: page.type === "page" ? page.title : "",
-            position: metadata?.position
+            position: pageMetadata[index]?.position
         })),
         ...sectionsWithPositions.map((s) => ({
             item: s.section,

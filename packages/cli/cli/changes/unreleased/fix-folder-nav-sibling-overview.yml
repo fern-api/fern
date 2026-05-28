@@ -1,5 +1,5 @@
 - summary: |
-    Folder-based navigation now merges a sibling markdown file (e.g. `adapters.mdx`)
-    with its matching directory (`adapters/`) as the section overview page, eliminating
-    duplicate entries in the sidebar for library autodocs output.
+    Library docs generator now writes module overview pages as `index.mdx` inside their
+    directory (e.g. `adapters/index.mdx`) instead of as sibling files (`adapters.mdx`),
+    eliminating duplicate entries in the sidebar for library autodocs output.
   type: fix
