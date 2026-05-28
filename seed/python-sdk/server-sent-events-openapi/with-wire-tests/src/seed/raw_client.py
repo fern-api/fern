@@ -16,14 +16,7 @@ from .core.request_options import RequestOptions
 from .core.serialization import convert_and_respect_annotation_metadata
 from .types.completion_full_response import CompletionFullResponse
 from .types.completion_stream_chunk import CompletionStreamChunk
-from .types.data_context_entity_event import DataContextEntityEvent
-from .types.data_context_heartbeat import DataContextHeartbeat
 from .types.event import Event
-from .types.protocol_collision_object_event import ProtocolCollisionObjectEvent
-from .types.protocol_heartbeat import ProtocolHeartbeat
-from .types.protocol_number_event import ProtocolNumberEvent
-from .types.protocol_object_event import ProtocolObjectEvent
-from .types.protocol_string_event import ProtocolStringEvent
 from .types.stream_data_context_response import StreamDataContextResponse
 from .types.stream_data_context_with_envelope_schema_response import StreamDataContextWithEnvelopeSchemaResponse
 from .types.stream_no_context_response import StreamNoContextResponse
@@ -81,50 +74,24 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
-                                if _sse.event == "heartbeat":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolHeartbeat,
-                                            parse_obj_as(
-                                                type_=ProtocolHeartbeat,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
-                                elif _sse.event == "string_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolStringEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'string_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "number_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolNumberEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'number_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "object_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolObjectEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'object_data': {e}, sse: {_sse!r}")
+                                try:
+                                    yield typing.cast(
+                                        StreamProtocolNoCollisionResponse,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamProtocolNoCollisionResponse,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return HttpResponse(response=_response, data=_iter())
@@ -183,50 +150,24 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
-                                if _sse.event == "heartbeat":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolHeartbeat,
-                                            parse_obj_as(
-                                                type_=ProtocolHeartbeat,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
-                                elif _sse.event == "string_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolStringEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'string_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "number_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolNumberEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'number_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "object_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolCollisionObjectEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolCollisionObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'object_data': {e}, sse: {_sse!r}")
+                                try:
+                                    yield typing.cast(
+                                        StreamProtocolCollisionResponse,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamProtocolCollisionResponse,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return HttpResponse(response=_response, data=_iter())
@@ -437,28 +378,24 @@ class RawSeedApi:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
-                                if _sse.event == "heartbeat":
-                                    try:
-                                        yield typing.cast(
-                                            DataContextHeartbeat,
-                                            parse_obj_as(
-                                                type_=DataContextHeartbeat,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
-                                elif _sse.event == "entity":
-                                    try:
-                                        yield typing.cast(
-                                            DataContextEntityEvent,
-                                            parse_obj_as(
-                                                type_=DataContextEntityEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'entity': {e}, sse: {_sse!r}")
+                                try:
+                                    yield typing.cast(
+                                        StreamProtocolWithFlatSchemaResponse,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamProtocolWithFlatSchemaResponse,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return HttpResponse(response=_response, data=_iter())
@@ -1367,50 +1304,24 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
-                                if _sse.event == "heartbeat":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolHeartbeat,
-                                            parse_obj_as(
-                                                type_=ProtocolHeartbeat,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
-                                elif _sse.event == "string_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolStringEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'string_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "number_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolNumberEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'number_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "object_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolObjectEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'object_data': {e}, sse: {_sse!r}")
+                                try:
+                                    yield typing.cast(
+                                        StreamProtocolNoCollisionResponse,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamProtocolNoCollisionResponse,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return AsyncHttpResponse(response=_response, data=_iter())
@@ -1469,50 +1380,24 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
-                                if _sse.event == "heartbeat":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolHeartbeat,
-                                            parse_obj_as(
-                                                type_=ProtocolHeartbeat,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
-                                elif _sse.event == "string_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolStringEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolStringEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'string_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "number_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolNumberEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolNumberEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'number_data': {e}, sse: {_sse!r}")
-                                elif _sse.event == "object_data":
-                                    try:
-                                        yield typing.cast(
-                                            ProtocolCollisionObjectEvent,
-                                            parse_obj_as(
-                                                type_=ProtocolCollisionObjectEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'object_data': {e}, sse: {_sse!r}")
+                                try:
+                                    yield typing.cast(
+                                        StreamProtocolCollisionResponse,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamProtocolCollisionResponse,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return AsyncHttpResponse(response=_response, data=_iter())
@@ -1723,28 +1608,24 @@ class AsyncRawSeedApi:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
-                                if _sse.event == "heartbeat":
-                                    try:
-                                        yield typing.cast(
-                                            DataContextHeartbeat,
-                                            parse_obj_as(
-                                                type_=DataContextHeartbeat,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'heartbeat': {e}, sse: {_sse!r}")
-                                elif _sse.event == "entity":
-                                    try:
-                                        yield typing.cast(
-                                            DataContextEntityEvent,
-                                            parse_obj_as(
-                                                type_=DataContextEntityEvent,  # type: ignore
-                                                object_=json.loads(_sse.data),
-                                            ),
-                                        )
-                                    except Exception as e:
-                                        warning(f"Failed to parse SSE event 'entity': {e}, sse: {_sse!r}")
+                                try:
+                                    yield typing.cast(
+                                        StreamProtocolWithFlatSchemaResponse,
+                                        parse_sse_obj(
+                                            sse=_sse,
+                                            type_=StreamProtocolWithFlatSchemaResponse,  # type: ignore
+                                        ),
+                                    )
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return AsyncHttpResponse(response=_response, data=_iter())
