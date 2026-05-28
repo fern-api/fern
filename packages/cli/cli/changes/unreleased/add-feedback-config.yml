@@ -1,3 +1,3 @@
 - summary: |
-    Add support for `feedback` configuration object in `docs.yml` with `hide-feedback` and `require-email` properties.
+    Add support for top-level `feedback` configuration object in `docs.yml` with `hide-feedback` and `require-email` properties.
   type: feat
