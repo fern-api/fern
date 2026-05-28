@@ -1,10 +1,10 @@
 import {
+    checkOrganizationMembership,
     createOrganizationIfDoesNotExist,
     FernUserToken,
     getOrganizationNameValidationError,
     verifyAndDecodeJwt
 } from "@fern-api/auth";
-import { createVenusService } from "@fern-api/core";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
@@ -237,27 +237,11 @@ export class Wizard {
         }
 
         try {
-            const venus = createVenusService({ token: token.value, headers: this.context.headers });
-            const isMemberResponse = await venus.organization.isMember(organization);
-            const result: { type: string } =
-                isMemberResponse.ok && isMemberResponse.body
-                    ? { type: "member" }
-                    : await (async () => {
-                          const getResponse = await venus.organization.get(organization);
-                          if (getResponse.ok) {
-                              return { type: "no-access" };
-                          }
-                          let r: { type: string } = { type: "unknown-error" };
-                          getResponse.error._visit({
-                              unauthorizedError: () => {
-                                  r = { type: "no-access" };
-                              },
-                              _other: () => {
-                                  r = { type: "not-found" };
-                              }
-                          });
-                          return r;
-                      })();
+            const result = await checkOrganizationMembership({
+                organization,
+                token,
+                headers: this.context.headers
+            });
 
             switch (result.type) {
                 case "member":
@@ -272,7 +256,8 @@ export class Wizard {
                             createOrganizationIfDoesNotExist({
                                 organization,
                                 token,
-                                context: taskContext
+                                context: taskContext,
+                                headers: this.context.headers
                             }),
                         indent: 2
                     });

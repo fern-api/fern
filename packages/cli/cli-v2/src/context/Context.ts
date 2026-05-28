@@ -1,6 +1,11 @@
-import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
+import {
+    checkOrganizationMembership,
+    FernToken,
+    FernUserToken,
+    getAccessToken,
+    verifyAndDecodeJwt
+} from "@fern-api/auth";
 import { schemas } from "@fern-api/config";
-import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
@@ -250,34 +255,21 @@ export class Context {
             return;
         }
 
-        const venus = createVenusService({ token: token.value, headers: this.headers });
-
-        const isMemberResponse = await venus.organization.isMember(organization);
-        if (isMemberResponse.ok && isMemberResponse.body) {
-            return;
-        }
-
-        const getResponse = await venus.organization.get(organization);
-        if (getResponse.ok) {
-            throw CliError.unauthorized(
-                `You do not have access to organization "${organization}".\n\n  Contact an organization admin to request access.`
-            );
-        }
-
-        let error: Error = CliError.internalError(`Failed to verify access to organization "${organization}".`);
-        getResponse.error._visit({
-            unauthorizedError: () => {
-                error = CliError.unauthorized(
+        const result = await checkOrganizationMembership({ organization, token, headers: this.headers });
+        switch (result.type) {
+            case "member":
+                return;
+            case "no-access":
+                throw CliError.unauthorized(
                     `You do not have access to organization "${organization}".\n\n  Contact an organization admin to request access.`
                 );
-            },
-            _other: () => {
-                error = CliError.notFound(
+            case "not-found":
+                throw CliError.notFound(
                     `Organization "${organization}" does not exist.\n\n  To create it, run: fern org create ${organization}`
                 );
-            }
-        });
-        throw error;
+            case "unknown-error":
+                throw CliError.internalError(`Failed to verify access to organization "${organization}".`);
+        }
     }
 
     public resolveTargetOutputs(target: Target): string[] | undefined {

@@ -24,7 +24,8 @@ export class TokenCommand {
             await createOrganizationIfDoesNotExist({
                 organization: orgId,
                 token,
-                context: new TaskContextAdapter({ context })
+                context: new TaskContextAdapter({ context }),
+                headers: context.headers
             });
         }
 
