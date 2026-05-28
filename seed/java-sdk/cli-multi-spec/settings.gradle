@@ -1,0 +1,3 @@
+rootProject.name = 'cli-multi-spec'
+
+include 'sample-app'

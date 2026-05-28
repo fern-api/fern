@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifier_override": "endpoint_.ping"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedLiteralUserAgentClient } from \"@fern/literal-user-agent\";\n\nconst client = new SeedLiteralUserAgentClient({ environment: \"YOUR_BASE_URL\" });\nawait client.ping();\n"
+            }
+        }
+    ],
+    "types": {}
+}

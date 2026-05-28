@@ -21,6 +21,7 @@
     "shape"
   ],
   "additionalProperties": false,
+  "description": "Defines properties with default values and validation rules.",
   "definitions": {
     "Shape": {
       "type": "string",

@@ -72,6 +72,7 @@ export interface APIDefinitionSettings {
     coerceEnumsToLiterals: boolean | undefined;
     objectQueryParameters: boolean | undefined;
     respectReadonlySchemas: boolean | undefined;
+    useReadVariantForResponses: boolean | undefined;
     respectNullableSchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
     inlinePathParameters: boolean | undefined;
@@ -137,6 +138,7 @@ export interface OpenRPCDefinitionSchema {
 export interface GraphQLDefinitionSchema {
     type: "graphql";
     path: string;
+    examples: string | undefined;
 }
 
 /**

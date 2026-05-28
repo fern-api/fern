@@ -33,9 +33,9 @@ import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
 import path from "path";
 import { type Duplex } from "stream";
-import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 import { type BunServer, createBunServer } from "./createBunServer.js";
+import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
@@ -489,7 +489,9 @@ export async function runAppPreviewServer({
     port,
     bundlePath,
     backendPort,
-    forceDownload
+    forceDownload,
+    cacheDir,
+    logsDir
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -499,9 +501,11 @@ export async function runAppPreviewServer({
     bundlePath?: string;
     backendPort: number;
     forceDownload?: boolean;
+    cacheDir?: AbsoluteFilePath;
+    logsDir?: AbsoluteFilePath;
 }): Promise<void> {
     if (forceDownload) {
-        const appPreviewFolder = getPathToPreviewFolder({ app: true });
+        const appPreviewFolder = getPathToPreviewFolder({ app: true, cacheDir });
         if (await doesPathExist(appPreviewFolder)) {
             context.logger.info("Force download requested. Deleting cached bundle...");
             await rm(appPreviewFolder, { recursive: true });
@@ -524,7 +528,8 @@ export async function runAppPreviewServer({
                 logger: context.logger,
                 preferCached: true,
                 app: true,
-                tryTar: true
+                tryTar: true,
+                cacheDir
             });
         } catch (err) {
             if (err instanceof Error) {
@@ -547,10 +552,11 @@ export async function runAppPreviewServer({
                     logger: context.logger,
                     preferCached: true,
                     app: true,
-                    tryTar: false
+                    tryTar: false,
+                    cacheDir
                 });
             } catch (err) {
-                if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
+                if (await doesPathExist(getPathToBundleFolder({ app: true, cacheDir }))) {
                     context.logger.warn("Falling back to cached bundle...");
                 } else {
                     context.logger.warn("Please reach out to support@buildwithfern.com.");
@@ -560,17 +566,20 @@ export async function runAppPreviewServer({
         }
     }
 
-    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
+    const bundleRoot = bundlePath || getPathToBundleFolder({ app: true, cacheDir });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
 
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize({
-        debug: (msg) => context.logger.debug(msg),
-        info: (msg) => context.logger.info(msg)
-    });
+    await debugLogger.initialize(
+        {
+            debug: (msg) => context.logger.debug(msg),
+            info: (msg) => context.logger.info(msg)
+        },
+        logsDir
+    );
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
@@ -971,11 +980,10 @@ export async function runAppPreviewServer({
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
     // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
-    const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
-        recursive: true,
-        ignoreInitial: true,
-        debounce: 100,
-        renameDetection: true
+    const watcher = await createDocsPreviewWatcher({
+        absoluteFilePathToFern,
+        additionalFilepaths,
+        context
     });
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
@@ -1092,8 +1100,21 @@ export async function runAppPreviewServer({
 
     // Now start Next.js after backend is ready
 
+    // Node.js >= 26 on Linux enables io_uring by default in libuv, which has a
+    // busy-loop bug: worker threads spin on an internal eventfd, starving the
+    // main event loop and causing the server to hang during startup.
+    // Setting UV_USE_IO_URING=0 falls back to epoll and avoids the hang.
+    const nodeMajor = parseInt(process.versions.node.split(".")[0] ?? "0", 10);
+    const needsIoUringWorkaround = process.platform === "linux" && nodeMajor >= 26;
+    if (needsIoUringWorkaround) {
+        context.logger.debug(
+            `Node.js v${process.versions.node} on Linux detected — disabling io_uring to avoid libuv busy-loop`
+        );
+    }
+
     const env = {
         ...process.env,
+        ...(needsIoUringWorkaround ? { UV_USE_IO_URING: "0" } : {}),
         PORT: port.toString(),
         HOSTNAME: "0.0.0.0",
         NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
@@ -1199,18 +1220,13 @@ export async function runAppPreviewServer({
             `Docs preview server failed to start: ${extractErrorMessage(err)}. ` +
                 `Run with --log-level debug for more details.`,
             undefined,
-            { code: CliError.Code.InternalError }
+            { code: CliError.Code.EnvironmentError }
         );
     }
 
     // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to .fern/logs/ directory (contains debug logs)
-        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
-            return;
-        }
-
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
 
         if (isReloading) {
@@ -1227,57 +1243,71 @@ export async function runAppPreviewServer({
             void (async () => {
                 isReloading = true;
 
-                // Expand the list of files to include pages that depend on changed snippets
-                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
-                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
-
-                if (hasSnippetDependencies) {
-                    context.logger.info(
-                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
-                    );
-                }
-
                 sendData({
                     version: 1,
                     type: "startReload"
                 });
 
-                const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
+                try {
+                    // Expand the list of files to include pages that depend on changed snippets
+                    const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
+                    const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
 
-                editedAbsoluteFilepaths.length = 0;
-
-                isReloading = false;
-
-                sendData({
-                    version: 1,
-                    type: "finishReload"
-                });
-
-                if (reloadedPreviewResult != null) {
-                    // Detect slug changes before updating the docs definition
-                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
-
-                    previewResult = reloadedPreviewResult;
-
-                    // Recompute translated definitions
-                    translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
-                    if (translatedDefinitions.size > 0) {
-                        context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                    if (hasSnippetDependencies) {
+                        context.logger.info(
+                            `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
+                        );
                     }
 
-                    // Send navigateToSlug events for any slug changes
-                    if (slugChanges.length > 0) {
-                        slugChanges.forEach((change) => {
-                            const eventData = {
-                                version: 1,
-                                type: "navigateToSlug",
-                                oldSlug: change.oldSlug,
-                                newSlug: change.newSlug
-                            };
+                    const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
 
-                            sendData(eventData);
+                    // Update the docs definition BEFORE notifying the browser,
+                    // so the backend serves fresh data when the browser refreshes.
+                    if (reloadedPreviewResult != null) {
+                        // Detect slug changes before updating the docs definition
+                        const slugChanges = slugTracker.updateAndDetectChanges(reloadedPreviewResult.docsDefinition);
+
+                        previewResult = reloadedPreviewResult;
+
+                        // Recompute translated definitions
+                        translatedDefinitions = await computeTranslatedDefinitions(reloadedPreviewResult);
+                        if (translatedDefinitions.size > 0) {
+                            context.logger.debug(`Recomputed translations for ${translatedDefinitions.size} locale(s)`);
+                        }
+
+                        sendData({
+                            version: 1,
+                            type: "finishReload"
+                        });
+
+                        // Send navigateToSlug events for any slug changes
+                        if (slugChanges.length > 0) {
+                            slugChanges.forEach((change) => {
+                                const eventData = {
+                                    version: 1,
+                                    type: "navigateToSlug",
+                                    oldSlug: change.oldSlug,
+                                    newSlug: change.newSlug
+                                };
+
+                                sendData(eventData);
+                            });
+                        }
+                    } else {
+                        sendData({
+                            version: 1,
+                            type: "finishReload"
                         });
                     }
+                } catch (err) {
+                    context.logger.error(`Reload failed: ${extractErrorMessage(err)}`);
+                    sendData({
+                        version: 1,
+                        type: "finishReload"
+                    });
+                } finally {
+                    editedAbsoluteFilepaths.length = 0;
+                    isReloading = false;
                 }
             })();
         }, RELOAD_DEBOUNCE_MS);

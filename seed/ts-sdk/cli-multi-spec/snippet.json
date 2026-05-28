@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_.listUsers"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-multi-spec\";\n\nconst client = new SeedApiClient;\nawait client.listUsers();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-multi-spec\";\n\nconst client = new SeedApiClient;\nawait client.getUser({\n    userId: \"userId\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/invoices",
+                "method": "GET",
+                "identifier_override": "endpoint_.listInvoices"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-multi-spec\";\n\nconst client = new SeedApiClient;\nawait client.listInvoices();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/invoices/{invoiceId}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getInvoice"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/cli-multi-spec\";\n\nconst client = new SeedApiClient;\nawait client.getInvoice({\n    invoiceId: \"invoiceId\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

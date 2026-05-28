@@ -1,4 +1,188 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.3
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 67
+- version: 5.14.2
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.35, which disables minimatch negation
+        on `.fernignore` patterns so a stray `!pattern` no longer silently inverts
+        the match and discards generator output.
+      type: fix
+  createdAt: "2026-05-21"
+  irVersion: 67
+- version: 5.14.1
+  changelogEntry:
+    - summary: |
+        Fix SSE streaming performance regression by caching `pydantic.TypeAdapter` instances
+        in `parse_obj_as()`. Previously, a new TypeAdapter was constructed on every call, which
+        is extremely expensive for discriminated union types. This caused ~8x slowdown in SSE
+        event parsing introduced in v4.51.0 (`parse_sse_obj`).
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.14.0
+  changelogEntry:
+    - summary: |
+        Add support for the `x-fern-base-path` OpenAPI extension. Root path
+        parameters declared on the base path are hoisted to the client
+        constructor; endpoint methods no longer take them as arguments and
+        URL substitution reads them from the client wrapper.
+      type: feat
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.13.1
+  changelogEntry:
+    - summary: |
+        Use `hasWebSocketInTree` IR field to wire WebSocket sub-clients into the
+        root client, even when the WebSocket channel lives on a nested sub-resource
+        rather than the top-level namespace package.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 67
+- version: 5.13.0
+  changelogEntry:
+    - summary: |
+        Add `output_directory` custom config, mirroring the Java generator's flag.
+        `project-root` (default behavior when unset) preserves today's `src/<package>/...`
+        layout with full project scaffolding. `source-root` writes the source tree
+        directly without the `src/` prefix and skips project scaffolding
+        (`pyproject.toml`, `requirements.txt`, `README.md`, `py.typed`, LICENSE,
+        `.github/workflows`, `.gitignore`, `tests/` scaffolds, `CONTRIBUTING.md`,
+        `reference.md`) — designed for embedding generated code into an existing
+        Python project. Composes with `package_path`; combine with `package_name`
+        to drop the `<package>` wrapper entirely. The legacy `flat_layout` flag is
+        preserved as a deprecated alias with bit-exact behavior.
+      type: feat
+  createdAt: "2026-05-19"
+  irVersion: 67
+- version: 5.12.12
+  changelogEntry:
+    - summary: |
+        Fix `test_aiohttp_autodetect.py` and `_default_clients.py` to use the
+        configured `package_name` instead of the raw organization name. Previously,
+        when `package_name` in `generators.yml` differed from `organization` in
+        `fern.config.json`, the generated aiohttp test used incorrect import paths
+        and the pip install error message contained a hardcoded literal "package"
+        instead of the actual package name.
+      type: fix
+  createdAt: "2026-05-18"
+  irVersion: 67
+- version: 5.12.11
+  changelogEntry:
+    - summary: |
+        Update OS packages in the Python SDK generator container from Debian sid to fix
+        krb5 (CVE-2026-40355, CVE-2026-40356), curl (CVE-2026-1965, CVE-2026-4873,
+        CVE-2026-5545, CVE-2026-6253, CVE-2026-6429), gnutls28 (CVE-2026-3832),
+        and expat (CVE-2026-45186).
+      type: chore
+  createdAt: "2026-05-18"
+  irVersion: 66
+- version: 5.12.10
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+    - summary: |
+        Dynamic snippets now pass root-level path parameters to the endpoint method instead
+        of the client constructor (which does not accept them), and include them alongside
+        endpoint-level path parameters so the rendered call matches the generated Python SDK
+        method signature.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 5.12.9
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.28, which sets explicit author and
+        committer on API-created commits to the Fern bot identity. Fixes commit
+        attribution on GitHub Enterprise where PAT-based authentication previously
+        attributed commits to the PAT-owning service account instead of fern-api[bot].
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 5.12.8
+  changelogEntry:
+    - summary: |
+        Bump Poetry from 1.8.5 to 2.4.1 in the python-sdk and pydantic-model
+        container images. Clears CVE-2026-34591 (Poetry `<2.3.3` stored credentials
+        in cleartext when keyring storage was unavailable). pyproject.toml's
+        `poetry-core` constraint moves from `^1.9.0` to `^2.0.0` to stay in
+        lockstep with Poetry 2.4.1's bundled `poetry-core 2.4.0` under
+        `virtualenvs.create=false`. `poetry.lock` regenerated under Poetry 2.4.1.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.12.7
+  changelogEntry:
+    - summary: |
+        Patch the bundled `ip-address` to v10.2.0 in the python-sdk container to
+        address CVE-2026-42338 / GHSA-v2v4-37r5-5v8g (XSS in `Address6` HTML-
+        emitting methods). npm 11.12.1 (shipped with `node:24.15`) bundles
+        `ip-address@10.1.0` via `socks`; this overlays the published 10.2.0
+        tarball in place at image build time. Also bumps the container-level
+        `pip` to 26.1 to clear CVE-2025-8869, CVE-2026-3219, CVE-2026-6357, and
+        CVE-2026-1703 (self-update flaw running after wheel install). Poetry
+        stays at 1.8.5 because pyproject.toml's `virtualenvs.create=false` flow
+        requires `poetry-core ^1.9.0`.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 5.12.6
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` (e.g. FHIR/IPS template strings) are now served verbatim instead
+        of being passed through WireMock's Handlebars transformer, which would
+        fail to resolve them as helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 5.12.5
+  changelogEntry:
+    - summary: |
+        Patch Python SDK generator container CVEs flagged in the AWS ECR / grype
+        scan. Patch npm's bundled `picomatch@4.0.3 -> 4.0.4`
+        (GHSA-c2c7-rcm5-vvqj, GHSA-3v7f-55p6-f55p) and
+        `brace-expansion@5.0.4 -> 5.0.5` (CVE-2026-33750) via tarball replacement
+        so the published image no longer ships the vulnerable bundled JS
+        dependencies that grype flags.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 5.12.4
+  changelogEntry:
+    - summary: |
+        Bump the Python SDK generator container's Node base image from
+        `node:22.22-bookworm-slim` to `node:24.15-trixie-slim`. Aligns the
+        generator with the rest of the Fern generator containers on a single
+        Node major version (Node 24) and Debian release (trixie). Trixie ships
+        patched versions of glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+        krb5, curl, and expat that are not available on bookworm, clearing the
+        AWS Inspector findings that dist-upgrade alone could not.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 5.12.3
+  changelogEntry:
+    - summary: |
+        Bump the python-sdk container's Node.js stage from `node:20.19.4-slim`
+        (Node 20 went EOL March 24, 2026) to `node:22.22-bookworm-slim`, and
+        apply latest Debian trixie security updates at build time so OS-level
+        package CVEs are picked up. Addresses CVE-2025-55130 (Node 20.19.4
+        permission-model symlink bypass) and the OS-level CVE-2026-31789
+        against `openssl 3.5.1-1`.
+      type: chore
+  createdAt: "2026-05-08"
+  irVersion: 66
 - version: 5.12.2
   changelogEntry:
     - summary: |

@@ -660,7 +660,9 @@ export class EndpointSnippetGenerator {
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
             otherArgs.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
+                ...this.getPathParameters({ namedParameters: pathParameters, snippet, asPointer: true }).map(
+                    (field) => field.value
+                )
             );
         }
         this.context.errors.unscope();
@@ -723,6 +725,11 @@ export class EndpointSnippetGenerator {
             inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? true
         };
 
+        const includePathParamsInRequest = this.context.includePathParametersInWrappedRequest({
+            request,
+            inlinePathParameters
+        });
+
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: go.StructField[] = [];
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
@@ -730,7 +737,8 @@ export class EndpointSnippetGenerator {
             pathParameterFields.push(
                 ...this.getPathParameters({
                     namedParameters: pathParameters,
-                    snippet
+                    snippet,
+                    asPointer: !includePathParamsInRequest
                 })
             );
         }
@@ -740,7 +748,7 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
+        if (!includePathParamsInRequest) {
             otherArgs.push(...pathParameterFields.map((field) => field.value));
         }
 
@@ -756,12 +764,7 @@ export class EndpointSnippetGenerator {
             ? this.getInlinedRequestArg({
                   request,
                   snippet,
-                  pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                      request,
-                      inlinePathParameters
-                  })
-                      ? pathParameterFields
-                      : [],
+                  pathParameterFields: includePathParamsInRequest ? pathParameterFields : [],
                   filePropertyInfo
               })
             : undefined;
@@ -928,10 +931,12 @@ export class EndpointSnippetGenerator {
 
     private getPathParameters({
         namedParameters,
-        snippet
+        snippet,
+        asPointer
     }: {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        asPointer: boolean;
     }): go.StructField[] {
         const args: go.StructField[] = [];
 
@@ -942,7 +947,9 @@ export class EndpointSnippetGenerator {
         for (const parameter of pathParameters) {
             args.push({
                 name: this.context.getTypeName(parameter.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible(parameter)
+                value: asPointer
+                    ? this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible(parameter)
+                    : this.context.dynamicTypeInstantiationMapper.convert(parameter)
             });
         }
 

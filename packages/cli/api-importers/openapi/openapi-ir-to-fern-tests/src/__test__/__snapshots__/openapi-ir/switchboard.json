@@ -3121,6 +3121,7 @@
       "response": {
         "description": "OK",
         "terminator": "[DONE]",
+        "resumable": false,
         "fullExamples": [],
         "schema": {
           "value": {

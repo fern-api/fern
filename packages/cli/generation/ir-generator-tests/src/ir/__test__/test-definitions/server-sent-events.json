@@ -216,6 +216,7 @@
                                     "inline": null
                                 },
                                 "terminator": "[[DONE]]",
+                                "resumable": null,
                                 "docs": null,
                                 "v2Examples": null
                             }
@@ -738,6 +739,7 @@
                                     "inline": null
                                 },
                                 "terminator": null,
+                                "resumable": null,
                                 "docs": null,
                                 "v2Examples": null
                             }
@@ -1636,6 +1638,7 @@
             "webhooks": null,
             "websocket": null,
             "hasEndpointsInTree": true,
+            "hasWebSocketInTree": false,
             "docs": null
         }
     },
@@ -1655,6 +1658,7 @@
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "hasWebSocketInTree": false,
         "docs": null
     },
     "sdkConfig": {

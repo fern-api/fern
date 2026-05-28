@@ -17,14 +17,18 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL         string
-	HTTPClient      HTTPClient
-	HTTPHeader      http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	MaxAttempts     uint
-	MaxBufSize      int
-	APIKey          string
+	BaseURL                    string
+	HTTPClient                 HTTPClient
+	HTTPHeader                 http.Header
+	BodyProperties             map[string]interface{}
+	QueryParameters            url.Values
+	MaxAttempts                uint
+	MaxBufSize                 int
+	MaxStreamReconnectAttempts uint
+	DisableStreamReconnection  bool
+	DisableRetries             bool
+	APIKey                     string
+	APIKeyFunc                 func() (string, error)
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -49,6 +53,10 @@ func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.APIKey != "" {
 		header.Set("Authorization", "Bearer "+r.APIKey)
+	} else if r.APIKeyFunc != nil {
+		if token, err := r.APIKeyFunc(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	return header
 }
@@ -125,6 +133,29 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
+// MaxStreamReconnectAttemptsOption implements the RequestOption interface.
+type MaxStreamReconnectAttemptsOption struct {
+	MaxStreamReconnectAttempts uint
+}
+
+func (m *MaxStreamReconnectAttemptsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxStreamReconnectAttempts = m.MaxStreamReconnectAttempts
+}
+
+// WithoutStreamReconnectionOption implements the RequestOption interface.
+type WithoutStreamReconnectionOption struct{}
+
+func (w *WithoutStreamReconnectionOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableStreamReconnection = true
+}
+
+// WithoutRetriesOption implements the RequestOption interface.
+type WithoutRetriesOption struct{}
+
+func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
+	opts.DisableRetries = true
+}
+
 // APIKeyOption implements the RequestOption interface.
 type APIKeyOption struct {
 	APIKey string
@@ -132,4 +163,13 @@ type APIKeyOption struct {
 
 func (a *APIKeyOption) applyRequestOptions(opts *RequestOptions) {
 	opts.APIKey = a.APIKey
+}
+
+// APIKeyFuncOption implements the RequestOption interface.
+type APIKeyFuncOption struct {
+	APIKeyFunc func() (string, error)
+}
+
+func (a *APIKeyFuncOption) applyRequestOptions(opts *RequestOptions) {
+	opts.APIKeyFunc = a.APIKeyFunc
 }

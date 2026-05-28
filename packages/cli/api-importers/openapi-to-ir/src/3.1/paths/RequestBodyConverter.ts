@@ -28,6 +28,13 @@ export declare namespace RequestBodyConverter {
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         requestBody: HttpRequestBody;
         streamRequestBody: HttpRequestBody | undefined;
+        /**
+         * Audience name → wire names of inline request body properties under that
+         * audience. Only populated for `inlinedRequestBody` outputs; `undefined`
+         * (or absent) means no inline property-level audience info to mark on the
+         * IR filter graph.
+         */
+        inlinedPropertiesByAudience?: Record<string, Set<string>>;
     }
 }
 
@@ -180,7 +187,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 inlinedTypes: this.context.removeSchemaFromInlinedTypes({
                     id: this.schemaId,
                     inlinedTypes: convertedSchema.inlinedTypes
-                })
+                }),
+                inlinedPropertiesByAudience: convertedSchema.schema?.propertiesByAudience
             };
         } else {
             return {
@@ -388,13 +396,23 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return undefined;
         }
 
-        const streamConditionProperty =
-            resolvedMediaTypeSchema.properties?.[this.streamingExtension.streamConditionProperty];
-        if (streamConditionProperty == null || this.context.isReferenceObject(streamConditionProperty)) {
-            return undefined;
+        let streamConditionProperty: OpenAPIV3_1.SchemaObject | undefined = resolvedMediaTypeSchema.properties?.[
+            this.streamingExtension.streamConditionProperty
+        ] as OpenAPIV3_1.SchemaObject | undefined;
+        if (streamConditionProperty != null && this.context.isReferenceObject(streamConditionProperty)) {
+            streamConditionProperty = undefined;
+        }
+        if (streamConditionProperty == null) {
+            // For oneOf/anyOf bodies (or other schemas where the stream-condition
+            // property isn't defined at the top level), synthesize a default
+            // boolean property so we can still pin the literal.
+            if (resolvedMediaTypeSchema.oneOf == null && resolvedMediaTypeSchema.anyOf == null) {
+                return undefined;
+            }
+            streamConditionProperty = { type: "boolean" } as OpenAPIV3_1.SchemaObject;
         }
 
-        const streamingOutput = this.buildStreamConditionInlinedRequestBody({
+        const streamingOutput = this.buildStreamConditionRequestBody({
             streamConditionProperty,
             resolvedMediaTypeSchema,
             isStreaming: true,
@@ -402,7 +420,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             mediaTypeObject
         });
 
-        const nonStreamingOutput = this.buildStreamConditionInlinedRequestBody({
+        const nonStreamingOutput = this.buildStreamConditionRequestBody({
             streamConditionProperty,
             resolvedMediaTypeSchema,
             isStreaming: false,
@@ -427,7 +445,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         };
     }
 
-    private buildStreamConditionInlinedRequestBody({
+    private buildStreamConditionRequestBody({
         streamConditionProperty,
         resolvedMediaTypeSchema,
         isStreaming,
@@ -441,7 +459,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
     }):
         | {
-              requestBody: HttpRequestBody.InlinedRequestBody;
+              requestBody: HttpRequestBody;
               inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
           }
         | undefined {
@@ -499,7 +517,21 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             };
         }
 
-        return undefined;
+        // For non-object shapes (e.g. oneOf/anyOf unions) emit a referenced
+        // request body. The converted schema already carries the literal-pinned
+        // stream property as a base property on the union.
+        return {
+            requestBody: HttpRequestBody.reference({
+                contentType,
+                docs: this.description,
+                requestBodyType: convertedSchema.type,
+                v2Examples: this.convertMediaTypeObjectExamples({
+                    mediaTypeObject: modifiedMediaTypeObject,
+                    exampleGenerationStrategy: "request"
+                })
+            }),
+            inlinedTypes: convertedSchema.inlinedTypes ?? {}
+        };
     }
 
     private recursivelyCheckTypeReferenceIsFile({

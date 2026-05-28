@@ -96,17 +96,11 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
 				Name: "John Doe",
+				ID:   "john.doe",
 			},
 		},
 		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
 			ID:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
@@ -121,6 +115,12 @@ func do() {
 				"releaseDate": "2023-12-08",
 			},
 			Revenue: int64(1000000),
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -521,6 +521,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 import (
 	context "context"
 
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -531,9 +532,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acme.GetMovieImdbRequest{
+		MovieID: "movie_xyz",
+	}
 	client.Imdb.GetMovie(
 		context.TODO(),
-		"movie_xyz",
+		request,
 	)
 }
 "
@@ -740,6 +744,32 @@ func do() {
 		Tags: []*string{},
 	}
 	client.Nullable.GetUsers(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (default) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	request := &acme.GetUserSpecificsRequest{
+		TenantID: "my_tenant",
+		UserID:   "my_user",
+		Version:  7,
+		Thought:  "my_thought",
+	}
+	client.User.GetUserSpecifics(
 		context.TODO(),
 		request,
 	)
@@ -1068,17 +1098,11 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
 				Name: "John Doe",
+				ID:   "john.doe",
 			},
 		},
 		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
 			ID:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
@@ -1093,6 +1117,12 @@ func do() {
 				"releaseDate": "2023-12-08",
 			},
 			Revenue: int64(1000000),
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -1493,6 +1523,7 @@ exports[`snippets (exportAllRequestsAtRoot) > imdb > 'GET /movies/{movieId} (sim
 import (
 	context "context"
 
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -1503,9 +1534,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acme.GetMovieImdbRequest{
+		MovieID: "movie_xyz",
+	}
 	client.Imdb.GetMovie(
 		context.TODO(),
-		"movie_xyz",
+		request,
 	)
 }
 "
@@ -1712,6 +1746,32 @@ func do() {
 		Tags: []*string{},
 	}
 	client.Nullable.GetUsers(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (exportAllRequestsAtRoot) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewClient()
+	request := &acme.GetUserSpecificsRequest{
+		TenantID: "my_tenant",
+		UserID:   "my_user",
+		Version:  7,
+		Thought:  "my_thought",
+	}
+	client.User.GetUserSpecifics(
 		context.TODO(),
 		request,
 	)
@@ -2040,17 +2100,11 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
 				Name: "John Doe",
+				ID:   "john.doe",
 			},
 		},
 		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
 			ID:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
@@ -2065,6 +2119,12 @@ func do() {
 				"releaseDate": "2023-12-08",
 			},
 			Revenue: int64(1000000),
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
@@ -2465,6 +2525,7 @@ exports[`snippets (exportedClientName) > imdb > 'GET /movies/{movieId} (simple)'
 import (
 	context "context"
 
+	acme "github.com/acme/acme-go"
 	client "github.com/acme/acme-go/client"
 	option "github.com/acme/acme-go/option"
 )
@@ -2475,9 +2536,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acme.GetMovieImdbRequest{
+		MovieID: "movie_xyz",
+	}
 	client.Imdb.GetMovie(
 		context.TODO(),
-		"movie_xyz",
+		request,
 	)
 }
 "
@@ -2684,6 +2748,32 @@ func do() {
 		Tags: []*string{},
 	}
 	client.Nullable.GetUsers(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > path-parameters > 'GET /{tenant_id}/user/{user_id}/speci…' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+)
+
+func do() {
+	client := client.NewFernClient()
+	request := &acme.GetUserSpecificsRequest{
+		TenantID: "my_tenant",
+		UserID:   "my_user",
+		Version:  7,
+		Thought:  "my_thought",
+	}
+	client.User.GetUserSpecifics(
 		context.TODO(),
 		request,
 	)

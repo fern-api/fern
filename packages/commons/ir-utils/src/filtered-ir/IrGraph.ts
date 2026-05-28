@@ -65,6 +65,7 @@ export class IrGraph {
     private webhooksNeededForAudience: Set<WebhookId> = new Set();
     private channelsNeededForAudience: Set<WebSocketChannelId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
+    private schemaIdToGraphTypeId: Map<string, TypeId> = new Map();
 
     public constructor(audiences: ConfigAudiences) {
         this.audiences = audiencesFromConfig(audiences);
@@ -91,6 +92,9 @@ export class IrGraph {
             referencedSubpackages: descendantFilepaths
         };
         this.types[typeId] = typeNode;
+        if (declaredTypeName.typeId != null && declaredTypeName.typeId !== typeId) {
+            this.schemaIdToGraphTypeId.set(declaredTypeName.typeId, typeId);
+        }
         if (this.typesReferencedByService[typeId] == null) {
             this.typesReferencedByService[typeId] = new Set();
         }
@@ -379,6 +383,31 @@ export class IrGraph {
         }
     }
 
+    /**
+     * Registers inline request body audience info for importers that don't pass a raw Fern
+     * Definition (e.g. OpenAPI V3). Properties absent from every audience set are universal.
+     */
+    public markInlinedRequestPropertiesForAudiences(
+        endpointId: EndpointId,
+        propertiesByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.requestProperties[endpointId] = { endpointId, propertiesByAudience };
+    }
+
+    public markQueryParametersForAudiences(
+        endpointId: EndpointId,
+        parametersByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.queryParameters[endpointId] = { endpointId, parametersByAudience };
+    }
+
+    public markInlinedWebhookPayloadPropertiesForAudiences(
+        webhookId: WebhookId,
+        propertiesByAudience: Record<AudienceId, Set<string>>
+    ): void {
+        this.webhookProperties[webhookId] = { webhookId, propertiesByAudience };
+    }
+
     public addChannel(
         filepath: FernFilepath,
         channelId: string,
@@ -463,8 +492,7 @@ export class IrGraph {
             this.addReferencedTypes(typeIds, channelNode.referencedTypes);
         }
 
-        // Property-level filtering is exclusion-based: a property is excluded iff it has
-        // at least one declared audience and none of those overlap the active filter.
+        // Property filtering is exclusion-based: drop only if declared audiences don't overlap.
         const excludedProperties: Record<TypeId, Set<string> | undefined> = {};
         const excludedRequestProperties: Record<EndpointId, Set<string> | undefined> = {};
         const excludedQueryParameters: Record<EndpointId, Set<string> | undefined> = {};
@@ -540,36 +568,53 @@ export class IrGraph {
 
         const typeNode = this.getTypeNode(typeId);
         for (const descendantTypeId of typeNode.allDescendants) {
-            this.markTypeForService(descendantTypeId, serviceId);
+            this.markTypeForService(this.resolveTypeId(descendantTypeId), serviceId);
         }
     }
 
+    private resolveTypeId(id: TypeId): TypeId {
+        return this.schemaIdToGraphTypeId.get(id) ?? id;
+    }
+
+    /**
+     * BFS the type-dependency graph and add every transitively-reachable type
+     * to `types`. The walk must be recursive: an outer type's `allDescendants`
+     * may only list its direct dependencies (e.g. when a property uses `$ref`
+     * to another component schema, the outer type's referencedTypes contains
+     * the ref target but not the target's own inline-object descendants), so a
+     * single-level pass would silently drop deeper named types and they would
+     * later render as `any` in the docs.
+     */
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
-        for (const typeId of typesToAdd) {
-            if (types.has(typeId)) {
+        const queue: TypeId[] = [...typesToAdd];
+
+        while (queue.length > 0) {
+            const typeId = queue.pop();
+            if (typeId == null || types.has(typeId)) {
                 continue;
             }
             types.add(typeId);
             const typeNode = this.getTypeNode(typeId);
 
+            const enqueueDescendant = (descendantTypeId: TypeId): void => {
+                const resolved = this.resolveTypeId(descendantTypeId);
+                if (!types.has(resolved)) {
+                    queue.push(resolved);
+                }
+            };
+
             if (this.audiences.type === "filtered") {
                 for (const audienceId of this.audiences.audiences) {
                     const descendantsForAudience = typeNode.descendantsByAudience[audienceId];
                     if (descendantsForAudience != null) {
-                        descendantsForAudience.forEach((descendantTypeId) => {
-                            types.add(descendantTypeId);
-                        });
+                        descendantsForAudience.forEach(enqueueDescendant);
                     } else {
-                        typeNode.allDescendants.forEach((descendantTypeId) => {
-                            types.add(descendantTypeId);
-                        });
+                        typeNode.allDescendants.forEach(enqueueDescendant);
                         break;
                     }
                 }
             } else {
-                typeNode.allDescendants.forEach((descendantTypeId) => {
-                    types.add(descendantTypeId);
-                });
+                typeNode.allDescendants.forEach(enqueueDescendant);
             }
         }
     }

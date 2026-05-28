@@ -34,14 +34,14 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
         version: "0.0.247"
     },
     [GeneratorName.TYPESCRIPT_SDK]: {
-        version: "2.3.2",
+        version: "3.71.2",
         output: {
             location: "local-file-system",
             path: "../sdks/typescript"
         }
     },
     [GeneratorName.TYPESCRIPT_NODE_SDK]: {
-        version: "2.3.2",
+        version: "3.71.2",
         output: {
             location: "local-file-system",
             path: "../sdks/typescript"
@@ -168,6 +168,13 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
         output: {
             location: "local-file-system",
             path: "../sdks/rust"
+        }
+    },
+    [GeneratorName.CLI]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/cli"
         }
     }
 };

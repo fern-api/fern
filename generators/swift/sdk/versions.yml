@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.35.9
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
+- version: 0.35.8
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 0.35.7
+  changelogEntry:
+    - summary: |
+        Patch the bundled `ip-address` to v10.2.0 in the swift-sdk container to
+        address CVE-2026-42338 / GHSA-v2v4-37r5-5v8g (XSS in `Address6` HTML-
+        emitting methods). npm 11.12.1 (shipped with `node:24.15`) bundles
+        `ip-address@10.1.0` via `socks`; this overlays the published 10.2.0
+        tarball in place at image build time.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 0.35.6
+  changelogEntry:
+    - summary: |
+        Patch Swift SDK + Swift model generator container CVEs flagged in the AWS
+        ECR / grype scan. Patch npm's bundled `picomatch@4.0.3 -> 4.0.4` and
+        `brace-expansion@5.0.4 -> 5.0.5` via tarball replacement so the published
+        image no longer ships the vulnerable bundled JS dependencies that grype
+        flags.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 0.35.5
+  changelogEntry:
+    - summary: |
+        Bump the Swift SDK and Swift model generator containers' Node base image
+        from `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the
+        generators with the rest of the Fern generator containers on a single Node
+        major version (Node 24) and picks up Node 24's CVE patches.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
 - version: 0.35.4
   changelogEntry:
     - summary: |

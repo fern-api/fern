@@ -25,6 +25,13 @@ export interface ConvertOpenAPIOptions {
     respectReadonlySchemas: boolean;
 
     /**
+     * If true, endpoint response type references will use the Read variant of schemas
+     * (e.g. `WebhookRead` instead of `Webhook`) when `respectReadonlySchemas` is enabled.
+     * Defaults to false for backward compatibility.
+     */
+    useReadVariantForResponses: boolean;
+
+    /**
      * If true, the converter will respect nullable properties in OpenAPI schemas.
      */
     respectNullableSchemas: boolean;
@@ -126,6 +133,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     detectGlobalHeaders: true,
     objectQueryParameters: true,
     respectReadonlySchemas: false,
+    useReadVariantForResponses: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: true,

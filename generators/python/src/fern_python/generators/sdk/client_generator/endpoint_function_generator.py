@@ -43,7 +43,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-from fern_python.generators.sdk.names import get_variable_member_name
+from fern_python.generators.sdk.names import get_root_path_parameter_member_name, get_variable_member_name
 from fern_python.snippet import SnippetWriter
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
 
@@ -157,7 +157,7 @@ class EndpointFunctionGenerator:
         self._path_parameter_names = dict()
         _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
 
-        for path_parameter in self._endpoint.all_path_parameters:
+        for path_parameter in filter_root_path_parameters(self._endpoint.all_path_parameters):
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
                 _named_parameter_names.append(name)
@@ -171,8 +171,11 @@ class EndpointFunctionGenerator:
             return
 
         # Consolidate the named parameters and path parameters in a single list.
+        # Root path parameters are hoisted to the client constructor, so exclude them here.
         parameters: List[AST.NamedFunctionParameter] = []
-        parameters = self._named_parameters_from_path_parameters(self._endpoint.all_path_parameters)
+        parameters = self._named_parameters_from_path_parameters(
+            filter_root_path_parameters(self._endpoint.all_path_parameters)
+        )
         parameters.extend(self._named_parameters_raw)
 
         for param in parameters:
@@ -256,16 +259,20 @@ class EndpointFunctionGenerator:
                     cleaned_parameters.append(param)
             named_parameters = cleaned_parameters
 
+        # Root path parameters are hoisted to the root client constructor; exclude them
+        # from the endpoint signature.
+        non_root_path_parameters = filter_root_path_parameters(self._endpoint.all_path_parameters)
+
         if self._context.custom_config.inline_path_params:
             named_path_parameters: List[AST.NamedFunctionParameter] = self._named_parameters_from_path_parameters(
-                self._endpoint.all_path_parameters
+                non_root_path_parameters
             )
             # path parameters go first because it's important that request options is the last parameter
             named_parameters = named_path_parameters + named_parameters
         else:
             # Even when not inlining path params, path params with client_default
             # need to be added as named parameters since they were skipped from unnamed params
-            non_variable_path_params = filter_variable_path_parameters(self._endpoint.all_path_parameters)
+            non_variable_path_params = filter_variable_path_parameters(non_root_path_parameters)
             client_default_path_params = [p for p in non_variable_path_params if p.client_default is not None]
             if client_default_path_params:
                 named_path_parameters = self._named_parameters_from_path_parameters(client_default_path_params)
@@ -329,7 +336,7 @@ class EndpointFunctionGenerator:
             docstring=self._get_docstring_for_endpoint(
                 endpoint=self._endpoint,
                 named_parameters=named_parameters,
-                path_parameters=self._endpoint.all_path_parameters,
+                path_parameters=filter_root_path_parameters(self._endpoint.all_path_parameters),
                 snippet=(
                     endpoint_snippets[0].snippet
                     if endpoint_snippets is not None and len(endpoint_snippets) > 0 and include_snippet
@@ -394,7 +401,9 @@ class EndpointFunctionGenerator:
         parameters: List[AST.FunctionParameter] = []
 
         if not self._context.custom_config.inline_path_params:
-            non_variable_path_parameters = filter_variable_path_parameters(self._endpoint.all_path_parameters)
+            non_variable_path_parameters = filter_variable_path_parameters(
+                filter_root_path_parameters(self._endpoint.all_path_parameters)
+            )
             for path_parameter in non_variable_path_parameters:
                 if not self._is_type_literal(path_parameter.value_type):
                     # Path parameters with client defaults are moved to named parameters
@@ -1061,6 +1070,11 @@ class EndpointFunctionGenerator:
                     if variable is None:
                         raise RuntimeError(f"Variable does not exist: {path_parameter.variable}")
                     member_name = get_variable_member_name(variable)
+                    return f"self.{self._client_wrapper_member_name}.{member_name}"
+                elif path_parameter.location == ir_types.PathParameterLocation.ROOT:
+                    # Root path parameters live on the client wrapper, hoisted from the
+                    # root client constructor.
+                    member_name = get_root_path_parameter_member_name(path_parameter)
                     return f"self.{self._client_wrapper_member_name}.{member_name}"
                 else:
                     return self._path_parameter_names[path_parameter.name]
@@ -2352,3 +2366,8 @@ def unwrap_optional_type(
 
 def filter_variable_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
     return [param for param in path_parameters if param.variable is None]
+
+
+def filter_root_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
+    """Filter out root-level path parameters; they're hoisted to the client constructor."""
+    return [param for param in path_parameters if param.location != ir_types.PathParameterLocation.ROOT]

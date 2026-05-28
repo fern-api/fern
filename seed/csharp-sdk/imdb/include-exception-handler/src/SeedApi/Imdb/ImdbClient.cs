@@ -40,9 +40,10 @@ public partial class ImdbClient : IImdbClient
                         new JsonRequest
                         {
                             Method = HttpMethod.Post,
-                            Path = "/movies/create-movie",
+                            Path = "movies/create-movie",
                             Body = request,
                             Headers = _headers,
+                            ContentType = "application/json",
                             Options = options,
                         },
                         cancellationToken
@@ -94,7 +95,7 @@ public partial class ImdbClient : IImdbClient
     }
 
     private async Task<WithRawResponse<Movie>> GetMovieAsyncCore(
-        string movieId,
+        GetMovieImdbRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -114,8 +115,8 @@ public partial class ImdbClient : IImdbClient
                         {
                             Method = HttpMethod.Get,
                             Path = string.Format(
-                                "/movies/{0}",
-                                ValueConvert.ToPathParameterString(movieId)
+                                "movies/{0}",
+                                ValueConvert.ToPathParameterString(request.MovieId)
                             ),
                             Headers = _headers,
                             Options = options,
@@ -163,7 +164,7 @@ public partial class ImdbClient : IImdbClient
                         switch (response.StatusCode)
                         {
                             case 404:
-                                throw new MovieDoesNotExistError(
+                                throw new NotFoundError(
                                     JsonUtils.Deserialize<string>(responseBody)
                                 );
                         }
@@ -200,16 +201,16 @@ public partial class ImdbClient : IImdbClient
     }
 
     /// <example><code>
-    /// await client.Imdb.GetMovieAsync("movieId");
+    /// await client.Imdb.GetMovieAsync(new GetMovieImdbRequest { MovieId = "movieId" });
     /// </code></example>
     public WithRawResponseTask<Movie> GetMovieAsync(
-        string movieId,
+        GetMovieImdbRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<Movie>(
-            GetMovieAsyncCore(movieId, options, cancellationToken)
+            GetMovieAsyncCore(request, options, cancellationToken)
         );
     }
 }

@@ -1,7 +1,16 @@
-FROM node:20-slim
+FROM node:24.16-trixie-slim
 
+# Apply latest Debian security updates so that grype-tracked OS package
+# vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
+# krb5, etc.) are resolved on top of the base image. trixie ships
+# patched versions of these packages that are not available on bookworm
+# (bookworm publishes the upstream fixes only via the next-stable
+# branch), so the base-image choice — not just dist-upgrade — is what
+# clears the AWS Inspector findings.
 RUN apt-get update \
+    && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates git \
+    && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable corepack so both pnpm and yarn resolve from each project's
@@ -25,5 +34,13 @@ RUN cd /tmp/warm-cache \
     && pnpm config set store-dir "$PNPM_STORE_PATH" \
     && pnpm install --ignore-scripts --prefer-offline \
     && rm -rf /tmp/warm-cache/node_modules
+
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.16 vendors 5.0.5).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack brace-expansion@5.0.6 && \
+    rm -rf brace-expansion && \
+    mkdir brace-expansion && \
+    tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
+    rm brace-expansion-5.0.6.tgz
 
 WORKDIR /workspace

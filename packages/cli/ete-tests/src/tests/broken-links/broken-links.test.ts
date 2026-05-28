@@ -75,6 +75,17 @@ describe("fern docs broken-links", () => {
         expect(stripAnsi(stdout)).toContain("All checks passed");
     }, 20_000);
 
+    it("broken links in folder-referenced pages should be detected", async ({ signal }) => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("folder-navigation")),
+            reject: false,
+            signal
+        });
+        // This fixture tests that markdown files referenced via folder entries
+        // in docs.yml are validated for broken links
+        expect(stripAnsi(stdout)).toContain("Found 2 errors");
+    }, 20_000);
+
     it("broken links in sections with path property should be detected", async ({ signal }) => {
         const { stdout } = await runFernCli(["docs", "broken-links"], {
             cwd: join(fixturesDir, RelativeFilePath.of("section-with-path")),
@@ -85,4 +96,27 @@ describe("fern docs broken-links", () => {
         // property are validated for broken links (not just pages)
         expect(stripAnsi(stdout).slice(0, -15)).toMatchSnapshot();
     }, 20_000);
+
+    it("broken links in API Reference description fields should be detected", async ({ signal }) => {
+        const { stdout } = await runFernCli(["docs", "broken-links"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("api-reference-descriptions")),
+            reject: false,
+            signal
+        });
+        // This fixture tests that broken links inside API Reference description
+        // fields (e.g. endpoint docs, type docs, property docs, path parameter
+        // docs) are detected by `fern check`.
+        //
+        // The fixture's Fern API definition contains four broken links:
+        //   - /guides/does-not-exist        (Movie type docs)
+        //   - /conventions/missing          (Movie.id property docs)
+        //   - /api/missing-endpoint-doc     (getMovie endpoint docs)
+        //   - /docs/missing-path-param      (movieId path-parameter docs)
+        const output = stripAnsi(stdout);
+        expect(output).not.toContain("All checks passed");
+        expect(output).toContain("/guides/does-not-exist");
+        expect(output).toContain("/conventions/missing");
+        expect(output).toContain("/api/missing-endpoint-doc");
+        expect(output).toContain("/docs/missing-path-param");
+    }, 30_000);
 });

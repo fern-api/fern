@@ -217,21 +217,25 @@ export async function startContainer({
 }
 
 /**
- * Executes a command inside a running container.
+ * Executes a command inside a running container. Throws on non-zero exit by
+ * default; pass `reject: false` to receive the result without throwing
+ * (callers that need to surface stderr from a failing command).
  */
 export async function execInContainer({
     logger,
     containerId,
     command,
     runner,
-    writeLogsToFile = true
+    writeLogsToFile = true,
+    reject = true
 }: {
     logger: Logger;
     containerId: string;
     command: string[];
     runner?: ContainerRunner;
     writeLogsToFile?: boolean;
-}): Promise<void> {
+    reject?: boolean;
+}): Promise<{ stdout: string; stderr: string; exitCode: number }> {
     const containerRunner = runner ?? "docker";
     const { stdout, stderr, exitCode } = await loggingExeca(
         logger,
@@ -252,9 +256,12 @@ export async function execInContainer({
         logger.info(`Generator logs here: ${tmpFile.path}`);
     }
 
-    if (exitCode !== 0) {
-        throw new Error(`Container exec exited with code ${exitCode}.\n${stdout}\n${stderr}`);
+    const resolvedExitCode = exitCode ?? 1;
+    if (reject && resolvedExitCode !== 0) {
+        throw new Error(`Container exec exited with code ${resolvedExitCode}.\n${stdout}\n${stderr}`);
     }
+
+    return { stdout, stderr, exitCode: resolvedExitCode };
 }
 
 /**

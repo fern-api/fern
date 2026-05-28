@@ -1,0 +1,189 @@
+irVersion: v67
+displayName: CLI
+image: fernapi/fern-cli
+changelogLocation: ../../generators/cli/versions.yml
+
+buildScripts:
+  compileScript:
+    commands:
+      - cargo build --locked --all-features --tests
+  testScript:
+    commands:
+      - cargo test --locked --all-features
+
+publish:
+  preBuildCommands:
+    - pnpm turbo run dist:cli --filter @fern-api/cli-generator
+  docker:
+    file: ./generators/cli/Dockerfile
+    image: fernapi/fern-cli
+    context: ./generators/cli
+
+test:
+  docker:
+    image: fernapi/fern-cli:latest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
+  local:
+    workingDirectory: generators/cli
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/cli-generator
+    runCommand: node --enable-source-maps dist/cli.cjs {CONFIG_PATH}
+
+scripts:
+  - image: fernapi/cli-seed
+    commands:
+      build:
+        - cargo build --locked --all-features --tests
+      test:
+        - cargo test --locked --all-features
+
+# Intentionally no `language:` field — setting it would make the
+# local-workspace-runner emit per-language dynamic-snippet tests
+# (`dynamic-snippets/example*.<ext>`) for every fixture. The CLI
+# generator produces a CLI binary, not call-site snippets, so we leave
+# `generatorInvocation.language` null and the runner skips the step.
+generatorType: SDK
+defaultOutputMode: local_files
+defaultCustomConfig: {}
+
+fixtures:
+  # Fern-definition workspace (no raw OpenAPI specs mounted). Exercises
+  # the generator's "skip cleanly" path — it logs and exits without
+  # touching the output dir.
+  simple-api:
+    - customConfig: null
+      outputFolder: no-custom-config
+  # Single-spec OpenAPI workspace. Exercises the common case: the binary
+  # name is auto-derived from spec `info.title` (kebab-cased), and the
+  # mounted spec lands in `cli/<derived>/openapi0.json` with a codegen'd
+  # `main.rs` referencing it via `.spec(...)`.
+  query-parameters-openapi:
+    - customConfig: null
+      outputFolder: no-custom-config
+  # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
+  # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
+  # refuses to guess a single name across multiple titles).
+  cli-multi-spec:
+    - customConfig:
+        binaryName: acme-cli
+      outputFolder: no-custom-config
+  # Multi-spec fixture WITH per-spec `namespace:` declarations.
+  # `customConfig.binaryName` is REQUIRED for multi-spec.
+  cli-multi-spec-namespaced:
+    - customConfig:
+        binaryName: acme-versioned
+      outputFolder: no-custom-config
+
+# Alpha-quality coverage: the SDK template only handles happy-path
+# OpenAPI specs. Seed iterates every test-definition by default; fixtures
+# that fail because the codegen'd `main.rs` can't cope with their auth
+# schemes, custom config, server-sent events, websockets, etc. are
+# parked here so CI passes. `simple-api:no-custom-config` is included
+# because that's our deliberate "skip cleanly" smoke test — the
+# generator writes nothing for Fern-definition workspaces, which makes
+# seed's `cargo build` script fail on a missing output dir. As the
+# template grows feature coverage, fixtures graduate off this list.
+allowedFailures:
+  - accept-header
+  - alias
+  - alias-extends
+  - any-auth
+  - api-wide-base-path
+  - audiences
+  - basic-auth
+  - basic-auth-environment-variables
+  - basic-auth-pw-omitted
+  - bearer-token-environment-variable
+  - bytes-download
+  - bytes-upload
+  - circular-references
+  - circular-references-advanced
+  - circular-references-extends
+  - client-side-params
+  - content-type
+  - cross-package-type-names
+  - dollar-string-examples
+  - empty-clients
+  - endpoint-security-auth
+  - enum
+  - error-property
+  - errors
+  - examples
+  - exhaustive
+  - extends
+  - extra-properties
+  - file-download
+  - file-upload
+  - folders
+  - header-auth
+  - header-auth-environment-variable
+  - http-head
+  - idempotency-headers
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-api-key
+  - inferred-auth-implicit-no-expiry
+  - inferred-auth-implicit-reference
+  - license
+  - literal
+  - literal-user-agent
+  - literals-unions
+  - mixed-case
+  - mixed-file-directory
+  - multi-line-docs
+  - multi-url-environment
+  - multi-url-environment-no-default
+  - multiple-request-bodies
+  - no-environment
+  - no-retries
+  - nullable
+  - nullable-optional
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-reference
+  - oauth-client-credentials-with-variables
+  - object
+  - objects-with-imports
+  - optional
+  - package-yml
+  - pagination
+  - pagination-custom
+  - pagination-uri-path
+  - path-parameters
+  - plain-text
+  - property-access
+  - public-object
+  - query-parameters
+  - request-parameters
+  - required-nullable
+  - reserved-keywords
+  - response-property
+  - server-sent-event-examples
+  - server-sent-events
+  - server-sent-events-resumable
+  - simple-api:no-custom-config
+  - simple-fhir
+  - single-url-environment-default
+  - single-url-environment-no-default
+  - streaming
+  - streaming-parameter
+  - trace
+  - undiscriminated-union-with-response-property
+  - undiscriminated-unions
+  - union-query-parameters
+  - unions
+  - unions-with-local-date
+  - unknown
+  - validation
+  - variables
+  - version
+  - version-no-default
+  - webhooks
+  - websocket
+  - websocket-bearer-auth
+  - websocket-inferred-auth
+  - websocket-multi-url

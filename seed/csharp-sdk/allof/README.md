@@ -45,7 +45,11 @@ using SeedApi;
 
 var client = new SeedApiClient();
 await client.CreateRuleAsync(
-    new RuleCreateRequest { Name = "name", ExecutionContext = RuleExecutionContext.Prod }
+    new RuleCreateRequest
+    {
+        Name = "name",
+        ExecutionContext = RuleCreateRequestExecutionContext.Prod,
+    }
 );
 ```
 
@@ -192,25 +196,25 @@ This SDK uses forward-compatible enums that can handle unknown values gracefully
 using SeedApi;
 
 // Using a built-in value
-var ruleExecutionContext = RuleExecutionContext.Prod;
+var ruleCreateRequestExecutionContext = RuleCreateRequestExecutionContext.Prod;
 
 // Using a custom value
-var customRuleExecutionContext = RuleExecutionContext.FromCustom("custom-value");
+var customRuleCreateRequestExecutionContext = RuleCreateRequestExecutionContext.FromCustom("custom-value");
 
 // Using in a switch statement
-switch (ruleExecutionContext.Value)
+switch (ruleCreateRequestExecutionContext.Value)
 {
-    case RuleExecutionContext.Values.Prod:
+    case RuleCreateRequestExecutionContext.Values.Prod:
         Console.WriteLine("Prod");
         break;
     default:
-        Console.WriteLine($"Unknown value: {ruleExecutionContext.Value}");
+        Console.WriteLine($"Unknown value: {ruleCreateRequestExecutionContext.Value}");
         break;
 }
 
 // Explicit casting
-string ruleExecutionContextString = (string)RuleExecutionContext.Prod;
-RuleExecutionContext ruleExecutionContextFromString = (RuleExecutionContext)"prod";
+string ruleCreateRequestExecutionContextString = (string)RuleCreateRequestExecutionContext.Prod;
+RuleCreateRequestExecutionContext ruleCreateRequestExecutionContextFromString = (RuleCreateRequestExecutionContext)"prod";
 ```
 
 ## Contributing

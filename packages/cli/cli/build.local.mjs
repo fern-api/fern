@@ -12,7 +12,7 @@ buildCli({
         FERN_FDR_ORIGIN: "http://localhost:8080",
         DEFAULT_FDR_LAMBDA_ORIGIN: "http://localhost:8080",
         VENUS_AUDIENCE: "venus-dev",
-        FERN_DASHBOARD_URL: "http://localhost:3000",
+        FERN_DASHBOARD_URL_DEFAULT: "http://localhost:3000",
         LOCAL_STORAGE_FOLDER: ".fern-local",
         POSTHOG_API_KEY: null,
         SENTRY_DSN: null,

@@ -1,5 +1,4 @@
-import { bootstrap, LockfileManager, type ReplayPreparation, type ReplayReport, ReplayService } from "@fern-api/replay";
-import { execFileSync } from "child_process";
+import { bootstrap, type ReplayPreparation, type ReplayReport, ReplayService } from "@fern-api/replay";
 import { existsSync, unlinkSync } from "fs";
 import { join } from "path";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
@@ -28,8 +27,6 @@ export interface ReplayRunResult {
     previousGenerationSha: string | null;
     /** SHA of the [fern-generated] commit created by this replay run (null if replay didn't run or unreadable) */
     currentGenerationSha: string | null;
-    /** SHA of main's HEAD before replay ran. Always on main's lineage, stable after squash merges. */
-    baseBranchHead: string | null;
     /** True when this run inlined `bootstrap()` to create the lockfile (auto-init from `fern generate`). */
     autoBootstrapped: boolean;
     /**
@@ -71,8 +68,6 @@ export interface PreparedReplay {
     previousGenerationSha: string | null;
     /** SHA of the new `[fern-generated]` commit created by prepare (or prior HEAD for dry-run terminals). */
     currentGenerationSha: string;
-    /** SHA of main's HEAD captured before prepare mutated anything. */
-    baseBranchHead: string | null;
     /** True when this run inlined `bootstrap()` to create the lockfile (auto-init from `fern generate`). */
     autoBootstrapped: boolean;
     /** True when the lockfile-missing branch was entered, regardless of bootstrap outcome. */
@@ -98,9 +93,12 @@ export interface ReplayPrepareState {
 }
 
 /**
- * Phase 1 of the split replay flow. Reads the lockfile, syncs divergent merges if a
- * `fern-generation-base` tag indicates a squash-merged PR, and invokes the replay
- * service's `prepareReplay`. Leaves HEAD at the new `[fern-generated]` commit.
+ * Phase 1 of the split replay flow. Reads the lockfile and invokes the replay service's
+ * `prepareReplay`. Leaves HEAD at the new `[fern-generated]` commit.
+ *
+ * Divergent-merge recovery (squash-merge, force-push, garbage-collected prior generation)
+ * is handled inside `@fern-api/replay` via the derived scan boundary in
+ * `findPreviousGenerationFromHistory` — no consumer-side gauntlet is needed.
  *
  * If no lockfile exists, runs `bootstrap()` inline to auto-initialize replay — this
  * bakes `fern replay init` into `fern generate` so customers no longer need a
@@ -114,15 +112,7 @@ export async function replayPrepare(
     params: ReplayRunParams,
     state?: ReplayPrepareState
 ): Promise<PreparedReplay | null> {
-    const {
-        outputDir,
-        cliVersion,
-        generatorVersions,
-        stageOnly = false,
-        generatorName,
-        skipApplication,
-        logger
-    } = params;
+    const { outputDir, cliVersion, generatorVersions, stageOnly = false, skipApplication, logger } = params;
     const lockfilePath = join(outputDir, ".fern", "replay.lock");
     let autoBootstrapped = false;
     let bootstrapAttempted = false;
@@ -173,80 +163,6 @@ export async function replayPrepare(
         }
     }
 
-    const baseBranchHead = gitRevParse(outputDir, "HEAD");
-
-    let previousGenerationSha: string | null = null;
-    let prevBaseBranchHead: string | null = null;
-    try {
-        const lockManager = new LockfileManager(outputDir);
-        if (lockManager.exists()) {
-            const lock = lockManager.read();
-            previousGenerationSha = lock.current_generation;
-            const latestGen = lock.generations.find((g) => g.commit_sha === lock.current_generation);
-            prevBaseBranchHead = latestGen?.base_branch_head ?? null;
-        }
-    } catch {
-        // If lockfile can't be read, proceed without SHA
-    }
-
-    if (previousGenerationSha != null) {
-        const sanitizedName = generatorName?.replace(/\//g, "--");
-        const namespacedTag = sanitizedName != null ? `fern-generation-base--${sanitizedName}` : null;
-        const tagSha =
-            (namespacedTag != null ? gitRevParse(outputDir, namespacedTag) : null) ??
-            gitRevParse(outputDir, "fern-generation-base");
-
-        let shouldSync = false;
-
-        if (tagSha != null) {
-            const tagParent = gitRevParse(outputDir, `${tagSha}^`);
-            if (tagParent === prevBaseBranchHead || tagParent === previousGenerationSha) {
-                const tagDistance = gitDiffNameOnly(outputDir, tagSha, "HEAD").length;
-                const lockDistance = gitDiffNameOnly(
-                    outputDir,
-                    prevBaseBranchHead ?? previousGenerationSha,
-                    "HEAD"
-                ).length;
-                shouldSync = tagDistance < lockDistance;
-            }
-        }
-
-        if (shouldSync && tagSha != null) {
-            if (!isTagMergedIntoHead(outputDir, tagSha)) {
-                logger?.warn(
-                    `fern-generation-base tag ${tagSha} is not reachable from HEAD — skipping divergent-merge sync. ` +
-                        `The tag likely points at an unmerged generation (PR closed without merge).`
-                );
-            } else {
-                try {
-                    const syncService = new ReplayService(outputDir, { enabled: true });
-                    await syncService.syncFromDivergentMerge(tagSha, {
-                        cliVersion,
-                        generatorVersions,
-                        baseBranchHead: baseBranchHead ?? undefined
-                    });
-                } catch (error) {
-                    // syncFromDivergentMerge can throw on git rewrite failures.
-                    // Wrap as ReplayPrepareError so callers (replayRun,
-                    // GenerationCommitStep) catch a single typed error and don't
-                    // forward raw String(error) (which can carry paths/SHAs) into
-                    // telemetry/logs.
-                    logger?.warn("Replay divergent-merge sync failed, continuing without sync: " + String(error));
-                    throw new ReplayPrepareError(String(error), error);
-                }
-
-                try {
-                    const freshLockManager = new LockfileManager(outputDir);
-                    if (freshLockManager.exists()) {
-                        previousGenerationSha = freshLockManager.read().current_generation;
-                    }
-                } catch {
-                    // proceed with original SHA
-                }
-            }
-        }
-    }
-
     const service = new ReplayService(outputDir, { enabled: true });
     let preparation: ReplayPreparation;
     try {
@@ -254,8 +170,7 @@ export async function replayPrepare(
             cliVersion,
             generatorVersions,
             stageOnly,
-            skipApplication,
-            baseBranchHead: baseBranchHead ?? undefined
+            skipApplication
         });
     } catch (error) {
         // Mirror the pre-split contract: replay failures never fail generation.
@@ -273,9 +188,8 @@ export async function replayPrepare(
         _preparation: preparation,
         outputDir,
         flow: preparation.flow,
-        previousGenerationSha,
+        previousGenerationSha: preparation.previousGenerationSha,
         currentGenerationSha: preparation.currentGenerationSha,
-        baseBranchHead,
         autoBootstrapped,
         bootstrapAttempted
     };
@@ -283,10 +197,8 @@ export async function replayPrepare(
 
 /**
  * Phase 2 of the split replay flow. Applies patches, rebases them, writes the
- * lockfile, and commits `[fern-replay]` (or stages under `stageOnly`). Refreshes
- * `baseBranchHead` from the lockfile afterward in case the service recorded a
- * newer value during apply. Also ensures `.fernignore` / `.gitattributes` entries
- * exist.
+ * lockfile, and commits `[fern-replay]` (or stages under `stageOnly`). Also
+ * ensures `.fernignore` / `.gitattributes` entries exist.
  *
  * Errors from `applyPreparedReplay` are caught and logged; a null report is
  * returned rather than aborting generation, mirroring the pre-split behavior.
@@ -304,27 +216,10 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
             fernignoreUpdated: false,
             previousGenerationSha: prepared.previousGenerationSha,
             currentGenerationSha: prepared.currentGenerationSha,
-            baseBranchHead: prepared.baseBranchHead,
             autoBootstrapped: prepared.autoBootstrapped,
             bootstrapAttempted: prepared.bootstrapAttempted,
             failureReason: String(error)
         };
-    }
-
-    // The service may have recorded a more recent baseBranchHead in the lockfile
-    // during apply (e.g., a bootstrap write). Prefer the persisted value if present.
-    let resolvedBaseBranchHead = prepared.baseBranchHead;
-    try {
-        const freshLockManager = new LockfileManager(prepared.outputDir);
-        if (freshLockManager.exists()) {
-            const freshLock = freshLockManager.read();
-            const latestGen = freshLock.generations.find((g) => g.commit_sha === freshLock.current_generation);
-            if (latestGen?.base_branch_head) {
-                resolvedBaseBranchHead = latestGen.base_branch_head;
-            }
-        }
-    } catch {
-        // proceed with prepared.baseBranchHead
     }
 
     const fernignoreUpdated = await ensureReplayFernignoreEntries(prepared.outputDir);
@@ -335,7 +230,6 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
         fernignoreUpdated,
         previousGenerationSha: prepared.previousGenerationSha,
         currentGenerationSha: prepared.currentGenerationSha,
-        baseBranchHead: resolvedBaseBranchHead,
         autoBootstrapped: prepared.autoBootstrapped,
         bootstrapAttempted: prepared.bootstrapAttempted
     };
@@ -359,7 +253,6 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             fernignoreUpdated: false,
             previousGenerationSha: null,
             currentGenerationSha: null,
-            baseBranchHead: null,
             autoBootstrapped: false,
             bootstrapAttempted: prepareState.bootstrapAttempted,
             failureReason: error instanceof ReplayPrepareError ? error.reason : String(error)
@@ -371,7 +264,6 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             fernignoreUpdated: false,
             previousGenerationSha: null,
             currentGenerationSha: null,
-            baseBranchHead: null,
             autoBootstrapped: false,
             bootstrapAttempted: prepareState.bootstrapAttempted
         };
@@ -401,67 +293,5 @@ export class ReplayPrepareError extends Error {
         }
         this.name = this.constructor.name;
         this.reason = reason;
-    }
-}
-
-/**
- * True when the tag's commit either is an ancestor of HEAD (fast-forward merge)
- * or its tree matches a commit in HEAD's recent history (squash merge).
- * False when the tag points at an orphaned synthetic commit — e.g. a clean-replay
- * PR that was closed without merging.
- *
- * Bounded to 500 commits: tag merges are always recent relative to the current
- * generation, and an unbounded `git log` on large repos is expensive.
- *
- * Exported for testing.
- */
-export function isTagMergedIntoHead(cwd: string, tagSha: string): boolean {
-    try {
-        execFileSync("git", ["merge-base", "--is-ancestor", tagSha, "HEAD"], {
-            cwd,
-            stdio: "pipe"
-        });
-        return true;
-    } catch {
-        // not an ancestor — fall through to tree-identity check for squash merges
-    }
-    const tagTree = gitRevParse(cwd, `${tagSha}^{tree}`);
-    if (tagTree == null) {
-        return false;
-    }
-    try {
-        const trees = execFileSync("git", ["log", "HEAD", "--format=%T", "--max-count=500"], {
-            cwd,
-            encoding: "utf-8",
-            stdio: "pipe"
-        });
-        return trees.split("\n").some((t) => t.trim() === tagTree);
-    } catch {
-        return false;
-    }
-}
-
-function gitRevParse(cwd: string, rev: string): string | null {
-    try {
-        return execFileSync("git", ["rev-parse", "--verify", rev], {
-            cwd,
-            encoding: "utf-8",
-            stdio: "pipe"
-        }).trim();
-    } catch {
-        return null;
-    }
-}
-
-function gitDiffNameOnly(cwd: string, from: string, to: string): string[] {
-    try {
-        const output = execFileSync("git", ["diff", "--name-only", from, to], {
-            cwd,
-            encoding: "utf-8",
-            stdio: "pipe"
-        });
-        return output.trim().split("\n").filter(Boolean);
-    } catch {
-        return [];
     }
 }

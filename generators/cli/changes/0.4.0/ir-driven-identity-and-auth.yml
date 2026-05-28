@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Drive binary identity and auth wiring from the Fern IR instead of
+    the raw OpenAPI spec. Env-var names now come from
+    `generators.yml`'s `auth-schemes` block (e.g. `CLOSE_API_KEY`)
+    rather than the spec-derived `<BIN>_<SCHEME>_<KIND>`.
+
+    Fix silent auth drop for basic schemes with `password.omit: true`
+    (Close's "API key as username" pattern). Previously emitted
+    `auth_basic_scheme(..., literal(""))`, but `Literal("")` resolves
+    to `None`, tripping the SDK's "both halves must resolve" check and
+    sending the request unauthenticated. Now uses the new
+    `auth_basic_scheme_username_only` / `_password_only` builders
+    backed by `BasicAuthProvider::{username_only,password_only}`.
+    `--help` now reads `basic auth (username only) · username: …`
+    instead of the misleading `password: built-in literal`.
+
+    Output also no longer ships Fern's CI workflows, the strip-schema
+    dev bin, or the `@fern-api` cargo-dist scope;
+    `[package.metadata.dist].dist` defaults to `true`.
+  type: feat

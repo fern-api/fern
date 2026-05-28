@@ -7,6 +7,7 @@
       "$ref": "#/definitions/union.OptionalMetadata"
     }
   ],
+  "description": "Tests that base-properties on an undiscriminated union are correctly\nrepresented in the IR and generated code.",
   "definitions": {
     "union.NamedMetadata": {
       "type": "object",

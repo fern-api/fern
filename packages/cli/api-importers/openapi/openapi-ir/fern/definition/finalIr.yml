@@ -14,6 +14,14 @@ types:
       title: optional<string>
       description: optional<string>
       basePath: optional<string>
+      basePathParameters:
+        type: optional<list<PathParameter>>
+        docs: |
+          Root-level path parameters declared by the structured form of
+          `x-fern-base-path`. When present, these are emitted at the root of
+          the generated Fern Definition (under `path-parameters`) and the
+          base path is preserved on the root API file instead of being
+          inlined onto every endpoint.
       servers: list<commons.Server>
       websocketServers: list<commons.Server>
       groups:
@@ -708,6 +716,12 @@ types:
       schema: Schema
       responseProperty: optional<string>
       terminator: optional<string>
+      resumable:
+        type: optional<boolean>
+        docs: |
+          For `streamingSse` responses, when true, the endpoint participates in
+          client-side reconnection using SSE primitives (`Last-Event-ID` /
+          `retry:`). Unset/false on non-SSE variants.
 
   Schema:
     union:

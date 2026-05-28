@@ -41,6 +41,7 @@
       },
       "response": {
         "description": "Success!",
+        "resumable": false,
         "fullExamples": [],
         "schema": {
           "generatedName": "CreateChatCompletionsResponse",

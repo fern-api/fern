@@ -4,7 +4,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
+import { resolveErrorCode, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -47,11 +47,13 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     automation,
     occurrenceTracker,
-    loginCommand
+    loginCommand,
+    getSpecsTarGzBuffer
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -85,6 +87,13 @@ export async function runRemoteGenerationForAPIWorkspace({
     automationMode?: boolean;
     autoMerge?: boolean;
     skipIfNoDiff?: boolean;
+    /**
+     * `--verify` CLI flag. When true, Fiddle runs the generator-cli pipeline's
+     * VerificationStep against the language-specific validator after the generator
+     * emits SDK files. Forwarded per-generator to {@link runRemoteGenerationForGenerator}.
+     * Default: false.
+     */
+    verify?: boolean;
     /** `--no-replay` CLI flag. Cloud doesn't honor it yet (FER-10343), plumbed for telemetry parity. */
     noReplay?: boolean;
     /** Suppresses replay PostHog event when true. Honors FERN_DISABLE_TELEMETRY. */
@@ -107,6 +116,7 @@ export async function runRemoteGenerationForAPIWorkspace({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    getSpecsTarGzBuffer?: (generatorName: string) => Promise<Buffer | undefined>;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -156,12 +166,14 @@ export async function runRemoteGenerationForAPIWorkspace({
                     automationMode,
                     autoMerge,
                     skipIfNoDiff,
+                    verify,
                     noReplay,
                     disableTelemetry,
                     automation,
                     generatorsYmlAbsolutePath,
                     occurrenceTracker: effectiveOccurrenceTracker,
                     loginCommand,
+                    getSpecsTarGzBuffer,
                     onSnippetsProduced: (invocation) => snippetsProducedBy.push(invocation)
                 })
             )
@@ -212,12 +224,14 @@ async function generateOne({
     automationMode,
     autoMerge,
     skipIfNoDiff,
+    verify,
     noReplay,
     disableTelemetry,
     automation,
     generatorsYmlAbsolutePath,
     occurrenceTracker,
     loginCommand,
+    getSpecsTarGzBuffer,
     onSnippetsProduced
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -246,12 +260,14 @@ async function generateOne({
     automationMode: boolean | undefined;
     autoMerge: boolean | undefined;
     skipIfNoDiff: boolean | undefined;
+    verify: boolean | undefined;
     noReplay: boolean | undefined;
     disableTelemetry: boolean | undefined;
     automation: AutomationRunOptions | undefined;
     generatorsYmlAbsolutePath: AbsoluteFilePath | undefined;
     occurrenceTracker: GeneratorOccurrenceTracker;
     loginCommand: string | undefined;
+    getSpecsTarGzBuffer: ((generatorName: string) => Promise<Buffer | undefined>) | undefined;
     /** Invoked post-success when the generator produced snippets. */
     onSnippetsProduced: (invocation: generatorsYml.GeneratorInvocation) => void;
 }): Promise<void> {
@@ -332,9 +348,11 @@ async function generateOne({
             automationMode,
             autoMerge,
             skipIfNoDiff,
+            verify,
             noReplay,
             disableTelemetry,
-            loginCommand
+            loginCommand,
+            specsTarGzBuffer: await getSpecsTarGzBuffer?.(generatorInvocation.name)
         });
 
         if (remoteTaskHandlerResponse?.createdSnippets) {
@@ -426,6 +444,10 @@ async function generateOne({
             generatorsYmlLineNumber: lineNumber
         });
         // Mark the task as failed but don't propagate — siblings continue running.
-        interactiveTaskContext.failWithoutThrowing(message);
+        // Pass the error object so resolveErrorCode can extract CliError codes,
+        // errno codes, etc. instead of defaulting to InternalError.
+        interactiveTaskContext.failWithoutThrowing(message, error, {
+            code: resolveErrorCode(error)
+        });
     }
 }

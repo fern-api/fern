@@ -6,12 +6,20 @@ export declare namespace WebhookConverter {
     export interface Output extends AbstractOperationConverter.Output {
         webhook: Webhook;
         audiences: string[];
+        inlinedPayloadPropertiesByAudience?: Record<string, Set<string>>;
     }
 }
 
 export class WebhookConverter extends AbstractOperationConverter {
-    constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
-        super({ context, breadcrumbs, operation, method, path });
+    constructor({
+        context,
+        breadcrumbs,
+        operation,
+        method,
+        path,
+        pathItemParameters
+    }: AbstractOperationConverter.Args) {
+        super({ context, breadcrumbs, operation, method, path, pathItemParameters });
     }
 
     public convert(): WebhookConverter.Output | undefined {
@@ -58,6 +66,10 @@ export class WebhookConverter extends AbstractOperationConverter {
         if (requestBody == null) {
             return undefined;
         }
+        const inlinedPayloadPropertiesByAudience =
+            requestBody.type === "inlinedRequestBody"
+                ? convertedRequestBody[0]?.inlinedPropertiesByAudience
+                : undefined;
 
         let payload: WebhookPayload;
         let fileUploadPayload: FileUploadRequest | undefined;
@@ -100,6 +112,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                     breadcrumbs: this.breadcrumbs
                 }) ?? [],
             group,
+            inlinedPayloadPropertiesByAudience,
             webhook: {
                 id: `${group?.join(".") ?? ""}.${method}`,
                 name: this.context.casingsGenerator.generateName(method),

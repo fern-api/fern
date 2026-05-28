@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_v1.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\", \"API_KEY\");\nawait client.V1.ListUsersAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_v2.listUsers"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi.V2;\nusing SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\", \"API_KEY\");\nawait client.V2.ListUsersAsync(new ListUsersRequest());\n"
+            }
+        }
+    ]
+}

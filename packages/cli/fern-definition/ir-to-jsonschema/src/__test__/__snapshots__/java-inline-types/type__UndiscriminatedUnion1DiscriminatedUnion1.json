@@ -17,13 +17,16 @@
           "const": "type1"
         },
         "foo": {
-          "type": "string"
+          "type": "string",
+          "description": "lorem ipsum"
         },
         "bar": {
-          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
+          "$ref": "#/definitions/UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1",
+          "description": "lorem ipsum"
         },
         "ref": {
-          "$ref": "#/definitions/ReferenceType"
+          "$ref": "#/definitions/ReferenceType",
+          "description": "lorem ipsum"
         }
       },
       "required": [
@@ -31,7 +34,8 @@
         "foo",
         "bar",
         "ref"
-      ]
+      ],
+      "description": "lorem ipsum"
     },
     {
       "properties": {
@@ -39,17 +43,20 @@
           "const": "type2"
         },
         "baz": {
-          "type": "string"
+          "type": "string",
+          "description": "lorem ipsum"
         },
         "ref": {
-          "$ref": "#/definitions/ReferenceType"
+          "$ref": "#/definitions/ReferenceType",
+          "description": "lorem ipsum"
         }
       },
       "required": [
         "type",
         "baz",
         "ref"
-      ]
+      ],
+      "description": "lorem ipsum"
     },
     {
       "properties": {
@@ -57,43 +64,51 @@
           "const": "ref"
         },
         "foo": {
-          "type": "string"
+          "type": "string",
+          "description": "lorem ipsum"
         }
       },
       "required": [
         "type",
         "foo"
-      ]
+      ],
+      "description": "lorem ipsum"
     }
   ],
+  "description": "lorem ipsum",
   "definitions": {
     "ReferenceType": {
       "type": "object",
       "properties": {
         "foo": {
-          "type": "string"
+          "type": "string",
+          "description": "lorem ipsum"
         }
       },
       "required": [
         "foo"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "lorem ipsum"
     },
     "UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
       "type": "object",
       "properties": {
         "foo": {
-          "type": "string"
+          "type": "string",
+          "description": "lorem ipsum"
         },
         "ref": {
-          "$ref": "#/definitions/ReferenceType"
+          "$ref": "#/definitions/ReferenceType",
+          "description": "lorem ipsum"
         }
       },
       "required": [
         "foo",
         "ref"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "lorem ipsum"
     }
   }
 }

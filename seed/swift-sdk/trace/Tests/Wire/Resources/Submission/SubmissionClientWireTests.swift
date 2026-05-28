@@ -29,7 +29,7 @@ import Trace
             status: .creatingContainer
         )
         let response = try await client.submission.createExecutionSession(
-            language: .java,
+            language: "JAVA",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

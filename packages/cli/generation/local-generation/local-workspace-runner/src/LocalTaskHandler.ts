@@ -21,7 +21,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, readdir, readFile, rm, stat } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -721,7 +721,14 @@ export class LocalTaskHandler {
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);
         const { configureBamlClient } = await loadBamlDependencies();
-        return configureBamlClient(this.ai);
+        try {
+            return configureBamlClient(this.ai);
+        } catch (error) {
+            throw new CliError({
+                message: `Invalid AI service configuration: ${extractErrorMessage(error)}`,
+                code: CliError.Code.ConfigError
+            });
+        }
     }
 
     private addFernBranding(message: string): string {
@@ -893,8 +900,15 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetJSON: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath;
     }): Promise<void> {
+        const outcome = await copySnippetJsonIfNonEmpty({
+            src: absolutePathToTmpSnippetJSON,
+            dest: absolutePathToLocalSnippetJSON
+        });
+        if (outcome === "skipped-empty") {
+            this.context.logger.debug(`Skipping empty snippet.json copy from ${absolutePathToTmpSnippetJSON}`);
+            return;
+        }
         this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`);
-        await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON);
     }
 
     /**
@@ -930,11 +944,18 @@ export class LocalTaskHandler {
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
-        const response = await loggingExeca(this.context.logger, "git", options, {
-            cwd,
-            doNotPipeOutput: true
-        });
-        return response.stdout;
+        try {
+            const response = await loggingExeca(this.context.logger, "git", options, {
+                cwd,
+                doNotPipeOutput: true
+            });
+            return response.stdout;
+        } catch (error) {
+            throw new CliError({
+                message: `Git command failed in generated output directory: ${extractErrorMessage(error)}`,
+                code: CliError.Code.UserError
+            });
+        }
     }
 
     private async runThrowawayGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
@@ -1070,4 +1091,29 @@ export class LocalTaskHandler {
         this.context.logger.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;
     }
+}
+
+/**
+ * Copies `src` to `dest` only when `src` has non-zero size; returns
+ * `"copied"` or `"skipped-empty"`. Extracted from `LocalTaskHandler` so
+ * the skip-empty behavior can be unit-tested without standing up the
+ * full handler. `runGenerator` pre-creates an empty `snippet.json` in
+ * the workspace tmp dir and bind-mounts it into the generator
+ * container; generators that don't emit per-endpoint snippets leave it
+ * empty, and we don't want that zero-byte stub leaking into the user's
+ * output dir.
+ */
+export async function copySnippetJsonIfNonEmpty({
+    src,
+    dest
+}: {
+    src: AbsoluteFilePath;
+    dest: AbsoluteFilePath;
+}): Promise<"copied" | "skipped-empty"> {
+    const tmpStat = await stat(src);
+    if (tmpStat.size === 0) {
+        return "skipped-empty";
+    }
+    await cp(src, dest);
+    return "copied";
 }

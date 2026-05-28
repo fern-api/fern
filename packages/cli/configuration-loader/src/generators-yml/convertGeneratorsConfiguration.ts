@@ -29,6 +29,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceEnumsToLiterals: undefined,
     objectQueryParameters: undefined,
     respectReadonlySchemas: undefined,
+    useReadVariantForResponses: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
     useBytesForBinaryResponse: undefined,
@@ -135,6 +136,7 @@ function parseOpenApiDefinitionSettingsSchema(
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         objectQueryParameters: settings?.["object-query-parameters"],
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
+        useReadVariantForResponses: settings?.["use-read-variant-for-responses"],
         inlinePathParameters: settings?.["inline-path-parameters"],
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
@@ -464,7 +466,8 @@ async function parseApiConfigurationV2Schema({
             definitionLocation = {
                 schema: {
                     type: "graphql",
-                    path: spec.graphql
+                    path: spec.graphql,
+                    examples: spec.examples
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
@@ -815,8 +818,19 @@ async function convertOutputMode({
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github) {
         const repoString = isGithubSelfhosted(generator.github) ? generator.github.uri : generator.github.repository;
-        const { owner, repo, remote } = parseRepository(repoString);
+        let owner: string;
+        let repo: string;
+        let remote: string;
+        try {
+            ({ owner, repo, remote } = parseRepository(repoString));
+        } catch {
+            throw new CliError({
+                message: `Invalid GitHub repository "${repoString}" in generators.yml. Expected a repository like "owner/repo", "github.com/owner/repo", or "https://github.com/owner/repo.git".`,
+                code: CliError.Code.ConfigError
+            });
+        }
         const host = remote !== "github.com" ? remote : undefined;
+
         const publishInfo =
             generator.output != null
                 ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
@@ -832,7 +846,8 @@ async function convertOutputMode({
         const mode = generator.github.mode ?? "release";
         switch (mode) {
             case "commit":
-            case "release": {
+            case "release":
+            case "commit-and-release": {
                 const releaseConfig = generator.github as generatorsYml.GithubCommitAndReleaseSchema;
                 const commitAndReleaseValue = {
                     owner,

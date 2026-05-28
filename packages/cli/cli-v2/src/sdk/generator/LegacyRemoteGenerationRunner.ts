@@ -137,6 +137,7 @@ export class LegacyRemoteGenerationRunner {
                 dynamicIrOnly: false,
                 retryRateLimited: false,
                 requireEnvVars: args.requireEnvVars ?? true,
+                verify: false,
                 disableTelemetry: !this.context.telemetry.isTelemetryEnabled()
             });
 

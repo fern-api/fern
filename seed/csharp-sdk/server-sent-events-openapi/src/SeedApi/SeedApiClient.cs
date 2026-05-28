@@ -322,7 +322,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "validate-union-request",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -466,7 +465,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/protocol-no-collision",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -537,7 +535,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/protocol-collision",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -606,7 +603,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/data-context",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -675,7 +671,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/no-context",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -744,7 +739,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/protocol-with-flat-schema",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -815,7 +809,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/data-context-with-envelope-schema",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -886,7 +879,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/oas-spec-native",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -1351,7 +1343,6 @@ public partial class SeedApiClient : ISeedApiClient
                     Path = "stream/x-fern-streaming-sse-only",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken

@@ -37,7 +37,7 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Fern\SeedClient;
-use Fern\Imdb\Types\CreateMovieRequest;
+use Fern\Imdb\Requests\CreateMovieRequest;
 
 $client = new SeedClient(
     token: '<token>',

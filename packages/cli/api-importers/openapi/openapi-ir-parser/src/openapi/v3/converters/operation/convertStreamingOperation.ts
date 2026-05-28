@@ -35,6 +35,7 @@ export function convertStreamingOperation({
                 context,
                 streamFormat: streamingExtension.format,
                 streamTerminator: streamingExtension.terminator,
+                streamResumable: streamingExtension.resumable,
                 source: context.source
             });
             return {
@@ -94,6 +95,7 @@ export function convertStreamingOperation({
                 context,
                 streamFormat: streamingExtension.format,
                 streamTerminator: streamingExtension.terminator,
+                streamResumable: streamingExtension.resumable,
                 suffix: STREAM_SUFFIX,
                 source: context.source,
                 streamRequestNameOverride: autoStreamRequestName
@@ -180,9 +182,20 @@ function getRequestBody({
         ? context.resolveSchemaReference(jsonMediaObject.schema)
         : jsonMediaObject.schema;
 
-    if (resolvedRequestBodySchema.allOf == null && resolvedRequestBodySchema.properties == null) {
-        return undefined; // not an object
+    if (
+        resolvedRequestBodySchema.allOf == null &&
+        resolvedRequestBodySchema.properties == null &&
+        resolvedRequestBodySchema.oneOf == null &&
+        resolvedRequestBodySchema.anyOf == null
+    ) {
+        return undefined; // not an object or union
     }
+
+    // For oneOf/anyOf bodies we attach the stream-condition literal as a sibling
+    // property of the union. convertUndiscriminatedOneOf accepts `properties` and
+    // `required` siblings to a `oneOf` and treats them as common base properties
+    // on the union, so the resulting IR is an undiscriminated union with the
+    // stream literal pinned across all variants.
 
     let streamingProperty = resolvedRequestBodySchema.properties?.[streamingExtension.streamConditionProperty];
     if (streamingProperty != null && isReferenceObject(streamingProperty)) {

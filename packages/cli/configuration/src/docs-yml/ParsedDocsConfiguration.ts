@@ -45,6 +45,12 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     language: string | undefined;
     disableEnvironmentEditing: boolean | undefined;
     websocketOneofDisplay: "flat" | "grouped" | undefined;
+    search:
+        | {
+              prioritizeCurrentProduct: boolean | undefined;
+              defaultFilterByCurrentProduct: boolean | undefined;
+          }
+        | undefined;
 }
 
 export interface ParsedDocsConfiguration {

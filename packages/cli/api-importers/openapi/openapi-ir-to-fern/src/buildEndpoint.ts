@@ -213,7 +213,11 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant:
+                        context.options.respectReadonlySchemas && context.options.useReadVariantForResponses
+                            ? "read"
+                            : undefined
                 });
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
@@ -232,7 +236,11 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant:
+                        context.options.respectReadonlySchemas && context.options.useReadVariantForResponses
+                            ? "read"
+                            : undefined
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
@@ -247,13 +255,18 @@ export function buildEndpoint({
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
-                    declarationDepth: 0
+                    declarationDepth: 0,
+                    variant:
+                        context.options.respectReadonlySchemas && context.options.useReadVariantForResponses
+                            ? "read"
+                            : undefined
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
                     format: "sse",
-                    terminator: jsonResponse.terminator ?? undefined
+                    terminator: jsonResponse.terminator ?? undefined,
+                    resumable: jsonResponse.resumable ?? undefined
                 };
             },
             file: (fileResponse) => {
@@ -485,7 +498,7 @@ function convertEndpointRetries({
 }
 
 interface ConvertedRequest {
-    value: RawSchemas.HttpRequestSchema;
+    value: RawSchemas.HttpRequestSchema | string;
     schemaIdsToExclude?: string[];
 }
 
@@ -537,11 +550,8 @@ function getRequest({
                 declarationDepth: 0,
                 variant
             });
-            const convertedRequest: ConvertedRequest = {
-                schemaIdsToExclude: [],
-                value: {
-                    body: requestTypeReference
-                }
+            const requestValue: RawSchemas.HttpRequestSchema = {
+                body: requestTypeReference
             };
 
             const hasPathParams = Object.keys(pathParameters ?? {}).length > 0;
@@ -549,27 +559,41 @@ function getRequest({
             const hasHeaders = Object.keys(headers ?? {}).length > 0;
 
             if (hasPathParams) {
-                convertedRequest.value["path-parameters"] = pathParameters;
+                requestValue["path-parameters"] = pathParameters;
             }
             if (hasQueryParams) {
-                convertedRequest.value["query-parameters"] = queryParameters;
+                requestValue["query-parameters"] = queryParameters;
             }
             if (hasHeaders) {
-                convertedRequest.value.headers = headers;
+                requestValue.headers = headers;
             }
             if (hasPathParams || hasQueryParams || hasHeaders) {
-                convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
+                requestValue.name = requestNameOverride ?? generatedRequestName;
             }
 
             if (request.contentType != null) {
-                convertedRequest.value["content-type"] = request.contentType;
+                requestValue["content-type"] = request.contentType;
             }
 
             if (request.description != null) {
-                convertedRequest.value.docs = request.description;
+                requestValue.docs = request.description;
             }
 
-            return convertedRequest;
+            // Collapse `{ body: <ref> }` to the scalar shorthand `request: <ref>`
+            // when nothing else is present and the content-type is the SDK default.
+            const canCollapse =
+                typeof requestValue.body === "string" &&
+                requestValue["path-parameters"] == null &&
+                requestValue["query-parameters"] == null &&
+                requestValue.headers == null &&
+                requestValue.name == null &&
+                requestValue.docs == null &&
+                (requestValue["content-type"] == null || requestValue["content-type"] === "application/json");
+
+            return {
+                schemaIdsToExclude: [],
+                value: canCollapse ? (requestValue.body as string) : requestValue
+            };
         }
 
         // Build a map from property key to the declaration file of its source allOf schema.

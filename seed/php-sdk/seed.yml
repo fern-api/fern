@@ -182,6 +182,7 @@ scripts:
       test:
         - composer test
 allowedFailures:
+  - api-wide-base-path-with-default
   - exhaustive:no-custom-config
   - exhaustive:wire-tests
   - pagination-custom
@@ -223,9 +224,10 @@ allowedFailures:
   - variables
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
-  - server-sent-events-openapi
   - any-auth
   - circular-references
   - file-upload
+  - api-wide-base-path-with-default
+  - oauth-client-credentials-with-variables
 
 

@@ -1,0 +1,9 @@
+{
+  "title": "EPIPE write uncaught exception",
+  "disposition": "shipped",
+  "rationale": "EPIPE from cli-v2 stdout/stderr write escaped as an uncaught stream error; the PR swallows explicit EPIPE at the terminal logger I/O boundary while rethrowing other stream errors.",
+  "fixSummary": "Added cli-v2 stdout/stderr EPIPE stream error handling in TtyAwareLogger.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15944",
+  "lastAnalyzed": "2026-05-16",
+  "problemSignature": "Uncaught exception with EPIPE errno from stream write bypassed resolveErrorCode and reached Sentry as raw exception."
+}

@@ -216,6 +216,7 @@
                   },
                   "type": "primitive"
                 },
+                "resumable": false,
                 "type": "sse"
               },
               "type": "streaming"
@@ -609,7 +610,8 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "hasEndpointsInTree": true
+      "hasEndpointsInTree": true,
+      "hasWebSocketInTree": false
     }
   },
   "rootPackage": {
@@ -625,7 +627,8 @@
     "subpackages": [
       "subpackage_chatCompletions"
     ],
-    "hasEndpointsInTree": true
+    "hasEndpointsInTree": true,
+    "hasWebSocketInTree": false
   },
   "sdkConfig": {
     "isAuthMandatory": false,

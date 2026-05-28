@@ -72,9 +72,7 @@ service:
               trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
       method: POST
       path: /bookings
-      request:
-        body: trainsRoot.Booking
-        content-type: application/json
+      request: trainsRoot.Booking
       response:
         docs: Booking successful
         status-code: 201

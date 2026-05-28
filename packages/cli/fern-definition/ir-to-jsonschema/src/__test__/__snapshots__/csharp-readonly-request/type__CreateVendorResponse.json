@@ -5,28 +5,34 @@
       "type": "object",
       "additionalProperties": {
         "$ref": "#/definitions/Vendor"
-      }
+      },
+      "description": "Map of vendor ID to created vendor"
     }
   },
   "required": [
     "vendors"
   ],
   "additionalProperties": false,
+  "description": "Response from creating vendors",
   "definitions": {
     "Vendor": {
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "The unique identifier for the vendor."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the vendor."
         },
         "created_at": {
-          "type": "string"
+          "type": "string",
+          "description": "The timestamp when the vendor was created."
         },
         "updated_at": {
-          "type": "string"
+          "type": "string",
+          "description": "The timestamp when the vendor was last updated."
         }
       },
       "required": [
@@ -35,7 +41,8 @@
         "created_at",
         "updated_at"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A vendor object with read-only timestamps"
     }
   }
 }

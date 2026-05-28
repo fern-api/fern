@@ -9,8 +9,11 @@ public record RuleCreateRequest
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
+    /// <summary>
+    /// Execution context for the rule, excluding the prod environment.
+    /// </summary>
     [JsonPropertyName("executionContext")]
-    public required RuleExecutionContext ExecutionContext { get; set; }
+    public required RuleCreateRequestExecutionContext ExecutionContext { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

@@ -1,0 +1,9 @@
+{
+  "title": "ENOSPC file watcher unhandled rejection",
+  "problemSignature": "Unhandled rejection with ENOSPC errno from docs preview file watcher initialization bypassed the docs preview boundary.",
+  "disposition": "shipped",
+  "rationale": "ENOSPC is a clear errno-style user environment syscall failure. The docs preview watcher boundary now handles watcher error events and reports them as non-reportable environment errors instead of letting EventEmitter surface them as unhandled rejections.",
+  "fixSummary": "Wrapped docs preview watcher startup and runtime errors in an environment-error boundary.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15949",
+  "lastAnalyzed": "2026-05-16"
+}

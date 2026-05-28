@@ -1,6 +1,12 @@
-FROM node:22.22-alpine3.23 AS node
+FROM node:24.16-alpine3.23 AS node
 
-FROM golang:1.26.2-alpine3.23
+FROM golang:1.26.3-alpine3.23
+
+# Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
+# still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
+RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
 
 ENV YARN_CACHE_FOLDER=/.yarn
 ARG SENTRY_DSN
@@ -20,6 +26,33 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
+# Patch npm's bundled picomatch@4.0.3 -> 4.0.4 (GHSA-c2c7-rcm5-vvqj,
+# GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.6
+# (GHSA-jxxr-4gwj-5jf2) copied from the node stage.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/picomatch \
+      /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz -o picomatch-4.0.4.tgz && \
+        tar -xzf picomatch-4.0.4.tgz && \
+        mv package picomatch && \
+        rm picomatch-4.0.4.tgz; \
+      fi; \
+    done && \
+    for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/brace-expansion; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.6.tgz -o brace-expansion-5.0.6.tgz && \
+        tar -xzf brace-expansion-5.0.6.tgz && \
+        mv package brace-expansion && \
+        rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
 
 COPY generators/go-v2/model/dist /dist
 

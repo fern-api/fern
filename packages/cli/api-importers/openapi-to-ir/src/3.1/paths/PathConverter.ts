@@ -5,7 +5,7 @@ import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { HttpMethods } from "../../constants/HttpMethods.js";
 import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent.js";
 import { FernPaginationExtension } from "../../extensions/x-fern-pagination.js";
-import { FernStreamingExtension } from "../../extensions/x-fern-streaming.js";
+import { FernStreamingExtension, getDocumentLevelResumable } from "../../extensions/x-fern-streaming.js";
 import { FernWebhookExtension } from "../../extensions/x-fern-webhook.js";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1.js";
 import { OperationConverter } from "./operations/OperationConverter.js";
@@ -68,6 +68,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
 
             const streamingExtensionConverter = new FernStreamingExtension({
                 breadcrumbs: operationBreadcrumbs,
+                document: this.context.spec,
                 operation,
                 context: this.context
             });
@@ -78,7 +79,12 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             if (streamingExtension == null) {
                 const hasTextEventStream = this.operationHasTextEventStreamResponse(operation);
                 if (hasTextEventStream) {
-                    streamingExtension = { type: "stream", format: "sse", terminator: undefined };
+                    streamingExtension = {
+                        type: "stream",
+                        format: "sse",
+                        terminator: undefined,
+                        resumable: getDocumentLevelResumable(this.context.spec) ?? false
+                    };
                 }
             }
 
@@ -127,7 +133,8 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             breadcrumbs: operationBreadcrumbs,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
-            path: this.path
+            path: this.path,
+            pathItemParameters: this.pathItem.parameters
         });
         return webhookConverter.convert();
     }
@@ -197,6 +204,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path,
+            pathItemParameters: this.pathItem.parameters,
             idempotent: isIdempotent,
             idToAuthScheme: this.idToAuthScheme,
             topLevelServers: this.topLevelServers,

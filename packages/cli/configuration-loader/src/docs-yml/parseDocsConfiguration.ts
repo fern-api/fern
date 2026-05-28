@@ -518,9 +518,19 @@ function convertSettingsConfig(
         return undefined;
     }
 
+    // The legacy `default-search-filters` setting is preserved as an alias for
+    // `search.default-filter-by-current-product`. Either one enables the behavior.
+    const defaultFilterByCurrentProduct =
+        (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
+    const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
+
     return {
         darkModeCode: settings.darkModeCode ?? false,
-        defaultSearchFilters: settings.defaultSearchFilters ?? false,
+        defaultSearchFilters: defaultFilterByCurrentProduct,
+        search: {
+            prioritizeCurrentProduct,
+            defaultFilterByCurrentProduct
+        },
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,
         hide404Page: settings.hide404Page ?? false,
@@ -671,7 +681,18 @@ async function getVersionedNavigationConfiguration({
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
         const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
-        const versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+        let versionContent: unknown;
+        try {
+            versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
+        } catch (error) {
+            if (error instanceof yaml.YAMLException) {
+                throw new CliError({
+                    message: `Failed to parse version file ${version.path}: ${error.message}`,
+                    code: CliError.Code.ParseError
+                });
+            }
+            throw error;
+        }
 
         // Sanitize null/undefined values before parsing
         const removedPaths: string[][] = [];
@@ -748,7 +769,18 @@ async function getNavigationConfiguration({
                 let navigation: docsYml.DocsNavigationConfiguration;
                 const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
 
-                const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                let content: unknown;
+                try {
+                    content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
+                } catch (error) {
+                    if (error instanceof yaml.YAMLException) {
+                        throw new CliError({
+                            message: `Failed to parse product file ${product.path}: ${error.message}`,
+                            code: CliError.Code.ParseError
+                        });
+                    }
+                    throw error;
+                }
 
                 // Sanitize null/undefined values before parsing
                 const removedPaths: string[][] = [];
@@ -2014,12 +2046,14 @@ async function loadTranslationPages({
 
             if (!(await doesPathExist(langDir))) {
                 context.failAndThrow(
-                    `Translation directory for locale "${lang}" not found.`,
-                    `Expected a directory at: ${langDir}\n` +
+                    `Translation directory for locale "${lang}" not found.\n` +
+                        `Expected a directory at: ${langDir}\n` +
                         `Create the directory and add translated versions of your documentation pages.\n` +
                         `The directory should mirror the same relative paths referenced in your docs.yml navigation.\n` +
                         `Example: if your docs.yml references "pages/getting-started.mdx", add a translated\n` +
-                        `version at "translations/${lang}/pages/getting-started.mdx".`
+                        `version at "translations/${lang}/pages/getting-started.mdx".`,
+                    undefined,
+                    { code: CliError.Code.ValidationError }
                 );
                 return;
             }

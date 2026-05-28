@@ -10,6 +10,7 @@ import {
     type SeverityOverride
 } from "./createDocsConfigFileAstVisitorForRules.js";
 import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
+import { formatInitError } from "./formatInitError.js";
 import { getAllRules } from "./getAllRules.js";
 import { Rule } from "./Rule.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
@@ -127,17 +128,24 @@ export async function runRulesOnDocsWorkspace({
     const allRulesWithVisitors: RuleWithVisitor[] = [];
     for (const result of ruleCreationResults) {
         if ("error" in result) {
-            const message = result.error instanceof Error ? result.error.message : String(result.error);
+            const message = formatInitError(result.error);
+            const severityOverride = severityOverrides.get(result.ruleName);
+            // Honor the user's configured severity for init failures. When a
+            // rule is configured at `warn` we should surface the failure as a
+            // warning rather than a fatal — otherwise the override is
+            // silently bypassed whenever the rule throws during setup.
+            const severity: ValidationViolation["severity"] =
+                severityOverride === "warning" ? "warning" : severityOverride === "error" ? "error" : "fatal";
             violations.push({
                 name: result.ruleName,
-                severity: "fatal",
+                severity,
                 relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
                 nodePath: [],
                 message: `Rule "${result.ruleName}" failed to initialize: ${message}`
             });
             context.logger.debug(
                 `Rule "${result.ruleName}" failed to initialize: ${
-                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : String(result.error)
+                    result.error instanceof Error ? (result.error.stack ?? result.error.message) : message
                 }`
             );
         } else {

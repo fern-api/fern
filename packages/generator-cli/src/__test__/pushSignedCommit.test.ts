@@ -97,13 +97,17 @@ describe("pushSignedCommit", () => {
             "local-sha",
             expect.stringMatching(/^refs\/temp\/fern-/)
         );
+        // `author` always sent; `committer` omitted so GitHub fills it in and signs.
         expect(octokit.git.createCommit).toHaveBeenCalledWith({
             owner: "acme",
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha",
-            parents: ["parent-sha"]
+            parents: ["parent-sha"],
+            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
         });
+        const defaultCall = octokit.git.createCommit.mock.calls[0]?.[0] as Record<string, unknown>;
+        expect(defaultCall).not.toHaveProperty("committer");
         expect(octokit.git.updateRef).toHaveBeenCalledWith({
             owner: "acme",
             repo: "acme-sdk",
@@ -226,8 +230,11 @@ describe("pushSignedCommit", () => {
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha-2",
-            parents: ["parent-sha-2"]
+            parents: ["parent-sha-2"],
+            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
         });
+        const retryCall = octokit.git.createCommit.mock.calls[1]?.[0] as Record<string, unknown>;
+        expect(retryCall).not.toHaveProperty("committer");
         // Temp ref re-push on the rebase retry must force, because the rebased commit
         // is not a descendant of the original tempRef tip.
         expect(repository.pushObjectToRef).toHaveBeenCalledTimes(2);
@@ -242,6 +249,68 @@ describe("pushSignedCommit", () => {
             expect.stringMatching(/^refs\/temp\/fern-/),
             { force: true }
         );
+    });
+
+    it("forwards explicit author as both author and committer when the caller provides one", async () => {
+        const repository = buildRepository();
+        const octokit = buildOctokit();
+        const customAuthor = { name: "auth0-bot", email: "auth0-bot@example.com" };
+
+        await makeCaller(
+            repository,
+            octokit
+        )({
+            ...baseArgs,
+            author: customAuthor,
+            repository: repository as never,
+            octokit: octokit as never
+        });
+
+        expect(octokit.git.createCommit).toHaveBeenCalledWith({
+            owner: "acme",
+            repo: "acme-sdk",
+            message: "SDK Generation",
+            tree: "tree-sha",
+            parents: ["parent-sha"],
+            author: customAuthor,
+            committer: customAuthor
+        });
+    });
+
+    it("preserves the explicit author/committer pair across the rebase-on-conflict retry", async () => {
+        const nonFF = Object.assign(new Error("Update is not a fast forward"), { status: 422 });
+        const customAuthor = { name: "auth0-bot", email: "auth0-bot@example.com" };
+        const repository = buildRepository({
+            getHeadSha: vi.fn().mockResolvedValueOnce("local-sha-1").mockResolvedValue("local-sha-2"),
+            getHeadTreeHash: vi.fn().mockResolvedValueOnce("tree-sha-1").mockResolvedValue("tree-sha-2"),
+            getHeadParents: vi.fn().mockResolvedValueOnce(["parent-sha-1"]).mockResolvedValue(["parent-sha-2"])
+        });
+        const octokit = buildOctokit({
+            createCommit: vi
+                .fn()
+                .mockResolvedValueOnce({ data: { sha: "signed-sha-1" } })
+                .mockResolvedValueOnce({ data: { sha: "signed-sha-2" } }),
+            updateRef: vi.fn().mockRejectedValueOnce(nonFF).mockResolvedValueOnce({ data: {} })
+        });
+
+        await makeCaller(
+            repository,
+            octokit
+        )({
+            ...baseArgs,
+            force: false,
+            rebaseOnConflict: true,
+            author: customAuthor,
+            repository: repository as never,
+            octokit: octokit as never
+        });
+
+        for (const attempt of [1, 2]) {
+            expect(octokit.git.createCommit).toHaveBeenNthCalledWith(
+                attempt,
+                expect.objectContaining({ author: customAuthor, committer: customAuthor })
+            );
+        }
     });
 
     it("propagates errors from the post-update local sync (does not swallow stale-HEAD risk)", async () => {

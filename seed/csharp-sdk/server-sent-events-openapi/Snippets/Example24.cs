@@ -12,9 +12,9 @@ public partial class Examples
         await foreach (var item in client.StreamXFernStreamingUnionStreamAsync(
             new StreamXFernStreamingUnionStreamRequest(
                 new UnionStreamMessageVariant {
+                    StreamResponse = true,
                     Prompt = "prompt",
-                    Message = "message",
-                    StreamResponse = true
+                    Message = "message"
                 }
             ) {
                 StreamResponse = true,

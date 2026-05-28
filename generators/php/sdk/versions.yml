@@ -1,4 +1,116 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.4
+  changelogEntry:
+    - summary: |
+        Generated discriminated unions no longer emit a `fromJson()` override. The base
+        `JsonSerializableType::fromJson` now uses late static binding (`static::jsonDeserialize`)
+        so subclasses' typed `jsonDeserialize` overrides dispatch correctly. This eliminates ~50
+        lines of duplicated code per union and resolves a PHPStan strict failure where the union
+        override's `$decodedJson` was narrowed to `array<array-key, mixed>` instead of
+        `array<string, mixed>`.
+      type: fix
+  createdAt: "2026-05-22"
+  irVersion: 66
+- version: 2.10.3
+  changelogEntry:
+    - summary: |
+        Bump Node.js base image from 24.15 to 24.16.
+      type: chore
+  createdAt: "2026-05-22"
+  irVersion: 66
+- version: 2.10.2
+  changelogEntry:
+    - summary: |
+        Use `interface_exists` instead of `class_exists` when checking for
+        `GuzzleHttp\ClientInterface` in the retry client timeout logic.
+        `class_exists` always returns false for interfaces, so Guzzle timeout
+        support was never detected.
+      type: fix
+  createdAt: "2026-05-20"
+  irVersion: 66
+- version: 2.10.1
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now render path-parameter arguments in IR (URL / SDK signature) order
+        rather than in the order they happen to appear in the input request, so generated
+        examples line up with the actual SDK method signature even when the spec lists path
+        parameters in a different order.
+      type: fix
+  createdAt: "2026-05-15"
+  irVersion: 66
+- version: 2.10.0
+  changelogEntry:
+    - summary: |
+        Support streaming response bodies in generated PHP SDKs (Server-Sent Events,
+        NDJSON, and raw text). Endpoints with a `response-stream` now return a typed
+        `SseStream<T>`, `JsonStream<T>`, or `TextStream` that iterates the response
+        frame-by-frame and deserializes each one into the declared payload type.
+        Previously these endpoints were emitted as broken `void` methods that always
+        threw `<Sdk>ApiException` regardless of HTTP status.
+      type: feat
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 2.9.7
+  changelogEntry:
+    - summary: |
+        Patch the bundled `ip-address` to v10.2.0 in the php-sdk container to
+        address CVE-2026-42338 / GHSA-v2v4-37r5-5v8g (XSS in `Address6` HTML-
+        emitting methods). npm 11.12.1 (shipped with `node:24.15`) bundles
+        `ip-address@10.1.0` via `socks`; this overlays the published 10.2.0
+        tarball in place at image build time.
+      type: chore
+  createdAt: "2026-05-14"
+  irVersion: 66
+- version: 2.9.6
+  changelogEntry:
+    - summary: |
+        Stop launching WireMock with `--global-response-templating` in generated
+        wire-test `docker-compose.test.yml`. Response examples containing literal
+        `{{...}}` are now served verbatim instead of being passed through
+        WireMock's Handlebars transformer, which would fail to resolve them as
+        helpers and return 500.
+      type: fix
+  createdAt: "2026-05-13"
+  irVersion: 66
+- version: 2.9.5
+  changelogEntry:
+    - summary: |
+        Patch PHP SDK + PHP model generator container CVEs flagged in the AWS ECR /
+        grype scan. Refresh `apk upgrade --available` to pull the latest Alpine
+        3.23 security patches and patch npm's bundled `picomatch@4.0.3 -> 4.0.4`
+        and `brace-expansion@5.0.4 -> 5.0.5` via tarball replacement.
+      type: chore
+  createdAt: "2026-05-12"
+  irVersion: 66
+- version: 2.9.4
+  changelogEntry:
+    - summary: |
+        Bump the PHP SDK and PHP model generator containers' Node base image from
+        `node:22.22-alpine3.23` to `node:24.15-alpine3.23`. Aligns the generators
+        with the rest of the Fern generator containers on a single Node major
+        version (Node 24) and picks up Node 24's CVE patches.
+      type: chore
+  createdAt: "2026-05-11"
+  irVersion: 66
+- version: 2.9.3
+  changelogEntry:
+    - summary: |
+        Bump the php-sdk container's `composer` base image from `composer:2.7.9`
+        (Alpine 3.20, PHP 8.3.12) to `composer:2.9.7` (Alpine 3.22, current PHP),
+        addressing the Alpine 3.20 EOL alert and the PHP 8.3.12 CVEs
+        (CVE-2024-8932, CVE-2024-11236, CVE-2025-1861), and force a fresh
+        `apk upgrade` so the rebuilt image picks up the patched openssl 3.5.6-r0
+        from Alpine 3.23.4 (CVE-2026-31789).
+      type: chore
+    - summary: |
+        Bump the php-model container's `composer` base image from `composer:2.7.9`
+        (Alpine 3.20, PHP 8.3.12) to `composer:2.9.7` (Alpine 3.22, current PHP),
+        mirroring the php-sdk bump. Addresses the Alpine 3.20 EOL alert and the
+        PHP 8.3.12 CVEs (CVE-2024-8932, CVE-2024-11236, CVE-2025-1861), and
+        standardizes on `apk upgrade --no-cache --available` for cache invalidation.
+      type: chore
+  createdAt: "2026-05-08"
+  irVersion: 66
 - version: 2.9.2
   changelogEntry:
     - summary: |

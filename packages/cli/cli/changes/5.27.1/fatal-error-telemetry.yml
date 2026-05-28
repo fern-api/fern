@@ -1,0 +1,3 @@
+- summary: |
+    Report escaped fatal CLI errors through telemetry in packaged production runs.
+  type: fix

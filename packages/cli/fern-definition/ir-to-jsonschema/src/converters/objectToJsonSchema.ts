@@ -25,6 +25,9 @@ export function convertObjectToJsonSchema({ object, context }: convertObjectToJs
             typeReference: property.valueType,
             context
         });
+        if (property.docs != null && propertySchema.description == null) {
+            propertySchema.description = property.docs;
+        }
         return [propertyName, propertySchema];
     });
 

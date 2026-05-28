@@ -1,0 +1,22 @@
+openapi: 3.1.0
+info:
+  title: literal-user-agent
+  version: 0.0.0
+  description: Test fixture for literal User-Agent header in api.headers config.
+paths:
+  /ping:
+    get:
+      operationId: ping
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas: {}
+  securitySchemes: {}
