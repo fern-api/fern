@@ -30,9 +30,11 @@ export namespace LegacyTokenMigrator {
  */
 export class LegacyTokenMigrator {
     private readonly loader: FernRcSchemaLoader;
+    private readonly headers: Record<string, string> | undefined;
 
-    constructor({ loader }: { loader: FernRcSchemaLoader }) {
+    constructor({ loader, headers }: { loader: FernRcSchemaLoader; headers?: Record<string, string> }) {
         this.loader = loader;
+        this.headers = headers;
     }
 
     /**
@@ -79,7 +81,7 @@ export class LegacyTokenMigrator {
      */
     private async fetchUserEmail(token: string): Promise<string> {
         try {
-            const venus = createVenusService({ token });
+            const venus = createVenusService({ token, headers: this.headers });
             const response = await venus.user.getMyself();
             if (response.ok && response.body.email != null) {
                 return response.body.email;
