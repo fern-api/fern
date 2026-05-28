@@ -20,7 +20,8 @@ ARG RUNC_VERSION=1.3.5
 # CVE-2026-41567, CVE-2026-41568, CVE-2026-42306 and later patches.
 ARG MOBY_VERSION=29.5.2
 ARG DOCKER_CLI_VERSION=29.5.2
-ARG XNET_VERSION=0.53.0
+ARG XNET_VERSION=0.55.0
+ARG XCRYPTO_VERSION=0.52.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.3
@@ -31,6 +32,7 @@ RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libsec
 RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
     cd /src/containerd && \
     go get golang.org/x/net@v${XNET_VERSION} \
+           golang.org/x/crypto@v${XCRYPTO_VERSION} \
            github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
@@ -46,7 +48,8 @@ RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/conta
     done
 RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontainers/runc.git /src/runc && \
     cd /src/runc && \
-    go get golang.org/x/net@v${XNET_VERSION} && \
+    go get golang.org/x/net@v${XNET_VERSION} \
+           golang.org/x/crypto@v${XCRYPTO_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     make static EXTRA_LDFLAGS="-s -w" && \
@@ -57,6 +60,7 @@ RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby
     # otel SDK + OTLP HTTP exporters (CVE-2026-39882, CVE-2026-39883)
     # before vendoring dockerd/docker-proxy.
     go get golang.org/x/net@v${XNET_VERSION} \
+           golang.org/x/crypto@v${XCRYPTO_VERSION} \
            github.com/containerd/containerd/v2@v${CONTAINERD_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
@@ -79,7 +83,8 @@ RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docke
     cp vendor.mod go.mod && cp vendor.sum go.sum && \
     # docker CLI's vendor.mod pins x/net <0.53; bump it (and re-vendor)
     # so the built /usr/local/bin/docker also clears CVE-2026-33814.
-    go get golang.org/x/net@v${XNET_VERSION} && \
+    go get golang.org/x/net@v${XNET_VERSION} \
+           golang.org/x/crypto@v${XCRYPTO_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     CGO_ENABLED=0 go build -mod=vendor \
@@ -118,8 +123,9 @@ RUN set -eux; \
     && rm "go${GO_VERSION}.linux-${GOARCH}.tar.gz"
 
 # Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
-# still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
-RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
+# still pins x/net v0.47.1; bump SBOM files to v0.55.0 to clear
+# CVE-2026-39821.
+RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
 

@@ -43,8 +43,9 @@ FROM golang:1.26.3-alpine3.23
 WORKDIR /workspace
 
 # Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
-# still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
-RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
+# still pins x/net v0.47.1; bump SBOM files to v0.55.0 to clear
+# CVE-2026-39821.
+RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
 
@@ -57,10 +58,9 @@ COPY generators/go/go.mod generators/go/go.sum /workspace/
 COPY generators/go/cmd /workspace/cmd
 COPY generators/go/internal /workspace/internal
 COPY generators/go/version.go /workspace/version.go
-# Bump golang.org/x/net to v0.53.0 (fixes CVE-2026-33814 HTTP/2 server
-# header smuggling). x/net is a transitive of golang.org/x/tools and is
-# normally pulled at v0.39.0; this forces the patched build.
-RUN go get golang.org/x/net@v0.53.0 && go mod tidy && go mod download
+# Bump golang.org/x/net to v0.55.0 (CVE-2026-39821) and golang.org/x/crypto
+# to v0.52.0 (CVE-2026-39827). Both are transitives of golang.org/x/tools.
+RUN go get golang.org/x/net@v0.55.0 golang.org/x/crypto@v0.52.0 && go mod tidy && go mod download
 
 COPY generators/go-v2/sdk/features.yml /assets/features.yml
 
