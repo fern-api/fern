@@ -3,8 +3,8 @@ import { CliError } from "@fern-api/task-context";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { RevokeTokenCommand } from "../command.js";
 
-vi.mock("@fern-api/core", () => ({
-    createVenusService: vi.fn()
+vi.mock("../../../../../services/index.js", () => ({
+    createVenusServiceV2: vi.fn()
 }));
 
 vi.mock("../../../../../ui/withSpinner.js", () => ({
@@ -42,16 +42,16 @@ describe("RevokeTokenCommand", () => {
     });
 
     it("should revoke a token successfully", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
         const mockRevoke = vi.fn().mockResolvedValue({ ok: true });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args);
 
-        expect(createVenusService).toHaveBeenCalledWith(
+        expect(createVenusServiceV2).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
         expect(mockRevoke).toHaveBeenCalledWith("tok_123");
@@ -59,11 +59,11 @@ describe("RevokeTokenCommand", () => {
     });
 
     it("should output JSON when --json flag is set", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
         const mockRevoke = vi.fn().mockResolvedValue({ ok: true });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await cmd.handle(context, { tokenId: "tok_123", json: true } as RevokeTokenCommand.Args);
@@ -85,16 +85,16 @@ describe("RevokeTokenCommand", () => {
     });
 
     it("should handle UnauthorizedError", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
             error: {
                 _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
             }
         });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
@@ -103,16 +103,16 @@ describe("RevokeTokenCommand", () => {
     });
 
     it("should handle TokenNotFoundError", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
             error: {
                 _visit: (visitor: { tokenNotFoundError: () => void }) => visitor.tokenNotFoundError()
             }
         });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);
@@ -121,16 +121,16 @@ describe("RevokeTokenCommand", () => {
     });
 
     it("should handle unknown errors", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../../services/index.js");
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
             error: {
                 _visit: (visitor: { _other: () => void }) => visitor._other()
             }
         });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await expect(cmd.handle(context, { tokenId: "tok_123" } as RevokeTokenCommand.Args)).rejects.toThrow(CliError);

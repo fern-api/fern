@@ -54,7 +54,7 @@ describe("CreateCommand", () => {
         await cmd.handle(context, { name: "acme" } as CreateCommand.Args);
 
         expect(createOrganizationIfDoesNotExist).toHaveBeenCalledWith(
-            expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
+            expect.objectContaining({ organization: "acme" })
         );
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining('Created organization "acme"'));
     });

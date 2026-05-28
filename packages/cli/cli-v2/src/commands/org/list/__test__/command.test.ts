@@ -3,8 +3,8 @@ import { CliError } from "@fern-api/task-context";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ListCommand } from "../command.js";
 
-vi.mock("@fern-api/core", () => ({
-    createVenusService: vi.fn()
+vi.mock("../../../../services/index.js", () => ({
+    createVenusServiceV2: vi.fn()
 }));
 
 function createMockLogger(): Logger {
@@ -39,19 +39,19 @@ describe("ListCommand", () => {
     });
 
     it("should list organizations successfully", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../services/index.js");
         const mockGetMyOrgs = vi.fn().mockResolvedValue({
             ok: true,
             body: { organizations: ["acme", "other-org"], nextPage: null }
         });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             user: { getMyOrganizations: mockGetMyOrgs }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await cmd.handle(context);
 
-        expect(createVenusService).toHaveBeenCalledWith(
+        expect(createVenusServiceV2).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
         expect(context.stdout.info).toHaveBeenCalledWith("acme");
@@ -59,7 +59,7 @@ describe("ListCommand", () => {
     });
 
     it("should paginate through multiple pages", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../services/index.js");
         const mockGetMyOrgs = vi
             .fn()
             .mockResolvedValueOnce({
@@ -70,9 +70,9 @@ describe("ListCommand", () => {
                 ok: true,
                 body: { organizations: ["other-org"], nextPage: null }
             });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             user: { getMyOrganizations: mockGetMyOrgs }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await cmd.handle(context);
@@ -85,14 +85,14 @@ describe("ListCommand", () => {
     });
 
     it("should show empty message when no organizations", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../services/index.js");
         const mockGetMyOrgs = vi.fn().mockResolvedValue({
             ok: true,
             body: { organizations: [], nextPage: null }
         });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             user: { getMyOrganizations: mockGetMyOrgs }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await cmd.handle(context);
@@ -112,11 +112,11 @@ describe("ListCommand", () => {
     });
 
     it("should throw on API error", async () => {
-        const { createVenusService } = await import("@fern-api/core");
+        const { createVenusServiceV2 } = await import("../../../../services/index.js");
         const mockGetMyOrgs = vi.fn().mockResolvedValue({ ok: false });
-        vi.mocked(createVenusService).mockReturnValue({
+        vi.mocked(createVenusServiceV2).mockReturnValue({
             user: { getMyOrganizations: mockGetMyOrgs }
-        } as unknown as ReturnType<typeof createVenusService>);
+        } as unknown as ReturnType<typeof createVenusServiceV2>);
 
         const context = createMockContext();
         await expect(cmd.handle(context)).rejects.toThrow(CliError);
