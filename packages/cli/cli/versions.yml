@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.0
+  changelogEntry:
+    - summary: |
+        Add X-Request-Id header to all CLI v2 HTTP requests for request tracing and debugging.
+      type: feat
+  createdAt: "2026-05-28"
+  irVersion: 66
 - version: 5.40.1
   changelogEntry:
     - summary: |
