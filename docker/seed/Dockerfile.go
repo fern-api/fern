@@ -22,7 +22,7 @@ ARG MOBY_VERSION=29.5.2
 ARG DOCKER_CLI_VERSION=29.5.2
 ARG XNET_VERSION=0.55.0
 ARG XCRYPTO_VERSION=0.52.0
-ARG XSYS_VERSION=0.44.0
+ARG XSYS_VERSION=0.45.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.3
@@ -136,7 +136,7 @@ RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
     sed -i 's|golang.org/x/crypto v0.46.1-[^ ]*|golang.org/x/crypto v0.52.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/crypto v0.46.1-/d' /usr/local/go/src/go.sum && \
-    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.44.0|g' \
+    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.45.0|g' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum
 
