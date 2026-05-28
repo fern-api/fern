@@ -151,17 +151,19 @@ ENV PATH="/usr/local/go/bin:${PATH}" \
 
 RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin"
 
-# Build golangci-lint from source so we can bump golang.org/x/sys to v0.45.0
-# (CVE-2026-39824). `go install` cannot override transitive deps, so we clone,
-# patch, and build.
+# Build golangci-lint via a temporary wrapper module so we can bump
+# golang.org/x/sys to v0.45.0 (CVE-2026-39824) while still fetching all
+# modules through the Go proxy + checksum database (sum.golang.org).
 ENV GOLANGCI_LINT_VERSION=v2.12.2
-RUN git clone --depth 1 --branch ${GOLANGCI_LINT_VERSION} \
-      https://github.com/golangci/golangci-lint.git /tmp/golangci-lint && \
-    cd /tmp/golangci-lint && \
-    go get golang.org/x/sys@v0.45.0 && go mod tidy && \
+RUN mkdir /tmp/glw && cd /tmp/glw && \
+    go mod init golangci-wrapper && \
+    go get github.com/golangci/golangci-lint/v2/cmd/golangci-lint@${GOLANGCI_LINT_VERSION} && \
+    go get golang.org/x/sys@v0.45.0 && \
+    go mod tidy && \
     CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath \
-      -o /usr/local/bin/golangci-lint ./cmd/golangci-lint && \
-    cd / && rm -rf /tmp/golangci-lint && \
+      -o /usr/local/bin/golangci-lint \
+      github.com/golangci/golangci-lint/v2/cmd/golangci-lint && \
+    cd / && rm -rf /tmp/glw && \
     go clean -modcache && \
     rm -rf /root/.cache/go-build
 
