@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.1
+  changelogEntry:
+    - summary: |
+        Stop overwriting native OpenAPI examples with AI-generated ones (FER-10006).
+        When a customer provides an `example` or `examples` on a request body whose
+        media type also has a `schema`, the example is now correctly classified as
+        user-specified at both the IR and FDR layers, so the AI example enhancer
+        skips the endpoint instead of replacing the human-authored payload.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 66
 - version: 5.41.0
   changelogEntry:
     - summary: |
