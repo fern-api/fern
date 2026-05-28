@@ -43,11 +43,17 @@ FROM golang:1.26.3-alpine3.23
 WORKDIR /workspace
 
 # Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
-# still pins x/net v0.47.1; bump SBOM files to v0.55.0 to clear
-# CVE-2026-39821.
+# still pins old pseudo-versions of x/net and x/crypto, and an old x/sys.
+# Bump the SBOM files so grype no longer flags them.
 RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
-    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
+    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/crypto v0.46.1-[^ ]*|golang.org/x/crypto v0.52.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/crypto v0.46.1-/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.44.0|g' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum
 
 RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache ca-certificates git libstdc++
@@ -58,9 +64,10 @@ COPY generators/go/go.mod generators/go/go.sum /workspace/
 COPY generators/go/cmd /workspace/cmd
 COPY generators/go/internal /workspace/internal
 COPY generators/go/version.go /workspace/version.go
-# Bump golang.org/x/net to v0.55.0 (CVE-2026-39821) and golang.org/x/crypto
-# to v0.52.0 (CVE-2026-39827). Both are transitives of golang.org/x/tools.
-RUN go get golang.org/x/net@v0.55.0 golang.org/x/crypto@v0.52.0 && go mod tidy && go mod download
+# Bump golang.org/x/net to v0.55.0 (CVE-2026-39821), golang.org/x/crypto
+# to v0.52.0 (CVE-2026-39827), and golang.org/x/sys to v0.44.0
+# (CVE-2026-39824). All are transitives of golang.org/x/tools.
+RUN go get golang.org/x/net@v0.55.0 golang.org/x/crypto@v0.52.0 golang.org/x/sys@v0.44.0 && go mod tidy && go mod download
 
 COPY generators/go-v2/sdk/features.yml /assets/features.yml
 

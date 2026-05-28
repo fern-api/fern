@@ -22,6 +22,7 @@ ARG MOBY_VERSION=29.5.2
 ARG DOCKER_CLI_VERSION=29.5.2
 ARG XNET_VERSION=0.55.0
 ARG XCRYPTO_VERSION=0.52.0
+ARG XSYS_VERSION=0.44.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.3
@@ -33,6 +34,7 @@ RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/conta
     cd /src/containerd && \
     go get golang.org/x/net@v${XNET_VERSION} \
            golang.org/x/crypto@v${XCRYPTO_VERSION} \
+           golang.org/x/sys@v${XSYS_VERSION} \
            github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
@@ -49,7 +51,8 @@ RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/conta
 RUN git clone --depth 1 --branch v${RUNC_VERSION} https://github.com/opencontainers/runc.git /src/runc && \
     cd /src/runc && \
     go get golang.org/x/net@v${XNET_VERSION} \
-           golang.org/x/crypto@v${XCRYPTO_VERSION} && \
+           golang.org/x/crypto@v${XCRYPTO_VERSION} \
+           golang.org/x/sys@v${XSYS_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     make static EXTRA_LDFLAGS="-s -w" && \
@@ -61,6 +64,7 @@ RUN git clone --depth 1 --branch docker-v${MOBY_VERSION} https://github.com/moby
     # before vendoring dockerd/docker-proxy.
     go get golang.org/x/net@v${XNET_VERSION} \
            golang.org/x/crypto@v${XCRYPTO_VERSION} \
+           golang.org/x/sys@v${XSYS_VERSION} \
            github.com/containerd/containerd/v2@v${CONTAINERD_VERSION} \
            go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
            go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
@@ -84,7 +88,8 @@ RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docke
     # docker CLI's vendor.mod pins x/net <0.53; bump it (and re-vendor)
     # so the built /usr/local/bin/docker also clears CVE-2026-33814.
     go get golang.org/x/net@v${XNET_VERSION} \
-           golang.org/x/crypto@v${XCRYPTO_VERSION} && \
+           golang.org/x/crypto@v${XCRYPTO_VERSION} \
+           golang.org/x/sys@v${XSYS_VERSION} && \
     go mod tidy && \
     go mod vendor && \
     CGO_ENABLED=0 go build -mod=vendor \
@@ -123,11 +128,17 @@ RUN set -eux; \
     && rm "go${GO_VERSION}.linux-${GOARCH}.tar.gz"
 
 # Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
-# still pins x/net v0.47.1; bump SBOM files to v0.55.0 to clear
-# CVE-2026-39821.
+# still pins old pseudo-versions of x/net and x/crypto, and an old x/sys.
+# Bump the SBOM files so grype no longer flags them.
 RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
-    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
+    sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/crypto v0.46.1-[^ ]*|golang.org/x/crypto v0.52.0|' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/crypto v0.46.1-/d' /usr/local/go/src/go.sum && \
+    sed -i 's|golang.org/x/sys v0.39.0|golang.org/x/sys v0.44.0|g' \
+        /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
+    sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/go.sum
 
 ENV PATH="/usr/local/go/bin:${PATH}" \
     GOPATH="/go" \
