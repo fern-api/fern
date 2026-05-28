@@ -1,4 +1,4 @@
-import { createVenusService } from "@fern-api/core";
+import { createVenusServiceV2 } from "../../../services/index.js";
 import { CliError } from "@fern-api/task-context";
 
 import type { FernVenusApiClient } from "@fern-api/venus-api-sdk";
@@ -24,7 +24,7 @@ export class ListCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusService({ token: token.value, headers: context.headers });
+        const venus = createVenusServiceV2({ token: token.value, headers: context.headers });
 
         // Fetch the first page to check if there are any results.
         const firstPage = await this.fetchPage({ venus, pageId: 1 });

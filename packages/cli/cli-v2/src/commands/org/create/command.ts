@@ -37,8 +37,7 @@ export class CreateCommand {
                 createOrganizationIfDoesNotExist({
                     organization: args.name,
                     token,
-                    context: new TaskContextAdapter({ context }),
-                    headers: context.headers
+                    context: new TaskContextAdapter({ context })
                 })
         });
 

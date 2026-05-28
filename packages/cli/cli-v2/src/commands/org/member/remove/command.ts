@@ -1,4 +1,4 @@
-import { createVenusService } from "@fern-api/core";
+import { createVenusServiceV2 } from "../../../../services/index.js";
 import { CliError } from "@fern-api/task-context";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
@@ -26,7 +26,7 @@ export class RemoveMemberCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusService({ token: token.value, headers: context.headers });
+        const venus = createVenusServiceV2({ token: token.value, headers: context.headers });
 
         const orgLookup = await venus.organization.get(args.org);
         if (!orgLookup.ok) {

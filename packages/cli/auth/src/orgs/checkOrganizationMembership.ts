@@ -9,14 +9,12 @@ export type OrganizationCheckResult =
 
 export async function checkOrganizationMembership({
     organization,
-    token,
-    headers
+    token
 }: {
     organization: string;
     token: FernUserToken;
-    headers?: Record<string, string>;
 }): Promise<OrganizationCheckResult> {
-    const venus = createVenusService({ token: token.value, headers });
+    const venus = createVenusService({ token: token.value });
 
     // First check if the user is a member of the organization.
     const isMemberResponse = await venus.organization.isMember(organization);

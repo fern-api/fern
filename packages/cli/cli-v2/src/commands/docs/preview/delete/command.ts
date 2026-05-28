@@ -1,4 +1,4 @@
-import { createFdrService } from "@fern-api/core";
+import { createFdrServiceV2 } from "../../../../services/index.js";
 import { buildPreviewDomain, isPreviewUrl as isPreviewUrlUtil } from "@fern-api/docs-preview";
 import { CliError } from "@fern-api/task-context";
 
@@ -30,7 +30,7 @@ export class DeleteCommand {
         }
 
         const token = await context.getTokenOrPrompt();
-        const fdr = createFdrService({ token: token.value, headers: context.headers });
+        const fdr = createFdrServiceV2({ token: token.value, headers: context.headers });
 
         context.stderr.debug(`Deleting preview site: ${resolvedUrl}`);
 
