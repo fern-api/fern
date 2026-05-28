@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.5
+  changelogEntry:
+    - summary: |
+        Fix TypedDict alias generation when `use_typeddict_requests: true` so that
+        container element types (`List[T]`, `Dict[K, V]`, `Set[T]`) and direct aliases
+        (`Alias = T`) reach for the request-side `TParams` variant rather than the
+        Pydantic model `T`. Without this, request parameters typed as such aliases
+        rejected dict-literal values at type-check time even though the runtime accepted
+        them.
+
+        Note: list-typed alias bodies now resolve to `typing.Sequence[…]` instead of
+        `typing.List[…]` under `use_typeddict_requests`, consistent with how endpoint
+        parameters are already typed. Existing call sites that pass lists continue to
+        work.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 67
 - version: 5.14.4
   changelogEntry:
     - summary: |
