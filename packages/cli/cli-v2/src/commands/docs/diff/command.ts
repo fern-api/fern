@@ -132,6 +132,14 @@ export class DiffCommand {
         const previewUrlWithScheme = previewUrl.startsWith("http") ? previewUrl : `https://${previewUrl}`;
         const normalizedPreviewUrl = new URL(previewUrlWithScheme).host;
 
+        const ALLOWED_PREVIEW_SUFFIXES = [".docs.buildwithfern.com", ".buildwithfern.com"];
+        if (!ALLOWED_PREVIEW_SUFFIXES.some((suffix) => normalizedPreviewUrl.endsWith(suffix))) {
+            throw new CliError({
+                message: `Preview URL host "${normalizedPreviewUrl}" is not a recognized Fern preview domain.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+
         context.stderr.info(`Resolving slugs for ${files.length} file(s)...`);
         const slugResponse = await getSlugForFiles({
             previewUrl: normalizedPreviewUrl,
@@ -159,7 +167,7 @@ export class DiffCommand {
 
         const browser = await launch({
             headless: true,
-            args: ["--ignore-certificate-errors", "--no-sandbox", "--disable-setuid-sandbox"]
+            args: ["--no-sandbox", "--disable-setuid-sandbox"]
         });
 
         try {
