@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.42.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs diff` command to CLI v2 for generating visual diffs between preview and production docs pages.
+      type: feat
+  createdAt: "2026-05-29"
+  irVersion: 66
 - version: 5.41.2
   changelogEntry:
     - summary: |
