@@ -136,6 +136,10 @@ describe("runPipeline", () => {
         const main = await readFile(path.join(outputDir, "cli", "my-api", "main.rs"), "utf-8");
         expect(main).toContain('CliApp::new("my-api")');
         await expect(access(path.join(outputDir, "cli", "my-api", "openapi0.json"))).resolves.toBeUndefined();
+
+        // writeGitignore placed a .gitignore with Rust build artifacts.
+        const gitignore = await readFile(path.join(outputDir, ".gitignore"), "utf-8");
+        expect(gitignore).toContain("/target");
     });
 
     it("customConfig.binaryName overrides IR apiDisplayName", async () => {
