@@ -1,0 +1,3 @@
+- summary: |
+    Fix `fern docs dev` failing with `ERR_PNPM_ADDING_TO_ROOT` when installing esbuild in the preview bundle directory. The `-w` flag is now passed to `pnpm i` since the bundle folder contains a `pnpm-workspace.yaml`.
+  type: fix
