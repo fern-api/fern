@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.2
+  changelogEntry:
+    - summary: |
+        Skip AI example enhancement in self-hosted builds to avoid Venus JWT 401 errors and unnecessary latency.
+      type: fix
+  createdAt: "2026-05-29"
+  irVersion: 66
 - version: 5.41.1
   changelogEntry:
     - summary: |
