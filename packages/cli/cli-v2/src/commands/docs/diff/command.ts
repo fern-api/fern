@@ -354,10 +354,14 @@ async function captureScreenshot({
             const targetHost = new URL(url).host;
             await page.setRequestInterception(true);
             page.on("request", (req) => {
-                const reqHost = new URL(req.url()).host;
-                if (reqHost === targetHost) {
-                    void req.continue({ headers: { ...req.headers(), FERN_TOKEN: token } });
-                } else {
+                try {
+                    const reqHost = new URL(req.url()).host;
+                    if (reqHost === targetHost) {
+                        void req.continue({ headers: { ...req.headers(), FERN_TOKEN: token } });
+                    } else {
+                        void req.continue();
+                    }
+                } catch {
                     void req.continue();
                 }
             });
