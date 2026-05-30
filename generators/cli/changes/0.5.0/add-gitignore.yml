@@ -1,0 +1,4 @@
+- summary: |
+    Include a `.gitignore` in generated CLI output so that Rust build
+    artifacts (`target/`) are not tracked by Git.
+  type: feat

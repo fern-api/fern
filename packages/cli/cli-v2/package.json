@@ -93,6 +93,7 @@
     "@types/jsonwebtoken": "catalog:",
     "@types/mime-types": "catalog:",
     "@types/node": "catalog:",
+    "@types/pngjs": "catalog:",
     "@types/semver": "catalog:",
     "@types/uuid": "^9.0.7",
     "@types/yargs": "^17.0.28",
@@ -119,6 +120,8 @@
   "dependencies": {
     "cli-progress": "catalog:",
     "dotenv": "^16.0.0",
+    "pngjs": "catalog:",
+    "puppeteer": "catalog:",
     "tmp-promise": "catalog:"
   }
 }

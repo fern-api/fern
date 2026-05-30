@@ -1,4 +1,79 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.42.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs diff` command to CLI v2 for generating visual diffs between preview and production docs pages.
+      type: feat
+  createdAt: "2026-05-29"
+  irVersion: 66
+- version: 5.41.2
+  changelogEntry:
+    - summary: |
+        Skip AI example enhancement in self-hosted builds to avoid Venus JWT 401 errors and unnecessary latency.
+      type: fix
+  createdAt: "2026-05-29"
+  irVersion: 66
+- version: 5.41.1
+  changelogEntry:
+    - summary: |
+        Stop overwriting native OpenAPI examples with AI-generated ones (FER-10006).
+        When a customer provides an `example` or `examples` on a request body whose
+        media type also has a `schema`, the example is now correctly classified as
+        user-specified at both the IR and FDR layers, so the AI example enhancer
+        skips the endpoint instead of replacing the human-authored payload.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 66
+- version: 5.41.0
+  changelogEntry:
+    - summary: |
+        Add X-Request-Id header to all CLI v2 HTTP requests for request tracing and debugging.
+      type: feat
+  createdAt: "2026-05-28"
+  irVersion: 66
+- version: 5.40.1
+  changelogEntry:
+    - summary: |
+        Add /openapi.json, /openapi.yaml, /openapi.yml, /asyncapi.json, /asyncapi.yaml, and /asyncapi.yml
+        to the link validator whitelist, and add pattern-based matching for dynamic API spec paths like
+        /openapi/`<id>`.json so `fern check` no longer reports false broken-link errors for these special doc pages.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 66
+- version: 5.40.0
+  changelogEntry:
+    - summary: |
+        Add hidden `fern docs theme delete --name <theme name>` CLI command to delete a named theme from an org. Includes a confirmation prompt (skippable with `--yes`).
+      type: feat
+  createdAt: "2026-05-27"
+  irVersion: 66
+- version: 5.39.0
+  changelogEntry:
+    - summary: |
+        Add a `settings.search` object to `docs.yml` with two new options:
+        - `prioritize-current-product`: boosts search results from the current
+          product/version via Algolia `optionalFilters` without excluding results
+          from other products/versions.
+        - `default-filter-by-current-product`: auto-selects the current product as
+          a facet filter so only results from the current product are shown by
+          default.
+
+        `settings.default-search-filters` is preserved as an alias for
+        `settings.search.default-filter-by-current-product` for backwards
+        compatibility.
+      type: feat
+  createdAt: "2026-05-27"
+  irVersion: 66
+- version: 5.38.2
+  changelogEntry:
+    - summary: |
+        Honor operation-level `x-fern-streaming.resumable` on SSE endpoints whose
+        streaming is auto-detected from a `text/event-stream` response. Previously,
+        setting `resumable: true` without an explicit `format` was silently dropped
+        and the endpoint generated as non-resumable.
+      type: fix
+  createdAt: "2026-05-27"
+  irVersion: 66
 - version: 5.38.1
   changelogEntry:
     - summary: |

@@ -16,29 +16,20 @@ const SDK_IGNORE = [
     // Internal planning / design docs (not for shipped CLI consumers).
     "docs/**",
 
-    // Integration tests that exec the openapi-fixture bin and assert
-    // against the placeholder spec's specific content. `copySpecs`
-    // writes a fresh main.rs alongside the user's mounted spec(s), so
-    // these tests are coupled to the SDK template's dev fixture and
-    // not meaningful in the user's generated output. The generic
-    // library tests (auth, websocket, tls, lib_api against the
-    // internal __fixtures__ spec) still ship.
-    "tests/cli_integration.rs",
-    "tests/openapi_fixture_wire.rs",
+    // Template-dev integration tests coupled to the SDK template's own
+    // dev fixture under `cli/openapi-fixture/` (also pruned below).
+    // `overlay_fixture.rs` `include_str!`s that spec to exercise the
+    // overlay → discovery pipeline via library calls; `tests/fixtures/`
+    // holds fixture data. `copySpecs` writes a fresh main.rs against the
+    // user's mounted spec, so none of this is meaningful in generated
+    // output. (The remaining template tests are pruned further down.)
+    "tests/overlay_fixture.rs",
     "tests/fixtures/**",
 
     // Template-author dev bin. `copySpecs` writes the whole folder
     // (main.rs + every mounted spec) from scratch at codegen time, so
     // none of the source-side files in here belong in user output.
     "cli/openapi-fixture/**",
-
-    // Rich (33 KB) test fixture used only by the template's own dev
-    // bin and `cli_integration.rs` / `openapi_fixture_wire.rs` (also
-    // ignored above). User output ships only the slimmer
-    // `__fixtures__/openapi.json` (≈ 1 KB) referenced by the
-    // lib-level overlay tests in src/openapi/overlay.rs and
-    // tests/lib_api.rs.
-    "src/openapi/__fixtures__/rich.json",
 
     // Fern's own CI workflows for the SDK template repo — ci.yml runs
     // clippy + tests on the template itself, release.yml ships

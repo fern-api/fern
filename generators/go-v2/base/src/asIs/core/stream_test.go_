@@ -733,6 +733,48 @@ func TestStream_LastEventID(t *testing.T) {
 	assert.Equal(t, "3", stream.LastEventID())
 }
 
+func TestStream_LastRetryMs(t *testing.T) {
+	// A server may advertise the reconnection time in its own SSE frame (no
+	// data:), as the spec recommends. The directive is sticky: it must remain
+	// readable via LastRetryMs across subsequent events that carry no retry: of
+	// their own, even though those events' per-frame Retry is 0.
+	sseData := "retry: 2000\n\n" +
+		"data: {\"content\":\"first\"}\n\n" +
+		"data: {\"content\":\"second\"}\n\n" +
+		"retry: 4000\ndata: {\"content\":\"third\"}\n\n"
+
+	server := newSSEServer(t, sseData)
+	defer server.Close()
+
+	resp, err := http.Get(server.URL)
+	require.NoError(t, err)
+	defer func() { _ = resp.Body.Close() }()
+
+	stream := NewStream[TestMessage](context.Background(), resp, WithFormat(StreamFormatSSE))
+	defer func() { _ = stream.Close() }()
+
+	// Before reading anything, no retry: has been advertised.
+	assert.Equal(t, 0, stream.LastRetryMs())
+
+	// First data event: the standalone "retry: 2000" frame was consumed first,
+	// so the sticky value is 2000 even though this event carries no retry:.
+	event, err := stream.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, "first", event.Data.Content)
+	assert.Equal(t, 0, event.Retry)
+	assert.Equal(t, 2000, stream.LastRetryMs())
+
+	// Second data event: still no retry:, sticky value unchanged.
+	_, err = stream.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, 2000, stream.LastRetryMs())
+
+	// Third event carries retry: 4000, updating the sticky value.
+	_, err = stream.RecvEvent()
+	require.NoError(t, err)
+	assert.Equal(t, 4000, stream.LastRetryMs())
+}
+
 func TestStream_RecvEventRaw(t *testing.T) {
 	sseData := "id: abc\nevent: update\nretry: 3000\ndata: not valid json\n\n"
 

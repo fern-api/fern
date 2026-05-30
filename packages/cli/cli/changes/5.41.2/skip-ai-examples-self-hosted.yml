@@ -1,0 +1,3 @@
+- summary: |
+    Skip AI example enhancement in self-hosted builds to avoid Venus JWT 401 errors and unnecessary latency.
+  type: fix

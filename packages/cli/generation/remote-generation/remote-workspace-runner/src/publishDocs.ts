@@ -482,8 +482,9 @@ export async function publishDocs({
                     apiNameOverride: apiName
                 });
 
+                const isSelfHosted = token.value === "dummy";
                 const aiEnhancerConfig = getAIEnhancerConfig(
-                    withAiExamples,
+                    withAiExamples && !isSelfHosted,
                     docsWorkspace.config.aiExamples?.style ??
                         docsWorkspace.config.experimental?.aiExampleStyleInstructions
                 );

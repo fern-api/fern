@@ -136,7 +136,16 @@ export const ValidMarkdownLinks: Rule = {
             .filter(FernNavigation.isInternalProductNode)
             .map((p) => p.slug);
 
-        const specialDocPages = ["/llms-full.txt", "/llms.txt"];
+        const specialDocPages = [
+            "/llms-full.txt",
+            "/llms.txt",
+            "/openapi.json",
+            "/openapi.yaml",
+            "/openapi.yml",
+            "/asyncapi.json",
+            "/asyncapi.yaml",
+            "/asyncapi.yml"
+        ];
 
         for (const specialPage of specialDocPages) {
             const pageWithBasePath = baseUrl.basePath

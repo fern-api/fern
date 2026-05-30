@@ -210,6 +210,108 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "chatCompletions"
+        ],
+        "methodName": "createAutodetectResumable"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateAutodetectResumableChatCompletionsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateAutodetectResumableChatCompletionsRequest",
+          "schema": "CreateCompletionRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success!",
+        "resumable": true,
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "CreateAutodetectResumableChatCompletionsResponse",
+          "schema": "CompletionChunk",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingSse"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "SSE endpoint whose streaming is auto-detected from the text/event-stream response. Sets operation-level resumable=true without a format, so the parser must honor resumable in the content-type fallback.",
+      "authed": false,
+      "method": "POST",
+      "path": "/completions/chat-autodetect-resume",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "prompt": {
+                "value": {
+                  "value": "prompt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "sse": true,
+            "events": [
+              {
+                "properties": {
+                  "text": {
+                    "value": {
+                      "value": "text",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            ],
+            "type": "withStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],

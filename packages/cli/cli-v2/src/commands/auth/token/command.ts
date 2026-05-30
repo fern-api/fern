@@ -24,11 +24,12 @@ export class TokenCommand {
             await createOrganizationIfDoesNotExist({
                 organization: orgId,
                 token,
-                context: new TaskContextAdapter({ context })
+                context: new TaskContextAdapter({ context }),
+                headers: context.headers
             });
         }
 
-        const venus = createVenusService({ token: token.value });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
         const response = await venus.registry.generateRegistryTokens({
             organizationId: orgId
         });
