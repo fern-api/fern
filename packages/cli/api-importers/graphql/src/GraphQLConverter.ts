@@ -234,8 +234,21 @@ export class GraphQLConverter {
                 } finally {
                     this.processingTypes.delete(typeName);
                 }
-            } else if (type instanceof GraphQLScalarType && !this.isBuiltInScalar(typeName)) {
-                continue;
+            } else if (type instanceof GraphQLScalarType) {
+                // Custom (non-built-in) scalars are emitted as named alias types so they land
+                // in the `types` map with a stable id usable as an href anchor by the frontend.
+                this.processingTypes.add(typeName);
+                try {
+                    this.types[typeId] = {
+                        name: this.getNamespacedTypeName(typeName),
+                        shape: this.convertScalarTypeDefinition(type),
+                        displayName: undefined,
+                        description: type.description ?? undefined,
+                        availability: undefined
+                    };
+                } finally {
+                    this.processingTypes.delete(typeName);
+                }
             }
         }
     }
@@ -481,14 +494,12 @@ export class GraphQLConverter {
                     };
             }
         } else {
+            // Custom scalars are emitted as named alias types in the `types` map, so reference
+            // them by their stable id. This lets the frontend link to the type's href anchor.
             return {
-                type: "primitive",
-                value: {
-                    type: "scalar",
-                    name: type.name,
-                    description: type.description ?? undefined,
-                    default: undefined
-                }
+                type: "id",
+                value: this.getNamespacedTypeId(type.name),
+                default: undefined
             };
         }
     }
