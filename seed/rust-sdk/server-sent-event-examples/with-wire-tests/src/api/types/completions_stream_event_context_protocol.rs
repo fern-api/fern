@@ -1,7 +1,8 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "event")]
+#[non_exhaustive]
 pub enum StreamEventContextProtocol {
     #[serde(rename = "completion")]
     #[non_exhaustive]
@@ -25,6 +26,12 @@ pub enum StreamEventContextProtocol {
         #[serde(default)]
         name: String,
     },
+
+    /// Catch-all variant for unrecognized discriminant values.
+    /// If the server sends a discriminant not recognized by the current SDK
+    /// version, the raw payload is captured here so callers can still inspect it.
+    #[serde(untagged)]
+    __Unknown(serde_json::Value),
 }
 
 impl StreamEventContextProtocol {
@@ -38,5 +45,9 @@ impl StreamEventContextProtocol {
 
     pub fn event(event: String, name: String) -> Self {
         Self::Event { event, name }
+    }
+
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
     }
 }
