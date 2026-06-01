@@ -22,6 +22,16 @@ import {
 import { isFieldRecursive } from "../utils/recursiveTypeUtils.js";
 import { canDeriveHashAndEq, canDerivePartialEq, generateFieldAttributes, hasHashMapFields, hasHashSetFields } from "../utils/structUtils.js";
 
+/**
+ * Name of the forward-compatible catch-all variant. Generated discriminated unions
+ * include this variant so unknown discriminant values deserialize into a wrapper
+ * holding the raw JSON instead of erroring. The double-underscore prefix matches
+ * the convention used by forward-compatible enums (`__Unknown`) and reduces the
+ * chance of colliding with a user-declared discriminant.
+ */
+const UNKNOWN_VARIANT_NAME = "__Unknown";
+const UNKNOWN_CONSTRUCTOR_NAME = "unknown";
+
 export class UnionGenerator {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly unionTypeDeclaration: FernIr.UnionTypeDeclaration;
@@ -35,6 +45,18 @@ export class UnionGenerator {
         this.typeDeclaration = typeDeclaration;
         this.unionTypeDeclaration = unionTypeDeclaration;
         this.context = context;
+    }
+
+    /**
+     * Discriminated unions are forward-compatible by default. A trailing
+     * `__Unknown(serde_json::Value)` variant marked `#[serde(untagged)]` acts as a
+     * fallback so unrecognized discriminant values (e.g. variants added server-side
+     * after this SDK was generated) deserialize into the raw JSON payload instead
+     * of failing. This matches the behavior already provided for multi-variant
+     * enums in this generator and the C#/Java/TypeScript SDKs.
+     */
+    private isForwardCompatible(): boolean {
+        return true;
     }
 
     public generate(): RustFile {
@@ -139,10 +161,31 @@ export class UnionGenerator {
                 }
                 this.generateUnionVariant(writer, unionType);
             });
+
+            if (this.isForwardCompatible()) {
+                if (this.unionTypeDeclaration.types.length > 0) {
+                    writer.newLine();
+                }
+                this.generateUnknownVariant(writer);
+            }
         });
 
         // Generate implementation block if needed
         this.generateImplementationBlock(writer, typeName);
+    }
+
+    /**
+     * Generate the forward-compatible catch-all variant. Annotated with
+     * `#[serde(untagged)]` so serde tries each tagged variant first and falls back
+     * to this variant for unrecognized discriminant values, preserving the raw JSON
+     * payload as `serde_json::Value`.
+     */
+    private generateUnknownVariant(writer: rust.Writer): void {
+        writer.writeLine("    /// Catch-all variant for unrecognized discriminant values.");
+        writer.writeLine("    /// If the server sends a discriminant not recognized by the current SDK");
+        writer.writeLine("    /// version, the raw payload is captured here so callers can still inspect it.");
+        writer.writeLine("    #[serde(untagged)]");
+        writer.writeLine(`    ${UNKNOWN_VARIANT_NAME}(serde_json::Value),`);
     }
 
     private generateUnionAttributes(): rust.Attribute[] {
@@ -166,6 +209,13 @@ export class UnionGenerator {
         // Serde tag attribute for discriminated union
         const discriminantField = getWireValue(this.unionTypeDeclaration.discriminant);
         attributes.push(Attribute.serde.tag(discriminantField));
+
+        if (this.isForwardCompatible()) {
+            // Enum-level #[non_exhaustive] forces callers to include a catch-all
+            // pattern in `match` expressions, so adding new typed variants in the
+            // future is non-breaking.
+            attributes.push(Attribute.nonExhaustive());
+        }
 
         return attributes;
     }
@@ -201,6 +251,12 @@ export class UnionGenerator {
     }
 
     private needsDeriveHashAndEq(): boolean {
+        // The forward-compatible `__Unknown(serde_json::Value)` variant doesn't
+        // support Hash or Eq, so unions with that variant can't derive them.
+        if (this.isForwardCompatible()) {
+            return false;
+        }
+
         // Check if all variant types and base properties can support Hash and Eq derives
 
         const isTypeSupportsHashAndEq = canDeriveHashAndEq(this.unionTypeDeclaration.baseProperties, this.context);
@@ -478,6 +534,19 @@ export class UnionGenerator {
                 });
             });
 
+            // Generate a constructor for the forward-compatible catch-all variant so
+            // callers can wrap a raw JSON payload (the `#[non_exhaustive]` enum attribute
+            // prevents direct construction outside the crate).
+            if (this.isForwardCompatible()) {
+                if (needsNewline) {
+                    writer.newLine();
+                }
+                writer.writeBlock(`pub fn ${UNKNOWN_CONSTRUCTOR_NAME}(value: serde_json::Value) -> Self`, () => {
+                    writer.writeLine(`Self::${UNKNOWN_VARIANT_NAME}(value)`);
+                });
+                needsNewline = true;
+            }
+
             // Generate getter methods for base properties
             if (this.unionTypeDeclaration.baseProperties.length > 0) {
                 this.unionTypeDeclaration.baseProperties.forEach((property) => {
@@ -496,6 +565,15 @@ export class UnionGenerator {
                             const variantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
                             writer.writeLine(`            Self::${variantName} { ${fieldName}, .. } => ${fieldName},`);
                         });
+
+                        if (this.isForwardCompatible()) {
+                            // Base properties aren't typed on the catch-all variant. Callers that
+                            // need to read them on an unknown variant should pattern-match on
+                            // `__Unknown(value)` directly and inspect the raw JSON.
+                            writer.writeLine(
+                                `            Self::${UNKNOWN_VARIANT_NAME}(_) => panic!("${methodName}() called on ${UNKNOWN_VARIANT_NAME} variant; inspect the raw JSON value directly"),`
+                            );
+                        }
 
                         writer.writeLine("        }");
                     });
