@@ -29,7 +29,6 @@ fi
 
 CLI_SDK_SHA="$(git -C "$CLI_SDK_DIR" rev-parse HEAD 2>/dev/null || echo "unknown")"
 CLI_SDK_SHORT="$(git -C "$CLI_SDK_DIR" rev-parse --short HEAD 2>/dev/null || echo "unknown")"
-SYNC_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
 echo "==> Syncing cli-sdk@${CLI_SDK_SHORT} (${CLI_SDK_SHA}) into generators/cli/sdk/"
 
@@ -79,21 +78,7 @@ rsync -a --delete \
 # ---------------------------------------------------------------------------
 echo "--- Projecting Cargo.toml ..."
 
-# Extract the workspace version from cli-sdk
-WORKSPACE_VERSION="$(grep -A2 '^\[workspace\.package\]' "$CLI_SDK_DIR/Cargo.toml" \
-  | grep '^version' | sed 's/.*"\(.*\)".*/\1/')"
-
-if [[ -z "$WORKSPACE_VERSION" ]]; then
-  echo "Error: could not extract [workspace.package] version from cli-sdk" >&2
-  exit 1
-fi
-
-echo "    version: $WORKSPACE_VERSION"
-
-# Extract sections from cli-sdk's Cargo.toml using awk.
-# We need: [features], [dependencies], [package.metadata.dist],
-# [profile.dist], [build-dependencies], [dev-dependencies]
-
+# Helper: extract all lines between a TOML [section] header and the next header.
 extract_section() {
   local file="$1" section="$2"
   awk -v sect="$section" '
@@ -107,6 +92,17 @@ extract_section() {
     found { print }
   ' "$file"
 }
+
+# Extract the workspace version from cli-sdk
+WORKSPACE_VERSION="$(extract_section "$CLI_SDK_DIR/Cargo.toml" "workspace.package" \
+  | grep '^version' | sed 's/.*"\(.*\)".*/\1/')"
+
+if [[ -z "$WORKSPACE_VERSION" ]]; then
+  echo "Error: could not extract [workspace.package] version from cli-sdk" >&2
+  exit 1
+fi
+
+echo "    version: $WORKSPACE_VERSION"
 
 FEATURES_BODY="$(extract_section "$CLI_SDK_DIR/Cargo.toml" "features")"
 DEPS_BODY="$(extract_section "$CLI_SDK_DIR/Cargo.toml" "dependencies")"
