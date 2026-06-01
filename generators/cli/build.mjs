@@ -1,4 +1,7 @@
 import { buildGenerator, getDirname } from "@fern-api/configs/build-utils.mjs";
+import { createRequire } from "module";
+import { cp } from "fs/promises";
+import path from "path";
 
 // Glob patterns (minimatch syntax, relative to ./sdk) of files we don't want
 // shipped inside the generator image. The remaining tree is what gets copied
@@ -62,6 +65,25 @@ const SDK_IGNORE = [
     "changes/**"
 ];
 
-await buildGenerator(getDirname(import.meta.url), {
+const dirname = getDirname(import.meta.url);
+
+await buildGenerator(dirname, {
     copy: { from: "./sdk", to: "./dist/sdk", ignore: SDK_IGNORE }
 });
+
+// Copy the pre-built rust-sdk generator CLI into dist/ so the Docker
+// image can invoke it as a child process for embedded SDK generation.
+// In the monorepo the package resolves via pnpm workspaces; the
+// `dist:cli` turbo task must have run for @fern-api/rust-sdk first.
+const require = createRequire(import.meta.url);
+try {
+    const rustSdkPkg = path.dirname(require.resolve("@fern-api/rust-sdk/package.json"));
+    const rustSdkDist = path.join(rustSdkPkg, "dist", "cli.cjs");
+    await cp(rustSdkDist, path.join(dirname, "dist", "rust-sdk-cli.cjs"));
+} catch {
+    // Non-fatal: the rust-sdk dist may not exist during a plain
+    // `pnpm compile`. It's only required for `dist:cli` / Docker.
+    console.warn(
+        "⚠ Could not copy rust-sdk CLI dist — embedded SDK generation will use monorepo resolution at runtime."
+    );
+}

@@ -18,8 +18,8 @@ import path from "path";
  * No-op when the file doesn't exist (e.g. if a future change removes
  * the dist-workspace.toml from the SDK template entirely).
  */
-export async function patchDistWorkspaceToml(args: { outputDir: string }): Promise<void> {
-    const { outputDir } = args;
+export async function patchDistWorkspaceToml(args: { outputDir: string; sdkCrateName?: string }): Promise<void> {
+    const { outputDir, sdkCrateName } = args;
     const distTomlPath = path.join(outputDir, "dist-workspace.toml");
     let contents: string;
     try {
@@ -27,6 +27,13 @@ export async function patchDistWorkspaceToml(args: { outputDir: string }): Promi
     } catch {
         return;
     }
+
+    if (sdkCrateName != null) {
+        const patched = addWorkspaceMember(contents, sdkCrateName);
+        await writeFile(distTomlPath, patched);
+        return;
+    }
+
     const patched = applyDistWorkspacePatch(contents);
     if (patched === contents) {
         return;
@@ -42,6 +49,30 @@ export async function patchDistWorkspaceToml(args: { outputDir: string }): Promi
  */
 export function applyDistWorkspacePatch(distToml: string): string {
     return distToml.replace(NPM_SCOPE_BLOCK, "").replace(NPM_PACKAGE_BLOCK, "");
+}
+
+/**
+ * Add an SDK crate as a workspace member. Inserts a `members` array
+ * entry under `[workspace]` if the section exists, or appends a new
+ * `[workspace]` section.
+ */
+export function addWorkspaceMember(distToml: string, sdkCrateName: string): string {
+    const memberLine = `"${sdkCrateName}"`;
+    // Look for existing [workspace] with members = [...]
+    const workspaceMatch = distToml.match(/(\[workspace\]\s*\nmembers\s*=\s*\[)([^\]]*)\]/);
+    if (workspaceMatch != null) {
+        const existing = workspaceMatch[2]?.trim() ?? "";
+        const newMembers = existing.length > 0 ? `${existing}, ${memberLine}` : memberLine;
+        return distToml.replace(workspaceMatch[0], `${workspaceMatch[1]}${newMembers}]`);
+    }
+    // Look for [workspace] without members
+    const wsIdx = distToml.indexOf("[workspace]");
+    if (wsIdx !== -1) {
+        const insertPos = wsIdx + "[workspace]".length;
+        return distToml.slice(0, insertPos) + `\nmembers = [${memberLine}]` + distToml.slice(insertPos);
+    }
+    // No [workspace] section — append one
+    return distToml + `\n[workspace]\nmembers = [${memberLine}]\n`;
 }
 
 const NPM_SCOPE_BLOCK = `# A namespace to use when publishing this package to the npm registry

@@ -1,0 +1,8 @@
+- summary: |
+    Embed typed Rust SDK as a workspace member in generated CLI output.
+    The CLI generator now invokes the rust-sdk generator in-process to
+    produce a `<api>-sdk` library crate alongside the CLI crate, wired
+    as a path dependency. Adds `custom.rs` scaffold for user-authored
+    async command handlers with `ctx.client()` access to a pre-wired,
+    strongly-typed SDK client.
+  type: feat

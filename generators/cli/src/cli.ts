@@ -48,7 +48,8 @@ async function generate(configPath: string): Promise<void> {
             const outcome = await runPipeline({
                 outputDir: config.output.path,
                 customConfig: getCustomConfig(config),
-                ir
+                ir,
+                irFilepath: config.irFilepath
             });
 
             if (outcome.status === "skipped") {

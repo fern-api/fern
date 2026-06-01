@@ -1301,6 +1301,10 @@ pub(crate) struct BindingEntry {
     pub(crate) auth_provider: DynAuthProvider,
     pub(crate) http_config: crate::http::HttpConfig,
     pub(crate) global_headers: Vec<(String, String)>,
+    /// The raw scheme bindings used to build `auth_provider`. Retained
+    /// so that [`AppContext::client_config()`] can resolve credential
+    /// values directly for the embedded SDK bridge.
+    pub(crate) auth_bindings: Vec<(String, crate::auth::SchemeBinding)>,
 }
 
 /// Runtime context passed to custom command handlers.
@@ -1319,6 +1323,9 @@ pub struct AppContext {
     /// `OutputPipeline` by [`AppContext::execute`] so custom commands
     /// honor the flag.
     quiet: bool,
+    /// `--base-url` or `<NAME>_BASE_URL` env override, resolved once
+    /// during dispatch. Threaded into [`client_config()`](Self::client_config).
+    base_url_override: Option<String>,
 }
 
 impl AppContext {
@@ -1329,9 +1336,29 @@ impl AppContext {
         global_headers: Vec<(String, String)>,
     ) -> Self {
         Self {
-            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
+            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers, auth_bindings: Vec::new() }],
             quiet: false,
+            base_url_override: None,
         }
+    }
+
+    pub(crate) fn new_with_bindings(
+        doc: RestDescription,
+        auth_provider: DynAuthProvider,
+        http_config: crate::http::HttpConfig,
+        global_headers: Vec<(String, String)>,
+        auth_bindings: Vec<(String, crate::auth::SchemeBinding)>,
+    ) -> Self {
+        Self {
+            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers, auth_bindings }],
+            quiet: false,
+            base_url_override: None,
+        }
+    }
+
+    pub(crate) fn with_base_url(mut self, base_url: Option<String>) -> Self {
+        self.base_url_override = base_url;
+        self
     }
 
     pub(crate) fn with_quiet(mut self, quiet: bool) -> Self {
@@ -1616,6 +1643,85 @@ impl AppContext {
         &self.entries[0].http_config
     }
 
+    // ── Embedded SDK bridge (Model A) ───────────────────────────────
+
+    /// Build a [`ResolvedClientConfig`] by resolving the registered
+    /// auth credential sources and threading in `--base-url`.
+    ///
+    /// This is the low-level escape hatch; prefer [`client()`](Self::client)
+    /// with an [`ApiClient`] impl for the common case.
+    ///
+    /// [`ResolvedClientConfig`]: crate::context::ResolvedClientConfig
+    /// [`ApiClient`]: crate::context::ApiClient
+    pub fn client_config(&self) -> crate::context::ResolvedClientConfig {
+        let entry = &self.entries[0];
+        let mut cfg = crate::context::ResolvedClientConfig {
+            base_url: self.base_url_override.clone(),
+            headers: entry.global_headers.clone(),
+            ..Default::default()
+        };
+
+        // Resolve credential values from the retained auth bindings.
+        for (_scheme_name, binding) in &entry.auth_bindings {
+            match binding {
+                crate::auth::SchemeBinding::Token(source) => {
+                    if let Some(secret) = source.resolve() {
+                        // Heuristic: if bearer_token is already set, treat
+                        // this as an API-key header; otherwise assume bearer.
+                        if cfg.bearer_token.is_none() {
+                            cfg.bearer_token = Some(secret);
+                        } else {
+                            cfg.api_key = Some(secret);
+                        }
+                    }
+                }
+                crate::auth::SchemeBinding::Basic { username, password } => {
+                    cfg.basic_username = username.resolve();
+                    cfg.basic_password = password.resolve();
+                }
+                crate::auth::SchemeBinding::Custom(_) => {
+                    // Custom providers can't be introspected; callers
+                    // should use `execute()`/`invoke()` directly.
+                }
+            }
+        }
+
+        cfg
+    }
+
+    /// Construct a typed SDK client from the resolved credentials.
+    ///
+    /// ```rust,ignore
+    /// let client: my_api_sdk::Client = ctx.client();
+    /// let user = client.users().get("id").await?;
+    /// ```
+    ///
+    /// Requires the SDK `Client` to implement [`ApiClient`].
+    ///
+    /// [`ApiClient`]: crate::context::ApiClient
+    pub fn client<T: crate::context::ApiClient>(&self) -> T {
+        T::from_resolved_config(self.client_config())
+    }
+
+    /// Emit a value through the output pipeline.
+    ///
+    /// Respects `--format` and `--quiet` flags. Use this instead of
+    /// writing to stdout directly so custom commands honor the same
+    /// output conventions as built-in commands.
+    pub fn emit<T: serde::Serialize>(&self, value: &T) -> Result<(), CliError> {
+        let json_value = serde_json::to_value(value)
+            .map_err(|e| CliError::Other(anyhow::anyhow!("serialization error: {e}")))?;
+        let pipeline = formatter::OutputPipeline {
+            format: formatter::OutputFormat::Json,
+            color_mode: formatter::ColorMode::default(),
+            quiet: self.quiet,
+        };
+        let mut out = std::io::stdout().lock();
+        pipeline
+            .emit(&mut out, &json_value, false, true)
+            .map_err(|e| CliError::Other(e.into()))?;
+        Ok(())
+    }
 }
 
 /// Recursively check whether any method in the resource tree is the

@@ -17,6 +17,8 @@
 //! for why the single-binding fast path was removed.
 
 use std::any::Any;
+use std::future::Future;
+use std::pin::Pin;
 
 use serde_json::Value;
 
@@ -30,15 +32,24 @@ use crate::stability::Stability;
 
 /// Handler function for CLI-level custom commands.
 ///
-/// Receives the parsed [`clap::ArgMatches`] for the subcommand and a
-/// type-erased binding context. Use [`OpenApiBinding::handler()`] or
-/// [`GraphqlBinding::handler()`] to wrap a typed handler function
-/// instead of downcasting manually.
+/// **Async**: returns a pinned, boxed future. The future may borrow
+/// from the argument references (the `'a` lifetime is propagated).
+///
+/// Use [`OpenApiBinding::handler()`] to wrap a **sync** handler, or
+/// [`OpenApiBinding::async_handler()`] for a native `async fn`.
 ///
 /// [`OpenApiBinding::handler()`]: crate::openapi::OpenApiBinding::handler
+/// [`OpenApiBinding::async_handler()`]: crate::openapi::OpenApiBinding::async_handler
 /// [`GraphqlBinding::handler()`]: crate::graphql::GraphqlBinding::handler
-pub type CliCommandHandler =
-    Box<dyn Fn(&clap::ArgMatches, &dyn Any) -> Result<(), CliError> + Send + Sync>;
+/// [`GraphqlBinding::async_handler()`]: crate::graphql::GraphqlBinding::async_handler
+pub type CliCommandHandler = Box<
+    dyn for<'a> Fn(
+        &'a clap::ArgMatches,
+        &'a (dyn Any + Send + Sync),
+    ) -> Pin<Box<dyn Future<Output = Result<(), CliError>> + Send + 'a>>
+        + Send
+        + Sync,
+>;
 
 /// A CLI-level custom command: parent path, clap command, and handler.
 struct CliCommand {
@@ -607,7 +618,7 @@ impl CliApp {
                     ctx = b.merge_binding_context(&matches, ctx)?;
                 }
                 let ctx = ctx.unwrap_or_else(|| Box::new(()));
-                (cc.handler)(target, ctx.as_ref())?;
+                (cc.handler)(target, &*ctx).await?;
                 return Ok(PipelineOutcome::Success);
             }
         }

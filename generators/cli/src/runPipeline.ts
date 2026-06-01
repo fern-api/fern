@@ -1,8 +1,10 @@
-import { mkdir } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
+import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoToml } from "./patchCargoToml.js";
@@ -31,10 +33,12 @@ export async function runPipeline(args: {
     outputDir: string;
     customConfig: FernCliCustomConfig;
     ir: IrSummary;
+    /** Path to the IR JSON file for embedded SDK codegen. Omit to skip SDK generation. */
+    irFilepath?: string;
     sdkTemplateDir?: string;
     specsDir?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, irFilepath, sdkTemplateDir, specsDir } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -57,11 +61,39 @@ export async function runPipeline(args: {
     //      identifying bits don't leak Fern's template-author branding.
     //   3. copySpecs writes the spec files + main.rs into
     //      `cli/<binaryName>/`, wiring the IR-derived auth bindings.
+    //   4. generateEmbeddedSdk generates the typed Rust SDK crate as a
+    //      workspace member (path dependency from the CLI crate).
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName });
     await patchDistWorkspaceToml({ outputDir });
-    await copySpecs({ outputDir, binaryName, authBindings, specsDir });
+    const embedSdk = irFilepath != null;
+    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedSdk });
     await writeGitignore(outputDir);
 
+    // Generate the embedded typed SDK crate when the IR filepath is available.
+    if (irFilepath != null) {
+        const sdkCrateName = await generateEmbeddedSdk({
+            irFilepath,
+            outputDir,
+            binaryName
+        });
+        await patchCargoToml({ outputDir, binaryName, sdkCrateName });
+        await patchDistWorkspaceToml({ outputDir, sdkCrateName });
+        await writeFernignore(outputDir, binaryName);
+    }
+
     return { status: "generated", binaryName };
+}
+
+/**
+ * Write a `.fernignore` listing files the user owns. `fern generate`
+ * should not overwrite these on subsequent runs.
+ */
+async function writeFernignore(outputDir: string, binaryName: string): Promise<void> {
+    const content = [
+        "# Files owned by the user — fern generate will not overwrite these.",
+        `cli/${binaryName}/custom.rs`,
+        ""
+    ].join("\n");
+    await writeFile(path.join(outputDir, ".fernignore"), content);
 }
