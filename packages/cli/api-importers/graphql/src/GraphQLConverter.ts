@@ -508,13 +508,14 @@ export class GraphQLConverter {
 
     private convertObjectTypeDefinition(type: GraphQLObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties = Object.entries(fields).map(
-            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = Object.entries(fields).map(
+            ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
-                propertyAccess: undefined
+                propertyAccess: undefined,
+                arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
         );
 
@@ -570,13 +571,14 @@ export class GraphQLConverter {
 
     private convertInterfaceAsObject(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties = Object.entries(fields).map(
-            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = Object.entries(fields).map(
+            ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
-                propertyAccess: undefined
+                propertyAccess: undefined,
+                arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
         );
 
