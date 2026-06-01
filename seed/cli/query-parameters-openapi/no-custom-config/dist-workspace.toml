@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "query-parameters-api-sdk"]
 
 # Config for 'dist'
 [dist]

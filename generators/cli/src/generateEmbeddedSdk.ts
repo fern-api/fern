@@ -65,10 +65,14 @@ export async function generateEmbeddedSdk(args: {
 
     const cliEntryPoint = resolveRustSdkCli();
 
+    // Point the subprocess at the features.yml bundled in the rust-sdk dist directory.
+    const featuresYml = path.resolve(path.dirname(cliEntryPoint), "assets", "features.yml");
+
     try {
         await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
             cwd: sdkOutputDir,
-            timeout: 120_000
+            timeout: 120_000,
+            env: { ...process.env, FERN_FEATURES_YML_PATH: featuresYml }
         });
     } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
@@ -88,8 +92,13 @@ export async function generateEmbeddedSdk(args: {
  *      `lib/cli.js` (development, after `pnpm compile`).
  */
 function resolveRustSdkCli(): string {
-    // 1. Docker / dist:cli build — co-located in dist/
-    const bundled = path.resolve(import.meta.dirname ?? ".", "rust-sdk-cli.cjs");
+    // Resolve the directory containing this script. In the CJS bundle
+    // `import.meta` is empty so we fall back to Node's native `__dirname`.
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const scriptDir: string = import.meta.dirname ?? (typeof __dirname !== "undefined" ? __dirname : ".");
+
+    // 1. Docker / dist:cli build — bundled in dist/rust-sdk-dist/
+    const bundled = path.resolve(scriptDir, "rust-sdk-dist", "cli.cjs");
     try {
         accessSync(bundled, constants.R_OK);
         return bundled;
@@ -99,9 +108,14 @@ function resolveRustSdkCli(): string {
 
     // 2. Monorepo dev — resolve via pnpm workspace link.
     try {
-        const esmRequire = createRequire(import.meta.url);
-        const pkgDir = path.dirname(esmRequire.resolve("@fern-api/rust-sdk/package.json"));
-        return path.join(pkgDir, "lib", "cli.js");
+        // In CJS import.meta.url is empty; use __filename for createRequire.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        const resolveFrom = import.meta.url ?? (typeof __filename !== "undefined" ? `file://${__filename}` : undefined);
+        if (resolveFrom != null) {
+            const esmRequire = createRequire(resolveFrom);
+            const pkgDir = path.dirname(esmRequire.resolve("@fern-api/rust-sdk/package.json"));
+            return path.join(pkgDir, "lib", "cli.js");
+        }
     } catch (_e: unknown) {
         // Package not resolvable — will throw below with actionable message.
     }

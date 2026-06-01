@@ -80,8 +80,10 @@ try {
     const { readlink } = await import("fs/promises");
     const target = await readlink(symlink);
     const rustSdkPkg = path.resolve(path.dirname(symlink), target);
-    const rustSdkDist = path.join(rustSdkPkg, "dist", "cli.cjs");
-    await cp(rustSdkDist, path.join(dirname, "dist", "rust-sdk-cli.cjs"));
+    // Copy the entire rust-sdk dist tree into dist/rust-sdk-dist/ so the
+    // subprocess has access to all its bundled assets (asIs/, assets/).
+    const rustSdkDistDir = path.join(rustSdkPkg, "dist");
+    await cp(rustSdkDistDir, path.join(dirname, "dist", "rust-sdk-dist"), { recursive: true });
 } catch (_e) {
     // Non-fatal: the rust-sdk dist may not exist during a plain
     // `pnpm compile`. It's only required for `dist:cli` / Docker.
