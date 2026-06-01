@@ -4,6 +4,7 @@ import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import type { IrSummary } from "../ir.js";
+import type { ResolvedOutputConfig } from "../resolveOutputConfig.js";
 import { runPipeline } from "../runPipeline.js";
 
 /**
@@ -91,6 +92,20 @@ describe("runPipeline", () => {
         auth: overrides.auth ?? { schemes: [] }
     });
 
+    const localFilesConfig: ResolvedOutputConfig = {
+        version: "0.0.0",
+        npmPublishInfo: undefined
+    };
+
+    const githubConfig: ResolvedOutputConfig = {
+        version: "1.5.0",
+        npmPublishInfo: {
+            packageName: "@acme/cli",
+            registryUrl: "https://registry.npmjs.org",
+            tokenEnvironmentVariable: "NPM_TOKEN"
+        }
+    };
+
     it("returns skipped when no OpenAPI specs are mounted; never touches the output dir", async () => {
         await stageSdkTemplate();
 
@@ -99,6 +114,7 @@ describe("runPipeline", () => {
             outputDir,
             customConfig: {},
             ir: ir(),
+            outputConfig: localFilesConfig,
             sdkTemplateDir,
             specsDir
         });
@@ -117,6 +133,7 @@ describe("runPipeline", () => {
             outputDir,
             customConfig: {},
             ir: ir({ apiDisplayName: "My API" }),
+            outputConfig: localFilesConfig,
             sdkTemplateDir,
             specsDir
         });
@@ -150,6 +167,7 @@ describe("runPipeline", () => {
             outputDir,
             customConfig: { binaryName: "Override CLI" },
             ir: ir({ apiDisplayName: "Should Not Win" }),
+            outputConfig: localFilesConfig,
             sdkTemplateDir,
             specsDir
         });
@@ -191,6 +209,7 @@ describe("runPipeline", () => {
                     ]
                 }
             }),
+            outputConfig: localFilesConfig,
             sdkTemplateDir,
             specsDir
         });
@@ -208,11 +227,68 @@ describe("runPipeline", () => {
         await stageSdkTemplate();
         await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
 
-        await expect(runPipeline({ outputDir, customConfig: {}, ir: ir(), sdkTemplateDir, specsDir })).rejects.toThrow(
-            /Set `customConfig.binaryName`/
-        );
+        await expect(
+            runPipeline({ outputDir, customConfig: {}, ir: ir(), outputConfig: localFilesConfig, sdkTemplateDir, specsDir })
+        ).rejects.toThrow(/Set `customConfig.binaryName`/);
 
         // The error came BEFORE any output got created.
         await expect(access(outputDir)).rejects.toThrow();
+    });
+
+    it("stamps the resolved version into Cargo.toml [package] version", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        const versionedConfig: ResolvedOutputConfig = { version: "2.3.1", npmPublishInfo: undefined };
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: versionedConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const cargo = await readFile(path.join(outputDir, "Cargo.toml"), "utf-8");
+        expect(cargo).toContain('version = "2.3.1"');
+    });
+
+    it("does NOT emit .github/ when output mode is local_files (no npmPublishInfo)", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: localFilesConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        await expect(access(path.join(outputDir, ".github"))).rejects.toThrow();
+    });
+
+    it("emits .github/workflows/ci.yml when github mode with npm publish info", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        expect(ciYml).toContain("name: ci");
+        expect(ciYml).toContain("contains(github.ref, 'refs/tags/')");
+        expect(ciYml).toContain("NPM_TOKEN");
+        expect(ciYml).toContain("@acme/cli");
+        expect(ciYml).toContain("npm publish");
+        expect(ciYml).toContain("x86_64-unknown-linux-gnu");
+        expect(ciYml).toContain("aarch64-apple-darwin");
     });
 });

@@ -1,6 +1,6 @@
 [package]
 name = "fern-cli-sdk"
-version = "0.18.1"
+version = "0.0.0"
 edition = "2021"
 description = "CLI generator — dynamic command surface from OpenAPI and GraphQL schemas"
 license = "Apache-2.0"
