@@ -148,6 +148,7 @@ async function sendAndPrint(opts: SendOptions): Promise<void> {
             const errorBody = (await response.json()) as { error?: string };
             detail = errorBody.error ?? `HTTP ${response.status}`;
         } catch {
+            // Non-JSON error body — fall back to raw HTTP status
             detail = `HTTP ${response.status}`;
         }
         context.logger.error(`Agent error: ${detail}`);
