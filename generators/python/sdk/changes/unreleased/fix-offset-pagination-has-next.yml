@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix offset pagination so generated `list` endpoints emit a real `_has_next` instead of the
+    literal `True`. When the API declares `has-next-page` on the pagination config, the
+    generator now reads that response field (`bool(_parsed_response.<path>)`); otherwise it
+    falls back to `len(_items or []) > 0`, matching the TypeScript generator's
+    `(r?.data ?? []).length > 0` semantics.
+
+    Previously every offset-paginated method hardcoded `_has_next = True`, so
+    `while pager.has_next: pager = pager.next_page()` loops never terminated. `for x in pager`
+    worked only because the core paginator stops iteration when `get_next()` returns an empty
+    page.
+  type: fix

@@ -34,7 +34,10 @@ class OffsetPagination(Paginator):
         return None
 
     def init_has_next(self) -> str:
-        return "True"
+        if self.offset.has_next_page is not None:
+            path = self._response_property_to_dot_access(self.offset.has_next_page)
+            return f"bool({Paginator.PARSED_RESPONSE_VARIABLE}.{path})"
+        return f"len({Paginator.PAGINATION_ITEMS_VARIABLE} or []) > 0"
 
     def init_get_next(self, *, writer: AST.NodeWriter) -> None:
         if self._is_async:
