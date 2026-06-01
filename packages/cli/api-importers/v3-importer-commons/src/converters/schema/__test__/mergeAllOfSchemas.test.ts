@@ -260,6 +260,130 @@ describe("mergeAllOfSchemas", () => {
             expect("$ref" in result).toBe(false);
         });
 
+        it("merges required arrays across resolved $ref boundaries", () => {
+            const resolver = (ref: { $ref: string }) => {
+                if (ref.$ref === "#/components/schemas/Parent") {
+                    return {
+                        type: "object",
+                        required: ["parentField"],
+                        properties: {
+                            parentField: { type: "string" },
+                            parentOptional: { type: "number" }
+                        }
+                    } as Schema;
+                }
+                return undefined;
+            };
+            const result = mergeAllOfSchemas(
+                {} as Schema,
+                [
+                    {
+                        required: ["childField", "parentField"],
+                        properties: { childField: { type: "boolean" } },
+                        allOf: [{ $ref: "#/components/schemas/Parent" } as unknown as Schema]
+                    } as Schema
+                ],
+                resolver
+            );
+            expect(result.required).toEqual(expect.arrayContaining(["parentField", "childField"]));
+            expect(result.required).toHaveLength(2);
+            expect(result.properties?.["parentField"]).toBeDefined();
+            expect(result.properties?.["parentOptional"]).toBeDefined();
+            expect(result.properties?.["childField"]).toBeDefined();
+        });
+
+        it("resolves multiple $ref entries in a single nested allOf", () => {
+            const resolver = (ref: { $ref: string }) => {
+                if (ref.$ref === "#/components/schemas/Identifiable") {
+                    return {
+                        type: "object",
+                        required: ["id"],
+                        properties: { id: { type: "string" } }
+                    } as Schema;
+                }
+                if (ref.$ref === "#/components/schemas/Describable") {
+                    return {
+                        type: "object",
+                        properties: {
+                            name: { type: "string" },
+                            description: { type: "string" }
+                        }
+                    } as Schema;
+                }
+                return undefined;
+            };
+            const result = mergeAllOfSchemas(
+                {} as Schema,
+                [
+                    {
+                        properties: { species: { type: "string" } },
+                        allOf: [
+                            { $ref: "#/components/schemas/Identifiable" } as unknown as Schema,
+                            { $ref: "#/components/schemas/Describable" } as unknown as Schema
+                        ]
+                    } as Schema
+                ],
+                resolver
+            );
+            expect(result.properties?.["id"]).toBeDefined();
+            expect(result.properties?.["name"]).toBeDefined();
+            expect(result.properties?.["description"]).toBeDefined();
+            expect(result.properties?.["species"]).toBeDefined();
+            expect(result.required).toEqual(["id"]);
+        });
+
+        it("preserves sibling properties when parent has both $ref and own properties", () => {
+            const resolver = (ref: { $ref: string }) => {
+                if (ref.$ref === "#/components/schemas/Address") {
+                    return {
+                        type: "object",
+                        required: ["country"],
+                        properties: {
+                            country: { type: "string" },
+                            city: { type: "string" }
+                        }
+                    } as Schema;
+                }
+                return undefined;
+            };
+            const result = mergeAllOfSchemas(
+                {} as Schema,
+                [
+                    {
+                        type: "object",
+                        properties: {
+                            companyName: { type: "string" },
+                            companyPhone: { type: "string" }
+                        },
+                        allOf: [{ $ref: "#/components/schemas/Address" } as unknown as Schema]
+                    } as Schema
+                ],
+                resolver
+            );
+            expect(result.properties?.["country"]).toBeDefined();
+            expect(result.properties?.["city"]).toBeDefined();
+            expect(result.properties?.["companyName"]).toBeDefined();
+            expect(result.properties?.["companyPhone"]).toBeDefined();
+            expect(result.required).toEqual(["country"]);
+        });
+
+        it("returns undefined resolver results gracefully", () => {
+            const resolver = () => undefined;
+            const result = mergeAllOfSchemas(
+                {} as Schema,
+                [
+                    {
+                        required: ["id"],
+                        properties: { id: { type: "string" } },
+                        allOf: [{ $ref: "#/components/schemas/Unknown" } as unknown as Schema]
+                    } as Schema
+                ],
+                resolver
+            );
+            expect(result.properties?.["id"]).toBeDefined();
+            expect(result.required).toEqual(["id"]);
+        });
+
         it("recursively flattens doubly-nested allOf", () => {
             const result = mergeAllOfSchemas({} as Schema, [
                 {
