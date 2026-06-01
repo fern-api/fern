@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
+#[non_exhaustive]
 pub enum VariableType {
     #[serde(rename = "integerType")]
     #[non_exhaustive]
@@ -53,6 +54,12 @@ pub enum VariableType {
     #[serde(rename = "doublyLinkedListType")]
     #[non_exhaustive]
     DoublyLinkedListType {},
+
+    /// Catch-all variant for unrecognized discriminant values.
+    /// If the server sends a discriminant not recognized by the current SDK
+    /// version, the raw payload is captured here so callers can still inspect it.
+    #[serde(untagged)]
+    __Unknown(serde_json::Value),
 }
 
 impl VariableType {
@@ -110,5 +117,9 @@ impl VariableType {
             value_type,
             is_fixed_length: Some(is_fixed_length),
         }
+    }
+
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
     }
 }

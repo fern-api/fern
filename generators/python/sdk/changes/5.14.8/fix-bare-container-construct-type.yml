@@ -1,0 +1,6 @@
+- summary: |
+    Fix `construct_type` crash on bare unparameterized `dict`, `list`, and `set` types.
+    Previously, `get_args()` on a bare container returned an empty tuple, causing
+    `ValueError` (dict) or `IndexError` (list/set). Now falls back to returning
+    the object unchanged, matching `Dict[Any, Any]` / `List[Any]` / `Set[Any]` semantics.
+  type: fix

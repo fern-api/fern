@@ -9,9 +9,10 @@ module Seed
     # @param api_key [String]
     # @param username [String]
     # @param password [String]
+    # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(client_id:, client_secret:, base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), username: ENV.fetch("MY_USERNAME", nil), password: ENV.fetch("MY_PASSWORD", nil))
+    def initialize(client_id:, client_secret:, base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil), username: ENV.fetch("MY_USERNAME", nil), password: ENV.fetch("MY_PASSWORD", nil), max_retries: 2)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -40,7 +41,8 @@ module Seed
       headers["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}" if !username.nil? && !password.nil?
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
-        headers: headers.merge(@auth_provider.auth_headers)
+        headers: headers.merge(@auth_provider.auth_headers),
+        max_retries: max_retries
       )
     end
 
