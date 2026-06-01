@@ -93,8 +93,8 @@ function resolveRustSdkCli(): string {
     try {
         accessSync(bundled, constants.R_OK);
         return bundled;
-    } catch {
-        // Not found — fall through.
+    } catch (_e: unknown) {
+        // Not found — fall through to monorepo resolution.
     }
 
     // 2. Monorepo dev — resolve via pnpm workspace link.
@@ -102,8 +102,8 @@ function resolveRustSdkCli(): string {
         const esmRequire = createRequire(import.meta.url);
         const pkgDir = path.dirname(esmRequire.resolve("@fern-api/rust-sdk/package.json"));
         return path.join(pkgDir, "lib", "cli.js");
-    } catch {
-        // Package not found.
+    } catch (_e: unknown) {
+        // Package not resolvable — will throw below with actionable message.
     }
 
     throw new Error(

@@ -115,8 +115,8 @@ async function scaffoldCustomRs(binDir: string): Promise<void> {
     try {
         await readFile(customRsPath);
         return; // already exists — user owns it
-    } catch {
-        // does not exist — scaffold it
+    } catch (_e: unknown) {
+        // does not exist — scaffold it below
     }
     const content = [
         "//! Custom command handlers.",

@@ -22,11 +22,13 @@ publish:
 test:
   docker:
     image: fernapi/fern-cli:latest
-    command: pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
+    command: pnpm turbo run dist:cli --filter @fern-api/rust-sdk && pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
   local:
     workingDirectory: generators/cli
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/cli-generator
+      # Build rust-sdk dist first — the CLI's build.mjs copies
+      # rust-sdk-cli.cjs into its own dist/ for subprocess invocation.
+      - pnpm turbo run dist:cli --filter @fern-api/rust-sdk && pnpm turbo run dist:cli --filter @fern-api/cli-generator
     runCommand: node --enable-source-maps dist/cli.cjs {CONFIG_PATH}
 
 scripts:

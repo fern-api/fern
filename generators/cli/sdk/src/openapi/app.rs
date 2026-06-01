@@ -1361,6 +1361,10 @@ impl AppContext {
         self
     }
 
+    pub(crate) fn set_base_url(&mut self, base_url: Option<String>) {
+        self.base_url_override = base_url;
+    }
+
     pub(crate) fn with_quiet(mut self, quiet: bool) -> Self {
         self.quiet = quiet;
         self
