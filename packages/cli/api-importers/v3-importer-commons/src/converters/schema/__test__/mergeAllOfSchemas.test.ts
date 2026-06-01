@@ -143,7 +143,7 @@ describe("mergeAllOfSchemas", () => {
             expect(result.allOf).toBeUndefined();
         });
 
-        it("filters out $ref objects from nested allOf arrays", () => {
+        it("filters out $ref objects from nested allOf arrays when no resolver provided", () => {
             const result = mergeAllOfSchemas({} as Schema, [
                 {
                     required: ["id"],
@@ -159,6 +159,104 @@ describe("mergeAllOfSchemas", () => {
             expect(result.properties?.["name"]).toBeDefined();
             expect(result.required).toEqual(expect.arrayContaining(["id", "name"]));
             // No $ref key should leak onto the result
+            expect("$ref" in result).toBe(false);
+        });
+
+        it("resolves $ref objects in nested allOf when resolver is provided", () => {
+            const resolver = (ref: { $ref: string }) => {
+                if (ref.$ref === "#/components/schemas/Base") {
+                    return {
+                        type: "object",
+                        required: ["baseField"],
+                        properties: {
+                            baseField: { type: "string" },
+                            baseOptional: { type: "number" }
+                        }
+                    } as Schema;
+                }
+                return undefined;
+            };
+            const result = mergeAllOfSchemas(
+                {} as Schema,
+                [
+                    {
+                        required: ["id"],
+                        properties: { id: { type: "string" } },
+                        allOf: [
+                            { $ref: "#/components/schemas/Base" } as unknown as Schema,
+                            { required: ["name"], properties: { name: { type: "string" } } }
+                        ]
+                    } as Schema
+                ],
+                resolver
+            );
+            expect(result.properties?.["id"]).toBeDefined();
+            expect(result.properties?.["name"]).toBeDefined();
+            expect(result.properties?.["baseField"]).toBeDefined();
+            expect(result.properties?.["baseOptional"]).toBeDefined();
+            expect(result.required).toEqual(expect.arrayContaining(["id", "name", "baseField"]));
+            expect("$ref" in result).toBe(false);
+        });
+
+        it("resolves deeply nested $ref chains with resolver", () => {
+            const resolver = (ref: { $ref: string }) => {
+                if (ref.$ref === "#/components/schemas/GrandParent") {
+                    return {
+                        properties: { ancestorProp: { type: "boolean" } },
+                        allOf: [{ $ref: "#/components/schemas/Root" } as unknown as Schema]
+                    } as Schema;
+                }
+                if (ref.$ref === "#/components/schemas/Root") {
+                    return {
+                        properties: { rootProp: { type: "integer" } }
+                    } as Schema;
+                }
+                return undefined;
+            };
+            const result = mergeAllOfSchemas(
+                {} as Schema,
+                [
+                    {
+                        properties: { childProp: { type: "string" } },
+                        allOf: [{ $ref: "#/components/schemas/GrandParent" } as unknown as Schema]
+                    } as Schema
+                ],
+                resolver
+            );
+            expect(result.properties?.["childProp"]).toBeDefined();
+            expect(result.properties?.["ancestorProp"]).toBeDefined();
+            expect(result.properties?.["rootProp"]).toBeDefined();
+        });
+
+        it("handles circular $ref in nested allOf with resolver", () => {
+            const resolver = (ref: { $ref: string }) => {
+                if (ref.$ref === "#/components/schemas/A") {
+                    return {
+                        properties: { aProp: { type: "string" } },
+                        allOf: [{ $ref: "#/components/schemas/B" } as unknown as Schema]
+                    } as Schema;
+                }
+                if (ref.$ref === "#/components/schemas/B") {
+                    return {
+                        properties: { bProp: { type: "number" } },
+                        allOf: [{ $ref: "#/components/schemas/A" } as unknown as Schema]
+                    } as Schema;
+                }
+                return undefined;
+            };
+            const result = mergeAllOfSchemas(
+                {} as Schema,
+                [
+                    {
+                        properties: { local: { type: "boolean" } },
+                        allOf: [{ $ref: "#/components/schemas/A" } as unknown as Schema]
+                    } as Schema
+                ],
+                resolver
+            );
+            expect(result.properties?.["local"]).toBeDefined();
+            expect(result.properties?.["aProp"]).toBeDefined();
+            expect(result.properties?.["bProp"]).toBeDefined();
             expect("$ref" in result).toBe(false);
         });
 
