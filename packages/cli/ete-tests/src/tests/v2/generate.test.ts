@@ -2,6 +2,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { describe, expect, it } from "vitest";
 import { createTempFixture } from "../../utils/createTempFixture.js";
 import { cliV2, runCliV2 } from "../../utils/runCliV2.js";
+import { setupOpenAPIServer } from "../../utils/setupOpenAPIServer.js";
 
 const FIXTURES = {
     petstore: "petstore",
@@ -364,6 +365,7 @@ paths:
             }, 120_000);
 
             it("should generate Go SDK from a URL-referenced spec", async () => {
+                const { cleanup: cleanupServer } = setupOpenAPIServer();
                 const fixture = await createTempFixture({});
                 try {
                     const result = await runCliV2({
@@ -371,7 +373,7 @@ paths:
                             "sdk",
                             "generate",
                             "--api",
-                            "https://petstore3.swagger.io/api/v3/openapi.json",
+                            "http://localhost:4567/openapi.json",
                             "--target",
                             "go",
                             "--org",
@@ -389,6 +391,7 @@ paths:
                     expect(await doesPathExist(outputPath)).toBe(true);
                 } finally {
                     await fixture.cleanup();
+                    await cleanupServer();
                 }
             }, 120_000);
         });
