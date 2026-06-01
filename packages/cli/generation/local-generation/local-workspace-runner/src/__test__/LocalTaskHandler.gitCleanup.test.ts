@@ -119,9 +119,7 @@ describe("LocalTaskHandler - .git cleanup (ENOTEMPTY fix)", { timeout: 30000 }, 
             const gcAutoIndex = gitCalls.findIndex(
                 (args) => args.includes("config") && args.includes("gc.auto") && args.includes("0")
             );
-            const addIndex = gitCalls.findIndex(
-                (args) => args.some((a) => a === "add") && args.some((a) => a === ".")
-            );
+            const addIndex = gitCalls.findIndex((args) => args.some((a) => a === "add") && args.some((a) => a === "."));
 
             // gc.auto 0 must be present
             expect(gcAutoIndex).toBeGreaterThan(-1);

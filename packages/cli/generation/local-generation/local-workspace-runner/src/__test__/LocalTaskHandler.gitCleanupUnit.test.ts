@@ -64,7 +64,9 @@ describe("LocalTaskHandler - .git cleanup unit tests", { timeout: 30000 }, () =>
         await mkdir(tmpOutputDir, { recursive: true });
     });
 
-    async function createLocalTaskHandler(): Promise<InstanceType<typeof import("../LocalTaskHandler.js").LocalTaskHandler>> {
+    async function createLocalTaskHandler(): Promise<
+        InstanceType<typeof import("../LocalTaskHandler.js").LocalTaskHandler>
+    > {
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
         const { AbsoluteFilePath } = await import("@fern-api/fs-utils");
 
@@ -125,17 +127,13 @@ describe("LocalTaskHandler - .git cleanup unit tests", { timeout: 30000 }, () =>
         await handler.copyGeneratedFiles();
 
         // Filter to git commands only
-        const gitCalls = execaCalls
-            .filter((c) => c.cmd === "git")
-            .map((c) => c.args);
+        const gitCalls = execaCalls.filter((c) => c.cmd === "git").map((c) => c.args);
 
         const initIdx = gitCalls.findIndex((args) => args.some((a) => a === "init"));
         const gcAutoIdx = gitCalls.findIndex(
             (args) => args.includes("config") && args.includes("gc.auto") && args.includes("0")
         );
-        const firstAddIdx = gitCalls.findIndex(
-            (args) => args.some((a) => a === "add") && args.some((a) => a === ".")
-        );
+        const firstAddIdx = gitCalls.findIndex((args) => args.some((a) => a === "add") && args.some((a) => a === "."));
 
         // All three must be present
         expect(initIdx).toBeGreaterThan(-1);
