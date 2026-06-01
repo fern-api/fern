@@ -1,0 +1,4 @@
+- summary: |
+    Fix offset pagination `_has_next` always being `True`, causing `while pager.has_next` loops to never terminate.
+    `init_has_next()` now returns `len(_items or []) > 0` instead of hardcoded `True`.
+  type: fix

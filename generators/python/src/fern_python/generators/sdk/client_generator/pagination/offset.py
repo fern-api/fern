@@ -34,7 +34,7 @@ class OffsetPagination(Paginator):
         return None
 
     def init_has_next(self) -> str:
-        return "True"
+        return f"len({Paginator.PAGINATION_ITEMS_VARIABLE} or []) > 0"
 
     def init_get_next(self, *, writer: AST.NodeWriter) -> None:
         if self._is_async:
@@ -53,9 +53,6 @@ class OffsetPagination(Paginator):
         for parameter in self._config.parameters:
             # Assume the paging mechanism is a direct parameter (e.g. not nested)
             if parameter.name == page_parameter_name:
-                # Assume the offset parameter is an integer
-                writer.write(f"{parameter.name} + {self.get_step()}")
-            elif parameter.name == page_parameter_name:
                 # Assume the offset parameter is an integer
                 writer.write(f"{parameter.name} + {self.get_step()}")
             else:
