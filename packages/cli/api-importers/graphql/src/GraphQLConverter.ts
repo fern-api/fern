@@ -288,8 +288,7 @@ export class GraphQLConverter {
     private convertOperations(
         type: GraphQLObjectType,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
-        pending: PendingOperation[],
-        parentFieldPath: string[] = []
+        pending: PendingOperation[]
     ): void {
         const fields = type.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
@@ -299,16 +298,13 @@ export class GraphQLConverter {
                 field.args.length === 0 &&
                 this.isNamespaceType(returnRawType)
             ) {
-                this.convertNamespaceOperations(returnRawType, fieldName, operationType, pending, [
-                    ...parentFieldPath,
-                    fieldName
-                ]);
+                this.convertNamespaceOperations(returnRawType, operationType, pending, [fieldName]);
             } else {
                 const flatId = `${operationType.toLowerCase()}_${fieldName}`;
                 pending.push({
                     flatId,
                     namespacedId: flatId,
-                    operation: this.convertField(field, fieldName, operationType, parentFieldPath)
+                    operation: this.convertField(field, fieldName, operationType)
                 });
             }
         }
@@ -316,7 +312,6 @@ export class GraphQLConverter {
 
     private convertNamespaceOperations(
         namespaceType: GraphQLObjectType,
-        _parentName: string,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
         pending: PendingOperation[],
         fieldPath: string[]
@@ -344,7 +339,7 @@ export class GraphQLConverter {
         field: GraphQLField<unknown, unknown>,
         name: string,
         operationType: FdrAPI.api.v1.register.GraphQlOperationType,
-        fieldPath: string[] = []
+        fieldPath?: string[]
     ): FdrAPI.api.v1.register.GraphQlOperation {
         const args = field.args.map((arg) => this.convertArgument(arg));
         const examples =
@@ -362,7 +357,7 @@ export class GraphQLConverter {
             displayName: undefined,
             description: field.description ?? undefined,
             availability: undefined,
-            fieldPath: fieldPath.length > 0 ? fieldPath : undefined,
+            fieldPath: fieldPath != null && fieldPath.length > 0 ? fieldPath : undefined,
             arguments: args.length > 0 ? args : undefined,
             returnType: this.convertOutputType(field.type),
             examples: examples != null && examples.length > 0 ? examples : undefined,

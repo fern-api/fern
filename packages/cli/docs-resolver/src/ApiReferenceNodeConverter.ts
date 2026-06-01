@@ -1191,8 +1191,7 @@ export class ApiReferenceNodeConverter {
                 const children = this.#buildFieldPathGroupedChildren(
                     operations,
                     sectionSlug,
-                    parentAvailability,
-                    `${this.apiDefinitionId}:graphql:${namespace}:${operationType}`
+                    parentAvailability
                 );
 
                 const sectionNode = {
@@ -1260,8 +1259,7 @@ export class ApiReferenceNodeConverter {
             const children = this.#buildFieldPathGroupedChildren(
                 operations,
                 sectionSlug,
-                parentAvailability,
-                `${this.apiDefinitionId}:graphql:${operationType}`
+                parentAvailability
             );
 
             const sectionNode = {
@@ -1296,8 +1294,7 @@ export class ApiReferenceNodeConverter {
     #buildFieldPathGroupedChildren(
         operations: APIV1Read.GraphQlOperation[],
         parentSlug: FernNavigation.V1.SlugGenerator,
-        parentAvailability: docsYml.RawSchemas.Availability | undefined,
-        idPrefix: string
+        parentAvailability: docsYml.RawSchemas.Availability | undefined
     ): FernNavigation.V1.ApiPackageChild[] {
         // Group operations by their first fieldPath element
         const groupedByParent = new Map<string, APIV1Read.GraphQlOperation[]>();
