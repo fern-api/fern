@@ -29,13 +29,15 @@ export async function doAuth0DeviceAuthorizationFlow({
     auth0ClientId,
     audience,
     context,
-    connection
+    connection,
+    organization
 }: {
     auth0Domain: string;
     auth0ClientId: string;
     audience: string;
     context: TaskContext;
     connection?: string;
+    organization?: string;
 }): Promise<Auth0TokenResponse> {
     const deviceCodeResponse = await axios.request<DeviceCodeResponse>({
         method: "POST",
@@ -45,7 +47,8 @@ export async function doAuth0DeviceAuthorizationFlow({
             client_id: auth0ClientId,
             audience,
             scope: "openid profile email offline_access",
-            ...(connection != null ? { connection } : {})
+            ...(connection != null ? { connection } : {}),
+            ...(organization != null ? { organization } : {})
         }),
         validateStatus: () => true
     });
