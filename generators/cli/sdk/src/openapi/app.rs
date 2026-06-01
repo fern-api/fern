@@ -2599,6 +2599,7 @@ mod tests {
             auth_provider: crate::auth::no_auth_provider(),
             http_config: crate::http::HttpConfig::new("test").unwrap(),
             global_headers: Vec::new(),
+            auth_bindings: Vec::new(),
         });
 
         // find_method should find methods from either entry.

@@ -610,10 +610,12 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let base_url = crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {
                     ctx.add_entry(entry);
+                    ctx.set_base_url(base_url);
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -624,7 +626,8 @@ impl Binding for OpenApiBinding {
                         entry.http_config,
                         entry.global_headers,
                         bindings,
-                    ).with_quiet(quiet);
+                    ).with_quiet(quiet)
+                     .with_base_url(base_url);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
@@ -637,7 +640,8 @@ impl Binding for OpenApiBinding {
                     entry.http_config,
                     entry.global_headers,
                     bindings,
-                ).with_quiet(quiet);
+                ).with_quiet(quiet)
+                 .with_base_url(base_url);
                 Ok(Some(Box::new(ctx)))
             }
         }

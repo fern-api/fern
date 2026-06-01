@@ -34,12 +34,12 @@ pub struct ResolvedClientConfig {
 impl ResolvedClientConfig {
     /// Convenience: expose the bearer token as a plain `&str`.
     pub fn bearer_token_str(&self) -> Option<&str> {
-        self.bearer_token.as_ref().map(|s| s.expose_secret().as_str())
+        self.bearer_token.as_ref().map(|s| s.expose_secret().as_ref())
     }
 
     /// Convenience: expose the API key as a plain `&str`.
     pub fn api_key_str(&self) -> Option<&str> {
-        self.api_key.as_ref().map(|s| s.expose_secret().as_str())
+        self.api_key.as_ref().map(|s| s.expose_secret().as_ref())
     }
 }
 

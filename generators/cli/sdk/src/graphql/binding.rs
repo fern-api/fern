@@ -163,11 +163,11 @@ impl GraphqlBinding {
 
     /// Wrap a native **async** handler into a [`CliCommandHandler`].
     pub fn async_handler(
-        f: fn(
-            &clap::ArgMatches,
-            &super::AppContext,
+        f: for<'a> fn(
+            &'a clap::ArgMatches,
+            &'a super::AppContext,
         ) -> std::pin::Pin<
-            Box<dyn std::future::Future<Output = Result<(), crate::error::CliError>> + Send + '_>,
+            Box<dyn std::future::Future<Output = Result<(), crate::error::CliError>> + Send + 'a>,
         >,
     ) -> crate::app::CliCommandHandler {
         Box::new(move |matches: &clap::ArgMatches, ctx: &(dyn std::any::Any + Send + Sync)| {
