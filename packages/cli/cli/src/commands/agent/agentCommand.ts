@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { createInterface } from "node:readline";
 
 import { FernToken, getUserToken } from "@fern-api/auth";
-import { getDashboardBaseUrl } from "@fern-api/login";
+import { askToLogin, getDashboardBaseUrl } from "@fern-api/login";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
@@ -25,7 +25,7 @@ interface AgentCommandOptions {
  * - Resume: `fern agent --conversation <uuid>`
  */
 export async function agentCommand(context: TaskContext, options: AgentCommandOptions): Promise<void> {
-    const token = await resolveToken(context);
+    const token = await resolveToken(context, options.organization);
     const dashboardUrl = getDashboardBaseUrl();
     const agentUrl = `${dashboardUrl}/api/agent`;
     const conversationId = options.conversationId ?? randomUUID();
@@ -85,7 +85,7 @@ export async function agentCommand(context: TaskContext, options: AgentCommandOp
     });
 }
 
-async function resolveToken(context: TaskContext): Promise<string> {
+async function resolveToken(context: TaskContext, organization: string): Promise<string> {
     // Try user token first (from `fern login`), then env FERN_TOKEN.
     const fernToken: FernToken | undefined = await getUserToken();
     if (fernToken != null) {
@@ -97,13 +97,10 @@ async function resolveToken(context: TaskContext): Promise<string> {
         return envToken.trim();
     }
 
-    context.failAndThrow(
-        "Authentication required. Please run " +
-            chalk.bold("fern login") +
-            " or set the " +
-            chalk.bold("FERN_TOKEN") +
-            " environment variable."
-    );
+    // No stored token — prompt for login with org scoping so the returned
+    // JWT carries RBAC permissions for the target org.
+    const token = await askToLogin(context, { organization });
+    return token.value;
 }
 
 interface SendOptions {

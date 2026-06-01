@@ -4,14 +4,17 @@ import inquirer, { ConfirmQuestion } from "inquirer";
 
 import { login } from "./login.js";
 
-export async function askToLogin(context: TaskContext): Promise<FernToken> {
+export async function askToLogin(
+    context: TaskContext,
+    { organization }: { organization?: string } = {}
+): Promise<FernToken> {
     if (!(await isLoggedIn()) && process.stdout.isTTY) {
         await context.takeOverTerminal(async () => {
             if (!(await askForConfirmation("Login required. Continue?"))) {
                 context.failAndThrow(undefined, undefined, { code: CliError.Code.AuthError });
             }
         });
-        await login(context);
+        await login(context, { organization });
     }
     const token = await getToken();
     if (token == null) {

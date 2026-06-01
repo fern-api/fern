@@ -1,0 +1,5 @@
+- summary: |
+    Add `--org` flag to `fern login` to scope the Auth0 token to a specific organization.
+    When specified, uses the Authorization Code (PKCE) flow which supports the `organization`
+    parameter and returns a JWT with RBAC permissions for the target org.
+  type: feat

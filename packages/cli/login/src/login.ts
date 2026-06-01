@@ -12,13 +12,17 @@ export type { Auth0TokenResponse } from "./auth0-login/doAuth0LoginFlow.js";
 
 export async function login(
     context: TaskContext,
-    { useDeviceCodeFlow = false, email }: { useDeviceCodeFlow?: boolean; email?: string } = {}
+    {
+        useDeviceCodeFlow = false,
+        email,
+        organization
+    }: { useDeviceCodeFlow?: boolean; email?: string; organization?: string } = {}
 ): Promise<FernUserToken> {
     context.instrumentPostHogEvent({
         command: "Login initiated"
     });
 
-    const { accessToken } = await getTokenFromAuth0(context, { useDeviceCodeFlow, email });
+    const { accessToken } = await getTokenFromAuth0(context, { useDeviceCodeFlow, email, organization });
     await storeToken(accessToken);
 
     context.logger.info(chalk.green("Logged in!"));
@@ -36,8 +40,9 @@ export async function getTokenFromAuth0(
     {
         useDeviceCodeFlow,
         forceReauth = false,
-        email
-    }: { useDeviceCodeFlow: boolean; forceReauth?: boolean; email?: string }
+        email,
+        organization
+    }: { useDeviceCodeFlow: boolean; forceReauth?: boolean; email?: string; organization?: string }
 ): Promise<Auth0TokenResponse> {
     if (useDeviceCodeFlow) {
         return await doAuth0DeviceAuthorizationFlow({
@@ -45,6 +50,19 @@ export async function getTokenFromAuth0(
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
             context
+        });
+    }
+
+    // When --org is specified, use the auth code flow directly (PKCE supports
+    // the organization parameter; device code does not).
+    if (organization != null) {
+        return await doAuth0LoginFlow({
+            context,
+            auth0Domain: AUTH0_DOMAIN,
+            auth0ClientId: AUTH0_CLIENT_ID,
+            audience: VENUS_AUDIENCE,
+            organization,
+            forceReauth: true
         });
     }
 
@@ -67,15 +85,19 @@ export async function getTokenFromAuth0(
     // - If already logged in → open the browser directly (Auth0 session handles it)
     // - If not logged in → show an interactive prompt so the user stays in the CLI
     if (!forceReauth && process.stdout.isTTY && !(await isLoggedIn())) {
-        return await promptAndLogin(context);
+        return await promptAndLogin(context, organization);
     }
 
-    return await loginWithDeviceCodeFallback(context, { forceReauth });
+    return await loginWithDeviceCodeFallback(context, { forceReauth, organization });
 }
 
 async function loginWithDeviceCodeFallback(
     context: TaskContext,
-    { forceReauth = false, connection }: { forceReauth?: boolean; connection?: string } = {}
+    {
+        forceReauth = false,
+        connection,
+        organization
+    }: { forceReauth?: boolean; connection?: string; organization?: string } = {}
 ): Promise<Auth0TokenResponse> {
     try {
         return await doAuth0LoginFlow({
@@ -84,7 +106,8 @@ async function loginWithDeviceCodeFallback(
             auth0ClientId: AUTH0_CLIENT_ID,
             audience: VENUS_AUDIENCE,
             forceReauth,
-            connection
+            connection,
+            organization
         });
     } catch {
         return await doAuth0DeviceAuthorizationFlow({
@@ -97,7 +120,7 @@ async function loginWithDeviceCodeFallback(
     }
 }
 
-async function promptAndLogin(context: TaskContext): Promise<Auth0TokenResponse> {
+async function promptAndLogin(context: TaskContext, organization?: string): Promise<Auth0TokenResponse> {
     const choices = LOGIN_OPTIONS.map((opt) => ({ name: opt.label, value: opt.connection }));
 
     const selectedConnection = await promptForConnection(context, choices);
@@ -111,10 +134,10 @@ async function promptAndLogin(context: TaskContext): Promise<Auth0TokenResponse>
             email: ssoEmail
         });
 
-        return await loginWithDeviceCodeFallback(context, { connection: resolvedConnection });
+        return await loginWithDeviceCodeFallback(context, { connection: resolvedConnection, organization });
     }
 
-    return await loginWithDeviceCodeFallback(context, { connection: selectedConnection });
+    return await loginWithDeviceCodeFallback(context, { connection: selectedConnection, organization });
 }
 
 async function promptForConnection(
