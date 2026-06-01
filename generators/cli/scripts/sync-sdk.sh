@@ -182,7 +182,6 @@ echo "--- Writing provenance marker ..."
 
 cat > "$SDK_DIR/.synced-from" << EOF
 cli-sdk@${CLI_SDK_SHA}
-synced: ${SYNC_DATE}
 EOF
 
 # ---------------------------------------------------------------------------
