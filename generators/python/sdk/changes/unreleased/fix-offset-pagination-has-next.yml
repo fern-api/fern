@@ -11,4 +11,10 @@
     `while pager.has_next: pager = pager.next_page()` loops never terminated. `for x in pager`
     worked only because the core paginator stops iteration when `get_next()` returns an empty
     page.
+
+    Also harden the offset paginator against two latent crashes: nested `has-next-page` paths
+    (e.g. `$response.metadata.hasNext`) are now wrapped in a `_parsed_response.metadata is
+    not None` guard mirroring the cursor paginator, and `_has_next`/`_get_next` are
+    pre-initialized so endpoints with an optional response type no longer raise `NameError`
+    when the server returns a null body.
   type: fix
