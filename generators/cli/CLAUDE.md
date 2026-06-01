@@ -197,6 +197,64 @@ The image warms a cargo target cache against the committed
 `Cargo.lock`; mounted fixtures use `cargo build --locked` and would
 otherwise refuse to start when the dep tree drifts.
 
+### Syncing the vendored SDK from cli-sdk
+
+The SDK at [`./sdk/`](./sdk/) is a **vendored snapshot** of
+[`fern-api/cli-sdk`](https://github.com/fern-api/cli-sdk). A daily
+GitHub Actions workflow (`.github/workflows/sync-cli-sdk.yml`) pulls
+`cli-sdk` `main` HEAD into this directory, opens an auto-merging PR,
+and relies on seed tests as the trust boundary.
+
+**How the sync works:**
+
+[`generators/cli/scripts/sync-sdk.sh`](scripts/sync-sdk.sh) takes a
+local cli-sdk checkout and:
+
+1. **Rsyncs source files** (`src/`, `tests/`, `cli/openapi-fixture/`)
+   under the same `SDK_IGNORE` rules as `build.mjs` — template-only
+   files (smoke tests, demo binaries, `.github/`, `docs/`, etc.) are
+   excluded.
+2. **Projects `Cargo.toml`** — the vendored manifest is a deterministic
+   projection of cli-sdk's workspace manifest, **not** a copy. A naïve
+   `cp` would re-introduce `[workspace]`, `version.workspace = true`,
+   and ~35 `[[bin]]` entries. The projection:
+   - **Drops** `[workspace]` + `[workspace.package]`
+   - **Keeps only** the `openapi-fixture` and `strip-schema` `[[bin]]`
+     entries
+   - **Rewrites** `version.workspace = true` → literal
+     `version = "<synced>"`
+   - **Injects** the 3 Fern comment blocks that `patchCargoToml.ts`
+     anchors on (`TEMPLATE_TOP_COMMENT`, `TEMPLATE_BIN_COMMENT`, the
+     `strip-schema` "Internal tool…" comment) plus `readme = "README.md"`
+     and `[package.metadata.dist] dist = false`
+   - **Copies verbatim**: `[dependencies]`, `[features]`, `[lib]`,
+     `[profile.dist]`, `[build-dependencies]`, `[dev-dependencies]`
+3. **Regenerates `Cargo.lock`** so `cargo build --locked` is honest.
+4. **Writes `.synced-from`** with `cli-sdk@<sha>` + timestamp for
+   provenance tracking.
+
+**Manual sync** (when you can't wait for the daily cron):
+
+```bash
+# From the fern repo root:
+git clone --depth 1 https://github.com/fern-api/cli-sdk.git /tmp/cli-sdk
+bash generators/cli/scripts/sync-sdk.sh /tmp/cli-sdk
+# Review the diff, then commit.
+```
+
+**Must-rebuild list** (only when `Cargo.lock` changes):
+
+```bash
+pnpm turbo run dist:cli --filter @fern-api/cli-generator
+docker build --no-cache -f docker/seed/Dockerfile.cli -t fernapi/cli-seed:latest .
+pnpm turbo run dist:cli --filter @fern-api/seed-cli
+```
+
+**Key invariant**: every `patchCargoToml.ts` anchor must be present in
+the projected `Cargo.toml`. If you rename a comment block in the
+template, update `sync-sdk.sh`'s projection accordingly — the
+`patchCargoToml.test.ts` will catch any mismatch at test time.
+
 ## Conventions
 
 - **No TOML parser**: `patchCargoToml` uses literal string replacement
