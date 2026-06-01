@@ -1,6 +1,6 @@
 import { buildGenerator, getDirname } from "@fern-api/configs/build-utils.mjs";
-import { createRequire } from "module";
 import { cp } from "fs/promises";
+import { createRequire } from "module";
 import path from "path";
 
 // Glob patterns (minimatch syntax, relative to ./sdk) of files we don't want
@@ -83,7 +83,4 @@ try {
 } catch {
     // Non-fatal: the rust-sdk dist may not exist during a plain
     // `pnpm compile`. It's only required for `dist:cli` / Docker.
-    console.warn(
-        "⚠ Could not copy rust-sdk CLI dist — embedded SDK generation will use monorepo resolution at runtime."
-    );
 }
