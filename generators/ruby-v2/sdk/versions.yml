@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.13.1
+  changelogEntry:
+    - summary: |
+        Generated model classes now include fields inherited from parent types
+        (Fern `extends` / OpenAPI `allOf`). Previously, derived models — including
+        discriminated union variants — only carried their own declared properties
+        and silently dropped fields contributed by their parents, leaving
+        deserialized responses without `id`, `name`, and other inherited common
+        fields.
+      type: fix
+  createdAt: "2026-06-01"
+  irVersion: 66
 - version: 1.13.0
   changelogEntry:
     - summary: |
