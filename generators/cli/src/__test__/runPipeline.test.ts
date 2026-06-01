@@ -228,7 +228,14 @@ describe("runPipeline", () => {
         await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
 
         await expect(
-            runPipeline({ outputDir, customConfig: {}, ir: ir(), outputConfig: localFilesConfig, sdkTemplateDir, specsDir })
+            runPipeline({
+                outputDir,
+                customConfig: {},
+                ir: ir(),
+                outputConfig: localFilesConfig,
+                sdkTemplateDir,
+                specsDir
+            })
         ).rejects.toThrow(/Set `customConfig.binaryName`/);
 
         // The error came BEFORE any output got created.

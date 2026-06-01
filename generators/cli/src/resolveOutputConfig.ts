@@ -69,9 +69,7 @@ export function resolveOutputConfig(output: GeneratorConfig["output"]): Resolved
 
 type GithubPublishInfo = NonNullable<Extract<OutputMode, { type: "github" }>["publishInfo"]>;
 
-function resolveNpmPublishInfo(
-    publishInfo: GithubPublishInfo | undefined
-): ResolvedNpmPublishInfo | undefined {
+function resolveNpmPublishInfo(publishInfo: GithubPublishInfo | undefined): ResolvedNpmPublishInfo | undefined {
     if (publishInfo == null) {
         return undefined;
     }

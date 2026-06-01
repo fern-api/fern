@@ -30,11 +30,7 @@ import { TEMPLATE_BINARY_NAME } from "./identity.js";
  *     in the shipped src/ tree depends on it.
  *   - All dependency versions, features, and the `[profile.dist]` block.
  */
-export async function patchCargoToml(args: {
-    outputDir: string;
-    binaryName: string;
-    version: string;
-}): Promise<void> {
+export async function patchCargoToml(args: { outputDir: string; binaryName: string; version: string }): Promise<void> {
     const { outputDir, binaryName, version } = args;
     const cargoTomlPath = path.join(outputDir, "Cargo.toml");
     const contents = await readFile(cargoTomlPath, "utf-8");

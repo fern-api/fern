@@ -48,10 +48,7 @@ export async function emitPublishWorkflow(args: {
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
 }
 
-function constructWorkflowYaml(args: {
-    binaryName: string;
-    npmPublishInfo: ResolvedNpmPublishInfo;
-}): string {
+function constructWorkflowYaml(args: { binaryName: string; npmPublishInfo: ResolvedNpmPublishInfo }): string {
     const { binaryName, npmPublishInfo } = args;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
 
