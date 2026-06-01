@@ -1,3 +1,3 @@
 - summary: |
-    Add support for top-level `feedback` configuration object in `docs.yml` with `hide-feedback` and `require-email` properties.
+    Add support for top-level `feedback` configuration object in `docs.yml` with `hide-feedback` and `require-email` properties. Using `layout.hide-feedback` alongside the `feedback` object now produces a validation error.
   type: feat

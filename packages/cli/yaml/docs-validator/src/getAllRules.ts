@@ -4,6 +4,7 @@ import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared/i
 import { FilepathsExistRule } from "./rules/filepaths-exist/index.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
+import { NoConflictingFeedbackConfigRule } from "./rules/no-conflicting-feedback-config/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation/index.js";
@@ -31,6 +32,7 @@ const allRules = [
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
     NoCircularRedirectsRule, // Detect circular redirect chains
+    NoConflictingFeedbackConfigRule, // Prevent layout.hide-feedback + feedback object conflict
     ValidTranslationsConfigRule,
     MissingRedirectsRule, // Check if any previously published URLs disappear without a redirect
     AccentColorContrastRule,
