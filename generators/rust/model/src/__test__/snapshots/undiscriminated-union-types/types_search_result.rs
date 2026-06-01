@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
+#[non_exhaustive]
 pub enum SearchResult {
         #[serde(rename = "user")]
         #[non_exhaustive]
@@ -40,6 +41,12 @@ pub enum SearchResult {
             #[serde(skip_serializing_if = "Option::is_none")]
             parent_id: Option<String>,
         },
+
+        /// Catch-all variant for unrecognized discriminant values.
+        /// If the server sends a discriminant not recognized by the current SDK
+        /// version, the raw payload is captured here so callers can still inspect it.
+        #[serde(untagged)]
+        __Unknown(serde_json::Value),
 }
 
 impl SearchResult {
@@ -57,5 +64,9 @@ impl SearchResult {
 
     pub fn category_with_parent_id(id: String, name: String, description: String, parent_id: String) -> Self {
         Self::Category { id, name, description, parent_id: Some(parent_id) }
+    }
+
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
     }
 }
