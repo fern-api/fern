@@ -26,7 +26,7 @@ export class InviteMemberCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusService({ token: token.value });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
 
         const orgLookup = await venus.organization.get(args.org);
         if (!orgLookup.ok) {

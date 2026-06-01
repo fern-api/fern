@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.5.0
+  changelogEntry:
+    - summary: |
+        Include a `.gitignore` in generated CLI output so that Rust build
+        artifacts (`target/`) are not tracked by Git.
+      type: feat
+  createdAt: "2026-05-29"
+  irVersion: 67
 - version: 0.4.2
   changelogEntry:
     - summary: |

@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.43.0
+  changelogEntry:
+    - summary: |
+        Prompt for an optional description when creating a token interactively via `fern org token create`.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.42.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs diff` command to CLI v2 for generating visual diffs between preview and production docs pages.
+      type: feat
+  createdAt: "2026-05-29"
+  irVersion: 66
+- version: 5.41.2
+  changelogEntry:
+    - summary: |
+        Skip AI example enhancement in self-hosted builds to avoid Venus JWT 401 errors and unnecessary latency.
+      type: fix
+  createdAt: "2026-05-29"
+  irVersion: 66
+- version: 5.41.1
+  changelogEntry:
+    - summary: |
+        Stop overwriting native OpenAPI examples with AI-generated ones (FER-10006).
+        When a customer provides an `example` or `examples` on a request body whose
+        media type also has a `schema`, the example is now correctly classified as
+        user-specified at both the IR and FDR layers, so the AI example enhancer
+        skips the endpoint instead of replacing the human-authored payload.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 66
+- version: 5.41.0
+  changelogEntry:
+    - summary: |
+        Add X-Request-Id header to all CLI v2 HTTP requests for request tracing and debugging.
+      type: feat
+  createdAt: "2026-05-28"
+  irVersion: 66
 - version: 5.40.1
   changelogEntry:
     - summary: |

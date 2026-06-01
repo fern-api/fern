@@ -7,6 +7,7 @@ import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
+import { writeGitignore } from "./writeGitignore.js";
 
 export type PipelineOutcome =
     | { status: "skipped"; reason: "no-openapi-specs" }
@@ -60,6 +61,7 @@ export async function runPipeline(args: {
     await patchCargoToml({ outputDir, binaryName });
     await patchDistWorkspaceToml({ outputDir });
     await copySpecs({ outputDir, binaryName, authBindings, specsDir });
+    await writeGitignore(outputDir);
 
     return { status: "generated", binaryName };
 }
