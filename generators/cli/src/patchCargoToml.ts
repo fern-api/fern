@@ -42,6 +42,15 @@ export async function patchCargoToml(args: { outputDir: string; binaryName: stri
         );
     }
     await writeFile(cargoTomlPath, patched);
+
+    // Cargo.lock records the package's own version alongside its
+    // dependencies.  When we stamp a resolved version into Cargo.toml,
+    // the lockfile entry must match — otherwise `cargo build --locked`
+    // rejects the build.
+    const cargoLockPath = path.join(outputDir, "Cargo.lock");
+    const lockContents = await readFile(cargoLockPath, "utf-8");
+    const patchedLock = patchCargoLockVersion(lockContents, version);
+    await writeFile(cargoLockPath, patchedLock);
 }
 
 /**
@@ -69,11 +78,9 @@ export function applyCargoTomlPatch(cargoToml: string, binaryName: string, versi
 
 /**
  * Replace the template's `version = "..."` field under `[package]`
- * with the resolved version. Uses a regex anchored to the `[package]`
- * section so it won't accidentally match version fields inside
- * `[dependencies]`. Safe for `cargo build --locked` — changing
- * `[package] version` does not alter the dependency graph in
- * `Cargo.lock`.
+ * with the resolved version. Uses a regex anchored to the first
+ * occurrence so it won't accidentally match version fields inside
+ * `[dependencies]`.
  */
 function replaceVersion(cargoToml: string, version: string): string {
     const versionRe = /^(version\s*=\s*)"[^"]*"/m;
@@ -81,6 +88,25 @@ function replaceVersion(cargoToml: string, version: string): string {
         throw new Error('patchCargoToml anchor missing — could not find version = "..." field');
     }
     return cargoToml.replace(versionRe, `$1"${version}"`);
+}
+
+/**
+ * Patch the `version` field of the `fern-cli-sdk` package entry in
+ * Cargo.lock to match the version stamped into Cargo.toml. Cargo.lock
+ * records each package as:
+ *
+ *   [[package]]
+ *   name = "fern-cli-sdk"
+ *   version = "0.18.1"
+ *
+ * We locate the `fern-cli-sdk` entry and replace its version.
+ */
+export function patchCargoLockVersion(cargoLock: string, version: string): string {
+    const pattern = /(name = "fern-cli-sdk"\nversion = ")([^"]*)(")/;
+    if (!pattern.test(cargoLock)) {
+        throw new Error("patchCargoToml: could not find fern-cli-sdk version entry in Cargo.lock");
+    }
+    return cargoLock.replace(pattern, `$1${version}$3`);
 }
 
 function requireReplace(haystack: string, needle: string, replacement: string): string {

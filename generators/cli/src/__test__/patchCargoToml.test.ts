@@ -3,7 +3,7 @@ import os from "os";
 import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { applyCargoTomlPatch, patchCargoToml } from "../index.js";
+import { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "../index.js";
 
 /**
  * Test against the real SDK template's `Cargo.toml`, not a hand-authored
@@ -11,11 +11,15 @@ import { applyCargoTomlPatch, patchCargoToml } from "../index.js";
  * these tests fail loudly — exactly when the patcher would silently
  * stop working in production.
  */
-const SDK_CARGO_TOML_PATH = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "../../sdk/Cargo.toml");
+const SDK_DIR = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "../../sdk");
+const SDK_CARGO_TOML_PATH = path.join(SDK_DIR, "Cargo.toml");
+const SDK_CARGO_LOCK_PATH = path.join(SDK_DIR, "Cargo.lock");
 
 let TEMPLATE_CARGO_TOML: string;
+let TEMPLATE_CARGO_LOCK: string;
 beforeAll(async () => {
     TEMPLATE_CARGO_TOML = await readFile(SDK_CARGO_TOML_PATH, "utf-8");
+    TEMPLATE_CARGO_LOCK = await readFile(SDK_CARGO_LOCK_PATH, "utf-8");
 });
 
 describe("applyCargoTomlPatch", () => {
@@ -89,6 +93,18 @@ dist = true`);
     });
 });
 
+describe("patchCargoLockVersion", () => {
+    it("replaces the fern-cli-sdk version in Cargo.lock", () => {
+        const patched = patchCargoLockVersion(TEMPLATE_CARGO_LOCK, "3.0.0");
+        expect(patched).toContain('name = "fern-cli-sdk"\nversion = "3.0.0"');
+        expect(patched).not.toContain('name = "fern-cli-sdk"\nversion = "0.18.1"');
+    });
+
+    it("throws when fern-cli-sdk entry is missing", () => {
+        expect(() => patchCargoLockVersion("version = 4\n", "1.0.0")).toThrow(/could not find fern-cli-sdk/);
+    });
+});
+
 describe("patchCargoToml (filesystem)", () => {
     let tmpDir: string;
 
@@ -100,8 +116,9 @@ describe("patchCargoToml (filesystem)", () => {
         await rm(tmpDir, { recursive: true, force: true });
     });
 
-    it("reads, patches, and writes Cargo.toml in the output dir", async () => {
+    it("reads, patches, and writes Cargo.toml and Cargo.lock in the output dir", async () => {
         await writeFile(path.join(tmpDir, "Cargo.toml"), TEMPLATE_CARGO_TOML);
+        await writeFile(path.join(tmpDir, "Cargo.lock"), TEMPLATE_CARGO_LOCK);
 
         await patchCargoToml({ outputDir: tmpDir, binaryName: "acme-cli", version: "2.0.0" });
 
@@ -111,10 +128,15 @@ describe("patchCargoToml (filesystem)", () => {
         expect(result).toContain("dist = true");
         expect(result).not.toContain('readme = "README.md"');
         expect(result).not.toContain('name = "strip-schema"');
+
+        const lockResult = await readFile(path.join(tmpDir, "Cargo.lock"), "utf-8");
+        expect(lockResult).toContain('name = "fern-cli-sdk"\nversion = "2.0.0"');
+        expect(lockResult).not.toContain('name = "fern-cli-sdk"\nversion = "0.18.1"');
     });
 
     it("throws when none of the template anchors are present", async () => {
         await writeFile(path.join(tmpDir, "Cargo.toml"), '[package]\nname = "unrelated"\n');
+        await writeFile(path.join(tmpDir, "Cargo.lock"), TEMPLATE_CARGO_LOCK);
 
         await expect(patchCargoToml({ outputDir: tmpDir, binaryName: "acme-cli", version: "1.0.0" })).rejects.toThrow(
             /anchor missing|did not match/
