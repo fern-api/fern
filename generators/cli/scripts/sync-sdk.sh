@@ -47,7 +47,6 @@ rsync -a --delete \
   --exclude='tests/fixtures/' \
   --exclude='cli/openapi-fixture/' \
   --exclude='.github/' \
-  --exclude='src/bin/strip_schema.rs' \
   --exclude='build.rs' \
   --exclude='tests/common/' \
   --exclude='tests/auth_routing_wire.rs' \
