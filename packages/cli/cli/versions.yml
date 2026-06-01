@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.1
+  changelogEntry:
+    - summary: |
+        Replace external petstore3.swagger.io URL with a local OpenAPI server in the v2 generate ETE test to remove a flaky dependency on the public petstore endpoint.
+      type: chore
+  createdAt: "2026-06-01"
+  irVersion: 66
 - version: 5.44.0
   changelogEntry:
     - summary: |
