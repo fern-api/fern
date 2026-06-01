@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.43.0
+  changelogEntry:
+    - summary: |
+        Prompt for an optional description when creating a token interactively via `fern org token create`.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
 - version: 5.42.0
   changelogEntry:
     - summary: |
