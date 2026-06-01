@@ -29,6 +29,7 @@ fi
 
 CLI_SDK_SHA="$(git -C "$CLI_SDK_DIR" rev-parse HEAD 2>/dev/null || echo "unknown")"
 CLI_SDK_SHORT="$(git -C "$CLI_SDK_DIR" rev-parse --short HEAD 2>/dev/null || echo "unknown")"
+SYNC_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
 echo "==> Syncing cli-sdk@${CLI_SDK_SHORT} (${CLI_SDK_SHA}) into generators/cli/sdk/"
 
