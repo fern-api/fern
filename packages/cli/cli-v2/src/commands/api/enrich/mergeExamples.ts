@@ -440,8 +440,8 @@ function applyResponseBodyExample(operation: any, responseExample: unknown, warn
     }
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyResponseBodyNamedExample(
+    // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
     operation: any,
     responseExample: unknown,
     exampleName: string,

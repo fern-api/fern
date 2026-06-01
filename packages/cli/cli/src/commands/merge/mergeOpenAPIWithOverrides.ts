@@ -550,8 +550,8 @@ function applyResponseBodyExample(operation: any, responseExample: unknown, warn
 /**
  * Sets a named entry in `examples` on the first success response's first content type.
  */
-// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyResponseBodyNamedExample(
+    // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
     operation: any,
     responseExample: unknown,
     exampleName: string,
