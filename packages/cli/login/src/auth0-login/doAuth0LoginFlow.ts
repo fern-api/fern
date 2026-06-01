@@ -88,7 +88,15 @@ function getCode({
             }
         });
 
-        const loginUrl = constructAuth0Url({ auth0ClientId, auth0Domain, origin, audience, forceReauth, connection, organization });
+        const loginUrl = constructAuth0Url({
+            auth0ClientId,
+            auth0Domain,
+            origin,
+            audience,
+            forceReauth,
+            connection,
+            organization
+        });
         void open(loginUrl).catch(() => {
             context.logger.info(
                 [

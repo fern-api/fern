@@ -12,7 +12,11 @@ export type { Auth0TokenResponse } from "./auth0-login/doAuth0LoginFlow.js";
 
 export async function login(
     context: TaskContext,
-    { useDeviceCodeFlow = false, email, organization }: { useDeviceCodeFlow?: boolean; email?: string; organization?: string } = {}
+    {
+        useDeviceCodeFlow = false,
+        email,
+        organization
+    }: { useDeviceCodeFlow?: boolean; email?: string; organization?: string } = {}
 ): Promise<FernUserToken> {
     context.instrumentPostHogEvent({
         command: "Login initiated"
@@ -78,7 +82,11 @@ export async function getTokenFromAuth0(
 
 async function loginWithDeviceCodeFallback(
     context: TaskContext,
-    { forceReauth = false, connection, organization }: { forceReauth?: boolean; connection?: string; organization?: string } = {}
+    {
+        forceReauth = false,
+        connection,
+        organization
+    }: { forceReauth?: boolean; connection?: string; organization?: string } = {}
 ): Promise<Auth0TokenResponse> {
     try {
         return await doAuth0LoginFlow({
