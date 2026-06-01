@@ -454,4 +454,137 @@ describe("extractEnrichedExamples", () => {
         const examples = extractEnrichedExamples(original, enriched);
         expect(examples).toEqual({});
     });
+
+    it("does not flag pre-existing examples on $ref parameters as newly enriched", () => {
+        // Regression: when one parameter on an operation is touched by an x-fern-example,
+        // resolveParameters inlines every $ref parameter on the operation. The extractor
+        // must still recognise the pre-existing example carried by the referenced component
+        // and not report it as new.
+        const original: Spec = {
+            paths: {
+                "/plants": {
+                    get: {
+                        parameters: [
+                            { $ref: "#/components/parameters/Limit" },
+                            { $ref: "#/components/parameters/Cursor" }
+                        ],
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            },
+            components: {
+                parameters: {
+                    Limit: { name: "limit", in: "query", schema: { type: "integer" }, example: "preexisting-limit" },
+                    Cursor: { name: "cursor", in: "query", schema: { type: "string" } }
+                }
+            }
+        };
+        const overrides: Spec = {
+            paths: {
+                "/plants": {
+                    get: { "x-fern-examples": [{ "query-parameters": { cursor: "next-page-token" } }] }
+                }
+            }
+        };
+
+        const enriched = mergeExamplesIntoSpec(original, overrides, createLogger());
+        const examples = extractEnrichedExamples(original, enriched);
+
+        // Only the cursor example is new; the limit example came from the resolved $ref.
+        expect(examples.paths["/plants"].get.parameters).toEqual([
+            { name: "cursor", in: "query", example: "next-page-token" }
+        ]);
+    });
+});
+
+describe("mergeExamplesIntoSpec warnings", () => {
+    it("warns when override has request.body but spec has no requestBody", () => {
+        const spec: Spec = {
+            openapi: "3.1.0",
+            paths: { "/plants": { post: { responses: { "201": { description: "Created" } } } } }
+        };
+        const overrides: Spec = {
+            paths: {
+                "/plants": {
+                    post: { "x-fern-examples": [{ request: { body: { name: "Snake Plant" } } }] }
+                }
+            }
+        };
+
+        const logger = createLogger();
+        mergeExamplesIntoSpec(spec, overrides, logger);
+        expect(logger.warnings.some((w) => w.includes("POST /plants") && w.includes("requestBody"))).toBe(true);
+    });
+
+    it("warns when override has response.body but spec has no 2xx or default response", () => {
+        const spec: Spec = {
+            openapi: "3.1.0",
+            paths: { "/plants": { get: { responses: { "404": { description: "Not found" } } } } }
+        };
+        const overrides: Spec = {
+            paths: {
+                "/plants": {
+                    get: { "x-fern-examples": [{ response: { body: { items: [] } } }] }
+                }
+            }
+        };
+
+        const logger = createLogger();
+        mergeExamplesIntoSpec(spec, overrides, logger);
+        expect(logger.warnings.some((w) => w.includes("GET /plants") && w.includes("response"))).toBe(true);
+    });
+
+    it("matches header parameter names case-insensitively (RFC 7230)", () => {
+        const spec: Spec = {
+            openapi: "3.1.0",
+            paths: {
+                "/plants": {
+                    get: {
+                        parameters: [{ name: "x-request-id", in: "header", schema: { type: "string" } }],
+                        responses: { "200": { description: "OK" } }
+                    }
+                }
+            }
+        };
+        const overrides: Spec = {
+            paths: {
+                "/plants": {
+                    get: { "x-fern-examples": [{ headers: { "X-Request-Id": "req-abc-123" } }] }
+                }
+            }
+        };
+
+        const result = mergeExamplesIntoSpec(spec, overrides, createLogger());
+        expect(result.paths["/plants"].get.parameters[0].example).toBe("req-abc-123");
+    });
+
+    it("falls back to the default response when no 2xx is declared", () => {
+        const spec: Spec = {
+            openapi: "3.1.0",
+            paths: {
+                "/plants": {
+                    get: {
+                        responses: {
+                            default: {
+                                description: "Unexpected error",
+                                content: { "application/json": { schema: { type: "object" } } }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        const overrides: Spec = {
+            paths: {
+                "/plants": {
+                    get: { "x-fern-examples": [{ response: { body: { code: "ERR" } } }] }
+                }
+            }
+        };
+
+        const result = mergeExamplesIntoSpec(spec, overrides, createLogger());
+        expect(result.paths["/plants"].get.responses.default.content["application/json"].example).toEqual({
+            code: "ERR"
+        });
+    });
 });

@@ -58,10 +58,14 @@ export function mergeExamplesIntoSpec(
                 continue;
             }
 
+            const warnForOp = (msg: string): void => {
+                logger.warn(`${method.toUpperCase()} ${overridePath}: ${msg}`);
+            };
+
             if (fernExamples.length === 1) {
-                applyExampleToOperation(specOperation, fernExamples[0], merged);
+                applyExampleToOperation(specOperation, fernExamples[0], merged, warnForOp);
             } else {
-                applyMultipleExamplesToOperation(specOperation, fernExamples, merged);
+                applyMultipleExamplesToOperation(specOperation, fernExamples, merged, warnForOp);
             }
         }
     }
@@ -102,7 +106,8 @@ export function extractEnrichedExamples(original: OpenAPISpec, enriched: OpenAPI
             const originalOp = (originalPathItem as Record<string, unknown>)?.[method];
             const exampleFields = extractOperationExamples(
                 operation as Record<string, unknown>,
-                (originalOp ?? {}) as Record<string, unknown>
+                (originalOp ?? {}) as Record<string, unknown>,
+                original
             );
 
             if (exampleFields != null) {
@@ -125,14 +130,29 @@ export function extractEnrichedExamples(original: OpenAPISpec, enriched: OpenAPI
  */
 function extractOperationExamples(
     enrichedOp: Record<string, unknown>,
-    originalOp: Record<string, unknown>
+    originalOp: Record<string, unknown>,
+    originalSpec: OpenAPISpec
 ): Record<string, unknown> | undefined {
     const result: Record<string, unknown> = {};
     let hasExamples = false;
 
     // Check parameters for new examples
     if (Array.isArray(enrichedOp.parameters)) {
-        const originalParams = Array.isArray(originalOp.parameters) ? originalOp.parameters : [];
+        // Resolve $refs on the original side so we can compare against the inlined
+        // shape that the merge process produced. Without this, every parameter that
+        // was originally a $ref would falsely appear as newly-enriched even when
+        // the referenced component already carried an example.
+        const originalParams = Array.isArray(originalOp.parameters)
+            ? (originalOp.parameters as Array<Record<string, unknown>>).map((p) => {
+                  if (typeof p?.$ref === "string") {
+                      const resolved = resolveRef(originalSpec, p.$ref);
+                      if (resolved != null && typeof resolved === "object") {
+                          return resolved as Record<string, unknown>;
+                      }
+                  }
+                  return p;
+              })
+            : [];
         const paramsWithExamples: unknown[] = [];
         for (const param of enrichedOp.parameters as Array<Record<string, unknown>>) {
             const origParam = originalParams.find(
@@ -219,23 +239,25 @@ function extractOperationExamples(
     return hasExamples ? result : undefined;
 }
 
+type WarnFn = (msg: string) => void;
+
 /**
  * Applies a single x-fern-example to an OpenAPI operation using singular `example` fields.
  */
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operations have dynamic shape
-function applyExampleToOperation(operation: any, fernExample: any, spec: OpenAPISpec): void {
-    applyParameterExamples(operation, fernExample["path-parameters"], "path", spec);
-    applyParameterExamples(operation, fernExample["query-parameters"], "query", spec);
-    applyParameterExamples(operation, fernExample.headers, "header", spec);
+function applyExampleToOperation(operation: any, fernExample: any, spec: OpenAPISpec, warn: WarnFn): void {
+    applyParameterExamples(operation, fernExample["path-parameters"], "path", spec, warn);
+    applyParameterExamples(operation, fernExample["query-parameters"], "query", spec, warn);
+    applyParameterExamples(operation, fernExample.headers, "header", spec, warn);
 
     const requestBody = fernExample.request?.body;
     if (requestBody !== undefined) {
-        applyRequestBodyExample(operation, requestBody);
+        applyRequestBodyExample(operation, requestBody, warn);
     }
 
     const responseBody = fernExample.response?.body;
     if (responseBody !== undefined) {
-        applyResponseBodyExample(operation, responseBody);
+        applyResponseBodyExample(operation, responseBody, warn);
     }
 }
 
@@ -243,25 +265,42 @@ function applyExampleToOperation(operation: any, fernExample: any, spec: OpenAPI
  * Applies multiple x-fern-examples to an OpenAPI operation using plural `examples` fields.
  */
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operations have dynamic shape
-function applyMultipleExamplesToOperation(operation: any, fernExamples: any[], spec: OpenAPISpec): void {
+function applyMultipleExamplesToOperation(operation: any, fernExamples: any[], spec: OpenAPISpec, warn: WarnFn): void {
     for (let i = 0; i < fernExamples.length; i++) {
         const fernExample = fernExamples[i];
         const exampleName = fernExample.name ?? `Example${i + 1}`;
 
-        applyParameterNamedExamples(operation, fernExample["path-parameters"], "path", exampleName, spec);
-        applyParameterNamedExamples(operation, fernExample["query-parameters"], "query", exampleName, spec);
-        applyParameterNamedExamples(operation, fernExample.headers, "header", exampleName, spec);
+        applyParameterNamedExamples(operation, fernExample["path-parameters"], "path", exampleName, spec, warn);
+        applyParameterNamedExamples(operation, fernExample["query-parameters"], "query", exampleName, spec, warn);
+        applyParameterNamedExamples(operation, fernExample.headers, "header", exampleName, spec, warn);
 
         const requestBody = fernExample.request?.body;
         if (requestBody !== undefined) {
-            applyRequestBodyNamedExample(operation, requestBody, exampleName);
+            applyRequestBodyNamedExample(operation, requestBody, exampleName, warn);
         }
 
         const responseBody = fernExample.response?.body;
         if (responseBody !== undefined) {
-            applyResponseBodyNamedExample(operation, responseBody, exampleName);
+            applyResponseBodyNamedExample(operation, responseBody, exampleName, warn);
         }
     }
+}
+
+// Header names are case-insensitive per RFC 7230, so match accordingly when location is "header".
+function matchParameter(
+    parameters: Array<Record<string, unknown>>,
+    paramName: string,
+    location: string
+    // biome-ignore lint/suspicious/noExplicitAny: parameter shape
+): any | undefined {
+    if (location === "header") {
+        const lower = paramName.toLowerCase();
+        return parameters.find(
+            (p: Record<string, unknown>) =>
+                typeof p.name === "string" && p.name.toLowerCase() === lower && p.in === "header"
+        );
+    }
+    return parameters.find((p: Record<string, unknown>) => p.name === paramName && p.in === location);
 }
 
 function applyParameterExamples(
@@ -269,17 +308,19 @@ function applyParameterExamples(
     operation: any,
     paramExamples: Record<string, unknown> | undefined,
     location: string,
-    spec: OpenAPISpec
+    spec: OpenAPISpec,
+    warn: WarnFn
 ): void {
     if (paramExamples == null || typeof paramExamples !== "object") {
         return;
     }
     const parameters = resolveParameters(operation, spec);
     for (const [paramName, exampleValue] of Object.entries(paramExamples)) {
-        // biome-ignore lint/suspicious/noExplicitAny: parameter shape
-        const param = parameters.find((p: any) => p.name === paramName && p.in === location);
+        const param = matchParameter(parameters, paramName, location);
         if (param != null) {
             param.example = exampleValue;
+        } else {
+            warn(`no ${location} parameter named '${paramName}' found in spec; example skipped.`);
         }
     }
 }
@@ -290,20 +331,22 @@ function applyParameterNamedExamples(
     paramExamples: Record<string, unknown> | undefined,
     location: string,
     exampleName: string,
-    spec: OpenAPISpec
+    spec: OpenAPISpec,
+    warn: WarnFn
 ): void {
     if (paramExamples == null || typeof paramExamples !== "object") {
         return;
     }
     const parameters = resolveParameters(operation, spec);
     for (const [paramName, exampleValue] of Object.entries(paramExamples)) {
-        // biome-ignore lint/suspicious/noExplicitAny: parameter shape
-        const param = parameters.find((p: any) => p.name === paramName && p.in === location);
+        const param = matchParameter(parameters, paramName, location);
         if (param != null) {
             if (param.examples == null) {
                 param.examples = {};
             }
             param.examples[exampleName] = { value: exampleValue };
+        } else {
+            warn(`no ${location} parameter named '${paramName}' found in spec; example '${exampleName}' skipped.`);
         }
     }
 }
@@ -343,12 +386,14 @@ function resolveRef(spec: OpenAPISpec, ref: string): any | undefined {
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
-function applyRequestBodyExample(operation: any, bodyExample: unknown): void {
+function applyRequestBodyExample(operation: any, bodyExample: unknown, warn: WarnFn): void {
     if (operation.requestBody == null) {
+        warn("spec defines no requestBody; request.body example skipped.");
         return;
     }
     const content = operation.requestBody.content;
     if (content == null) {
+        warn("spec requestBody defines no content; request.body example skipped.");
         return;
     }
     const contentType = getFirstContentType(content);
@@ -358,12 +403,14 @@ function applyRequestBodyExample(operation: any, bodyExample: unknown): void {
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
-function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exampleName: string): void {
+function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exampleName: string, warn: WarnFn): void {
     if (operation.requestBody == null) {
+        warn(`spec defines no requestBody; request.body example '${exampleName}' skipped.`);
         return;
     }
     const content = operation.requestBody.content;
     if (content == null) {
+        warn(`spec requestBody defines no content; request.body example '${exampleName}' skipped.`);
         return;
     }
     const contentType = getFirstContentType(content);
@@ -376,13 +423,15 @@ function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exam
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
-function applyResponseBodyExample(operation: any, responseExample: unknown): void {
+function applyResponseBodyExample(operation: any, responseExample: unknown, warn: WarnFn): void {
     const response = getFirstSuccessResponse(operation);
     if (response == null) {
+        warn("spec defines no 2xx or default response; response.body example skipped.");
         return;
     }
     const content = response.content;
     if (content == null) {
+        warn("spec response defines no content; response.body example skipped.");
         return;
     }
     const contentType = getFirstContentType(content);
@@ -392,13 +441,20 @@ function applyResponseBodyExample(operation: any, responseExample: unknown): voi
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
-function applyResponseBodyNamedExample(operation: any, responseExample: unknown, exampleName: string): void {
+function applyResponseBodyNamedExample(
+    operation: any,
+    responseExample: unknown,
+    exampleName: string,
+    warn: WarnFn
+): void {
     const response = getFirstSuccessResponse(operation);
     if (response == null) {
+        warn(`spec defines no 2xx or default response; response.body example '${exampleName}' skipped.`);
         return;
     }
     const content = response.content;
     if (content == null) {
+        warn(`spec response defines no content; response.body example '${exampleName}' skipped.`);
         return;
     }
     const contentType = getFirstContentType(content);
@@ -425,6 +481,10 @@ function getFirstSuccessResponse(operation: any): any | undefined {
         if (code.startsWith("2")) {
             return responses[code];
         }
+    }
+    // Fall back to the "default" response when no 2xx response is declared.
+    if (responses.default != null) {
+        return responses.default;
     }
     return undefined;
 }

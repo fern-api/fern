@@ -2527,10 +2527,6 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("ai-examples", {
                     type: "boolean",
                     description: "Generate examples using AI (coming soon)"
-                })
-                .option("disable-ai-examples", {
-                    type: "boolean",
-                    description: "Disable AI example generation"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({

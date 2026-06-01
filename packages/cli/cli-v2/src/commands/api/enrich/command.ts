@@ -19,7 +19,6 @@ export declare namespace EnrichCommand {
         output?: string;
         split?: boolean;
         "ai-examples"?: boolean;
-        "disable-ai-examples"?: boolean;
     }
 }
 
@@ -108,10 +107,6 @@ export function addEnrichCommand(cli: Argv<GlobalArgs>): void {
                 .option("ai-examples", {
                     type: "boolean",
                     description: "Generate examples using AI (coming soon)"
-                })
-                .option("disable-ai-examples", {
-                    type: "boolean",
-                    description: "Disable AI example generation"
                 })
     );
 }
