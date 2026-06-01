@@ -54,7 +54,14 @@ const TEST_OPENAPI_DOCUMENT: OpenAPI.Document = {
     }
 };
 
-export function setupOpenAPIServer(): { server: http.Server; cleanup: () => Promise<void> } {
+export interface OpenAPIServerHandle {
+    server: http.Server;
+    port: number;
+    url: string;
+    cleanup: () => Promise<void>;
+}
+
+export async function setupOpenAPIServer(options: { port?: number } = {}): Promise<OpenAPIServerHandle> {
     const app = express();
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -62,7 +69,20 @@ export function setupOpenAPIServer(): { server: http.Server; cleanup: () => Prom
         res.json(TEST_OPENAPI_DOCUMENT);
     });
 
-    const server = app.listen(4567);
+    const requestedPort = options.port ?? 0;
+    const server = await new Promise<http.Server>((resolve, reject) => {
+        const s = app.listen(requestedPort);
+        s.once("listening", () => resolve(s));
+        s.once("error", reject);
+    });
+
+    const address = server.address();
+    if (address == null || typeof address === "string") {
+        throw new Error(`Unexpected server address: ${String(address)}`);
+    }
+    const port = address.port;
+    const url = `http://localhost:${port}/openapi.json`;
+
     const cleanup = async () => {
         return new Promise<void>((resolve, reject) => {
             server.close((err) => {
@@ -74,5 +94,5 @@ export function setupOpenAPIServer(): { server: http.Server; cleanup: () => Prom
             });
         });
     };
-    return { server, cleanup };
+    return { server, port, url, cleanup };
 }
