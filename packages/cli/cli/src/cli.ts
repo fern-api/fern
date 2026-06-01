@@ -53,6 +53,7 @@ import { CliContext } from "./cli-context/CliContext.js";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli.js";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
+import { agentCommand } from "./commands/agent/agentCommand.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
@@ -289,6 +290,7 @@ async function tryRunCli(cliContext: CliContext) {
     addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
 
+    addAgentCommand(cli, cliContext);
     addSdkCommand(cli, cliContext);
     addAutomationsCommand(cli, cliContext);
 
@@ -1565,6 +1567,54 @@ function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     command: "fern logout"
                 });
                 await logout(context);
+            });
+        }
+    );
+}
+
+function addAgentCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "agent [query]",
+        "Chat with the Fern Agent about your docs sites",
+        (yargs) =>
+            yargs
+                .positional("query", {
+                    type: "string",
+                    description: "Ask the agent a question (one-shot mode). Omit to start interactive mode."
+                })
+                .option("organization", {
+                    alias: "org",
+                    type: "string",
+                    description: "Organization name. Defaults to the one in fern.config.json"
+                })
+                .option("conversation", {
+                    type: "string",
+                    description: "Resume an existing conversation by ID"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output machine-readable JSON instead of streamed text"
+                }),
+        async (argv) => {
+            await cliContext.runTask(async (context) => {
+                cliContext.instrumentPostHogEvent({
+                    command: "fern agent"
+                });
+
+                const organization = argv.organization ?? (await getOrganization(cliContext));
+                if (organization == null) {
+                    return context.failAndThrow(
+                        "Organization required. Either run from a Fern project directory or pass --org <name>."
+                    );
+                }
+
+                await agentCommand(context, {
+                    query: argv.query,
+                    organization,
+                    conversationId: argv.conversation,
+                    json: argv.json
+                });
             });
         }
     );

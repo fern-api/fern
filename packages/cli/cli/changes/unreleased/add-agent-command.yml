@@ -1,0 +1,5 @@
+- summary: |
+    Add `fern agent` command for chatting with the Fern Agent about your docs sites.
+    Supports one-shot mode (`fern agent "query"`), interactive REPL mode (`fern agent`),
+    resumable conversations (`--conversation <id>`), and machine-readable JSON output (`--json`).
+  type: feat
