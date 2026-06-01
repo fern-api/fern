@@ -1,0 +1,46 @@
+types:
+  AnimalBase:
+    properties:
+      id: string
+      name: string
+
+  Dog:
+    extends: AnimalBase
+    properties:
+      breed: string
+
+  Cat:
+    extends: AnimalBase
+    properties:
+      indoor: boolean
+
+  # Discriminated union whose base-properties overlap with properties that
+  # each variant ALSO inherits via its own `extends` chain. The union
+  # validator must not falsely flag the inherited keys as missing on the
+  # variant after filtering base-property keys for variant validation.
+  Animal:
+    discriminant: kind
+    base-properties:
+      id: string
+      name: string
+    union:
+      dog: Dog
+      cat: Cat
+    examples:
+      - value:
+          kind: dog
+          id: rex-1
+          name: Rex
+          breed: corgi
+      - value:
+          kind: cat
+          id: whiskers-1
+          name: Whiskers
+          indoor: true
+
+      # Invalid: missing required id (declared as base-property AND inherited
+      # via Dog -> AnimalBase). Validator must surface this miss.
+      - value:
+          kind: dog
+          name: Rex
+          breed: corgi

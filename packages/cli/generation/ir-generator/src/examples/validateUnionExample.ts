@@ -135,8 +135,26 @@ export function validateUnionExample({
     }
 
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
+        const variantPropertyKeys = new Set(
+            getAllPropertiesForObject({
+                typeName: type,
+                objectDeclaration: resolvedType.declaration,
+                typeResolver,
+                definitionFile: resolvedType.file.definitionFile,
+                workspace,
+                filepathOfDeclaration: resolvedType.file.relativeFilepath,
+                smartCasing: false
+            }).map((p) => p.wireKey)
+        );
         const unionMemberExample = Object.fromEntries(
             Object.entries(nonDiscriminantPropertyExamples).filter(([key]) => {
+                // Keep the key on the variant if the variant itself declares it
+                // (own properties or inherited via extends). Otherwise, drop keys
+                // owned exclusively by the union (base-properties / union extends),
+                // so the variant validator does not flag them as unexpected.
+                if (variantPropertyKeys.has(key)) {
+                    return true;
+                }
                 if (rawUnion["base-properties"]?.[key] != null) {
                     return false;
                 }

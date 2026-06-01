@@ -380,4 +380,31 @@ describe("valid-example-type", () => {
 
         expect(violations).toEqual(expectedViolations);
     });
+
+    it("does not falsely flag union base-property keys that variants also inherit via extends", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleTypeRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("union-with-extends-overlap")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [
+            // Only the genuinely-invalid example (index 2) should produce a violation.
+            // The first two valid examples must not produce any false positives even though
+            // their `id` / `name` keys appear in BOTH the union's base-properties AND the
+            // variant's inherited properties via Dog/Cat -> AnimalBase.
+            {
+                name: "valid-example-type",
+                severity: "fatal",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Example is missing required property "id"',
+                nodePath: ["types", "Animal", { key: "examples", arrayIndex: 2 }]
+            }
+        ];
+
+        expect(violations).toEqual(expectedViolations);
+    });
 });
