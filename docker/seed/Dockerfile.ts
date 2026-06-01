@@ -42,6 +42,19 @@ RUN apt-get update \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/*
 
+# Update perl-base to fix CVE-2026-48959, CVE-2026-48961, CVE-2026-9538, CVE-2026-48962, CVE-2026-42497
+RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
+    && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Components: main" >> /etc/apt/sources.list.d/sid.sources \
+    && echo "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/sid.sources \
+    && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends -t sid \
+       perl-base perl \
+    && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
+    && rm -rf /var/lib/apt/lists/*
+
 # Upgrade bundled npm to 11.14.1 to pick up patched transitive dependencies
 # (picomatch 4.0.4, minimatch 10.2.5, tar 7.5.13).
 # node:24.16.0 ships npm 11.12.1 which still vendors picomatch 4.0.3 and
