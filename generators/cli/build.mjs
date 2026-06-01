@@ -1,6 +1,5 @@
 import { buildGenerator, getDirname } from "@fern-api/configs/build-utils.mjs";
 import { cp } from "fs/promises";
-import { createRequire } from "module";
 import path from "path";
 
 // Glob patterns (minimatch syntax, relative to ./sdk) of files we don't want
@@ -75,12 +74,15 @@ await buildGenerator(dirname, {
 // image can invoke it as a child process for embedded SDK generation.
 // In the monorepo the package resolves via pnpm workspaces; the
 // `dist:cli` turbo task must have run for @fern-api/rust-sdk first.
-const require = createRequire(import.meta.url);
 try {
-    const rustSdkPkg = path.dirname(require.resolve("@fern-api/rust-sdk/package.json"));
+    // Follow the pnpm workspace symlink to find the real package root.
+    const symlink = path.resolve(dirname, "node_modules", "@fern-api", "rust-sdk");
+    const { readlink } = await import("fs/promises");
+    const target = await readlink(symlink);
+    const rustSdkPkg = path.resolve(path.dirname(symlink), target);
     const rustSdkDist = path.join(rustSdkPkg, "dist", "cli.cjs");
     await cp(rustSdkDist, path.join(dirname, "dist", "rust-sdk-cli.cjs"));
-} catch {
+} catch (_e) {
     // Non-fatal: the rust-sdk dist may not exist during a plain
     // `pnpm compile`. It's only required for `dist:cli` / Docker.
 }
