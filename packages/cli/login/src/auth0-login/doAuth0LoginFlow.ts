@@ -24,8 +24,7 @@ export async function doAuth0LoginFlow({
     auth0ClientId,
     audience,
     forceReauth = false,
-    connection,
-    organization
+    connection
 }: {
     context: TaskContext;
     auth0Domain: string;
@@ -35,8 +34,6 @@ export async function doAuth0LoginFlow({
     forceReauth?: boolean;
     /** If set, passes the connection parameter to Auth0 to route directly to a specific IdP. */
     connection?: string;
-    /** If set, scopes the token to the specified Auth0 organization (by name). */
-    organization?: string;
 }): Promise<Auth0TokenResponse> {
     const { origin, server } = await createServer();
     const { code } = await getCode({
@@ -47,8 +44,7 @@ export async function doAuth0LoginFlow({
         origin,
         audience,
         forceReauth,
-        connection,
-        organization
+        connection
     });
     server.close();
     return await getTokenFromCode({ auth0Domain, auth0ClientId, code, origin });
@@ -62,8 +58,7 @@ function getCode({
     origin,
     audience,
     forceReauth,
-    connection,
-    organization
+    connection
 }: {
     context: TaskContext;
     server: Server;
@@ -73,7 +68,6 @@ function getCode({
     audience: string;
     forceReauth: boolean;
     connection?: string;
-    organization?: string;
 }) {
     return new Promise<{ code: string }>((resolve) => {
         server.addListener("request", (request, response) => {
@@ -94,8 +88,7 @@ function getCode({
             origin,
             audience,
             forceReauth,
-            connection,
-            organization
+            connection
         });
         void open(loginUrl).catch(() => {
             context.logger.info(
@@ -158,8 +151,7 @@ function constructAuth0Url({
     auth0ClientId,
     audience,
     forceReauth,
-    connection,
-    organization
+    connection
 }: {
     origin: string;
     auth0Domain: string;
@@ -167,7 +159,6 @@ function constructAuth0Url({
     audience: string;
     forceReauth: boolean;
     connection?: string;
-    organization?: string;
 }) {
     const queryParams = new URLSearchParams({
         client_id: auth0ClientId,
@@ -179,10 +170,6 @@ function constructAuth0Url({
 
     if (connection != null) {
         queryParams.set("connection", connection);
-    }
-
-    if (organization != null) {
-        queryParams.set("organization", organization);
     }
 
     if (forceReauth) {

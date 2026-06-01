@@ -1544,17 +1544,13 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("email", {
                     string: true,
                     description: "Log in via enterprise SSO using your email address"
-                })
-                .option("org", {
-                    string: true,
-                    description: "Scope the login token to a specific organization"
                 }),
         async (argv) => {
             await cliContext.runTask(async (context) => {
                 cliContext.instrumentPostHogEvent({
                     command: "fern login"
                 });
-                await login(context, { useDeviceCodeFlow: argv.deviceCode, email: argv.email, organization: argv.org });
+                await login(context, { useDeviceCodeFlow: argv.deviceCode, email: argv.email });
             });
         }
     );
