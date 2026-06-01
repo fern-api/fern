@@ -320,10 +320,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
 
             const mergedSchema = mergeAllOfSchemas(this.schema, resolvedElements, (ref) => {
-                return this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                     schemaOrReference: ref,
                     breadcrumbs: this.breadcrumbs
                 });
+                // Skip if result is still a reference (e.g. URL ref alias)
+                if (resolved != null && this.context.isReferenceObject(resolved)) {
+                    return undefined;
+                }
+                return resolved;
             });
 
             const allResolvedRefs = new Set<string>([...this.visitedRefs, ...localResolvedRefs]);
