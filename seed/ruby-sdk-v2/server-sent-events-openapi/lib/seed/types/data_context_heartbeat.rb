@@ -2,6 +2,8 @@
 
 module Seed
   module Types
-    class DataContextHeartbeat < Internal::Types::Model; end
+    class DataContextHeartbeat < Internal::Types::Model
+      field :timestamp, -> { String }, optional: true, nullable: false
+    end
   end
 end
