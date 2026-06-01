@@ -1,18 +1,11 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
-import { CliError } from "@fern-api/task-context";
-import { readFile, writeFile } from "fs/promises";
-import yaml from "js-yaml";
-import { CliContext } from "../../cli-context/CliContext.js";
-
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
 type OpenAPISpec = Record<string, any>;
 
 const HTTP_METHODS = new Set(["get", "put", "post", "delete", "options", "head", "patch", "trace"]);
 
 /**
- * Merges an AI examples overrides file into an OpenAPI spec.
- * The overrides file contains paths with x-fern-examples that are decomposed
- * and integrated into native OpenAPI example fields per endpoint.
+ * Iterates over paths/methods in the overrides and integrates x-fern-examples
+ * into native OpenAPI example fields in the base spec.
  *
  * Mapping:
  *   - path-parameters   -> parameters[].example (where in: path)
@@ -21,87 +14,11 @@ const HTTP_METHODS = new Set(["get", "put", "post", "delete", "options", "head",
  *   - request.body      -> requestBody.content.*.example
  *   - response.body     -> responses.<status>.content.*.example
  */
-export async function mergeOpenAPIWithOverrides({
-    openapiPath,
-    overridesPath,
-    outputPath,
-    split = false,
-    cliContext
-}: {
-    openapiPath: AbsoluteFilePath;
-    overridesPath: AbsoluteFilePath;
-    outputPath: AbsoluteFilePath;
-    split?: boolean;
-    cliContext: CliContext;
-}): Promise<void> {
-    await cliContext.runTask(async (context) => {
-        // Validate files exist
-        if (!(await doesPathExist(openapiPath))) {
-            return context.failAndThrow(`OpenAPI spec file does not exist: ${openapiPath}`, undefined, {
-                code: CliError.Code.ConfigError
-            });
-        }
-        if (!(await doesPathExist(overridesPath))) {
-            return context.failAndThrow(`Overrides file does not exist: ${overridesPath}`, undefined, {
-                code: CliError.Code.ConfigError
-            });
-        }
-
-        context.logger.info(`Merging ${overridesPath} into ${openapiPath}`);
-
-        // Load both files
-        const openapi = await loadYamlOrJson(openapiPath, context);
-        const overrides = await loadYamlOrJson(overridesPath, context);
-
-        // Merge the x-fern-examples into native OpenAPI examples
-        const merged = mergeExamplesIntoSpec(openapi, overrides, context);
-
-        // Determine output format based on output file extension
-        const isJson = outputPath.endsWith(".json");
-
-        if (split) {
-            const examples = extractEnrichedExamples(openapi, merged);
-            const output = isJson
-                ? JSON.stringify(examples, null, 2)
-                : yaml.dump(examples, { lineWidth: -1, noRefs: true });
-            await writeFile(outputPath, output);
-            context.logger.info(`Extracted enriched examples written to ${outputPath}`);
-        } else {
-            const output = isJson
-                ? JSON.stringify(merged, null, 2)
-                : yaml.dump(merged, { lineWidth: -1, noRefs: true });
-            await writeFile(outputPath, output);
-            if (outputPath === openapiPath) {
-                context.logger.info(`Enriched ${openapiPath} in-place`);
-            } else {
-                context.logger.info(`Merged output written to ${outputPath}`);
-            }
-        }
-    });
-}
-
-// biome-ignore lint/suspicious/noExplicitAny: YAML/JSON files can have any shape
-async function loadYamlOrJson(filepath: AbsoluteFilePath, context: any): Promise<OpenAPISpec> {
-    const contents = await readFile(filepath, "utf8");
-    try {
-        return JSON.parse(contents);
-    } catch {
-        try {
-            return yaml.load(contents) as OpenAPISpec;
-        } catch (err) {
-            return context.failAndThrow(`Failed to parse file as JSON or YAML: ${filepath}`, undefined, {
-                code: CliError.Code.ParseError
-            });
-        }
-    }
-}
-
-/**
- * Iterates over paths/methods in the overrides and integrates x-fern-examples
- * into native OpenAPI example fields in the base spec.
- */
-// biome-ignore lint/suspicious/noExplicitAny: context logger
-export function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec, context: any): OpenAPISpec {
+export function mergeExamplesIntoSpec(
+    spec: OpenAPISpec,
+    overrides: OpenAPISpec,
+    logger: { warn: (msg: string) => void }
+): OpenAPISpec {
     const merged = structuredClone(spec);
 
     const overridePaths = overrides.paths;
@@ -120,7 +37,7 @@ export function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec,
 
         const specPath = findMatchingSpecPath(overridePath, merged.paths);
         if (specPath == null) {
-            context.logger.warn(`Path ${overridePath} not found in OpenAPI spec, skipping.`);
+            logger.warn(`Path ${overridePath} not found in OpenAPI spec, skipping.`);
             continue;
         }
 
@@ -131,9 +48,7 @@ export function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec,
 
             const specOperation = merged.paths[specPath][method];
             if (specOperation == null || typeof specOperation !== "object") {
-                context.logger.warn(
-                    `Operation ${method.toUpperCase()} ${overridePath} not found in OpenAPI spec, skipping.`
-                );
+                logger.warn(`Operation ${method.toUpperCase()} ${overridePath} not found in OpenAPI spec, skipping.`);
                 continue;
             }
 
@@ -144,7 +59,7 @@ export function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec,
             }
 
             const warnForOp = (msg: string): void => {
-                context.logger.warn(`${method.toUpperCase()} ${overridePath}: ${msg}`);
+                logger.warn(`${method.toUpperCase()} ${overridePath}: ${msg}`);
             };
 
             if (fernExamples.length === 1) {
@@ -155,7 +70,6 @@ export function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec,
         }
     }
 
-    // Strip all x-fern-examples from the merged spec
     stripFernExamples(merged);
 
     return merged;
@@ -389,9 +303,6 @@ function matchParameter(
     return parameters.find((p: Record<string, unknown>) => p.name === paramName && p.in === location);
 }
 
-/**
- * Sets `example` on matching parameters (by name and location).
- */
 function applyParameterExamples(
     // biome-ignore lint/suspicious/noExplicitAny: OpenAPI parameter shapes
     operation: any,
@@ -414,9 +325,6 @@ function applyParameterExamples(
     }
 }
 
-/**
- * Sets named entries in `examples` on matching parameters.
- */
 function applyParameterNamedExamples(
     // biome-ignore lint/suspicious/noExplicitAny: OpenAPI parameter shapes
     operation: any,
@@ -443,9 +351,6 @@ function applyParameterNamedExamples(
     }
 }
 
-/**
- * Resolves the parameters array for an operation, including any $ref parameters.
- */
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI parameter shapes
 function resolveParameters(operation: any, spec: OpenAPISpec): any[] {
     if (!Array.isArray(operation.parameters)) {
@@ -453,7 +358,7 @@ function resolveParameters(operation: any, spec: OpenAPISpec): any[] {
     }
     return operation.parameters.map((param: Record<string, unknown>, index: number) => {
         if (param.$ref != null && typeof param.$ref === "string") {
-            const resolved = resolveRef(spec, param.$ref as string);
+            const resolved = resolveRef(spec, param.$ref);
             if (resolved != null) {
                 operation.parameters[index] = { ...resolved };
                 return operation.parameters[index];
@@ -463,9 +368,6 @@ function resolveParameters(operation: any, spec: OpenAPISpec): any[] {
     });
 }
 
-/**
- * Resolves a JSON $ref pointer within the spec.
- */
 // biome-ignore lint/suspicious/noExplicitAny: ref resolution
 function resolveRef(spec: OpenAPISpec, ref: string): any | undefined {
     if (!ref.startsWith("#/")) {
@@ -483,9 +385,6 @@ function resolveRef(spec: OpenAPISpec, ref: string): any | undefined {
     return current;
 }
 
-/**
- * Sets `example` on the request body's first content type.
- */
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyRequestBodyExample(operation: any, bodyExample: unknown, warn: WarnFn): void {
     if (operation.requestBody == null) {
@@ -503,9 +402,6 @@ function applyRequestBodyExample(operation: any, bodyExample: unknown, warn: War
     }
 }
 
-/**
- * Sets a named entry in `examples` on the request body's first content type.
- */
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exampleName: string, warn: WarnFn): void {
     if (operation.requestBody == null) {
@@ -526,9 +422,6 @@ function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exam
     }
 }
 
-/**
- * Sets `example` on the first success response's first content type.
- */
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
 function applyResponseBodyExample(operation: any, responseExample: unknown, warn: WarnFn): void {
     const response = getFirstSuccessResponse(operation);
@@ -547,9 +440,6 @@ function applyResponseBodyExample(operation: any, responseExample: unknown, warn
     }
 }
 
-/**
- * Sets a named entry in `examples` on the first success response's first content type.
- */
 function applyResponseBodyNamedExample(
     // biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
     operation: any,
@@ -576,10 +466,6 @@ function applyResponseBodyNamedExample(
     }
 }
 
-/**
- * Returns the first success (2xx) response object from the operation, falling
- * back to the "default" response if no 2xx is declared.
- */
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI responses shape
 function getFirstSuccessResponse(operation: any): any | undefined {
     const responses = operation.responses;
@@ -596,15 +482,13 @@ function getFirstSuccessResponse(operation: any): any | undefined {
             return responses[code];
         }
     }
+    // Fall back to the "default" response when no 2xx response is declared.
     if (responses.default != null) {
         return responses.default;
     }
     return undefined;
 }
 
-/**
- * Returns the first content type key from a content map.
- */
 function getFirstContentType(content: Record<string, unknown>): string | undefined {
     const keys = Object.keys(content);
     return keys.length > 0 ? keys[0] : undefined;
@@ -617,7 +501,6 @@ function getFirstContentType(content: Record<string, unknown>): string | undefin
  * templated spec paths (e.g. `/customers/{customerId}`).
  */
 export function findMatchingSpecPath(overridePath: string, specPaths: Record<string, unknown>): string | undefined {
-    // Try exact match first
     if (specPaths[overridePath] != null) {
         return overridePath;
     }
@@ -637,7 +520,6 @@ export function findMatchingSpecPath(overridePath: string, specPaths: Record<str
             if (specSeg === overrideSeg) {
                 continue;
             }
-            // Match templated segment {param} against bare param name
             if (specSeg != null && specSeg.startsWith("{") && specSeg.endsWith("}")) {
                 const paramName = specSeg.slice(1, -1);
                 if (paramName === overrideSeg) {
@@ -656,9 +538,6 @@ export function findMatchingSpecPath(overridePath: string, specPaths: Record<str
     return undefined;
 }
 
-/**
- * Strips all x-fern-examples from every operation in the spec.
- */
 function stripFernExamples(spec: OpenAPISpec): void {
     const paths = spec.paths;
     if (paths == null || typeof paths !== "object") {
