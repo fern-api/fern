@@ -202,8 +202,8 @@ otherwise refuse to start when the dep tree drifts.
 The SDK at [`./sdk/`](./sdk/) is a **vendored snapshot** of
 [`fern-api/cli-sdk`](https://github.com/fern-api/cli-sdk). A daily
 GitHub Actions workflow (`.github/workflows/sync-cli-sdk.yml`) pulls
-`cli-sdk` `main` HEAD into this directory, opens an auto-merging PR,
-and relies on seed tests as the trust boundary.
+`cli-sdk` `main` HEAD into this directory, opens a PR for human review,
+and relies on seed tests + a human reviewer as the trust boundary.
 
 **How the sync works:**
 
