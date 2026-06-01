@@ -1188,11 +1188,7 @@ export class ApiReferenceNodeConverter {
                 const sectionTitle = operationTypeLabels[operationType];
                 const sectionSlug = namespaceSlug.append(kebabCase(sectionTitle));
 
-                const children = this.#buildFieldPathGroupedChildren(
-                    operations,
-                    sectionSlug,
-                    parentAvailability
-                );
+                const children = this.#buildFieldPathGroupedChildren(operations, sectionSlug, parentAvailability);
 
                 const sectionNode = {
                     id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
@@ -1256,11 +1252,7 @@ export class ApiReferenceNodeConverter {
             const sectionTitle = operationTypeLabels[operationType];
             const sectionSlug = parentSlug.append(kebabCase(sectionTitle));
 
-            const children = this.#buildFieldPathGroupedChildren(
-                operations,
-                sectionSlug,
-                parentAvailability
-            );
+            const children = this.#buildFieldPathGroupedChildren(operations, sectionSlug, parentAvailability);
 
             const sectionNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
