@@ -96,9 +96,10 @@ module Seed
 
     # @param base_url [String, nil]
     # @param environment [Hash[Symbol, String], nil]
+    # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(base_url: nil, environment: Seed::Environment::REGIONAL_API_SERVER)
+    def initialize(base_url: nil, environment: Seed::Environment::REGIONAL_API_SERVER, max_retries: 2)
       @base_url = base_url
       @environment = environment
 
@@ -107,7 +108,8 @@ module Seed
         headers: {
           "User-Agent" => "fern_server-url-templating/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries
       )
     end
   end

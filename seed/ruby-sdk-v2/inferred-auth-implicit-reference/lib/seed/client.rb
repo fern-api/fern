@@ -3,9 +3,10 @@
 module Seed
   class Client
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -28,7 +29,8 @@ module Seed
         headers: {
           "User-Agent" => "fern_inferred-auth-implicit-reference/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }.merge(@auth_provider.auth_headers)
+        }.merge(@auth_provider.auth_headers),
+        max_retries: max_retries
       )
     end
 
