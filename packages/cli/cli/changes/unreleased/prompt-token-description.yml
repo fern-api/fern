@@ -1,0 +1,3 @@
+- summary: |
+    Prompt for an optional description when creating a token interactively via `fern org token create`.
+  type: feat
