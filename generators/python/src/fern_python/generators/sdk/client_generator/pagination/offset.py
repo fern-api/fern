@@ -23,17 +23,26 @@ class OffsetPagination(Paginator):
     ):
         super().__init__(context, is_async, pydantic_parse_expression, config, response_is_optional)
         self.offset = offset
+        self._next_none_safe_condition = (
+            self._get_none_safe_property_condition(self.offset.has_next_page)
+            if self.offset.has_next_page is not None
+            else None
+        )
 
     def init_custom_vars_pre_next(self, *, writer: AST.NodeWriter) -> None:
-        return
+        writer.write_line(f"{Paginator.PAGINATION_HAS_NEXT_VARIABLE} = False")
+        writer.write_line(f"{Paginator.PAGINATION_GET_NEXT_VARIABLE} = None")
 
     def init_custom_vars_after_next(self, *, writer: AST.NodeWriter) -> None:
         return
 
     def get_next_none_safe_condition(self) -> Optional[str]:
-        return None
+        return self._next_none_safe_condition
 
     def init_has_next(self) -> str:
+        if self.offset.has_next_page is not None:
+            path = self._response_property_to_dot_access(self.offset.has_next_page)
+            return f"bool({Paginator.PARSED_RESPONSE_VARIABLE}.{path})"
         return f"len({Paginator.PAGINATION_ITEMS_VARIABLE} or []) > 0"
 
     def init_get_next(self, *, writer: AST.NodeWriter) -> None:
@@ -53,6 +62,9 @@ class OffsetPagination(Paginator):
         for parameter in self._config.parameters:
             # Assume the paging mechanism is a direct parameter (e.g. not nested)
             if parameter.name == page_parameter_name:
+                # Assume the offset parameter is an integer
+                writer.write(f"{parameter.name} + {self.get_step()}")
+            elif parameter.name == page_parameter_name:
                 # Assume the offset parameter is an integer
                 writer.write(f"{parameter.name} + {self.get_step()}")
             else:

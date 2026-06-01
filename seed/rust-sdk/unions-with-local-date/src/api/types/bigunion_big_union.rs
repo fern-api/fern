@@ -1,7 +1,8 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
+#[non_exhaustive]
 pub enum BigUnion {
     #[serde(rename = "normalSweet")]
     #[non_exhaustive]
@@ -466,6 +467,12 @@ pub enum BigUnion {
         #[serde(with = "crate::core::flexible_datetime::offset::option")]
         archived_at: Option<DateTime<FixedOffset>>,
     },
+
+    /// Catch-all variant for unrecognized discriminant values.
+    /// If the server sends a discriminant not recognized by the current SDK
+    /// version, the raw payload is captured here so callers can still inspect it.
+    #[serde(untagged)]
+    __Unknown(serde_json::Value),
 }
 
 impl BigUnion {
@@ -875,6 +882,10 @@ impl BigUnion {
         }
     }
 
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
+    }
+
     pub fn get_id(&self) -> &str {
         match self {
             Self::NormalSweet { id, .. } => id,
@@ -906,6 +917,9 @@ impl BigUnion {
             Self::PotableBad { id, .. } => id,
             Self::TriangularRepair { id, .. } => id,
             Self::GaseousRoad { id, .. } => id,
+            Self::__Unknown(_) => {
+                panic!("get_id() called on __Unknown variant; inspect the raw JSON value directly")
+            }
         }
     }
 
@@ -940,40 +954,44 @@ impl BigUnion {
             Self::PotableBad { created_at, .. } => created_at,
             Self::TriangularRepair { created_at, .. } => created_at,
             Self::GaseousRoad { created_at, .. } => created_at,
+            Self::__Unknown(_) => panic!(
+                "get_created_at() called on __Unknown variant; inspect the raw JSON value directly"
+            ),
         }
     }
 
     pub fn get_archived_at(&self) -> &Option<DateTime<FixedOffset>> {
         match self {
-            Self::NormalSweet { archived_at, .. } => archived_at,
-            Self::ThankfulFactor { archived_at, .. } => archived_at,
-            Self::JumboEnd { archived_at, .. } => archived_at,
-            Self::HastyPain { archived_at, .. } => archived_at,
-            Self::MistySnow { archived_at, .. } => archived_at,
-            Self::DistinctFailure { archived_at, .. } => archived_at,
-            Self::PracticalPrinciple { archived_at, .. } => archived_at,
-            Self::LimpingStep { archived_at, .. } => archived_at,
-            Self::VibrantExcitement { archived_at, .. } => archived_at,
-            Self::ActiveDiamond { archived_at, .. } => archived_at,
-            Self::PopularLimit { archived_at, .. } => archived_at,
-            Self::FalseMirror { archived_at, .. } => archived_at,
-            Self::PrimaryBlock { archived_at, .. } => archived_at,
-            Self::RotatingRatio { archived_at, .. } => archived_at,
-            Self::ColorfulCover { archived_at, .. } => archived_at,
-            Self::DisloyalValue { archived_at, .. } => archived_at,
-            Self::GruesomeCoach { archived_at, .. } => archived_at,
-            Self::TotalWork { archived_at, .. } => archived_at,
-            Self::HarmoniousPlay { archived_at, .. } => archived_at,
-            Self::UniqueStress { archived_at, .. } => archived_at,
-            Self::UnwillingSmoke { archived_at, .. } => archived_at,
-            Self::FrozenSleep { archived_at, .. } => archived_at,
-            Self::DiligentDeal { archived_at, .. } => archived_at,
-            Self::AttractiveScript { archived_at, .. } => archived_at,
-            Self::HoarseMouse { archived_at, .. } => archived_at,
-            Self::CircularCard { archived_at, .. } => archived_at,
-            Self::PotableBad { archived_at, .. } => archived_at,
-            Self::TriangularRepair { archived_at, .. } => archived_at,
-            Self::GaseousRoad { archived_at, .. } => archived_at,
-        }
+                    Self::NormalSweet { archived_at, .. } => archived_at,
+                    Self::ThankfulFactor { archived_at, .. } => archived_at,
+                    Self::JumboEnd { archived_at, .. } => archived_at,
+                    Self::HastyPain { archived_at, .. } => archived_at,
+                    Self::MistySnow { archived_at, .. } => archived_at,
+                    Self::DistinctFailure { archived_at, .. } => archived_at,
+                    Self::PracticalPrinciple { archived_at, .. } => archived_at,
+                    Self::LimpingStep { archived_at, .. } => archived_at,
+                    Self::VibrantExcitement { archived_at, .. } => archived_at,
+                    Self::ActiveDiamond { archived_at, .. } => archived_at,
+                    Self::PopularLimit { archived_at, .. } => archived_at,
+                    Self::FalseMirror { archived_at, .. } => archived_at,
+                    Self::PrimaryBlock { archived_at, .. } => archived_at,
+                    Self::RotatingRatio { archived_at, .. } => archived_at,
+                    Self::ColorfulCover { archived_at, .. } => archived_at,
+                    Self::DisloyalValue { archived_at, .. } => archived_at,
+                    Self::GruesomeCoach { archived_at, .. } => archived_at,
+                    Self::TotalWork { archived_at, .. } => archived_at,
+                    Self::HarmoniousPlay { archived_at, .. } => archived_at,
+                    Self::UniqueStress { archived_at, .. } => archived_at,
+                    Self::UnwillingSmoke { archived_at, .. } => archived_at,
+                    Self::FrozenSleep { archived_at, .. } => archived_at,
+                    Self::DiligentDeal { archived_at, .. } => archived_at,
+                    Self::AttractiveScript { archived_at, .. } => archived_at,
+                    Self::HoarseMouse { archived_at, .. } => archived_at,
+                    Self::CircularCard { archived_at, .. } => archived_at,
+                    Self::PotableBad { archived_at, .. } => archived_at,
+                    Self::TriangularRepair { archived_at, .. } => archived_at,
+                    Self::GaseousRoad { archived_at, .. } => archived_at,
+                    Self::__Unknown(_) => panic!("get_archived_at() called on __Unknown variant; inspect the raw JSON value directly"),
+                }
     }
 }

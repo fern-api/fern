@@ -533,7 +533,7 @@ class RawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = len(_items or []) > 0
+                _has_next = bool(_parsed_response.has_next_page)
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
                     page=page + 1,
                     limit=limit,
@@ -1283,7 +1283,7 @@ class AsyncRawInlineUsersClient:
                 )
                 _items = _parsed_response.data.users if _parsed_response.data is not None else []
 
-                _has_next = len(_items or []) > 0
+                _has_next = bool(_parsed_response.has_next_page)
 
                 async def _get_next():
                     return await self.list_with_offset_pagination_has_next_page(
