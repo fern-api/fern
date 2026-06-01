@@ -1,4 +1,5 @@
 import type { GeneratorConfig } from "@fern-api/base-generator";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 
 /**
  * Resolved output configuration the CLI pipeline consumes.
@@ -60,6 +61,8 @@ export function resolveOutputConfig(output: GeneratorConfig["output"]): Resolved
                 npmPublishInfo: undefined
             };
         default:
+            // Forward-compatible: unknown output modes fall back to default version with no npm publishing.
+            assertNeverNoThrow(mode as never);
             return {
                 version: DEFAULT_VERSION,
                 npmPublishInfo: undefined
@@ -85,6 +88,8 @@ function resolveNpmPublishInfo(publishInfo: GithubPublishInfo | undefined): Reso
             };
         }
         default:
+            // Non-npm publish types (maven, pypi, nuget, etc.) are intentionally unsupported by the CLI generator.
+            assertNeverNoThrow(publishInfo as never);
             return undefined;
     }
 }
