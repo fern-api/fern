@@ -1352,7 +1352,7 @@ export class ApiReferenceNodeConverter {
                 type: "apiPackage",
                 collapsed: undefined,
                 children: groupChildren,
-                title: titleCase(parentField),
+                title: parentField,
                 slug: groupSlug.get(),
                 icon: undefined,
                 hidden: this.hideChildren,
