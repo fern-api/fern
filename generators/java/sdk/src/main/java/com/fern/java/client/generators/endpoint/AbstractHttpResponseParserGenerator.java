@@ -155,6 +155,9 @@ public abstract class AbstractHttpResponseParserGenerator {
     public abstract CodeBlock getNextPageGetter(String endpointName, String methodParameters);
 
     public CodeBlock getResponseParserCodeBlock(MethodSpec.Builder endpointMethodBuilder) {
+        ClassName retryInterceptorClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
+        ClassName maxRetriesOverrideClassName = retryInterceptorClassName.nestedClass("MaxRetriesOverride");
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()
                 // Default the request client
                 .addStatement(
@@ -173,6 +176,21 @@ public abstract class AbstractHttpResponseParserGenerator {
                         variables.getDefaultedClientName(),
                         clientOptionsField,
                         generatedClientOptions.httpClientWithTimeout(),
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                .endControlFlow()
+                // Attach per-request maxRetries override as an OkHttp tag so the
+                // RetryInterceptor can pick it up. Falls back to ClientOptions.maxRetries
+                // when not set.
+                .beginControlFlow(
+                        "if ($L != null && $L.getMaxRetries().isPresent())",
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement(
+                        "$L = $L.newBuilder().tag($T.class, new $T($L.getMaxRetries().get())).build()",
+                        variables.getOkhttpRequestName(),
+                        variables.getOkhttpRequestName(),
+                        maxRetriesOverrideClassName,
+                        maxRetriesOverrideClassName,
                         AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow();
         if (isStreamingEndpoint()) {
