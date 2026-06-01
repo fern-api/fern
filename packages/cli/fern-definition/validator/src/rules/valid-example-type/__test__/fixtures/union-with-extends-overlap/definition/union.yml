@@ -44,3 +44,32 @@ types:
           kind: dog
           name: Rex
           breed: corgi
+
+  # Regression: variant whose inherited schema declares a key with a
+  # DIFFERENT type than the union's base-properties. Before the fix, the
+  # filter dropped the key before variant validation, so the type
+  # mismatch was silent. The fix preserves the key on the example handed
+  # to variant validation so the conflict surfaces.
+  NumericIdBase:
+    properties:
+      id: integer
+
+  Bird:
+    extends: NumericIdBase
+    properties:
+      wingspan: integer
+
+  # Union declares `id: string` in base-properties; Bird inherits `id:
+  # integer` from NumericIdBase. The example value satisfies the union's
+  # base check but not the variant's view — must produce a violation.
+  BirdAware:
+    discriminant: kind
+    base-properties:
+      id: string
+    union:
+      bird: Bird
+    examples:
+      - value:
+          kind: bird
+          id: tweety-1
+          wingspan: 12

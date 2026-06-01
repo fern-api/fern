@@ -381,7 +381,7 @@ describe("valid-example-type", () => {
         expect(violations).toEqual(expectedViolations);
     });
 
-    it("does not falsely flag union base-property keys that variants also inherit via extends", async () => {
+    it("validates discriminated union examples against the variant's view of inherited properties", async () => {
         const violations = await getViolationsForRule({
             rule: ValidExampleTypeRule,
             absolutePathToWorkspace: join(
@@ -392,16 +392,30 @@ describe("valid-example-type", () => {
         });
 
         const expectedViolations: ValidationViolation[] = [
-            // Only the genuinely-invalid example (index 2) should produce a violation.
-            // The first two valid examples must not produce any false positives even though
-            // their `id` / `name` keys appear in BOTH the union's base-properties AND the
-            // variant's inherited properties via Dog/Cat -> AnimalBase.
+            // Animal: examples 0 and 1 (Dog/Cat) are valid — their `id` / `name`
+            // keys appear in BOTH the union's base-properties AND the variant's
+            // inherited properties (via Dog/Cat -> AnimalBase). Pre-fix, the
+            // filter dropped these keys before variant validation and the
+            // variant validator falsely flagged them as missing. Only example 2
+            // (deliberately missing `id`) should produce a violation.
             {
                 name: "valid-example-type",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("union.yml"),
                 message: 'Example is missing required property "id"',
                 nodePath: ["types", "Animal", { key: "examples", arrayIndex: 2 }]
+            },
+            // BirdAware: locks in the behavior change. The union's `base-properties`
+            // declares `id: string` but Bird inherits `id: integer` via
+            // `NumericIdBase`. With the fix, the variant validator sees `id`
+            // and surfaces the type mismatch — pre-fix the key was filtered
+            // out and the mismatch was silent.
+            {
+                name: "valid-example-type",
+                severity: "fatal",
+                relativeFilepath: RelativeFilePath.of("union.yml"),
+                message: 'Expected example to be an integer. Example is: "tweety-1"',
+                nodePath: ["types", "BirdAware", { key: "examples", arrayIndex: 0 }]
             }
         ];
 
