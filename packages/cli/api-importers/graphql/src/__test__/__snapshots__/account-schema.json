@@ -362,7 +362,57 @@
               "type": "id",
               "value": "AppsConnection"
             },
-            "description": "Apps owned by the account."
+            "description": "Apps owned by the account.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "checkout",
@@ -373,7 +423,19 @@
                 "value": "Checkout"
               }
             },
-            "description": "Allows for billing a Merchant for Products on a one-time or recurring basis."
+            "description": "Allows for billing a Merchant for Products on a one-time or recurring basis.",
+            "arguments": [
+              {
+                "name": "id",
+                "description": "The ID of the object.",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "id",
@@ -399,7 +461,68 @@
               "type": "id",
               "value": "StoreConnection"
             },
-            "description": "The stores related to an account."
+            "description": "The stores related to an account.",
+            "arguments": [
+              {
+                "name": "filter",
+                "description": "Filter stores by IDs or store hashes.",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "StoreFilterInput"
+                  }
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "subscriptions",
@@ -407,7 +530,67 @@
               "type": "id",
               "value": "SubscriptionConnection"
             },
-            "description": "Subscriptions belonging to the account."
+            "description": "Subscriptions belonging to the account.",
+            "arguments": [
+              {
+                "name": "filters",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "id",
+                    "value": "SubscriptionFiltersInput"
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "userGroups",
@@ -415,7 +598,57 @@
               "type": "id",
               "value": "UserGroupConnection"
             },
-            "description": "User groups belonging to the account."
+            "description": "User groups belonging to the account.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "users",
@@ -423,7 +656,57 @@
               "type": "id",
               "value": "UserConnection"
             },
-            "description": "Users belonging to the account."
+            "description": "Users belonging to the account.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -464,7 +747,16 @@
                 "value": "AddUserToAccountResult"
               }
             },
-            "description": "Adds a user to an account."
+            "description": "Adds a user to an account.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "AddUserToAccountInput"
+                }
+              }
+            ]
           },
           {
             "key": "removeUserFromAccount",
@@ -475,7 +767,16 @@
                 "value": "RemoveUserFromAccountResult"
               }
             },
-            "description": "Removes a user from an account and all associated entities."
+            "description": "Removes a user from an account and all associated entities.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "RemoveUserFromAccountInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -652,7 +953,57 @@
               "type": "id",
               "value": "AwsEventSourcesConnection"
             },
-            "description": "Amazon EventSources."
+            "description": "Amazon EventSources.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -673,7 +1024,16 @@
                 "value": "CreateEventSourceResult"
               }
             },
-            "description": "Creates an Amazon EventSource."
+            "description": "Creates an Amazon EventSource.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateEventSourceInput"
+                }
+              }
+            ]
           },
           {
             "key": "deleteEventSource",
@@ -684,7 +1044,16 @@
                 "value": "DeleteEventSourceResult"
               }
             },
-            "description": "Deletes an Amazon EventSource."
+            "description": "Deletes an Amazon EventSource.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "DeleteEventSourceInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1101,7 +1470,57 @@
               "type": "id",
               "value": "CheckoutItemConnection"
             },
-            "description": "The item(s) associated with the checkout."
+            "description": "The item(s) associated with the checkout.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "status",
@@ -1636,7 +2055,16 @@
                 "value": "CreateCheckoutResult"
               }
             },
-            "description": "Creates a Checkout for a Merchant."
+            "description": "Creates a Checkout for a Merchant.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateCheckoutInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -2928,7 +3356,57 @@
               "type": "id",
               "value": "UserConnection"
             },
-            "description": "The users removed from the user group."
+            "description": "The users removed from the user group.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "pollingId",
@@ -2961,7 +3439,21 @@
                 "value": "StoreStatus"
               }
             },
-            "description": "Get the status for a store for add users to user groups operation."
+            "description": "Get the status for a store for add users to user groups operation.",
+            "arguments": [
+              {
+                "name": "pollingId",
+                "description": "The unique identifier used to poll the status of the asynchronous operation.",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "scalar",
+                    "name": "UUID",
+                    "description": "The UUID scalar type represents a universally unique identifier."
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -2989,7 +3481,57 @@
               "type": "id",
               "value": "AppsConnection"
             },
-            "description": "The list of store apps."
+            "description": "The list of store apps.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "name",
@@ -3017,7 +3559,57 @@
               "type": "id",
               "value": "StoreUserConnection"
             },
-            "description": "Users belonging to the store."
+            "description": "Users belonging to the store.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -3199,7 +3791,57 @@
               "type": "id",
               "value": "AppsConnection"
             },
-            "description": "Apps accessible by the user on the store."
+            "description": "Apps accessible by the user on the store.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "email",
@@ -3727,7 +4369,16 @@
                 "value": "CancelSubscriptionResult"
               }
             },
-            "description": "Cancels a Subscription for a Merchant."
+            "description": "Cancels a Subscription for a Merchant.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CancelSubscriptionInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -4066,7 +4717,57 @@
               "type": "id",
               "value": "UserGroupByUserConnection"
             },
-            "description": "User groups the user belongs to."
+            "description": "User groups the user belongs to.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -4180,7 +4881,57 @@
               "type": "id",
               "value": "UserConnection"
             },
-            "description": "The users belonging to a user group."
+            "description": "The users belonging to a user group.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           },
           {
             "key": "targets",
@@ -4188,7 +4939,57 @@
               "type": "id",
               "value": "TargetConnection"
             },
-            "description": "The targets belonging to a user group."
+            "description": "The targets belonging to a user group.",
+            "arguments": [
+              {
+                "name": "before",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "first",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -4400,7 +5201,16 @@
                 "value": "AddUsersToUserGroupsResult"
               }
             },
-            "description": "Adds users to user groups."
+            "description": "Adds users to user groups.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "AddUsersToUserGroupsInput"
+                }
+              }
+            ]
           },
           {
             "key": "removeUsersFromUserGroup",
@@ -4411,7 +5221,16 @@
                 "value": "RemoveUsersFromUserGroupResult"
               }
             },
-            "description": "Removes users from a user group."
+            "description": "Removes users from a user group.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "RemoveUsersFromUserGroupInput"
+                }
+              }
+            ]
           }
         ]
       },
@@ -4468,7 +5287,16 @@
                 "value": "CreateUserWithPasswordResult"
               }
             },
-            "description": "Creates a user with password."
+            "description": "Creates a user with password.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateUserWithPasswordInput"
+                }
+              }
+            ]
           },
           {
             "key": "createUser",
@@ -4479,7 +5307,16 @@
                 "value": "CreateUserResult"
               }
             },
-            "description": "Creates a user."
+            "description": "Creates a user.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "CreateUserInput"
+                }
+              }
+            ]
           },
           {
             "key": "addUserToStore",
@@ -4490,7 +5327,16 @@
                 "value": "AddUserToStoreResult"
               }
             },
-            "description": "Adds a user to a store."
+            "description": "Adds a user to a store.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "AddUserToStoreInput"
+                }
+              }
+            ]
           },
           {
             "key": "removeUserFromStore",
@@ -4501,7 +5347,16 @@
                 "value": "RemoveUserFromStoreResult"
               }
             },
-            "description": "Removes user from a store."
+            "description": "Removes user from a store.",
+            "arguments": [
+              {
+                "name": "input",
+                "type": {
+                  "type": "id",
+                  "value": "RemoveUserFromStoreInput"
+                }
+              }
+            ]
           }
         ]
       },
