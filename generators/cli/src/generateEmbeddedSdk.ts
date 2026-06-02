@@ -16,7 +16,7 @@
 
 import { execFile } from "child_process";
 import { accessSync, constants } from "fs";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, unlink, writeFile } from "fs/promises";
 import { createRequire } from "module";
 import path from "path";
 import { promisify } from "util";
@@ -66,10 +66,10 @@ export async function generateEmbeddedSdk(args: {
     const configPath = path.join(sdkOutputDir, ".generator-config.json");
     await writeFile(configPath, JSON.stringify(generatorConfig, null, 2));
 
-    const cliEntryPoint = resolveRustSdkCli();
+    const { entryPoint: cliEntryPoint, assetsDir } = resolveRustSdkCli();
 
     // Point the subprocess at the features.yml bundled in the rust-sdk dist directory.
-    const featuresYml = path.resolve(path.dirname(cliEntryPoint), "assets", "features.yml");
+    const featuresYml = path.join(assetsDir, "features.yml");
 
     try {
         await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
@@ -80,6 +80,8 @@ export async function generateEmbeddedSdk(args: {
     } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
         throw new Error(`Embedded SDK generation failed: ${message}`);
+    } finally {
+        await unlink(configPath).catch(() => {});
     }
 
     return sdkCrateName;
@@ -94,7 +96,7 @@ export async function generateEmbeddedSdk(args: {
  *   2. Monorepo workspace — `@fern-api/rust-sdk` package's compiled
  *      `lib/cli.js` (development, after `pnpm compile`).
  */
-function resolveRustSdkCli(): string {
+function resolveRustSdkCli(): { entryPoint: string; assetsDir: string } {
     // Resolve the directory containing this script. In the CJS bundle
     // `import.meta` is empty so we fall back to Node's native `__dirname`.
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -104,7 +106,7 @@ function resolveRustSdkCli(): string {
     const bundled = path.resolve(scriptDir, "rust-sdk-dist", "cli.cjs");
     try {
         accessSync(bundled, constants.R_OK);
-        return bundled;
+        return { entryPoint: bundled, assetsDir: path.resolve(path.dirname(bundled), "assets") };
     } catch (_e: unknown) {
         // Not found — fall through to monorepo resolution.
     }
@@ -117,7 +119,10 @@ function resolveRustSdkCli(): string {
         if (resolveFrom != null) {
             const esmRequire = createRequire(resolveFrom);
             const pkgDir = path.dirname(esmRequire.resolve("@fern-api/rust-sdk/package.json"));
-            return path.join(pkgDir, "lib", "cli.js");
+            return {
+                entryPoint: path.join(pkgDir, "lib", "cli.js"),
+                assetsDir: path.join(pkgDir, "dist", "assets")
+            };
         }
     } catch (_e: unknown) {
         // Package not resolvable — will throw below with actionable message.

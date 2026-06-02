@@ -24,6 +24,17 @@
         },
         {
             "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof/fern\"\n\tfernclient \"github.com/allof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreatePlant(\n\tcontext.TODO(),\n\t\u0026fern.PlantPost{\n\t\tSpecies:     \"species\",\n\t\tFamily:      \"family\",\n\t\tGenus:       \"genus\",\n\t\tSunExposure: fern.PlantPostSunExposureFull,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/rule-types",
                 "method": "GET",
                 "identifier_override": "endpoint_.searchRuleTypes"
@@ -42,6 +53,17 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof/fern\"\n\tfernclient \"github.com/allof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateRule(\n\tcontext.TODO(),\n\t\u0026fern.RuleCreateRequest{\n\t\tName:             \"name\",\n\t\tExecutionContext: fern.RuleCreateRequestExecutionContextProd,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/trees",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTree"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof/fern\"\n\tfernclient \"github.com/allof/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateTree(\n\tcontext.TODO(),\n\t\u0026fern.TreeRecord{\n\t\tID: \"id\",\n\t},\n)\n"
             }
         },
         {
