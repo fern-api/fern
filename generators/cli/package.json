@@ -27,8 +27,8 @@
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
     "dist:cli": "node build.mjs",
-    "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-cli-generator:latest .",
-    "dockerTagVersion": "turbo run dist:cli --filter . && docker build -f ./Dockerfile -t fernapi/fern-cli-generator:${0} .",
+    "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-cli:latest .",
+    "dockerTagVersion": "turbo run dist:cli --filter . && docker build -f ./Dockerfile -t fernapi/fern-cli:${0} .",
     "test": "vitest --passWithNoTests --run"
   },
   "devDependencies": {

@@ -10,6 +10,6 @@ api:
 groups:
   cli:
     generators:
-      - name: fernapi/fern-cli-generator
+      - name: fernapi/fern-cli
         version: latest
         ir-version: latest
