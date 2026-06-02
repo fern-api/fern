@@ -142,6 +142,11 @@ class PydanticModelGenerator(AbstractGenerator):
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> None:
+        # Enums that are inlined directly into undiscriminated unions are no longer referenced
+        # by name anywhere, so we skip emitting their (now-dead) files entirely.
+        if context.should_inline_away_type(type.name.type_id):
+            return
+
         # TODO: Actually flag typeddicts if they're request object ONLY, right now we just always create
         # the typeddict for any object. This is fine for now, but we should be able to filter the types down.
 

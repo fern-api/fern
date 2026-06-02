@@ -91,6 +91,16 @@ service:
           response:
             body: success
 
+    subscribe:
+      path: "/subscribe"
+      method: POST
+      request:
+        name: SubscribeRequest
+        body:
+          properties:
+            events: list<SubscribedEvent>
+      response: boolean
+
 types:
   Request:
     properties:
@@ -252,6 +262,21 @@ types:
       - literal<"type">
       - literal<"value">
       - string
+
+  SubscribedEvent:
+    discriminated: false
+    union:
+      - SubscribedEventType
+      - literal<"system">
+
+  SubscribedEventType:
+    enum:
+      - name: BatchSucceeded
+        value: batch.succeeded
+      - name: BatchFailed
+        value: batch.failed
+      - name: DocumentProcessed
+        value: document.processed
 
   # Test case for named type aliases that resolve to the same underlying C# type
   # This tests the fix for CS0557 duplicate implicit conversion operators

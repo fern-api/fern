@@ -34,16 +34,33 @@ class PydanticModelUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGen
         )
 
     def generate(self) -> None:
+        def get_member_hint(member: ir_types.UndiscriminatedUnionMember) -> AST.TypeHint:
+            is_circular_reference = self._context.does_type_reference_reference_other_type(
+                member.type, self._name.type_id
+            )
+            return self._context.get_type_hint_for_type_reference(
+                member.type, as_if_type_checking_import=is_circular_reference
+            )
+
+        # The standalone alias is the response-shaped form, so it keeps the trailing
+        # `typing.Any` fallback for forward compatibility (as_request=False).
+        inlined_hint = self._context.get_inlined_undiscriminated_union_hint(
+            members=self._union.members,
+            as_request=False,
+            get_member_hint=get_member_hint,
+        )
+        type_hint = inlined_hint or AST.TypeHint.union(
+            *(
+                self._context.get_type_hint_for_type_reference(
+                    member.type, as_if_type_checking_import=member.is_circular_reference
+                )
+                for member in self._members
+            )
+        )
+
         self._source_file.add_declaration(
             AST.TypeAliasDeclaration(
-                type_hint=AST.TypeHint.union(
-                    *(
-                        self._context.get_type_hint_for_type_reference(
-                            member.type, as_if_type_checking_import=member.is_circular_reference
-                        )
-                        for member in self._members
-                    )
-                ),
+                type_hint=type_hint,
                 name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
             ),
             should_export=True,

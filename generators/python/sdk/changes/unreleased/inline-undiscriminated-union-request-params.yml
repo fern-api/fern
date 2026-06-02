@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in `inline_undiscriminated_union_request_params` flag. When enabled,
+    undiscriminated unions whose members are literal-like (single string/boolean
+    literals, or single-value enums that are only ever referenced as undiscriminated
+    union members) inline those members directly into the union as a combined
+    `typing.Literal[...]`, instead of emitting a separate named type and referencing
+    it indirectly. The now-unreferenced member types are no longer generated.
+
+    In response position the inlined union keeps a trailing `typing.Any` fallback for
+    forward compatibility; in request position the fallback is omitted so callers only
+    see the options the SDK supports. Off by default — existing output is unchanged.
+  type: feat

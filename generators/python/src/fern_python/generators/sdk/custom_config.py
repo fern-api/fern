@@ -93,6 +93,17 @@ class SDKCustomConfig(pydantic.BaseModel):
     # parameters in function signatures where possible.
     inline_request_params: bool = True
 
+    # Feature flag that inlines literal-like undiscriminated union members directly
+    # into the union as a combined `typing.Literal[...]`, rather than emitting a
+    # separate named type (single string/boolean literals, or single-value enums that
+    # are only ever referenced as undiscriminated union members) and referencing it
+    # indirectly. The now-unreferenced member types are no longer generated.
+    #
+    # In response position the inlined union keeps a trailing `typing.Any` fallback for
+    # forward compatibility; in request position the fallback is omitted so callers only
+    # see the options the SDK supports. Off by default — existing output is unchanged.
+    inline_undiscriminated_union_request_params: bool = False
+
     # When True, endpoints whose referenced request body is a discriminated
     # union are inlined as flat kwargs (variants' fields merged, discriminator
     # collapsed to a Literal of all values, conflicting field types unioned),

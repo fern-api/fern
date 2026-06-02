@@ -49,6 +49,7 @@ class SdkGeneratorContext(ABC):
             union_naming_version=custom_config.pydantic_config.union_naming,
             use_pydantic_field_aliases=custom_config.pydantic_config.use_pydantic_field_aliases,
             pydantic_compatibility=custom_config.pydantic_config.version,
+            inline_undiscriminated_union_request_params=custom_config.inline_undiscriminated_union_request_params,
         )
 
         _has_standard_paginated_endpoints = any(

@@ -208,6 +208,15 @@ class TypeReferenceToTypeHintConverter:
         as_request: bool,
         as_if_type_checking_import: bool = False,
     ) -> AST.TypeHint:
+        # In request position, inline literal-bearing undiscriminated unions directly into the
+        # signature (dropping the forward-compat `typing.Any`) so callers see only the options
+        # the SDK supports. Response position continues to reference the named alias.
+        if as_request and self._context.inline_undiscriminated_union_request_params:
+            inlined_hint = self._context.maybe_get_inlined_hint_for_named_undiscriminated_union(
+                type_name.type_id, as_request=True
+            )
+            if inlined_hint is not None:
+                return inlined_hint
         return AST.TypeHint(
             type=self._type_declaration_referencer.get_class_reference(
                 name=type_name,

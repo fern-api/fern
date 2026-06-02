@@ -423,6 +423,13 @@ fixtures:
     - customConfig:
         flatten_union_request_bodies: true
       outputFolder: flatten-union-request-bodies
+  undiscriminated-unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inline_request_params: true
+        inline_undiscriminated_union_request_params: true
+      outputFolder: inline-undiscriminated-union-request-params
   websocket:
     - outputFolder: websocket-base
     - customConfig:

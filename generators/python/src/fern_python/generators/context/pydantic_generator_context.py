@@ -29,6 +29,7 @@ class PydanticGeneratorContext(ABC):
         union_naming_version: UnionNamingVersions,
         use_pydantic_field_aliases: bool,
         pydantic_compatibility: PydanticVersionCompatibility,
+        inline_undiscriminated_union_request_params: bool = False,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -43,6 +44,7 @@ class PydanticGeneratorContext(ABC):
         self.use_str_enums = use_str_enums
         self.source_file_factory = SourceFileFactory(should_format=not skip_formatting)
         self.union_naming_version: UnionNamingVersions = union_naming_version
+        self.inline_undiscriminated_union_request_params = inline_undiscriminated_union_request_params
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath: ...
@@ -112,6 +114,22 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]: ...
+
+    @abstractmethod
+    def should_inline_away_type(self, type_id: ir_types.TypeId) -> bool: ...
+
+    @abstractmethod
+    def get_inlined_undiscriminated_union_hint(
+        self,
+        members: List[ir_types.UndiscriminatedUnionMember],
+        as_request: bool,
+        get_member_hint: Callable[[ir_types.UndiscriminatedUnionMember], AST.TypeHint],
+    ) -> Optional[AST.TypeHint]: ...
+
+    @abstractmethod
+    def maybe_get_inlined_hint_for_named_undiscriminated_union(
+        self, type_id: ir_types.TypeId, as_request: bool
+    ) -> Optional[AST.TypeHint]: ...
 
     @abstractmethod
     def get_initializer_for_type_reference(
