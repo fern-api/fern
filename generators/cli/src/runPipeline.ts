@@ -3,10 +3,12 @@ import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
+import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
+import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
 import { writeGitignore } from "./writeGitignore.js";
 
 export type PipelineOutcome =
@@ -31,10 +33,11 @@ export async function runPipeline(args: {
     outputDir: string;
     customConfig: FernCliCustomConfig;
     ir: IrSummary;
+    outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
     specsDir?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, outputConfig, sdkTemplateDir, specsDir } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -57,11 +60,21 @@ export async function runPipeline(args: {
     //      identifying bits don't leak Fern's template-author branding.
     //   3. copySpecs writes the spec files + main.rs into
     //      `cli/<binaryName>/`, wiring the IR-derived auth bindings.
+    //   4. emitPublishWorkflow writes `.github/workflows/ci.yml` when
+    //      output mode is `github` with npm publish info.
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
-    await patchCargoToml({ outputDir, binaryName });
+    await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
     await copySpecs({ outputDir, binaryName, authBindings, specsDir });
     await writeGitignore(outputDir);
+
+    if (outputConfig.npmPublishInfo != null) {
+        await emitPublishWorkflow({
+            outputDir,
+            binaryName,
+            npmPublishInfo: outputConfig.npmPublishInfo
+        });
+    }
 
     return { status: "generated", binaryName };
 }

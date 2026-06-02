@@ -30,11 +30,11 @@ import { TEMPLATE_BINARY_NAME } from "./identity.js";
  *     in the shipped src/ tree depends on it.
  *   - All dependency versions, features, and the `[profile.dist]` block.
  */
-export async function patchCargoToml(args: { outputDir: string; binaryName: string }): Promise<void> {
-    const { outputDir, binaryName } = args;
+export async function patchCargoToml(args: { outputDir: string; binaryName: string; version: string }): Promise<void> {
+    const { outputDir, binaryName, version } = args;
     const cargoTomlPath = path.join(outputDir, "Cargo.toml");
     const contents = await readFile(cargoTomlPath, "utf-8");
-    const patched = applyCargoTomlPatch(contents, binaryName);
+    const patched = applyCargoTomlPatch(contents, binaryName, version);
     if (patched === contents) {
         throw new Error(
             `Cargo.toml at ${cargoTomlPath} did not match the expected template — no substitutions made. ` +
@@ -42,6 +42,15 @@ export async function patchCargoToml(args: { outputDir: string; binaryName: stri
         );
     }
     await writeFile(cargoTomlPath, patched);
+
+    // Cargo.lock records the package's own version alongside its
+    // dependencies.  When we stamp a resolved version into Cargo.toml,
+    // the lockfile entry must match — otherwise `cargo build --locked`
+    // rejects the build.
+    const cargoLockPath = path.join(outputDir, "Cargo.lock");
+    const lockContents = await readFile(cargoLockPath, "utf-8");
+    const patchedLock = patchCargoLockVersion(lockContents, version);
+    await writeFile(cargoLockPath, patchedLock);
 }
 
 /**
@@ -50,7 +59,7 @@ export async function patchCargoToml(args: { outputDir: string; binaryName: stri
  * patcher's expectations becomes a test failure rather than a silent
  * skip.
  */
-export function applyCargoTomlPatch(cargoToml: string, binaryName: string): string {
+export function applyCargoTomlPatch(cargoToml: string, binaryName: string, version: string): string {
     let patched = cargoToml;
     patched = requireReplace(patched, TEMPLATE_TOP_COMMENT, "");
     patched = requireReplace(patched, TEMPLATE_BIN_COMMENT, "");
@@ -63,7 +72,41 @@ export function applyCargoTomlPatch(cargoToml: string, binaryName: string): stri
         `path = "cli/${TEMPLATE_BINARY_NAME}/main.rs"`,
         `path = "cli/${binaryName}/main.rs"`
     );
+    patched = replaceVersion(patched, version);
     return patched;
+}
+
+/**
+ * Replace the template's `version = "..."` field under `[package]`
+ * with the resolved version. Uses a regex anchored to the first
+ * occurrence so it won't accidentally match version fields inside
+ * `[dependencies]`.
+ */
+function replaceVersion(cargoToml: string, version: string): string {
+    const versionRe = /^(version\s*=\s*)"[^"]*"/m;
+    if (!versionRe.test(cargoToml)) {
+        throw new Error('patchCargoToml anchor missing — could not find version = "..." field');
+    }
+    return cargoToml.replace(versionRe, `$1"${version}"`);
+}
+
+/**
+ * Patch the `version` field of the `fern-cli-sdk` package entry in
+ * Cargo.lock to match the version stamped into Cargo.toml. Cargo.lock
+ * records each package as:
+ *
+ *   [[package]]
+ *   name = "fern-cli-sdk"
+ *   version = "0.18.1"
+ *
+ * We locate the `fern-cli-sdk` entry and replace its version.
+ */
+export function patchCargoLockVersion(cargoLock: string, version: string): string {
+    const pattern = /(name = "fern-cli-sdk"\nversion = ")([^"]*)(")/;
+    if (!pattern.test(cargoLock)) {
+        throw new Error("patchCargoToml: could not find fern-cli-sdk version entry in Cargo.lock");
+    }
+    return cargoLock.replace(pattern, `$1${version}$3`);
 }
 
 function requireReplace(haystack: string, needle: string, replacement: string): string {

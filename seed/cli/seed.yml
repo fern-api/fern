@@ -60,6 +60,18 @@ fixtures:
   query-parameters-openapi:
     - customConfig: null
       outputFolder: no-custom-config
+    # Github output mode with npm publish info — verifies that the
+    # generator emits `.github/workflows/ci.yml` and stamps the
+    # resolved version into Cargo.toml.
+    - customConfig: null
+      outputFolder: github-npm
+      outputMode: github
+      outputVersion: "1.0.0"
+      publishConfig:
+        type: npm
+        registryUrl: https://registry.npmjs.org
+        packageName: "@fern/query-parameters-openapi"
+        token: "${NPM_TOKEN}"
   # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
   # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
   # refuses to guess a single name across multiple titles).
