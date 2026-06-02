@@ -127,3 +127,7 @@ seed/**/Library/Caches/
 
 # Devbox gradle properties
 /gradle.properties
+
+# Transient cli-sdk checkout used by .github/workflows/sync-cli-sdk.yml.
+# It is a nested git clone; never let `git add -A` capture it as a gitlink.
+/_cli-sdk/
