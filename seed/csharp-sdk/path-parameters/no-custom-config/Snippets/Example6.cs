@@ -11,8 +11,8 @@ public partial class Examples
 
         await client.User.SearchUsersAsync(
             new SearchUsersRequest {
-                TenantId = "tenant_id",
                 UserId = "user_id",
+                TenantId = "tenant_id",
                 Limit = 1
             }
         );

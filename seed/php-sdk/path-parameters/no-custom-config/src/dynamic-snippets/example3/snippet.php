@@ -10,6 +10,6 @@ $client = new SeedClient(
     ],
 );
 $client->user->getUser(
-    'tenant_id',
     'user_id',
+    'tenant_id',
 );

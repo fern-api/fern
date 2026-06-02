@@ -10,7 +10,6 @@ public partial class Examples
         );
 
         await client.User.UpdateUserAsync(
-            "tenant_id",
             "user_id",
             new UpdateUserRequest {
                 Body = new User {
@@ -21,7 +20,8 @@ public partial class Examples
                     }
 
                 }
-            }
+            },
+            "tenant_id"
         );
     }
 

@@ -12,7 +12,7 @@ $client = new SeedClient(
 );
 $client->user->getUser(
     new GetUsersRequest([
-        'tenantId' => 'tenant_id',
         'userId' => 'user_id',
+        'tenantId' => 'tenant_id',
     ]),
 );

@@ -818,19 +818,34 @@ export class EndpointSnippetGenerator {
         const args: php.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
-            );
-        }
+        const endpointPathParameters = request.pathParameters ?? [];
+        const rootPathParameters = this.context.ir.pathParameters ?? [];
+        // Process all path parameters together so associateByWireValue sees the
+        // full set and doesn't flag endpoint params as unrecognized.
+        const allNamedParameters = [...rootPathParameters, ...endpointPathParameters];
+        const allPathParamFields = this.getPathParameters({ namedParameters: allNamedParameters, snippet });
         this.context.errors.unscope();
+
+        // When there are no endpoint-specific path parameters, root-level path
+        // parameters may have default values (e.g. from x-fern-base-path). Place
+        // them after the body argument to match Method.ts parameter ordering which
+        // moves parameters with initializers after required parameters.
+        const moveRootAfterBody = endpointPathParameters.length === 0 && rootPathParameters.length > 0;
+        if (moveRootAfterBody) {
+            // No endpoint params, so allPathParamFields are all root — skip them for now
+        } else {
+            args.push(...allPathParamFields.map((field) => field.value));
+        }
 
         this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
         this.context.errors.unscope();
+
+        if (moveRootAfterBody) {
+            args.push(...allPathParamFields.map((field) => field.value));
+        }
 
         return args;
     }
@@ -873,11 +888,21 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.customConfig?.inlinePathParameters ?? false;
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: php.ConstructorField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
-        }
+        const endpointPathParameters = request.pathParameters ?? [];
+        const rootPathParameters = this.context.ir.pathParameters ?? [];
+        // Process all path parameters together so associateByWireValue sees the
+        // full set and doesn't flag endpoint params as unrecognized.
+        const allNamedParameters = [...rootPathParameters, ...endpointPathParameters];
+        const allPathParameterFields = this.getPathParameters({ namedParameters: allNamedParameters, snippet });
+        // When there are no endpoint-specific path parameters, root-level path
+        // parameters may have default values (e.g. from x-fern-base-path). Place
+        // them after the request argument to match Method.ts parameter ordering.
+        // When endpoint-specific path parameters exist, keep the original combined
+        // order (root first, then endpoint) before the request.
+        const moveRootAfterRequest = endpointPathParameters.length === 0 && rootPathParameters.length > 0;
+        // Split the fields back into root vs endpoint groups based on count.
+        const rootPathParameterFields = allPathParameterFields.slice(0, rootPathParameters.length);
+        const endpointPathParameterFields = allPathParameterFields.slice(rootPathParameters.length);
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
@@ -885,7 +910,11 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            args.push(...pathParameterFields.map((field) => field.value));
+            if (moveRootAfterRequest) {
+                args.push(...endpointPathParameterFields.map((field) => field.value));
+            } else {
+                args.push(...allPathParameterFields.map((field) => field.value));
+            }
         }
 
         if (
@@ -903,12 +932,20 @@ export class EndpointSnippetGenerator {
                         request,
                         inlinePathParameters
                     })
-                        ? pathParameterFields
+                        ? allPathParameterFields
                         : [],
                     filePropertyInfo
                 })
             );
         }
+
+        if (
+            moveRootAfterRequest &&
+            !this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })
+        ) {
+            args.push(...rootPathParameterFields.map((field) => field.value));
+        }
+
         return args;
     }
 

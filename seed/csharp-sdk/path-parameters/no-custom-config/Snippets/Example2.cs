@@ -10,11 +10,11 @@ public partial class Examples
         );
 
         await client.Organizations.SearchOrganizationsAsync(
-            "tenant_id",
             "organization_id",
             new SearchOrganizationsRequest {
                 Limit = 1
-            }
+            },
+            "tenant_id"
         );
     }
 

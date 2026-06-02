@@ -1,0 +1,4 @@
+- summary: |
+    Fix dynamic snippet argument ordering to place body arguments before
+    defaulted path parameters, matching the generated method signature ordering.
+  type: fix

@@ -566,11 +566,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const args: ast.Literal[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: ast.ConstructorField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
-        }
+        const endpointPathParameters = request.pathParameters ?? [];
+        const rootPathParameters = this.context.ir.pathParameters ?? [];
+        // Process all path parameters together so associateByWireValue sees the
+        // full set and doesn't flag endpoint params as unrecognized.
+        const allNamedParameters = [...rootPathParameters, ...endpointPathParameters];
+        const allPathParameterFields = this.getPathParameters({ namedParameters: allNamedParameters, snippet });
+        // When there are no endpoint-specific path parameters, root-level path
+        // parameters may have default values (e.g. from x-fern-base-path). Place
+        // them after the request argument to match AbstractEndpointGenerator parameter ordering.
+        const moveRootAfterRequest = endpointPathParameters.length === 0 && rootPathParameters.length > 0;
+        // Split the fields back into root vs endpoint groups based on count.
+        const rootPathParameterFields = allPathParameterFields.slice(0, rootPathParameters.length);
+        const endpointPathParameterFields = allPathParameterFields.slice(rootPathParameters.length);
         this.context.errors.unscope();
 
         // TODO: Add support for file properties.
@@ -584,7 +592,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 inlinePathParameters: this.settings.shouldInlinePathParameters
             })
         ) {
-            args.push(...pathParameterFields.map((field) => field.value));
+            if (moveRootAfterRequest) {
+                args.push(...endpointPathParameterFields.map((field) => field.value));
+            } else {
+                args.push(...allPathParameterFields.map((field) => field.value));
+            }
         }
         // For now, the C# SDK always requires the inlined request parameter.
         args.push(
@@ -595,11 +607,22 @@ export class EndpointSnippetGenerator extends WithGeneration {
                     request,
                     inlinePathParameters: this.settings.shouldInlinePathParameters
                 })
-                    ? pathParameterFields
+                    ? allPathParameterFields
                     : [],
                 filePropertyInfo
             })
         );
+
+        if (
+            moveRootAfterRequest &&
+            !this.context.includePathParametersInWrappedRequest({
+                request,
+                inlinePathParameters: this.settings.shouldInlinePathParameters
+            })
+        ) {
+            args.push(...rootPathParameterFields.map((field) => field.value));
+        }
+
         return args;
     }
 
@@ -789,20 +812,35 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ast.Literal[] {
         const args: ast.Literal[] = [];
+
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
-            );
-        }
+        const endpointPathParameters = request.pathParameters ?? [];
+        const rootPathParameters = this.context.ir.pathParameters ?? [];
+        // Process all path parameters together so associateByWireValue sees the
+        // full set and doesn't flag endpoint params as unrecognized.
+        const allNamedParameters = [...rootPathParameters, ...endpointPathParameters];
+        const allPathParamFields = this.getPathParameters({ namedParameters: allNamedParameters, snippet });
         this.context.errors.unscope();
+
+        // When there are no endpoint-specific path parameters, root-level path
+        // parameters may have default values (e.g. from x-fern-base-path). Place
+        // them after the body argument to match AbstractEndpointGenerator parameter ordering.
+        const moveRootAfterBody = endpointPathParameters.length === 0 && rootPathParameters.length > 0;
+        if (moveRootAfterBody) {
+            // No endpoint params, so allPathParamFields are all root — skip them for now
+        } else {
+            args.push(...allPathParamFields.map((field) => field.value));
+        }
 
         this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
             args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
         }
         this.context.errors.unscope();
+
+        if (moveRootAfterBody) {
+            args.push(...allPathParamFields.map((field) => field.value));
+        }
 
         return args;
     }

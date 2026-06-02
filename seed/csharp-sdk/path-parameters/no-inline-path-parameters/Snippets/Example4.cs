@@ -10,7 +10,6 @@ public partial class Examples
         );
 
         await client.User.CreateUserAsync(
-            "tenant_id",
             new User {
                 Name = "name",
                 Tags = new List<string>(){
@@ -18,7 +17,8 @@ public partial class Examples
                     "tags",
                 }
 
-            }
+            },
+            "tenant_id"
         );
     }
 

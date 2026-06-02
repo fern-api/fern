@@ -11,8 +11,8 @@ public partial class Examples
 
         await client.User.GetUserAsync(
             new GetUsersRequest {
-                TenantId = "tenant_id",
-                UserId = "user_id"
+                UserId = "user_id",
+                TenantId = "tenant_id"
             }
         );
     }

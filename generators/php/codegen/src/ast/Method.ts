@@ -75,9 +75,14 @@ export class Method extends AstNode {
         writer.write(`${this.access}${this.static_ ? " static" : ""} function ${this.name}(`);
 
         // NOTE: Put all required parameters before all optional parameters
-        // since this is required by PHPStan
-        const requiredParameters = this.parameters.filter((param) => !param.type.isOptional());
-        const optionalParameters = this.parameters.filter((param) => param.type.isOptional());
+        // since this is required by PHPStan. Parameters with an initializer
+        // (default value) are also considered optional in PHP.
+        const requiredParameters = this.parameters.filter(
+            (param) => !param.type.isOptional() && param.initializer == null
+        );
+        const optionalParameters = this.parameters.filter(
+            (param) => param.type.isOptional() || param.initializer != null
+        );
 
         const orderedParameters = [...requiredParameters, ...optionalParameters];
 
