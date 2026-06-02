@@ -60,6 +60,15 @@ if [[ -d "$SDK_DIR/tests" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
+# 1b. Strip fixture-dependent inline tests from src/
+# ---------------------------------------------------------------------------
+# cli-sdk's #[cfg(test)] modules reference fixture specs via
+# include_str!("../../cli/<dir>/...") that are NOT synced. Removing them
+# keeps `cargo test` clean in both the vendored SDK and generated CLIs.
+echo "--- Stripping fixture-dependent inline tests from src/ ..."
+python3 "$SCRIPT_DIR/strip-fixture-tests.py" "$SDK_DIR/src/"
+
+# ---------------------------------------------------------------------------
 # 2. Project Cargo.toml (not a naive copy — workspace → single-package)
 # ---------------------------------------------------------------------------
 echo "--- Projecting Cargo.toml ..."
