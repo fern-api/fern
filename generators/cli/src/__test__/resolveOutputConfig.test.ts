@@ -1,6 +1,6 @@
 import { FernGeneratorExec } from "@fern-api/base-generator";
 import { describe, expect, it } from "vitest";
-import { resolveOutputConfig, type ResolvedNpmPublishInfo } from "../resolveOutputConfig.js";
+import { type ResolvedNpmPublishInfo, resolveOutputConfig } from "../resolveOutputConfig.js";
 
 /**
  * Direct unit tests for `resolveOutputConfig`. Exercises every output
@@ -87,8 +87,8 @@ describe("resolveOutputConfig", () => {
         );
 
         expect(result.npmPublishInfo).toBeDefined();
-        expect(result.npmPublishInfo!.tokenEnvironmentVariable).toBe("NPM_TOKEN");
-        expect(result.npmPublishInfo!.useOidc).toBe(false);
+        expect(result.npmPublishInfo?.tokenEnvironmentVariable).toBe("NPM_TOKEN");
+        expect(result.npmPublishInfo?.useOidc).toBe(false);
     });
 
     it("<USE_OIDC> sentinel sets useOidc = true and preserves the sentinel value", () => {
@@ -105,8 +105,8 @@ describe("resolveOutputConfig", () => {
         );
 
         expect(result.npmPublishInfo).toBeDefined();
-        expect(result.npmPublishInfo!.tokenEnvironmentVariable).toBe("<USE_OIDC>");
-        expect(result.npmPublishInfo!.useOidc).toBe(true);
+        expect(result.npmPublishInfo?.tokenEnvironmentVariable).toBe("<USE_OIDC>");
+        expect(result.npmPublishInfo?.useOidc).toBe(true);
     });
 
     it("shouldGeneratePublishWorkflow: false suppresses npm publish info", () => {
