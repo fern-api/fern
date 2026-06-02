@@ -355,9 +355,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                         stream_parameter=lambda _: None,
                     )
 
-    def _add_inlined_body_refs(
-        self, body: ir_types.InlinedRequestBody, target: Set[ir_types.TypeId]
-    ) -> None:
+    def _add_inlined_body_refs(self, body: ir_types.InlinedRequestBody, target: Set[ir_types.TypeId]) -> None:
         for extension in body.extends:
             target.add(extension.type_id)
         for inlined_property in body.properties:
@@ -510,9 +508,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         return self.get_inlined_undiscriminated_union_hint(
             members=shape.members,
             as_request=as_request,
-            get_member_hint=lambda member: self.get_type_hint_for_type_reference(
-                member.type, in_endpoint=as_request
-            ),
+            get_member_hint=lambda member: self.get_type_hint_for_type_reference(member.type, in_endpoint=as_request),
         )
 
     def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
