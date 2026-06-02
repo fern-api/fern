@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "full",
+    "partial",
+    "shade"
+  ],
+  "description": "Required sun exposure level.",
+  "definitions": {}
+}

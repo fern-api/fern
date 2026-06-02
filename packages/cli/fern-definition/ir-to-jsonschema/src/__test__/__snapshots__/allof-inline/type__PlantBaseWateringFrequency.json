@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "daily",
+    "weekly",
+    "biweekly",
+    "monthly"
+  ],
+  "definitions": {}
+}
