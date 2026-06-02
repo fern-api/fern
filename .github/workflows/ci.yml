@@ -205,7 +205,7 @@ jobs:
   test:
     needs: [changes-filter]
     if: github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
-    runs-on: Test
+    runs-on: Test2
     timeout-minutes: 25
     steps:
       - name: Checkout repo
@@ -265,7 +265,7 @@ jobs:
   test-ete:
     needs: [changes-filter]
     if: github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
-    runs-on: Test
+    runs-on: Test2
     timeout-minutes: 25
     steps:
       - name: Checkout repo
