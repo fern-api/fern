@@ -13,6 +13,7 @@ import {
     DocsDefinitionResolver,
     filterOssWorkspaces,
     stitchGlobalTheme,
+    type TranslatedApiSpec,
     type TranslationNavigationOverlay
 } from "@fern-api/docs-resolver";
 import {
@@ -151,6 +152,12 @@ export interface PreviewDocsResult {
      * Absolute path to the fern docs workspace folder.
      */
     docsWorkspacePath: AbsoluteFilePath;
+    /**
+     * Per-locale translated API definitions, keyed by locale then by the base
+     * `apiDefinitionId` (shared with the default-locale definition) so they can be
+     * spliced into a per-locale docs definition's `apis` without touching the nav tree.
+     */
+    translatedApiDefinitions: Record<string, Record<string, APIV1Read.ApiDefinition>> | undefined;
 }
 
 export async function getPreviewDocsDefinition({
@@ -318,7 +325,8 @@ export async function getPreviewDocsDefinition({
                 translationPages: previousPreviewResult.translationPages,
                 translationNavigationOverlays: previousPreviewResult.translationNavigationOverlays,
                 collectedFileIds: previousPreviewResult.collectedFileIds,
-                docsWorkspacePath: previousPreviewResult.docsWorkspacePath
+                docsWorkspacePath: previousPreviewResult.docsWorkspacePath,
+                translatedApiDefinitions: previousPreviewResult.translatedApiDefinitions
             };
         }
     }
@@ -355,7 +363,8 @@ export async function getPreviewDocsDefinition({
                 };
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences: undefined
+        targetAudiences: undefined,
+        buildTranslatedApiDefinitions: true
     });
 
     const writeDocsDefinition = await resolver.resolve();
@@ -410,13 +419,72 @@ export async function getPreviewDocsDefinition({
     const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
     const collectedFileIds = resolver.getCollectedFileIds();
 
+    const translatedApiSpecs = resolver.getTranslatedApiSpecs();
+    let translatedApiDefinitions: Record<string, Record<string, APIV1Read.ApiDefinition>> | undefined;
+    if (translatedApiSpecs.size > 0) {
+        translatedApiDefinitions = {};
+        for (const [locale, byApiId] of translatedApiSpecs) {
+            const localeApis: Record<string, APIV1Read.ApiDefinition> = {};
+            for (const [apiDefinitionId, spec] of byApiId) {
+                try {
+                    localeApis[apiDefinitionId] = convertTranslatedIrToReadApi(spec, apiDefinitionId, context);
+                } catch (error) {
+                    context.logger.warn(
+                        `Failed to convert translated API definition "${apiDefinitionId}" for locale "${locale}": ${extractErrorMessage(
+                            error
+                        )}. Falling back to the default-locale API.`
+                    );
+                }
+            }
+            if (Object.keys(localeApis).length > 0) {
+                translatedApiDefinitions[locale] = localeApis;
+            }
+        }
+        if (Object.keys(translatedApiDefinitions).length === 0) {
+            translatedApiDefinitions = undefined;
+        }
+    }
+
     return {
         docsDefinition,
         translationPages,
         translationNavigationOverlays,
         collectedFileIds,
-        docsWorkspacePath: docsWorkspace.absoluteFilePath
+        docsWorkspacePath: docsWorkspace.absoluteFilePath,
+        translatedApiDefinitions
     };
+}
+
+/**
+ * Converts a translated API IR into a V1 read API definition, reusing the base
+ * `apiDefinitionId` instead of minting a fresh one so the per-locale navigation
+ * tree resolves to the translated API.
+ */
+function convertTranslatedIrToReadApi(
+    spec: TranslatedApiSpec,
+    apiDefinitionId: string,
+    context: TaskContext
+): APIV1Read.ApiDefinition {
+    const dbApiDefinition = convertAPIDefinitionToDb(
+        convertIrToFdrApi({
+            ir: spec.ir,
+            snippetsConfig: spec.snippetsConfig,
+            playgroundConfig: spec.playgroundConfig,
+            graphqlOperations: spec.graphqlOperations ?? {},
+            graphqlTypes: spec.graphqlTypes ?? {},
+            context,
+            apiNameOverride: spec.apiName
+        }),
+        FdrAPI.ApiDefinitionId(apiDefinitionId),
+        new SDKSnippetHolder({
+            snippetsConfigWithSdkId: {},
+            snippetsBySdkId: {},
+            snippetTemplatesByEndpoint: {},
+            snippetTemplatesByEndpointId: {},
+            snippetsBySdkIdAndEndpointId: {}
+        })
+    );
+    return convertDbAPIDefinitionToRead(dbApiDefinition);
 }
 
 async function applyGlobalThemeIfNeeded(
