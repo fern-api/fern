@@ -26,6 +26,27 @@ function sha256(data: Buffer): string {
     return createHash("sha256").update(data).digest("hex");
 }
 
+/**
+ * Matches `file:<fullPath>` tokens in rewritten page markdown — the same
+ * pattern the docs bundle's MDX serializer uses to discover file references
+ * (`packages/fern-docs/bundle/src/mdx/bundler/serialize.ts`). Keeping the two
+ * in sync guarantees `referencedFiles` is exactly the set the bundle resolves
+ * per page (ADR 0014).
+ */
+const FILE_REF_PATTERN = /file:([^\s"'<>)}\]]+)/g;
+
+/** Deduplicated bare `fullPath`s of every `file:<fullPath>` token in `markdown`. */
+function extractReferencedFiles(markdown: string): string[] {
+    const paths = new Set<string>();
+    for (const match of markdown.matchAll(FILE_REF_PATTERN)) {
+        const fullPath = match[1];
+        if (fullPath != null) {
+            paths.add(fullPath);
+        }
+    }
+    return [...paths];
+}
+
 interface BlobRef {
     hash: string;
     contentType: string;
@@ -107,7 +128,23 @@ export function buildLedgerInput({
         }
         const buf = Buffer.from(page.markdown, "utf-8");
         const hash = sha256(buf);
-        pages[pageId] = { hash, contentType: "text/markdown", contentLength: buf.length };
+        // Capture the file/image artifacts this page embeds so FDR can
+        // materialise the page→file join into the route shards (ADR 0014,
+        // "File metadata on the render path"). The markdown reaching here has
+        // already had image paths rewritten to `file:<sanitizedPath>` tokens by
+        // the resolver's replaceImagePathsAndUrls step, and in ledger mode the
+        // token suffix IS the file's `fullPath`. We scan with the SAME regex
+        // the bundle's MDX serializer uses to discover `file:` references, so
+        // `referencedFiles` is exactly the set the bundle will request for this
+        // page — a cheap O(content) scan over markdown already in memory, not a
+        // re-parse and not a server-side re-fetch.
+        const referencedFiles = extractReferencedFiles(page.markdown);
+        pages[pageId] = {
+            hash,
+            contentType: "text/markdown",
+            contentLength: buf.length,
+            ...(referencedFiles.length > 0 ? { referencedFiles } : {})
+        };
         blobs.set(hash, buf);
     }
 
