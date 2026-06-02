@@ -37,7 +37,7 @@ export const DEFAULT_NODE_DEBUG_PORT = "9229";
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
  */
-const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli"]);
+const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli-generator"]);
 
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);

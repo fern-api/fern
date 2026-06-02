@@ -1,0 +1,8 @@
+- summary: |
+    Fix `ENOTEMPTY` error during local generation when removing the temporary
+    `.git` directory in `copyGeneratedFilesWithFernIgnoreInTempRepo`. The `fs.rm`
+    call now uses `maxRetries: 3` to handle race conditions with git background
+    processes (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+    Also disables git auto-gc during the temporary `git init` to reduce the
+    likelihood of the race condition.
+  type: fix

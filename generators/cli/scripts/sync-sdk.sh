@@ -34,45 +34,30 @@ SYNC_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 echo "==> Syncing cli-sdk@${CLI_SDK_SHORT} (${CLI_SDK_SHA}) into generators/cli/sdk/"
 
 # ---------------------------------------------------------------------------
-# 1. Rsync source files with SDK_IGNORE rules (mirrors build.mjs SDK_IGNORE)
+# 1. Rsync source files + openapi-fixture dev binary
 # ---------------------------------------------------------------------------
-echo "--- Syncing src/, tests/, cli/openapi-fixture/ ..."
+echo "--- Syncing src/, cli/openapi-fixture/ ..."
 
 rsync -a --delete \
   --exclude='.DS_Store' \
-  --exclude='target/' \
-  --exclude='.gitignore' \
-  --exclude='docs/' \
-  --exclude='tests/overlay_fixture.rs' \
-  --exclude='tests/fixtures/' \
-  --exclude='cli/openapi-fixture/' \
-  --exclude='.github/' \
-  --exclude='build.rs' \
-  --exclude='tests/common/' \
-  --exclude='tests/auth_routing_wire.rs' \
-  --exclude='tests/extension_surface_behavior.rs' \
-  --exclude='tests/lib_api.rs' \
-  --exclude='tests/tls_env_vars.rs' \
-  --exclude='changes/' \
   "$CLI_SDK_DIR/src/" "$SDK_DIR/src/"
 
-# Sync tests (only the ones not in SDK_IGNORE)
-mkdir -p "$SDK_DIR/tests"
-rsync -a --delete \
-  --exclude='.DS_Store' \
-  --exclude='overlay_fixture.rs' \
-  --exclude='fixtures/' \
-  --exclude='common/' \
-  --exclude='auth_routing_wire.rs' \
-  --exclude='extension_surface_behavior.rs' \
-  --exclude='lib_api.rs' \
-  --exclude='tls_env_vars.rs' \
-  "$CLI_SDK_DIR/tests/" "$SDK_DIR/tests/"
+# Tests are NOT synced. cli-sdk's own CI validates test compilation;
+# the vendored SDK only needs the library + openapi-fixture binary to
+# compile. Many test files reference non-synced CLI binaries/specs
+# (smoke tests, parser.rs #[cfg(test)] include_str! calls) and would
+# fail to compile in the projected single-package layout.
 
 # Sync cli/openapi-fixture/ (the dev fixture used by seed)
 mkdir -p "$SDK_DIR/cli/openapi-fixture"
 rsync -a --delete \
   "$CLI_SDK_DIR/cli/openapi-fixture/" "$SDK_DIR/cli/openapi-fixture/"
+
+# Remove stale tests/ directory if present from a prior sync revision
+if [[ -d "$SDK_DIR/tests" ]]; then
+  echo "--- Removing stale tests/ directory ..."
+  rm -rf "$SDK_DIR/tests"
+fi
 
 # ---------------------------------------------------------------------------
 # 2. Project Cargo.toml (not a naive copy — workspace → single-package)

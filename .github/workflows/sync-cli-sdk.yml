@@ -40,7 +40,7 @@ jobs:
         run: bash generators/cli/scripts/sync-sdk.sh _cli-sdk
 
       - name: Verify projected SDK builds
-        run: cargo build --locked --all-features --tests
+        run: cargo build --locked --all-features
         working-directory: generators/cli/sdk
 
       - name: Check for changes

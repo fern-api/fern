@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.3
+  changelogEntry:
+    - summary: |
+        Fix `ENOTEMPTY` error during local generation when removing the temporary
+        `.git` directory in `copyGeneratedFilesWithFernIgnoreInTempRepo`. The `fs.rm`
+        call now uses `maxRetries: 3` to handle race conditions with git background
+        processes (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+        Also disables git auto-gc during the temporary `git init` to reduce the
+        likelihood of the race condition.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
 - version: 5.44.2
   changelogEntry:
     - summary: |
@@ -239,7 +251,7 @@
         and `GraphQLSpec.namespace`). Enables generators that opt into
         `generatorWantsSpecs` to route multi-spec workspaces by their
         workspace-declared namespace instead of inferring one from the
-        runner-assigned filename. The new `fernapi/fern-cli` generator
+        runner-assigned filename. The new `fernapi/fern-cli-generator` generator
         uses this to emit `.spec_under("<ns>", ...)` in the generated
         `main.rs` when the user namespaces their specs.
       type: feat
@@ -703,7 +715,7 @@
 - version: 5.25.0
   changelogEntry:
     - summary: |
-        Register the new `fernapi/fern-cli` generator in the CLI configuration.
+        Register the new `fernapi/fern-cli-generator` generator in the CLI configuration.
       type: feat
   createdAt: "2026-05-14"
   irVersion: 66
