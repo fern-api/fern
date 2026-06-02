@@ -26,7 +26,12 @@ export interface ResolvedOutputConfig {
 export interface ResolvedNpmPublishInfo {
     packageName: string;
     registryUrl: string;
+    /**
+     * The name of the GitHub Actions secret holding the npm auth token.
+     * Set to `"<USE_OIDC>"` when OIDC-based publishing is configured.
+     */
     tokenEnvironmentVariable: string;
+    useOidc: boolean;
 }
 
 const DEFAULT_VERSION = "0.0.0";
@@ -81,10 +86,16 @@ function resolveNpmPublishInfo(publishInfo: GithubPublishInfo | undefined): Reso
             if (publishInfo.shouldGeneratePublishWorkflow === false) {
                 return undefined;
             }
+            const useOidc = publishInfo.tokenEnvironmentVariable === "<USE_OIDC>";
+            const tokenEnvironmentVariable =
+                useOidc || (publishInfo.tokenEnvironmentVariable != null && publishInfo.tokenEnvironmentVariable !== "")
+                    ? publishInfo.tokenEnvironmentVariable
+                    : "NPM_TOKEN";
             return {
                 packageName: publishInfo.packageName,
                 registryUrl: publishInfo.registryUrl,
-                tokenEnvironmentVariable: publishInfo.tokenEnvironmentVariable
+                tokenEnvironmentVariable,
+                useOidc
             };
         }
         default:

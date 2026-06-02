@@ -50,7 +50,13 @@ export async function emitPublishWorkflow(args: {
 
 function constructWorkflowYaml(args: { binaryName: string; npmPublishInfo: ResolvedNpmPublishInfo }): string {
     const { binaryName, npmPublishInfo } = args;
+    const { useOidc } = npmPublishInfo;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
+
+    const oidcPermissions = useOidc
+        ? `\n    permissions:\n      contents: read\n      id-token: write`
+        : "";
+    const tokenEnvBlock = useOidc ? "" : `\n        env:\n          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}`;
 
     const matrixIncludes = TARGETS.map(
         (t) =>
@@ -110,7 +116,7 @@ jobs:
   publish:
     needs: [check, compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: \${{ matrix.runner }}
+    runs-on: \${{ matrix.runner }}${oidcPermissions}
     strategy:
       fail-fast: true
       matrix:
@@ -140,9 +146,7 @@ ${matrixIncludes}
       - name: Build release binary
         run: cargo build --release --locked --target \${{ matrix.rust-target }}
 
-      - name: Package and publish npm platform package
-        env:
-          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}
+      - name: Package and publish npm platform package${tokenEnvBlock}
         shell: bash
         run: |
           set -euo pipefail
@@ -184,7 +188,7 @@ ${matrixIncludes}
   publish-launcher:
     needs: [publish]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest${oidcPermissions}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -194,9 +198,7 @@ ${matrixIncludes}
         with:
           registry-url: "${npmPublishInfo.registryUrl}"
 
-      - name: Publish launcher package
-        env:
-          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}
+      - name: Publish launcher package${tokenEnvBlock}
         shell: bash
         run: |
           set -euo pipefail

@@ -115,7 +115,8 @@ describe("runPipeline", () => {
         npmPublishInfo: {
             packageName: "@acme/cli",
             registryUrl: "https://registry.npmjs.org",
-            tokenEnvironmentVariable: "NPM_TOKEN"
+            tokenEnvironmentVariable: "NPM_TOKEN",
+            useOidc: false
         }
     };
 
