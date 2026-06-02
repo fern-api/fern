@@ -156,26 +156,11 @@ export class GraphQLConverter {
             flatIdCounts.set(op.flatId, (flatIdCounts.get(op.flatId) ?? 0) + 1);
         }
 
-        // First pass: pick flatId or namespacedId based on flat-level collisions
-        const resolved = pending.map((op) => {
-            const hasCollision = (flatIdCounts.get(op.flatId) ?? 0) > 1;
-            return { ...op, finalId: hasCollision ? op.namespacedId : op.flatId };
-        });
-
-        // Second pass: verify no cross-tier collisions on final IDs
-        const finalIdCounts = new Map<string, number>();
-        for (const op of resolved) {
-            finalIdCounts.set(op.finalId, (finalIdCounts.get(op.finalId) ?? 0) + 1);
-        }
-        for (const op of resolved) {
-            if ((finalIdCounts.get(op.finalId) ?? 0) > 1) {
-                op.finalId = op.namespacedId;
-            }
-        }
-
         const result: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation> = {};
-        for (const op of resolved) {
-            const operationId = this.getNamespacedOperationId(op.finalId);
+        for (const op of pending) {
+            const hasCollision = (flatIdCounts.get(op.flatId) ?? 0) > 1;
+            const finalId = hasCollision ? op.namespacedId : op.flatId;
+            const operationId = this.getNamespacedOperationId(finalId);
             result[operationId] = {
                 ...op.operation,
                 id: operationId

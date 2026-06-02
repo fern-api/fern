@@ -1188,7 +1188,13 @@ export class ApiReferenceNodeConverter {
                 const sectionTitle = operationTypeLabels[operationType];
                 const sectionSlug = namespaceSlug.append(kebabCase(sectionTitle));
 
-                const children = this.#buildFieldPathGroupedChildren(operations, sectionSlug, parentAvailability);
+                const children = this.#buildFieldPathGroupedChildren(
+                    operations,
+                    sectionSlug,
+                    parentAvailability,
+                    operationType,
+                    namespace
+                );
 
                 const sectionNode = {
                     id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
@@ -1252,7 +1258,12 @@ export class ApiReferenceNodeConverter {
             const sectionTitle = operationTypeLabels[operationType];
             const sectionSlug = parentSlug.append(kebabCase(sectionTitle));
 
-            const children = this.#buildFieldPathGroupedChildren(operations, sectionSlug, parentAvailability);
+            const children = this.#buildFieldPathGroupedChildren(
+                operations,
+                sectionSlug,
+                parentAvailability,
+                operationType
+            );
 
             const sectionNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
@@ -1286,7 +1297,9 @@ export class ApiReferenceNodeConverter {
     #buildFieldPathGroupedChildren(
         operations: APIV1Read.GraphQlOperation[],
         parentSlug: FernNavigation.V1.SlugGenerator,
-        parentAvailability: docsYml.RawSchemas.Availability | undefined
+        parentAvailability: docsYml.RawSchemas.Availability | undefined,
+        operationType: string,
+        namespace?: string
     ): FernNavigation.V1.ApiPackageChild[] {
         // Group operations by their first fieldPath element
         const groupedByParent = new Map<string, APIV1Read.GraphQlOperation[]>();
@@ -1336,16 +1349,14 @@ export class ApiReferenceNodeConverter {
                 };
             });
 
-            if (groupChildren.length === 0) {
-                continue;
-            }
-
             children.push({
-                id: this.#idgen.get(`${this.apiDefinitionId}:graphql-group:${parentField}`),
+                id: this.#idgen.get(
+                    `${this.apiDefinitionId}:graphql-group:${namespace != null ? `${namespace}:` : ""}${operationType}:${parentField}`
+                ),
                 type: "apiPackage",
                 collapsed: undefined,
                 children: groupChildren,
-                title: parentField,
+                title: titleCase(parentField),
                 slug: fieldSlug.get(),
                 icon: undefined,
                 hidden: this.hideChildren,
