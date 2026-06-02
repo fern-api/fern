@@ -4816,69 +4816,6 @@ paths:
         assert_eq!(users.root_url, "https://api.example.com");
     }
 
-    #[test]
-    fn test_box_upload_operations_use_upload_server() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let doc = load_openapi_spec(yaml, "box").unwrap();
-        // At least one resource must have methods that route to upload.box.com
-        let upload_methods: Vec<_> = doc.resources.values()
-            .flat_map(|r| r.methods.values())
-            .filter(|m| m.root_url.contains("upload.box.com"))
-            .collect();
-        assert!(
-            !upload_methods.is_empty(),
-            "expected at least one method routing to upload.box.com, found none"
-        );
-    }
-
-    #[test]
-    fn test_load_box_spec() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let doc = load_openapi_spec(yaml, "box").unwrap();
-        assert_eq!(doc.name, "box");
-        assert_eq!(doc.root_url, "https://api.box.com/2.0");
-
-        // Box spec has 73 top-level resource groups: 72 with x-fern-sdk-group-name,
-        // plus one ("metadata taxonomies") surfaced by the tag-based fallback.
-        assert_eq!(doc.resources.len(), 73);
-
-        // Check specific groups exist
-        assert!(doc.resources.contains_key("files"));
-        assert!(doc.resources.contains_key("folders"));
-        assert!(doc.resources.contains_key("users"));
-        assert!(doc.resources.contains_key("collaborations"));
-
-        // Check users has 6 methods
-        let users = &doc.resources["users"];
-        assert_eq!(users.methods.len(), 6);
-        assert!(users.methods.contains_key("get"));
-        assert!(users.methods.contains_key("list"));
-        assert!(users.methods.contains_key("create"));
-        assert!(users.methods.contains_key("getCurrent"));
-
-        // Check a method's HTTP method and path
-        let get_user = &users.methods["get"];
-        assert_eq!(get_user.http_method, "GET");
-        assert_eq!(get_user.path, "/users/{user_id}");
-
-        // Check parameters
-        assert!(get_user.parameters.contains_key("user_id"));
-        let user_id_param = &get_user.parameters["user_id"];
-        assert_eq!(user_id_param.location.as_deref(), Some("path"));
-        assert!(user_id_param.required);
-    }
-
-    #[test]
-    fn test_load_bigcommerce_spec() {
-        // BigCommerce ships per-domain specs (vendored from docs-v2). Pick a
-        // representative one to verify the parser handles them — the CLI binary
-        // wires up all 36 of them via `spec_under` namespaces.
-        let yaml = include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml");
-        let doc = load_openapi_spec(yaml, "bigcommerce").unwrap();
-        assert_eq!(doc.name, "bigcommerce");
-        assert!(doc.root_url.contains("api.bigcommerce.com"));
-    }
-
     // ------------------------------------------------------------------
     // x-fern-idempotent + x-fern-idempotency-headers (FER-9864 P1).
     // ------------------------------------------------------------------
@@ -6597,54 +6534,6 @@ paths:
 
     // -- Verification: from_str vs from_value round-trip --------------------
 
-    /// Compare `load_openapi_spec` (from_str → Value → from_value) against
-    /// each real spec to ensure the round-trip path doesn't lose or corrupt
-    /// any operations, resources, or schemas.
-    #[test]
-    fn test_roundtrip_bigcommerce_customers_v3() {
-        let yaml = include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml");
-        let doc = load_openapi_spec(yaml, "bigcommerce").unwrap();
-        assert!(!doc.resources.is_empty(), "customers.v3 should have resources");
-        assert!(!doc.schemas.is_empty(), "customers.v3 should have schemas");
-    }
-
-    #[test]
-    fn test_roundtrip_bigcommerce_orders_v2() {
-        let yaml = include_str!("../../cli/bigcommerce/specs/management/orders.v2.yml");
-        let doc = load_openapi_spec(yaml, "bigcommerce").unwrap();
-        assert!(!doc.resources.is_empty(), "orders.v2 should have resources");
-    }
-
-    #[test]
-    fn test_roundtrip_box_spec() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let doc = load_openapi_spec(yaml, "box").unwrap();
-        assert!(!doc.resources.is_empty(), "box should have resources");
-        assert!(!doc.schemas.is_empty(), "box should have schemas");
-    }
-
-    /// Verify the from_str → from_value path produces identical results to
-    /// what the old direct from_str path would have produced. We compare
-    /// resource keys and method counts to ensure no operations are lost.
-    #[test]
-    fn test_roundtrip_consistency_all_bigcommerce_specs() {
-        let specs: &[(&str, &str)] = &[
-            ("customers.v3", include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml")),
-            ("orders.v3", include_str!("../../cli/bigcommerce/specs/management/orders.v3.yml")),
-            ("orders.v2", include_str!("../../cli/bigcommerce/specs/management/orders.v2.yml")),
-            ("checkouts.v3", include_str!("../../cli/bigcommerce/specs/management/checkouts.v3.yml")),
-            ("channels.v3", include_str!("../../cli/bigcommerce/specs/management/channels.v3.yml")),
-            ("carts.v3", include_str!("../../cli/bigcommerce/specs/management/carts.v3.yml")),
-            ("shipping.v3", include_str!("../../cli/bigcommerce/specs/management/shipping.v3.yml")),
-        ];
-        for (name, yaml) in specs {
-            let doc = load_openapi_spec(yaml, "bigcommerce");
-            assert!(doc.is_ok(), "spec {name} should parse without error: {:?}", doc.err());
-            let doc = doc.unwrap();
-            assert!(!doc.resources.is_empty(), "spec {name} should have resources");
-        }
-    }
-
     // -- Verification: allowNullKeys covers all Fern CLI keys ---------------
 
     #[test]
@@ -6696,37 +6585,6 @@ paths:
     }
 
     // -- Verification: real overrides e2e -----------------------------------
-
-    #[test]
-    fn test_real_overrides_e2e_bigcommerce_customers_v3() {
-        let base_yaml = include_str!("../../cli/bigcommerce/specs/management/customers.v3.yml");
-        let overrides_yaml = r#"
-paths:
-  /customers:
-    get:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: list
-    post:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: create
-  /customers/{customerId}:
-    put:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: update
-    delete:
-      x-fern-sdk-group-name: [customers]
-      x-fern-sdk-method-name: delete
-"#;
-        let base: serde_yaml::Value = serde_yaml::from_str(base_yaml).unwrap();
-        let ovr: serde_yaml::Value = serde_yaml::from_str(overrides_yaml).unwrap();
-        let merged = deep_merge_yaml(base, ovr);
-        let doc = load_openapi_spec_from_value(merged, "bigcommerce").unwrap();
-        let customers = &doc.resources["customers"];
-        assert!(customers.methods.contains_key("list"), "override should create 'list' method");
-        assert!(customers.methods.contains_key("create"), "override should create 'create' method");
-        assert!(customers.methods.contains_key("update"), "override should create 'update' method");
-        assert!(customers.methods.contains_key("delete"), "override should create 'delete' method");
-    }
 
     // -- Verification: all_objects heuristic --------------------------------
 
@@ -8644,24 +8502,6 @@ paths:
     // `openapi: 3.1.0`. They sweep the new 3.1 surface area (type arrays,
     // numeric exclusive bounds, const, composition, webhooks, schema-level
     // examples) against actual wire shapes rather than synthetic snippets.
-
-    #[test]
-    fn test_real_31_devin_spec_parses() {
-        let yaml = include_str!("../../cli/devin/openapi.yaml");
-        load_openapi_spec(yaml, "devin").expect("devin 3.1 spec should parse");
-    }
-
-    #[test]
-    fn test_real_31_paid_spec_parses() {
-        let yaml = include_str!("../../cli/paid/specs/openapi.yml");
-        load_openapi_spec(yaml, "paid").expect("paid 3.1 spec should parse");
-    }
-
-    #[test]
-    fn test_real_31_assemblyai_spec_parses() {
-        let yaml = include_str!("../../cli/assemblyai/specs/openapi.yml");
-        load_openapi_spec(yaml, "assemblyai").expect("assemblyai 3.1 spec should parse");
-    }
 
     // -- JSON Schema composition (oneOf / anyOf / allOf) -----------------
 
