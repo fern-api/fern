@@ -53,9 +53,7 @@ function constructWorkflowYaml(args: { binaryName: string; npmPublishInfo: Resol
     const { useOidc } = npmPublishInfo;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
 
-    const oidcPermissions = useOidc
-        ? `\n    permissions:\n      contents: read\n      id-token: write`
-        : "";
+    const oidcPermissions = useOidc ? `\n    permissions:\n      contents: read\n      id-token: write` : "";
     const tokenEnvBlock = useOidc ? "" : `\n        env:\n          NODE_AUTH_TOKEN: \${{ secrets.${tokenVar} }}`;
 
     const matrixIncludes = TARGETS.map(
