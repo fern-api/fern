@@ -163,6 +163,9 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (this.settings.shouldInlinePathParameters) {
             return false;
         }
+        if (!this.settings.shouldElidePathParameterWrappers) {
+            return false;
+        }
         if (!(wrapper.includePathParameters ?? false)) {
             return false;
         }
