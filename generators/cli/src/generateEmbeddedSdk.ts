@@ -81,7 +81,8 @@ export async function generateEmbeddedSdk(args: {
         const message = err instanceof Error ? err.message : String(err);
         throw new Error(`Embedded SDK generation failed: ${message}`);
     } finally {
-        await unlink(configPath).catch(() => {});
+        // Best-effort cleanup; file may already be absent if the subprocess moved it.
+        await unlink(configPath).catch((_e: unknown) => undefined);
     }
 
     return sdkCrateName;
