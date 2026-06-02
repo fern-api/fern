@@ -3053,17 +3053,6 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_load_spec_via_cli_app() {
-        let yaml = include_str!("../../cli/box/openapi.yaml");
-        let app = CliApp::new("box").spec(yaml);
-        assert_eq!(app.name, "box");
-        // Verify the spec can be parsed via build_doc
-        let doc = app.build_doc().unwrap();
-        assert_eq!(doc.name, "box");
-        assert!(doc.resources.len() >= 14);
-    }
-
     // ------------------------------------------------------------------
     // CliApp::idempotency_header_env — generator-side env-var wiring for
     // FER-9852, implemented in cli-sdk for FER-9864 P1. Verifies the

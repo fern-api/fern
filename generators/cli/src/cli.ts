@@ -10,6 +10,7 @@ import {
 } from "@fern-api/base-generator";
 import { getCustomConfig } from "./customConfig.js";
 import { readIrSummary } from "./ir.js";
+import { resolveOutputConfig } from "./resolveOutputConfig.js";
 import { runPipeline } from "./runPipeline.js";
 
 const pathToConfig = process.argv[process.argv.length - 1];
@@ -45,11 +46,13 @@ async function generate(configPath: string): Promise<void> {
             );
 
             const ir = await readIrSummary(config.irFilepath);
+            const outputConfig = resolveOutputConfig(config.output);
             const outcome = await runPipeline({
                 outputDir: config.output.path,
                 customConfig: getCustomConfig(config),
                 ir,
-                irFilepath: config.irFilepath
+                irFilepath: config.irFilepath,
+                outputConfig
             });
 
             if (outcome.status === "skipped") {

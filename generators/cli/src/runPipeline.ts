@@ -4,11 +4,13 @@ import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
+import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
+import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
 import { writeGitignore } from "./writeGitignore.js";
 
 export type PipelineOutcome =
@@ -35,10 +37,11 @@ export async function runPipeline(args: {
     ir: IrSummary;
     /** Path to the IR JSON file for embedded SDK codegen. Omit to skip SDK generation. */
     irFilepath?: string;
+    outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
     specsDir?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, irFilepath, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -63,8 +66,10 @@ export async function runPipeline(args: {
     //      `cli/<binaryName>/`, wiring the IR-derived auth bindings.
     //   4. generateEmbeddedSdk generates the typed Rust SDK crate as a
     //      workspace member (path dependency from the CLI crate).
+    //   5. emitPublishWorkflow writes `.github/workflows/ci.yml` when
+    //      output mode is `github` with npm publish info.
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
-    await patchCargoToml({ outputDir, binaryName });
+    await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
     const embedSdk = irFilepath != null;
     await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedSdk });
@@ -80,6 +85,14 @@ export async function runPipeline(args: {
         await patchCargoToml({ outputDir, binaryName, sdkCrateName });
         await patchDistWorkspaceToml({ outputDir, sdkCrateName });
         await writeFernignore(outputDir, binaryName);
+    }
+
+    if (outputConfig.npmPublishInfo != null) {
+        await emitPublishWorkflow({
+            outputDir,
+            binaryName,
+            npmPublishInfo: outputConfig.npmPublishInfo
+        });
     }
 
     return { status: "generated", binaryName };
