@@ -2957,7 +2957,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Validate the basic auth scheme structure
         const basicAuthScheme = intermediateRepresentation.auth.schemes[0];
         expect(basicAuthScheme).toBeDefined();
-        expect.assert(basicAuthScheme?.type === "basic");
+        assert(basicAuthScheme?.type === "basic");
 
         // Verify that x-fern-basic custom names are correctly flowing through to the IR
         // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
@@ -2975,11 +2975,20 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(fdrAuthSchemes).toBeDefined();
         if (fdrAuthSchemes) {
             const basicAuth = Object.values(fdrAuthSchemes).find((scheme) => scheme.type === "basicAuth");
-            expect.assert(basicAuth?.type === "basicAuth");
+            assert(basicAuth?.type === "basicAuth");
             // Verify custom names from x-fern-basic flow through to FDR
             expect(basicAuth.usernameName).toBe("project_id");
             expect(basicAuth.passwordName).toBe("api_token");
         }
+
+        const endpoint = fdrApiDefinition.rootPackage.endpoints.find((endpoint) => endpoint.id === "listPlants");
+        expect(endpoint?.multiAuth).toEqual([{ schemes: ["basicAuth"] }]);
+        const endpointBasicAuthId = endpoint?.multiAuth?.[0]?.schemes[0];
+        expect(endpointBasicAuthId).toBe("basicAuth");
+        const endpointBasicAuth = fdrAuthSchemes?.[endpointBasicAuthId ?? ""];
+        assert(endpointBasicAuth?.type === "basicAuth");
+        expect(endpointBasicAuth.usernameName).toBe("project_id");
+        expect(endpointBasicAuth.passwordName).toBe("api_token");
 
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-fern-basic-auth-fdr.snap");
