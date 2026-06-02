@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import Callable, Dict, List, Optional, Set
+from typing import Callable, Dict, List, Optional, Set, Tuple
 
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from .pydantic_generator_context import PydanticGeneratorContext
@@ -9,7 +9,7 @@ from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConver
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
-from fern_python.utils import get_original_name
+from fern_python.utils import get_original_name, get_wire_value
 from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
@@ -32,6 +32,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         use_pydantic_field_aliases: bool,
         pydantic_compatibility: PydanticVersionCompatibility,
         reserved_names: Optional[Set[str]] = None,
+        inline_undiscriminated_union_request_params: bool = False,
     ):
         super().__init__(
             ir=ir,
@@ -44,6 +45,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             union_naming_version=union_naming_version,
             use_pydantic_field_aliases=use_pydantic_field_aliases,
             pydantic_compatibility=pydantic_compatibility,
+            inline_undiscriminated_union_request_params=inline_undiscriminated_union_request_params,
         )
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self
@@ -56,6 +58,11 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
             defaultdict(OrderedSet)
         )
+
+        # Lazily-computed set of enum type ids that are referenced exclusively as members of
+        # undiscriminated unions and are therefore inlined into those unions (and not emitted
+        # as their own files). Only populated when the inlining flag is enabled.
+        self._inline_eligible_enum_ids: Optional[Set[ir_types.TypeId]] = None
 
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
@@ -275,6 +282,233 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 self.get_declaration_for_type_id(type_name.type_id),
             ),
             unknown=lambda: set(),
+        )
+
+    # ---------------------------------------------------------------------------
+    # Inlining of literal-like undiscriminated union members
+    # ---------------------------------------------------------------------------
+
+    def _direct_named_ids(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
+        """The named type ids *directly* referenced by a type reference.
+
+        Descends through containers (list/set/optional/nullable/map) but does NOT
+        resolve named types transitively — a `named` leaf yields its own id and stops.
+        This is intentionally different from `referenced_types`, which is transitive.
+        """
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list_=self._direct_named_ids,
+                set_=self._direct_named_ids,
+                optional=self._direct_named_ids,
+                nullable=self._direct_named_ids,
+                map_=lambda map_type: self._direct_named_ids(map_type.key_type)
+                | self._direct_named_ids(map_type.value_type),
+                literal=lambda literal: set(),
+            ),
+            named=lambda type_name: {type_name.type_id},
+            primitive=lambda primitive: set(),
+            unknown=lambda: set(),
+        )
+
+    def _is_enum_rendered_as_literals(self, type_id: ir_types.TypeId) -> bool:
+        declaration = self.ir.types.get(type_id)
+        if declaration is None:
+            return False
+        shape = declaration.shape.get_as_union()
+        return shape.type == "enum" and self.use_str_enums
+
+    def _collect_endpoint_referenced_ids(self, target: Set[ir_types.TypeId]) -> None:
+        def add(type_reference: ir_types.TypeReference) -> None:
+            target.update(self._direct_named_ids(type_reference))
+
+        for header in self.ir.headers:
+            add(header.value_type)
+        for service in self.ir.services.values():
+            for header in service.headers:
+                add(header.value_type)
+            for path_parameter in service.path_parameters:
+                add(path_parameter.value_type)
+            for endpoint in service.endpoints:
+                for path_parameter in endpoint.all_path_parameters:
+                    add(path_parameter.value_type)
+                for query_parameter in endpoint.query_parameters:
+                    add(query_parameter.value_type)
+                for header in endpoint.response_headers or []:
+                    add(header.value_type)
+                if endpoint.request_body is not None:
+                    endpoint.request_body.visit(
+                        inlined_request_body=lambda body: self._add_inlined_body_refs(body, target),
+                        reference=lambda reference: add(reference.request_body_type),
+                        file_upload=lambda _: None,
+                        bytes=lambda _: None,
+                    )
+                if endpoint.response is not None and endpoint.response.body is not None:
+                    endpoint.response.body.visit(
+                        json=lambda json_response: json_response.visit(
+                            response=lambda body: add(body.response_body_type),
+                            nested_property_as_response=lambda body: add(body.response_body_type),
+                        ),
+                        file_download=lambda _: None,
+                        text=lambda _: None,
+                        bytes=lambda _: None,
+                        streaming=lambda _: None,
+                        stream_parameter=lambda _: None,
+                    )
+
+    def _add_inlined_body_refs(self, body: ir_types.InlinedRequestBody, target: Set[ir_types.TypeId]) -> None:
+        for extension in body.extends:
+            target.add(extension.type_id)
+        for inlined_property in body.properties:
+            target.update(self._direct_named_ids(inlined_property.value_type))
+        for extended_property in body.extended_properties or []:
+            target.update(self._direct_named_ids(extended_property.value_type))
+
+    def _get_inline_eligible_enum_ids(self) -> Set[ir_types.TypeId]:
+        if self._inline_eligible_enum_ids is not None:
+            return self._inline_eligible_enum_ids
+        if not self.inline_undiscriminated_union_request_params:
+            self._inline_eligible_enum_ids = set()
+            return self._inline_eligible_enum_ids
+
+        union_member_ids: Set[ir_types.TypeId] = set()
+        referenced_elsewhere: Set[ir_types.TypeId] = set()
+
+        def add_elsewhere(type_reference: ir_types.TypeReference) -> None:
+            referenced_elsewhere.update(self._direct_named_ids(type_reference))
+
+        for declaration in self.ir.types.values():
+            shape = declaration.shape.get_as_union()
+            if shape.type == "undiscriminatedUnion":
+                for member in shape.members:
+                    union_member_ids.update(self._direct_named_ids(member.type))
+            elif shape.type == "object":
+                for extension in shape.extends:
+                    referenced_elsewhere.add(extension.type_id)
+                for property in shape.properties:
+                    add_elsewhere(property.value_type)
+            elif shape.type == "alias":
+                add_elsewhere(shape.alias_of)
+            elif shape.type == "union":
+                for extension in shape.extends:
+                    referenced_elsewhere.add(extension.type_id)
+                for base_property in shape.base_properties:
+                    add_elsewhere(base_property.value_type)
+                for variant in shape.types:
+                    variant.shape.visit(
+                        same_properties_as_object=lambda type_name: referenced_elsewhere.add(type_name.type_id),
+                        single_property=lambda single_property: add_elsewhere(single_property.type),
+                        no_properties=lambda: None,
+                    )
+            # enums reference no other types
+
+        self._collect_endpoint_referenced_ids(referenced_elsewhere)
+
+        self._inline_eligible_enum_ids = {
+            type_id
+            for type_id in union_member_ids
+            if self._is_enum_rendered_as_literals(type_id) and type_id not in referenced_elsewhere
+        }
+        return self._inline_eligible_enum_ids
+
+    def should_inline_away_type(self, type_id: ir_types.TypeId) -> bool:
+        return type_id in self._get_inline_eligible_enum_ids()
+
+    def _enum_value_reprs(self, type_id: ir_types.TypeId) -> List[str]:
+        declaration = self.ir.types[type_id]
+        enum_values = declaration.shape.visit(
+            alias=lambda _: [],
+            enum=lambda enum: list(enum.values),
+            object=lambda _: [],
+            union=lambda _: [],
+            undiscriminated_union=lambda _: [],
+        )
+        reprs: List[str] = []
+        for value in enum_values:
+            escaped = get_wire_value(value.name).replace("\\", "\\\\").replace('"', '\\"')
+            reprs.append(f'"{escaped}"')
+        return reprs
+
+    def _literal_value_reprs_for_member(
+        self, type_reference: ir_types.TypeReference
+    ) -> Optional[Tuple[List[str], bool]]:
+        """If a union member is literal-like and should be inlined, returns its literal
+        value reprs and whether it carries a forward-compatible fallback (enums do).
+        Returns None if the member should be kept as-is.
+        """
+        union = type_reference.get_as_union()
+        if union.type == "container":
+            container = union.container.get_as_union()
+            if container.type == "literal":
+                literal_repr = container.literal.visit(
+                    string=lambda value: '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"',
+                    boolean=lambda value: f"{value}",
+                )
+                return ([literal_repr], False)
+            return None
+        if union.type == "named" and self.should_inline_away_type(union.type_id):
+            return (self._enum_value_reprs(union.type_id), True)
+        return None
+
+    def get_inlined_undiscriminated_union_hint(
+        self,
+        members: List[ir_types.UndiscriminatedUnionMember],
+        as_request: bool,
+        get_member_hint: Callable[[ir_types.UndiscriminatedUnionMember], AST.TypeHint],
+    ) -> Optional[AST.TypeHint]:
+        """Builds the inlined type hint for an undiscriminated union, expanding
+        literal-like members into a single combined `Literal[...]`. Returns None when
+        no member is inlinable, so callers can fall back to the default rendering.
+        """
+        if not self.inline_undiscriminated_union_request_params:
+            return None
+
+        value_reprs: List[str] = []
+        seen_values: Set[str] = set()
+        has_forward_compat = False
+        other_hints: List[AST.TypeHint] = []
+        inlined_any = False
+
+        for member in members:
+            extracted = self._literal_value_reprs_for_member(member.type)
+            if extracted is None:
+                other_hints.append(get_member_hint(member))
+                continue
+            inlined_any = True
+            reprs, member_has_forward_compat = extracted
+            has_forward_compat = has_forward_compat or member_has_forward_compat
+            for value_repr in reprs:
+                if value_repr not in seen_values:
+                    seen_values.add(value_repr)
+                    value_reprs.append(value_repr)
+
+        if not inlined_any:
+            return None
+
+        hints: List[AST.TypeHint] = list(other_hints)
+        if value_reprs:
+            hints.append(AST.TypeHint.literal(AST.Expression(", ".join(value_reprs))))
+        if has_forward_compat and not as_request:
+            hints.append(AST.TypeHint.any())
+
+        if len(hints) == 1:
+            return hints[0]
+        return AST.TypeHint.union(*hints)
+
+    def maybe_get_inlined_hint_for_named_undiscriminated_union(
+        self, type_id: ir_types.TypeId, as_request: bool
+    ) -> Optional[AST.TypeHint]:
+        if not self.inline_undiscriminated_union_request_params:
+            return None
+        declaration = self.ir.types.get(type_id)
+        if declaration is None:
+            return None
+        shape = declaration.shape.get_as_union()
+        if shape.type != "undiscriminatedUnion":
+            return None
+        return self.get_inlined_undiscriminated_union_hint(
+            members=shape.members,
+            as_request=as_request,
+            get_member_hint=lambda member: self.get_type_hint_for_type_reference(member.type, in_endpoint=as_request),
         )
 
     def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:

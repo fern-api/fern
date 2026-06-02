@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "batch.succeeded",
+    "batch.failed",
+    "document.processed"
+  ],
+  "definitions": {}
+}

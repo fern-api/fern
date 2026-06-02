@@ -1892,6 +1892,221 @@
                 }
             ]
         },
+        "type_union:SubscribedEvent": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "SubscribedEvent",
+                    "camelCase": {
+                        "unsafeName": "subscribedEvent",
+                        "safeName": "subscribedEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "subscribed_event",
+                        "safeName": "subscribed_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SUBSCRIBED_EVENT",
+                        "safeName": "SUBSCRIBED_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SubscribedEvent",
+                        "safeName": "SubscribedEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "named",
+                    "value": "type_union:SubscribedEventType"
+                },
+                {
+                    "type": "literal",
+                    "value": {
+                        "type": "string",
+                        "value": "system"
+                    }
+                }
+            ]
+        },
+        "type_union:SubscribedEventType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "SubscribedEventType",
+                    "camelCase": {
+                        "unsafeName": "subscribedEventType",
+                        "safeName": "subscribedEventType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "subscribed_event_type",
+                        "safeName": "subscribed_event_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SUBSCRIBED_EVENT_TYPE",
+                        "safeName": "SUBSCRIBED_EVENT_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SubscribedEventType",
+                        "safeName": "SubscribedEventType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "batch.succeeded",
+                    "name": {
+                        "originalName": "BatchSucceeded",
+                        "camelCase": {
+                            "unsafeName": "batchSucceeded",
+                            "safeName": "batchSucceeded"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "batch_succeeded",
+                            "safeName": "batch_succeeded"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BATCH_SUCCEEDED",
+                            "safeName": "BATCH_SUCCEEDED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BatchSucceeded",
+                            "safeName": "BatchSucceeded"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "batch.failed",
+                    "name": {
+                        "originalName": "BatchFailed",
+                        "camelCase": {
+                            "unsafeName": "batchFailed",
+                            "safeName": "batchFailed"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "batch_failed",
+                            "safeName": "batch_failed"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BATCH_FAILED",
+                            "safeName": "BATCH_FAILED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BatchFailed",
+                            "safeName": "BatchFailed"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "document.processed",
+                    "name": {
+                        "originalName": "DocumentProcessed",
+                        "camelCase": {
+                            "unsafeName": "documentProcessed",
+                            "safeName": "documentProcessed"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "document_processed",
+                            "safeName": "document_processed"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DOCUMENT_PROCESSED",
+                            "safeName": "DOCUMENT_PROCESSED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DocumentProcessed",
+                            "safeName": "DocumentProcessed"
+                        }
+                    }
+                }
+            ]
+        },
         "type_union:UserId": {
             "type": "alias",
             "declaration": {
@@ -4093,6 +4308,193 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_union:PaymentMethodUnion"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_union.subscribe": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "subscribe",
+                    "camelCase": {
+                        "unsafeName": "subscribe",
+                        "safeName": "subscribe"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "subscribe",
+                        "safeName": "subscribe"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SUBSCRIBE",
+                        "safeName": "SUBSCRIBE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Subscribe",
+                        "safeName": "Subscribe"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/subscribe"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "SubscribeRequest",
+                        "camelCase": {
+                            "unsafeName": "subscribeRequest",
+                            "safeName": "subscribeRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "subscribe_request",
+                            "safeName": "subscribe_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SUBSCRIBE_REQUEST",
+                            "safeName": "SUBSCRIBE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SubscribeRequest",
+                            "safeName": "SubscribeRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "union",
+                                "camelCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union",
+                                    "safeName": "union"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION",
+                                    "safeName": "UNION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Union",
+                                    "safeName": "Union"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "events",
+                                "name": {
+                                    "originalName": "events",
+                                    "camelCase": {
+                                        "unsafeName": "events",
+                                        "safeName": "events"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "events",
+                                        "safeName": "events"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "EVENTS",
+                                        "safeName": "EVENTS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Events",
+                                        "safeName": "Events"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "list",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_union:SubscribedEvent"
+                                }
                             },
                             "propertyAccess": null,
                             "variable": null

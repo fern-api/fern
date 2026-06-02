@@ -1,0 +1,20 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/union.SubscribedEventType"
+    },
+    {
+      "const": "system"
+    }
+  ],
+  "definitions": {
+    "union.SubscribedEventType": {
+      "type": "string",
+      "enum": [
+        "batch.succeeded",
+        "batch.failed",
+        "document.processed"
+      ]
+    }
+  }
+}
