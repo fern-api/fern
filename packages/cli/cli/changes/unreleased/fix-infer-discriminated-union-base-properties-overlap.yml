@@ -1,0 +1,10 @@
+- summary: |
+    Fix OpenAPI parser emitting redundant or wrongly-required base properties for
+    discriminated unions when `infer-discriminated-union-base-properties: true`.
+    The inference now (1) skips properties every variant already inherits via a
+    shared `allOf $ref` parent — the parent schema is the single source of truth —
+    and (2) lifts an inferred property as `optional` if any variant declares it as
+    not-required. Together these prevent generated TypeScript SDKs from synthesizing
+    a `_Base` interface that collides with the real parent on either presence or
+    optionality (`TS2320`).
+  type: fix

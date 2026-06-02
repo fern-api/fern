@@ -12,12 +12,15 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
+import com.seed.api.requests.PlantPost;
 import com.seed.api.requests.RuleCreateRequest;
 import com.seed.api.requests.SearchRuleTypesRequest;
 import com.seed.api.types.CombinedEntity;
 import com.seed.api.types.Organization;
+import com.seed.api.types.PlantStrict;
 import com.seed.api.types.RuleResponse;
 import com.seed.api.types.RuleTypeSearchResponse;
+import com.seed.api.types.TreeRecord;
 import com.seed.api.types.UserSearchResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -238,6 +241,110 @@ public class RawSeedApiClient {
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Organization.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     */
+    public SeedApiHttpResponse<PlantStrict> createPlant(PlantPost request) {
+        return createPlant(request, null);
+    }
+
+    /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     */
+    public SeedApiHttpResponse<PlantStrict> createPlant(PlantPost request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("plants");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, PlantStrict.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     */
+    public SeedApiHttpResponse<TreeRecord> createTree(TreeRecord request) {
+        return createTree(request, null);
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     */
+    public SeedApiHttpResponse<TreeRecord> createTree(TreeRecord request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("trees");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedApiException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TreeRecord.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(

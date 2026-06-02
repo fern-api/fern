@@ -29,7 +29,10 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
     }
 
     public doGenerate(): RubyFile {
-        const properties = this.objectDeclaration.properties || [];
+        const properties = [
+            ...(this.objectDeclaration.extendedProperties ?? []),
+            ...(this.objectDeclaration.properties ?? [])
+        ];
 
         const statements = generateFields({
             typeDeclaration: this.typeDeclaration,

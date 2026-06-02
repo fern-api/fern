@@ -1,4 +1,34 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.3
+  changelogEntry:
+    - summary: |
+        Fix `ENOTEMPTY` error during local generation when removing the temporary
+        `.git` directory in `copyGeneratedFilesWithFernIgnoreInTempRepo`. The `fs.rm`
+        call now uses `maxRetries: 3` to handle race conditions with git background
+        processes (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+        Also disables git auto-gc during the temporary `git init` to reduce the
+        likelihood of the race condition.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
+- version: 5.44.2
+  changelogEntry:
+    - summary: |
+        Fix false-positive "Example is missing required property" errors when validating
+        examples of discriminated unions whose `base-properties` overlap with properties
+        each variant also inherits via its own `extends` chain. The union validator now
+        preserves keys claimed by the variant when constructing the example handed to
+        variant-level validation, so inherited required properties are no longer dropped.
+      type: fix
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.44.1
+  changelogEntry:
+    - summary: |
+        Replace external petstore3.swagger.io URL with a local OpenAPI server in the v2 generate ETE test to remove a flaky dependency on the public petstore endpoint.
+      type: chore
+  createdAt: "2026-06-01"
+  irVersion: 66
 - version: 5.44.0
   changelogEntry:
     - summary: |
@@ -221,7 +251,7 @@
         and `GraphQLSpec.namespace`). Enables generators that opt into
         `generatorWantsSpecs` to route multi-spec workspaces by their
         workspace-declared namespace instead of inferring one from the
-        runner-assigned filename. The new `fernapi/fern-cli` generator
+        runner-assigned filename. The new `fernapi/fern-cli-generator` generator
         uses this to emit `.spec_under("<ns>", ...)` in the generated
         `main.rs` when the user namespaces their specs.
       type: feat
@@ -685,7 +715,7 @@
 - version: 5.25.0
   changelogEntry:
     - summary: |
-        Register the new `fernapi/fern-cli` generator in the CLI configuration.
+        Register the new `fernapi/fern-cli-generator` generator in the CLI configuration.
       type: feat
   createdAt: "2026-05-14"
   irVersion: 66
