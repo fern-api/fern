@@ -5,7 +5,6 @@ public partial interface IUserClient
     WithRawResponseTask<User> GetUserAsync(
         string tenantId,
         string userId,
-        GetUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -20,7 +19,7 @@ public partial interface IUserClient
     WithRawResponseTask<User> UpdateUserAsync(
         string tenantId,
         string userId,
-        UpdateUserRequest request,
+        User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -40,7 +39,6 @@ public partial interface IUserClient
         string tenantId,
         string userId,
         int version,
-        GetUserMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
@@ -53,7 +51,6 @@ public partial interface IUserClient
         string userId,
         int version,
         string thought,
-        GetUserSpecificsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\n    \"tenant_id\",\n    \"organization_id\",\n    \"user_id\",\n    new GetOrganizationUserRequest()\n);\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Organizations.GetOrganizationUserAsync(\"tenant_id\", \"organization_id\", \"user_id\");\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"tenant_id\", \"user_id\", new GetUsersRequest());\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserAsync(\"tenant_id\", \"user_id\");\n"
             }
         },
         {
@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.UpdateUserAsync(\n    \"tenant_id\",\n    \"user_id\",\n    new UpdateUserRequest\n    {\n        Body = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n    }\n);\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.UpdateUserAsync(\n    \"tenant_id\",\n    \"user_id\",\n    new User\n    {\n        Name = \"name\",\n        Tags = new List<string>() { \"tags\", \"tags\" },\n    }\n);\n"
             }
         },
         {
@@ -94,7 +94,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserMetadataAsync(\"tenant_id\", \"user_id\", 1, new GetUserMetadataRequest());\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserMetadataAsync(\"tenant_id\", \"user_id\", 1);\n"
             }
         },
         {
@@ -106,7 +106,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserSpecificsAsync(\n    \"tenant_id\",\n    \"user_id\",\n    1,\n    \"thought\",\n    new GetUserSpecificsRequest()\n);\n"
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.User.GetUserSpecificsAsync(\"tenant_id\", \"user_id\", 1, \"thought\");\n"
             }
         }
     ]

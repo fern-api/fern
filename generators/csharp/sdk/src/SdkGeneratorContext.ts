@@ -141,6 +141,47 @@ export class SdkGeneratorContext extends GeneratorContext {
         return endpoint.allPathParameters.length > 0 && inlinePathParameters && wrapperShouldIncludePathParameters;
     }
 
+    /**
+     * Determines whether a wrapper request should be elided when the generator is configured
+     * with inline-path-parameters: false but the IR was generated with inline-path-parameters: true
+     * at the spec level.
+     *
+     * Returns:
+     * - "skip" if the wrapper should be skipped entirely (path-only endpoints)
+     * - "unwrap-body" if the wrapper should be replaced with a direct body reference
+     * - false if the wrapper should be kept as-is
+     */
+    public shouldElideWrappedRequest({
+        endpoint,
+        wrapper,
+        serviceId
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        wrapper: FernIr.SdkRequestWrapper;
+        serviceId: FernIr.ServiceId;
+    }): "skip" | "unwrap-body" | false {
+        if (this.settings.shouldInlinePathParameters) {
+            return false;
+        }
+        if (!(wrapper.includePathParameters ?? false)) {
+            return false;
+        }
+        if (wrapper.onlyPathParameters) {
+            return "skip";
+        }
+        const service = this.getHttpService(serviceId);
+        if (
+            endpoint.queryParameters.length === 0 &&
+            endpoint.headers.length === 0 &&
+            (service == null || service.headers.length === 0) &&
+            endpoint.requestBody != null &&
+            endpoint.requestBody.type === "reference"
+        ) {
+            return "unwrap-body";
+        }
+        return false;
+    }
+
     public hasFormUrlEncodedEndpoints(): boolean {
         return Object.values(this.ir.services).some((service) =>
             service.endpoints.some(

@@ -28,6 +28,22 @@ export function createEndpointRequest({
 }: CreateEndpointRequest.Args): EndpointRequest | undefined {
     return sdkRequest.shape._visit<EndpointRequest | undefined>({
         wrapper: (wrapper) => {
+            const elide = context.shouldElideWrappedRequest({
+                endpoint,
+                wrapper,
+                serviceId
+            });
+            if (elide === "skip") {
+                return undefined;
+            }
+            if (elide === "unwrap-body" && endpoint.requestBody?.type === "reference") {
+                return new ReferencedEndpointRequest(
+                    context,
+                    sdkRequest,
+                    endpoint,
+                    endpoint.requestBody.requestBodyType
+                );
+            }
             return new WrappedEndpointRequest({
                 context,
                 serviceId,

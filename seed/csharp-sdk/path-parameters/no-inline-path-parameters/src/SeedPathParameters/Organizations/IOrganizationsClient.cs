@@ -13,7 +13,6 @@ public partial interface IOrganizationsClient
         string tenantId,
         string organizationId,
         string userId,
-        GetOrganizationUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

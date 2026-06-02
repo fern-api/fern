@@ -48,7 +48,7 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(tenantId, organizationId, userId, GetOrganizationUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(tenantId, organizationId, userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -61,12 +61,7 @@ await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 <dd>
 
 ```csharp
-await client.Organizations.GetOrganizationUserAsync(
-    "tenant_id",
-    "organization_id",
-    "user_id",
-    new GetOrganizationUserRequest()
-);
+await client.Organizations.GetOrganizationUserAsync("tenant_id", "organization_id", "user_id");
 ```
 </dd>
 </dl>
@@ -98,14 +93,6 @@ await client.Organizations.GetOrganizationUserAsync(
 <dd>
 
 **userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `GetOrganizationUserRequest` 
     
 </dd>
 </dl>
@@ -178,7 +165,7 @@ await client.Organizations.SearchOrganizationsAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(tenantId, userId, GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(tenantId, userId) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -191,7 +178,7 @@ await client.Organizations.SearchOrganizationsAsync(
 <dd>
 
 ```csharp
-await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
+await client.User.GetUserAsync("tenant_id", "user_id");
 ```
 </dd>
 </dl>
@@ -215,14 +202,6 @@ await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
 <dd>
 
 **userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `GetUsersRequest` 
     
 </dd>
 </dl>
@@ -289,7 +268,7 @@ await client.User.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(tenantId, userId, User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -305,13 +284,10 @@ await client.User.CreateUserAsync(
 await client.User.UpdateUserAsync(
     "tenant_id",
     "user_id",
-    new UpdateUserRequest
+    new User
     {
-        Body = new User
-        {
-            Name = "name",
-            Tags = new List<string>() { "tags", "tags" },
-        },
+        Name = "name",
+        Tags = new List<string>() { "tags", "tags" },
     }
 );
 ```
@@ -344,7 +320,7 @@ await client.User.UpdateUserAsync(
 <dl>
 <dd>
 
-**request:** `UpdateUserRequest` 
+**request:** `User` 
     
 </dd>
 </dl>
@@ -412,7 +388,7 @@ await client.User.SearchUsersAsync("tenant_id", "user_id", new SearchUsersReques
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserMetadataAsync</a>(tenantId, userId, version, GetUserMetadataRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserMetadataAsync</a>(tenantId, userId, version) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -439,7 +415,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```csharp
-await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMetadataRequest());
+await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1);
 ```
 </dd>
 </dl>
@@ -474,14 +450,6 @@ await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMet
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**request:** `GetUserMetadataRequest` 
-    
-</dd>
-</dl>
 </dd>
 </dl>
 
@@ -490,7 +458,7 @@ await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMet
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(tenantId, userId, version, thought, GetUserSpecificsRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(tenantId, userId, version, thought) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -517,13 +485,7 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```csharp
-await client.User.GetUserSpecificsAsync(
-    "tenant_id",
-    "user_id",
-    1,
-    "thought",
-    new GetUserSpecificsRequest()
-);
+await client.User.GetUserSpecificsAsync("tenant_id", "user_id", 1, "thought");
 ```
 </dd>
 </dl>
@@ -563,14 +525,6 @@ await client.User.GetUserSpecificsAsync(
 <dd>
 
 **thought:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `GetUserSpecificsRequest` 
     
 </dd>
 </dl>

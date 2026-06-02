@@ -93,6 +93,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
     private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         service.endpoints.forEach((endpoint) => {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                const elide = context.shouldElideWrappedRequest({
+                    endpoint,
+                    wrapper: endpoint.sdkRequest.shape,
+                    serviceId
+                });
+                if (elide !== false) {
+                    return;
+                }
                 const wrappedRequestGenerator = new WrappedRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
                     context,

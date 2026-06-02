@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedPathParameters;
 using SeedPathParameters.Test.Unit.MockServer;
 using SeedPathParameters.Test.Utils;
 
@@ -50,13 +49,10 @@ public class UpdateUserTest : BaseMockServerTest
         var response = await Client.User.UpdateUserAsync(
             "tenant_id",
             "user_id",
-            new UpdateUserRequest
+            new SeedPathParameters.User
             {
-                Body = new SeedPathParameters.User
-                {
-                    Name = "name",
-                    Tags = new List<string>() { "tags", "tags" },
-                },
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
             }
         );
         JsonAssert.AreEqual(response, mockResponse);
