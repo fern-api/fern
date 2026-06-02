@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
+import { formatNavigationConfigError, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
 
 import * as DocsYmlJsonSchema from "./products-yml.schema.json";
 
@@ -29,9 +29,8 @@ export async function validateProductConfigFileSchema({ value }: { value: unknow
         };
     }
 
-    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : "";
     return {
         type: "failure",
-        message: `${result.error?.message ?? "Failed to parse because JSON schema validation failed"}${path}`
+        message: formatNavigationConfigError({ error: result.error, value })
     };
 }

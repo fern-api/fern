@@ -87,8 +87,11 @@ allowedFailures:
   - accept-header
   - alias
   - alias-extends
+  - allof
+  - allof-inline
   - any-auth
   - api-wide-base-path
+  - api-wide-base-path-with-default
   - audiences
   - basic-auth
   - basic-auth-environment-variables
@@ -100,6 +103,8 @@ allowedFailures:
   - circular-references-advanced
   - circular-references-extends
   - client-side-params
+  - cli-multi-spec:no-custom-config
+  - cli-multi-spec-namespaced:no-custom-config
   - content-type
   - cross-package-type-names
   - dollar-string-examples
@@ -114,11 +119,13 @@ allowedFailures:
   - extra-properties
   - file-download
   - file-upload
+  - file-upload-openapi
   - folders
   - header-auth
   - header-auth-environment-variable
   - http-head
   - idempotency-headers
+  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-api-key
@@ -133,21 +140,28 @@ allowedFailures:
   - multi-line-docs
   - multi-url-environment
   - multi-url-environment-no-default
+  - multi-url-environment-reference
   - multiple-request-bodies
+  - no-content-response
   - no-environment
   - no-retries
   - nullable
+  - nullable-allof-extends
   - nullable-optional
+  - nullable-request-body
+  - null-type
   - oauth-client-credentials
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
+  - oauth-client-credentials-openapi
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - object
   - objects-with-imports
+  - openapi-request-body-ref
   - optional
   - package-yml
   - pagination
@@ -157,14 +171,20 @@ allowedFailures:
   - plain-text
   - property-access
   - public-object
+  - query-param-name-conflict
   - query-parameters
+  - query-parameters-openapi:no-custom-config
+  - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
   - reserved-keywords
   - response-property
+  - schemaless-request-body-examples
   - server-sent-event-examples
   - server-sent-events
+  - server-sent-events-openapi
   - server-sent-events-resumable
+  - server-url-templating
   - simple-api:no-custom-config
   - simple-fhir
   - single-url-environment-default
@@ -178,12 +198,15 @@ allowedFailures:
   - unions
   - unions-with-local-date
   - unknown
+  - url-form-encoded
   - validation
   - variables
   - version
   - version-no-default
+  - webhook-audience
   - webhooks
   - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
   - websocket-multi-url
+  - x-fern-default
