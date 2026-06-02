@@ -56,6 +56,7 @@ type Stream[T any] struct {
 	stopFunc          func() bool
 	options           *streamOptions
 	lastEventID       string // snapshot of sseReader.LastEventID() taken just before each reconnect; survives the reader swap
+	lastRetryMs       int    // snapshot of sseReader.LastRetryMs() taken just before each reconnect; survives the reader swap
 	reconnectAttempts uint
 }
 
@@ -297,6 +298,27 @@ func (s *Stream[T]) LastEventID() string {
 	return s.lastEventID
 }
 
+// LastRetryMs returns the most recently advertised SSE `retry:` reconnection
+// time in milliseconds, or 0 if the server has not sent one. Per the SSE spec
+// the value is sticky: a `retry:` directive — even one sent in its own frame
+// with no `data:` — remains in effect for subsequent events until the server
+// sends a new one, so the per-event StreamEvent.Retry can be 0 while this
+// returns the advertised interval. The runtime already honors this value when
+// gating reconnect backoff; this accessor exposes it so callers can observe
+// it, mirroring LastEventID.
+//
+// When WithReconnect is configured, the value persists across reconnects: each
+// new reader starts with no retry directive, so callers see the pre-reconnect
+// snapshot until the resumed stream advertises a `retry:` of its own.
+func (s *Stream[T]) LastRetryMs() int {
+	if s.sseReader != nil {
+		if ms := s.sseReader.LastRetryMs(); ms > 0 {
+			return ms
+		}
+	}
+	return s.lastRetryMs
+}
+
 // shouldReconnectOnError reports whether the given error from the underlying
 // reader should trigger a reconnect attempt.
 func (s *Stream[T]) shouldReconnectOnError(err error) bool {
@@ -329,6 +351,7 @@ func (s *Stream[T]) reconnect() error {
 			s.lastEventID = id
 		}
 		if ms := s.sseReader.LastRetryMs(); ms > 0 {
+			s.lastRetryMs = ms
 			delay := time.Duration(ms) * time.Millisecond
 			if delay > maxReconnectBackoff {
 				delay = maxReconnectBackoff

@@ -1,4 +1,124 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.3
+  changelogEntry:
+    - summary: |
+        Fix `ENOTEMPTY` error during local generation when removing the temporary
+        `.git` directory in `copyGeneratedFilesWithFernIgnoreInTempRepo`. The `fs.rm`
+        call now uses `maxRetries: 3` to handle race conditions with git background
+        processes (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+        Also disables git auto-gc during the temporary `git init` to reduce the
+        likelihood of the race condition.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
+- version: 5.44.2
+  changelogEntry:
+    - summary: |
+        Fix false-positive "Example is missing required property" errors when validating
+        examples of discriminated unions whose `base-properties` overlap with properties
+        each variant also inherits via its own `extends` chain. The union validator now
+        preserves keys claimed by the variant when constructing the example handed to
+        variant-level validation, so inherited required properties are no longer dropped.
+      type: fix
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.44.1
+  changelogEntry:
+    - summary: |
+        Replace external petstore3.swagger.io URL with a local OpenAPI server in the v2 generate ETE test to remove a flaky dependency on the public petstore endpoint.
+      type: chore
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.44.0
+  changelogEntry:
+    - summary: |
+        Add `fern api enrich` command to CLI v2 for merging AI-generated examples
+        from an overrides file into native OpenAPI example fields.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.43.0
+  changelogEntry:
+    - summary: |
+        Prompt for an optional description when creating a token interactively via `fern org token create`.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.42.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs diff` command to CLI v2 for generating visual diffs between preview and production docs pages.
+      type: feat
+  createdAt: "2026-05-29"
+  irVersion: 66
+- version: 5.41.2
+  changelogEntry:
+    - summary: |
+        Skip AI example enhancement in self-hosted builds to avoid Venus JWT 401 errors and unnecessary latency.
+      type: fix
+  createdAt: "2026-05-29"
+  irVersion: 66
+- version: 5.41.1
+  changelogEntry:
+    - summary: |
+        Stop overwriting native OpenAPI examples with AI-generated ones (FER-10006).
+        When a customer provides an `example` or `examples` on a request body whose
+        media type also has a `schema`, the example is now correctly classified as
+        user-specified at both the IR and FDR layers, so the AI example enhancer
+        skips the endpoint instead of replacing the human-authored payload.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 66
+- version: 5.41.0
+  changelogEntry:
+    - summary: |
+        Add X-Request-Id header to all CLI v2 HTTP requests for request tracing and debugging.
+      type: feat
+  createdAt: "2026-05-28"
+  irVersion: 66
+- version: 5.40.1
+  changelogEntry:
+    - summary: |
+        Add /openapi.json, /openapi.yaml, /openapi.yml, /asyncapi.json, /asyncapi.yaml, and /asyncapi.yml
+        to the link validator whitelist, and add pattern-based matching for dynamic API spec paths like
+        /openapi/`<id>`.json so `fern check` no longer reports false broken-link errors for these special doc pages.
+      type: fix
+  createdAt: "2026-05-28"
+  irVersion: 66
+- version: 5.40.0
+  changelogEntry:
+    - summary: |
+        Add hidden `fern docs theme delete --name <theme name>` CLI command to delete a named theme from an org. Includes a confirmation prompt (skippable with `--yes`).
+      type: feat
+  createdAt: "2026-05-27"
+  irVersion: 66
+- version: 5.39.0
+  changelogEntry:
+    - summary: |
+        Add a `settings.search` object to `docs.yml` with two new options:
+        - `prioritize-current-product`: boosts search results from the current
+          product/version via Algolia `optionalFilters` without excluding results
+          from other products/versions.
+        - `default-filter-by-current-product`: auto-selects the current product as
+          a facet filter so only results from the current product are shown by
+          default.
+
+        `settings.default-search-filters` is preserved as an alias for
+        `settings.search.default-filter-by-current-product` for backwards
+        compatibility.
+      type: feat
+  createdAt: "2026-05-27"
+  irVersion: 66
+- version: 5.38.2
+  changelogEntry:
+    - summary: |
+        Honor operation-level `x-fern-streaming.resumable` on SSE endpoints whose
+        streaming is auto-detected from a `text/event-stream` response. Previously,
+        setting `resumable: true` without an explicit `format` was silently dropped
+        and the endpoint generated as non-resumable.
+      type: fix
+  createdAt: "2026-05-27"
+  irVersion: 66
 - version: 5.38.1
   changelogEntry:
     - summary: |
@@ -131,7 +251,7 @@
         and `GraphQLSpec.namespace`). Enables generators that opt into
         `generatorWantsSpecs` to route multi-spec workspaces by their
         workspace-declared namespace instead of inferring one from the
-        runner-assigned filename. The new `fernapi/fern-cli` generator
+        runner-assigned filename. The new `fernapi/fern-cli-generator` generator
         uses this to emit `.spec_under("<ns>", ...)` in the generated
         `main.rs` when the user namespaces their specs.
       type: feat
@@ -595,7 +715,7 @@
 - version: 5.25.0
   changelogEntry:
     - summary: |
-        Register the new `fernapi/fern-cli` generator in the CLI configuration.
+        Register the new `fernapi/fern-cli-generator` generator in the CLI configuration.
       type: feat
   createdAt: "2026-05-14"
   irVersion: 66

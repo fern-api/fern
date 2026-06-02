@@ -308,11 +308,17 @@ export const LayoutConfig = z.object({
 
 // ===== Settings =====
 
+export const SearchSettingsConfig = z.object({
+    "prioritize-current-product": z.boolean().optional(),
+    "default-filter-by-current-product": z.boolean().optional()
+});
+
 export const DocsSettingsConfig = z.object({
     "search-text": z.string().optional(),
     "disable-search": z.boolean().optional(),
     "dark-mode-code": z.boolean().optional(),
     "default-search-filters": z.boolean().optional(),
+    search: SearchSettingsConfig.optional(),
     "http-snippets": HttpSnippetsConfig.optional(),
     "hide-404-page": z.boolean().optional(),
     "use-javascript-as-typescript": z.boolean().optional(),

@@ -2884,6 +2884,18 @@
             "default-search-filters": {
               "type": "boolean"
             },
+            "search": {
+              "type": "object",
+              "properties": {
+                "prioritize-current-product": {
+                  "type": "boolean"
+                },
+                "default-filter-by-current-product": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
             "http-snippets": {
               "anyOf": [
                 {

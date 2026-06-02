@@ -268,7 +268,7 @@ overrides:
   cross-spawn: ^7.0.6
   node-fetch@2.x>whatwg-url: ^14.0.0
   minimatch: '>=10.2.3'
-  qs: 6.15.0
+  qs: 6.15.2
   url-join: ^4.0.1
   '@fern-api/fdr-sdk': 1.2.16-3b754a56be
   form-data: ^4.0.4

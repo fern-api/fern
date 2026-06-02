@@ -41,16 +41,18 @@ module Seed
 
     # @param base_url [String, nil]
     # @param api_version [String, nil]
+    # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(base_url: nil, api_version: "2024-02-08")
+    def initialize(base_url: nil, api_version: "2024-02-08", max_retries: 2)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_x-fern-default/0.0.1",
           "X-Fern-Language" => "Ruby",
           "X-API-Version" => api_version.to_s
-        }
+        },
+        max_retries: max_retries
       )
     end
   end

@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.37.0
+  changelogEntry:
+    - summary: |
+        Discriminated unions are now forward-compatible. Each generated `enum` carries
+        `#[non_exhaustive]` and a final `__Unknown(serde_json::Value)` variant marked
+        `#[serde(untagged)]`. Unknown discriminant values (e.g. variants introduced
+        server-side after this SDK was generated) deserialize into `__Unknown`
+        instead of erroring, preserving the raw JSON payload for inspection and
+        round-trip serialization.
+
+        Forward-compatible unions can no longer derive `Eq`/`Hash` because
+        `serde_json::Value` doesn't implement them. `PartialEq` is still derived.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
 - version: 0.36.8
   changelogEntry:
     - summary: |

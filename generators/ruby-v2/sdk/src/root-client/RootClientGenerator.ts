@@ -73,6 +73,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getInitializeMethod(): ruby.Method {
         const parameters: ruby.KeywordParameter[] = [];
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const defaultMaxRetries = this.context.customConfig.maxRetries ?? 2;
 
         const baseUrlParameter = ruby.parameters.keyword({
             name: "base_url",
@@ -98,6 +99,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const globalHeaderParameters = this.getGlobalHeaderParameters();
         parameters.push(...globalHeaderParameters);
+
+        const maxRetriesParameter = ruby.parameters.keyword({
+            name: "max_retries",
+            type: ruby.Type.integer(),
+            initializer: ruby.TypeLiteral.integer(defaultMaxRetries),
+            docs: "The default maximum number of retries for failed requests."
+        });
+        parameters.push(maxRetriesParameter);
 
         // Sort parameters: required (no initializer) before optional (with initializer)
         const sortedParameters = [...parameters].sort((a, b) => {
@@ -235,10 +244,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     writer.writeNode(this.getRawClientHeaders());
                 }
                 if (inferredAuth != null) {
-                    writer.writeLine(`.merge(@auth_provider.auth_headers)`);
+                    writer.writeLine(`.merge(@auth_provider.auth_headers),`);
                 } else {
-                    writer.newLine();
+                    writer.writeLine(",");
                 }
+                writer.writeLine(`max_retries: max_retries`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })

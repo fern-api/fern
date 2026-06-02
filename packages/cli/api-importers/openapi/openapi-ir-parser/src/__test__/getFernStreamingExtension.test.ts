@@ -3,7 +3,8 @@ import { describe, expect, it } from "vitest";
 
 import {
     getDocumentLevelResumable,
-    getFernStreamingExtension
+    getFernStreamingExtension,
+    getOperationLevelResumable
 } from "../openapi/v3/extensions/getFernStreamingExtension.js";
 
 type DocumentWithExtensions = OpenAPIV3.Document & { [key: `x-${string}`]: unknown };
@@ -133,5 +134,37 @@ describe("getDocumentLevelResumable", () => {
     it("returns undefined when document-level resumable is a non-boolean value", () => {
         const document = makeDocument({ resumable: "yes" });
         expect(getDocumentLevelResumable(document)).toBeUndefined();
+    });
+});
+
+describe("getOperationLevelResumable", () => {
+    it("returns true when operation-level x-fern-streaming.resumable is true", () => {
+        const operation = makeOperation({ resumable: true });
+        expect(getOperationLevelResumable(operation)).toBe(true);
+    });
+
+    it("returns false when operation-level x-fern-streaming.resumable is false", () => {
+        const operation = makeOperation({ resumable: false });
+        expect(getOperationLevelResumable(operation)).toBe(false);
+    });
+
+    it("returns true even when no format is set (content-type auto-detection case)", () => {
+        const operation = makeOperation({ resumable: true });
+        expect(getOperationLevelResumable(operation)).toBe(true);
+    });
+
+    it("returns undefined when operation has no x-fern-streaming extension", () => {
+        const operation = makeOperation();
+        expect(getOperationLevelResumable(operation)).toBeUndefined();
+    });
+
+    it("returns undefined when operation-level x-fern-streaming is a boolean", () => {
+        const operation = makeOperation(true);
+        expect(getOperationLevelResumable(operation)).toBeUndefined();
+    });
+
+    it("returns undefined when operation-level resumable is a non-boolean value", () => {
+        const operation = makeOperation({ resumable: "yes" });
+        expect(getOperationLevelResumable(operation)).toBeUndefined();
     });
 });

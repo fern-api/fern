@@ -797,6 +797,9 @@ export class LocalTaskHandler {
         // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
         // Touch ID on macOS) and unnecessary overhead.
         await this.runThrowawayGitCommand(["init"], tmpOutputResolutionDir);
+        // Disable auto-gc so that no background pack processes run during
+        // the subsequent operations, which would race with the rm(.git) below.
+        await this.runThrowawayGitCommand(["config", "gc.auto", "0"], tmpOutputResolutionDir);
         await this.runThrowawayGitCommand(["add", "."], tmpOutputResolutionDir);
         await this.runThrowawayGitCommand(
             [
@@ -827,7 +830,12 @@ export class LocalTaskHandler {
         await this.runThrowawayGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
-        await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+        await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), {
+            recursive: true,
+            force: true,
+            maxRetries: 3,
+            retryDelay: 100
+        });
 
         // Delete local output directory and copy all files from the generated directory
         await rm(this.absolutePathToLocalOutput, { recursive: true });

@@ -133,9 +133,61 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "fc35a3ba-6a37-4842-99e5-f58821955c31",
+      "name": "Create a plant (nested allOf with $ref chain) - default",
+      "request": {
+        "urlPathTemplate": "/plants",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"species\": \"species\",\n  \"family\": \"family\",\n  \"genus\": \"genus\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fc35a3ba-6a37-4842-99e5-f58821955c31",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "b78e388b-bdbb-4fab-a683-45f8819e89ec",
+      "name": "Create a tree (multiple nested $ref in parent allOf) - default",
+      "request": {
+        "urlPathTemplate": "/trees",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"treeName\": \"treeName\",\n  \"treeDescription\": \"treeDescription\",\n  \"id\": \"id\",\n  \"treeSpecies\": \"treeSpecies\",\n  \"heightInFeet\": 1.1,\n  \"plantedDate\": \"2023-01-15\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "b78e388b-bdbb-4fab-a683-45f8819e89ec",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 5
+    "total": 7
   }
 }

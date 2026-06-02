@@ -63,6 +63,7 @@ import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { deleteDocsTheme } from "./commands/docs-theme/deleteDocsTheme.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
@@ -1834,11 +1835,38 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("theme", "Manage org-level themes for your documentation", (yargs) => {
+        addDocsThemeDeleteCommand(yargs, cliContext);
         addDocsThemeExportCommand(yargs, cliContext);
         addDocsThemeListCommand(yargs, cliContext);
         addDocsThemeUploadCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsThemeDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "delete",
+        false,
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: "Name of the theme to delete",
+                    demandOption: true
+                })
+                .option("force", {
+                    alias: "f",
+                    type: "boolean",
+                    description: "Skip the confirmation prompt"
+                })
+                .example("$0 docs theme delete --name dark", "Delete the theme named 'dark'")
+                .example("$0 docs theme delete --name dark --force", "Delete without confirmation"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme delete" });
+            await deleteDocsTheme({ cliContext, name: argv.name, force: argv.force });
+        }
+    );
 }
 
 function addDocsThemeExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -2531,7 +2559,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "enrich <openapi>",
-        "Merge an AI examples overrides file into an OpenAPI spec",
+        "Enrich an OpenAPI spec with AI-generated examples",
         (yargs) =>
             yargs
                 .positional("openapi", {
@@ -2542,26 +2570,55 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("file", {
                     type: "string",
                     alias: "f",
-                    description: "Path to the overrides file (e.g. ai_examples_overrides.yml)",
-                    demandOption: true
+                    description: "Path to the overrides file containing x-fern-examples"
                 })
                 .option("output", {
                     type: "string",
                     alias: "o",
-                    description: "Path to write the enriched output file",
-                    demandOption: true
+                    description: "Path to write the output file (defaults to in-place update)"
+                })
+                .option("split", {
+                    type: "boolean",
+                    default: false,
+                    description: "Extract only the enriched examples instead of the full spec"
+                })
+                .option("ai-examples", {
+                    type: "boolean",
+                    description: "Generate examples using AI (coming soon)"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern api enrich"
             });
             const openapiPath = resolve(cwd(), argv.openapi as string);
+            if (argv.file == null) {
+                if (argv["ai-examples"] === true) {
+                    cliContext.failAndThrow(
+                        "AI example generation is not yet available. Provide an overrides file with --file in the meantime.",
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
+                }
+                cliContext.failAndThrow(
+                    "Provide an overrides file with --file (-f), or pass --ai-examples to generate examples with AI.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.split === true && argv.output == null) {
+                cliContext.failAndThrow(
+                    "--split requires --output (-o) to specify where to write the extracted examples.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             const overridesPath = resolve(cwd(), argv.file);
-            const outputPath = resolve(cwd(), argv.output);
+            const outputPath = argv.output != null ? resolve(cwd(), argv.output) : openapiPath;
             await mergeOpenAPIWithOverrides({
                 openapiPath: AbsoluteFilePath.of(openapiPath),
                 overridesPath: AbsoluteFilePath.of(overridesPath),
                 outputPath: AbsoluteFilePath.of(outputPath),
+                split: argv.split === true,
                 cliContext
             });
         }

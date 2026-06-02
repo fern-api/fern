@@ -1,5 +1,7 @@
 import { createVenusService } from "@fern-api/core";
 import { CliError } from "@fern-api/task-context";
+import chalk from "chalk";
+import inquirer from "inquirer";
 import type { Argv } from "yargs";
 import type { Context } from "../../../../context/Context.js";
 import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
@@ -26,7 +28,7 @@ export class CreateTokenCommand {
             throw new CliError({ code: CliError.Code.AuthError });
         }
 
-        const venus = createVenusService({ token: token.value });
+        const venus = createVenusService({ token: token.value, headers: context.headers });
 
         const orgLookup = await venus.organization.get(args.org);
         if (!orgLookup.ok) {
@@ -44,12 +46,26 @@ export class CreateTokenCommand {
         }
         const auth0OrgId = orgLookup.body.auth0Id;
 
+        let description = args.description;
+        if (description == null && context.isTTY) {
+            const { desc } = await inquirer.prompt<{ desc: string }>([
+                {
+                    type: "input",
+                    name: "desc",
+                    message: `Description ${chalk.dim("(optional, press Enter to skip)")}:`
+                }
+            ]);
+            if (desc.trim().length > 0) {
+                description = desc.trim();
+            }
+        }
+
         const response = await withSpinner({
             message: `Creating token for organization "${args.org}"`,
             operation: () =>
                 venus.apiKeys.create({
                     organizationId: auth0OrgId,
-                    description: args.description
+                    description
                 })
         });
 

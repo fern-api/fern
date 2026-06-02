@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  title: Native Example With Schema
+  description: |
+    Reproduces the bug where a user-specified native OpenAPI example placed
+    via the `example` (singular) field on a request body media type that
+    DOES define a schema is not detected by the AI example enhancer.
+  version: 1.0.0
+paths:
+  /widgets:
+    post:
+      operationId: createWidget
+      summary: Create a widget
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWidgetRequest"
+            example:
+              # Distinctive values so we can tell at a glance whether the
+              # user's example was captured (vs. a schema-derived default
+              # such as `"name": "name"`, `"id": "id"`, which is what
+              # auto-generation would emit for this schema).
+              name: "Sonic Screwdriver"
+              id: "widget_8a3f"
+              quantity: 42
+      responses:
+        "201":
+          description: Widget created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Widget"
+components:
+  schemas:
+    CreateWidgetRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        quantity:
+          type: integer
+    Widget:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer

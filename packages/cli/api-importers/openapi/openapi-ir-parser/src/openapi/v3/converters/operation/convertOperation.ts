@@ -16,7 +16,8 @@ import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension.js
 import {
     FernStreamingExtension,
     getDocumentLevelResumable,
-    getFernStreamingExtension
+    getFernStreamingExtension,
+    getOperationLevelResumable
 } from "../../extensions/getFernStreamingExtension.js";
 import { getFernPaginationExtension } from "../../extensions/getPaginationExtension.js";
 import { OperationContext, PathItemContext } from "../contexts.js";
@@ -111,7 +112,7 @@ export function convertOperation({
                 type: "stream",
                 format: "sse",
                 terminator: undefined,
-                resumable: getDocumentLevelResumable(context.document) ?? false
+                resumable: getOperationLevelResumable(operation) ?? getDocumentLevelResumable(context.document) ?? false
             };
         }
     }

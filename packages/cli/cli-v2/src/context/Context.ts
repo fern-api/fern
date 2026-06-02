@@ -10,10 +10,10 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
-
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import inquirer from "inquirer";
+import { v4 as uuidv4 } from "uuid";
 import { CredentialStore, TokenService } from "../auth/index.js";
 import { Cache } from "../cache/index.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
@@ -33,6 +33,7 @@ export class Context {
     private logFilePathPrinted = false;
 
     public readonly createdAt: number = Date.now();
+    public readonly requestId: string = uuidv4();
     public readonly cwd: AbsoluteFilePath;
     public readonly logLevel: LogLevel;
     public readonly info: CommandInfo;
@@ -82,7 +83,7 @@ export class Context {
         this.logs = new LogFileWriter(this.cache.logs.absoluteFilePath);
         this.ttyAwareLogger = ttyAwareLogger;
         this.telemetry = telemetry;
-        this.tokenService = new TokenService({ credential: new CredentialStore() });
+        this.tokenService = new TokenService({ credential: new CredentialStore(), headers: this.headers });
     }
 
     /**
@@ -90,6 +91,13 @@ export class Context {
      */
     public get isTTY(): boolean {
         return this.ttyAwareLogger.isTTY;
+    }
+
+    /**
+     * Returns headers that should be included with every outbound API request.
+     */
+    public get headers(): Record<string, string> {
+        return { "X-Request-Id": this.requestId };
     }
 
     /**
@@ -247,18 +255,17 @@ export class Context {
             return;
         }
 
-        const result = await checkOrganizationMembership({ organization, token });
-
+        const result = await checkOrganizationMembership({ organization, token, headers: this.headers });
         switch (result.type) {
             case "member":
                 return;
-            case "not-found":
-                throw CliError.notFound(
-                    `Organization "${organization}" does not exist.\n\n  To create it, run: fern org create ${organization}`
-                );
             case "no-access":
                 throw CliError.unauthorized(
                     `You do not have access to organization "${organization}".\n\n  Contact an organization admin to request access.`
+                );
+            case "not-found":
+                throw CliError.notFound(
+                    `Organization "${organization}" does not exist.\n\n  To create it, run: fern org create ${organization}`
                 );
             case "unknown-error":
                 throw CliError.internalError(`Failed to verify access to organization "${organization}".`);
