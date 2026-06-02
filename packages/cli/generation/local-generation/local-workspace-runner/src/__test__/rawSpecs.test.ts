@@ -882,7 +882,7 @@ describe("filterSpec", () => {
 /**
  * Coverage for the per-entry `namespace` field added to
  * `RawSpecsManifestEntry`. Downstream generators (initially
- * `fernapi/fern-cli-generator`) rely on this field to route multi-spec
+ * `fernapi/fern-cli`) rely on this field to route multi-spec
  * workspaces by their `generators.yml`-declared namespace rather than
  * inferring one from the runner-assigned filename.
  */

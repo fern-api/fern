@@ -1,6 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Rename the CLI generator Docker image from `fernapi/fern-cli` to
-    `fernapi/fern-cli-generator`.
-  type: chore
