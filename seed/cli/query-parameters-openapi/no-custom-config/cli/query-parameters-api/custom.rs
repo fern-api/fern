@@ -17,7 +17,7 @@ pub fn register(app: CliApp) -> CliApp {
     // Example:
     //   app.custom_command("my-cmd", "Description", |ctx| {
     //       Box::pin(async move {
-    //           let client = ctx.client::<my_api_sdk::Client>();
+    //           let client = ctx.client::<query_parameters_api_sdk::Client>();
     //           let resp = client.some_endpoint().await?;
     //           ctx.emit(&resp)?;
     //           Ok(())

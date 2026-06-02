@@ -95,7 +95,7 @@ export async function copySpecs(args: {
 
     // Scaffold custom.rs for user-authored async command handlers.
     if (embedSdk === true) {
-        await scaffoldCustomRs(binDir);
+        await scaffoldCustomRs(binDir, binaryName);
     }
 }
 
@@ -109,7 +109,7 @@ interface SpecEntry {
  * own async command handlers. Listed in `.fernignore` so `fern generate`
  * never overwrites user changes.
  */
-async function scaffoldCustomRs(binDir: string): Promise<void> {
+async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<void> {
     const customRsPath = path.join(binDir, "custom.rs");
     // Only create if it doesn't already exist (respects .fernignore).
     try {
@@ -118,6 +118,7 @@ async function scaffoldCustomRs(binDir: string): Promise<void> {
     } catch (_e: unknown) {
         // does not exist — scaffold it below
     }
+    const sdkCrate = `${binaryName.replace(/-/g, "_")}_sdk`;
     const content = [
         "//! Custom command handlers.",
         "//!",
@@ -138,7 +139,7 @@ async function scaffoldCustomRs(binDir: string): Promise<void> {
         "    // Example:",
         '    //   app.custom_command("my-cmd", "Description", |ctx| {',
         "    //       Box::pin(async move {",
-        "    //           let client = ctx.client::<my_api_sdk::Client>();",
+        `    //           let client = ctx.client::<${sdkCrate}::Client>();`,
         "    //           let resp = client.some_endpoint().await?;",
         "    //           ctx.emit(&resp)?;",
         "    //           Ok(())",

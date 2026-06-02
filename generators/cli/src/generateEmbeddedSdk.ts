@@ -43,13 +43,16 @@ export async function generateEmbeddedSdk(args: {
     await mkdir(sdkOutputDir, { recursive: true });
 
     // Write a minimal generator config that the rust-sdk CLI reads.
+    // crateName must match the dependency key that patchCargoToml writes
+    // (snake_case of sdkCrateName), otherwise Cargo cannot resolve the
+    // path dependency by package name.
     const generatorConfig = {
         irFilepath,
         output: {
             path: sdkOutputDir,
             mode: { type: "downloadFiles" as const }
         },
-        customConfig: {},
+        customConfig: { crateName: sdkCrateName.replace(/-/g, "_") },
         workspaceName: binaryName,
         organization: "",
         environment: { _type: "local" as const, type: "local" as const },

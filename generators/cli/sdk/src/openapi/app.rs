@@ -1657,6 +1657,8 @@ impl AppContext {
     ///
     /// [`ResolvedClientConfig`]: crate::context::ResolvedClientConfig
     /// [`ApiClient`]: crate::context::ApiClient
+    // TODO: only reads entries[0]; multi-binding CLIs expose only the
+    // first binding's auth/headers to custom commands.
     pub fn client_config(&self) -> crate::context::ResolvedClientConfig {
         let entry = &self.entries[0];
         let mut cfg = crate::context::ResolvedClientConfig {
@@ -1670,8 +1672,10 @@ impl AppContext {
             match binding {
                 crate::auth::SchemeBinding::Token(source) => {
                     if let Some(secret) = source.resolve() {
-                        // Heuristic: if bearer_token is already set, treat
-                        // this as an API-key header; otherwise assume bearer.
+                        // TODO: SchemeBinding::Token can't distinguish bearer
+                        // from header auth — a header-auth-only API gets
+                        // bearer_token populated. Carry the scheme kind on
+                        // SchemeBinding to resolve this.
                         if cfg.bearer_token.is_none() {
                             cfg.bearer_token = Some(secret);
                         } else {
@@ -1709,9 +1713,9 @@ impl AppContext {
 
     /// Emit a value through the output pipeline.
     ///
-    /// Respects `--format` and `--quiet` flags. Use this instead of
-    /// writing to stdout directly so custom commands honor the same
-    /// output conventions as built-in commands.
+    /// Currently hardcodes JSON output format; respects `--quiet`.
+    /// Use this instead of writing to stdout directly so custom
+    /// commands honor the same output conventions as built-in commands.
     pub fn emit<T: serde::Serialize>(&self, value: &T) -> Result<(), CliError> {
         let json_value = serde_json::to_value(value)
             .map_err(|e| CliError::Other(anyhow::anyhow!("serialization error: {e}")))?;

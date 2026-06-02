@@ -1,0 +1,12 @@
+{
+    "extends": ["//"],
+    "tasks": {
+        "dist:cli": {
+            // cli-generator's build.mjs copies rust-sdk's dist/ tree into
+            // dist/rust-sdk-dist/ so the Docker image can invoke the rust-sdk
+            // generator as a child process. This requires rust-sdk's dist:cli
+            // to have run first.
+            "dependsOn": ["^compile", "compile", "@fern-api/rust-sdk#dist:cli"]
+        }
+    }
+}

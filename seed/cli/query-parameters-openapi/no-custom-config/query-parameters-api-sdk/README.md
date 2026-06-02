@@ -1,7 +1,7 @@
 #  Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/api)](https://crates.io/crates/api)
+[![crates.io shield](https://img.shields.io/crates/v/query_parameters_api_sdk)](https://crates.io/crates/query_parameters_api_sdk)
 
 The  Rust library provides convenient access to the  APIs from Rust.
 
@@ -24,13 +24,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-api = "0.1.0"
+query_parameters_api_sdk = "0.1.0"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add api
+cargo add query_parameters_api_sdk
 ```
 
 ## Reference
@@ -42,7 +42,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use query_parameters_api::prelude::*;
+use query_parameters_api_sdk::prelude::*;
 
 #[tokio::main]
 async fn main() {

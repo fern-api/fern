@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use query_parameters_api::prelude::*;
+use query_parameters_api_sdk::prelude::*;
 
 #[tokio::main]
 async fn main() {

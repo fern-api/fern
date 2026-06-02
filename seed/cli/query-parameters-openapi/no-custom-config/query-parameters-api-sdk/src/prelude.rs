@@ -1,7 +1,7 @@
 //! Prelude module for convenient imports
 //!
 //! This module re-exports the most commonly used types and traits.
-//! Import it with: `use api::prelude::*;`
+//! Import it with: `use query_parameters_api_sdk::prelude::*;`
 
 // Client and configuration
 pub use crate::config::ClientConfig;
