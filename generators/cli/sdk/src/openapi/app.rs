@@ -30,7 +30,7 @@ fn split_prefix(prefix: &str) -> Vec<String> {
 /// **Stutter elision:** at the leaf, if `incoming` contains a top-level
 /// resource whose name matches the leaf namespace, that resource's methods
 /// and sub-resources are *hoisted* into the namespace itself — eliminating
-/// the `myapi v3 customers customers get` repetition that would
+/// the `bigcommerce v3 customers customers get` repetition that would
 /// otherwise occur when a spec's primary domain matches the namespace name.
 /// Other top-level resources from the spec become children of the
 /// namespace as usual.
@@ -204,7 +204,7 @@ fn merge_schemas(
     acc: &mut HashMap<String, JsonSchema>,
     incoming: HashMap<String, JsonSchema>,
 ) -> Result<(), CliError> {
-    // Multi-spec setups share common schema
+    // Multi-spec setups like BigCommerce's Management API share common schema
     // names (`ErrorResponse`, `Pagination`, `Meta`) across many specs that are
     // authored from the same template — collisions are the norm, not a bug.
     // First write wins; schemas are only used for best-effort request-body
@@ -482,16 +482,16 @@ pub(crate) struct SpecEntry {
 }
 
 /// A server-URL template variable like `{store_hash}` in
-/// `https://api.example.com/stores/{store_hash}/v3`. Resolved at runtime
+/// `https://api.bigcommerce.com/stores/{store_hash}/v3`. Resolved at runtime
 /// from a CLI flag (`--<name>`), an env var, or a built-in default — first
 /// match wins.
 #[derive(Clone)]
 pub(crate) struct ServerVar {
     /// OpenAPI variable name as it appears in the URL template (`store_hash`).
     name: String,
-    /// Env var consulted when the flag isn't passed (e.g. `MYAPI_STORE_HASH`).
+    /// Env var consulted when the flag isn't passed (e.g. `BIGCOMMERCE_STORE_HASH`).
     env_var: Option<String>,
-    /// Fallback default (for variables that have one — most
+    /// Fallback default (for variables that have one — most BigCommerce-style
     /// store identifiers don't).
     default: Option<String>,
     /// One-line `--help` string.
@@ -514,6 +514,12 @@ pub struct CliApp {
     /// — the spec drives the choice. Generators that already know the
     /// API's auth model can pin a specific strategy.
     auth_strategy: AuthStrategy,
+    /// Optional additive auth layers registered via
+    /// [`auth_layer`](Self::auth_layer). Each is applied on top of the
+    /// composed primary provider whenever it has credentials — see
+    /// [`LayeredAuthProvider`](crate::auth::LayeredAuthProvider). Empty by
+    /// default; layers never affect whether the primary auth is satisfiable.
+    pub(crate) auth_layers: Vec<DynAuthProvider>,
     /// Trust roots parsed at builder-call time. Storing parsed certs (not
     /// raw bytes) means the validation error message lives in one place
     /// — at the call site of `extra_root_cert`, where it's most useful.
@@ -555,6 +561,7 @@ impl CliApp {
             description_override: None,
             auth_bindings: Vec::new(),
             auth_strategy: AuthStrategy::Auto,
+            auth_layers: Vec::new(),
             extra_root_certs: Vec::new(),
             extra_root_certs_pem: Vec::new(),
             server_vars: Vec::new(),
@@ -636,7 +643,7 @@ impl CliApp {
     ///   4. Otherwise, errors with a helpful message
     ///
     /// Used for multi-tenant APIs where every URL is parameterized — the
-    /// canonical example is a `{store_hash}` placeholder. Variables
+    /// canonical example is BigCommerce's `{store_hash}`. Variables
     /// referenced in `servers[].url` but not registered here remain literal
     /// in the URL (and the request will fail at send time), so registering
     /// them is effectively required.
@@ -769,7 +776,7 @@ impl CliApp {
     /// deep-merged onto the spec before parsing.
     ///
     /// ```ignore
-    /// CliApp::new("myapi")
+    /// CliApp::new("bigcommerce")
     ///     .specs_under_named_with_overrides("v3", [
     ///         ("customers",
     ///          include_str!("specs/management/customers.v3.yml"),
@@ -1017,6 +1024,48 @@ impl CliApp {
         self
     }
 
+    /// Register an *additive* auth layer: a provider whose headers are
+    /// attached on top of the composed primary auth whenever it has
+    /// credentials, regardless of the [`AuthStrategy`].
+    ///
+    /// Unlike [`auth_scheme`](Self::auth_scheme) bound under
+    /// [`AuthStrategy::All`], a layer is strictly optional — it never makes
+    /// the primary auth mandatory and is silently skipped when its credential
+    /// is absent. Use it for a supplementary header that sits alongside real
+    /// auth and is only present in some environments.
+    ///
+    /// The motivating case is Lattice Sandboxes, which require an extra
+    /// `Anduril-Sandbox-Authorization: Bearer <token>` header in addition to
+    /// the normal bearer token — but only when developing against a sandbox:
+    ///
+    /// ```ignore
+    /// use fern_cli_sdk::auth::{AuthCredentialSource, HeaderAuthProvider};
+    ///
+    /// CliApp::new("lattice")
+    ///     .spec(include_str!("openapi.yaml"))
+    ///     .auth_scheme_env("bearerHttpAuthentication", "ENVIRONMENT_TOKEN")
+    ///     .auth_layer(HeaderAuthProvider::new(
+    ///         "sandboxAuthorization",
+    ///         "Anduril-Sandbox-Authorization",
+    ///         AuthCredentialSource::from_env("SANDBOXES_TOKEN"),
+    ///         true, // emit "Bearer <token>"
+    ///     ))
+    ///     .run();
+    /// ```
+    pub fn auth_layer<P>(self, provider: P) -> Self
+    where
+        P: crate::auth::AuthProvider + 'static,
+    {
+        self.auth_layer_shared(std::sync::Arc::new(provider))
+    }
+
+    /// Same as [`auth_layer`](Self::auth_layer) but takes an already-built
+    /// [`DynAuthProvider`] (for sharing one provider across bindings).
+    pub fn auth_layer_shared(mut self, provider: DynAuthProvider) -> Self {
+        self.auth_layers.push(provider);
+        self
+    }
+
     /// Pin how the bound auth schemes compose into a single provider.
     /// Defaults to [`AuthStrategy::Auto`], which derives the strategy from
     /// the spec (Routing if any operation declares per-endpoint security,
@@ -1071,11 +1120,26 @@ impl CliApp {
         doc: &RestDescription,
         mut cli: clap::Command,
     ) -> clap::Command {
-        let auth_section = crate::auth::render_auth_help_section(&self.auth_bindings);
+        let auth_section = {
+            let base = crate::auth::render_auth_help_section(&self.auth_bindings);
+            let layer_rows: Vec<(String, Vec<String>)> = self
+                .auth_layers
+                .iter()
+                .map(|p| (p.name().to_string(), p.credential_hints()))
+                .collect();
+            let layers = crate::auth::render_auth_layers_help(&layer_rows);
+            match (base, layers) {
+                (Some(b), Some(l)) => Some(format!("{b}{l}")),
+                (Some(b), None) => Some(b),
+                // No primary bindings but layers exist — supply the heading.
+                (None, Some(l)) => Some(format!("Authentication:\n{l}")),
+                (None, None) => None,
+            }
+        };
 
         // Server-variable flags (e.g. `--store-hash` for {store_hash}).
         for var in &self.server_vars {
-            let kebab = var.name.replace('_', "-");
+            let kebab = crate::text::to_kebab_flag(&var.name);
             let help_text = var
                 .description
                 .clone()
@@ -1265,12 +1329,27 @@ impl CliApp {
     /// — the CLI runs unauthenticated.
     pub(crate) fn build_auth_provider(&self, doc: &RestDescription) -> DynAuthProvider {
         let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
-        crate::auth::build_provider_with_strategy(
+        let primary = crate::auth::build_provider_with_strategy(
             &self.auth_bindings,
             &doc.security_schemes,
             self.auth_strategy,
             has_per_endpoint,
-        )
+        );
+        self.wrap_auth_layers(primary)
+    }
+
+    /// Layer any registered additive providers on top of the composed
+    /// primary. A no-op when no layers were registered, so the common case
+    /// pays nothing.
+    fn wrap_auth_layers(&self, primary: DynAuthProvider) -> DynAuthProvider {
+        if self.auth_layers.is_empty() {
+            primary
+        } else {
+            std::sync::Arc::new(crate::auth::LayeredAuthProvider::new(
+                primary,
+                self.auth_layers.clone(),
+            ))
+        }
     }
 
     /// Build an auth provider from externally-finalized bindings.
@@ -1282,12 +1361,13 @@ impl CliApp {
         doc: &RestDescription,
     ) -> DynAuthProvider {
         let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
-        crate::auth::build_provider_with_strategy(
+        let primary = crate::auth::build_provider_with_strategy(
             finalized,
             &doc.security_schemes,
             self.auth_strategy,
             has_per_endpoint,
-        )
+        );
+        self.wrap_auth_layers(primary)
     }
 }
 
@@ -1319,6 +1399,10 @@ pub struct AppContext {
     /// `OutputPipeline` by [`AppContext::execute`] so custom commands
     /// honor the flag.
     quiet: bool,
+    /// Base URL override resolved from `--base-url` / `{NAME}_BASE_URL`.
+    /// Threaded into `invoke()` so custom command handlers respect the
+    /// override the same way direct CLI dispatch does.
+    base_url_override: Option<String>,
 }
 
 impl AppContext {
@@ -1331,11 +1415,17 @@ impl AppContext {
         Self {
             entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
             quiet: false,
+            base_url_override: None,
         }
     }
 
     pub(crate) fn with_quiet(mut self, quiet: bool) -> Self {
         self.quiet = quiet;
+        self
+    }
+
+    pub(crate) fn with_base_url_override(mut self, base_url_override: Option<String>) -> Self {
+        self.base_url_override = base_url_override;
         self
     }
 
@@ -1451,11 +1541,12 @@ impl AppContext {
                 None,
                 None,
                 None,
+                None, // no multipart for programmatic callers
                 false,
                 &pagination,
                 &pipeline,
                 false,
-                None,
+                self.base_url_override.as_deref(),
                 &entry.http_config,
                 // TODO(mcp/programmatic): programmatic callers always
                 // honor `x-fern-sdk-return-value` (matches typed-SDK
@@ -1489,7 +1580,7 @@ impl AppContext {
     ///
     /// Like [`execute`](Self::execute) but captures the response instead of
     /// printing it, and accepts a `binary_body_path` for operations with a
-    /// binary request body (e.g. a file upload endpoint). Designed for
+    /// binary request body (e.g. AssemblyAI's `/v2/upload`). Designed for
     /// custom commands that chain multiple API calls.
     pub fn invoke(
         &self,
@@ -1528,11 +1619,12 @@ impl AppContext {
                 None,
                 None,
                 binary_body_path,
+                None, // no multipart for programmatic callers
                 false,
                 &pagination,
                 &formatter::OutputPipeline::default(),
                 true, // capture_output
-                None,
+                self.base_url_override.as_deref(),
                 &entry.http_config,
                 // See TODO in `execute` above — same trade-off applies
                 // here: chained custom commands expect the
@@ -1750,10 +1842,6 @@ pub(crate) fn collect_params_from_flags(
     let mut missing_variable_bound: Vec<(String, String)> = Vec::new();
     for (param_name, param_def) in &method.parameters {
         if let Some(var_name) = param_def.variable_reference.as_deref() {
-            // Global flag ids match the variable name (see `run_async`).
-            // clap's `.env(...)` on the global arg already covers the
-            // env-var fallback before we get here, so a missing value
-            // means neither CLI flag nor env var was provided.
             match matched_args.get_one::<String>(var_name) {
                 Some(value) => {
                     params.insert(
@@ -1767,8 +1855,14 @@ pub(crate) fn collect_params_from_flags(
             }
             continue;
         }
+
+        // The clap arg ID may differ from the wire name when the wire
+        // name collides with a built-in flag. Use the same resolution
+        // function the command builder uses (FER-10430).
+        let arg_id = crate::openapi::commands::param_clap_arg_id(param_name);
+
         if param_def.repeated {
-            if let Some(values) = matched_args.get_many::<String>(param_name) {
+            if let Some(values) = matched_args.get_many::<String>(&arg_id) {
                 let arr: Vec<serde_json::Value> = values
                     .map(|v| serde_json::Value::String(v.clone()))
                     .collect();
@@ -1777,18 +1871,29 @@ pub(crate) fn collect_params_from_flags(
             continue;
         }
 
-        let Some(value) = matched_args.get_one::<String>(param_name) else {
+        let Some(value) = matched_args.get_one::<String>(&arg_id) else {
             continue;
         };
-        let from_default = matched_args.value_source(param_name)
+        let from_default = matched_args.value_source(&arg_id)
             == Some(clap::parser::ValueSource::DefaultValue);
         let json_value = match (from_default, &param_def.default_value) {
             (true, Some(typed)) => typed.clone(),
             _ => {
-                // For object-typed params (e.g. deepObject query parameters),
-                // attempt JSON parsing so deepObject serialization receives a
-                // Value::Object rather than a string.
-                if param_def.param_type.as_deref() == Some("object") {
+                // Null sentinel, gated to user-supplied input so a
+                // default-injected "null" string is never reinterpreted.
+                // See ADR-0003.
+                if param_def.nullable && value == "null" {
+                    serde_json::Value::Null
+                } else if matches!(
+                    param_def.param_type.as_deref(),
+                    Some("object") | Some("array")
+                ) {
+                    // For object- and array-typed params (e.g. deepObject /
+                    // form / spaceDelimited / pipeDelimited query parameters,
+                    // or simple-style header parameters), attempt JSON parsing
+                    // so the style-aware serializer receives a `Value::Object` /
+                    // `Value::Array` rather than a verbatim string. Falls back
+                    // to the raw string when the value isn't valid JSON.
                     serde_json::from_str(value.as_str())
                         .unwrap_or_else(|_| serde_json::Value::String(value.clone()))
                 } else {
@@ -1827,6 +1932,65 @@ pub(crate) fn collect_params_from_flags(
     }
 
     Ok(params)
+}
+
+/// Collect multipart/form-data parts from CLI arg matches. Returns `None`
+/// when the operation has no multipart fields. File-typed fields reject
+/// control characters (matching `binary_body_path` validation) but allow
+/// absolute paths since users may upload files from anywhere on disk.
+pub(crate) fn collect_multipart_parts(
+    method: &RestMethod,
+    matches: &clap::ArgMatches,
+) -> Result<Option<Vec<executor::MultipartPart>>, crate::error::CliError> {
+    if method.multipart_fields.is_empty() {
+        return Ok(None);
+    }
+
+    let mut parts = Vec::new();
+    for field in &method.multipart_fields {
+        // Skip fields whose kebab name collides with a builtin flag — the
+        // arg was never registered so any value would come from the builtin.
+        let kebab = crate::text::to_kebab_flag(&field.wire_name);
+        if crate::openapi::commands::BUILTIN_FLAG_NAMES.contains(&kebab.as_str()) {
+            continue;
+        }
+
+        let value = matches
+            .try_get_one::<String>(&field.wire_name)
+            .ok()
+            .flatten();
+        let Some(value) = value else {
+            continue;
+        };
+
+        if field.is_file {
+            let raw = value.as_str();
+            let stripped = raw.strip_prefix('@').unwrap_or(raw);
+            if stripped != "-" {
+                crate::output::reject_dangerous_chars(
+                    stripped,
+                    &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
+                )?;
+            }
+            parts.push(executor::MultipartPart::File {
+                name: field.wire_name.clone(),
+                path: raw.to_string(),
+                content_type: field.content_type.clone(),
+            });
+        } else {
+            parts.push(executor::MultipartPart::Text {
+                name: field.wire_name.clone(),
+                value: value.clone(),
+                content_type: field.content_type.clone(),
+            });
+        }
+    }
+
+    if parts.is_empty() {
+        Ok(None)
+    } else {
+        Ok(Some(parts))
+    }
 }
 
 pub(crate) fn build_pagination_config(
@@ -2569,12 +2733,230 @@ mod tests {
     }
 
     #[test]
+    fn test_collect_params_null_sentinel_on_nullable_param() {
+        // `--user-id null` on a nullable scalar body param must produce
+        // serde_json::Value::Null, not Value::String("null").
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "userId".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("userId").long("user-id"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--user-id", "null"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(result.get("userId"), Some(&serde_json::Value::Null));
+    }
+
+    #[test]
+    fn test_collect_params_null_string_on_non_nullable_param_unchanged() {
+        // `--field null` on a non-nullable string param keeps current
+        // behavior: passes the four-character string through unchanged.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "code".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: false,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("code").long("code"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--code", "null"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("code").and_then(|v| v.as_str()),
+            Some("null"),
+            "literal 'null' must pass through unchanged on non-nullable fields",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_array_typed_param_parsed_from_json() {
+        // An array-typed param (e.g. a simple/array path param) carries a
+        // JSON-array string on the CLI; it must be parsed into a
+        // `Value::Array` so the path serializer can comma-join the elements
+        // instead of sending the verbatim `["a","b"]` string.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "ids".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("array".to_string()),
+                location: Some("path".to_string()),
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("ids").long("ids"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--ids", r#"["a","b"]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("ids"),
+            Some(&serde_json::json!(["a", "b"])),
+            "array-typed param must be JSON-parsed into a Value::Array",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_array_typed_param_invalid_json_falls_back_to_string() {
+        // Malformed JSON for an array-typed param keeps the verbatim string
+        // (no behavior change / no hard error for non-JSON input).
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "ids".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("array".to_string()),
+                location: Some("path".to_string()),
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("ids").long("ids"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--ids", "not-json"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("ids").and_then(|v| v.as_str()),
+            Some("not-json"),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_null_sentinel_does_not_apply_to_defaults() {
+        // When clap injects an `x-fern-default` value that happens to be the
+        // string "null", we must NOT convert it to Value::Null — the user
+        // didn't ask for null, the default did. The value_source check is
+        // load-bearing here.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "userId".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                nullable: true,
+                default_value: Some(serde_json::Value::String("fallback".into())),
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("userId")
+                    .long("user-id")
+                    .default_value("fallback"),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        // Omit the flag → clap fills "fallback" from default.
+        let matches = cmd.get_matches_from(vec!["test"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        // The typed default flows through, NOT a JSON null.
+        assert_eq!(
+            result.get("userId"),
+            Some(&serde_json::Value::String("fallback".into())),
+        );
+    }
+
+    #[test]
     fn test_collect_params_empty_when_no_flags() {
         let method = crate::openapi::discovery::RestMethod::default();
         let cmd = clap::Command::new("test").arg(clap::Arg::new("params").long("params"));
         let matches = cmd.get_matches_from(vec!["test"]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert!(result.is_empty());
+    }
+
+    #[test]
+    fn test_collect_params_array_value_parsed_from_json() {
+        // An `array`-typed param carrying a JSON array string is parsed
+        // into a Value::Array so the style-aware serializer can explode /
+        // join it. Previously only `object` params were parsed.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "tag".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("array".to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("tag").long("tag"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--tag", r#"["a","b"]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(result.get("tag"), Some(&serde_json::json!(["a", "b"])));
+    }
+
+    #[test]
+    fn test_collect_params_array_invalid_json_falls_back_to_string() {
+        // Non-JSON input for an `array` param degrades to the raw string
+        // rather than erroring, mirroring the object branch.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "tag".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("array".to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("tag").long("tag"))
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--tag", "not-json"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("tag").and_then(|v| v.as_str()),
+            Some("not-json"),
+        );
+    }
+
+    #[test]
+    fn test_load_spec_via_cli_app() {
+        let yaml = include_str!("../../cli/box/openapi.yaml");
+        let app = CliApp::new("box").spec(yaml);
+        assert_eq!(app.name, "box");
+        // Verify the spec can be parsed via build_doc
+        let doc = app.build_doc().unwrap();
+        assert_eq!(doc.name, "box");
+        assert!(doc.resources.len() >= 14);
     }
 
     // ------------------------------------------------------------------
@@ -2927,7 +3309,7 @@ paths:
     #[test]
     fn test_merge_schemas_first_write_wins_on_duplicate() {
         // Multi-spec setups commonly share schema names (`ErrorResponse`,
-        // `Pagination`). Strict-error policy made multi-spec use
+        // `Pagination`). Strict-error policy made BigCommerce-style use
         // unworkable; first-write-wins lets specs share without manual
         // de-duplication.
         let mut acc = HashMap::new();
@@ -3013,7 +3395,7 @@ paths:
     #[test]
     fn test_spec_under_merges_multiple_specs_into_same_prefix() {
         // Two specs sharing a prefix should merge under it (not error).
-        // Prevents use cases where many v2 specs all need
+        // Prevents BigCommerce-style use cases where many v2 specs all need
         // to live under a single `v2` namespace.
         let spec_a = r#"
 openapi: "3.0.0"
@@ -3141,13 +3523,13 @@ paths:
     fn test_substitute_url_vars_replaces_known_and_leaves_unknown() {
         let mut subs = HashMap::new();
         subs.insert("store_hash".to_string(), "abc123".to_string());
-        let url = "https://api.example.com/stores/{store_hash}/v3/customers/{customer_id}";
+        let url = "https://api.bigcommerce.com/stores/{store_hash}/v3/customers/{customer_id}";
         let out = substitute_url_vars(url, &subs);
         // Known var substituted, unknown left literal so the failure mode is
         // visible in dry-run output and downstream error messages.
         assert_eq!(
             out,
-            "https://api.example.com/stores/abc123/v3/customers/{customer_id}"
+            "https://api.bigcommerce.com/stores/abc123/v3/customers/{customer_id}"
         );
     }
 

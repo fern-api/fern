@@ -2,6 +2,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { describe, expect, it } from "vitest";
 import { createTempFixture } from "../../utils/createTempFixture.js";
 import { cliV2, runCliV2 } from "../../utils/runCliV2.js";
+import { setupOpenAPIServer } from "../../utils/setupOpenAPIServer.js";
 
 const FIXTURES = {
     petstore: "petstore",
@@ -364,31 +365,36 @@ paths:
             }, 120_000);
 
             it("should generate Go SDK from a URL-referenced spec", async () => {
-                const fixture = await createTempFixture({});
+                const server = await setupOpenAPIServer();
                 try {
-                    const result = await runCliV2({
-                        args: [
-                            "sdk",
-                            "generate",
-                            "--api",
-                            "https://petstore3.swagger.io/api/v3/openapi.json",
-                            "--target",
-                            "go",
-                            "--org",
-                            "test-org",
-                            "--output",
-                            "./out",
-                            "--local"
-                        ],
-                        cwd: fixture.path,
-                        timeout: 120_000
-                    });
-                    expect(result.exitCode).toBe(0);
+                    const fixture = await createTempFixture({});
+                    try {
+                        const result = await runCliV2({
+                            args: [
+                                "sdk",
+                                "generate",
+                                "--api",
+                                server.url,
+                                "--target",
+                                "go",
+                                "--org",
+                                "test-org",
+                                "--output",
+                                "./out",
+                                "--local"
+                            ],
+                            cwd: fixture.path,
+                            timeout: 120_000
+                        });
+                        expect(result.exitCode).toBe(0);
 
-                    const outputPath = join(AbsoluteFilePath.of(fixture.path), RelativeFilePath.of("out"));
-                    expect(await doesPathExist(outputPath)).toBe(true);
+                        const outputPath = join(AbsoluteFilePath.of(fixture.path), RelativeFilePath.of("out"));
+                        expect(await doesPathExist(outputPath)).toBe(true);
+                    } finally {
+                        await fixture.cleanup();
+                    }
                 } finally {
-                    await fixture.cleanup();
+                    await server.cleanup();
                 }
             }, 120_000);
         });
