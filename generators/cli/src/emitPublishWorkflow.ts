@@ -63,6 +63,21 @@ function constructWorkflowYaml(args: { binaryName: string; npmPublishInfo: Resol
             `            npm-platform-suffix: ${t.npmPlatformSuffix}`
     ).join("\n");
 
+    // Bash lines that build up the launcher's optionalDependencies map.
+    // Each entry ends with a trailing comma except the last — JSON
+    // forbids trailing commas inside `{ ... }`.
+    const optionalDepsLines = TARGETS.map((t, i) => {
+        const trailingComma = i === TARGETS.length - 1 ? "" : ",";
+        return `          OPTIONAL_DEPS="\${OPTIONAL_DEPS}\\"${npmPublishInfo.packageName}-${t.npmPlatformSuffix}\\": \\"\${VERSION}\\"${trailingComma}"`;
+    }).join("\n");
+
+    // JavaScript object-literal entries for the launcher's PLATFORMS
+    // map. Trailing commas are legal in ES5+ object literals so every
+    // entry gets one — keeps diffs small when targets are added.
+    const launcherPlatformEntries = TARGETS.map(
+        (t) => `            "${t.npmPlatformSuffix}": "${npmPublishInfo.packageName}-${t.npmPlatformSuffix}",`
+    ).join("\n");
+
     return `name: ci
 
 on: [push]
@@ -116,7 +131,12 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: \${{ matrix.runner }}${oidcPermissions}
     strategy:
-      fail-fast: true
+      # Don't cancel sibling matrix jobs on first failure — a transient
+      # failure on one platform would otherwise leave npm in a partial
+      # state (some platform packages published, others not, launcher
+      # never published), with no clean re-run since the already-
+      # published versions reject re-publish.
+      fail-fast: false
       matrix:
         include:
 ${matrixIncludes}
@@ -175,9 +195,13 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
-          if [[ "\${VERSION}" == *alpha* ]]; then
+          # Pre-release detection — require the semver "-" separator so a
+          # release tag like v1.0.0 for a package whose version string
+          # happens to contain "alpha"/"beta" as a substring isn't
+          # mis-tagged on npm.
+          if [[ "\${VERSION}" == *-alpha* ]]; then
             npm publish --access public --tag alpha
-          elif [[ "\${VERSION}" == *beta* ]]; then
+          elif [[ "\${VERSION}" == *-beta* ]]; then
             npm publish --access public --tag beta
           else
             npm publish --access public
@@ -209,11 +233,7 @@ ${matrixIncludes}
 
           # Build optionalDependencies map
           OPTIONAL_DEPS=""
-          OPTIONAL_DEPS="\${OPTIONAL_DEPS}\\"${npmPublishInfo.packageName}-linux-x64\\": \\"\${VERSION}\\","
-          OPTIONAL_DEPS="\${OPTIONAL_DEPS}\\"${npmPublishInfo.packageName}-linux-arm64\\": \\"\${VERSION}\\","
-          OPTIONAL_DEPS="\${OPTIONAL_DEPS}\\"${npmPublishInfo.packageName}-darwin-x64\\": \\"\${VERSION}\\","
-          OPTIONAL_DEPS="\${OPTIONAL_DEPS}\\"${npmPublishInfo.packageName}-darwin-arm64\\": \\"\${VERSION}\\","
-          OPTIONAL_DEPS="\${OPTIONAL_DEPS}\\"${npmPublishInfo.packageName}-win32-x64\\": \\"\${VERSION}\\""
+${optionalDepsLines}
 
           cat > "\${PKG_DIR}/package.json" <<PKGJSON
           {
@@ -240,11 +260,7 @@ ${matrixIncludes}
           const os = require("os");
 
           const PLATFORMS = {
-            "linux-x64": "${npmPublishInfo.packageName}-linux-x64",
-            "linux-arm64": "${npmPublishInfo.packageName}-linux-arm64",
-            "darwin-x64": "${npmPublishInfo.packageName}-darwin-x64",
-            "darwin-arm64": "${npmPublishInfo.packageName}-darwin-arm64",
-            "win32-x64": "${npmPublishInfo.packageName}-win32-x64",
+${launcherPlatformEntries}
           };
 
           const platformKey = os.platform() + "-" + os.arch();
@@ -268,9 +284,13 @@ ${matrixIncludes}
           LAUNCHER
 
           cd "\${PKG_DIR}"
-          if [[ "\${VERSION}" == *alpha* ]]; then
+          # Pre-release detection — require the semver "-" separator so a
+          # release tag like v1.0.0 for a package whose version string
+          # happens to contain "alpha"/"beta" as a substring isn't
+          # mis-tagged on npm.
+          if [[ "\${VERSION}" == *-alpha* ]]; then
             npm publish --access public --tag alpha
-          elif [[ "\${VERSION}" == *beta* ]]; then
+          elif [[ "\${VERSION}" == *-beta* ]]; then
             npm publish --access public --tag beta
           else
             npm publish --access public

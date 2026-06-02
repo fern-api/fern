@@ -51,7 +51,12 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ${{ matrix.runner }}
     strategy:
-      fail-fast: true
+      # Don't cancel sibling matrix jobs on first failure — a transient
+      # failure on one platform would otherwise leave npm in a partial
+      # state (some platform packages published, others not, launcher
+      # never published), with no clean re-run since the already-
+      # published versions reject re-publish.
+      fail-fast: false
       matrix:
         include:
           - rust-target: x86_64-unknown-linux-gnu
@@ -126,9 +131,13 @@ jobs:
           PKGJSON
 
           cd "${PKG_DIR}"
-          if [[ "${VERSION}" == *alpha* ]]; then
+          # Pre-release detection — require the semver "-" separator so a
+          # release tag like v1.0.0 for a package whose version string
+          # happens to contain "alpha"/"beta" as a substring isn't
+          # mis-tagged on npm.
+          if [[ "${VERSION}" == *-alpha* ]]; then
             npm publish --access public --tag alpha
-          elif [[ "${VERSION}" == *beta* ]]; then
+          elif [[ "${VERSION}" == *-beta* ]]; then
             npm publish --access public --tag beta
           else
             npm publish --access public
@@ -221,9 +230,13 @@ jobs:
           LAUNCHER
 
           cd "${PKG_DIR}"
-          if [[ "${VERSION}" == *alpha* ]]; then
+          # Pre-release detection — require the semver "-" separator so a
+          # release tag like v1.0.0 for a package whose version string
+          # happens to contain "alpha"/"beta" as a substring isn't
+          # mis-tagged on npm.
+          if [[ "${VERSION}" == *-alpha* ]]; then
             npm publish --access public --tag alpha
-          elif [[ "${VERSION}" == *beta* ]]; then
+          elif [[ "${VERSION}" == *-beta* ]]; then
             npm publish --access public --tag beta
           else
             npm publish --access public
