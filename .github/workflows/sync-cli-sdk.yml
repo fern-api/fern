@@ -68,6 +68,10 @@ jobs:
         uses: peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725  # v8
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
+          # Scope staging to the synced path only. Without this the action runs
+          # `git add -A` across the whole tree and captures the transient
+          # `_cli-sdk` clone as a submodule gitlink (mode 160000).
+          add-paths: generators/cli/sdk/
           commit-message: "chore(cli-generator): sync cli-sdk@${{ steps.provenance.outputs.short }}"
           title: "chore(cli-generator): sync cli-sdk@${{ steps.provenance.outputs.short }}"
           body: |

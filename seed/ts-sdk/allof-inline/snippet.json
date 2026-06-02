@@ -54,6 +54,28 @@
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.getOrganization();\n"
             }
+        },
+        {
+            "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.createPlant({\n    species: \"species\",\n    family: \"family\",\n    genus: \"genus\",\n    commonName: \"commonName\",\n    wateringFrequency: \"daily\",\n    sunExposure: \"full\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/trees",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTree"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-inline\";\n\nconst client = new SeedApiClient;\nawait client.createTree({\n    id: \"id\",\n    treeName: \"treeName\",\n    treeSpecies: \"treeSpecies\"\n});\n"
+            }
         }
     ],
     "types": {}

@@ -1,5 +1,6 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
 import {
+    applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement,
@@ -10,7 +11,7 @@ import {
     transformAtPrefixImports,
     wrapWithHttps
 } from "@fern-api/docs-resolver";
-import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import {
     AbsoluteFilePath,
     dirname,
@@ -735,20 +736,36 @@ export async function runAppPreviewServer({
         result: PreviewDocsResult
     ): Promise<Map<string, DocsV1Read.DocsDefinition>> {
         const translations = new Map<string, DocsV1Read.DocsDefinition>();
-        const { docsDefinition, translationPages, translationNavigationOverlays, collectedFileIds, docsWorkspacePath } =
-            result;
+        const {
+            docsDefinition,
+            translationPages,
+            translationNavigationOverlays,
+            translatedApiDefinitions,
+            collectedFileIds,
+            docsWorkspacePath
+        } = result;
 
-        if (translationPages == null || Object.keys(translationPages).length === 0) {
+        const hasTranslatedPages = translationPages != null && Object.keys(translationPages).length > 0;
+        const hasTranslatedApis = translatedApiDefinitions != null && Object.keys(translatedApiDefinitions).length > 0;
+        if (!hasTranslatedPages && !hasTranslatedApis) {
             return translations;
         }
 
         const defaultLocale = docsDefinition.config.translations?.defaultLocale;
 
-        for (const [locale, localePages] of Object.entries(translationPages)) {
+        // A locale qualifies if it has translated pages, translated API specs, or both.
+        const localesToBuild = new Set<string>([
+            ...Object.keys(translationPages ?? {}),
+            ...Object.keys(translatedApiDefinitions ?? {})
+        ]);
+
+        for (const locale of localesToBuild) {
             // Skip the default locale - we use the base definition for that
             if (locale === defaultLocale) {
                 continue;
             }
+
+            const localePages = translationPages?.[locale] ?? {};
 
             try {
                 // Locale-aware file loaders that prefer translated snippets when available
@@ -859,8 +876,23 @@ export async function runAppPreviewServer({
                     }
                 }
 
+                const localeApis = translatedApiDefinitions?.[locale];
+                const translatedApis =
+                    localeApis != null ? { ...docsDefinition.apis, ...localeApis } : docsDefinition.apis;
+
+                // Splicing `apis` alone leaves the sidebar in the default language,
+                // since the nav tree bakes in titles from the base API definition.
+                if (localeApis != null && updatedRoot != null) {
+                    updatedRoot = applyTranslatedApiTitlesToNavTree(
+                        updatedRoot,
+                        docsDefinition.apis as Record<string, APIV1Read.ApiDefinition>,
+                        localeApis
+                    );
+                }
+
                 const translatedDefinition: DocsV1Read.DocsDefinition = {
                     ...docsDefinition,
+                    apis: translatedApis,
                     pages: translatedPages,
                     config: {
                         ...docsDefinition.config,
@@ -871,7 +903,10 @@ export async function runAppPreviewServer({
                 };
 
                 translations.set(locale, translatedDefinition);
-                context.logger.debug(`Computed translated definition for locale "${locale}"`);
+                context.logger.debug(
+                    `Computed translated definition for locale "${locale}"` +
+                        (localeApis != null ? ` (with ${Object.keys(localeApis).length} translated API(s))` : "")
+                );
             } catch (error) {
                 context.logger.warn(`Failed to compute translation for locale "${locale}": ${String(error)}`);
             }

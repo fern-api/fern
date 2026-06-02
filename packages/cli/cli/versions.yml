@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.4
+  changelogEntry:
+    - summary: |
+        Fix docs rendering dropping parent properties when an allOf parent schema
+        itself uses allOf with $ref elements. The v3 OpenAPI parser now recursively
+        resolves nested $ref objects during allOf flattening instead of silently
+        filtering them out.
+      type: fix
+    - summary: |
+        Fix OpenAPI parser emitting redundant or wrongly-required base properties for
+        discriminated unions when `infer-discriminated-union-base-properties: true`.
+        The inference now (1) skips properties every variant already inherits via a
+        shared `allOf $ref` parent — the parent schema is the single source of truth —
+        and (2) lifts an inferred property as `optional` if any variant declares it as
+        not-required. Together these prevent generated TypeScript SDKs from synthesizing
+        a `_Base` interface that collides with the real parent on either presence or
+        optionality (`TS2320`).
+      type: fix
+    - summary: |
+        Fix localized docs builds so translated OpenAPI specs are used for API reference content and navigation titles.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
 - version: 5.44.3
   changelogEntry:
     - summary: |

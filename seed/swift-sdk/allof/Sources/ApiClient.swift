@@ -101,4 +101,30 @@ public final class ApiClient: Sendable {
             responseType: Organization.self
         )
     }
+
+    /// Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func createPlant(request: Requests.PlantPost, requestOptions: RequestOptions? = nil) async throws -> PlantStrict {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/plants",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: PlantStrict.self
+        )
+    }
+
+    /// Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func createTree(request: TreeRecord, requestOptions: RequestOptions? = nil) async throws -> TreeRecord {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/trees",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: TreeRecord.self
+        )
+    }
 }
