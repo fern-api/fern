@@ -36,6 +36,7 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/generator-cli": "workspace:*",
     "@fern-fern/ir-sdk": "67.0.0",
     "@types/node": "catalog:",
     "commander": "^14.0.3",

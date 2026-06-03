@@ -221,13 +221,17 @@ describe("copySpecs", () => {
                     '.auth_basic_scheme_username_only("ApiKeyAuth", ' +
                     'AuthCredentialSource::from_env("CLOSE_API_KEY"))',
                 placement: "binding",
-                authTypeImport: "AuthCredentialSource"
+                authTypeImport: "AuthCredentialSource",
+                envVars: ["CLOSE_API_KEY"],
+                kind: "basic"
             },
             {
                 schemeName: "OAuth2",
                 rustCall: '.auth(BearerAuth::new("OAuth2").env("CLOSE_TOKEN"))',
                 placement: "root",
-                authTypeImport: "BearerAuth"
+                authTypeImport: "BearerAuth",
+                envVars: ["CLOSE_TOKEN"],
+                kind: "bearer"
             }
         ];
         await copySpecs({ outputDir, binaryName: "close", authBindings: bindings, specsDir });
@@ -268,7 +272,9 @@ describe("copySpecs", () => {
                     schemeName: "Bearer",
                     rustCall: '.auth(BearerAuth::new("Bearer").env("ACME_TOKEN"))',
                     placement: "root",
-                    authTypeImport: "BearerAuth"
+                    authTypeImport: "BearerAuth",
+                    envVars: ["ACME_TOKEN"],
+                    kind: "bearer"
                 }
             ],
             specsDir

@@ -4,6 +4,7 @@ import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
 import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
+import { emitReadme } from "./emitReadme.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoToml } from "./patchCargoToml.js";
@@ -67,6 +68,13 @@ export async function runPipeline(args: {
     await patchDistWorkspaceToml({ outputDir });
     await copySpecs({ outputDir, binaryName, authBindings, specsDir });
     await writeGitignore(outputDir);
+    await emitReadme({
+        outputDir,
+        binaryName,
+        apiDisplayName: ir.apiDisplayName,
+        authBindings,
+        npmPublishInfo: outputConfig.npmPublishInfo
+    });
 
     if (outputConfig.npmPublishInfo != null) {
         await emitPublishWorkflow({
