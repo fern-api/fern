@@ -49,6 +49,9 @@ function bundle(entryCode: string): Promise<number> {
                                     // declaration output; not needed for bundling.
                                     isolatedDeclarations: false,
                                     declaration: false,
+                                    // Allow the temp entry file outside the
+                                    // project's rootDir to be processed.
+                                    rootDir: undefined,
                                 },
                             },
                         },

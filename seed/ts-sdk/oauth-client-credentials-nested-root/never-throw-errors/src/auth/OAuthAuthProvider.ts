@@ -87,6 +87,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
                 const tokenResponse = await this.authClient.getToken({
                     client_id: clientId,
                     client_secret: clientSecret,
+                    scope: this.options.scope,
                 });
                 if (!tokenResponse.ok) {
                     throw new errors.SeedOauthClientCredentialsError({ body: tokenResponse.error });
@@ -144,6 +145,7 @@ export namespace OAuthAuthProvider {
     export type ClientCredentials = {
         [CLIENT_ID_PARAM]: core.Supplier<string>;
         [CLIENT_SECRET_PARAM]: core.Supplier<string>;
+        scope?: string | undefined;
     };
     export type TokenOverride = {
         [TOKEN_PARAM]: core.Supplier<string>;

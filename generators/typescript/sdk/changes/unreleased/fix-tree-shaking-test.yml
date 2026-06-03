@@ -1,0 +1,4 @@
+- summary: |
+    Fix tree-shaking test for multiple-exports fixture by adding rootDir
+    override to allow temp entry files outside the project root.
+  type: fix

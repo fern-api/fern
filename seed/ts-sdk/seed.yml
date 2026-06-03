@@ -567,8 +567,6 @@ scripts:
 allowedFailures:
   - cross-package-type-names:serde-layer
   - exhaustive:never-throw-errors
-  - exhaustive:multiple-exports
-  - oauth-client-credentials-custom
   - package-yml
   - inferred-auth-implicit-reference
   - unions:serde-layer

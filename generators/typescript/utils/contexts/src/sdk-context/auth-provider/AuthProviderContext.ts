@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
 import { FileContext } from "../file-context/FileContext.js";
@@ -145,7 +146,7 @@ export class AuthProviderContext {
             for (const prop of requestBody.properties) {
                 const typeRef = this.context.type.getReferenceToType(prop.valueType);
                 properties.push({
-                    name: this.context.case.camelSafe(prop.name),
+                    name: this.getPropertyName(prop.name),
                     type: typeRef.typeNodeWithoutUndefined,
                     isOptional: typeRef.isOptional,
                     docs: prop.docs ? [prop.docs] : undefined
@@ -157,7 +158,7 @@ export class AuthProviderContext {
                 for (const prop of typeDeclaration.shape.properties) {
                     const typeRef = this.context.type.getReferenceToType(prop.valueType);
                     properties.push({
-                        name: this.context.case.camelSafe(prop.name),
+                        name: this.getPropertyName(prop.name),
                         type: typeRef.typeNodeWithoutUndefined,
                         isOptional: typeRef.isOptional,
                         docs: prop.docs ? [prop.docs] : undefined
@@ -186,5 +187,15 @@ export class AuthProviderContext {
             throw new Error(`failed to find endpoint with id ${tokenEndpointReference.endpointId}`);
         }
         return endpoint;
+    }
+
+    private getPropertyName(name: FernIr.NameAndWireValueOrString): string {
+        if (this.context.includeSerdeLayer && !this.context.retainOriginalCasing) {
+            return this.context.case.camelSafe(name);
+        }
+        if (typeof name === "string") {
+            return name;
+        }
+        return getWireValue(name);
     }
 }

@@ -1,0 +1,5 @@
+- summary: |
+    Fix OAuthAuthProvider to support non-literal custom properties and scopes.
+    The generated OAuth provider now correctly includes scope and custom
+    request properties in the token endpoint call.
+  type: fix
