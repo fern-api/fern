@@ -125,14 +125,30 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
 
     // 2. src/prelude.rs — re-exports the derives that every generated
     //    type file imports via `use crate::prelude::*`.
-    const preludeRs = [
+    const preludeLines = [
         "pub use serde::{Deserialize, Serialize};",
         "pub use serde_json::{json, Value};",
         "pub use std::collections::{HashMap, HashSet};",
-        "pub use std::fmt;",
-        ""
-    ].join("\n");
-    await writeFile(path.join(typesOutputDir, "src", "prelude.rs"), preludeRs);
+        "pub use std::fmt;"
+    ];
+
+    // If the rust-model generator emitted an error.rs with BuildError,
+    // re-export it so type files that reference BuildError (builders)
+    // can resolve it via `use crate::prelude::*`.
+    const errorRsPath = path.join(typesOutputDir, "src", "error.rs");
+    let hasErrorRs = false;
+    try {
+        await readFile(errorRsPath);
+        hasErrorRs = true;
+    } catch (_e: unknown) {
+        // no error.rs — skip
+    }
+    if (hasErrorRs) {
+        preludeLines.push("pub use crate::error::BuildError;");
+    }
+
+    preludeLines.push("");
+    await writeFile(path.join(typesOutputDir, "src", "prelude.rs"), preludeLines.join("\n"));
 
     // 3. Inject `pub mod prelude;` into lib.rs (right after the header
     //    comment, before any other module declarations).
