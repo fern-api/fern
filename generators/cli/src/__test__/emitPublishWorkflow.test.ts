@@ -45,6 +45,21 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain("id-token: write");
     });
 
+    it("uses npx npm@latest publish wrapper instead of bare npm publish", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain('npx -y npm@latest publish "$@"');
+        expect(yaml).not.toMatch(/^\s+npm publish/m);
+    });
+
+    it("includes backport detection for stable releases", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("dist-tags.latest");
+        expect(yaml).toContain("--tag backport");
+        expect(yaml).toContain("npx -y semver@7.8.1");
+    });
+
     it("uses a custom token variable name in the secret reference", async () => {
         const yaml = await emitAndRead({
             ...baseInfo,
@@ -103,7 +118,7 @@ describe("emitPublishWorkflow", () => {
 
         expect(yaml).toContain('BINARY_NAME="my-tool"');
         expect(yaml).toContain("@acme/cli");
-        expect(yaml).toContain("x86_64-unknown-linux-gnu");
+        expect(yaml).toContain("x86_64-unknown-linux-musl");
         expect(yaml).toContain("aarch64-apple-darwin");
     });
 
@@ -120,5 +135,44 @@ describe("emitPublishWorkflow", () => {
         const yaml = await emitAndRead(baseInfo);
 
         expect(yaml).toContain("contains(github.ref, 'refs/tags/')");
+    });
+
+    it("uses actions/checkout@v6 and actions/setup-node@v6", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("actions/checkout@v6");
+        expect(yaml).not.toContain("actions/checkout@v4");
+        expect(yaml).toContain("actions/setup-node@v6");
+        expect(yaml).not.toContain("actions/setup-node@v4");
+    });
+
+    it("uses musl targets for Linux with native ARM runner", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("x86_64-unknown-linux-musl");
+        expect(yaml).toContain("aarch64-unknown-linux-musl");
+        expect(yaml).not.toContain("unknown-linux-gnu");
+        expect(yaml).toContain("ubuntu-24.04-arm");
+    });
+
+    it("installs musl-tools and conditionally builds with rustls for musl targets", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("musl-tools");
+        expect(yaml).toContain("--no-default-features --features rustls");
+        expect(yaml).not.toContain("gcc-aarch64-linux-gnu");
+    });
+
+    it("both publish steps define a publish() helper and backport logic", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // There should be two publish() helper definitions — one per publish step
+        const publishHelperMatches = yaml.match(/publish\(\)\s*\{/g);
+        expect(publishHelperMatches).toHaveLength(2);
+
+        // Both platform and launcher steps should have backport logic
+        // Each step has 2 occurrences: the echo message + the publish call
+        const backportMatches = yaml.match(/--tag backport/g);
+        expect(backportMatches).toHaveLength(4);
     });
 });

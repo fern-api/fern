@@ -311,8 +311,8 @@ describe("runPipeline", () => {
         expect(ciYml).toContain("contains(github.ref, 'refs/tags/')");
         expect(ciYml).toContain("NPM_TOKEN");
         expect(ciYml).toContain("@acme/cli");
-        expect(ciYml).toContain("npm publish");
-        expect(ciYml).toContain("x86_64-unknown-linux-gnu");
+        expect(ciYml).toContain("npm@latest publish");
+        expect(ciYml).toContain("x86_64-unknown-linux-musl");
         expect(ciYml).toContain("aarch64-apple-darwin");
     });
 });

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated publish workflow improvements: uses `npx -y npm@latest publish`
+    for OIDC support, adds backport tag detection for older-than-latest releases,
+    switches Linux targets from glibc to musl for fully static binaries,
+    builds aarch64-linux natively on `ubuntu-24.04-arm` instead of cross-compiling,
+    conditionally uses `--no-default-features --features rustls` for musl targets,
+    and bumps `actions/checkout` and `actions/setup-node` to v6.
+  type: feat
