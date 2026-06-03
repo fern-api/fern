@@ -182,52 +182,29 @@ scripts:
       test:
         - composer test
 allowedFailures:
+  # Dynamic snippet issues (wrong types, missing args, syntax errors in generated snippets).
   - api-wide-base-path-with-default
   - exhaustive:no-custom-config
   - exhaustive:wire-tests
-  - pagination-custom
-  - endpoint-security-auth
-  - inferred-auth-implicit
-  - inferred-auth-implicit-reference
-  # Dynamic snippets need to add support for global headers included in the client constructor.
-  - header-auth-environment-variable
-  # TODO: Add support for bytes upload.
   - bytes-upload
-  # Basic auth wire-tests are enabled in fixtures section.
-  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - variables
+  - oauth-client-credentials-with-variables
+  # Dynamic snippet syntax errors for examples with Exception-named types.
   - examples:no-custom-config
   - examples:readme-config
+  # Union serialization: jsonSerialize/jsonDeserialize called on enum types.
   - trace
   - circular-references
   - circular-references-advanced
-  # Add support for literals and confirm that string literal examples are being generated.
+  # Literal header: ternary condition always true.
   - literal
-  # Add support for OAuth.
-  - oauth-client-credentials
+  # OAuth/InferredAuth custom properties need non-literal property passthrough.
   - oauth-client-credentials-custom
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
   - oauth-client-credentials-reference
-  # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
-  - pagination:no-custom-config
-  - pagination:property-accessors
-  # Fix union dynamic snippets (i.e. BigUnion).
+  - inferred-auth-implicit-reference
+  # Union dynamic snippets (i.e. BigUnion).
   - unions:no-custom-config
   - unions:property-accessors
-  # Java-specific fixture for LocalDate support
   - unions-with-local-date
-  # unknown
-  - file-upload
-  - http-head
-  - oauth-client-credentials-with-variables
-  - variables
-  # Java-specific fixture for staged builder ordering
-  - java-staged-builder-ordering
-  - any-auth
-  - circular-references
-  - file-upload
-  - api-wide-base-path-with-default
-  - oauth-client-credentials-with-variables
 
 
