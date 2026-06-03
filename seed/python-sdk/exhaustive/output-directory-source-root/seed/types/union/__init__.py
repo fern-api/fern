@@ -4,21 +4,10 @@
 
 import typing
 from importlib import import_module
-
 if typing.TYPE_CHECKING:
     from .types import Animal, Animal_Cat, Animal_Dog, Cat, Dog, MixedType
     from .errors import ErrorWithUnionBody
-_dynamic_imports: typing.Dict[str, str] = {
-    "Animal": ".types",
-    "Animal_Cat": ".types",
-    "Animal_Dog": ".types",
-    "Cat": ".types",
-    "Dog": ".types",
-    "ErrorWithUnionBody": ".errors",
-    "MixedType": ".types",
-}
-
-
+_dynamic_imports: typing.Dict[str, str] = {"Animal": ".types", "Animal_Cat": ".types", "Animal_Dog": ".types", "Cat": ".types", "Dog": ".types", "ErrorWithUnionBody": ".errors", "MixedType": ".types"}
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
@@ -33,11 +22,7 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
         raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
-
-
 def __dir__():
     lazy_attrs = list(_dynamic_imports.keys())
     return sorted(lazy_attrs)
-
-
 __all__ = ["Animal", "Animal_Cat", "Animal_Dog", "Cat", "Dog", "ErrorWithUnionBody", "MixedType"]
