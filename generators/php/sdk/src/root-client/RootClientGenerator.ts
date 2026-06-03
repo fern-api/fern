@@ -387,15 +387,16 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 if (resolvedBasicAuthSchemes.length > 0) {
                     const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
                     const needsControlFlow = isAuthOptional || resolvedBasicAuthSchemes.length > 1;
-                    for (let i = 0; i < resolvedBasicAuthSchemes.length; i++) {
-                        const resolved = resolvedBasicAuthSchemes[i];
+                    let hasWrittenIf = false;
+                    for (const resolved of resolvedBasicAuthSchemes) {
                         if (resolved == null) {
                             continue;
                         }
                         const { condition, credentialExpr } = resolved;
                         const hasCondition = needsControlFlow && condition.length > 0;
                         if (hasCondition) {
-                            writer.controlFlow(i === 0 ? "if" : "else if", php.codeblock(condition));
+                            writer.controlFlow(hasWrittenIf ? "else if" : "if", php.codeblock(condition));
+                            hasWrittenIf = true;
                         }
                         writer.writeLine(
                             `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${credentialExpr});`
