@@ -1367,14 +1367,15 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
      */
     private mergeAllOfProperties(
         resolvedSchema: OpenAPIV3_1.SchemaObject,
-        visited: Set<string> = new Set()
+        visited: Set<string> = new Set(),
+        depth: number = 0
     ): {
         mergedProperties: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject>;
         mergedRequired: string[];
     } {
         const directProps = resolvedSchema.properties ?? {};
         const directRequired = resolvedSchema.required ?? [];
-        if (resolvedSchema.allOf == null || resolvedSchema.allOf.length === 0) {
+        if (depth > this.MAX_DEPTH || resolvedSchema.allOf == null || resolvedSchema.allOf.length === 0) {
             return { mergedProperties: directProps, mergedRequired: directRequired };
         }
 
@@ -1402,7 +1403,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             // Recursively resolve nested allOf chains so grandparent properties
             // are included (e.g. UserPost → UserBase → UserStrict).
             if (resolved.allOf != null && resolved.allOf.length > 0) {
-                const nested = this.mergeAllOfProperties(resolved, visited);
+                const nested = this.mergeAllOfProperties(resolved, visited, depth + 1);
                 for (const req of nested.mergedRequired) {
                     baseRequired.add(req);
                 }
