@@ -238,7 +238,7 @@ class RawServiceClient:
 
     def get_optional_movie_docs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[str]:
+    ) -> HttpResponse[typing.Optional[str]]:
         """
         Parameters
         ----------
@@ -249,7 +249,7 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[str]
+        HttpResponse[typing.Optional[str]]
         """
         _response = self._client_wrapper.httpx_client.request(
             "movie",
@@ -282,7 +282,7 @@ class RawServiceClient:
 
     def get_optional_movie_name(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[str]:
+    ) -> HttpResponse[typing.Optional[str]]:
         """
         Parameters
         ----------
@@ -293,7 +293,7 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[str]
+        HttpResponse[typing.Optional[str]]
         """
         _response = self._client_wrapper.httpx_client.request(
             "movie",
@@ -543,7 +543,7 @@ class AsyncRawServiceClient:
 
     async def get_optional_movie_docs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[str]:
+    ) -> AsyncHttpResponse[typing.Optional[str]]:
         """
         Parameters
         ----------
@@ -554,7 +554,7 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[str]
+        AsyncHttpResponse[typing.Optional[str]]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movie",
@@ -587,7 +587,7 @@ class AsyncRawServiceClient:
 
     async def get_optional_movie_name(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[str]:
+    ) -> AsyncHttpResponse[typing.Optional[str]]:
         """
         Parameters
         ----------
@@ -598,7 +598,7 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[str]
+        AsyncHttpResponse[typing.Optional[str]]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movie",

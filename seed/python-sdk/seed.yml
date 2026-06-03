@@ -501,8 +501,6 @@ allowedFailures:
   - examples:legacy-wire-tests
   - exhaustive:deps_with_min_python_version
   - oauth-client-credentials-custom
-  - oauth-client-credentials-openapi
-  - response-property
   - streaming-parameter
   - trace
   - unions:union-naming-v1-wire-tests
