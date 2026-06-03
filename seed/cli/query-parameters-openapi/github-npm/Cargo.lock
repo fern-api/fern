@@ -349,9 +349,9 @@ dependencies = [
  "anyhow",
  "base64",
  "bytes",
- "clap",
  "clap_complete",
  "clap_mangen",
+ "clap",
  "dotenvy",
  "form_urlencoded",
  "futures-util",
@@ -359,23 +359,24 @@ dependencies = [
  "httpdate",
  "libc",
  "percent-encoding",
+ "query_parameters_api_types",
  "reqwest",
  "secrecy",
- "serde",
- "serde_json",
  "serde_json_path",
+ "serde_json",
  "serde_qs",
  "serde_yaml",
+ "serde",
  "serial_test",
  "sha2",
  "tempfile",
  "thiserror 2.0.18",
- "tokio",
  "tokio-tungstenite",
  "tokio-util",
- "tracing",
+ "tokio",
  "tracing-appender",
  "tracing-subscriber",
+ "tracing",
  "unicode-normalization",
  "wiremock",
 ]
@@ -2832,3 +2833,11 @@ name = "zmij"
 version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
+
+[[package]]
+name = "query_parameters_api_types"
+version = "0.0.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]

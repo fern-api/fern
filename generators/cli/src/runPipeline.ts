@@ -9,7 +9,7 @@ import { emitReadme } from "./emitReadme.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
-import { patchCargoToml } from "./patchCargoToml.js";
+import { patchCargoToml, patchCargoLockForTypes } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
 import { writeGitignore } from "./writeGitignore.js";
@@ -91,6 +91,7 @@ export async function runPipeline(args: {
             binaryName
         });
         await patchCargoToml({ outputDir, binaryName, typesCrateName });
+        await patchCargoLockForTypes({ outputDir, typesCrateName });
         await patchDistWorkspaceToml({ outputDir, typesCrateName });
         await writeFernignore(outputDir, binaryName);
     }

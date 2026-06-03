@@ -142,6 +142,70 @@ export function patchCargoLockVersion(cargoLock: string, version: string): strin
     return cargoLock.replace(pattern, `$1${version}$3`);
 }
 
+/**
+ * Patch Cargo.lock to include the generated types crate as a workspace
+ * member. `cargo build --locked` requires the lock file to be
+ * consistent with `Cargo.toml` — adding a new `[dependencies.X]` path
+ * dep without a corresponding `[[package]]` entry causes a rejection.
+ *
+ * The types crate's only dependencies (`serde`, `serde_json`) are
+ * already resolved in the lock file from the CLI SDK's own dep tree,
+ * so we only need to:
+ *   1. Append a `[[package]]` entry for the types crate itself.
+ *   2. Add the types crate to `fern-cli-sdk`'s dependency list.
+ */
+export async function patchCargoLockForTypes(args: { outputDir: string; typesCrateName: string }): Promise<void> {
+    const { outputDir, typesCrateName } = args;
+    const lockPath = path.join(outputDir, "Cargo.lock");
+    const contents = await readFile(lockPath, "utf-8");
+    const patched = addTypesCrateToLock(contents, typesCrateName);
+    await writeFile(lockPath, patched);
+}
+
+/**
+ * Pure transformation for unit-test access.
+ */
+export function addTypesCrateToLock(cargoLock: string, typesCrateName: string): string {
+    const snakeName = typesCrateName.replace(/-/g, "_");
+
+    // 1. Append [[package]] entry for the types crate (sorted insertion
+    //    isn't strictly required by Cargo, but we append at the end for
+    //    simplicity — Cargo accepts any order).
+    const packageEntry = [
+        "",
+        "[[package]]",
+        `name = "${snakeName}"`,
+        'version = "0.0.0"',
+        "dependencies = [",
+        ' "serde",',
+        ' "serde_json",',
+        "]",
+        ""
+    ].join("\n");
+
+    let patched = cargoLock.trimEnd() + "\n" + packageEntry;
+
+    // 2. Add the types crate to fern-cli-sdk's dependency list.
+    //    The dependency list is alphabetically sorted; insert after the
+    //    last entry that sorts before our crate name.
+    const sdkDepsPattern = /(name = "fern-cli-sdk"\nversion = "[^"]*"\ndependencies = \[)([\s\S]*?)(\])/;
+    const match = patched.match(sdkDepsPattern);
+    if (match != null) {
+        const fullMatch = match[0];
+        const prefix = match[1] ?? "";
+        const depsBody = match[2] ?? "";
+        const depLine = ` "${snakeName}",`;
+        // Parse existing deps and insert in sorted order.
+        const lines = depsBody.split("\n").filter((l) => l.trim().length > 0);
+        lines.push(depLine);
+        lines.sort((a, b) => a.trim().localeCompare(b.trim()));
+        const newDepsBody = "\n" + lines.join("\n") + "\n";
+        patched = patched.replace(fullMatch, prefix + newDepsBody + match[3]);
+    }
+
+    return patched;
+}
+
 function requireReplace(haystack: string, needle: string, replacement: string): string {
     if (!haystack.includes(needle)) {
         throw new Error(`patchCargoToml anchor missing — could not find ${JSON.stringify(needle.slice(0, 60))}`);
