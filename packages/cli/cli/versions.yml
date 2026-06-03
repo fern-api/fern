@@ -6,7 +6,7 @@
         `fernapi/fern-cli-generator`.
       type: chore
   createdAt: "2026-06-03"
-  irVersion: 67
+  irVersion: 66
 - version: 5.44.4
   changelogEntry:
     - summary: |

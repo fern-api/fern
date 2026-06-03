@@ -3,3 +3,4 @@
     reports IR 67-compatible generator versions (e.g. CLI generator ≥ 0.2.0)
     when resolving `fern generator upgrade`.
   type: fix
+  irVersion: 67
