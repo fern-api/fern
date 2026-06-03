@@ -263,6 +263,9 @@ fixtures:
               - myCustomFunction
               - AnotherCustomClient
       outputFolder: additional_init_exports
+      # client_additions is a user-provided module that doesn't exist in the
+      # test environment; skip build scripts (mypy would fail on the missing import).
+      skipScripts: true
     - customConfig:
         improved_imports: true
       outputFolder: improved_imports

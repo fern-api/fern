@@ -1,0 +1,5 @@
+- summary: |
+    Fix generation failure in `output_directory: source-root` mode by skipping
+    `poetry lock` and `ruff` commands that require a pyproject.toml which is not
+    emitted in source-root mode.
+  type: fix
