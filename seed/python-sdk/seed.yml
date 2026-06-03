@@ -49,12 +49,6 @@ customFixtureConfig:
   customConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
-allowedFailures:
-  - examples:legacy-wire-tests
-  - exhaustive:deps_with_min_python_version
-  - oauth-client-credentials-custom
-  - oauth-client-credentials-openapi
-  - unions:union-naming-v1-wire-tests
 fixtures:
   alias-extends:
     - customConfig: null
@@ -503,4 +497,10 @@ scripts:
         - poetry run pytest -rP .
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
+allowedFailures:
+  - examples:legacy-wire-tests
+  - exhaustive:deps_with_min_python_version
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-openapi
+  - unions:union-naming-v1-wire-tests
 
