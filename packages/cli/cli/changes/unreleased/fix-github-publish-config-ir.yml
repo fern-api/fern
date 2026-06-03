@@ -1,0 +1,5 @@
+- summary: |
+    Fix `publishConfig` being null in the IR for generators using github output mode with npm/maven/pypi publish info.
+    Previously, the `getPublishConfig` function returned `undefined` for `github` and `githubV2` output modes,
+    preventing generators from receiving the publish configuration needed to emit CI workflows.
+  type: fix

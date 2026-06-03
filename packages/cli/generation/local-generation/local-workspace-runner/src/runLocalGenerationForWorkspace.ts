@@ -24,6 +24,7 @@ import {
 import { cloneRepository, getGithubApiBaseUrl, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
@@ -734,12 +735,105 @@ function getPublishConfig({
                 publishTarget: undefined
             });
         },
-        github: () => undefined,
-        githubV2: () => undefined,
+        github: (value) => convertGithubOutputModeToPublishConfig(value),
+        githubV2: (value) => convertGithubV2OutputModeToPublishConfig(value),
         publish: () => undefined,
         publishV2: () => undefined,
         _other: () => undefined
     });
+}
+
+function convertGithubOutputModeToPublishConfig(
+    value: FernFiddle.GithubOutputMode
+): FernIr.PublishingConfig | undefined {
+    const publishTarget = convertGithubPublishInfoToTarget(value.publishInfo);
+    if (publishTarget == null) {
+        return undefined;
+    }
+    return FernIr.PublishingConfig.github({
+        owner: value.owner,
+        repo: value.repo,
+        uri: undefined,
+        token: undefined,
+        mode: value.makePr === true ? "pull-request" : undefined,
+        branch: value.branch,
+        target: publishTarget
+    });
+}
+
+function convertGithubV2OutputModeToPublishConfig(
+    value: FernFiddle.GithubOutputModeV2
+): FernIr.PublishingConfig | undefined {
+    const publishTarget = convertGithubPublishInfoToTarget(value.publishInfo);
+    if (publishTarget == null) {
+        return undefined;
+    }
+    return FernIr.PublishingConfig.github({
+        owner: value.owner,
+        repo: value.repo,
+        uri: undefined,
+        token: undefined,
+        mode: value.type === "pullRequest" ? "pull-request" : undefined,
+        branch: value.branch,
+        target: publishTarget
+    });
+}
+
+function convertGithubPublishInfoToTarget(
+    publishInfo: FernFiddle.GithubPublishInfo | undefined
+): FernIr.PublishTarget | undefined {
+    if (publishInfo == null) {
+        return undefined;
+    }
+    return publishInfo._visit<FernIr.PublishTarget | undefined>({
+        npm: (value) =>
+            FernIr.PublishTarget.npm({
+                version: undefined,
+                packageName: value.packageName,
+                tokenEnvironmentVariable: resolveTokenEnvVar(value.token)
+            }),
+        maven: (value) =>
+            FernIr.PublishTarget.maven({
+                version: undefined,
+                coordinate: value.coordinate,
+                usernameEnvironmentVariable: value.credentials?.username ?? "",
+                passwordEnvironmentVariable: value.credentials?.password ?? "",
+                mavenUrlEnvironmentVariable: value.registryUrl
+            }),
+        pypi: (value) =>
+            FernIr.PublishTarget.pypi({
+                version: undefined,
+                packageName: value.packageName
+            }),
+        postman: (value) =>
+            FernIr.PublishTarget.postman({
+                apiKey: value.apiKey ?? "",
+                workspaceId: value.workspaceId ?? "",
+                collectionId: undefined
+            }),
+        rubygems: () => undefined,
+        nuget: () => undefined,
+        crates: (value) =>
+            FernIr.PublishTarget.crates({
+                version: undefined,
+                packageName: value.packageName
+            }),
+        _other: () => undefined
+    });
+}
+
+function resolveTokenEnvVar(token: string | undefined): string {
+    if (token == null) {
+        return "";
+    }
+    const trimmed = token.trim();
+    if (trimmed === "<USE_OIDC>" || trimmed === "OIDC") {
+        return "<USE_OIDC>";
+    }
+    if (trimmed.startsWith("${") && trimmed.endsWith("}")) {
+        return trimmed.slice(2, -1).trim();
+    }
+    return "";
 }
 
 function getPublishTarget({
