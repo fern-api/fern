@@ -28,7 +28,7 @@ const TARGETS: ReadonlyArray<{
  *   - **publish** job runs only on tag pushes, builds cross-platform
  *     binaries, packages each as an embedded-binary npm platform
  *     package, assembles a thin launcher package, and publishes all
- *     to npm via `secrets.NPM_TOKEN`.
+ *     to npm via OIDC or `secrets.NPM_TOKEN`.
  *
  * The embedded-binary packaging model (the esbuild/swc pattern) means
  * the binary bytes live *inside* the npm tarball. This decouples
@@ -195,16 +195,27 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "\$@"
+          }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
           # happens to contain "alpha"/"beta" as a substring isn't
           # mis-tagged on npm.
           if [[ "\${VERSION}" == *-alpha* ]]; then
-            npm publish --access public --tag alpha
+            publish --access public --tag alpha
           elif [[ "\${VERSION}" == *-beta* ]]; then
-            npm publish --access public --tag beta
+            publish --access public --tag beta
           else
-            npm publish --access public
+            PKG_NAME=\$(node -p "require('./package.json').name")
+            PKG_VERSION=\$(node -p "require('./package.json').version")
+            CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
+              publish --access public --tag backport
+            else
+              publish --access public
+            fi
           fi
 
   publish-launcher:
@@ -284,16 +295,27 @@ ${launcherPlatformEntries}
           LAUNCHER
 
           cd "\${PKG_DIR}"
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "\$@"
+          }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
           # happens to contain "alpha"/"beta" as a substring isn't
           # mis-tagged on npm.
           if [[ "\${VERSION}" == *-alpha* ]]; then
-            npm publish --access public --tag alpha
+            publish --access public --tag alpha
           elif [[ "\${VERSION}" == *-beta* ]]; then
-            npm publish --access public --tag beta
+            publish --access public --tag beta
           else
-            npm publish --access public
+            PKG_NAME=\$(node -p "require('./package.json').name")
+            PKG_VERSION=\$(node -p "require('./package.json').version")
+            CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
+              publish --access public --tag backport
+            else
+              publish --access public
+            fi
           fi
 `;
 }

@@ -45,6 +45,21 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain("id-token: write");
     });
 
+    it("uses npx npm@latest publish wrapper instead of bare npm publish", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain('npx -y npm@latest publish "$@"');
+        expect(yaml).not.toMatch(/^\s+npm publish/m);
+    });
+
+    it("includes backport detection for stable releases", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("dist-tags.latest");
+        expect(yaml).toContain("--tag backport");
+        expect(yaml).toContain("npx -y semver");
+    });
+
     it("uses a custom token variable name in the secret reference", async () => {
         const yaml = await emitAndRead({
             ...baseInfo,
@@ -120,5 +135,18 @@ describe("emitPublishWorkflow", () => {
         const yaml = await emitAndRead(baseInfo);
 
         expect(yaml).toContain("contains(github.ref, 'refs/tags/')");
+    });
+
+    it("both publish steps define a publish() helper and backport logic", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        // There should be two publish() helper definitions — one per publish step
+        const publishHelperMatches = yaml.match(/publish\(\)\s*\{/g);
+        expect(publishHelperMatches).toHaveLength(2);
+
+        // Both platform and launcher steps should have backport logic
+        // Each step has 2 occurrences: the echo message + the publish call
+        const backportMatches = yaml.match(/--tag backport/g);
+        expect(backportMatches).toHaveLength(4);
     });
 });
