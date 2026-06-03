@@ -4,31 +4,11 @@
 
 import typing
 from importlib import import_module
-
 if typing.TYPE_CHECKING:
     from . import container, content_type, enum, http_methods, object, pagination, params, primitive, put, union, urls
     from .pagination import PaginatedResponse
     from .put import Error, ErrorCategory, ErrorCode, PutResponse
-_dynamic_imports: typing.Dict[str, str] = {
-    "Error": ".put",
-    "ErrorCategory": ".put",
-    "ErrorCode": ".put",
-    "PaginatedResponse": ".pagination",
-    "PutResponse": ".put",
-    "container": ".container",
-    "content_type": ".content_type",
-    "enum": ".enum",
-    "http_methods": ".http_methods",
-    "object": ".object",
-    "pagination": ".pagination",
-    "params": ".params",
-    "primitive": ".primitive",
-    "put": ".put",
-    "union": ".union",
-    "urls": ".urls",
-}
-
-
+_dynamic_imports: typing.Dict[str, str] = {"Error": ".put", "ErrorCategory": ".put", "ErrorCode": ".put", "PaginatedResponse": ".pagination", "PutResponse": ".put", "container": ".container", "content_type": ".content_type", "enum": ".enum", "http_methods": ".http_methods", "object": ".object", "pagination": ".pagination", "params": ".params", "primitive": ".primitive", "put": ".put", "union": ".union", "urls": ".urls"}
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
@@ -43,28 +23,7 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
         raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
-
-
 def __dir__():
     lazy_attrs = list(_dynamic_imports.keys())
     return sorted(lazy_attrs)
-
-
-__all__ = [
-    "Error",
-    "ErrorCategory",
-    "ErrorCode",
-    "PaginatedResponse",
-    "PutResponse",
-    "container",
-    "content_type",
-    "enum",
-    "http_methods",
-    "object",
-    "pagination",
-    "params",
-    "primitive",
-    "put",
-    "union",
-    "urls",
-]
+__all__ = ["Error", "ErrorCategory", "ErrorCode", "PaginatedResponse", "PutResponse", "container", "content_type", "enum", "http_methods", "object", "pagination", "params", "primitive", "put", "union", "urls"]

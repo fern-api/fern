@@ -4,7 +4,6 @@
 
 import typing
 from importlib import import_module
-
 if typing.TYPE_CHECKING:
     from .documented_unknown_type import DocumentedUnknownType
     from .double_optional import DoubleOptional
@@ -20,24 +19,7 @@ if typing.TYPE_CHECKING:
     from .object_with_required_nested_object import ObjectWithRequiredNestedObject
     from .object_with_unknown_field import ObjectWithUnknownField
     from .optional_alias import OptionalAlias
-_dynamic_imports: typing.Dict[str, str] = {
-    "DocumentedUnknownType": ".documented_unknown_type",
-    "DoubleOptional": ".double_optional",
-    "MapOfDocumentedUnknownType": ".map_of_documented_unknown_type",
-    "NestedObjectWithOptionalField": ".nested_object_with_optional_field",
-    "NestedObjectWithRequiredField": ".nested_object_with_required_field",
-    "ObjectWithDatetimeLikeString": ".object_with_datetime_like_string",
-    "ObjectWithDocumentedUnknownType": ".object_with_documented_unknown_type",
-    "ObjectWithMapOfMap": ".object_with_map_of_map",
-    "ObjectWithMixedRequiredAndOptionalFields": ".object_with_mixed_required_and_optional_fields",
-    "ObjectWithOptionalField": ".object_with_optional_field",
-    "ObjectWithRequiredField": ".object_with_required_field",
-    "ObjectWithRequiredNestedObject": ".object_with_required_nested_object",
-    "ObjectWithUnknownField": ".object_with_unknown_field",
-    "OptionalAlias": ".optional_alias",
-}
-
-
+_dynamic_imports: typing.Dict[str, str] = {"DocumentedUnknownType": ".documented_unknown_type", "DoubleOptional": ".double_optional", "MapOfDocumentedUnknownType": ".map_of_documented_unknown_type", "NestedObjectWithOptionalField": ".nested_object_with_optional_field", "NestedObjectWithRequiredField": ".nested_object_with_required_field", "ObjectWithDatetimeLikeString": ".object_with_datetime_like_string", "ObjectWithDocumentedUnknownType": ".object_with_documented_unknown_type", "ObjectWithMapOfMap": ".object_with_map_of_map", "ObjectWithMixedRequiredAndOptionalFields": ".object_with_mixed_required_and_optional_fields", "ObjectWithOptionalField": ".object_with_optional_field", "ObjectWithRequiredField": ".object_with_required_field", "ObjectWithRequiredNestedObject": ".object_with_required_nested_object", "ObjectWithUnknownField": ".object_with_unknown_field", "OptionalAlias": ".optional_alias"}
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
@@ -52,26 +34,7 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
         raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
-
-
 def __dir__():
     lazy_attrs = list(_dynamic_imports.keys())
     return sorted(lazy_attrs)
-
-
-__all__ = [
-    "DocumentedUnknownType",
-    "DoubleOptional",
-    "MapOfDocumentedUnknownType",
-    "NestedObjectWithOptionalField",
-    "NestedObjectWithRequiredField",
-    "ObjectWithDatetimeLikeString",
-    "ObjectWithDocumentedUnknownType",
-    "ObjectWithMapOfMap",
-    "ObjectWithMixedRequiredAndOptionalFields",
-    "ObjectWithOptionalField",
-    "ObjectWithRequiredField",
-    "ObjectWithRequiredNestedObject",
-    "ObjectWithUnknownField",
-    "OptionalAlias",
-]
+__all__ = ["DocumentedUnknownType", "DoubleOptional", "MapOfDocumentedUnknownType", "NestedObjectWithOptionalField", "NestedObjectWithRequiredField", "ObjectWithDatetimeLikeString", "ObjectWithDocumentedUnknownType", "ObjectWithMapOfMap", "ObjectWithMixedRequiredAndOptionalFields", "ObjectWithOptionalField", "ObjectWithRequiredField", "ObjectWithRequiredNestedObject", "ObjectWithUnknownField", "OptionalAlias"]
