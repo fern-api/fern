@@ -1,6 +1,6 @@
 irVersion: v67
 displayName: CLI
-image: fernapi/fern-cli
+image: fernapi/fern-cli-generator
 changelogLocation: ../../generators/cli/versions.yml
 
 buildScripts:
@@ -16,12 +16,12 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/cli-generator
   docker:
     file: ./generators/cli/Dockerfile
-    image: fernapi/fern-cli
+    image: fernapi/fern-cli-generator
     context: ./generators/cli
 
 test:
   docker:
-    image: fernapi/fern-cli:latest
+    image: fernapi/fern-cli-generator:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
   local:
     workingDirectory: generators/cli

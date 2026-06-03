@@ -7,7 +7,7 @@ import { copySnippetJsonIfNonEmpty } from "../LocalTaskHandler.js";
 
 /**
  * Unit coverage for the empty-stub skip behavior introduced when the
- * `fernapi/fern-cli` generator started shipping outputs without
+ * `fernapi/fern-cli-generator` generator started shipping outputs without
  * per-endpoint snippets. `runGenerator` pre-creates an empty
  * `snippet.json` in the workspace tmp dir; if we blindly copy it into
  * the user's output every generator without a snippet emission leaves a
