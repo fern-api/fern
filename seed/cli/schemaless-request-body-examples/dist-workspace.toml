@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "schemaless-request-body-examples-api-types"]
 
 # Config for 'dist'
 [dist]

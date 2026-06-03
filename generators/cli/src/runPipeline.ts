@@ -36,7 +36,7 @@ export async function runPipeline(args: {
     outputDir: string;
     customConfig: FernCliCustomConfig;
     ir: IrSummary;
-    /** Path to the IR JSON file for embedded types codegen. Required when customConfig.embedTypes is true. */
+    /** Path to the IR JSON file for embedded types codegen. */
     irFilepath?: string;
     outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
@@ -72,7 +72,7 @@ export async function runPipeline(args: {
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
-    const embedTypes = customConfig.embedTypes === true && irFilepath != null;
+    const embedTypes = customConfig.embedTypes !== false && irFilepath != null;
     await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes });
     await writeGitignore(outputDir);
     await emitReadme({
@@ -83,7 +83,7 @@ export async function runPipeline(args: {
         npmPublishInfo: outputConfig.npmPublishInfo
     });
 
-    // Generate the embedded types crate when opt-in via customConfig.
+    // Generate the embedded types crate (on by default; opt-out via embedTypes: false).
     if (embedTypes && irFilepath != null) {
         const typesCrateName = await generateEmbeddedTypes({
             irFilepath,

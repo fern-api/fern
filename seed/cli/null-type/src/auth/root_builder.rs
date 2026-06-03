@@ -415,5 +415,4 @@ mod tests {
         assert_eq!(name, "OAuth2Security");
         assert!(matches!(binding, SchemeBinding::Token(AuthCredentialSource::Missing)));
     }
-
 }

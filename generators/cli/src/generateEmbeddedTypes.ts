@@ -19,7 +19,7 @@
 
 import { execFile } from "child_process";
 import { accessSync, constants } from "fs";
-import { mkdir, unlink, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, unlink, writeFile } from "fs/promises";
 import { createRequire } from "module";
 import path from "path";
 import { promisify } from "util";
@@ -85,7 +85,70 @@ export async function generateEmbeddedTypes(args: {
         await unlink(configPath).catch((_e: unknown) => undefined);
     }
 
+    // The rust-model generator only emits .rs source files — it does not
+    // produce Cargo.toml or the prelude module that its types import.
+    // Patch the crate so it compiles as a workspace member.
+    await patchTypesCrate({ typesOutputDir, typesCrateName });
+
     return typesCrateName;
+}
+
+/**
+ * Write the scaffolding files that the rust-model generator does not
+ * produce: `Cargo.toml`, `src/prelude.rs`, and a `pub mod prelude;`
+ * declaration in `src/lib.rs`.
+ *
+ * Also cleans up the `.fern/` metadata directory that the base generator
+ * framework writes — it's useful for standalone crates but noise inside
+ * the CLI workspace.
+ */
+async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: string }): Promise<void> {
+    const { typesOutputDir, typesCrateName } = args;
+    const crateName = typesCrateName.replace(/-/g, "_");
+
+    // 1. Cargo.toml — minimal lib crate with serde derives.
+    const cargoToml = [
+        "[package]",
+        `name = "${crateName}"`,
+        'version = "0.0.0"',
+        'edition = "2021"',
+        "",
+        "[lib]",
+        "doctest = false",
+        "",
+        "[dependencies]",
+        'serde = { version = "1", features = ["derive"] }',
+        'serde_json = "1"',
+        ""
+    ].join("\n");
+    await writeFile(path.join(typesOutputDir, "Cargo.toml"), cargoToml);
+
+    // 2. src/prelude.rs — re-exports the derives that every generated
+    //    type file imports via `use crate::prelude::*`.
+    const preludeRs = [
+        "pub use serde::{Deserialize, Serialize};",
+        "pub use serde_json::{json, Value};",
+        "pub use std::collections::{HashMap, HashSet};",
+        "pub use std::fmt;",
+        ""
+    ].join("\n");
+    await writeFile(path.join(typesOutputDir, "src", "prelude.rs"), preludeRs);
+
+    // 3. Inject `pub mod prelude;` into lib.rs (right after the header
+    //    comment, before any other module declarations).
+    const libPath = path.join(typesOutputDir, "src", "lib.rs");
+    const libContent = await readFile(libPath, "utf-8");
+    if (!libContent.includes("pub mod prelude;")) {
+        const patched = libContent.replace(
+            "//! Generated models by Fern\n",
+            "//! Generated models by Fern\n\npub mod prelude;\n"
+        );
+        await writeFile(libPath, patched);
+    }
+
+    // 4. Remove the .fern/ metadata directory written by the base
+    //    generator framework — not needed inside a workspace member.
+    await rm(path.join(typesOutputDir, ".fern"), { recursive: true, force: true });
 }
 
 /**

@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "oauth-client-credentials-openapi-types"]
 
 # Config for 'dist'
 [dist]

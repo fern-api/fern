@@ -61,7 +61,11 @@ const SDK_IGNORE = [
 
     // Changelog entries for the SDK template itself — not relevant to
     // customer output.
-    "changes/**"
+    "changes/**",
+
+    // Provenance marker written by sync-sdk.sh — internal to the
+    // generator repo, never belongs in customer output.
+    ".synced-from"
 ];
 
 const dirname = getDirname(import.meta.url);

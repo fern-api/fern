@@ -295,6 +295,7 @@ impl AppContext {
                 false,
                 None,
                 &entry.http_config,
+                false,
             ))
             .map(|_| ())
     }
