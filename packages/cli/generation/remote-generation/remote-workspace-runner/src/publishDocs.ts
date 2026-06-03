@@ -31,6 +31,7 @@ import terminalLink from "terminal-link";
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { mapDocsDefinitionToLegacyFileIds } from "./mapDocsDefinitionToLegacyFileIds.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
@@ -283,11 +284,11 @@ export async function publishDocs({
         // into LedgerConfig path strings.
         //
         // Populated by the uploadFiles callback below:
-        //   - ledger mode: identity map (fullPath → fullPath) — the FileId we
-        //     emit IS the sanitizedPath, so the lookup just round-trips it.
-        //   - dual/legacy: keyed by the UUID FileId returned by FDR's
-        //     startDocsRegister/startDocsPreviewRegister response.
+        //   - ledger mode: identity map (fullPath → fullPath)
+        //   - dual/legacy: both the legacy UUID FileId and the canonical
+        //     sanitizedPath resolve to the ledger fullPath.
         const ledgerFileIdToPath = new Map<string, string>();
+        const legacyFilePathToId = new Map<string, string>();
 
         const resolver = new DocsDefinitionResolver({
             domain,
@@ -415,6 +416,22 @@ export async function publishDocs({
                 const hashNonImageTime = performance.now() - hashNonImageStart;
                 context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
+                const canonicalizeUploadedFilesForResolver = (uploadedFiles: UploadedFile[]): UploadedFile[] => {
+                    return uploadedFiles.map((uploaded) => {
+                        const sanitizedPath = filesMap.get(uploaded.absoluteFilePath)?.sanitizedPath;
+                        if (sanitizedPath == null) {
+                            return uploaded;
+                        }
+                        legacyFilePathToId.set(sanitizedPath, uploaded.fileId);
+                        ledgerFileIdToPath.set(uploaded.fileId, sanitizedPath);
+                        ledgerFileIdToPath.set(sanitizedPath, sanitizedPath);
+                        return {
+                            ...uploaded,
+                            fileId: sanitizedPath
+                        };
+                    });
+                };
+
                 // ── Ledger-only path ─────────────────────────────────────
                 // In ledger mode we do NOT call fdr.docs.v2.write.startDocsRegister
                 // / startDocsPreviewRegister. The legacy V2 register mints fresh
@@ -511,13 +528,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    for (const uploaded of uploadedFiles) {
-                        const sanitizedPath = filesMap.get(uploaded.absoluteFilePath)?.sanitizedPath;
-                        if (sanitizedPath != null) {
-                            ledgerFileIdToPath.set(uploaded.fileId, sanitizedPath);
-                        }
-                    }
-                    return uploadedFiles;
+                    return canonicalizeUploadedFilesForResolver(uploadedFiles);
                 } else {
                     let startDocsRegisterResponse;
                     try {
@@ -574,13 +585,7 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    for (const uploaded of uploadedFiles) {
-                        const sanitizedPath = filesMap.get(uploaded.absoluteFilePath)?.sanitizedPath;
-                        if (sanitizedPath != null) {
-                            ledgerFileIdToPath.set(uploaded.fileId, sanitizedPath);
-                        }
-                    }
-                    return uploadedFiles;
+                    return canonicalizeUploadedFilesForResolver(uploadedFiles);
                 }
             },
             registerApi: async ({
@@ -760,9 +765,13 @@ export async function publishDocs({
             context.logger.info("Publishing docs to FDR...");
             const publishStart = performance.now();
             try {
+                const legacyDocsDefinition = mapDocsDefinitionToLegacyFileIds({
+                    docsDefinition,
+                    pathToFileId: legacyFilePathToId
+                });
                 await fdr.docs.v2.write.finishDocsRegister({
                     docsRegistrationId,
-                    docsDefinition,
+                    docsDefinition: legacyDocsDefinition,
                     excludeApis,
                     ...(isBasepathAware && !preview && { basepathAware: true })
                 });
@@ -876,6 +885,10 @@ export async function publishDocs({
                             resolver,
                             context
                         });
+                        const legacyTranslatedDefinition = mapDocsDefinitionToLegacyFileIds({
+                            docsDefinition: translatedDefinition,
+                            pathToFileId: legacyFilePathToId
+                        });
 
                         const pageCount = Object.keys(localePages).length;
                         context.logger.debug(
@@ -899,7 +912,7 @@ export async function publishDocs({
                                 customDomains: preview ? [] : customDomains,
                                 orgId: organization,
                                 locale,
-                                docsDefinition: translatedDefinition
+                                docsDefinition: legacyTranslatedDefinition
                             })
                         });
                         if (!translationResponse.ok) {

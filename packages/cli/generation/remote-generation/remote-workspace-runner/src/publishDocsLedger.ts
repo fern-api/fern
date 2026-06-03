@@ -1,7 +1,6 @@
 import { type DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
 import {
-    createDocsLedgerClient,
     type DocsPublishGitInput,
     type DocsPublishInput,
     type FileManifestEntry,
@@ -12,7 +11,6 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 
-import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
@@ -45,6 +43,13 @@ function extractReferencedFiles(markdown: string): string[] {
         }
     }
     return [...paths];
+}
+
+function remapMarkdownFileReferences(markdown: string, fileIdToPath: Map<string, string> | undefined): string {
+    if (fileIdToPath == null || fileIdToPath.size === 0) {
+        return markdown;
+    }
+    return markdown.replace(FILE_REF_PATTERN, (token, fileId: string) => `file:${fileIdToPath.get(fileId) ?? fileId}`);
 }
 
 interface BlobRef {
@@ -126,7 +131,8 @@ export function buildLedgerInput({
         if (page == null) {
             continue;
         }
-        const buf = Buffer.from(page.markdown, "utf-8");
+        const markdown = remapMarkdownFileReferences(page.markdown, fileIdToPath);
+        const buf = Buffer.from(markdown, "utf-8");
         const hash = sha256(buf);
         // Capture the file/image artifacts this page embeds so FDR can
         // materialise the page→file join into the route shards (ADR 0014,
@@ -138,7 +144,7 @@ export function buildLedgerInput({
         // `referencedFiles` is exactly the set the bundle will request for this
         // page — a cheap O(content) scan over markdown already in memory, not a
         // re-parse and not a server-side re-fetch.
-        const referencedFiles = extractReferencedFiles(page.markdown);
+        const referencedFiles = extractReferencedFiles(markdown);
         pages[pageId] = {
             hash,
             contentType: "text/markdown",
@@ -297,6 +303,7 @@ export async function publishDocsViaLedger({
     // entry and translations follow. The server processes all locales
     // through the same pipeline.
 
+    const { createDocsLedgerClient } = await import("@fern-api/fdr-sdk/orpc-client");
     const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
@@ -502,6 +509,7 @@ async function buildAllTranslationInputs({
 
     const localeEntries = Object.entries(translationPages);
     context.logger.info(`[ledger] Building ${localeEntries.length} translation locale(s)...`);
+    const { buildTranslatedDocsDefinition } = await import("./buildTranslatedDocsDefinition.js");
 
     return Promise.all(
         localeEntries.map(async ([locale, localePages]): Promise<BuiltTranslation> => {
