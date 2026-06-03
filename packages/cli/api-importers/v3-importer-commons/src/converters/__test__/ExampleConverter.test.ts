@@ -1130,7 +1130,11 @@ describe("ExampleConverter", () => {
                 return typeof obj === "object" && obj !== null && "$ref" in obj;
             }),
             resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => {
-                if (typeof schemaOrReference === "object" && schemaOrReference !== null && "$ref" in schemaOrReference) {
+                if (
+                    typeof schemaOrReference === "object" &&
+                    schemaOrReference !== null &&
+                    "$ref" in schemaOrReference
+                ) {
                     const ref = (schemaOrReference as { $ref: string }).$ref;
                     const name = ref.split("/").pop();
                     if (name != null && name in schemas) {
