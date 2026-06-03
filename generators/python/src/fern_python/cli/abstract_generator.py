@@ -213,16 +213,26 @@ class AbstractGenerator(ABC):
         output_mode: OutputMode = generator_config.output.mode
         output_mode_union = output_mode.get_as_union()
 
+        # source-root mode emits only source files (no pyproject.toml / ruff config),
+        # so poetry lock and ruff must be skipped.
+        is_source_root = output_directory is OutputDirectory.SOURCE_ROOT
+
         if output_mode_union.type == "downloadFiles":
             # since download files does not contain a pyproject.toml
             # we run ruff using the fern_python poetry.toml (copied into the docker)
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_lock()
-            publisher.run_ruff_check_fix()
-            publisher.run_ruff_format()
+            if not is_source_root:
+                publisher.run_poetry_lock()
+                publisher.run_ruff_check_fix()
+                publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
+            if is_source_root:
+                raise RuntimeError(
+                    "output_directory='source-root' is incompatible with publish output mode "
+                    "(no pyproject.toml is emitted)"
+                )
             publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
