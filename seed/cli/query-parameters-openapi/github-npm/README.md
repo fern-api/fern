@@ -1,6 +1,6 @@
 # Query Parameters API CLI
 
-Command-line interface for the Query Parameters API API.
+Command-line interface for the Query Parameters API.
 
 ## Installation
 
@@ -14,6 +14,15 @@ Or run it directly without installing:
 
 ```bash
 npx @fern/query-parameters-openapi --help
+```
+
+### Build from source
+
+If you prefer to build from source, install the [Rust toolchain](https://rustup.rs/) and run:
+
+```bash
+cargo build --release
+./target/release/query-parameters-api --help
 ```
 
 ## Authentication

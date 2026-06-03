@@ -48,7 +48,8 @@ export async function emitReadme(args: {
 // ---------------------------------------------------------------------------
 
 function generateHeader(displayName: string): string {
-    return lines(`# ${displayName} CLI`, "", `Command-line interface for the ${displayName} API.`, "");
+    const suffix = displayName.toUpperCase().endsWith("API") ? "" : " API";
+    return lines(`# ${displayName} CLI`, "", `Command-line interface for the ${displayName}${suffix}.`, "");
 }
 
 // ---------------------------------------------------------------------------
@@ -97,6 +98,15 @@ function generateInstallation(args: { binaryName: string; npmPublishInfo: Resolv
             "",
             "```bash",
             `npx ${npmPublishInfo.packageName} --help`,
+            "```",
+            "",
+            "### Build from source",
+            "",
+            "If you prefer to build from source, install the [Rust toolchain](https://rustup.rs/) and run:",
+            "",
+            "```bash",
+            "cargo build --release",
+            `./target/release/${binaryName} --help`,
             "```",
             ""
         );

@@ -59,6 +59,8 @@ describe("emitReadme", () => {
         expect(readme).toContain("Command-line interface for the Petstore API.");
         expect(readme).toContain("npm install -g @petstore/cli");
         expect(readme).toContain("npx @petstore/cli --help");
+        expect(readme).toContain("### Build from source");
+        expect(readme).toContain("cargo build --release");
         expect(readme).toContain('export PETSTORE_API_TOKEN="<your token>"');
         expect(readme).toContain(".env");
         expect(readme).toContain("petstore-api --help");
@@ -85,6 +87,7 @@ describe("emitReadme", () => {
         expect(readme).toContain("rustup.rs");
         expect(readme).not.toContain("npm install");
         expect(readme).not.toContain("npx");
+        expect(readme).not.toContain("### Build from source");
     });
 
     // ── Generic auth when no supported bindings ─────────────────────

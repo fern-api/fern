@@ -1,6 +1,6 @@
 # Query Parameters API CLI
 
-Command-line interface for the Query Parameters API API.
+Command-line interface for the Query Parameters API.
 
 ## Installation
 

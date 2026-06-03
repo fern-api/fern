@@ -1,6 +1,6 @@
 # api CLI
 
-Command-line interface for the api API.
+Command-line interface for the api.
 
 ## Installation
 
