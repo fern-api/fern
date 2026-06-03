@@ -1,0 +1,5 @@
+- summary: |
+    Update CLI irVersion metadata from 66 to 67 so that FDR correctly
+    reports IR 67-compatible generator versions (e.g. CLI generator ≥ 0.2.0)
+    when resolving `fern generator upgrade`.
+  type: fix
