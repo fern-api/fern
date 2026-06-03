@@ -8,6 +8,7 @@ import {
     shouldReportToSentry,
     shouldTrackLocalVariablesInSentry
 } from "@fern-api/base-generator";
+import { githubPush, githubRelease } from "@fern-api/generator-cli";
 import { getCustomConfig } from "./customConfig.js";
 import { readIrSummary } from "./ir.js";
 import { resolveOutputConfig } from "./resolveOutputConfig.js";
@@ -57,6 +58,23 @@ async function generate(configPath: string): Promise<void> {
             if (outcome.status === "skipped") {
                 // biome-ignore lint/suspicious/noConsole: generator CLI output
                 console.log("No OpenAPI specs mounted — skipping CLI generation.");
+            }
+
+            // Push to GitHub and create a tagged release when running in
+            // github mode with an installation token (remote generation).
+            // Local generation without a token delegates to the
+            // PostGenerationPipeline instead.
+            if (outcome.status === "generated" && config.output.mode.type === "github") {
+                const { repoUrl, installationToken, version } = config.output.mode;
+                if (installationToken != null) {
+                    const githubConfig = {
+                        sourceDirectory: config.output.path,
+                        uri: repoUrl,
+                        token: installationToken
+                    };
+                    await githubPush({ githubConfig });
+                    await githubRelease({ githubConfig, version });
+                }
             }
 
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));

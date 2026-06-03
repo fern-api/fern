@@ -133,8 +133,42 @@ export class GitHub {
         }
     }
 
-    public async release(): Promise<void> {
-        console.log("TODO: Implement release");
+    public async release({ version, body }: { version: string; body?: string }): Promise<void> {
+        try {
+            const { owner, repo } = parseRepository(this.githubConfig.uri);
+            const apiBaseUrl = getGithubApiBaseUrl(this.githubConfig.uri);
+            const octokit = new Octokit({
+                auth: this.githubConfig.token,
+                ...(apiBaseUrl != null ? { baseUrl: apiBaseUrl } : {})
+            });
+
+            // Resolve the target branch to get its HEAD SHA without cloning.
+            let branch = this.githubConfig.branch;
+            if (branch == null) {
+                const { data: repoData } = await octokit.repos.get({ owner, repo });
+                branch = repoData.default_branch;
+            }
+            const { data: refData } = await octokit.git.getRef({
+                owner,
+                repo,
+                ref: `heads/${branch}`
+            });
+            const headSha = refData.object.sha;
+
+            await octokit.repos.createRelease({
+                owner,
+                repo,
+                tag_name: version,
+                target_commitish: headSha,
+                name: version,
+                body,
+                draft: false,
+                prerelease: false
+            });
+        } catch (error) {
+            console.error("Error during GitHub release:", error);
+            throw error;
+        }
     }
 
     private async getFernignoreFiles(repository: ClonedRepository): Promise<string[]> {

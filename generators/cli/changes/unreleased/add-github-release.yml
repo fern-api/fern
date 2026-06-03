@@ -1,0 +1,5 @@
+- summary: |
+    Add GitHub tagged release creation when running in release mode.
+    After generating CLI output and pushing to GitHub, the generator
+    now creates a tagged release via the GitHub API.
+  type: feat

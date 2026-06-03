@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Implement `GitHub.release()` to create tagged releases via the
+        GitHub API. The `githubRelease` API function now accepts `version`
+        and optional `body` parameters. Previously the release command was
+        a no-op stub.
+      type: feat
+  createdAt: "2026-06-03"
+  version: 0.9.36
+
+- changelogEntry:
+    - summary: |
         Disable minimatch negation on `.fernignore` patterns so a stray `!pattern` doesn't silently invert the match and discard generator output.
       type: fix
   createdAt: "2026-05-21"

@@ -146,22 +146,35 @@ void yargs(hideBin(process.argv))
                 "release",
                 "Create a release on GitHub",
                 (subYargs) => {
-                    return subYargs.option("config", {
-                        string: true,
-                        required: true,
-                        description: "Path to configuration file"
-                    });
+                    return subYargs
+                        .option("config", {
+                            string: true,
+                            required: true,
+                            description: "Path to configuration file"
+                        })
+                        .option("version", {
+                            string: true,
+                            required: true,
+                            description: "The version tag for the release"
+                        })
+                        .option("body", {
+                            string: true,
+                            required: false,
+                            description: "Optional release body / changelog"
+                        });
                 },
                 async (argv) => {
-                    if (argv.config == null) {
-                        process.stderr.write("missing required arguments; please specify the --config flag\n");
+                    if (argv.config == null || argv.version == null) {
+                        process.stderr.write(
+                            "missing required arguments; please specify --config and --version flags\n"
+                        );
                         process.exit(1);
                     }
                     const wd = cwd();
                     const githubConfig = await loadGitHubConfig({
                         absolutePathToConfig: resolve(wd, argv.config)
                     });
-                    await githubRelease({ githubConfig });
+                    await githubRelease({ githubConfig, version: argv.version, body: argv.body });
                     process.exit(0);
                 }
             )
