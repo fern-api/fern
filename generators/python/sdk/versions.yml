@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.9
+  changelogEntry:
+    - summary: |
+        Fix generation failure in `output_directory: source-root` mode by skipping
+        `poetry lock` and `ruff` commands that require a pyproject.toml which is not
+        emitted in source-root mode.
+      type: fix
+    - summary: |
+        Fix duplicate `__root__` field declaration in Pydantic v1 discriminated unions
+        with `include_union_utils: true`.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
 - version: 5.14.8
   changelogEntry:
     - summary: |
