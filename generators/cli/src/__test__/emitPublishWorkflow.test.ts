@@ -118,7 +118,7 @@ describe("emitPublishWorkflow", () => {
 
         expect(yaml).toContain('BINARY_NAME="my-tool"');
         expect(yaml).toContain("@acme/cli");
-        expect(yaml).toContain("x86_64-unknown-linux-gnu");
+        expect(yaml).toContain("x86_64-unknown-linux-musl");
         expect(yaml).toContain("aarch64-apple-darwin");
     });
 
@@ -135,6 +135,32 @@ describe("emitPublishWorkflow", () => {
         const yaml = await emitAndRead(baseInfo);
 
         expect(yaml).toContain("contains(github.ref, 'refs/tags/')");
+    });
+
+    it("uses actions/checkout@v6 and actions/setup-node@v6", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("actions/checkout@v6");
+        expect(yaml).not.toContain("actions/checkout@v4");
+        expect(yaml).toContain("actions/setup-node@v6");
+        expect(yaml).not.toContain("actions/setup-node@v4");
+    });
+
+    it("uses musl targets for Linux with native ARM runner", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("x86_64-unknown-linux-musl");
+        expect(yaml).toContain("aarch64-unknown-linux-musl");
+        expect(yaml).not.toContain("unknown-linux-gnu");
+        expect(yaml).toContain("ubuntu-24.04-arm");
+    });
+
+    it("installs musl-tools and conditionally builds with rustls for musl targets", async () => {
+        const yaml = await emitAndRead(baseInfo);
+
+        expect(yaml).toContain("musl-tools");
+        expect(yaml).toContain("--no-default-features --features rustls");
+        expect(yaml).not.toContain("gcc-aarch64-linux-gnu");
     });
 
     it("both publish steps define a publish() helper and backport logic", async () => {

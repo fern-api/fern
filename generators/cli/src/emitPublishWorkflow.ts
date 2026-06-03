@@ -12,8 +12,8 @@ const TARGETS: ReadonlyArray<{
     runner: string;
     npmPlatformSuffix: string;
 }> = [
-    { rustTarget: "x86_64-unknown-linux-gnu", runner: "ubuntu-latest", npmPlatformSuffix: "linux-x64" },
-    { rustTarget: "aarch64-unknown-linux-gnu", runner: "ubuntu-latest", npmPlatformSuffix: "linux-arm64" },
+    { rustTarget: "x86_64-unknown-linux-musl", runner: "ubuntu-latest", npmPlatformSuffix: "linux-x64" },
+    { rustTarget: "aarch64-unknown-linux-musl", runner: "ubuntu-24.04-arm", npmPlatformSuffix: "linux-arm64" },
     { rustTarget: "x86_64-apple-darwin", runner: "macos-latest", npmPlatformSuffix: "darwin-x64" },
     { rustTarget: "aarch64-apple-darwin", runner: "macos-latest", npmPlatformSuffix: "darwin-arm64" },
     { rustTarget: "x86_64-pc-windows-msvc", runner: "windows-latest", npmPlatformSuffix: "win32-x64" }
@@ -94,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -106,7 +106,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -118,7 +118,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -142,7 +142,7 @@ jobs:
 ${matrixIncludes}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -150,19 +150,25 @@ ${matrixIncludes}
           target: \${{ matrix.rust-target }}
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           registry-url: "${npmPublishInfo.registryUrl}"
 
-      - name: Install cross-compilation tools
-        if: matrix.rust-target == 'aarch64-unknown-linux-gnu'
+      - name: Install musl build tools
+        if: contains(matrix.rust-target, '-linux-musl')
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu
-          echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
+          sudo apt-get install -y musl-tools
 
       - name: Build release binary
-        run: cargo build --release --locked --target \${{ matrix.rust-target }}
+        shell: bash
+        run: |
+          if [[ "\${{ matrix.rust-target }}" == *-linux-musl ]]; then
+            cargo build --release --locked --target \${{ matrix.rust-target }} \\
+              --no-default-features --features rustls
+          else
+            cargo build --release --locked --target \${{ matrix.rust-target }}
+          fi
 
       - name: Package and publish npm platform package${tokenEnvBlock}
         shell: bash
@@ -224,10 +230,10 @@ ${matrixIncludes}
     runs-on: ubuntu-latest${oidcPermissions}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           registry-url: "${npmPublishInfo.registryUrl}"
 
