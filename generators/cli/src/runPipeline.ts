@@ -5,6 +5,7 @@ import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
 import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
+import { emitReadme } from "./emitReadme.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
@@ -35,7 +36,7 @@ export async function runPipeline(args: {
     outputDir: string;
     customConfig: FernCliCustomConfig;
     ir: IrSummary;
-    /** Path to the IR JSON file for embedded types codegen. Omit to skip types generation. */
+    /** Path to the IR JSON file for embedded types codegen. Required when customConfig.embedTypes is true. */
     irFilepath?: string;
     outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
@@ -71,12 +72,19 @@ export async function runPipeline(args: {
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
-    const embedTypes = irFilepath != null;
+    const embedTypes = customConfig.embedTypes === true && irFilepath != null;
     await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes });
     await writeGitignore(outputDir);
+    await emitReadme({
+        outputDir,
+        binaryName,
+        apiDisplayName: ir.apiDisplayName,
+        authBindings,
+        npmPublishInfo: outputConfig.npmPublishInfo
+    });
 
-    // Generate the embedded types crate when the IR filepath is available.
-    if (irFilepath != null) {
+    // Generate the embedded types crate when opt-in via customConfig.
+    if (embedTypes && irFilepath != null) {
         const typesCrateName = await generateEmbeddedTypes({
             irFilepath,
             outputDir,
