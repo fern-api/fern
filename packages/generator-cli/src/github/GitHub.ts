@@ -155,16 +155,30 @@ export class GitHub {
             });
             const headSha = refData.object.sha;
 
-            await octokit.repos.createRelease({
-                owner,
-                repo,
-                tag_name: version,
-                target_commitish: headSha,
-                name: version,
-                body,
-                draft: false,
-                prerelease: false
-            });
+            try {
+                await octokit.repos.createRelease({
+                    owner,
+                    repo,
+                    tag_name: version,
+                    target_commitish: headSha,
+                    name: version,
+                    body,
+                    draft: false,
+                    prerelease: false
+                });
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (e: any) {
+                if (
+                    typeof e?.status === "number" &&
+                    e.status === 422 &&
+                    typeof e?.message === "string" &&
+                    e.message.includes("already_exists")
+                ) {
+                    console.error(`A release for tag ${version} already exists`);
+                } else {
+                    throw e;
+                }
+            }
         } catch (error) {
             console.error("Error during GitHub release:", error);
             throw error;
