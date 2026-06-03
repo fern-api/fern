@@ -33,7 +33,7 @@ export async function emitReadme(args: {
     const displayName = apiDisplayName ?? binaryName;
 
     const header = generateHeader(displayName);
-    const blocks = generateBlocks({ binaryName, authBindings, npmPublishInfo });
+    const blocks = generateBlocks({ binaryName, displayName, authBindings, npmPublishInfo });
 
     const readmePath = path.join(outputDir, "README.md");
     const existing = await readExistingReadme(readmePath);
@@ -63,16 +63,19 @@ function generateHeader(displayName: string): string {
 
 function generateBlocks(args: {
     binaryName: string;
+    displayName: string;
     authBindings: DetectedAuthBinding[];
     npmPublishInfo: ResolvedNpmPublishInfo | undefined;
 }): Block[] {
-    const { binaryName, authBindings, npmPublishInfo } = args;
+    const { binaryName, displayName, authBindings, npmPublishInfo } = args;
+    const envPrefix = toEnvVarPrefix(binaryName);
     return [
         generateInstallation({ binaryName, npmPublishInfo }),
         generateAuthentication({ binaryName, authBindings }),
-        generateUsage(binaryName),
+        generateUsage({ binaryName, displayName, envPrefix, authBindings }),
+        generateCommonFlags(binaryName),
+        generateEnvironmentVariables(envPrefix),
         generateOutputFormats(binaryName),
-        generateConfiguration(binaryName),
         generateShellCompletion(binaryName)
     ];
 }
@@ -101,13 +104,18 @@ function generateInstallation(args: { binaryName: string; npmPublishInfo: Resolv
         content = lines(
             "## Installation",
             "",
-            "Build from source:",
+            "Install the [Rust toolchain](https://rustup.rs/) if you don't have it:",
+            "",
+            "```bash",
+            'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh',
+            "```",
+            "",
+            "Then build from source:",
             "",
             "```bash",
             "cargo build --release",
+            `./target/release/${binaryName} --help`,
             "```",
-            "",
-            `The compiled binary will be available at \`target/release/${binaryName}\`.`,
             ""
         );
     }
@@ -130,7 +138,7 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
     const envLines: string[] = [];
     for (const binding of authBindings) {
         for (const envVar of binding.envVars) {
-            envLines.push(`export ${envVar}="<your ${describeAuthKind(binding.kind)}>"`);
+            envLines.push(`export ${envVar}="${placeholderForKind(binding.kind)}"`);
         }
     }
     return new Block({
@@ -143,21 +151,92 @@ function generateAuthentication(args: { binaryName: string; authBindings: Detect
             "```bash",
             ...envLines,
             "```",
+            "",
+            "A `.env` file in the working directory is also supported — the CLI auto-loads it on startup.",
             ""
         )
     });
 }
 
-function generateUsage(binaryName: string): Block {
+function generateUsage(args: {
+    binaryName: string;
+    displayName: string;
+    envPrefix: string;
+    authBindings: DetectedAuthBinding[];
+}): Block {
+    const { binaryName, displayName, envPrefix, authBindings } = args;
+
+    const helpBlock = buildHelpOutput({ binaryName, displayName, envPrefix, authBindings });
+
     return new Block({
         id: "USAGE",
         content: lines(
             "## Usage",
             "",
-            "```bash",
-            `${binaryName} --help                 # list commands and flags`,
-            `${binaryName} --help --format json   # full machine-readable command surface`,
             "```",
+            ...helpBlock,
+            "```",
+            "",
+            "Every API resource appears as a subcommand (e.g. `" +
+                binaryName +
+                " <resource> <method>`). " +
+                "Run `" +
+                binaryName +
+                " <resource> --help` to see available methods.",
+            ""
+        )
+    });
+}
+
+function generateCommonFlags(binaryName: string): Block {
+    return new Block({
+        id: "COMMON_FLAGS",
+        content: lines(
+            "## Common flags",
+            "",
+            "These flags are available on every operation:",
+            "",
+            "| Flag | Description |",
+            "|------|-------------|",
+            "| `--dry-run` | Validate the request locally and print the HTTP request without sending it — useful for scripting and agent workflows |",
+            "| `--json <JSON\\|->` | Supply a request body as JSON (or `-` to read stdin); individual body fields also have their own flags |",
+            "| `--params <JSON>` | Merge extra parameters as JSON (overrides individual flags) |",
+            "| `--format <json\\|table\\|yaml\\|csv>` | Output format (default `json`) |",
+            "| `--output <PATH>` | Write binary responses to a file |",
+            "| `--base-url <URL>` | Override the API base URL (e.g. for testing against a mock server) |",
+            "| `--page-all` | Auto-paginate and stream results as NDJSON |",
+            "| `--page-limit <N>` | Max pages to fetch when auto-paginating (default `10`) |",
+            "| `-q, --quiet` | Suppress stdout output on success (errors still go to stderr) |",
+            "",
+            "### Dry run",
+            "",
+            "The `--dry-run` flag renders the exact HTTP request the CLI would send, without executing it. " +
+                "This is particularly valuable for AI agent integration — agents can validate their intent " +
+                "before committing to a write operation:",
+            "",
+            "```bash",
+            `${binaryName} <resource> <method> --dry-run`,
+            "```",
+            ""
+        )
+    });
+}
+
+function generateEnvironmentVariables(envPrefix: string): Block {
+    return new Block({
+        id: "ENVIRONMENT_VARIABLES",
+        content: lines(
+            "## Environment variables",
+            "",
+            `| Variable | Description |`,
+            `|----------|-------------|`,
+            `| \`${envPrefix}_BASE_URL\` | Override the API base URL |`,
+            `| \`${envPrefix}_CA_BUNDLE\` | Path to PEM file with extra trust roots (or \`SSL_CERT_FILE\`) |`,
+            `| \`${envPrefix}_INSECURE=1\` | Skip TLS verification (debugging only) |`,
+            `| \`${envPrefix}_PROXY\` | HTTP(S) proxy URL |`,
+            `| \`${envPrefix}_TIMEOUT_SECS\` | Total request timeout in seconds |`,
+            "",
+            "Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.",
             ""
         )
     });
@@ -172,24 +251,11 @@ function generateOutputFormats(binaryName: string): Block {
             "Use the global `--format` flag to control output. Supported values: `json` (default), `table`, `yaml`, `csv`.",
             "",
             "```bash",
-            `${binaryName} <command> --format json | jq`,
-            "```",
-            ""
-        )
-    });
-}
-
-function generateConfiguration(binaryName: string): Block {
-    const envPrefix = toEnvVarPrefix(binaryName);
-    return new Block({
-        id: "CONFIGURATION",
-        content: lines(
-            "## Configuration",
+            `# Pipe JSON output through jq`,
+            `${binaryName} <resource> <method> --format json | jq`,
             "",
-            "Override the default base URL with the `--base-url` flag or the environment variable:",
-            "",
-            "```bash",
-            `export ${envPrefix}_BASE_URL="https://api.example.com"`,
+            "# Machine-readable catalog of every operation",
+            `${binaryName} --help --format json | jq 'length'`,
             "```",
             ""
         )
@@ -213,17 +279,88 @@ function generateShellCompletion(binaryName: string): Block {
 }
 
 // ---------------------------------------------------------------------------
+// Help-output builder — renders a representative top-level --help block
+// with the correct binary name, display name, env-var prefix, and auth
+// env vars substituted in.
+// ---------------------------------------------------------------------------
+
+function buildHelpOutput(args: {
+    binaryName: string;
+    displayName: string;
+    envPrefix: string;
+    authBindings: DetectedAuthBinding[];
+}): string[] {
+    const { binaryName, displayName, envPrefix, authBindings } = args;
+
+    const out: string[] = [];
+    out.push(displayName);
+    out.push("");
+    out.push(`Usage: ${binaryName} [OPTIONS] <COMMAND>`);
+    out.push("");
+    out.push("Commands:");
+    out.push("  ...                API resource commands (run --help to list)");
+    out.push("  generate-skills    Generate SKILL.md files for AI agent integration");
+    out.push("  completion         Generate shell completion scripts");
+    out.push("  man                Generate a man page (roff format)");
+    out.push("  help               Print this message or the help of the given subcommand(s)");
+    out.push("");
+    out.push("Options:");
+    out.push("      --dry-run          Validate the request locally without sending it to the API");
+    out.push("      --format <FORMAT>  Output format: json (default), table, yaml, csv");
+    out.push("      --base-url <URL>   Override the API base URL (e.g. for testing against a mock server)");
+    out.push("  -q, --quiet            Suppress stdout output on success (errors still go to stderr)");
+    out.push("  -h, --help             Print help");
+    out.push("  -V, --version          Print version");
+    out.push("");
+    out.push("Environment variables:");
+
+    // Auth env vars first
+    for (const binding of authBindings) {
+        for (const envVar of binding.envVars) {
+            out.push(`  ${padEnvVar(envVar)}${describeAuthEnvVar(binding.kind)}`);
+        }
+    }
+
+    out.push(`  ${padEnvVar(`${envPrefix}_BASE_URL`)}Override the API base URL`);
+    out.push(`  ${padEnvVar(`${envPrefix}_CA_BUNDLE`)}Path to PEM file with extra trust roots (or SSL_CERT_FILE)`);
+    out.push(`  ${padEnvVar(`${envPrefix}_INSECURE=1`)}Skip TLS verification (debugging only)`);
+    out.push(`  ${padEnvVar(`${envPrefix}_PROXY`)}HTTP(S) proxy URL`);
+    out.push(`  ${padEnvVar(`${envPrefix}_TIMEOUT_SECS`)}Total request timeout`);
+    out.push("");
+    out.push("Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored.");
+
+    return out;
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-function describeAuthKind(kind: DetectedAuthBinding["kind"]): string {
+const ENV_VAR_COL_WIDTH = 36;
+
+function padEnvVar(envVar: string): string {
+    return envVar.padEnd(ENV_VAR_COL_WIDTH);
+}
+
+function describeAuthEnvVar(kind: DetectedAuthBinding["kind"]): string {
     switch (kind) {
         case "bearer":
-            return "token";
+            return "Bearer token for authentication";
         case "header":
-            return "api key";
+            return "API key for authentication";
         case "basic":
-            return "credential";
+            return "Credential for authentication";
+    }
+}
+
+function placeholderForKind(kind: DetectedAuthBinding["kind"]): string {
+    switch (kind) {
+        case "bearer":
+            return "<your token>";
+        case "header":
+            return "<your api key>";
+        case "basic":
+            return "<your credential>";
     }
 }
 

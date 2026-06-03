@@ -60,10 +60,13 @@ describe("emitReadme", () => {
         expect(readme).toContain("npm install -g @petstore/cli");
         expect(readme).toContain("npx @petstore/cli --help");
         expect(readme).toContain('export PETSTORE_API_TOKEN="<your token>"');
+        expect(readme).toContain(".env");
         expect(readme).toContain("petstore-api --help");
-        expect(readme).toContain("--format json");
-        expect(readme).toContain("--base-url");
+        expect(readme).toContain("--format");
+        expect(readme).toContain("--dry-run");
         expect(readme).toContain("PETSTORE_API_BASE_URL");
+        expect(readme).toContain("PETSTORE_API_CA_BUNDLE");
+        expect(readme).toContain("PETSTORE_API_TIMEOUT_SECS");
         expect(readme).toContain("petstore-api completion <bash|zsh|fish|powershell>");
     });
 
@@ -79,7 +82,7 @@ describe("emitReadme", () => {
         });
 
         expect(readme).toContain("cargo build --release");
-        expect(readme).toContain("target/release/acme");
+        expect(readme).toContain("rustup.rs");
         expect(readme).not.toContain("npm install");
         expect(readme).not.toContain("npx");
     });
@@ -97,7 +100,6 @@ describe("emitReadme", () => {
 
         expect(readme).toContain("This API requires authentication. Run `my-api --help` for details.");
         // The Authentication section should not contain env-var export lines.
-        // (The Configuration section legitimately contains an export for BASE_URL.)
         const authSection = readme.split("## Authentication")[1]?.split("##")[0] ?? "";
         expect(authSection).not.toContain("export ");
     });
@@ -217,8 +219,9 @@ describe("emitReadme", () => {
             "## Installation",
             "## Authentication",
             "## Usage",
+            "## Common flags",
+            "## Environment variables",
             "## Output formats",
-            "## Configuration",
             "## Shell completion"
         ];
 
@@ -228,5 +231,41 @@ describe("emitReadme", () => {
             expect(idx, `${section} should appear in README`).toBeGreaterThan(lastIndex);
             lastIndex = idx;
         }
+    });
+
+    // ── Help output in Usage section ────────────────────────────────
+
+    it("renders a representative --help output in the Usage section", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "petstore-api",
+            apiDisplayName: "Petstore",
+            authBindings: [bearerBinding],
+            npmPublishInfo
+        });
+
+        const usageSection = readme.split("## Usage")[1]?.split("## Common flags")[0] ?? "";
+        expect(usageSection).toContain("Petstore");
+        expect(usageSection).toContain("Usage: petstore-api [OPTIONS] <COMMAND>");
+        expect(usageSection).toContain("generate-skills");
+        expect(usageSection).toContain("completion");
+        expect(usageSection).toContain("--dry-run");
+        expect(usageSection).toContain("PETSTORE_API_BASE_URL");
+        expect(usageSection).toContain("PETSTORE_API_TOKEN");
+    });
+
+    // ── .env support mentioned in Authentication ────────────────────
+
+    it("mentions .env file support in Authentication when auth bindings present", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo: undefined
+        });
+
+        const authSection = readme.split("## Authentication")[1]?.split("##")[0] ?? "";
+        expect(authSection).toContain(".env");
     });
 });
