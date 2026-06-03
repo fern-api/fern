@@ -125,6 +125,7 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
 
         // CLI
         case "fern-cli":
+        case "fern-cli-generator":
             return "cli";
 
         default: {

@@ -11,6 +11,124 @@ import (
 )
 
 var (
+	plantPostFieldSpecies           = big.NewInt(1 << 0)
+	plantPostFieldFamily            = big.NewInt(1 << 1)
+	plantPostFieldGenus             = big.NewInt(1 << 2)
+	plantPostFieldCommonName        = big.NewInt(1 << 3)
+	plantPostFieldWateringFrequency = big.NewInt(1 << 4)
+	plantPostFieldSunExposure       = big.NewInt(1 << 5)
+	plantPostFieldPlantedAt         = big.NewInt(1 << 6)
+	plantPostFieldSoilType          = big.NewInt(1 << 7)
+)
+
+type PlantPost struct {
+	// The botanical species name.
+	Species string `json:"species" url:"-"`
+	// The botanical family.
+	Family string `json:"family" url:"-"`
+	// The botanical genus.
+	Genus string `json:"genus" url:"-"`
+	// The common name of the plant.
+	CommonName        string                     `json:"commonName" url:"-"`
+	WateringFrequency PlantPostWateringFrequency `json:"wateringFrequency" url:"-"`
+	// Required sun exposure level.
+	SunExposure PlantPostSunExposure `json:"sunExposure" url:"-"`
+	// Date the plant was planted.
+	PlantedAt *time.Time `json:"plantedAt,omitempty" url:"-" format:"date"`
+	// Preferred soil type.
+	SoilType *string `json:"soilType,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (p *PlantPost) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetSpecies sets the Species field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetSpecies(species string) {
+	p.Species = species
+	p.require(plantPostFieldSpecies)
+}
+
+// SetFamily sets the Family field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetFamily(family string) {
+	p.Family = family
+	p.require(plantPostFieldFamily)
+}
+
+// SetGenus sets the Genus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetGenus(genus string) {
+	p.Genus = genus
+	p.require(plantPostFieldGenus)
+}
+
+// SetCommonName sets the CommonName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetCommonName(commonName string) {
+	p.CommonName = commonName
+	p.require(plantPostFieldCommonName)
+}
+
+// SetWateringFrequency sets the WateringFrequency field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetWateringFrequency(wateringFrequency PlantPostWateringFrequency) {
+	p.WateringFrequency = wateringFrequency
+	p.require(plantPostFieldWateringFrequency)
+}
+
+// SetSunExposure sets the SunExposure field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetSunExposure(sunExposure PlantPostSunExposure) {
+	p.SunExposure = sunExposure
+	p.require(plantPostFieldSunExposure)
+}
+
+// SetPlantedAt sets the PlantedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetPlantedAt(plantedAt *time.Time) {
+	p.PlantedAt = plantedAt
+	p.require(plantPostFieldPlantedAt)
+}
+
+// SetSoilType sets the SoilType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantPost) SetSoilType(soilType *string) {
+	p.SoilType = soilType
+	p.require(plantPostFieldSoilType)
+}
+
+func (p *PlantPost) UnmarshalJSON(data []byte) error {
+	type unmarshaler PlantPost
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PlantPost(body)
+	return nil
+}
+
+func (p *PlantPost) MarshalJSON() ([]byte, error) {
+	type embed PlantPost
+	var marshaler = struct {
+		embed
+		PlantedAt *internal.Date `json:"plantedAt,omitempty"`
+	}{
+		embed:     embed(*p),
+		PlantedAt: internal.NewOptionalDate(p.PlantedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	ruleCreateRequestFieldName             = big.NewInt(1 << 0)
 	ruleCreateRequestFieldExecutionContext = big.NewInt(1 << 1)
 )
@@ -1410,6 +1528,359 @@ func (p *PagingCursors) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
+var (
+	plantBaseFieldSpecies           = big.NewInt(1 << 0)
+	plantBaseFieldFamily            = big.NewInt(1 << 1)
+	plantBaseFieldGenus             = big.NewInt(1 << 2)
+	plantBaseFieldCommonName        = big.NewInt(1 << 3)
+	plantBaseFieldWateringFrequency = big.NewInt(1 << 4)
+)
+
+type PlantBase struct {
+	// The botanical species name.
+	Species string `json:"species" url:"species"`
+	// The botanical family.
+	Family string `json:"family" url:"family"`
+	// The botanical genus.
+	Genus string `json:"genus" url:"genus"`
+	// The common name of the plant.
+	CommonName        *string                     `json:"commonName,omitempty" url:"commonName,omitempty"`
+	WateringFrequency *PlantBaseWateringFrequency `json:"wateringFrequency,omitempty" url:"wateringFrequency,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PlantBase) GetSpecies() string {
+	if p == nil {
+		return ""
+	}
+	return p.Species
+}
+
+func (p *PlantBase) GetFamily() string {
+	if p == nil {
+		return ""
+	}
+	return p.Family
+}
+
+func (p *PlantBase) GetGenus() string {
+	if p == nil {
+		return ""
+	}
+	return p.Genus
+}
+
+func (p *PlantBase) GetCommonName() *string {
+	if p == nil {
+		return nil
+	}
+	return p.CommonName
+}
+
+func (p *PlantBase) GetWateringFrequency() *PlantBaseWateringFrequency {
+	if p == nil {
+		return nil
+	}
+	return p.WateringFrequency
+}
+
+func (p *PlantBase) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PlantBase) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetSpecies sets the Species field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantBase) SetSpecies(species string) {
+	p.Species = species
+	p.require(plantBaseFieldSpecies)
+}
+
+// SetFamily sets the Family field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantBase) SetFamily(family string) {
+	p.Family = family
+	p.require(plantBaseFieldFamily)
+}
+
+// SetGenus sets the Genus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantBase) SetGenus(genus string) {
+	p.Genus = genus
+	p.require(plantBaseFieldGenus)
+}
+
+// SetCommonName sets the CommonName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantBase) SetCommonName(commonName *string) {
+	p.CommonName = commonName
+	p.require(plantBaseFieldCommonName)
+}
+
+// SetWateringFrequency sets the WateringFrequency field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantBase) SetWateringFrequency(wateringFrequency *PlantBaseWateringFrequency) {
+	p.WateringFrequency = wateringFrequency
+	p.require(plantBaseFieldWateringFrequency)
+}
+
+func (p *PlantBase) UnmarshalJSON(data []byte) error {
+	type unmarshaler PlantBase
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PlantBase(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PlantBase) MarshalJSON() ([]byte, error) {
+	type embed PlantBase
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PlantBase) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
+type PlantBaseWateringFrequency string
+
+const (
+	PlantBaseWateringFrequencyDaily    PlantBaseWateringFrequency = "daily"
+	PlantBaseWateringFrequencyWeekly   PlantBaseWateringFrequency = "weekly"
+	PlantBaseWateringFrequencyBiweekly PlantBaseWateringFrequency = "biweekly"
+	PlantBaseWateringFrequencyMonthly  PlantBaseWateringFrequency = "monthly"
+)
+
+func NewPlantBaseWateringFrequencyFromString(s string) (PlantBaseWateringFrequency, error) {
+	switch s {
+	case "daily":
+		return PlantBaseWateringFrequencyDaily, nil
+	case "weekly":
+		return PlantBaseWateringFrequencyWeekly, nil
+	case "biweekly":
+		return PlantBaseWateringFrequencyBiweekly, nil
+	case "monthly":
+		return PlantBaseWateringFrequencyMonthly, nil
+	}
+	var t PlantBaseWateringFrequency
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PlantBaseWateringFrequency) Ptr() *PlantBaseWateringFrequency {
+	return &p
+}
+
+// Required sun exposure level.
+type PlantPostSunExposure string
+
+const (
+	PlantPostSunExposureFull    PlantPostSunExposure = "full"
+	PlantPostSunExposurePartial PlantPostSunExposure = "partial"
+	PlantPostSunExposureShade   PlantPostSunExposure = "shade"
+)
+
+func NewPlantPostSunExposureFromString(s string) (PlantPostSunExposure, error) {
+	switch s {
+	case "full":
+		return PlantPostSunExposureFull, nil
+	case "partial":
+		return PlantPostSunExposurePartial, nil
+	case "shade":
+		return PlantPostSunExposureShade, nil
+	}
+	var t PlantPostSunExposure
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PlantPostSunExposure) Ptr() *PlantPostSunExposure {
+	return &p
+}
+
+type PlantPostWateringFrequency string
+
+const (
+	PlantPostWateringFrequencyDaily    PlantPostWateringFrequency = "daily"
+	PlantPostWateringFrequencyWeekly   PlantPostWateringFrequency = "weekly"
+	PlantPostWateringFrequencyBiweekly PlantPostWateringFrequency = "biweekly"
+	PlantPostWateringFrequencyMonthly  PlantPostWateringFrequency = "monthly"
+)
+
+func NewPlantPostWateringFrequencyFromString(s string) (PlantPostWateringFrequency, error) {
+	switch s {
+	case "daily":
+		return PlantPostWateringFrequencyDaily, nil
+	case "weekly":
+		return PlantPostWateringFrequencyWeekly, nil
+	case "biweekly":
+		return PlantPostWateringFrequencyBiweekly, nil
+	case "monthly":
+		return PlantPostWateringFrequencyMonthly, nil
+	}
+	var t PlantPostWateringFrequency
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PlantPostWateringFrequency) Ptr() *PlantPostWateringFrequency {
+	return &p
+}
+
+var (
+	plantStrictFieldSpecies = big.NewInt(1 << 0)
+	plantStrictFieldFamily  = big.NewInt(1 << 1)
+	plantStrictFieldGenus   = big.NewInt(1 << 2)
+)
+
+type PlantStrict struct {
+	// The botanical species name.
+	Species string `json:"species" url:"species"`
+	// The botanical family.
+	Family string `json:"family" url:"family"`
+	// The botanical genus.
+	Genus string `json:"genus" url:"genus"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (p *PlantStrict) GetSpecies() string {
+	if p == nil {
+		return ""
+	}
+	return p.Species
+}
+
+func (p *PlantStrict) GetFamily() string {
+	if p == nil {
+		return ""
+	}
+	return p.Family
+}
+
+func (p *PlantStrict) GetGenus() string {
+	if p == nil {
+		return ""
+	}
+	return p.Genus
+}
+
+func (p *PlantStrict) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
+}
+
+func (p *PlantStrict) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetSpecies sets the Species field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantStrict) SetSpecies(species string) {
+	p.Species = species
+	p.require(plantStrictFieldSpecies)
+}
+
+// SetFamily sets the Family field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantStrict) SetFamily(family string) {
+	p.Family = family
+	p.require(plantStrictFieldFamily)
+}
+
+// SetGenus sets the Genus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PlantStrict) SetGenus(genus string) {
+	p.Genus = genus
+	p.require(plantStrictFieldGenus)
+}
+
+func (p *PlantStrict) UnmarshalJSON(data []byte) error {
+	type unmarshaler PlantStrict
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = PlantStrict(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (p *PlantStrict) MarshalJSON() ([]byte, error) {
+	type embed PlantStrict
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (p *PlantStrict) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
+}
+
 // Execution context for the rule, excluding the prod environment.
 type RuleCreateRequestExecutionContext string
 
@@ -1914,6 +2385,524 @@ func (r *RuleTypeSearchResponse) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	treeBaseFieldID              = big.NewInt(1 << 0)
+	treeBaseFieldTreeName        = big.NewInt(1 << 1)
+	treeBaseFieldTreeDescription = big.NewInt(1 << 2)
+	treeBaseFieldTreeSpecies     = big.NewInt(1 << 3)
+	treeBaseFieldHeightInFeet    = big.NewInt(1 << 4)
+)
+
+type TreeBase struct {
+	// Unique tree identifier.
+	ID string `json:"id" url:"id"`
+	// Display name of the tree.
+	TreeName *string `json:"treeName,omitempty" url:"treeName,omitempty"`
+	// A description of the tree.
+	TreeDescription *string `json:"treeDescription,omitempty" url:"treeDescription,omitempty"`
+	// The species of tree.
+	TreeSpecies *string `json:"treeSpecies,omitempty" url:"treeSpecies,omitempty"`
+	// Height of the tree in feet.
+	HeightInFeet *float64 `json:"heightInFeet,omitempty" url:"heightInFeet,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TreeBase) GetID() string {
+	if t == nil {
+		return ""
+	}
+	return t.ID
+}
+
+func (t *TreeBase) GetTreeName() *string {
+	if t == nil {
+		return nil
+	}
+	return t.TreeName
+}
+
+func (t *TreeBase) GetTreeDescription() *string {
+	if t == nil {
+		return nil
+	}
+	return t.TreeDescription
+}
+
+func (t *TreeBase) GetTreeSpecies() *string {
+	if t == nil {
+		return nil
+	}
+	return t.TreeSpecies
+}
+
+func (t *TreeBase) GetHeightInFeet() *float64 {
+	if t == nil {
+		return nil
+	}
+	return t.HeightInFeet
+}
+
+func (t *TreeBase) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TreeBase) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeBase) SetID(id string) {
+	t.ID = id
+	t.require(treeBaseFieldID)
+}
+
+// SetTreeName sets the TreeName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeBase) SetTreeName(treeName *string) {
+	t.TreeName = treeName
+	t.require(treeBaseFieldTreeName)
+}
+
+// SetTreeDescription sets the TreeDescription field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeBase) SetTreeDescription(treeDescription *string) {
+	t.TreeDescription = treeDescription
+	t.require(treeBaseFieldTreeDescription)
+}
+
+// SetTreeSpecies sets the TreeSpecies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeBase) SetTreeSpecies(treeSpecies *string) {
+	t.TreeSpecies = treeSpecies
+	t.require(treeBaseFieldTreeSpecies)
+}
+
+// SetHeightInFeet sets the HeightInFeet field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeBase) SetHeightInFeet(heightInFeet *float64) {
+	t.HeightInFeet = heightInFeet
+	t.require(treeBaseFieldHeightInFeet)
+}
+
+func (t *TreeBase) UnmarshalJSON(data []byte) error {
+	type unmarshaler TreeBase
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TreeBase(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TreeBase) MarshalJSON() ([]byte, error) {
+	type embed TreeBase
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TreeBase) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+var (
+	treeDescribableFieldTreeName        = big.NewInt(1 << 0)
+	treeDescribableFieldTreeDescription = big.NewInt(1 << 1)
+)
+
+type TreeDescribable struct {
+	// Display name of the tree.
+	TreeName *string `json:"treeName,omitempty" url:"treeName,omitempty"`
+	// A description of the tree.
+	TreeDescription *string `json:"treeDescription,omitempty" url:"treeDescription,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TreeDescribable) GetTreeName() *string {
+	if t == nil {
+		return nil
+	}
+	return t.TreeName
+}
+
+func (t *TreeDescribable) GetTreeDescription() *string {
+	if t == nil {
+		return nil
+	}
+	return t.TreeDescription
+}
+
+func (t *TreeDescribable) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TreeDescribable) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetTreeName sets the TreeName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeDescribable) SetTreeName(treeName *string) {
+	t.TreeName = treeName
+	t.require(treeDescribableFieldTreeName)
+}
+
+// SetTreeDescription sets the TreeDescription field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeDescribable) SetTreeDescription(treeDescription *string) {
+	t.TreeDescription = treeDescription
+	t.require(treeDescribableFieldTreeDescription)
+}
+
+func (t *TreeDescribable) UnmarshalJSON(data []byte) error {
+	type unmarshaler TreeDescribable
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TreeDescribable(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TreeDescribable) MarshalJSON() ([]byte, error) {
+	type embed TreeDescribable
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TreeDescribable) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+var (
+	treeIdentifiableFieldID = big.NewInt(1 << 0)
+)
+
+type TreeIdentifiable struct {
+	// Unique tree identifier.
+	ID string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TreeIdentifiable) GetID() string {
+	if t == nil {
+		return ""
+	}
+	return t.ID
+}
+
+func (t *TreeIdentifiable) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TreeIdentifiable) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeIdentifiable) SetID(id string) {
+	t.ID = id
+	t.require(treeIdentifiableFieldID)
+}
+
+func (t *TreeIdentifiable) UnmarshalJSON(data []byte) error {
+	type unmarshaler TreeIdentifiable
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TreeIdentifiable(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TreeIdentifiable) MarshalJSON() ([]byte, error) {
+	type embed TreeIdentifiable
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TreeIdentifiable) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+var (
+	treeRecordFieldID              = big.NewInt(1 << 0)
+	treeRecordFieldTreeName        = big.NewInt(1 << 1)
+	treeRecordFieldTreeDescription = big.NewInt(1 << 2)
+	treeRecordFieldTreeSpecies     = big.NewInt(1 << 3)
+	treeRecordFieldHeightInFeet    = big.NewInt(1 << 4)
+	treeRecordFieldPlantedDate     = big.NewInt(1 << 5)
+)
+
+type TreeRecord struct {
+	// Unique tree identifier.
+	ID string `json:"id" url:"id"`
+	// Display name of the tree.
+	TreeName string `json:"treeName" url:"treeName"`
+	// A description of the tree.
+	TreeDescription *string `json:"treeDescription,omitempty" url:"treeDescription,omitempty"`
+	// The species of tree.
+	TreeSpecies string `json:"treeSpecies" url:"treeSpecies"`
+	// Height of the tree in feet.
+	HeightInFeet *float64 `json:"heightInFeet,omitempty" url:"heightInFeet,omitempty"`
+	// Date the tree was planted.
+	PlantedDate *time.Time `json:"plantedDate,omitempty" url:"plantedDate,omitempty" format:"date"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TreeRecord) GetID() string {
+	if t == nil {
+		return ""
+	}
+	return t.ID
+}
+
+func (t *TreeRecord) GetTreeName() string {
+	if t == nil {
+		return ""
+	}
+	return t.TreeName
+}
+
+func (t *TreeRecord) GetTreeDescription() *string {
+	if t == nil {
+		return nil
+	}
+	return t.TreeDescription
+}
+
+func (t *TreeRecord) GetTreeSpecies() string {
+	if t == nil {
+		return ""
+	}
+	return t.TreeSpecies
+}
+
+func (t *TreeRecord) GetHeightInFeet() *float64 {
+	if t == nil {
+		return nil
+	}
+	return t.HeightInFeet
+}
+
+func (t *TreeRecord) GetPlantedDate() *time.Time {
+	if t == nil {
+		return nil
+	}
+	return t.PlantedDate
+}
+
+func (t *TreeRecord) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TreeRecord) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeRecord) SetID(id string) {
+	t.ID = id
+	t.require(treeRecordFieldID)
+}
+
+// SetTreeName sets the TreeName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeRecord) SetTreeName(treeName string) {
+	t.TreeName = treeName
+	t.require(treeRecordFieldTreeName)
+}
+
+// SetTreeDescription sets the TreeDescription field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeRecord) SetTreeDescription(treeDescription *string) {
+	t.TreeDescription = treeDescription
+	t.require(treeRecordFieldTreeDescription)
+}
+
+// SetTreeSpecies sets the TreeSpecies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeRecord) SetTreeSpecies(treeSpecies string) {
+	t.TreeSpecies = treeSpecies
+	t.require(treeRecordFieldTreeSpecies)
+}
+
+// SetHeightInFeet sets the HeightInFeet field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeRecord) SetHeightInFeet(heightInFeet *float64) {
+	t.HeightInFeet = heightInFeet
+	t.require(treeRecordFieldHeightInFeet)
+}
+
+// SetPlantedDate sets the PlantedDate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TreeRecord) SetPlantedDate(plantedDate *time.Time) {
+	t.PlantedDate = plantedDate
+	t.require(treeRecordFieldPlantedDate)
+}
+
+func (t *TreeRecord) UnmarshalJSON(data []byte) error {
+	type embed TreeRecord
+	var unmarshaler = struct {
+		embed
+		PlantedDate *internal.Date `json:"plantedDate,omitempty"`
+	}{
+		embed: embed(*t),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*t = TreeRecord(unmarshaler.embed)
+	t.PlantedDate = unmarshaler.PlantedDate.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TreeRecord) MarshalJSON() ([]byte, error) {
+	type embed TreeRecord
+	var marshaler = struct {
+		embed
+		PlantedDate *internal.Date `json:"plantedDate,omitempty"`
+	}{
+		embed:       embed(*t),
+		PlantedDate: internal.NewOptionalDate(t.PlantedDate),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TreeRecord) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 var (

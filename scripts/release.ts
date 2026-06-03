@@ -18,6 +18,7 @@ interface ChangelogEntry {
     summary: string;
     type: "fix" | "chore" | "feat" | "internal";
     "pre-release"?: string;
+    irVersion?: number;
 }
 
 const VALID_CHANGELOG_TYPES = new Set(["fix", "chore", "feat", "internal"]);
@@ -80,12 +81,22 @@ function validateChangelogEntry(entry: unknown, filename: string, index: number)
         }
     }
 
-    const allowedKeys = new Set(["summary", "type", "pre-release"]);
+    if (obj.irVersion !== undefined) {
+        if (typeof obj.irVersion !== "number" || !Number.isInteger(obj.irVersion) || obj.irVersion < 1) {
+            console.error(
+                `Error in ${filename}, entry ${index + 1}: Invalid "irVersion" field: ${JSON.stringify(obj.irVersion)}. ` +
+                    `Expected a positive integer.`
+            );
+            process.exit(1);
+        }
+    }
+
+    const allowedKeys = new Set(["summary", "type", "pre-release", "irVersion"]);
     for (const key of Object.keys(obj)) {
         if (!allowedKeys.has(key)) {
             console.error(
                 `Error in ${filename}, entry ${index + 1}: Unknown field "${key}". ` +
-                    `Only "summary", "type", and "pre-release" are allowed.`
+                    `Only "summary", "type", "pre-release", and "irVersion" are allowed.`
             );
             process.exit(1);
         }
@@ -106,8 +117,8 @@ interface UnreleasedChange {
 
 function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     if (!existsSync(unreleasedDir)) {
-        console.error(`❌ Error: Unreleased changes directory not found: ${unreleasedDir}`);
-        process.exit(1);
+        console.log("ℹ️  No unreleased changes directory found. Nothing to release.");
+        process.exit(0);
     }
 
     const files = readdirSync(unreleasedDir).filter(
@@ -140,6 +151,17 @@ function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     }
 
     return changes;
+}
+
+function getIrVersionOverride(changes: UnreleasedChange[]): number | undefined {
+    for (const change of changes) {
+        for (const entry of change.entries) {
+            if (entry.irVersion != null) {
+                return entry.irVersion;
+            }
+        }
+    }
+    return undefined;
 }
 
 function getPreReleaseTag(changes: UnreleasedChange[]): string | undefined {
@@ -374,9 +396,14 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     const currentVersion = getCurrentVersion(versionsFile);
     console.log(`📊 Current version: ${currentVersion}`);
 
-    // Get current IR version
-    const irVersion = getCurrentIrVersion(versionsFile);
-    console.log(`📊 Current IR version: ${irVersion}`);
+    // Get current IR version (changelog override takes precedence)
+    const irVersionFromChangelog = getIrVersionOverride(changes);
+    const irVersion = irVersionFromChangelog ?? getCurrentIrVersion(versionsFile);
+    if (irVersionFromChangelog != null) {
+        console.log(`📊 IR version: ${irVersion} (overridden by changelog entry)`);
+    } else {
+        console.log(`📊 Current IR version: ${irVersion}`);
+    }
 
     // Determine next version
     const nextVersion = determineNextVersion(currentVersion, changes);

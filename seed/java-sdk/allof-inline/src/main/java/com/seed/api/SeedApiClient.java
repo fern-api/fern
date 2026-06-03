@@ -5,12 +5,15 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.requests.PlantPost;
 import com.seed.api.requests.RuleCreateRequest;
 import com.seed.api.requests.SearchRuleTypesRequest;
 import com.seed.api.types.CombinedEntity;
 import com.seed.api.types.Organization;
+import com.seed.api.types.PlantStrict;
 import com.seed.api.types.RuleResponse;
 import com.seed.api.types.RuleTypeSearchResponse;
+import com.seed.api.types.TreeRecord;
 import com.seed.api.types.UserSearchResponse;
 
 public class SeedApiClient {
@@ -76,6 +79,34 @@ public class SeedApiClient {
 
     public Organization getOrganization(RequestOptions requestOptions) {
         return this.rawClient.getOrganization(requestOptions).body();
+    }
+
+    /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     */
+    public PlantStrict createPlant(PlantPost request) {
+        return this.rawClient.createPlant(request).body();
+    }
+
+    /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     */
+    public PlantStrict createPlant(PlantPost request, RequestOptions requestOptions) {
+        return this.rawClient.createPlant(request, requestOptions).body();
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     */
+    public TreeRecord createTree(TreeRecord request) {
+        return this.rawClient.createTree(request).body();
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     */
+    public TreeRecord createTree(TreeRecord request, RequestOptions requestOptions) {
+        return this.rawClient.createTree(request, requestOptions).body();
     }
 
     public static SeedApiClientBuilder builder() {

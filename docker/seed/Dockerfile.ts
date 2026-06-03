@@ -88,7 +88,7 @@ RUN pnpm add -g typescript@~5.7.2 \
   @types/node@^18.19.70 \
   webpack@^5.97.1 \
   msw@2.11.2 \
-  vitest@^3.2.4
+  vitest@^4.1.1
 
 # Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
 # rebuilt one (go1.26.3). pnpm installs the platform-specific binary at
