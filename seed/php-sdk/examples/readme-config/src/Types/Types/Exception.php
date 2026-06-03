@@ -40,16 +40,17 @@ class Exception extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    )
-    {
-        $this->type = $values['type'];$this->value = $values['value'];
+    ) {
+        $this->type = $values['type'];
+        $this->value = $values['value'];
     }
 
     /**
      * @param ExceptionInfo $generic
      * @return Exception
      */
-    public static function generic(ExceptionInfo $generic): Exception {
+    public static function generic(ExceptionInfo $generic): Exception
+    {
         return new Exception([
             'type' => 'generic',
             'value' => $generic,
@@ -59,7 +60,8 @@ class Exception extends JsonSerializableType
     /**
      * @return Exception
      */
-    public static function timeout(): Exception {
+    public static function timeout(): Exception
+    {
         return new Exception([
             'type' => 'timeout',
             'value' => null,
@@ -69,48 +71,53 @@ class Exception extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isGeneric(): bool {
-        return $this->value instanceof ExceptionInfo&& $this->type === 'generic';
+    public function isGeneric(): bool
+    {
+        return $this->value instanceof ExceptionInfo && $this->type === 'generic';
     }
 
     /**
      * @return ExceptionInfo
      */
-    public function asGeneric(): ExceptionInfo {
-        if (!($this->value instanceof ExceptionInfo&& $this->type === 'generic')){
-            throw new \\Exception(
+    public function asGeneric(): ExceptionInfo
+    {
+        if (!($this->value instanceof ExceptionInfo && $this->type === 'generic')) {
+            throw new \Exception(
                 "Expected generic; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-        
+
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isTimeout(): bool {
-        return is_null($this->value)&& $this->type === 'timeout';
+    public function isTimeout(): bool
+    {
+        return is_null($this->value) && $this->type === 'timeout';
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         $result = [];
         $result['type'] = $this->type;
-        
+
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-        
-        switch ($this->type){
+
+        switch ($this->type) {
             case 'generic':
                 $value = $this->asGeneric()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -120,39 +127,40 @@ class Exception extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)){
+                if (is_null($this->value)) {
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType){
+                if ($this->value instanceof JsonSerializableType) {
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)){
+                } elseif (is_array($this->value)) {
                     $result = array_merge($this->value, $result);
                 }
         }
-        
+
         return $result;
     }
 
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static {
+    public static function jsonDeserialize(array $data): static
+    {
         $args = [];
-        if (!array_key_exists('type', $data)){
-            throw new \\Exception(
+        if (!array_key_exists('type', $data)) {
+            throw new \Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))){
-            throw new \\Exception(
+        if (!(is_string($type))) {
+            throw new \Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-        
+
         $args['type'] = $type;
-        switch ($type){
+        switch ($type) {
             case 'generic':
                 $args['value'] = ExceptionInfo::jsonDeserialize($data);
                 break;
@@ -164,7 +172,7 @@ class Exception extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-        
+
         // @phpstan-ignore-next-line
         return new static($args);
     }
