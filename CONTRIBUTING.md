@@ -247,6 +247,119 @@ Below are some examples of using the command.
 - Pointed at a fern folder with multiple apis: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern/apis/<name-of-api>`
 
 <br>
+
+## Release versioning
+
+This repository uses a **changelog-driven release system**. You never bump version numbers manually — instead, you add a small YAML changelog file describing your change, and automation handles the rest.
+
+### How it works
+
+Each releasable component (the CLI, each generator) has its own:
+
+- **`versions.yml`** — the version history (automation-managed, do not hand-edit)
+- **`changes/unreleased/`** — directory where you drop changelog files
+
+When changes land on `main`, the [release workflow](/.github/workflows/release-software.yml) runs [`scripts/release.ts`](/scripts/release.ts), which:
+
+1. Reads all YAML files in the component's `changes/unreleased/` directory
+2. Determines the semver bump from the `type` fields (see below)
+3. Prepends a new entry to `versions.yml` with the new version, changelog entries, date, and `irVersion`
+4. Moves the unreleased changelog files into a versioned directory (e.g., `changes/5.44.6/`)
+5. Commits and pushes
+
+The mapping of components to their changelog and versions paths is defined in [`release-config.json`](/release-config.json). That file is the single source of truth.
+
+### Adding a changelog entry
+
+1. Find the correct `changes/unreleased/` directory for your component (see [table below](#changelog-folder-reference))
+2. Copy `.template.yml` from that directory, or create a new YAML file with a descriptive name (e.g., `fix-streaming-timeout.yml`)
+3. Each file is a **YAML array** of objects:
+
+```yaml
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+- summary: |
+    Fix global headers from generators.yml not appearing in documentation.
+  type: fix
+```
+
+#### Fields
+
+| Field | Required | Values | Description |
+|-------|----------|--------|-------------|
+| `summary` | yes | string | Description of the change. Multi-line `\|` allowed. |
+| `type` | yes | `fix`, `chore`, `feat`, `internal` | Drives semver bump (see below). |
+| `pre-release` | no | `alpha`, `beta`, `rc` | Produces a pre-release version, e.g., `1.2.0-rc.0`. |
+| `irVersion` | no | positive integer | Override the IR major version for this release (CLI only — see [irVersion](#irversion-metadata)). |
+
+The full schema is in [`fern-changes-yml.schema.json`](/fern-changes-yml.schema.json).
+
+#### Semver bump rules
+
+| `type` | Bump |
+|--------|------|
+| `fix` / `chore` | patch |
+| `feat` / `internal` | minor |
+
+**Major version bumps** are intentionally not produced by the automated release flow. To ship a major release, a human edits the relevant `versions.yml` directly so the breaking change is explicitly acknowledged in review.
+
+### Changelog folder reference
+
+Use the table below to find where to put your changelog file. If your PR spans multiple components, add a changelog file in **each** relevant `changes/unreleased/` directory. Always pick the narrowest matching component.
+
+| Component | Source directory | Changelog directory |
+|-----------|-----------------|---------------------|
+| Fern CLI | `packages/cli/` | `packages/cli/cli/changes/unreleased/` |
+| C# generator | `generators/csharp/` | `generators/csharp/sdk/changes/unreleased/` |
+| Go generator | `generators/go/` | `generators/go/sdk/changes/unreleased/` |
+| Java generator | `generators/java/` | `generators/java/sdk/changes/unreleased/` |
+| PHP generator | `generators/php/` | `generators/php/sdk/changes/unreleased/` |
+| Python generator | `generators/python/` | `generators/python/sdk/changes/unreleased/` |
+| Ruby v2 generator | `generators/ruby-v2/` | `generators/ruby-v2/sdk/changes/unreleased/` |
+| Rust generator | `generators/rust/` | `generators/rust/sdk/changes/unreleased/` |
+| Swift generator | `generators/swift/` | `generators/swift/sdk/changes/unreleased/` |
+| TypeScript generator | `generators/typescript/` | `generators/typescript/sdk/changes/unreleased/` |
+| CLI generator | `generators/cli/` | `generators/cli/changes/unreleased/` |
+
+> **If anything here disagrees with [`release-config.json`](/release-config.json), follow the file on disk.**
+
+### `irVersion` metadata
+
+The `irVersion` field in `versions.yml` tracks the **IR major version** the CLI can produce. The release script inherits this value from the previous `versions.yml` entry by default.
+
+When the IR major version bumps (e.g., 66 → 67), one of the changelog entries in that release **must** include `irVersion: <new major>` to override the inherited value:
+
+```yaml
+- summary: |
+    Update CLI irVersion metadata from 66 to 67.
+  type: fix
+  irVersion: 67
+```
+
+If this is missed, [FDR](https://github.com/fern-api/fern-platform) will think new CLI versions only support the old IR, and `fern generator upgrade` will return stale generator versions. See [PR #16210](https://github.com/fern-api/fern/pull/16210) for the fix that added `irVersion` support to changelog entries.
+
+### The release script
+
+[`scripts/release.ts`](/scripts/release.ts) is the core of the release system. In brief:
+
+1. **Reads** unreleased changelog files from `{changelogFolder}/unreleased/`
+2. **Validates** each entry against [`fern-changes-yml.schema.json`](/fern-changes-yml.schema.json)
+3. **Determines** the next semver version from changelog `type` fields
+4. **Resolves** the `irVersion` — uses the override from a changelog entry if present, otherwise inherits from the latest `versions.yml` entry
+5. **Prepends** a new version entry to `versions.yml`
+6. **Moves** unreleased files into `{changelogFolder}/{version}/`
+7. **Commits** and pushes to the current branch
+
+The workflow that triggers this is [`.github/workflows/release-software.yml`](/.github/workflows/release-software.yml).
+
+### Quick reference
+
+- **DO** add a YAML file to `changes/unreleased/` for every user-facing or internal change
+- **DO NOT** hand-edit `versions.yml` (unless shipping a major version bump)
+- **DO NOT** run the release script locally in normal development — the CI workflow handles releases
+- **DO** check [`release-config.json`](/release-config.json) if you're unsure which changelog folder maps to your component
+
+<br>
+
 ## Feedback
 
 If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!
