@@ -238,6 +238,9 @@ fixtures:
         extra_dependencies:
           boto3: 1.35.76
       outputFolder: deps_with_min_python_version
+      # langchain ^1.2.15 requires pydantic v2 but the default SDK pins pydantic ^1.10;
+      # poetry lock fails with an unsolvable dependency conflict.
+      skipScripts: true
     - customConfig:
         extra_dev_dependencies:
           requests_mock: 1.12.1
@@ -426,6 +429,9 @@ fixtures:
           union_naming: v1
         use_inheritance_for_extended_models: false
       outputFolder: union-naming-v1-wire-tests
+      # Wire tests fail with pydantic validation errors for discriminated unions
+      # using v1 union naming convention.
+      skipScripts: true
     - customConfig:
         flatten_union_request_bodies: true
       outputFolder: flatten-union-request-bodies
@@ -444,6 +450,12 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use-typeddict-requests
+  oauth-client-credentials-custom:
+    - customConfig: null
+      outputFolder: no-custom-config
+      # Generated oauth_token_provider uses client_id/client_secret but the
+      # custom token endpoint has different parameter names.
+      skipScripts: true
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
