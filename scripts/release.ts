@@ -106,8 +106,8 @@ interface UnreleasedChange {
 
 function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     if (!existsSync(unreleasedDir)) {
-        console.error(`❌ Error: Unreleased changes directory not found: ${unreleasedDir}`);
-        process.exit(1);
+        console.log("ℹ️  No unreleased changes directory found. Nothing to release.");
+        process.exit(0);
     }
 
     const files = readdirSync(unreleasedDir).filter(
