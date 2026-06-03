@@ -57,7 +57,7 @@ describe("emitPublishWorkflow", () => {
 
         expect(yaml).toContain("dist-tags.latest");
         expect(yaml).toContain("--tag backport");
-        expect(yaml).toContain("npx -y semver");
+        expect(yaml).toContain("npx -y semver@7.8.1");
     });
 
     it("uses a custom token variable name in the secret reference", async () => {

@@ -216,7 +216,7 @@ ${matrixIncludes}
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
-            if npx -y semver "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+            if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
               publish --access public --tag backport
             else
@@ -316,7 +316,7 @@ ${launcherPlatformEntries}
             PKG_NAME=\$(node -p "require('./package.json').name")
             PKG_VERSION=\$(node -p "require('./package.json').version")
             CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
-            if npx -y semver "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+            if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
               echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
               publish --access public --tag backport
             else
