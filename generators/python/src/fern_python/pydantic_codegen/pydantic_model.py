@@ -308,7 +308,10 @@ class PydanticModel:
         )
 
     def set_root_type_unsafe_v1_or_v2_only(
-        self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
+        self,
+        root_type: AST.TypeHint,
+        annotation: Optional[AST.Expression] = None,
+        skip_declaration: bool = False,
     ) -> None:
         if self._version not in (
             PydanticVersionCompatibility.V1,
@@ -321,18 +324,19 @@ class PydanticModel:
             raise RuntimeError(f"{root_type_name} was already added")
         self._v1_or_v2_root_type = root_type
 
-        root_type_with_annotation = (
-            AST.TypeHint.annotated(
-                type=root_type,
-                annotation=AST.Expression(annotation),
+        if not skip_declaration:
+            root_type_with_annotation = (
+                AST.TypeHint.annotated(
+                    type=root_type,
+                    annotation=AST.Expression(annotation),
+                )
+                if annotation is not None
+                else root_type
             )
-            if annotation is not None
-            else root_type
-        )
 
-        self._class_declaration.add_statement(
-            AST.VariableDeclaration(name=root_type_name, type_hint=root_type_with_annotation)
-        )
+            self._class_declaration.add_statement(
+                AST.VariableDeclaration(name=root_type_name, type_hint=root_type_with_annotation)
+            )
 
     def get_root_type_unsafe_v1_or_v2_only(self) -> Optional[AST.TypeHint]:
         return self._v1_or_v2_root_type
