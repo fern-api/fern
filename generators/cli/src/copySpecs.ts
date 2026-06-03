@@ -144,7 +144,7 @@ async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<voi
         '    //   app.custom_command("deploy", "Run a deployment", |matches, ctx| {',
         '    //       let method = ctx.find_method("deployments", "create")?;',
         "    //       let req = SomeRequest { /* ... */ };",
-        '    //       let body = serde_json::to_string(&req).unwrap();',
+        "    //       let body = serde_json::to_string(&req).unwrap();",
         "    //       let result = ctx.invoke(method, None, Some(&body), None)?;",
         "    //       ctx.emit(&result)?;",
         "    //       Ok(())",
