@@ -23,9 +23,9 @@ import { TEMPLATE_BINARY_NAME } from "./identity.js";
  *     top of [package] and above the openapi-fixture
  *     [[bin]]                                       →  (removed; meant for SDK template authors)
  *
- * When `sdkCrateName` is supplied (second call), the function adds a
- * `[dependencies.<sdkCrateName>]` path dep pointing at the generated
- * SDK crate workspace member.
+ * When `typesCrateName` is supplied (second call), the function adds a
+ * `[dependencies.<typesCrateName>]` path dep pointing at the generated
+ * types crate workspace member.
  *
  * What stays:
  *   - `[package] name = "fern-cli-sdk"` — pinned by the shipped
@@ -38,14 +38,14 @@ export async function patchCargoToml(args: {
     outputDir: string;
     binaryName: string;
     version?: string;
-    sdkCrateName?: string;
+    typesCrateName?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, version, sdkCrateName } = args;
+    const { outputDir, binaryName, version, typesCrateName } = args;
     const cargoTomlPath = path.join(outputDir, "Cargo.toml");
     const contents = await readFile(cargoTomlPath, "utf-8");
 
-    if (sdkCrateName != null) {
-        const patched = addSdkDependency(contents, sdkCrateName);
+    if (typesCrateName != null) {
+        const patched = addTypesDependency(contents, typesCrateName);
         await writeFile(cargoTomlPath, patched);
         return;
     }
@@ -95,12 +95,12 @@ export function applyCargoTomlPatch(cargoToml: string, binaryName: string, versi
 }
 
 /**
- * Append a `[dependencies.<sdkCrateName>]` path dependency to the
- * Cargo.toml, linking the CLI crate to the generated SDK crate.
+ * Append a `[dependencies.<typesCrateName>]` path dependency to the
+ * Cargo.toml, linking the CLI crate to the generated types crate.
  */
-export function addSdkDependency(cargoToml: string, sdkCrateName: string): string {
-    const snakeName = sdkCrateName.replace(/-/g, "_");
-    const depBlock = `\n[dependencies.${snakeName}]\npath = "${sdkCrateName}"\n`;
+export function addTypesDependency(cargoToml: string, typesCrateName: string): string {
+    const snakeName = typesCrateName.replace(/-/g, "_");
+    const depBlock = `\n[dependencies.${snakeName}]\npath = "${typesCrateName}"\n`;
     // Append before [profile] sections if present, else at the end.
     const profileIdx = cargoToml.indexOf("\n[profile.");
     if (profileIdx !== -1) {

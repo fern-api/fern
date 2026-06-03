@@ -162,47 +162,21 @@ impl GraphqlBinding {
         })
     }
 
-    /// Wrap a **sync** handler function into a [`CliCommandHandler`].
+    /// Wrap a typed handler function into a [`CliCommandHandler`] that
+    /// automatically downcasts the binding context to
+    /// [`AppContext`](super::AppContext).
     ///
-    /// The handler is executed inside a ready-made future so existing
-    /// sync handlers keep working after the async migration.
+    /// Use this with [`CliApp::command()`](crate::app::CliApp::command)
+    /// or [`CliApp::command_under()`](crate::app::CliApp::command_under).
     pub fn handler(
         f: fn(&clap::ArgMatches, &super::AppContext) -> Result<(), crate::error::CliError>,
     ) -> crate::app::CliCommandHandler {
-        Box::new(move |matches: &clap::ArgMatches, ctx: &(dyn std::any::Any + Send + Sync)| {
-            let result = (|| {
-                let ctx = ctx.downcast_ref::<super::AppContext>().ok_or_else(|| {
-                    crate::error::CliError::Validation(
-                        "handler requires a GraphQL binding context".into(),
-                    )
-                })?;
-                f(matches, ctx)
-            })();
-            Box::pin(async move { result })
-        })
-    }
-
-    /// Wrap a native **async** handler into a [`CliCommandHandler`].
-    pub fn async_handler(
-        f: for<'a> fn(
-            &'a clap::ArgMatches,
-            &'a super::AppContext,
-        ) -> std::pin::Pin<
-            Box<dyn std::future::Future<Output = Result<(), crate::error::CliError>> + Send + 'a>,
-        >,
-    ) -> crate::app::CliCommandHandler {
-        Box::new(move |matches: &clap::ArgMatches, ctx: &(dyn std::any::Any + Send + Sync)| {
-            let ctx = match ctx.downcast_ref::<super::AppContext>() {
-                Some(ctx) => ctx,
-                None => {
-                    return Box::pin(async {
-                        Err(crate::error::CliError::Validation(
-                            "async_handler requires a GraphQL binding context".into(),
-                        ))
-                    })
-                        as std::pin::Pin<Box<dyn std::future::Future<Output = _> + Send + '_>>;
-                }
-            };
+        Box::new(move |matches: &clap::ArgMatches, ctx: &dyn std::any::Any| {
+            let ctx = ctx.downcast_ref::<super::AppContext>().ok_or_else(|| {
+                crate::error::CliError::Validation(
+                    "handler requires a GraphQL binding context".into(),
+                )
+            })?;
             f(matches, ctx)
         })
     }

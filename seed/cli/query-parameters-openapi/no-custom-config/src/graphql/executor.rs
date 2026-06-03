@@ -206,7 +206,6 @@ pub async fn execute_method(
     capture_output: bool,
     base_url_override: Option<&str>,
     http_config: &crate::http::HttpConfig,
-    no_retry: bool,
 ) -> Result<Option<Value>, CliError> {
     let mut input =
         parse_and_validate_inputs(doc, method, params_json, body_json, base_url_override)?;
@@ -231,89 +230,26 @@ pub async fn execute_method(
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
 
+    // Build the client once outside the pagination loop. Client construction
+    // reads env vars and (with TLS) builds a connection pool; rebuilding per
+    // page would defeat connection reuse and emit any one-time warnings
+    // (e.g. insecure-mode) once per page.
     let client = http_config.build_client()?;
 
-    let retry_policy = crate::http::RetryPolicy::default();
-
     loop {
+        let request = build_http_request(&client, &input, auth_provider)?;
+
         let method_id = method.id.as_deref().unwrap_or("unknown");
         let start = std::time::Instant::now();
-
-        // Fresh key per page so the server doesn't deduplicate distinct
-        // pages, but stable across retries of the same page.
-        let idempotency_key = Some(crate::http::generate_idempotency_key());
-
-        // Retry loop — same pattern as the OpenAPI executor.
-        let mut retry_attempt: u32 = 0;
-        let response = loop {
-            let mut request = build_http_request(&client, &input, auth_provider)?;
-            if let Some(ref key) = idempotency_key {
-                request = request.header("Idempotency-Key", key.as_str());
-            }
-
-            match request.send().await {
-                Ok(resp) => {
-                    let status = resp.status();
-                    let retry_after_header = resp
-                        .headers()
-                        .get("retry-after")
-                        .and_then(|v| v.to_str().ok())
-                        .map(|s| s.to_string());
-                    let outcome = crate::http::RetryOutcome {
-                        status: Some(status.as_u16()),
-                        retry_after: retry_after_header.as_deref(),
-                    };
-                    if let Some(delay) = crate::http::decide_retry(
-                        retry_attempt,
-                        &outcome,
-                        &retry_policy,
-                        "POST",
-                        idempotency_key.is_some(),
-                        no_retry,
-                    ) {
-                        tracing::warn!(
-                            api_method = method_id,
-                            http_method = "POST",
-                            status = status.as_u16(),
-                            attempt = retry_attempt + 1,
-                            delay_ms = delay.as_millis() as u64,
-                            "retrying after retryable HTTP status",
-                        );
-                        let _ = resp.bytes().await;
-                        tokio::time::sleep(delay).await;
-                        retry_attempt += 1;
-                        continue;
-                    }
-                    break resp;
-                }
-                Err(e) => {
-                    let outcome = crate::http::RetryOutcome {
-                        status: None,
-                        retry_after: None,
-                    };
-                    if let Some(delay) = crate::http::decide_retry(
-                        retry_attempt,
-                        &outcome,
-                        &retry_policy,
-                        "POST",
-                        idempotency_key.is_some(),
-                        no_retry,
-                    ) {
-                        tracing::warn!(
-                            api_method = method_id,
-                            http_method = "POST",
-                            attempt = retry_attempt + 1,
-                            delay_ms = delay.as_millis() as u64,
-                            error = %e,
-                            "retrying after network/transport failure",
-                        );
-                        tokio::time::sleep(delay).await;
-                        retry_attempt += 1;
-                        continue;
-                    }
-                    crate::http::maybe_emit_tls_hint(http_config, &e);
-                    return Err(anyhow::Error::from(e).context("HTTP request failed").into());
-                }
+        let response = match request.send().await {
+            Ok(resp) => resp,
+            Err(e) => {
+                // Surface a human-readable hint to stderr if this looks like
+                // a TLS failure — the most common debugging hump for users
+                // behind corporate proxies / interception tools. The hint is
+                // a side effect; the error then propagates up like any other.
+                crate::http::maybe_emit_tls_hint(http_config, &e);
+                return Err(anyhow::Error::from(e).context("HTTP request failed").into());
             }
         };
         let latency_ms = start.elapsed().as_millis() as u64;
@@ -733,7 +669,6 @@ mod tests {
             true, // capture_output
             None,
             &http_config,
-            false,
         )
         .await
         .expect("dry-run should succeed");

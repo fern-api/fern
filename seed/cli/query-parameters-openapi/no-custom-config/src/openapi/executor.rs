@@ -69,28 +69,6 @@ pub enum UploadSource<'a> {
     },
 }
 
-/// A single part in a multipart/form-data request, collected from CLI
-/// flags for operations that declare `multipart/form-data` bodies.
-pub enum MultipartPart {
-    /// UTF-8 text value sent as a plain form field. `content_type` carries
-    /// an explicit per-part `Content-Type` from the OpenAPI `encoding`
-    /// object; `None` means reqwest's default (`text/plain`).
-    Text {
-        name: String,
-        value: String,
-        content_type: Option<String>,
-    },
-    /// File read from disk (or stdin). The `path` is already validated.
-    /// `content_type` is the per-part `Content-Type` resolved from the
-    /// OpenAPI `encoding` object (falling back to the schema-inferred
-    /// `application/octet-stream` for file fields).
-    File {
-        name: String,
-        path: String,
-        content_type: Option<String>,
-    },
-}
-
 /// Configuration for auto-pagination.
 #[derive(Debug, Clone)]
 pub struct PaginationConfig {
@@ -133,18 +111,27 @@ pub(crate) struct RetryOutcome<'a> {
     pub retry_after: Option<&'a str>,
 }
 
-/// Returns `true` when the HTTP status code is considered retryable.
+/// Returns the default set of retryable HTTP status codes.
 ///
-/// Retryable statuses (FER-10521):
+/// Matches fern's TypeScript SDK `retryStatusCodes: recommended` mode
+/// ([fern PR](https://github.com/fern-api/fern/blob/main/generators/typescript/sdk/changes/3.67.0/feat-retry-status-codes.yml)):
+///
 ///   - 408 Request Timeout      — server gave up before reading; safe.
 ///   - 429 Too Many Requests    — backoff signal; safe.
-///   - 500–599 (all server errors) — transient infrastructure failures.
+///   - 502 Bad Gateway          — upstream layer failed; transient.
+///   - 503 Service Unavailable  — explicitly transient by spec.
+///   - 504 Gateway Timeout      — upstream timeout; transient.
 ///
-/// Prior to FER-10521 this excluded 500 (often a non-transient bug).
-/// The broader 5xx set aligns with the cross-SDK default and with
-/// the expectation that CLIs retry aggressively on server-side errors.
+/// Deliberately *excludes* 500 Internal Server Error — a 500 often
+/// indicates a non-transient bug on the server (bad input shape, app
+/// crash) where retrying just masks the underlying issue. Servers that
+/// genuinely want us to retry a 500 can still surface a `Retry-After`
+/// header and the executor will honor it.
+///
+/// Also excludes 425 Too Early (TLS 1.3 0-RTT replay protection) —
+/// never seen in practice from reqwest's HTTP/1.1 client.
 pub(crate) fn is_retryable_status(status: u16) -> bool {
-    status == 408 || status == 429 || (500..=599).contains(&status)
+    matches!(status, 408 | 429 | 502 | 503 | 504)
 }
 
 /// Whether the per-method retry policy allows retrying *non-idempotent*
@@ -170,22 +157,6 @@ pub(crate) fn method_allows_retry(http_method: &str, marked_idempotent: bool) ->
 pub(crate) fn binary_body_is_stdin(binary_body_path: Option<&str>) -> bool {
     match binary_body_path {
         Some(raw) => matches!(BinaryBodySource::parse(raw), BinaryBodySource::Stdin),
-        None => false,
-    }
-}
-
-/// Whether any `MultipartPart::File` in the list uses stdin (`-` or `@-`).
-/// Stdin-sourced file parts cannot be replayed on retry because the pipe is
-/// consumed by the first `read_to_end`. Mirrors `binary_body_is_stdin`.
-pub(crate) fn multipart_has_stdin(parts: &Option<Vec<MultipartPart>>) -> bool {
-    match parts {
-        Some(parts) => parts.iter().any(|p| match p {
-            MultipartPart::File { path, .. } => {
-                let stripped = path.strip_prefix('@').unwrap_or(path);
-                stripped == "-"
-            }
-            MultipartPart::Text { .. } => false,
-        }),
         None => false,
     }
 }
@@ -356,13 +327,22 @@ fn parse_and_validate_inputs(
         Map::new()
     };
 
-    // Helper: build the `Provide it via …` hint. Uses the same
-    // `resolve_param_flag_name` that the command builder uses so the
-    // suggested `--<flag>` matches the actually registered flag
-    // (including body-param dot-notation and `-param` builtin suffix).
+    // Helper: build the `Provide it via …` hint listing every channel a
+    // user can satisfy this parameter through. Mirrors `commands.rs`'s
+    // flag-name resolution so the suggested `--<flag>` is the actual flag
+    // the user can pass: `flag_name_override` wins verbatim (synthetic
+    // injections that already encode the wire name); otherwise kebab the
+    // `display_name` from `x-fern-parameter-name`, falling back to the
+    // wire name. Body fields also accept `--json`; every other location
+    // only accepts the per-field flag or `--params`.
     let missing_param_hint = |param_def: &MethodParameter, param_name: &str| -> String {
-        let flag = crate::openapi::commands::resolve_param_flag_name(param_def, param_name)
-            .unwrap_or_else(|| crate::text::to_kebab_flag(param_name));
+        let flag = if let Some(override_flag) = param_def.flag_name_override.as_deref() {
+            override_flag.to_string()
+        } else {
+            crate::text::to_kebab_flag(
+                param_def.display_name.as_deref().unwrap_or(param_name),
+            )
+        };
         if param_def.location.as_deref() == Some("body") {
             format!("Provide it via --{flag}, --json, or --params")
         } else {
@@ -409,8 +389,10 @@ fn parse_and_validate_inputs(
         let location = method.parameters.get(key).and_then(|p| p.location.as_deref());
         match location {
             Some("header") => {
-                let param_def = method.parameters.get(key);
-                let str_value = serialize_header_simple(value, param_def)?;
+                let str_value = match value {
+                    Value::String(s) => s.clone(),
+                    other => other.to_string(),
+                };
                 header_params.push((key.clone(), str_value));
             }
             Some("body") => {
@@ -593,46 +575,19 @@ async fn build_http_request(
     pages_fetched: u32,
     upload: &Option<UploadSource<'_>>,
     binary_body_path: Option<&str>,
-    multipart_parts: &Option<Vec<MultipartPart>>,
     pagination: &PaginationConfig,
 ) -> Result<reqwest::RequestBuilder, CliError> {
     // Uri / Path pagination supplies a fully-resolved next URL in the
     // page state; use it verbatim so that the server's cursor / query
     // params travel as-is.
-    let base_target_url = page_state.url_override().unwrap_or(&input.full_url);
-
-    // Build the query string ourselves (rather than reqwest's `.query()`,
-    // which form-encodes: space -> `+`, comma -> `%2C`). The OpenAPI 3.0
-    // query styles need RFC 3986 percent-encoding with style delimiters left
-    // literal in the joined value (spaceDelimited -> `%20`, pipeDelimited ->
-    // `%7C`, form/no-explode arrays keep `,`). When the URL is supplied by the
-    // server (uri / path pagination) it already carries every query param the
-    // server cares about, so we honor it as-is.
-    let target_url = if page_state.url_override().is_some() {
-        base_target_url.to_string()
-    } else {
-        let mut all_query_params = input.query_params.clone();
-        if let Some((name, value)) =
-            page_state.injection(method.pagination.as_ref(), &pagination.token_query_param)
-        {
-            all_query_params.push((name, value));
-        }
-        // Upload operations carry `uploadType=multipart`; route it through the
-        // same RFC-3986 query encoder as every other param instead of reqwest's
-        // `.query()` (the value is an ASCII literal, so the encoded form is
-        // identical — this just keeps a single query encoder).
-        if pages_fetched == 0 && upload.is_some() {
-            all_query_params.push(("uploadType".to_string(), "multipart".to_string()));
-        }
-        append_query_string(base_target_url, &all_query_params)
-    };
+    let target_url = page_state.url_override().unwrap_or(&input.full_url);
 
     let mut request = match method.http_method.as_str() {
-        "GET" => client.get(&target_url),
-        "POST" => client.post(&target_url),
-        "PUT" => client.put(&target_url),
-        "PATCH" => client.patch(&target_url),
-        "DELETE" => client.delete(&target_url),
+        "GET" => client.get(target_url),
+        "POST" => client.post(target_url),
+        "PUT" => client.put(target_url),
+        "PATCH" => client.patch(target_url),
+        "DELETE" => client.delete(target_url),
         other => {
             return Err(CliError::Other(anyhow::anyhow!(
                 "Unsupported HTTP method: {other}"
@@ -669,8 +624,25 @@ async fn build_http_request(
         }
     }
 
+    // When the URL is supplied by the server (uri / path pagination)
+    // the URL already carries every query param the server cares about
+    // — re-appending the user's initial filters would either double them
+    // up or fight the server's own cursor. Honor the server's URL as-is.
+    if page_state.url_override().is_none() {
+        let mut all_query_params = input.query_params.clone();
+        if let Some((name, value)) =
+            page_state.injection(method.pagination.as_ref(), &pagination.token_query_param)
+        {
+            all_query_params.push((name, value));
+        }
+        if !all_query_params.is_empty() {
+            request = request.query(&all_query_params);
+        }
+    }
+
     if pages_fetched == 0 {
         if let Some(upload_source) = upload {
+            request = request.query(&[("uploadType", "multipart")]);
             let (body, content_type, content_length) = match upload_source {
                 UploadSource::Bytes { data, content_type } => {
                     if content_type.contains('\r') || content_type.contains('\n') {
@@ -721,9 +693,6 @@ async fn build_http_request(
                     request = request.body(build_stdin_body_stream());
                 }
             }
-        } else if let Some(parts) = multipart_parts {
-            let form = build_multipart_form(parts).await?;
-            request = request.multipart(form);
         } else if let Some(ref body_val) = input.body {
             request = encode_request_body(request, body_val, &method.body_encoding);
         } else if matches!(method.http_method.as_str(), "POST" | "PUT" | "PATCH") {
@@ -1494,7 +1463,6 @@ pub async fn execute_method(
     output_path: Option<&str>,
     upload: Option<UploadSource<'_>>,
     binary_body_path: Option<&str>,
-    multipart_parts: Option<Vec<MultipartPart>>,
     dry_run: bool,
     pagination: &PaginationConfig,
     pipeline: &crate::formatter::OutputPipeline,
@@ -1579,28 +1547,6 @@ pub async fn execute_method(
                 "flag": flag_name,
             });
         }
-        if let Some(ref parts) = multipart_parts {
-            let part_info: Vec<Value> = parts
-                .iter()
-                .map(|p| match p {
-                    MultipartPart::Text {
-                        name,
-                        value,
-                        content_type,
-                    } => {
-                        json!({ "name": name, "type": "text", "value": value, "content_type": content_type })
-                    }
-                    MultipartPart::File {
-                        name,
-                        path,
-                        content_type,
-                    } => {
-                        json!({ "name": name, "type": "file", "path": path, "content_type": content_type })
-                    }
-                })
-                .collect();
-            dry_run_info["multipart_form_data"] = json!(part_info);
-        }
         if capture_output {
             return Ok(Some(dry_run_info));
         }
@@ -1645,38 +1591,14 @@ pub async fn execute_method(
         // an empty body. Disable retries for that case so we preserve
         // the pre-retry behavior (a single attempt, surface whatever
         // the server returns) rather than masking the original failure.
-        // Disable retries when the body is a streamed stdin or multipart
-        // body — those can't be replayed on a second attempt.
-        let default_retries = RetriesConfig::default();
-        let retries_cfg =
-            if binary_body_is_stdin(binary_body_path) || multipart_has_stdin(&multipart_parts) {
-                None
-            } else {
-                Some(method.retries.as_ref().unwrap_or(&default_retries))
-            };
-
-        // Auto Idempotency-Key: generate once before the retry loop so
-        // the same key is sent on every attempt. Only for POST/PUT/PATCH
-        // unless opted out via `x-fern-cli-idempotency: false`, or when
-        // the operation already has an explicit idempotency-header
-        // mechanism (x-fern-idempotent: true provides --idempotency-key).
-        let user_provides_idempotency = method.idempotent
-            || input
-                .header_params
-                .iter()
-                .any(|(k, _)| k.eq_ignore_ascii_case("idempotency-key"));
-        let idempotency_key = if !method.no_auto_idempotency_key
-            && !user_provides_idempotency
-            && crate::http::needs_idempotency_key(&method.http_method)
-        {
-            Some(crate::http::generate_idempotency_key())
-        } else {
+        let retries_cfg = if binary_body_is_stdin(binary_body_path) {
             None
+        } else {
+            method.retries.as_ref()
         };
-
         let mut retry_attempt: u32 = 0;
         let response = loop {
-            let mut request = build_http_request(
+            let request = build_http_request(
                 &client,
                 method,
                 &input,
@@ -1686,14 +1608,9 @@ pub async fn execute_method(
                 pages_fetched,
                 &upload,
                 binary_body_path,
-                &multipart_parts,
                 pagination,
             )
             .await?;
-
-            if let Some(ref key) = idempotency_key {
-                request = request.header("Idempotency-Key", key.as_str());
-            }
 
             match request.send().await {
                 Ok(resp) => {
@@ -1713,7 +1630,7 @@ pub async fn execute_method(
                             &outcome,
                             cfg,
                             &method.http_method,
-                            method.idempotent || idempotency_key.is_some(),
+                            method.idempotent,
                             no_retry,
                         ) {
                             tracing::warn!(
@@ -1748,7 +1665,7 @@ pub async fn execute_method(
                             &outcome,
                             cfg,
                             &method.http_method,
-                            method.idempotent || idempotency_key.is_some(),
+                            method.idempotent,
                             no_retry,
                         ) {
                             tracing::warn!(
@@ -1939,30 +1856,7 @@ fn serialize_query_param(
 
     match style {
         "deepObject" => serialize_deep_object(key, value),
-        // spaceDelimited / pipeDelimited only define array behavior; the
-        // elements are joined by a single space / pipe under one key. For
-        // non-array values they degrade to the same scalar shape as form.
-        "spaceDelimited" => serialize_delimited(key, value, ' '),
-        "pipeDelimited" => serialize_delimited(key, value, '|'),
         _ => serialize_form(key, value, explode),
-    }
-}
-
-/// `spaceDelimited` / `pipeDelimited` array serialization: a single key whose
-/// value is the elements joined by `delim`. The delimiter is a literal here;
-/// the request encoder percent-encodes it on the wire (space -> `%20`,
-/// pipe -> `%7C`).
-fn serialize_delimited(key: &str, value: &Value, delim: char) -> Vec<(String, String)> {
-    match value {
-        Value::Array(arr) => {
-            let joined = arr
-                .iter()
-                .map(value_to_query_string)
-                .collect::<Vec<_>>()
-                .join(&delim.to_string());
-            vec![(key.to_string(), joined)]
-        }
-        _ => vec![(key.to_string(), value_to_query_string(value))],
     }
 }
 
@@ -2013,23 +1907,6 @@ fn serialize_form(key: &str, value: &Value, explode: bool) -> Vec<(String, Strin
                 .join(",");
             vec![(key.to_string(), joined)]
         }
-        // form / object / explode=true: each property becomes its own
-        // top-level key (`role=admin&active=true`), dropping the parameter
-        // name entirely — the OpenAPI 3.0 rule for an exploded object.
-        Value::Object(map) if explode => map
-            .iter()
-            .map(|(k, v)| (k.clone(), value_to_query_string(v)))
-            .collect(),
-        // form / object / explode=false: comma-joined `key,value` pairs under
-        // the single parameter key (`profile=role,admin,active,true`).
-        Value::Object(map) => {
-            let joined = map
-                .iter()
-                .flat_map(|(k, v)| [k.clone(), value_to_query_string(v)])
-                .collect::<Vec<_>>()
-                .join(",");
-            vec![(key.to_string(), joined)]
-        }
         _ => vec![(key.to_string(), value_to_query_string(value))],
     }
 }
@@ -2042,86 +1919,6 @@ fn value_to_query_string(v: &Value) -> String {
         Value::Null => String::new(),
         other => other.to_string(),
     }
-}
-
-/// Serialize a header parameter value into its OpenAPI `simple`-style wire
-/// representation (the only style permitted for `in: header` parameters).
-///
-/// - primitive → the scalar rendered as-is (`X-Custom: hello`)
-/// - array → elements comma-joined under one name; `explode` does not change
-///   the delimiter for `simple` (`X-Tags: a,b`)
-/// - object, `explode: false` → flattened `k,v,k2,v2` (`X-Filter: k,v,k2,v2`)
-/// - object, `explode: true` → `k=v,k2=v2`
-///
-/// The fully-assembled value is rejected if it contains control characters,
-/// which would otherwise enable header injection (CR/LF) when the value
-/// arrives from an untrusted CLI argument.
-fn serialize_header_simple(
-    value: &Value,
-    param_def: Option<&crate::openapi::discovery::MethodParameter>,
-) -> Result<String, CliError> {
-    let explode = param_def.and_then(|p| p.explode).unwrap_or(false);
-
-    let rendered = match value {
-        Value::Array(arr) => arr
-            .iter()
-            .map(value_to_query_string)
-            .collect::<Vec<_>>()
-            .join(","),
-        Value::Object(map) => map
-            .iter()
-            .flat_map(|(k, v)| {
-                let v = value_to_query_string(v);
-                if explode {
-                    vec![format!("{k}={v}")]
-                } else {
-                    vec![k.clone(), v]
-                }
-            })
-            .collect::<Vec<_>>()
-            .join(","),
-        other => value_to_query_string(other),
-    };
-
-    crate::output::reject_dangerous_chars(&rendered, "header value")?;
-    Ok(rendered)
-}
-
-/// Percent-encode set for a query-string component (key or value).
-///
-/// RFC 3986 unreserved characters (`A-Za-z0-9-_.~`) are left intact; the comma
-/// is also kept literal so a form/no-explode array reads `ids=1,2` rather than
-/// `ids=1%2C2`. Everything else — including space (`%20`, *not* the form
-/// `+`), `|` (`%7C`), `&`, `=`, `#`, and `[` `]` — is percent-encoded. This is
-/// the RFC 3986 encoding the OpenAPI 3.0 query styles expect, and is stricter
-/// than reqwest's `serde_urlencoded`-based `.query()` form encoding.
-const QUERY_COMPONENT: &percent_encoding::AsciiSet = &percent_encoding::NON_ALPHANUMERIC
-    .remove(b'-')
-    .remove(b'_')
-    .remove(b'.')
-    .remove(b'~')
-    .remove(b',');
-
-fn encode_query_component(s: &str) -> String {
-    percent_encoding::utf8_percent_encode(s, QUERY_COMPONENT).to_string()
-}
-
-/// Append already-style-serialized `(key, value)` query pairs to `base_url`,
-/// percent-encoding each component per [`QUERY_COMPONENT`]. Pairs are joined
-/// with `&`; the leading separator is `?` unless `base_url` already carries a
-/// query string, in which case `&` continues it. Returns `base_url` unchanged
-/// when there are no pairs.
-fn append_query_string(base_url: &str, pairs: &[(String, String)]) -> String {
-    if pairs.is_empty() {
-        return base_url.to_string();
-    }
-    let query = pairs
-        .iter()
-        .map(|(k, v)| format!("{}={}", encode_query_component(k), encode_query_component(v)))
-        .collect::<Vec<_>>()
-        .join("&");
-    let sep = if base_url.contains('?') { '&' } else { '?' };
-    format!("{base_url}{sep}{query}")
 }
 
 fn effective_root_url(method: &RestMethod, doc: &RestDescription) -> String {
@@ -2199,7 +1996,7 @@ fn build_url(
     let rendered_base_path = doc
         .base_path
         .as_deref()
-        .map(|bp| render_path_template(bp, params, Some(&method.parameters)))
+        .map(|bp| render_path_template(bp, params))
         .transpose()?;
     let base_path_parameters: HashSet<&str> = doc
         .base_path
@@ -2283,7 +2080,7 @@ fn build_url(
         query_params.extend(pairs);
     }
 
-    let url_path = render_path_template(path_template, params, Some(&method.parameters))?;
+    let url_path = render_path_template(path_template, params)?;
 
     let full_url = if is_upload {
         // Use the upload endpoint from the Discovery Document
@@ -2299,7 +2096,7 @@ fn build_url(
                         .to_string(),
                 )
             })?;
-        let upload_path = render_path_template(upload_endpoint, params, Some(&method.parameters))?;
+        let upload_path = render_path_template(upload_endpoint, params)?;
         // Compose the upload host with the spec-level base_path the same
         // way the non-upload branch does, so x-fern-base-path is applied
         // uniformly. This branch is currently unreachable from OpenAPI
@@ -2348,7 +2145,6 @@ fn extract_template_path_parameters(path_template: &str) -> HashSet<&str> {
 fn render_path_template(
     path_template: &str,
     params: &Map<String, Value>,
-    param_defs: Option<&HashMap<String, MethodParameter>>,
 ) -> Result<String, CliError> {
     let mut rendered = String::with_capacity(path_template.len());
     let mut cursor = 0;
@@ -2371,21 +2167,15 @@ fn render_path_template(
         };
 
         if let Some(value) = params.get(key) {
+            let val_str = match value {
+                Value::String(s) => s.clone(),
+                other => other.to_string(),
+            };
             let encoded = if is_plus {
-                // RFC 6570 `{+var}` reserved expansion: preserve literal `/`.
-                let val_str = match value {
-                    Value::String(s) => s.clone(),
-                    other => other.to_string(),
-                };
                 let validated = crate::validate::validate_resource_name(&val_str)?;
                 crate::validate::encode_path_preserving_slashes(validated)
             } else {
-                // Consult the parameter's OpenAPI serialization `style`
-                // (simple / label / matrix) and `explode` flag. Falls back
-                // to plain simple/primitive substitution when no definition
-                // is available (e.g. `x-fern-base-path` placeholders).
-                let param_def = param_defs.and_then(|defs| defs.get(key));
-                serialize_path_param(key, value, param_def)
+                crate::validate::encode_path_segment(&val_str)
             };
             rendered.push_str(&encoded);
         } else {
@@ -2397,123 +2187,6 @@ fn render_path_template(
 
     rendered.push_str(&path_template[cursor..]);
     Ok(rendered)
-}
-
-/// Serialize a value into a single URL path segment per the OpenAPI 3.0 path
-/// `style` (`simple` default, `label`, `matrix`) and `explode` flag.
-///
-/// Only the user-supplied *values* are percent-encoded
-/// ([`encode_path_segment`](crate::validate::encode_path_segment)); the
-/// structural separators introduced by the style (`,`, `.`, `;`, `=`) are
-/// literal. Because `encode_path_segment` itself encodes those characters,
-/// assembling the segment from already-encoded values keeps the separators
-/// from being double-encoded.
-fn serialize_path_param(
-    name: &str,
-    value: &Value,
-    param_def: Option<&MethodParameter>,
-) -> String {
-    let style = param_def
-        .and_then(|p| p.style.as_deref())
-        .unwrap_or("simple");
-    // OpenAPI default `explode` is false for every path style.
-    let explode = param_def.and_then(|p| p.explode).unwrap_or(false);
-
-    let enc = |v: &Value| crate::validate::encode_path_segment(&value_to_path_string(v));
-
-    match style {
-        "label" => match value {
-            Value::Array(arr) => {
-                // RFC 6570: explode=true -> dot-separated; explode=false -> comma-separated.
-                let joiner = if explode { "." } else { "," };
-                let body = arr.iter().map(&enc).collect::<Vec<_>>().join(joiner);
-                format!(".{body}")
-            }
-            Value::Object(map) => {
-                if explode {
-                    // explode=true: k=v pairs dot-separated.
-                    let body = map
-                        .iter()
-                        .map(|(k, v)| {
-                            format!("{}={}", crate::validate::encode_path_segment(k), enc(v))
-                        })
-                        .collect::<Vec<_>>()
-                        .join(".");
-                    format!(".{body}")
-                } else {
-                    // explode=false: flat k,v,k,v comma-separated.
-                    let body = map
-                        .iter()
-                        .flat_map(|(k, v)| {
-                            [crate::validate::encode_path_segment(k), enc(v)]
-                        })
-                        .collect::<Vec<_>>()
-                        .join(",");
-                    format!(".{body}")
-                }
-            }
-            _ => format!(".{}", enc(value)),
-        },
-        "matrix" => match value {
-            Value::Array(arr) if explode => arr
-                .iter()
-                .map(|v| format!(";{name}={}", enc(v)))
-                .collect::<Vec<_>>()
-                .join(""),
-            Value::Array(arr) => {
-                let body = arr.iter().map(&enc).collect::<Vec<_>>().join(",");
-                format!(";{name}={body}")
-            }
-            Value::Object(map) if explode => map
-                .iter()
-                .map(|(k, v)| {
-                    format!(";{}={}", crate::validate::encode_path_segment(k), enc(v))
-                })
-                .collect::<Vec<_>>()
-                .join(""),
-            Value::Object(map) => {
-                let body = map
-                    .iter()
-                    .map(|(k, v)| {
-                        format!("{},{}", crate::validate::encode_path_segment(k), enc(v))
-                    })
-                    .collect::<Vec<_>>()
-                    .join(",");
-                format!(";{name}={body}")
-            }
-            _ => format!(";{name}={}", enc(value)),
-        },
-        // "simple" (default) and any unrecognized style.
-        _ => match value {
-            Value::Array(arr) => arr.iter().map(&enc).collect::<Vec<_>>().join(","),
-            Value::Object(map) if explode => map
-                .iter()
-                .map(|(k, v)| {
-                    format!("{}={}", crate::validate::encode_path_segment(k), enc(v))
-                })
-                .collect::<Vec<_>>()
-                .join(","),
-            Value::Object(map) => map
-                .iter()
-                .flat_map(|(k, v)| [crate::validate::encode_path_segment(k), enc(v)])
-                .collect::<Vec<_>>()
-                .join(","),
-            _ => enc(value),
-        },
-    }
-}
-
-/// Stringify a JSON value for a path segment. Mirrors `value_to_query_string`
-/// (the query-side equivalent) — strings pass through, numbers/booleans use
-/// their canonical text, null is empty, composites fall back to JSON.
-fn value_to_path_string(v: &Value) -> String {
-    match v {
-        Value::String(s) => s.clone(),
-        Value::Number(n) => n.to_string(),
-        Value::Bool(b) => b.to_string(),
-        Value::Null => String::new(),
-        other => other.to_string(),
-    }
 }
 
 /// Resolves the MIME type for the uploaded media content.
@@ -2696,89 +2369,6 @@ fn build_multipart_stream(
         content_type,
         content_length,
     ))
-}
-
-/// Resolve a file part's `Content-Type`. A per-part value from the OpenAPI
-/// `encoding` object wins; otherwise the OAS default for a binary part,
-/// `application/octet-stream`, applies.
-fn file_part_mime(content_type: Option<&str>) -> &str {
-    content_type.unwrap_or("application/octet-stream")
-}
-
-/// Build a `reqwest::multipart::Form` from the collected CLI flag values.
-/// Text parts are added inline; file parts are read from disk and
-/// streamed. The `Content-Type: multipart/form-data; boundary=...`
-/// header is set by reqwest automatically when `.multipart(form)` is
-/// called on the request builder.
-async fn build_multipart_form(
-    parts: &[MultipartPart],
-) -> Result<reqwest::multipart::Form, CliError> {
-    let mut form = reqwest::multipart::Form::new();
-
-    for part in parts {
-        match part {
-            MultipartPart::Text {
-                name,
-                value,
-                content_type,
-            } => {
-                // A text part is just `Part::text`; an explicit per-part
-                // `Content-Type` from the OpenAPI `encoding` object (e.g.
-                // `application/json`) overrides reqwest's `text/plain`.
-                let mut text_part = reqwest::multipart::Part::text(value.clone());
-                if let Some(ct) = content_type {
-                    text_part = text_part.mime_str(ct).map_err(|e| {
-                        CliError::Validation(format!(
-                            "Invalid Content-Type '{ct}' for multipart field '{name}': {e}"
-                        ))
-                    })?;
-                }
-                form = form.part(name.clone(), text_part);
-            }
-            MultipartPart::File {
-                name,
-                path,
-                content_type,
-            } => {
-                let mime = file_part_mime(content_type.as_deref());
-                let stripped = path.strip_prefix('@').unwrap_or(path);
-                let (bytes, file_name) = if stripped == "-" {
-                    let mut buf = Vec::new();
-                    tokio::io::AsyncReadExt::read_to_end(&mut tokio::io::stdin(), &mut buf)
-                        .await
-                        .map_err(|e| {
-                            CliError::Validation(format!(
-                                "Failed to read stdin for multipart field '{name}': {e}"
-                            ))
-                        })?;
-                    (buf, "stdin".to_string())
-                } else {
-                    let file_bytes = tokio::fs::read(stripped).await.map_err(|e| {
-                        CliError::Validation(format!(
-                            "Failed to read file '{stripped}' for multipart field '{name}': {e}"
-                        ))
-                    })?;
-                    let file_name = std::path::Path::new(stripped)
-                        .file_name()
-                        .and_then(|n| n.to_str())
-                        .unwrap_or("upload")
-                        .to_string();
-                    (file_bytes, file_name)
-                };
-                let file_part = reqwest::multipart::Part::bytes(bytes)
-                    .file_name(file_name)
-                    .mime_str(mime)
-                    .map_err(|e| {
-                        CliError::Validation(format!(
-                            "Invalid Content-Type '{mime}' for multipart field '{name}': {e}"
-                        ))
-                    })?;
-                form = form.part(name.clone(), file_part);
-            }
-        }
-    }
-
-    Ok(form)
 }
 
 /// Builds a multipart/related body from in-memory bytes.
@@ -3072,13 +2662,6 @@ fn validate_property(
         return;
     }
 
-    // Null on a nullable property is always valid — short-circuits type
-    // checking that would otherwise reject `null` for a `string` /
-    // `integer` / etc. base type.
-    if prop_schema.nullable && value.is_null() {
-        return;
-    }
-
     // 2. Type checking
     if let Some(expected_type) = &prop_schema.prop_type {
         let type_matches = match (expected_type.as_str(), value) {
@@ -3197,13 +2780,16 @@ mod tests {
 
     #[test]
     fn test_is_retryable_status_set_matches_docs() {
-        // All 5xx plus 408 and 429 are retryable (FER-10521).
-        for s in [408u16, 429, 500, 501, 502, 503, 504, 505, 599] {
+        // Matches fern TS SDK retryStatusCodes: recommended set:
+        // 408 / 429 / 502 / 503 / 504.
+        for s in [408u16, 429, 502, 503, 504] {
             assert!(is_retryable_status(s), "{s} should retry");
         }
-        // 4xx client errors (except 408/429) won't change on retry \u2014 see is_retryable_status
-        // and 2xx/3xx are obviously terminal.
-        for s in [200u16, 301, 400, 401, 403, 404, 422, 425] {
+        // 500 is deliberately NOT retried \u2014 see is_retryable_status
+        // docstring. 425 (Too Early), 501 Not Implemented, and other
+        // 5xx outside the recommended set are terminal. 4xx client
+        // errors won't change on retry, so they're terminal too.
+        for s in [200u16, 301, 400, 401, 403, 404, 422, 425, 500, 501, 505] {
             assert!(!is_retryable_status(s), "{s} should NOT retry");
         }
     }
@@ -3236,147 +2822,6 @@ mod tests {
         assert!(!binary_body_is_stdin(Some("@/tmp/audio.mp3")));
         // No binary body at all — retries decided by other policy.
         assert!(!binary_body_is_stdin(None));
-    }
-
-    #[test]
-    fn test_multipart_has_stdin() {
-        // File part with `-` — retries must be disabled.
-        assert!(multipart_has_stdin(&Some(vec![MultipartPart::File {
-            name: "file".into(),
-            path: "-".into(),
-            content_type: None,
-        }])));
-        // File part with `@-` — also stdin.
-        assert!(multipart_has_stdin(&Some(vec![MultipartPart::File {
-            name: "file".into(),
-            path: "@-".into(),
-            content_type: None,
-        }])));
-        // File part with real path — retries are safe.
-        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::File {
-            name: "file".into(),
-            path: "/tmp/upload.bin".into(),
-            content_type: None,
-        }])));
-        // Text-only parts — retries are safe.
-        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::Text {
-            name: "purpose".into(),
-            value: "test".into(),
-            content_type: None,
-        }])));
-        // Mixed: one stdin file + one text — still disables retries.
-        assert!(multipart_has_stdin(&Some(vec![
-            MultipartPart::Text {
-                name: "purpose".into(),
-                value: "test".into(),
-                content_type: None,
-            },
-            MultipartPart::File {
-                name: "file".into(),
-                path: "-".into(),
-                content_type: None,
-            },
-        ])));
-        // No multipart parts at all.
-        assert!(!multipart_has_stdin(&None));
-    }
-
-    #[test]
-    fn test_file_part_mime_defaults_and_override() {
-        // No per-part content type → OAS binary default.
-        assert_eq!(file_part_mime(None), "application/octet-stream");
-        // An encoding-supplied content type wins.
-        assert_eq!(file_part_mime(Some("image/png")), "image/png");
-        assert_eq!(file_part_mime(Some("text/plain")), "text/plain");
-    }
-
-    /// Send a built multipart form to a local mock server and return the raw
-    /// captured body so we can assert the per-part framing the wire carries.
-    /// reqwest serializes multipart forms as a stream, so the only faithful
-    /// way to inspect the bytes is to actually transmit them.
-    async fn multipart_body_string(parts: Vec<MultipartPart>) -> String {
-        use wiremock::matchers::method as wm_method;
-        use wiremock::{Mock, MockServer, ResponseTemplate};
-
-        let server = MockServer::start().await;
-        Mock::given(wm_method("POST"))
-            .respond_with(ResponseTemplate::new(200))
-            .mount(&server)
-            .await;
-
-        let client = reqwest::Client::new();
-        let form = build_multipart_form(&parts).await.unwrap();
-        client
-            .post(format!("{}/upload", server.uri()))
-            .multipart(form)
-            .send()
-            .await
-            .unwrap();
-
-        let received = server.received_requests().await.unwrap();
-        String::from_utf8_lossy(&received[0].body).into_owned()
-    }
-
-    #[tokio::test]
-    async fn test_build_multipart_form_text_part_uses_encoding_content_type() {
-        // A text part with an explicit encoding contentType emits that
-        // Content-Type header instead of the default text/plain.
-        let body = multipart_body_string(vec![MultipartPart::Text {
-            name: "metadata".into(),
-            value: "{\"k\":1}".into(),
-            content_type: Some("application/json".into()),
-        }])
-        .await;
-        assert!(
-            body.contains("Content-Disposition: form-data; name=\"metadata\""),
-            "text part should carry its Content-Disposition; got: {body}"
-        );
-        assert!(
-            body.contains("Content-Type: application/json"),
-            "text part Content-Type should come from encoding; got: {body}"
-        );
-        assert!(body.contains("{\"k\":1}"), "value should be in body; got: {body}");
-    }
-
-    #[tokio::test]
-    async fn test_build_multipart_form_file_part_default_octet_stream() {
-        // A file part without an encoding entry defaults to octet-stream.
-        let tmp = std::env::temp_dir().join("fern_multipart_default.bin");
-        std::fs::write(&tmp, b"payload-bytes").unwrap();
-        let body = multipart_body_string(vec![MultipartPart::File {
-            name: "file".into(),
-            path: tmp.to_string_lossy().into_owned(),
-            content_type: None,
-        }])
-        .await;
-        let _ = std::fs::remove_file(&tmp);
-        assert!(
-            body.contains("Content-Disposition: form-data; name=\"file\""),
-            "file part should carry its Content-Disposition; got: {body}"
-        );
-        assert!(
-            body.contains("Content-Type: application/octet-stream"),
-            "file part should default to octet-stream; got: {body}"
-        );
-        assert!(body.contains("payload-bytes"), "file bytes should stream; got: {body}");
-    }
-
-    #[tokio::test]
-    async fn test_build_multipart_form_file_part_honors_encoding_content_type() {
-        // A file part with an encoding contentType overrides the default.
-        let tmp = std::env::temp_dir().join("fern_multipart_override.png");
-        std::fs::write(&tmp, b"\x89PNG").unwrap();
-        let body = multipart_body_string(vec![MultipartPart::File {
-            name: "file".into(),
-            path: tmp.to_string_lossy().into_owned(),
-            content_type: Some("image/png".into()),
-        }])
-        .await;
-        let _ = std::fs::remove_file(&tmp);
-        assert!(
-            body.contains("Content-Type: image/png"),
-            "file part Content-Type should come from encoding; got: {body}"
-        );
     }
 
     #[test]
@@ -3814,7 +3259,6 @@ mod tests {
             0,
             &None,
             None,
-            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -3862,7 +3306,6 @@ mod tests {
             0,
             &None,
             None,
-            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -3914,7 +3357,6 @@ mod tests {
             0,
             &None,
             None,
-            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -4274,96 +3716,6 @@ mod tests {
     }
 
     #[test]
-    fn test_missing_body_param_hint_preserves_dot_notation() {
-        // Gap 1a: For a body param with dot-notation (e.g. `address.street`),
-        // the missing-required-param error must suggest `--address.street`
-        // (dots preserved via `to_kebab_flag`), NOT `--address-street`.
-        let mut parameters = std::collections::HashMap::new();
-        parameters.insert(
-            "address.street".to_string(),
-            MethodParameter {
-                location: Some("body".to_string()),
-                param_type: Some("string".to_string()),
-                required: true,
-                ..Default::default()
-            },
-        );
-
-        let method = RestMethod {
-            http_method: "POST".to_string(),
-            path: "contacts".to_string(),
-            parameters,
-            ..Default::default()
-        };
-        let doc = RestDescription {
-            base_url: Some("https://api.example.com/".to_string()),
-            ..Default::default()
-        };
-
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
-            .unwrap_err();
-        match err {
-            CliError::Validation(msg) => {
-                assert!(
-                    msg.contains("--address.street"),
-                    "hint must preserve dots for body params: {msg}",
-                );
-                assert!(
-                    !msg.contains("--address-street"),
-                    "hint must NOT kebab-ify dots to hyphens: {msg}",
-                );
-            }
-            other => panic!("expected Validation error, got {other:?}"),
-        }
-    }
-
-    #[test]
-    fn test_missing_param_hint_uses_builtin_collision_suffix() {
-        // Gap 1b: When a required param's flag name collides with a builtin
-        // (e.g. a param named `format`), the hint must suggest
-        // `--format-param` (the actually registered flag), NOT `--format`.
-        let mut parameters = std::collections::HashMap::new();
-        parameters.insert(
-            "format".to_string(),
-            MethodParameter {
-                location: Some("query".to_string()),
-                param_type: Some("string".to_string()),
-                required: true,
-                ..Default::default()
-            },
-        );
-
-        let method = RestMethod {
-            http_method: "GET".to_string(),
-            path: "reports".to_string(),
-            parameters,
-            ..Default::default()
-        };
-        let doc = RestDescription {
-            base_url: Some("https://api.example.com/".to_string()),
-            ..Default::default()
-        };
-
-        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
-            .unwrap_err();
-        match err {
-            CliError::Validation(msg) => {
-                assert!(
-                    msg.contains("--format-param"),
-                    "hint must use the -param suffixed flag for builtin collisions: {msg}",
-                );
-                // Verify it does NOT suggest bare `--format ` (with trailing
-                // space to avoid matching `--format-param`).
-                assert!(
-                    !msg.contains("--format ") && !msg.contains("--format,"),
-                    "hint must NOT suggest the bare builtin flag: {msg}",
-                );
-            }
-            other => panic!("expected Validation error, got {other:?}"),
-        }
-    }
-
-    #[test]
     fn test_per_field_body_flags_path_runs_schema_validation() {
         // Schema validation must run regardless of whether the body was
         // built from --json or from per-field flags. The previous version
@@ -4483,62 +3835,6 @@ mod tests {
 
         let body = json!({ "name": "My File" });
         assert!(validate_body_against_schema(&body, "File", &doc).is_ok());
-    }
-
-    #[test]
-    fn test_validate_body_accepts_null_on_nullable_property() {
-        // A property whose schema declares `nullable: true` must accept JSON
-        // null without raising "Expected type 'string', found null".
-        let mut properties = HashMap::new();
-        properties.insert(
-            "userId".to_string(),
-            JsonSchemaProperty {
-                prop_type: Some("string".to_string()),
-                nullable: true,
-                ..Default::default()
-            },
-        );
-        let schemas = HashMap::from([(
-            "Event".to_string(),
-            JsonSchema {
-                schema_type: Some("object".to_string()),
-                properties,
-                ..Default::default()
-            },
-        )]);
-        let doc = RestDescription { schemas, ..Default::default() };
-        let body = json!({ "userId": null });
-        assert!(
-            validate_body_against_schema(&body, "Event", &doc).is_ok(),
-            "JSON null on a nullable: true property must validate",
-        );
-    }
-
-    #[test]
-    fn test_validate_body_rejects_null_on_non_nullable_property() {
-        // Regression guard: a property with no `nullable` flag must still
-        // reject JSON null. Keeps the validator strict outside the explicit
-        // nullable opt-in.
-        let mut properties = HashMap::new();
-        properties.insert(
-            "code".to_string(),
-            JsonSchemaProperty {
-                prop_type: Some("string".to_string()),
-                ..Default::default()
-            },
-        );
-        let schemas = HashMap::from([(
-            "Item".to_string(),
-            JsonSchema {
-                schema_type: Some("object".to_string()),
-                properties,
-                ..Default::default()
-            },
-        )]);
-        let doc = RestDescription { schemas, ..Default::default() };
-        let body = json!({ "code": null });
-        let result = validate_body_against_schema(&body, "Item", &doc);
-        assert!(result.is_err(), "null on non-nullable property must still be rejected");
     }
 
     #[test]
@@ -5843,374 +5139,6 @@ mod tests {
         assert_eq!(result, vec![("q".to_string(), "hello".to_string())]);
     }
 
-    fn param_with(style: &str, explode: Option<bool>) -> MethodParameter {
-        MethodParameter {
-            style: Some(style.to_string()),
-            explode,
-            ..Default::default()
-        }
-    }
-
-    fn path_param(style: &str, explode: Option<bool>) -> MethodParameter {
-        MethodParameter {
-            location: Some("path".to_string()),
-            style: Some(style.to_string()),
-            explode,
-            ..Default::default()
-        }
-    }
-
-    // ── query-param style tests (from main) ──────────────────────────────
-
-    #[test]
-    fn test_serialize_space_delimited_array() {
-        // spaceDelimited joins elements with a literal space; the encoder
-        // turns that into `%20` on the wire.
-        let value = json!(["1", "2"]);
-        let result = serialize_query_param("ids", &value, Some(&param_with("spaceDelimited", Some(false))));
-        assert_eq!(result, vec![("ids".to_string(), "1 2".to_string())]);
-    }
-
-    #[test]
-    fn test_serialize_pipe_delimited_array() {
-        let value = json!(["1", "2"]);
-        let result = serialize_query_param("ids", &value, Some(&param_with("pipeDelimited", Some(false))));
-        assert_eq!(result, vec![("ids".to_string(), "1|2".to_string())]);
-    }
-
-    #[test]
-    fn test_serialize_delimited_scalar_degrades_to_value() {
-        // A non-array under a delimited style is just the scalar value.
-        let value = json!("solo");
-        let result = serialize_query_param("ids", &value, Some(&param_with("spaceDelimited", Some(false))));
-        assert_eq!(result, vec![("ids".to_string(), "solo".to_string())]);
-    }
-
-    #[test]
-    fn test_serialize_form_explode_object() {
-        // form/object/explode=true: each property becomes its own top-level
-        // key; the parameter name is dropped.
-        let value = json!({"role": "admin", "active": "true"});
-        let result = serialize_query_param("profile", &value, Some(&param_with("form", Some(true))));
-        assert!(result.contains(&("role".to_string(), "admin".to_string())), "got: {result:?}");
-        assert!(result.contains(&("active".to_string(), "true".to_string())), "got: {result:?}");
-        assert!(
-            !result.iter().any(|(k, _)| k == "profile"),
-            "parameter name must be dropped for exploded object; got: {result:?}"
-        );
-    }
-
-    #[test]
-    fn test_serialize_form_no_explode_object() {
-        // form/object/explode=false: comma-joined key,value pairs under the
-        // single parameter key.
-        let value = json!({"role": "admin"});
-        let result = serialize_query_param("profile", &value, Some(&param_with("form", Some(false))));
-        assert_eq!(result, vec![("profile".to_string(), "role,admin".to_string())]);
-    }
-
-    #[test]
-    fn test_encode_query_component_space_is_percent20_not_plus() {
-        // RFC 3986: a literal space encodes as %20, never the form `+`.
-        assert_eq!(encode_query_component("a b"), "a%20b");
-    }
-
-    #[test]
-    fn test_encode_query_component_reserved_chars() {
-        assert_eq!(encode_query_component("a&b=c#d"), "a%26b%3Dc%23d");
-        // Brackets (deepObject keys) are percent-encoded.
-        assert_eq!(encode_query_component("filter[status]"), "filter%5Bstatus%5D");
-        // The pipe delimiter encodes to %7C.
-        assert_eq!(encode_query_component("1|2"), "1%7C2");
-    }
-
-    #[test]
-    fn test_encode_query_component_comma_stays_literal() {
-        // The comma is the form/no-explode delimiter and must stay literal.
-        assert_eq!(encode_query_component("1,2"), "1,2");
-    }
-
-    #[test]
-    fn test_encode_query_component_unreserved_untouched() {
-        assert_eq!(encode_query_component("Aa0-_.~"), "Aa0-_.~");
-    }
-
-    #[test]
-    fn test_append_query_string_first_param_uses_question_mark() {
-        let pairs = vec![("ids".to_string(), "1 2".to_string())];
-        assert_eq!(
-            append_query_string("https://api.example.com/x", &pairs),
-            "https://api.example.com/x?ids=1%202"
-        );
-    }
-
-    #[test]
-    fn test_append_query_string_continues_existing_query() {
-        let pairs = vec![("b".to_string(), "2".to_string())];
-        assert_eq!(
-            append_query_string("https://api.example.com/x?a=1", &pairs),
-            "https://api.example.com/x?a=1&b=2"
-        );
-    }
-
-    #[test]
-    fn test_append_query_string_empty_pairs_is_unchanged() {
-        assert_eq!(
-            append_query_string("https://api.example.com/x", &[]),
-            "https://api.example.com/x"
-        );
-    }
-
-    #[test]
-    fn test_append_query_string_joins_multiple_with_ampersand() {
-        let pairs = vec![
-            ("role".to_string(), "admin".to_string()),
-            ("active".to_string(), "true".to_string()),
-        ];
-        assert_eq!(
-            append_query_string("https://api.example.com/x", &pairs),
-            "https://api.example.com/x?role=admin&active=true"
-        );
-    }
-
-    // ── header style tests (from main) ───────────────────────────────────
-
-    #[test]
-    fn test_serialize_header_simple_primitive() {
-        let v = serialize_header_simple(&json!("hello"), None).unwrap();
-        assert_eq!(v, "hello");
-    }
-
-    #[test]
-    fn test_serialize_header_simple_array_comma_joined() {
-        // simple/array: elements comma-joined, regardless of explode.
-        let value = json!(["a", "b"]);
-        let v = serialize_header_simple(&value, None).unwrap();
-        assert_eq!(v, "a,b");
-    }
-
-    #[test]
-    fn test_serialize_header_simple_object_no_explode() {
-        // simple/object explode=false -> k,v,k2,v2 (keys sorted by Map order).
-        let value = json!({"k": "v", "k2": "v2"});
-        let v = serialize_header_simple(
-            &value,
-            Some(&MethodParameter {
-                style: Some("simple".to_string()),
-                explode: Some(false),
-                ..Default::default()
-            }),
-        )
-        .unwrap();
-        assert_eq!(v, "k,v,k2,v2");
-    }
-
-    #[test]
-    fn test_serialize_header_simple_object_explode() {
-        // simple/object explode=true -> k=v,k2=v2.
-        let value = json!({"k": "v", "k2": "v2"});
-        let v = serialize_header_simple(
-            &value,
-            Some(&MethodParameter {
-                explode: Some(true),
-                ..Default::default()
-            }),
-        )
-        .unwrap();
-        assert_eq!(v, "k=v,k2=v2");
-    }
-
-    #[test]
-    fn test_serialize_header_simple_array_numbers() {
-        // non-string scalars render via value_to_query_string.
-        let value = json!([1, 2, 3]);
-        let v = serialize_header_simple(&value, None).unwrap();
-        assert_eq!(v, "1,2,3");
-    }
-
-    #[test]
-    fn test_serialize_header_simple_rejects_control_chars() {
-        // CR/LF in a value would enable header injection — must be rejected.
-        let value = json!("a\r\nInjected: yes");
-        assert!(serialize_header_simple(&value, None).is_err());
-    }
-
-    #[test]
-    fn test_serialize_header_simple_rejects_control_chars_in_array() {
-        let value = json!(["ok", "bad\nvalue"]);
-        assert!(serialize_header_simple(&value, None).is_err());
-    }
-
-    // ── path-param style tests ───────────────────────────────────────────
-
-    #[test]
-    fn test_serialize_path_param_default_simple_primitive() {
-        // No definition -> simple/primitive: just the encoded value.
-        assert_eq!(serialize_path_param("id", &json!("42"), None), "42");
-    }
-
-    #[test]
-    fn test_serialize_path_param_simple_array() {
-        let def = path_param("simple", Some(false));
-        assert_eq!(
-            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
-            "a,b"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_simple_object() {
-        // serde_json sorts object keys -> k1,v1,k2,v2 for this input.
-        let def = path_param("simple", Some(false));
-        assert_eq!(
-            serialize_path_param("filter", &json!({"k1": "v1", "k2": "v2"}), Some(&def)),
-            "k1,v1,k2,v2"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_simple_object_explode() {
-        let def = path_param("simple", Some(true));
-        assert_eq!(
-            serialize_path_param("filter", &json!({"k1": "v1", "k2": "v2"}), Some(&def)),
-            "k1=v1,k2=v2"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_label_primitive() {
-        let def = path_param("label", None);
-        assert_eq!(serialize_path_param("id", &json!("42"), Some(&def)), ".42");
-    }
-
-    #[test]
-    fn test_serialize_path_param_label_array() {
-        // label/array/explode=false: members comma-joined after leading dot.
-        let def = path_param("label", Some(false));
-        assert_eq!(
-            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
-            ".a,b"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_label_array_explode() {
-        // label/array/explode=true: members dot-joined after leading dot.
-        let def = path_param("label", Some(true));
-        assert_eq!(
-            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
-            ".a.b"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_label_object_no_explode() {
-        // label/object/explode=false: flat k,v,k,v comma-joined after leading dot.
-        let def = path_param("label", Some(false));
-        assert_eq!(
-            serialize_path_param("color", &json!({"R": "100", "G": "200"}), Some(&def)),
-            ".G,200,R,100"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_label_object_explode() {
-        // label/object/explode=true: k=v pairs dot-joined after leading dot.
-        let def = path_param("label", Some(true));
-        assert_eq!(
-            serialize_path_param("color", &json!({"R": "100", "G": "200"}), Some(&def)),
-            ".G=200.R=100"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_matrix_primitive() {
-        let def = path_param("matrix", None);
-        assert_eq!(
-            serialize_path_param("id", &json!("42"), Some(&def)),
-            ";id=42"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_matrix_array_no_explode() {
-        let def = path_param("matrix", Some(false));
-        assert_eq!(
-            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
-            ";ids=a,b"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_matrix_array_explode() {
-        let def = path_param("matrix", Some(true));
-        assert_eq!(
-            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
-            ";ids=a;ids=b"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_matrix_object_explode() {
-        // matrix/object/explode=true: each k=v gets its own ;k=v prefix.
-        let def = path_param("matrix", Some(true));
-        assert_eq!(
-            serialize_path_param("color", &json!({"R": "100", "G": "200"}), Some(&def)),
-            ";G=200;R=100"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_encodes_values_not_separators() {
-        // The structural commas stay literal; only the user values are
-        // percent-encoded (a space -> %20, a comma inside a value -> %2C).
-        let def = path_param("simple", Some(false));
-        assert_eq!(
-            serialize_path_param("ids", &json!(["a b", "c,d"]), Some(&def)),
-            "a%20b,c%2Cd"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_matrix_encodes_value_not_prefix() {
-        let def = path_param("matrix", None);
-        assert_eq!(
-            serialize_path_param("id", &json!("a b"), Some(&def)),
-            ";id=a%20b"
-        );
-    }
-
-    #[test]
-    fn test_serialize_path_param_simple_array_with_null() {
-        // A null element serializes as an empty string.
-        let def = path_param("simple", Some(false));
-        assert_eq!(
-            serialize_path_param("ids", &json!(["a", null, "b"]), Some(&def)),
-            "a,,b"
-        );
-    }
-
-    #[test]
-    fn test_render_path_template_label_style() {
-        let mut defs: HashMap<String, MethodParameter> = HashMap::new();
-        defs.insert("id".to_string(), path_param("label", None));
-        let mut params = Map::new();
-        params.insert("id".to_string(), json!("42"));
-        let rendered =
-            render_path_template("/path/label/{id}", &params, Some(&defs)).unwrap();
-        assert_eq!(rendered, "/path/label/.42");
-    }
-
-    #[test]
-    fn test_render_path_template_no_defs_falls_back_to_simple() {
-        // Base-path placeholders pass `None` for defs -> plain encoded value.
-        let mut params = Map::new();
-        params.insert("tenant".to_string(), json!("acme"));
-        let rendered =
-            render_path_template("/{tenant}/v1", &params, None).unwrap();
-        assert_eq!(rendered, "/acme/v1");
-    }
-
     #[test]
     fn test_get_nested_str_simple() {
         let val = json!({"nextPageToken": "tok123"});
@@ -7153,8 +6081,8 @@ mod tests {
     #[test]
     fn test_build_url_method_root_url_overrides_doc_root_url() {
         // Per-operation server override: method.root_url must win over doc.root_url.
-        // If this is broken, requests route to the wrong host (e.g. Box uploads
-        // go to api.box.com instead of upload.box.com).
+        // If this is broken, requests route to the wrong host (e.g. uploads
+        // go to api.example.com instead of upload.example.com).
         let doc = RestDescription {
             root_url: "https://api.example.com/".to_string(),
             service_path: "v1/".to_string(),
@@ -7252,7 +6180,6 @@ mod tests {
             0,
             &None,
             None,
-            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -7287,7 +6214,6 @@ mod tests {
                 0,
                 &None,
                 None,
-                &None,
                 &PaginationConfig::default(),
             )
             .await;
@@ -7674,7 +6600,6 @@ async fn test_execute_method_dry_run() {
         None,
         None,
         None,
-        None, // multipart_parts
         true, // dry_run
         &pagination,
         &crate::formatter::OutputPipeline::default(),
@@ -7722,7 +6647,6 @@ async fn test_execute_method_missing_path_param() {
         None,
         None,
         None,
-        None, // multipart_parts
         true,
         &PaginationConfig::default(),
         &crate::formatter::OutputPipeline::default(),
@@ -7780,7 +6704,6 @@ async fn test_post_without_body_sets_content_length_zero() {
         0,
         &None,
         None,
-        &None,
         &PaginationConfig::default(),
     )
     .await
@@ -7823,7 +6746,6 @@ async fn test_post_with_body_does_not_add_content_length_zero() {
         0,
         &None,
         None,
-        &None,
         &PaginationConfig::default(),
     )
     .await
@@ -7864,7 +6786,6 @@ async fn test_get_does_not_set_content_length_zero() {
         0,
         &None,
         None,
-        &None,
         &PaginationConfig::default(),
     )
     .await
@@ -7915,7 +6836,6 @@ async fn test_bearer_header_sends_bearer_prefix() {
         0,
         &None,
         None,
-        &None,
         &PaginationConfig::default(),
     )
     .await

@@ -433,22 +433,23 @@ impl RestDescription {
 
 /// Default total attempts (initial + retries) when retries are enabled.
 ///
-/// 4 total attempts = 3 retries. Matches the fern Python/TypeScript
-/// runtime SDKs. The spec author can override this with
+/// CLI users typically don't expect retries by default — they want fast,
+/// observable failures — so we ship a *conservative* default that retries
+/// at most once. The spec author can override this with
 /// `x-fern-retries: { max_attempts: N }`.
 ///
-/// This was raised from 2 (FER-10521) to align with the cross-SDK
-/// default and the expectation that transient 5xx / 429 / network
-/// failures benefit from multiple retry attempts. CLIs that are embedded in
+/// This is deliberately lower than the fern Python/TypeScript runtime SDKs
+/// (which default to 3 total attempts) because those SDKs are embedded in
 /// long-running applications where the latency of an extra retry is
 /// acceptable. The CLI is interactive — a 3-second backoff before the
 /// final failure feels broken.
-pub const DEFAULT_RETRY_MAX_ATTEMPTS: u32 = 4;
+pub const DEFAULT_RETRY_MAX_ATTEMPTS: u32 = 2;
 
 /// Default exponential-backoff base delay in milliseconds. The wait before
 /// retry N is `base * factor^N` (plus jitter). With
-/// [`DEFAULT_RETRY_MAX_ATTEMPTS`] = 4 the delays are 500ms, 1s, 2s.
-pub const DEFAULT_RETRY_BASE_DELAY_MS: u64 = 500;
+/// [`DEFAULT_RETRY_MAX_ATTEMPTS`] = 2 the single retry happens after
+/// `base * factor^0` = 250ms.
+pub const DEFAULT_RETRY_BASE_DELAY_MS: u64 = 250;
 
 /// Default exponential-backoff growth factor.
 pub const DEFAULT_RETRY_FACTOR: f64 = 2.0;
@@ -571,12 +572,6 @@ pub struct RestMethod {
     /// type.
     #[serde(default)]
     pub binary_request_body: Option<BinaryRequestBody>,
-    /// Fields for a `multipart/form-data` request body. When non-empty, the
-    /// executor sends the request as multipart instead of JSON, and each
-    /// field surfaces as a per-operation CLI flag. Empty for non-multipart
-    /// operations.
-    #[serde(default, skip)]
-    pub multipart_fields: Vec<MultipartField>,
     /// How the request body should be serialized on the wire.
     ///
     /// Defaults to `BodyEncoding::Json`. The executor reads this to decide
@@ -650,11 +645,6 @@ pub struct RestMethod {
     /// stream.
     #[serde(default, skip)]
     pub streaming: Option<StreamingConfig>,
-    /// When `true`, the executor does NOT auto-generate an
-    /// `Idempotency-Key` header for this operation even though it uses
-    /// POST/PUT/PATCH. Set from `x-fern-cli-idempotency: false`.
-    #[serde(default, skip)]
-    pub no_auto_idempotency_key: bool,
     /// Resolved `x-fern-retries` extension for this operation, after
     /// applying root-level inheritance (per-op `true` adopts the spec-root
     /// baseline; per-op object merges field-by-field over root). `None`
@@ -837,29 +827,6 @@ pub struct BinaryRequestBody {
     pub flag_name: String,
 }
 
-/// A single field in a `multipart/form-data` request body. Each field
-/// becomes a CLI flag whose value is sent as one part in the multipart
-/// body. File-typed fields accept a filesystem path (or `@path` /
-/// `-` for stdin) and are streamed as binary parts with the appropriate
-/// content type.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct MultipartField {
-    /// Wire name sent as the `name` in `Content-Disposition: form-data; name="..."`.
-    pub wire_name: String,
-    /// `true` when the field's schema is `type: string, format: binary`
-    /// (or `type: file`). File fields accept a path and stream the
-    /// contents; text fields send the flag value as a UTF-8 text part.
-    pub is_file: bool,
-    /// Human-readable description from the spec (surfaces in `--help`).
-    pub description: Option<String>,
-    /// Whether the spec marks this field as required.
-    pub required: bool,
-    /// Content type hint for file parts (e.g. `application/octet-stream`).
-    /// Only meaningful when `is_file` is true; text parts always use
-    /// `text/plain; charset=utf-8`.
-    pub content_type: Option<String>,
-}
-
 /// Media upload metadata.
 #[derive(Debug, Clone, Deserialize, Default)]
 pub struct MediaUpload {
@@ -947,15 +914,6 @@ pub struct MethodParameter {
     /// implicit default (no badge).
     #[serde(default)]
     pub availability: Option<Availability>,
-    /// True when this body parameter's schema admits JSON `null` as a valid
-    /// value (OpenAPI 3.0 `nullable: true` or 3.1 `type: [..., "null"]`).
-    /// Gated on scalar `param_type` (`string` / `integer` / `number` /
-    /// `boolean`) — composite types stay false because the null sentinel
-    /// surface is scalar-only (see ADR-0003). When true, the CLI accepts
-    /// the literal `null` as a flag value and converts it to `Value::Null`
-    /// at request-build time.
-    #[serde(default)]
-    pub nullable: bool,
     /// Optional environment variable that supplies a default value when
     /// the corresponding CLI flag is not passed. Populated for synthetic
     /// parameters injected by Fern extensions (e.g. idempotency headers);

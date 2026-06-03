@@ -135,36 +135,6 @@ pub fn render_auth_help_section(bindings: &[(String, SchemeBinding)]) -> Option<
     Some(out)
 }
 
-/// Render the optional-layer rows for the `--help` "Authentication:" block.
-///
-/// Layers are additive supplementary headers (e.g. a sandbox-only token) that
-/// are attached on top of the primary auth when their credential is present.
-/// Each row is rendered as `  <name>   <hints> (optional)` and the block is
-/// returned *without* the `Authentication:` heading so the caller can append
-/// it under [`render_auth_help_section`]'s output (or supply the heading
-/// itself when there are no primary bindings).
-///
-/// Returns `None` when there are no layers.
-pub fn render_auth_layers_help(layers: &[(String, Vec<String>)]) -> Option<String> {
-    if layers.is_empty() {
-        return None;
-    }
-    let max_name = layers.iter().map(|(n, _)| n.len()).max().unwrap_or(0).max(8);
-    let mut out = String::new();
-    for (name, hints) in layers {
-        let sources = if hints.is_empty() {
-            "custom (optional)".to_string()
-        } else {
-            format!("{} (optional)", hints.join(" / "))
-        };
-        let _ = std::fmt::Write::write_fmt(
-            &mut out,
-            format_args!("  {name:<max_name$}   {sources}\n"),
-        );
-    }
-    Some(out)
-}
-
 fn describe_binding_sources(binding: &SchemeBinding) -> String {
     match binding {
         SchemeBinding::Token(src) => describe_credential_source(src),
@@ -185,8 +155,7 @@ fn describe_credential_source(src: &AuthCredentialSource) -> String {
         AuthCredentialSource::Cli(arg) => format!("--{arg} flag"),
         AuthCredentialSource::File(path) => format!("{} file", path.display()),
         AuthCredentialSource::Literal(_) => "built-in literal".to_string(),
-        AuthCredentialSource::Closure(_, Some(hint)) => hint.clone(),
-        AuthCredentialSource::Closure(_, None) => "custom resolver".to_string(),
+        AuthCredentialSource::Closure(_) => "custom resolver".to_string(),
         AuthCredentialSource::Chain(sources) => sources
             .iter()
             .map(describe_credential_source)
@@ -865,30 +834,6 @@ mod tests {
     }
 
     #[test]
-    fn render_auth_layers_help_none_for_empty() {
-        assert!(render_auth_layers_help(&[]).is_none());
-    }
-
-    #[test]
-    fn render_auth_layers_help_marks_optional_with_hints() {
-        let layers = vec![(
-            "sandboxAuthorization".to_string(),
-            vec!["SANDBOXES_TOKEN environment variable".to_string()],
-        )];
-        let out = render_auth_layers_help(&layers).unwrap();
-        assert!(out.contains("sandboxAuthorization"));
-        assert!(out.contains("SANDBOXES_TOKEN environment variable"));
-        assert!(out.contains("(optional)"));
-    }
-
-    #[test]
-    fn render_auth_layers_help_handles_hintless_layer() {
-        let layers = vec![("x".to_string(), Vec::new())];
-        let out = render_auth_layers_help(&layers).unwrap();
-        assert!(out.contains("custom (optional)"));
-    }
-
-    #[test]
     fn render_auth_help_section_marks_custom_provider_opaque() {
         let bindings = vec![(
             "x".to_string(),
@@ -912,4 +857,5 @@ mod tests {
         let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-custom").as_deref(), Some("c"));
     }
+
 }

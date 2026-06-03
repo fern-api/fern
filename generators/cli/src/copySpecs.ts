@@ -65,9 +65,9 @@ export async function copySpecs(args: {
     authBindings: DetectedAuthBinding[];
     specsDir?: string;
     /** When true, emit `mod custom;` + `custom::register(app)` in main.rs. */
-    embedSdk?: boolean;
+    embedTypes?: boolean;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir, embedSdk } = args;
+    const { outputDir, binaryName, authBindings, specsDir, embedTypes } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -90,11 +90,11 @@ export async function copySpecs(args: {
 
     await writeFile(
         path.join(binDir, "main.rs"),
-        renderMainRs({ binaryName, entries, authBindings, embedSdk: embedSdk ?? false })
+        renderMainRs({ binaryName, entries, authBindings, embedTypes: embedTypes ?? false })
     );
 
-    // Scaffold custom.rs for user-authored async command handlers.
-    if (embedSdk === true) {
+    // Scaffold custom.rs for user-authored command handlers.
+    if (embedTypes === true) {
         await scaffoldCustomRs(binDir, binaryName);
     }
 }
@@ -118,16 +118,17 @@ async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<voi
     } catch (_e: unknown) {
         // does not exist — scaffold it below
     }
-    const sdkCrate = `${binaryName.replace(/-/g, "_")}_sdk`;
+    const typesCrate = `${binaryName.replace(/-/g, "_")}_types`;
     const content = [
         "//! Custom command handlers.",
         "//!",
         "//! This file is yours to edit — it is listed in `.fernignore` so",
         "//! `fern generate` will never overwrite your changes.",
         "//!",
-        "//! Each handler is an `async fn` that receives an `AppContext` with a",
-        "//! pre-wired, strongly-typed SDK client accessible via `ctx.client()`.",
-        "//! Return values flow through the CLI's output pipeline via `ctx.emit()`.",
+        "//! Each handler receives an `AppContext` with `invoke()` / `execute()`",
+        "//! methods that use the CLI's native HTTP executor. Combine these with",
+        `//! the typed request/response structs from \`${typesCrate}\` for`,
+        "//! strongly-typed serialization and deserialization.",
         "",
         "use fern_cli_sdk::app::CliApp;",
         "",
@@ -136,14 +137,17 @@ async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<voi
         "/// Called from `main.rs` during startup. Add `.custom_command(...)` calls",
         "/// here to extend the generated CLI with your own subcommands.",
         "pub fn register(app: CliApp) -> CliApp {",
-        "    // Example:",
-        '    //   app.custom_command("my-cmd", "Description", |ctx| {',
-        "    //       Box::pin(async move {",
-        `    //           let client = ctx.client::<${sdkCrate}::Client>();`,
-        "    //           let resp = client.some_endpoint().await?;",
-        "    //           ctx.emit(&resp)?;",
-        "    //           Ok(())",
-        "    //       })",
+        "    // Example using ctx.invoke() with typed request/response structs:",
+        "    //",
+        `    //   use ${typesCrate}::SomeRequest;`,
+        "    //",
+        '    //   app.custom_command("deploy", "Run a deployment", |matches, ctx| {',
+        '    //       let method = ctx.find_method("deployments", "create")?;',
+        "    //       let req = SomeRequest { /* ... */ };",
+        '    //       let body = serde_json::to_string(&req).unwrap();',
+        "    //       let result = ctx.invoke(method, None, Some(&body), None)?;",
+        "    //       ctx.emit(&result)?;",
+        "    //       Ok(())",
         "    //   })",
         "    app",
         "}",
@@ -156,9 +160,9 @@ function renderMainRs(args: {
     binaryName: string;
     entries: SpecEntry[];
     authBindings: DetectedAuthBinding[];
-    embedSdk: boolean;
+    embedTypes: boolean;
 }): string {
-    const { binaryName, entries, authBindings, embedSdk } = args;
+    const { binaryName, entries, authBindings, embedTypes } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -184,7 +188,7 @@ function renderMainRs(args: {
         ""
     ];
 
-    if (embedSdk) {
+    if (embedTypes) {
         lines.push("mod custom;");
         lines.push("");
     }
@@ -213,7 +217,7 @@ function renderMainRs(args: {
     // Close the binding
     lines.push("        );");
 
-    if (embedSdk) {
+    if (embedTypes) {
         lines.push("");
         lines.push("    let app = custom::register(app);");
     }

@@ -104,13 +104,6 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         self.has_credentials()
     }
 
-    /// Human-readable hints about where this provider reads its credentials
-    /// from. Used by the friendly auth-error path to tell the user which
-    /// env var / CLI flag / file to set.
-    fn credential_hints(&self) -> Vec<String> {
-        Vec::new()
-    }
-
     /// Apply the scheme to `request`. Implementations should be a no-op if
     /// they can't satisfy the request (e.g., no env var set), so wrappers can
     /// fall through. Hard errors (malformed token bytes) are surfaced via

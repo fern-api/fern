@@ -4,7 +4,7 @@
 
 use std::sync::Arc;
 
-use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider};
+use crate::auth::{AuthCredentialSource, DynAuthProvider};
 use crate::binding::{Binding, BoxFuture, DispatchResult};
 use crate::error::CliError;
 use crate::openapi::commands;
@@ -132,33 +132,6 @@ impl OpenApiBinding {
         self
     }
 
-    /// Pin how multiple auth schemes compose. See [`AuthStrategy`].
-    pub fn auth_strategy(mut self, strategy: AuthStrategy) -> Self {
-        self.inner = self.inner.auth_strategy(strategy);
-        self
-    }
-
-    /// Register an additive auth layer applied on top of the primary auth
-    /// whenever its credential is present. See [`CliApp::auth_layer`].
-    ///
-    /// [`CliApp::auth_layer`]: crate::openapi::app::CliApp::auth_layer
-    pub fn auth_layer(
-        mut self,
-        provider: impl crate::auth::provider::AuthProvider + 'static,
-    ) -> Self {
-        self.inner = self.inner.auth_layer(provider);
-        self
-    }
-
-    /// Register a pre-built shared additive auth layer.
-    /// See [`CliApp::auth_layer_shared`].
-    ///
-    /// [`CliApp::auth_layer_shared`]: crate::openapi::app::CliApp::auth_layer_shared
-    pub fn auth_layer_shared(mut self, provider: crate::auth::DynAuthProvider) -> Self {
-        self.inner = self.inner.auth_layer_shared(provider);
-        self
-    }
-
     /// Bind HTTP Basic auth for the named scheme.
     pub fn auth_basic_scheme(
         mut self,
@@ -263,28 +236,20 @@ impl OpenApiBinding {
                 Some((h.header.clone(), val))
             })
             .collect();
-        // Retain the finalized auth bindings so AppContext::client_config()
-        // can resolve credential values directly for the embedded SDK bridge.
-        let finalized_bindings = if cli_auth_args.is_empty() {
-            self.inner.auth_bindings.clone()
-        } else {
-            let matches_arc = std::sync::Arc::new(matches.clone());
-            crate::auth::finalize_bindings(self.inner.auth_bindings.clone(), &matches_arc)
-        };
-
         Ok(super::app::BindingEntry {
             doc: doc.clone(),
             auth_provider,
             http_config: prepared.http_config.clone(),
             global_headers,
-            auth_bindings: finalized_bindings,
         })
     }
 
-    /// Wrap a **sync** handler function into a [`CliCommandHandler`].
+    /// Wrap a typed handler function into a [`CliCommandHandler`] that
+    /// automatically downcasts the binding context to
+    /// [`AppContext`](super::AppContext).
     ///
-    /// The handler is executed inside a ready-made future so existing
-    /// sync handlers keep working after the async migration.
+    /// Use this with [`CliApp::command()`](crate::app::CliApp::command)
+    /// or [`CliApp::command_under()`](crate::app::CliApp::command_under):
     ///
     /// ```rust,ignore
     /// CliApp::new("my-cli")
@@ -295,46 +260,12 @@ impl OpenApiBinding {
     pub fn handler(
         f: fn(&clap::ArgMatches, &super::AppContext) -> Result<(), crate::error::CliError>,
     ) -> crate::app::CliCommandHandler {
-        Box::new(move |matches: &clap::ArgMatches, ctx: &(dyn std::any::Any + Send + Sync)| {
-            let result = (|| {
-                let ctx = ctx.downcast_ref::<super::AppContext>().ok_or_else(|| {
-                    crate::error::CliError::Validation(
-                        "handler requires an OpenAPI binding context".into(),
-                    )
-                })?;
-                f(matches, ctx)
-            })();
-            Box::pin(async move { result })
-        })
-    }
-
-    /// Wrap a native **async** handler into a [`CliCommandHandler`].
-    ///
-    /// Use this for custom commands that need to `await` SDK calls:
-    ///
-    /// ```rust,ignore
-    /// OpenApiBinding::async_handler(|m, ctx| Box::pin(my_async_fn(m, ctx)))
-    /// ```
-    pub fn async_handler(
-        f: for<'a> fn(
-            &'a clap::ArgMatches,
-            &'a super::AppContext,
-        ) -> std::pin::Pin<
-            Box<dyn std::future::Future<Output = Result<(), crate::error::CliError>> + Send + 'a>,
-        >,
-    ) -> crate::app::CliCommandHandler {
-        Box::new(move |matches: &clap::ArgMatches, ctx: &(dyn std::any::Any + Send + Sync)| {
-            let ctx = match ctx.downcast_ref::<super::AppContext>() {
-                Some(ctx) => ctx,
-                None => {
-                    return Box::pin(async {
-                        Err(crate::error::CliError::Validation(
-                            "async_handler requires an OpenAPI binding context".into(),
-                        ))
-                    })
-                        as std::pin::Pin<Box<dyn std::future::Future<Output = _> + Send + '_>>;
-                }
-            };
+        Box::new(move |matches: &clap::ArgMatches, ctx: &dyn std::any::Any| {
+            let ctx = ctx.downcast_ref::<super::AppContext>().ok_or_else(|| {
+                crate::error::CliError::Validation(
+                    "handler requires an OpenAPI binding context".into(),
+                )
+            })?;
             f(matches, ctx)
         })
     }
@@ -381,8 +312,8 @@ impl Binding for OpenApiBinding {
         if !missing.is_empty() {
             missing.sort();
             // Warn rather than fail — multi-spec binaries may intentionally
-            // bind only a subset of schemes (e.g. Twilio binds basic auth
-            // but not the IAM OAuth2 schemes).
+            // bind only a subset of schemes (e.g. basic auth
+            // but not the OAuth2 schemes).
             tracing::warn!(
                 "Spec declares security scheme(s) [{}] with no .auth() binding. \
                  Those endpoints will run unauthenticated.",
@@ -570,10 +501,6 @@ impl Binding for OpenApiBinding {
             };
             let output_path = output_path_buf.as_deref().and_then(|p| p.to_str());
 
-            // Collect multipart/form-data parts from CLI flags for operations
-            // that declare a `multipart/form-data` body. `None` for all others.
-            let multipart_parts = super::app::collect_multipart_parts(method, matched_args)?;
-
             // Execute with capture_output = true to get the Value back
             // instead of printing to stdout.
             let result = executor::execute_method(
@@ -585,7 +512,6 @@ impl Binding for OpenApiBinding {
                 output_path,
                 None,  // upload
                 binary_body_path,
-                multipart_parts,
                 dry_run,
                 &pagination,
                 &crate::formatter::OutputPipeline::default(),
@@ -617,16 +543,12 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
-        let base_url = crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
-        let bindings = entry.auth_bindings.clone();
-        let ctx = super::AppContext::new_with_bindings(
+        let ctx = super::AppContext::new(
             entry.doc,
             entry.auth_provider,
             entry.http_config,
             entry.global_headers,
-            bindings,
-        ).with_quiet(quiet)
-         .with_base_url(base_url);
+        ).with_quiet(quiet);
         Ok(Some(Box::new(ctx)))
     }
 
@@ -642,38 +564,32 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
-        let base_url = crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {
                     ctx.add_entry(entry);
-                    ctx.set_base_url(base_url);
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
-                    let bindings = entry.auth_bindings.clone();
-                    let ctx = super::AppContext::new_with_bindings(
+                    // Different binding type — start a new AppContext,
+                    // discard the incompatible context.
+                    let ctx = super::AppContext::new(
                         entry.doc,
                         entry.auth_provider,
                         entry.http_config,
                         entry.global_headers,
-                        bindings,
-                    ).with_quiet(quiet)
-                     .with_base_url(base_url);
+                    ).with_quiet(quiet);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
             },
             None => {
-                let bindings = entry.auth_bindings.clone();
-                let ctx = super::AppContext::new_with_bindings(
+                let ctx = super::AppContext::new(
                     entry.doc,
                     entry.auth_provider,
                     entry.http_config,
                     entry.global_headers,
-                    bindings,
-                ).with_quiet(quiet)
-                 .with_base_url(base_url);
+                ).with_quiet(quiet);
                 Ok(Some(Box::new(ctx)))
             }
         }

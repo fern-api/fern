@@ -1,9 +1,0 @@
-{
-  "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-cli-generator",
-  "generatorVersion": "local",
-  "generatorConfig": {},
-  "originGitCommit": "DUMMY",
-  "invokedBy": "manual",
-  "requestedVersion": "0.0.1"
-}

@@ -26,7 +26,7 @@
 //! - [`schemes`] — concrete [`BearerAuthProvider`], [`BasicAuthProvider`],
 //!   and [`HeaderAuthProvider`] implementations.
 //! - [`compose`] — composition wrappers: [`AnyAuthProvider`],
-//!   [`AllAuthProvider`], [`LayeredAuthProvider`], [`RoutingAuthProvider`].
+//!   [`AllAuthProvider`], [`RoutingAuthProvider`].
 //! - [`builder`] — [`SchemeBinding`], [`AuthStrategy`], and the
 //!   `build_provider_*` factories that `CliApp` calls.
 //! - [`error`] — auth-aware HTTP error mapping (`handle_error_response`).
@@ -47,11 +47,11 @@ pub(crate) mod test_helpers;
 
 pub use builder::{
     build_provider_from_bindings, build_provider_from_doc, build_provider_with_strategy,
-    collect_binding_cli_args, finalize_bindings, render_auth_help_section, render_auth_layers_help,
-    AuthStrategy, SchemeBinding,
+    collect_binding_cli_args, finalize_bindings, render_auth_help_section, AuthStrategy,
+    SchemeBinding,
 };
 pub use error::handle_error_response;
-pub use compose::{AllAuthProvider, AnyAuthProvider, LayeredAuthProvider, RoutingAuthProvider};
+pub use compose::{AllAuthProvider, AnyAuthProvider, RoutingAuthProvider};
 pub use credential::AuthCredentialSource;
 pub use provider::{
     no_auth_provider, AuthProvider, DynAuthProvider, EndpointAuthMetadata, NoAuthProvider,

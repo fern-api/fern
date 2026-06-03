@@ -22,12 +22,6 @@ struct Prepared {
 #[must_use]
 pub struct GraphqlBinding {
     inner: super::CliApp,
-    /// When set, the entire GraphQL surface is mounted under this single
-    /// top-level command (e.g. `graphql`) instead of contributing its
-    /// resource groups directly at the root. Lets a GraphQL binding
-    /// coexist with another binding whose group names would otherwise
-    /// collide (e.g. an OpenAPI binding for the same vendor).
-    prefix: Option<String>,
     prepared: std::sync::Mutex<Option<Arc<Prepared>>>,
 }
 
@@ -35,7 +29,6 @@ impl Default for GraphqlBinding {
     fn default() -> Self {
         Self {
             inner: super::CliApp::new(""),
-            prefix: None,
             prepared: std::sync::Mutex::new(None),
         }
     }
@@ -58,17 +51,6 @@ impl GraphqlBinding {
         self
     }
 
-    /// Mount the entire GraphQL surface under a single top-level command.
-    ///
-    /// Without this, the binding contributes its resource groups directly
-    /// at the CLI root (`<cli> payment …`). With `.under("graphql")`, the
-    /// same surface is reachable as `<cli> graphql payment …`, freeing the
-    /// root namespace for another binding (e.g. a REST `OpenApiBinding`).
-    pub fn under(mut self, prefix: &str) -> Self {
-        self.prefix = Some(prefix.to_string());
-        self
-    }
-
     pub fn auth_scheme_env(mut self, scheme_name: &str, env_var: &str) -> Self {
         self.inner = self.inner.auth_scheme_env(scheme_name, env_var);
         self
@@ -76,6 +58,16 @@ impl GraphqlBinding {
 
     pub fn auth_scheme(mut self, scheme_name: &str, source: AuthCredentialSource) -> Self {
         self.inner = self.inner.auth_scheme(scheme_name, source);
+        self
+    }
+
+    pub fn auth_basic_scheme(
+        mut self,
+        scheme_name: &str,
+        username: AuthCredentialSource,
+        password: AuthCredentialSource,
+    ) -> Self {
+        self.inner = self.inner.auth_basic_scheme(scheme_name, username, password);
         self
     }
 
@@ -102,20 +94,7 @@ impl GraphqlBinding {
                 "No endpoint provided. Call .endpoint() on GraphqlBinding.".to_string(),
             )
         })?;
-        let mut doc = crate::graphql::load_graphql_schema(json, &self.inner.name, endpoint)?;
-
-        // If a prefix is configured, nest every top-level resource under a
-        // single synthetic resource. `build_cli`, `resolve_method_from_matches`,
-        // and the JSON-help walk all recurse through `resources`, so this is
-        // all that's needed to mount the whole surface under `<prefix>`.
-        if let Some(prefix) = &self.prefix {
-            let original = std::mem::take(&mut doc.resources);
-            let wrapper = crate::graphql::discovery::GraphQLResource {
-                methods: std::collections::HashMap::new(),
-                resources: original,
-            };
-            doc.resources = std::collections::HashMap::from([(prefix.clone(), wrapper)]);
-        }
+        let doc = crate::graphql::load_graphql_schema(json, &self.inner.name, endpoint)?;
 
         let http_config = crate::http::HttpConfig::new(&self.inner.name)?
             .with_parsed_root_certs(
@@ -162,47 +141,21 @@ impl GraphqlBinding {
         })
     }
 
-    /// Wrap a **sync** handler function into a [`CliCommandHandler`].
+    /// Wrap a typed handler function into a [`CliCommandHandler`] that
+    /// automatically downcasts the binding context to
+    /// [`AppContext`](super::AppContext).
     ///
-    /// The handler is executed inside a ready-made future so existing
-    /// sync handlers keep working after the async migration.
+    /// Use this with [`CliApp::command()`](crate::app::CliApp::command)
+    /// or [`CliApp::command_under()`](crate::app::CliApp::command_under).
     pub fn handler(
         f: fn(&clap::ArgMatches, &super::AppContext) -> Result<(), crate::error::CliError>,
     ) -> crate::app::CliCommandHandler {
-        Box::new(move |matches: &clap::ArgMatches, ctx: &(dyn std::any::Any + Send + Sync)| {
-            let result = (|| {
-                let ctx = ctx.downcast_ref::<super::AppContext>().ok_or_else(|| {
-                    crate::error::CliError::Validation(
-                        "handler requires a GraphQL binding context".into(),
-                    )
-                })?;
-                f(matches, ctx)
-            })();
-            Box::pin(async move { result })
-        })
-    }
-
-    /// Wrap a native **async** handler into a [`CliCommandHandler`].
-    pub fn async_handler(
-        f: for<'a> fn(
-            &'a clap::ArgMatches,
-            &'a super::AppContext,
-        ) -> std::pin::Pin<
-            Box<dyn std::future::Future<Output = Result<(), crate::error::CliError>> + Send + 'a>,
-        >,
-    ) -> crate::app::CliCommandHandler {
-        Box::new(move |matches: &clap::ArgMatches, ctx: &(dyn std::any::Any + Send + Sync)| {
-            let ctx = match ctx.downcast_ref::<super::AppContext>() {
-                Some(ctx) => ctx,
-                None => {
-                    return Box::pin(async {
-                        Err(crate::error::CliError::Validation(
-                            "async_handler requires a GraphQL binding context".into(),
-                        ))
-                    })
-                        as std::pin::Pin<Box<dyn std::future::Future<Output = _> + Send + '_>>;
-                }
-            };
+        Box::new(move |matches: &clap::ArgMatches, ctx: &dyn std::any::Any| {
+            let ctx = ctx.downcast_ref::<super::AppContext>().ok_or_else(|| {
+                crate::error::CliError::Validation(
+                    "handler requires a GraphQL binding context".into(),
+                )
+            })?;
             f(matches, ctx)
         })
     }
@@ -316,15 +269,6 @@ impl Binding for GraphqlBinding {
             let dry_run = matched_args.get_flag("dry-run");
             let pagination = super::app::build_pagination_config(matched_args);
 
-            // `--no-retry` is a global debug opt-out; read it safely so an
-            // unmatched flag is a clean `false` rather than a panic.
-            let no_retry = matched_args
-                .try_get_one::<bool>("no-retry")
-                .ok()
-                .flatten()
-                .copied()
-                .unwrap_or(false);
-
             let base_url_override_owned =
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let base_url_override = base_url_override_owned.as_deref();
@@ -341,7 +285,6 @@ impl Binding for GraphqlBinding {
                 true, // capture_output
                 base_url_override,
                 &prepared.http_config,
-                no_retry,
             )
             .await?;
 

@@ -18,8 +18,8 @@ import path from "path";
  * No-op when the file doesn't exist (e.g. if a future change removes
  * the dist-workspace.toml from the SDK template entirely).
  */
-export async function patchDistWorkspaceToml(args: { outputDir: string; sdkCrateName?: string }): Promise<void> {
-    const { outputDir, sdkCrateName } = args;
+export async function patchDistWorkspaceToml(args: { outputDir: string; typesCrateName?: string }): Promise<void> {
+    const { outputDir, typesCrateName } = args;
     const distTomlPath = path.join(outputDir, "dist-workspace.toml");
     let contents: string;
     try {
@@ -28,8 +28,8 @@ export async function patchDistWorkspaceToml(args: { outputDir: string; sdkCrate
         return;
     }
 
-    if (sdkCrateName != null) {
-        const patched = addWorkspaceMember(contents, sdkCrateName);
+    if (typesCrateName != null) {
+        const patched = addWorkspaceMember(contents, typesCrateName);
         await writeFile(distTomlPath, patched);
         return;
     }
@@ -52,12 +52,12 @@ export function applyDistWorkspacePatch(distToml: string): string {
 }
 
 /**
- * Add an SDK crate as a workspace member. Inserts a `members` array
+ * Add a types crate as a workspace member. Inserts a `members` array
  * entry under `[workspace]` if the section exists, or appends a new
  * `[workspace]` section.
  */
-export function addWorkspaceMember(distToml: string, sdkCrateName: string): string {
-    const memberLine = `"${sdkCrateName}"`;
+export function addWorkspaceMember(distToml: string, typesCrateName: string): string {
+    const memberLine = `"${typesCrateName}"`;
     // Look for existing [workspace] with members = [...]
     const workspaceMatch = distToml.match(/(\[workspace\]\s*\nmembers\s*=\s*\[)([^\]]*)\]/);
     if (workspaceMatch != null) {

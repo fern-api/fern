@@ -5,14 +5,12 @@
 use clap::builder::{PossibleValue, PossibleValuesParser};
 use clap::{Arg, Command};
 
-use std::borrow::Cow;
 use std::collections::HashMap;
 
 use crate::openapi::discovery::{
-    Availability, FernEnumValue, MethodParameter, MultipartField, RestDescription, RestResource,
-    SdkGroupInfo,
+    Availability, FernEnumValue, MethodParameter, RestDescription, RestResource, SdkGroupInfo,
 };
-use crate::text::{sanitize_flag_name, to_kebab_flag};
+use crate::text::to_kebab_flag;
 
 /// Filter the document in-place so only operations matching at least
 /// one of `active_audiences` survive into the command tree. Mirrors
@@ -334,17 +332,6 @@ fn build_resource_command(
             );
         }
 
-        // Add per-field flags for multipart/form-data operations.
-        // Skip fields whose kebab name collides with a builtin flag,
-        // matching the regular-param convention above.
-        for field in &method.multipart_fields {
-            let kebab = to_kebab_flag(&field.wire_name);
-            if BUILTIN_FLAG_NAMES.contains(&kebab.as_str()) {
-                continue;
-            }
-            method_cmd = method_cmd.arg(build_multipart_field_arg(field));
-        }
-
         // Pagination flags
         method_cmd = method_cmd
             .arg(
@@ -403,57 +390,50 @@ fn build_resource_command(
             );
         }
 
-        // Generate individual flags from method parameters.
-        //
-        // Track (sanitized_flag → wire_name) to detect collisions where
-        // two distinct wire names produce the same CLI flag.
-        let mut flag_to_wire: HashMap<String, String> = HashMap::new();
-
+        // Generate individual flags from method parameters
         let mut param_names: Vec<_> = method.parameters.keys().collect();
         param_names.sort();
         for param_name in param_names {
             let param = &method.parameters[param_name];
 
-            // Flag name resolution uses `resolve_param_flag_name` — the
-            // single source of truth shared with the executor's
-            // missing-param hint (FER-10430).
-            let kebab_name = match resolve_param_flag_name(param, param_name) {
-                Some(name) => name,
-                None => {
-                    tracing::warn!(
-                        param = %param_name,
-                        "skipping parameter with unsanitizable name",
-                    );
-                    continue;
-                }
+            // Flag name resolution:
+            //   1. `flag_name_override` (set verbatim, no kebab pass) —
+            //      populated only by synthetic Fern-extension injections
+            //      (currently `inject_idempotency_header_params`). See
+            //      `MethodParameter::flag_name_override`.
+            //   2. `display_name` from `x-fern-parameter-name` — kebabed.
+            //      Renames the CLI flag while keeping `param_name` (the
+            //      wire name) as the clap arg ID. Downstream
+            //      `collect_params_from_flags` looks values up by arg ID,
+            //      and the executor uses the params map key (= wire name)
+            //      when serializing the request, so the alias never leaks
+            //      onto the wire — only the user-facing flag changes.
+            //      Mirrors fern's openapi-ir-parser, which renames the
+            //      SDK parameter via `parameterNameOverride` while
+            //      preserving the OpenAPI parameter's `name` on the HTTP
+            //      request.
+            //   3. Fallback: kebab the HashMap key.
+            let kebab_name = if let Some(override_flag) = param.flag_name_override.as_deref() {
+                override_flag.to_string()
+            } else {
+                let flag_source = param.display_name.as_deref().unwrap_or(param_name.as_str());
+                to_kebab_flag(flag_source)
             };
+            if BUILTIN_FLAG_NAMES.contains(&kebab_name.as_str()) {
+                continue;
+            }
 
             // Variable-bound path parameters get their value from a
             // root-level global flag (registered in `app::run_async` from
-            // `doc.sdk_variables`) plus its env-var fallback. Skip before
-            // inserting into flag_to_wire so variable-bound params don't
-            // occupy a collision slot and block a later non-variable-bound
-            // param that sanitizes to the same flag name.
+            // `doc.sdk_variables`) plus its env-var fallback. Skipping
+            // here keeps the per-operation flag surface clean and matches
+            // Fern's openapi-ir-parser, which lowers these into
+            // constructor-style globals rather than method arguments.
             if param.variable_reference.is_some() {
                 continue;
             }
 
-            // Cross-parameter collision: two different wire names mapping
-            // to the same flag. Skip the second occurrence with a warning
-            // (load-time error would be ideal but the builder is infallible).
-            if let Some(existing_wire) = flag_to_wire.get(&kebab_name) {
-                tracing::warn!(
-                    flag = %kebab_name,
-                    wire1 = %existing_wire,
-                    wire2 = %param_name,
-                    "two parameters sanitize to the same flag --{kebab_name}; \
-                     keeping '{existing_wire}', skipping '{param_name}'",
-                );
-                continue;
-            }
-            flag_to_wire.insert(kebab_name.clone(), param_name.clone());
-
-            let base_value_name = match param.param_type.as_deref() {
+            let value_name = match param.param_type.as_deref() {
                 Some("string") => "STRING",
                 Some("integer") => "NUMBER",
                 Some("number") => "NUMBER",
@@ -462,13 +442,6 @@ fn build_resource_command(
                 Some("object") => "JSON_OBJECT",
                 _ => "VALUE",
             };
-            // Composite types never set `param.nullable`, so the `|null`
-            // sentinel suffix stays scalar-only without an explicit guard.
-            let value_name: Cow<'static, str> = if param.nullable {
-                Cow::Owned(format!("{base_value_name}|null"))
-            } else {
-                Cow::Borrowed(base_value_name)
-            };
 
             let help_text = crate::text::truncate_description(
                 param.description.as_deref().unwrap_or(""),
@@ -476,22 +449,20 @@ fn build_resource_command(
                 true,
             );
             let help_text = with_availability_badge(&help_text, param.availability);
-            // When the CLI flag differs from the wire name — whether via
-            // `x-fern-parameter-name` rename or sanitization — surface
-            // the original wire name in `--help` so users can correlate
-            // the flag with the API docs / `--params` JSON. Synthetic
-            // `flag_name_override` injections already encode the wire
-            // name in their description, so they skip this.
-            let flag_differs_from_wire = param.flag_name_override.is_none()
-                && kebab_name != *param_name;
-            let help_text = if flag_differs_from_wire {
-                if help_text.is_empty() {
-                    format!("(api: {param_name})")
-                } else {
-                    format!("{help_text} (api: {param_name})")
+            // When the flag has been renamed via `x-fern-parameter-name`,
+            // surface the original wire name in `--help` so users can
+            // still correlate the flag with the API doc / `--params` JSON.
+            // (Synthetic `flag_name_override` injections already encode
+            // the wire name in their description, so they skip this.)
+            let help_text = match param.display_name.as_deref() {
+                Some(alias) if param.flag_name_override.is_none() && alias != param_name => {
+                    if help_text.is_empty() {
+                        format!("(wire name: {param_name})")
+                    } else {
+                        format!("{help_text} (wire name: {param_name})")
+                    }
                 }
-            } else {
-                help_text
+                _ => help_text,
             };
             // Append the OpenAPI standard `default:` value as a
             // `[default: ...]` suffix when it is the only default
@@ -508,8 +479,7 @@ fn build_resource_command(
                 None => help_text,
             };
 
-            let arg_id = param_clap_arg_id(param_name);
-            let mut arg = Arg::new(arg_id)
+            let mut arg = Arg::new(param_name.clone())
                 .long(kebab_name)
                 .value_name(value_name)
                 .help(help_text);
@@ -564,54 +534,6 @@ fn build_resource_command(
     }
 }
 
-/// Compute the clap arg ID for a parameter given its wire name.
-///
-/// Normally the arg ID equals the wire name so the executor can look
-/// values up by wire name directly. When the wire name itself collides
-/// with a built-in flag's arg ID (e.g. `format`, `output`, `json`), we
-/// suffix it with `-param` to avoid a clap duplicate-arg-ID panic.
-///
-/// This function is also called by `collect_params_from_flags` so the
-/// executor uses the same mangled ID that the command builder registered.
-pub(crate) fn param_clap_arg_id(wire_name: &str) -> String {
-    if BUILTIN_FLAG_NAMES.contains(&wire_name) {
-        format!("{wire_name}-param")
-    } else {
-        wire_name.to_string()
-    }
-}
-
-/// Resolve the CLI flag name for a parameter, replicating every step that
-/// `build_resource_command` applies: override -> body-kebab vs
-/// non-body-sanitize -> builtin-collision `-param` suffix. Both the
-/// command builder and the executor's missing-param hint must agree on
-/// what flag a parameter maps to — this shared helper is the single
-/// source of truth.
-///
-/// Returns `None` only when `sanitize_flag_name` rejects the name
-/// (control characters, CJK, etc.). The caller should fall back to
-/// `--params` guidance in that case.
-pub(crate) fn resolve_param_flag_name(param: &MethodParameter, wire_name: &str) -> Option<String> {
-    let mut flag = if let Some(override_flag) = param.flag_name_override.as_deref() {
-        override_flag.to_string()
-    } else {
-        let is_body = param.location.as_deref() == Some("body");
-        let source = param.display_name.as_deref().unwrap_or(wire_name);
-        if is_body {
-            to_kebab_flag(source)
-        } else {
-            match sanitize_flag_name(source) {
-                Ok(name) => name,
-                Err(_) => return None,
-            }
-        }
-    };
-    if BUILTIN_FLAG_NAMES.contains(&flag.as_str()) {
-        flag = format!("{flag}-param");
-    }
-    Some(flag)
-}
-
 /// Build a `PossibleValuesParser` that respects an optional `x-fern-enum`
 /// override. When the parameter has no `fern_enum` map, this is a plain
 /// `PossibleValuesParser::new(wire_values)`. When it does, each wire value
@@ -622,7 +544,7 @@ fn build_enum_value_parser(
     wire_values: &[String],
     param: &MethodParameter,
 ) -> PossibleValuesParser {
-    let mut possible: Vec<PossibleValue> = wire_values
+    let possible: Vec<PossibleValue> = wire_values
         .iter()
         .map(|wire| {
             let cfg = param
@@ -632,12 +554,6 @@ fn build_enum_value_parser(
             build_possible_value(wire, cfg)
         })
         .collect();
-    // Null sentinel: when the param is nullable, accept `null` as a
-    // fourth (etc.) possible value so clap admits it. The conversion to
-    // `Value::Null` happens later in `collect_params_from_flags`.
-    if param.nullable {
-        possible.push(PossibleValue::new("null").help("Send JSON null."));
-    }
     PossibleValuesParser::from(possible)
 }
 
@@ -655,36 +571,6 @@ fn build_possible_value(wire: &str, cfg: Option<&FernEnumValue>) -> PossibleValu
         pv = pv.help(desc.to_string());
     }
     pv
-}
-
-/// Build a `clap::Arg` for a single [`MultipartField`]. File fields
-/// accept a path (or `@path` / `-` for stdin); text fields accept a
-/// plain string value.
-fn build_multipart_field_arg(field: &MultipartField) -> Arg {
-    let kebab = to_kebab_flag(&field.wire_name);
-    let (value_name, help_prefix) = if field.is_file {
-        ("PATH|@PATH|-", "File to upload")
-    } else {
-        ("VALUE", "")
-    };
-
-    let help_text = match (&field.description, help_prefix) {
-        (Some(desc), "") => desc.clone(),
-        (Some(desc), prefix) => format!("{prefix}. {desc}"),
-        (None, prefix) if !prefix.is_empty() => prefix.to_string(),
-        _ => String::new(),
-    };
-
-    let mut arg = Arg::new(field.wire_name.clone())
-        .long(kebab)
-        .value_name(value_name)
-        .help(help_text);
-
-    if field.required {
-        arg = arg.required(true);
-    }
-
-    arg
 }
 
 #[cfg(test)]
@@ -892,91 +778,7 @@ mod tests {
     }
 
     #[test]
-    fn test_nullable_scalar_renders_value_name_with_null_suffix() {
-        // A nullable scalar body param renders its value_name as `<TYPE>|null`
-        // so users discover the null sentinel from `--help`.
-        let mut params = HashMap::new();
-        params.insert(
-            "userId".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                location: Some("body".to_string()),
-                nullable: true,
-                ..Default::default()
-            },
-        );
-        params.insert(
-            "count".to_string(),
-            MethodParameter {
-                param_type: Some("integer".to_string()),
-                location: Some("body".to_string()),
-                nullable: true,
-                ..Default::default()
-            },
-        );
-        params.insert(
-            "code".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                location: Some("body".to_string()),
-                nullable: false,
-                ..Default::default()
-            },
-        );
-        let mut methods = HashMap::new();
-        methods.insert(
-            "create".to_string(),
-            RestMethod {
-                http_method: "POST".to_string(),
-                path: "/things".to_string(),
-                parameters: params,
-                ..Default::default()
-            },
-        );
-        let mut resources = HashMap::new();
-        resources.insert(
-            "things".to_string(),
-            RestResource {
-                methods,
-                resources: HashMap::new(),
-            },
-        );
-        let doc = RestDescription {
-            name: "test-cli".to_string(),
-            resources,
-            ..Default::default()
-        };
-        let cmd = build_cli(&doc);
-        let create = cmd
-            .find_subcommand("things")
-            .unwrap()
-            .find_subcommand("create")
-            .unwrap();
-
-        let value_name_for = |id: &str| -> String {
-            let arg = create
-                .get_arguments()
-                .find(|a| a.get_id().as_str() == id)
-                .unwrap_or_else(|| panic!("arg '{id}' missing"));
-            arg.get_value_names()
-                .unwrap_or(&[])
-                .iter()
-                .map(|s| s.to_string())
-                .collect::<Vec<_>>()
-                .join(",")
-        };
-
-        assert_eq!(value_name_for("userId"), "STRING|null");
-        assert_eq!(value_name_for("count"), "NUMBER|null");
-        assert_eq!(
-            value_name_for("code"),
-            "STRING",
-            "non-nullable scalar must NOT gain the |null suffix",
-        );
-    }
-
-    #[test]
-    fn test_builtin_flag_names_renamed_with_param_suffix() {
+    fn test_builtin_flag_names_not_duplicated() {
         let mut params = HashMap::new();
         params.insert(
             "format".to_string(),
@@ -1029,6 +831,7 @@ mod tests {
             ..Default::default()
         };
 
+        // This should not panic from duplicate arg names
         let cmd = build_cli(&doc);
         let things_cmd = cmd
             .find_subcommand("things")
@@ -1042,359 +845,20 @@ mod tests {
             .map(|a| a.get_id().to_string())
             .collect();
 
+        // "format" and "output" should NOT appear as duplicated param flags
+        // but "real_param" should be present
         assert!(
             args.contains(&"real_param".to_string()),
             "real_param flag missing"
         );
 
-        // Wire names that collide with builtins get a `-param` suffix on
-        // both the arg ID and the long flag (FER-10430).
+        // Count occurrences of "format" — should be at most 1 (from the global flag)
+        let format_count = args.iter().filter(|a| *a == "format").count();
         assert!(
-            args.contains(&"format-param".to_string()),
-            "format should be renamed to format-param, got: {args:?}"
-        );
-        assert!(
-            args.contains(&"output-param".to_string()),
-            "output should be renamed to output-param, got: {args:?}"
-        );
-
-        // The long flags should also be suffixed.
-        let format_arg = test_cmd
-            .get_arguments()
-            .find(|a| a.get_id() == "format-param")
-            .expect("format-param arg missing");
-        assert_eq!(
-            format_arg.get_long().unwrap(),
-            "format-param",
-            "format param should have --format-param long flag",
+            format_count <= 1,
+            "format flag duplicated: found {format_count}"
         );
     }
-
-    #[test]
-    fn test_sanitized_param_name_produces_correct_flag() {
-        let mut params = HashMap::new();
-        params.insert(
-            "id:in".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                description: Some("Filter by ID".to_string()),
-                location: Some("query".to_string()),
-                ..Default::default()
-            },
-        );
-        params.insert(
-            "date_created:min".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                description: Some("Min date".to_string()),
-                location: Some("query".to_string()),
-                ..Default::default()
-            },
-        );
-
-        let mut methods = HashMap::new();
-        methods.insert(
-            "list".to_string(),
-            RestMethod {
-                http_method: "GET".to_string(),
-                path: "/things".to_string(),
-                parameters: params,
-                ..Default::default()
-            },
-        );
-        let mut resources = HashMap::new();
-        resources.insert(
-            "things".to_string(),
-            RestResource {
-                methods,
-                resources: HashMap::new(),
-            },
-        );
-        let doc = RestDescription {
-            name: "test-cli".to_string(),
-            resources,
-            ..Default::default()
-        };
-
-        let cmd = build_cli(&doc);
-        let list_cmd = cmd
-            .find_subcommand("things")
-            .and_then(|c| c.find_subcommand("list"))
-            .expect("things list missing");
-
-        // The arg IDs are the wire names (no builtin collision).
-        let arg_ids: Vec<String> = list_cmd
-            .get_arguments()
-            .map(|a| a.get_id().to_string())
-            .collect();
-        assert!(
-            arg_ids.contains(&"id:in".to_string()),
-            "arg ID should be the wire name 'id:in', got: {arg_ids:?}",
-        );
-        assert!(
-            arg_ids.contains(&"date_created:min".to_string()),
-            "arg ID should be the wire name 'date_created:min', got: {arg_ids:?}",
-        );
-
-        // But the long flags are sanitized.
-        let id_in = list_cmd
-            .get_arguments()
-            .find(|a| a.get_id() == "id:in")
-            .unwrap();
-        assert_eq!(id_in.get_long().unwrap(), "id-in");
-
-        let date_min = list_cmd
-            .get_arguments()
-            .find(|a| a.get_id() == "date_created:min")
-            .unwrap();
-        assert_eq!(date_min.get_long().unwrap(), "date-created-min");
-    }
-
-    #[test]
-    fn test_sanitized_flag_help_shows_wire_name() {
-        let mut params = HashMap::new();
-        params.insert(
-            "id:in".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                description: Some("Filter by ID".to_string()),
-                location: Some("query".to_string()),
-                ..Default::default()
-            },
-        );
-
-        let mut methods = HashMap::new();
-        methods.insert(
-            "list".to_string(),
-            RestMethod {
-                http_method: "GET".to_string(),
-                path: "/things".to_string(),
-                parameters: params,
-                ..Default::default()
-            },
-        );
-        let mut resources = HashMap::new();
-        resources.insert(
-            "things".to_string(),
-            RestResource {
-                methods,
-                resources: HashMap::new(),
-            },
-        );
-        let doc = RestDescription {
-            name: "test-cli".to_string(),
-            resources,
-            ..Default::default()
-        };
-
-        let cmd = build_cli(&doc);
-        let list_cmd = cmd
-            .find_subcommand("things")
-            .and_then(|c| c.find_subcommand("list"))
-            .unwrap();
-        let id_in = list_cmd
-            .get_arguments()
-            .find(|a| a.get_id() == "id:in")
-            .unwrap();
-        let help = id_in.get_help().unwrap().to_string();
-        assert!(
-            help.contains("api: id:in"),
-            "help text should include the wire name; got: {help}",
-        );
-    }
-    #[test]
-    fn test_variable_bound_param_does_not_block_same_named_normal_param() {
-        // Finding 1: a variable-bound param (e.g. `projectId`) that
-        // sanitizes to the same flag as a normal param (e.g.
-        // `project_id` -> `project-id`) must not occupy a collision
-        // slot and prevent the normal param from getting a flag.
-        let mut params = HashMap::new();
-        params.insert(
-            "projectId".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                location: Some("path".to_string()),
-                variable_reference: Some("projectId".to_string()),
-                ..Default::default()
-            },
-        );
-        params.insert(
-            "project_id".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                description: Some("Filter by project".to_string()),
-                location: Some("query".to_string()),
-                ..Default::default()
-            },
-        );
-
-        let mut methods = HashMap::new();
-        methods.insert(
-            "list".to_string(),
-            RestMethod {
-                http_method: "GET".to_string(),
-                path: "/projects/{projectId}/items".to_string(),
-                parameters: params,
-                ..Default::default()
-            },
-        );
-        let mut resources = HashMap::new();
-        resources.insert(
-            "items".to_string(),
-            RestResource {
-                methods,
-                resources: HashMap::new(),
-            },
-        );
-        let doc = RestDescription {
-            name: "test-cli".to_string(),
-            resources,
-            ..Default::default()
-        };
-
-        let cmd = build_cli(&doc);
-        let list_cmd = cmd
-            .find_subcommand("items")
-            .and_then(|c| c.find_subcommand("list"))
-            .expect("items list missing");
-
-        let arg_ids: Vec<String> = list_cmd
-            .get_arguments()
-            .map(|a| a.get_id().to_string())
-            .collect();
-
-        // The normal query param `project_id` should be registered
-        // even though `projectId` (variable-bound) sanitizes to the
-        // same flag name `project-id`.
-        assert!(
-            arg_ids.contains(&"project_id".to_string()),
-            "project_id flag should be registered despite variable-bound projectId; got: {arg_ids:?}",
-        );
-
-        // The variable-bound param should NOT have a per-op flag.
-        assert!(
-            !arg_ids.contains(&"projectId".to_string()),
-            "variable-bound projectId should not appear as a per-op flag; got: {arg_ids:?}",
-        );
-
-        // Verify the long flag is correct.
-        let proj_arg = list_cmd
-            .get_arguments()
-            .find(|a| a.get_id() == "project_id")
-            .unwrap();
-        assert_eq!(proj_arg.get_long().unwrap(), "project-id");
-    }
-
-    #[test]
-    fn test_resolve_param_flag_name_body_preserves_dots() {
-        // Finding 2: body params use to_kebab_flag which preserves
-        // dot-notation; the helper must replicate this.
-        let param = MethodParameter {
-            param_type: Some("string".to_string()),
-            location: Some("body".to_string()),
-            ..Default::default()
-        };
-        let flag = resolve_param_flag_name(&param, "address.street").unwrap();
-        assert_eq!(
-            flag, "address.street",
-            "body param dots should be preserved via to_kebab_flag",
-        );
-    }
-
-    #[test]
-    fn test_resolve_param_flag_name_builtin_collision() {
-        // Finding 2: params colliding with builtins get `-param` suffix.
-        let param = MethodParameter {
-            param_type: Some("string".to_string()),
-            location: Some("query".to_string()),
-            ..Default::default()
-        };
-        let flag = resolve_param_flag_name(&param, "format").unwrap();
-        assert_eq!(
-            flag, "format-param",
-            "builtin collision should append -param",
-        );
-    }
-
-    #[test]
-    fn test_resolve_param_flag_name_sanitizes_non_body() {
-        let param = MethodParameter {
-            param_type: Some("string".to_string()),
-            location: Some("query".to_string()),
-            ..Default::default()
-        };
-        let flag = resolve_param_flag_name(&param, "status:in").unwrap();
-        assert_eq!(flag, "status-in");
-    }
-
-    #[test]
-    fn test_resolve_param_flag_name_uses_override() {
-        let param = MethodParameter {
-            flag_name_override: Some("custom-flag".to_string()),
-            location: Some("header".to_string()),
-            ..Default::default()
-        };
-        let flag = resolve_param_flag_name(&param, "X-Custom-Header").unwrap();
-        assert_eq!(flag, "custom-flag");
-    }
-
-    #[test]
-    fn test_resolve_param_flag_name_uses_display_name() {
-        let param = MethodParameter {
-            display_name: Some("searchQuery".to_string()),
-            location: Some("query".to_string()),
-            ..Default::default()
-        };
-        let flag = resolve_param_flag_name(&param, "filter_term").unwrap();
-        assert_eq!(flag, "search-query");
-    }
-
-    #[test]
-    fn test_resolve_param_flag_name_is_idempotent() {
-        // Applying the helper twice must equal applying it once. The
-        // function calls sanitize_flag_name (idempotent) and may append
-        // `-param`. Since `format-param` is NOT in BUILTIN_FLAG_NAMES,
-        // a second application stays `format-param`.
-
-        // Case 1: body param with dot-notation (`address.street`).
-        let body_param = MethodParameter {
-            location: Some("body".to_string()),
-            ..Default::default()
-        };
-        let once = resolve_param_flag_name(&body_param, "address.street").unwrap();
-        let twice = resolve_param_flag_name(&body_param, &once).unwrap();
-        assert_eq!(once, twice, "body dot-notation must be idempotent");
-
-        // Case 2: flag_name_override — the override is used verbatim.
-        let override_param = MethodParameter {
-            flag_name_override: Some("custom-flag".to_string()),
-            location: Some("header".to_string()),
-            ..Default::default()
-        };
-        let once = resolve_param_flag_name(&override_param, "X-Custom-Header").unwrap();
-        let twice = resolve_param_flag_name(&override_param, &once).unwrap();
-        assert_eq!(once, twice, "override case must be idempotent");
-
-        // Case 3: sanitize case (`id:in` → `id-in`).
-        let query_param = MethodParameter {
-            location: Some("query".to_string()),
-            ..Default::default()
-        };
-        let once = resolve_param_flag_name(&query_param, "id:in").unwrap();
-        let twice = resolve_param_flag_name(&query_param, &once).unwrap();
-        assert_eq!(once, twice, "sanitize case must be idempotent");
-
-        // Case 4: builtin-collision case (`format` → `format-param`).
-        let collision_param = MethodParameter {
-            location: Some("query".to_string()),
-            ..Default::default()
-        };
-        let once = resolve_param_flag_name(&collision_param, "format").unwrap();
-        assert_eq!(once, "format-param", "sanity: first application appends -param");
-        let twice = resolve_param_flag_name(&collision_param, &once).unwrap();
-        assert_eq!(once, twice, "builtin-collision case must be idempotent");
-    }
-
     // ------------------------------------------------------------------
     // x-fern-enum → clap PossibleValue wiring
     //
@@ -1550,69 +1014,6 @@ mod tests {
             .try_get_matches_from(vec!["test", "--status", "managed"])
             .expect("clap should accept a PossibleValue without a self-alias");
         assert_eq!(matches.get_one::<String>("status").unwrap(), "managed");
-    }
-
-    #[test]
-    fn test_build_enum_value_parser_accepts_null_when_param_nullable() {
-        // A nullable enum field must accept the literal `null` alongside its
-        // wire values. The sentinel→Value::Null transform happens later in
-        // collect_params_from_flags; clap's job is just to admit the string.
-        let param = MethodParameter {
-            param_type: Some("string".to_string()),
-            enum_values: Some(vec!["red".to_string(), "blue".to_string()]),
-            nullable: true,
-            ..Default::default()
-        };
-        let parser = build_enum_value_parser(param.enum_values.as_ref().unwrap(), &param);
-        let cmd = Command::new("test").arg(Arg::new("color").long("color").value_parser(parser));
-
-        for input in ["red", "blue", "null"] {
-            cmd.clone()
-                .try_get_matches_from(vec!["test", "--color", input])
-                .unwrap_or_else(|e| panic!("nullable enum should accept `{input}`; got: {e}"));
-        }
-
-        assert!(
-            cmd.clone()
-                .try_get_matches_from(vec!["test", "--color", "purple"])
-                .is_err(),
-            "values outside the enum (and not the null sentinel) must still be rejected",
-        );
-    }
-
-    #[test]
-    fn test_build_enum_value_parser_rejects_null_when_non_nullable() {
-        // Regression guard: a non-nullable enum field must NOT accept "null".
-        let param = MethodParameter {
-            param_type: Some("string".to_string()),
-            enum_values: Some(vec!["red".to_string(), "blue".to_string()]),
-            nullable: false,
-            ..Default::default()
-        };
-        let parser = build_enum_value_parser(param.enum_values.as_ref().unwrap(), &param);
-        let cmd = Command::new("test").arg(Arg::new("color").long("color").value_parser(parser));
-        assert!(
-            cmd.try_get_matches_from(vec!["test", "--color", "null"])
-                .is_err(),
-            "non-nullable enum must reject `null` (closed set)",
-        );
-    }
-
-    #[test]
-    fn test_build_enum_value_parser_nullable_lists_null_in_help() {
-        // The clap-rendered help must include `null` in the [possible values]
-        // listing so users can discover the sentinel from `--help` alone.
-        let param = MethodParameter {
-            param_type: Some("string".to_string()),
-            enum_values: Some(vec!["red".to_string(), "blue".to_string()]),
-            nullable: true,
-            ..Default::default()
-        };
-        let help = render_arg_long_help(&param);
-        assert!(
-            help.contains("null"),
-            "nullable enum's long help must list `null` as a possible value, got:\n{help}",
-        );
     }
 
     #[test]
@@ -2158,89 +1559,5 @@ paths:
             out
         };
         assert_eq!(collect_tree(yaml_without), collect_tree(yaml_with));
-    }
-
-    #[test]
-    fn test_multipart_field_builtin_collision_skipped() {
-        use crate::openapi::discovery::MultipartField;
-
-        let mut methods = HashMap::new();
-        methods.insert(
-            "upload".to_string(),
-            RestMethod {
-                http_method: "POST".to_string(),
-                path: "/uploads".to_string(),
-                multipart_fields: vec![
-                    MultipartField {
-                        wire_name: "format".to_string(),
-                        is_file: false,
-                        description: Some("Collides with builtin --format".to_string()),
-                        required: false,
-                        content_type: None,
-                    },
-                    MultipartField {
-                        wire_name: "output".to_string(),
-                        is_file: false,
-                        description: Some("Collides with builtin --output".to_string()),
-                        required: false,
-                        content_type: None,
-                    },
-                    MultipartField {
-                        wire_name: "file".to_string(),
-                        is_file: true,
-                        description: Some("No collision".to_string()),
-                        required: true,
-                        content_type: Some("application/octet-stream".to_string()),
-                    },
-                ],
-                ..Default::default()
-            },
-        );
-
-        let mut resources = HashMap::new();
-        resources.insert(
-            "uploads".to_string(),
-            RestResource {
-                methods,
-                resources: HashMap::new(),
-            },
-        );
-
-        let doc = RestDescription {
-            name: "test-cli".to_string(),
-            resources,
-            ..Default::default()
-        };
-
-        // Must not panic from duplicate arg names.
-        let cmd = build_cli(&doc);
-        let uploads_cmd = cmd
-            .find_subcommand("uploads")
-            .expect("uploads resource missing");
-        let upload_cmd = uploads_cmd
-            .find_subcommand("upload")
-            .expect("upload method missing");
-
-        let arg_ids: Vec<String> = upload_cmd
-            .get_arguments()
-            .map(|a| a.get_id().to_string())
-            .collect();
-
-        // "file" should be present (no collision).
-        assert!(
-            arg_ids.contains(&"file".to_string()),
-            "non-colliding multipart field 'file' should be present, got: {arg_ids:?}",
-        );
-        // "format" and "output" appear exactly once (from the global builtins).
-        let format_count = arg_ids.iter().filter(|a| *a == "format").count();
-        assert!(
-            format_count <= 1,
-            "multipart 'format' should be skipped to avoid duplicate; found {format_count} in {arg_ids:?}",
-        );
-        let output_count = arg_ids.iter().filter(|a| *a == "output").count();
-        assert!(
-            output_count <= 1,
-            "multipart 'output' should be skipped to avoid duplicate; found {output_count} in {arg_ids:?}",
-        );
     }
 }

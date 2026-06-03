@@ -5,7 +5,7 @@ import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
 import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
-import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
+import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoToml } from "./patchCargoToml.js";
@@ -35,7 +35,7 @@ export async function runPipeline(args: {
     outputDir: string;
     customConfig: FernCliCustomConfig;
     ir: IrSummary;
-    /** Path to the IR JSON file for embedded SDK codegen. Omit to skip SDK generation. */
+    /** Path to the IR JSON file for embedded types codegen. Omit to skip types generation. */
     irFilepath?: string;
     outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
@@ -64,26 +64,26 @@ export async function runPipeline(args: {
     //      identifying bits don't leak Fern's template-author branding.
     //   3. copySpecs writes the spec files + main.rs into
     //      `cli/<binaryName>/`, wiring the IR-derived auth bindings.
-    //   4. generateEmbeddedSdk generates the typed Rust SDK crate as a
-    //      workspace member (path dependency from the CLI crate).
+    //   4. generateEmbeddedTypes generates the typed Rust model crate
+    //      as a workspace member (path dependency from the CLI crate).
     //   5. emitPublishWorkflow writes `.github/workflows/ci.yml` when
     //      output mode is `github` with npm publish info.
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
-    const embedSdk = irFilepath != null;
-    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedSdk });
+    const embedTypes = irFilepath != null;
+    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes });
     await writeGitignore(outputDir);
 
-    // Generate the embedded typed SDK crate when the IR filepath is available.
+    // Generate the embedded types crate when the IR filepath is available.
     if (irFilepath != null) {
-        const sdkCrateName = await generateEmbeddedSdk({
+        const typesCrateName = await generateEmbeddedTypes({
             irFilepath,
             outputDir,
             binaryName
         });
-        await patchCargoToml({ outputDir, binaryName, sdkCrateName });
-        await patchDistWorkspaceToml({ outputDir, sdkCrateName });
+        await patchCargoToml({ outputDir, binaryName, typesCrateName });
+        await patchDistWorkspaceToml({ outputDir, typesCrateName });
         await writeFernignore(outputDir, binaryName);
     }
 

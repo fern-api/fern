@@ -70,21 +70,21 @@ await buildGenerator(dirname, {
     copy: { from: "./sdk", to: "./dist/sdk", ignore: SDK_IGNORE }
 });
 
-// Copy the pre-built rust-sdk generator CLI into dist/ so the Docker
-// image can invoke it as a child process for embedded SDK generation.
+// Copy the pre-built rust-model generator CLI into dist/ so the Docker
+// image can invoke it as a child process for embedded types generation.
 // In the monorepo the package resolves via pnpm workspaces; the
-// `dist:cli` turbo task must have run for @fern-api/rust-sdk first.
+// `dist:cli` turbo task must have run for @fern-api/rust-model first.
 try {
     // Follow the pnpm workspace symlink to find the real package root.
-    const symlink = path.resolve(dirname, "node_modules", "@fern-api", "rust-sdk");
+    const symlink = path.resolve(dirname, "node_modules", "@fern-api", "rust-model");
     const { readlink } = await import("fs/promises");
     const target = await readlink(symlink);
-    const rustSdkPkg = path.resolve(path.dirname(symlink), target);
-    // Copy the entire rust-sdk dist tree into dist/rust-sdk-dist/ so the
-    // subprocess has access to all its bundled assets (asIs/, assets/).
-    const rustSdkDistDir = path.join(rustSdkPkg, "dist");
-    await cp(rustSdkDistDir, path.join(dirname, "dist", "rust-sdk-dist"), { recursive: true });
+    const rustModelPkg = path.resolve(path.dirname(symlink), target);
+    // Copy the entire rust-model dist tree into dist/rust-model-dist/ so the
+    // subprocess has access to all its bundled assets (asIs/).
+    const rustModelDistDir = path.join(rustModelPkg, "dist");
+    await cp(rustModelDistDir, path.join(dirname, "dist", "rust-model-dist"), { recursive: true });
 } catch (_e) {
-    // Non-fatal: the rust-sdk dist may not exist during a plain
+    // Non-fatal: the rust-model dist may not exist during a plain
     // `pnpm compile`. It's only required for `dist:cli` / Docker.
 }

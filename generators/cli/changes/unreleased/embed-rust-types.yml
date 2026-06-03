@@ -1,0 +1,9 @@
+- summary: |
+    Embed typed Rust model crate as a workspace member in generated CLI
+    output. The CLI generator now invokes the rust-model generator as a
+    child process to produce a `<api>-types` library crate alongside the
+    CLI crate, wired as a path dependency. Custom command handlers use
+    `ctx.invoke()` with typed serde structs from the types crate for
+    serialization/deserialization while all HTTP execution stays on the
+    CLI's native executor.
+  type: feat

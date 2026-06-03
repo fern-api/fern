@@ -11,7 +11,6 @@ pub mod auth;
 pub mod binding;
 pub mod cli_args;
 pub mod completions;
-pub mod context;
 pub(crate) mod custom_commands;
 pub mod http;
 pub mod error;

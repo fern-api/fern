@@ -10,14 +10,14 @@ use serde::{Deserialize, Deserializer};
 use crate::text::to_kebab_flag;
 use crate::openapi::discovery::{
     Availability, BinaryRequestBody, BodyEncoding, GlobalHeader, IdempotencyHeader, JsonSchema,
-    JsonSchemaProperty, MethodParameter, MultipartField, PaginationConfig, RestDescription,
-    RestMethod, RestResource, RetriesConfig, SchemaRef, SdkGroupInfo, SdkVariable,
-    SecurityScheme, StreamingConfig,
+    JsonSchemaProperty, MethodParameter, PaginationConfig, RestDescription, RestMethod,
+    RestResource, RetriesConfig, SchemaRef, SdkGroupInfo, SdkVariable, SecurityScheme,
+    StreamingConfig,
 };
 use crate::error::CliError;
 
 /// Deserialize `x-fern-sdk-group-name` as either a string scalar or a list of
-/// strings. The Fern extension allows both forms; specs like AssemblyAI's use
+/// strings. The Fern extension allows both forms; some specs use
 /// the scalar form while internal fixtures use the list form for nesting.
 fn deserialize_group_name<'de, D>(deserializer: D) -> Result<Option<Vec<String>>, D::Error>
 where
@@ -414,11 +414,6 @@ struct OpenApiOperation {
     /// headers.
     #[serde(rename = "x-fern-idempotent", default)]
     x_fern_idempotent: Option<bool>,
-    /// `x-fern-cli-idempotency: false` opt-out for auto Idempotency-Key.
-    /// When explicitly `false`, the executor does NOT inject the
-    /// auto-generated `Idempotency-Key` header on POST/PUT/PATCH.
-    #[serde(rename = "x-fern-cli-idempotency", default)]
-    x_fern_cli_idempotency: Option<bool>,
     /// Raw `x-fern-sdk-return-value` extension on the operation. Mirrors
     /// fern-api/fern's `FernOpenAPIExtension.RESPONSE_PROPERTY` — a
     /// dot-separated key path into the JSON response body identifying
@@ -584,19 +579,6 @@ struct OpenApiRequestBody {
 #[derive(Debug, Deserialize)]
 struct OpenApiMediaType {
     schema: Option<OpenApiSchemaObject>,
-    /// OpenAPI `encoding` object — per-property serialization overrides.
-    /// Only `contentType` is consumed (for multipart/form-data part
-    /// headers); `style` / `explode` / `headers` / `allowReserved` are not
-    /// yet acted upon.
-    #[serde(default)]
-    encoding: HashMap<String, OpenApiEncoding>,
-}
-
-/// A single entry in the OpenAPI `encoding` object.
-#[derive(Debug, Deserialize, Default)]
-struct OpenApiEncoding {
-    #[serde(rename = "contentType")]
-    content_type: Option<String>,
 }
 
 /// Captures the OpenAPI `type` field across the 3.0 string form
@@ -759,7 +741,7 @@ struct OpenApiSchemaObject {
     ///   - OpenAPI 3.1 array of values: `examples: [a, b]`
     ///   - OpenAPI 3.0 MediaType-style map: `examples: { name: { value: ... } }`
     ///     (technically out-of-spec at the schema level, but several
-    ///     real-world specs — e.g. BigCommerce — embed this form)
+    ///     real-world specs embed this form)
     ///   - Single value
     ///
     /// Downstream code is free to interpret the value based on its shape.
@@ -2545,8 +2527,7 @@ pub fn load_openapi_spec_from_value(
 
             // Handle request body — also harvests body-located parameters so
             // the command builder can render per-field flags alongside `--json`.
-            let (request, binary_request_body, body_encoding, body_params, multipart_fields) =
-                extract_request_body(
+            let (request, binary_request_body, body_encoding, body_params) = extract_request_body(
                 &operation.request_body,
                 operation.operation_id.as_deref().unwrap_or("unknown"),
                 &mut doc.schemas,
@@ -2612,13 +2593,6 @@ pub fn load_openapi_spec_from_value(
 
             let idempotent = operation.x_fern_idempotent.unwrap_or(false);
 
-            // `x-fern-cli-idempotency: false` explicitly disables the
-            // auto-generated Idempotency-Key header on this operation.
-            let no_auto_idempotency_key = operation
-                .x_fern_cli_idempotency
-                .map(|v| !v)
-                .unwrap_or(false);
-
             // `x-fern-audiences` is an array of strings; missing means
             // `[]`. Stored verbatim so the command-tree filter can
             // mirror fern's `some(...)` membership check exactly. See
@@ -2679,13 +2653,11 @@ pub fn load_openapi_spec_from_value(
                 root_url: method_root_url,
                 servers: method_servers,
                 binary_request_body,
-                multipart_fields,
                 body_encoding,
                 security_requirements,
                 pagination,
                 availability,
                 idempotent,
-                no_auto_idempotency_key,
                 return_value,
                 streaming,
                 retries,
@@ -2749,18 +2721,7 @@ fn insert_method_into_resources(
 /// the only way to supply them.
 const MAX_BODY_DEPTH: u8 = 3;
 
-/// Result of [`extract_request_body`], as
-/// `(json_schema, binary_body, body_encoding, body_params, multipart_fields)`.
-/// See the function docs for per-field semantics.
-type ExtractedRequestBody = (
-    Option<SchemaRef>,
-    Option<BinaryRequestBody>,
-    BodyEncoding,
-    HashMap<String, MethodParameter>,
-    Vec<MultipartField>,
-);
-
-/// Returns `(json_schema, binary_body, body_encoding, body_params, multipart_fields)`:
+/// Returns `(json_schema, binary_body, body_encoding, body_params)`:
 /// - `json_schema`: a SchemaRef for the JSON request body (if `application/json` is declared).
 /// - `binary_body`: metadata when the operation expects a raw binary body
 ///   (any non-JSON / non-form media type).
@@ -2769,24 +2730,24 @@ type ExtractedRequestBody = (
 ///   each property up to MAX_BODY_DEPTH is exposed as a body-located [`MethodParameter`]
 ///   with dotted keys for nested fields. `$ref` bodies are resolved from
 ///   `component_schemas` and their properties flattened with the same depth rules.
-/// - `multipart_fields`: per-field metadata for `multipart/form-data` bodies.
 fn extract_request_body(
     request_body: &Option<OpenApiRequestBody>,
     operation_id: &str,
     schemas: &mut HashMap<String, JsonSchema>,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,
-) -> ExtractedRequestBody {
+) -> (Option<SchemaRef>, Option<BinaryRequestBody>, BodyEncoding, HashMap<String, MethodParameter>) {
     let Some(body) = request_body.as_ref() else {
-        return (None, None, BodyEncoding::Json, HashMap::new(), Vec::new());
+        return (None, None, BodyEncoding::Json, HashMap::new());
     };
     let Some(content) = body.content.as_ref() else {
-        return (None, None, BodyEncoding::Json, HashMap::new(), Vec::new());
+        return (None, None, BodyEncoding::Json, HashMap::new());
     };
 
     if let Some(media) = content.get("application/json") {
         if let Some(schema_obj) = media.schema.as_ref() {
             if let Some(ref_path) = &schema_obj.schema_ref {
                 let name = strip_ref_prefix(ref_path);
+                // Resolve the $ref from components/schemas and flatten its properties.
                 let body_params = component_schemas
                     .get(&name)
                     .map(|resolved| flatten_body_params(resolved, component_schemas, 0))
@@ -2799,7 +2760,6 @@ fn extract_request_body(
                     None,
                     BodyEncoding::Json,
                     body_params,
-                    Vec::new(),
                 );
             }
 
@@ -2817,27 +2777,11 @@ fn extract_request_body(
                 None,
                 BodyEncoding::Json,
                 body_params,
-                Vec::new(),
             );
         }
     }
 
-    // Handle multipart/form-data bodies. Each property in the schema
-    // becomes a CLI flag; file-typed fields accept a path and are streamed
-    // as binary parts.
-    if let Some(media) = content.get("multipart/form-data") {
-        let multipart_fields = extract_multipart_fields(
-            media.schema.as_ref(),
-            &media.encoding,
-            component_schemas,
-            operation_id,
-        );
-        if !multipart_fields.is_empty() {
-            return (None, None, BodyEncoding::Json, HashMap::new(), multipart_fields);
-        }
-    }
-
-    // No JSON or multipart body declared — check for form-urlencoded body next.
+    // No JSON body declared — check for form-urlencoded body next.
     if let Some(media) = content.get("application/x-www-form-urlencoded") {
         if let Some(schema_obj) = media.schema.as_ref() {
             if let Some(ref_path) = &schema_obj.schema_ref {
@@ -2854,7 +2798,6 @@ fn extract_request_body(
                     None,
                     BodyEncoding::FormUrlEncoded,
                     body_params,
-                    Vec::new(),
                 );
             }
 
@@ -2872,19 +2815,17 @@ fn extract_request_body(
                 None,
                 BodyEncoding::FormUrlEncoded,
                 body_params,
-                Vec::new(),
             );
         }
     }
 
-    // No JSON, multipart, or form body — look for a binary content type.
-    // `multipart/form-data` and `application/x-www-form-urlencoded` are
-    // explicitly excluded (handled above).
+    // No JSON or form body — look for a binary content type. `multipart/form-data`
+    // is explicitly excluded (separate future work).
     let Some((content_type, media)) = content.iter().find(|(ct, _)| {
         let ct = ct.as_str();
         ct != "application/x-www-form-urlencoded" && ct != "multipart/form-data"
     }) else {
-        return (None, None, BodyEncoding::Json, HashMap::new(), Vec::new());
+        return (None, None, BodyEncoding::Json, HashMap::new());
     };
 
     let is_binary_format = media
@@ -2914,122 +2855,7 @@ fn extract_request_body(
         }),
         BodyEncoding::Json,
         HashMap::new(),
-        Vec::new(),
     )
-}
-
-/// Walk a `multipart/form-data` schema and emit one [`MultipartField`] per
-/// property. Resolves `$ref` to `components/schemas` for the root schema
-/// and for individual properties. File fields are identified by
-/// `type: string, format: binary` (or legacy `type: file`).
-///
-/// `encoding` is the media type's OpenAPI `encoding` object; a per-property
-/// `contentType` there overrides the content type inferred from the schema
-/// (the default being `application/octet-stream` for file parts and
-/// `text/plain` for text parts). This is the OAS 3.x mechanism for, e.g.,
-/// declaring that a string field carries `application/json`.
-fn extract_multipart_fields(
-    schema: Option<&OpenApiSchemaObject>,
-    encoding: &HashMap<String, OpenApiEncoding>,
-    component_schemas: &HashMap<String, OpenApiSchemaObject>,
-    operation_id: &str,
-) -> Vec<MultipartField> {
-    let Some(schema) = schema else {
-        tracing::warn!(
-            operation = operation_id,
-            "multipart/form-data body has no schema; skipping",
-        );
-        return Vec::new();
-    };
-
-    // Resolve top-level $ref.
-    let resolved = if let Some(ref_path) = &schema.schema_ref {
-        let name = strip_ref_prefix(ref_path);
-        match component_schemas.get(&name) {
-            Some(r) => r,
-            None => {
-                tracing::warn!(
-                    operation = operation_id,
-                    schema_ref = name,
-                    "unresolvable $ref for multipart body; skipping",
-                );
-                return Vec::new();
-            }
-        }
-    } else {
-        schema
-    };
-
-    if resolved.schema_type() != Some("object") {
-        tracing::warn!(
-            operation = operation_id,
-            "multipart/form-data schema is not an object; skipping",
-        );
-        return Vec::new();
-    }
-
-    let required_set: std::collections::HashSet<&str> =
-        resolved.required.iter().map(String::as_str).collect();
-
-    let mut fields: Vec<MultipartField> = resolved
-        .properties
-        .iter()
-        .map(|(name, prop)| {
-            let (is_file, inferred_ct) = classify_multipart_property(prop, component_schemas);
-            // A `contentType` in the `encoding` object wins over the
-            // schema-inferred default for this part.
-            let content_type = encoding
-                .get(name)
-                .and_then(|e| e.content_type.clone())
-                .or(inferred_ct);
-            MultipartField {
-                wire_name: name.clone(),
-                is_file,
-                description: prop.description.clone(),
-                required: required_set.contains(name.as_str()),
-                content_type,
-            }
-        })
-        .collect();
-    fields.sort_by(|a, b| a.wire_name.cmp(&b.wire_name));
-    fields
-}
-
-/// Determine whether a multipart property is a file upload and its content type.
-fn classify_multipart_property(
-    prop: &OpenApiSchemaObject,
-    component_schemas: &HashMap<String, OpenApiSchemaObject>,
-) -> (bool, Option<String>) {
-    // Resolve $ref if present.
-    let resolved = if let Some(ref_path) = &prop.schema_ref {
-        let name = strip_ref_prefix(ref_path);
-        component_schemas.get(&name).unwrap_or(prop)
-    } else {
-        prop
-    };
-
-    let ty = resolved.schema_type();
-    let fmt = resolved.format.as_deref();
-
-    // `type: string, format: binary` or legacy `type: file`
-    if (ty == Some("string") && fmt == Some("binary")) || ty == Some("file") {
-        let ct = Some("application/octet-stream".to_string());
-        return (true, ct);
-    }
-
-    // Array of binary files (e.g. `type: array, items: { type: string, format: binary }`)
-    if ty == Some("array") {
-        if let Some(items) = &resolved.items {
-            if (items.schema_type() == Some("string")
-                && items.format.as_deref() == Some("binary"))
-                || items.schema_type() == Some("file")
-            {
-                return (true, Some("application/octet-stream".to_string()));
-            }
-        }
-    }
-
-    (false, None)
 }
 
 /// Recursively walk an object schema and emit one body-located [`MethodParameter`]
@@ -3043,21 +2869,6 @@ fn flatten_body_params(
     depth: u8,
 ) -> HashMap<String, MethodParameter> {
     flatten_body_params_prefix(schema, component_schemas, depth, "")
-}
-
-/// True when the schema admits JSON `null` *and* its base type is a scalar
-/// the CLI lowers to a single flag (`string` / `integer` / `number` /
-/// `boolean`). Composite types (`array`, `object`) stay false even when the
-/// schema marks them nullable — see ADR-0003 for why the null-sentinel
-/// surface is scalar-only.
-fn is_scalar_nullable(obj: &OpenApiSchemaObject) -> bool {
-    if !obj.is_nullable() {
-        return false;
-    }
-    matches!(
-        obj.schema_type(),
-        Some("string") | Some("integer") | Some("number") | Some("boolean"),
-    )
 }
 
 fn flatten_body_params_prefix(
@@ -3115,7 +2926,6 @@ fn flatten_body_params_prefix(
                         enum_values: effective_enum_values(resolved),
                         default_value: const_default,
                         repeated: is_array,
-                        nullable: is_scalar_nullable(resolved),
                         ..Default::default()
                     },
                 );
@@ -3153,7 +2963,6 @@ fn flatten_body_params_prefix(
                 enum_values: effective_enum_values(prop),
                 default_value: const_default,
                 repeated: is_array,
-                nullable: is_scalar_nullable(prop),
                 ..Default::default()
             },
         );
@@ -3261,7 +3070,7 @@ mod tests {
 
     #[test]
     fn test_strip_tag_prefix_no_strip_when_no_overlap() {
-        // BigCommerce-style: op `getCustomers` doesn't start with tag tokens.
+        // When op `getCustomers` doesn't start with tag tokens.
         assert_eq!(strip_tag_prefix("getCustomers", "Customers"), "getCustomers");
     }
 
@@ -3286,7 +3095,7 @@ paths:
 
     #[test]
     fn test_method_name_keeps_operation_id_when_no_tag_overlap() {
-        // BigCommerce-shape: operationId doesn't start with tag → method
+        // When operationId doesn't start with tag → method
         // stays as full kebab'd operationId. Matches Fern's behavior.
         let yaml = r#"
 openapi: "3.0.0"
@@ -3386,263 +3195,8 @@ paths:
     }
 
     #[test]
-    fn test_multipart_form_data_fields_parsed() {
-        let yaml = r#"
-openapi: "3.0.0"
-info: { title: T, version: "1.0" }
-servers: [{ url: "https://x.com" }]
-paths:
-  /uploads:
-    post:
-      x-fern-sdk-group-name: uploads
-      x-fern-sdk-method-name: create
-      operationId: uploadsCreate
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              required: [file]
-              properties:
-                file:
-                  type: string
-                  format: binary
-                  description: The file to upload
-                purpose:
-                  type: string
-                  description: Purpose of the upload
-      responses: { "201": { description: ok } }
-"#;
-        let doc = load_openapi_spec(yaml, "t").unwrap();
-        let create = &doc.resources["uploads"].methods["create"];
-        assert_eq!(create.multipart_fields.len(), 2);
-
-        let file_field = create
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "file")
-            .expect("file field missing");
-        assert!(file_field.is_file);
-        assert!(file_field.required);
-        assert_eq!(
-            file_field.description.as_deref(),
-            Some("The file to upload")
-        );
-
-        let purpose_field = create
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "purpose")
-            .expect("purpose field missing");
-        assert!(!purpose_field.is_file);
-        assert!(!purpose_field.required);
-    }
-
-    #[test]
-    fn test_multipart_form_data_with_ref_schema() {
-        let yaml = r#"
-openapi: "3.0.0"
-info: { title: T, version: "1.0" }
-servers: [{ url: "https://x.com" }]
-paths:
-  /files:
-    post:
-      x-fern-sdk-group-name: files
-      x-fern-sdk-method-name: upload
-      operationId: filesUpload
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/FileUpload'
-      responses: { "200": { description: ok } }
-components:
-  schemas:
-    FileUpload:
-      type: object
-      required: [content]
-      properties:
-        content:
-          type: string
-          format: binary
-        label:
-          type: string
-"#;
-        let doc = load_openapi_spec(yaml, "t").unwrap();
-        let upload = &doc.resources["files"].methods["upload"];
-        assert_eq!(upload.multipart_fields.len(), 2);
-
-        let content = upload
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "content")
-            .expect("content field missing");
-        assert!(content.is_file);
-        assert!(content.required);
-
-        let label = upload
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "label")
-            .expect("label field missing");
-        assert!(!label.is_file);
-        assert!(!label.required);
-    }
-
-    #[test]
-    fn test_multipart_encoding_content_type_overrides_inferred() {
-        // The OpenAPI `encoding` object pins a per-part Content-Type that
-        // wins over the schema-inferred default: here `metadata` is a plain
-        // string (would default to a text part) but is declared
-        // `application/json`, and the file part's octet-stream default is
-        // overridden to `image/png`.
-        let yaml = r#"
-openapi: "3.0.0"
-info: { title: T, version: "1.0" }
-servers: [{ url: "https://x.com" }]
-paths:
-  /uploads:
-    post:
-      x-fern-sdk-group-name: uploads
-      x-fern-sdk-method-name: create
-      operationId: uploadsCreate
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-                metadata:
-                  type: string
-            encoding:
-              file:
-                contentType: image/png
-              metadata:
-                contentType: application/json
-      responses: { "201": { description: ok } }
-"#;
-        let doc = load_openapi_spec(yaml, "t").unwrap();
-        let create = &doc.resources["uploads"].methods["create"];
-
-        let file_field = create
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "file")
-            .expect("file field missing");
-        assert!(file_field.is_file);
-        assert_eq!(
-            file_field.content_type.as_deref(),
-            Some("image/png"),
-            "encoding.contentType should override the octet-stream default",
-        );
-
-        let metadata_field = create
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "metadata")
-            .expect("metadata field missing");
-        assert!(!metadata_field.is_file);
-        assert_eq!(
-            metadata_field.content_type.as_deref(),
-            Some("application/json"),
-            "a text part can carry a per-part Content-Type via encoding",
-        );
-    }
-
-    #[test]
-    fn test_multipart_file_part_defaults_to_octet_stream_without_encoding() {
-        // Absent an `encoding` entry, a binary part keeps the OpenAPI
-        // default content type and a text part stays untyped (None →
-        // reqwest's text/plain at send time).
-        let yaml = r#"
-openapi: "3.0.0"
-info: { title: T, version: "1.0" }
-servers: [{ url: "https://x.com" }]
-paths:
-  /uploads:
-    post:
-      x-fern-sdk-group-name: uploads
-      x-fern-sdk-method-name: create
-      operationId: uploadsCreate
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-                note:
-                  type: string
-      responses: { "201": { description: ok } }
-"#;
-        let doc = load_openapi_spec(yaml, "t").unwrap();
-        let create = &doc.resources["uploads"].methods["create"];
-
-        let file_field = create
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "file")
-            .unwrap();
-        assert_eq!(
-            file_field.content_type.as_deref(),
-            Some("application/octet-stream"),
-        );
-
-        let note_field = create
-            .multipart_fields
-            .iter()
-            .find(|f| f.wire_name == "note")
-            .unwrap();
-        assert_eq!(note_field.content_type, None);
-    }
-
-    #[test]
-    fn test_multipart_does_not_produce_json_body() {
-        let yaml = r#"
-openapi: "3.0.0"
-info: { title: T, version: "1.0" }
-servers: [{ url: "https://x.com" }]
-paths:
-  /uploads:
-    post:
-      x-fern-sdk-group-name: uploads
-      x-fern-sdk-method-name: create
-      operationId: uploadsCreate
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-      responses: { "200": { description: ok } }
-"#;
-        let doc = load_openapi_spec(yaml, "t").unwrap();
-        let create = &doc.resources["uploads"].methods["create"];
-        assert!(
-            create.request.is_none(),
-            "multipart ops should not have a JSON request schema"
-        );
-        assert!(
-            create.binary_request_body.is_none(),
-            "multipart ops should not have a binary_request_body"
-        );
-        assert!(
-            !create.multipart_fields.is_empty(),
-            "multipart ops should have multipart_fields"
-        );
-    }
-
-    #[test]
     fn test_group_name_accepts_scalar_string() {
-        // AssemblyAI and other Fern specs write `x-fern-sdk-group-name: transcripts`
+        // Some Fern specs write `x-fern-sdk-group-name: transcripts`
         // as a bare string; the parser should accept it as a single-element list.
         let yaml = r#"
 openapi: "3.0.0"
@@ -6532,8 +6086,6 @@ paths:
         assert!(!map.contains_key("remove"), "null inside object array element should be removed");
     }
 
-    // -- Verification: from_str vs from_value round-trip --------------------
-
     // -- Verification: allowNullKeys covers all Fern CLI keys ---------------
 
     #[test]
@@ -6583,8 +6135,6 @@ paths:
         let item = &merged["x-code-samples"].as_sequence().unwrap()[0];
         assert!(item["source"].is_null(), "null under x-code-samples should be preserved");
     }
-
-    // -- Verification: real overrides e2e -----------------------------------
 
     // -- Verification: all_objects heuristic --------------------------------
 
@@ -8496,13 +8046,6 @@ paths:
             vec!["public".to_string(), "public".to_string()],
         );
     }
-    // -- Real-world OpenAPI 3.1 specs (parse sweep) ----------------------
-    //
-    // These fixtures are real customer/prospect specs that declare
-    // `openapi: 3.1.0`. They sweep the new 3.1 surface area (type arrays,
-    // numeric exclusive bounds, const, composition, webhooks, schema-level
-    // examples) against actual wire shapes rather than synthetic snippets.
-
     // -- JSON Schema composition (oneOf / anyOf / allOf) -----------------
 
     #[test]
@@ -8621,7 +8164,7 @@ paths:
 
     #[test]
     fn test_examples_lax_30_map_form() {
-        // BigCommerce-style schema-level `examples` map (out-of-spec for
+        // Schema-level `examples` map (out-of-spec for
         // OpenAPI 3.0 at the schema level, but real-world specs use it).
         // The parser must round-trip without erroring.
         let obj: OpenApiSchemaObject = serde_yaml::from_str(
@@ -9008,126 +8551,6 @@ components:
         assert!(s_31.nullable);
         assert_eq!(s_30.schema_type.as_deref(), Some("object"));
         assert_eq!(s_31.schema_type.as_deref(), Some("object"));
-    }
-
-    #[test]
-    fn test_flatten_body_params_marks_scalar_nullable_30() {
-        let schema: OpenApiSchemaObject = serde_yaml::from_str(
-            r#"
-            type: object
-            properties:
-              userId:
-                type: string
-                nullable: true
-            "#,
-        )
-        .unwrap();
-        let params = flatten_body_params(&schema, &HashMap::new(), 0);
-        let user_id = params.get("userId").expect("userId flag should be emitted");
-        assert!(user_id.nullable, "scalar nullable (3.0) must propagate to MethodParameter");
-    }
-
-    #[test]
-    fn test_flatten_body_params_marks_scalar_nullable_31() {
-        let schema: OpenApiSchemaObject = serde_yaml::from_str(
-            r#"
-            type: object
-            properties:
-              userId:
-                type: ["string", "null"]
-            "#,
-        )
-        .unwrap();
-        let params = flatten_body_params(&schema, &HashMap::new(), 0);
-        let user_id = params.get("userId").expect("userId flag should be emitted");
-        assert!(user_id.nullable, "scalar nullable (3.1) must propagate to MethodParameter");
-    }
-
-    #[test]
-    fn test_flatten_body_params_non_nullable_scalar_stays_false() {
-        let schema: OpenApiSchemaObject = serde_yaml::from_str(
-            r#"
-            type: object
-            properties:
-              userId:
-                type: string
-            "#,
-        )
-        .unwrap();
-        let params = flatten_body_params(&schema, &HashMap::new(), 0);
-        let user_id = params.get("userId").unwrap();
-        assert!(!user_id.nullable);
-    }
-
-    #[test]
-    fn test_flatten_body_params_nullable_integer_and_boolean_and_number() {
-        // Three scalar variants beyond string: all must propagate nullable.
-        let schema: OpenApiSchemaObject = serde_yaml::from_str(
-            r#"
-            type: object
-            properties:
-              count:
-                type: ["integer", "null"]
-              active:
-                type: ["boolean", "null"]
-              ratio:
-                type: ["number", "null"]
-            "#,
-        )
-        .unwrap();
-        let params = flatten_body_params(&schema, &HashMap::new(), 0);
-        assert!(params["count"].nullable);
-        assert!(params["active"].nullable);
-        assert!(params["ratio"].nullable);
-    }
-
-    #[test]
-    fn test_flatten_body_params_non_scalar_nullable_not_propagated() {
-        // type: [array, null] and type: [object, null] must NOT set
-        // param.nullable=true. Arrays + nullable would collide with
-        // ArgAction::Append; object-nullable has no parent flag to attach to.
-        let schema: OpenApiSchemaObject = serde_yaml::from_str(
-            r#"
-            type: object
-            properties:
-              tags:
-                type: ["array", "null"]
-                items:
-                  type: string
-              metadata:
-                type: ["object", "null"]
-                properties:
-                  code:
-                    type: string
-            "#,
-        )
-        .unwrap();
-        let params = flatten_body_params(&schema, &HashMap::new(), 0);
-        // tags is an array → repeated, single flag, nullable must be false.
-        assert!(!params["tags"].nullable, "nullable array must not set param.nullable");
-        // metadata is flattened to metadata.code; the only emitted flag is
-        // the inner scalar, which is non-nullable.
-        assert!(!params["metadata.code"].nullable);
-    }
-
-    #[test]
-    fn test_flatten_body_params_nested_nullable_via_dot_notation() {
-        // metadata.code where code is nullable: dot-notation should preserve
-        // the nullable flag on the leaf.
-        let schema: OpenApiSchemaObject = serde_yaml::from_str(
-            r#"
-            type: object
-            properties:
-              metadata:
-                type: object
-                properties:
-                  code:
-                    type: ["string", "null"]
-            "#,
-        )
-        .unwrap();
-        let params = flatten_body_params(&schema, &HashMap::new(), 0);
-        assert!(params["metadata.code"].nullable);
     }
 
     #[test]

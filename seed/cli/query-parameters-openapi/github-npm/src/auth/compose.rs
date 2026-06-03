@@ -41,13 +41,6 @@ impl AuthProvider for AnyAuthProvider {
         self.providers.iter().any(|p| p.has_credentials())
     }
 
-    fn credential_hints(&self) -> Vec<String> {
-        self.providers
-            .iter()
-            .flat_map(|p| p.credential_hints())
-            .collect()
-    }
-
     fn has_credentials_for(&self, endpoint: &EndpointAuthMetadata) -> bool {
         self.providers
             .iter()
@@ -112,13 +105,6 @@ impl AuthProvider for AllAuthProvider {
         !self.providers.is_empty() && self.providers.iter().all(|p| p.has_credentials())
     }
 
-    fn credential_hints(&self) -> Vec<String> {
-        self.providers
-            .iter()
-            .flat_map(|p| p.credential_hints())
-            .collect()
-    }
-
     fn has_credentials_for(&self, endpoint: &EndpointAuthMetadata) -> bool {
         !self.providers.is_empty()
             && self
@@ -145,83 +131,6 @@ impl AuthProvider for AllAuthProvider {
         let mut req = request;
         for provider in &self.providers {
             req = provider.apply(req, endpoint)?;
-        }
-        Ok(req)
-    }
-}
-
-// ---------------------------------------------------------------------------
-// LayeredAuthProvider — a primary scheme plus optional additive headers.
-// ---------------------------------------------------------------------------
-
-/// Wrap a `primary` provider and layer zero or more *optional* providers on
-/// top of it. The layers are additive supplements, not alternatives: every
-/// layer that currently has credentials is applied to the request in addition
-/// to whatever the primary attaches.
-///
-/// Unlike [`AllAuthProvider`], a layer never makes the request mandatory —
-/// satisfiability (`has_credentials` / `has_credentials_for`) is decided by
-/// the primary alone, and a layer with no credentials is simply skipped. This
-/// is the right shape for a supplementary header that sits *alongside* real
-/// auth and is only present in some environments.
-///
-/// The motivating case is Lattice Sandboxes: every request carries the normal
-/// `Authorization: Bearer <token>` (the primary) and, only when developing
-/// against a sandbox, an additional `Anduril-Sandbox-Authorization: Bearer
-/// <SANDBOXES_TOKEN>` header (a layer). In production the layer's credential
-/// is absent, so the request behaves exactly as if no layer were configured.
-#[derive(Debug, Clone)]
-pub struct LayeredAuthProvider {
-    primary: DynAuthProvider,
-    layers: Vec<DynAuthProvider>,
-}
-
-impl LayeredAuthProvider {
-    pub fn new(primary: DynAuthProvider, layers: Vec<DynAuthProvider>) -> Self {
-        Self { primary, layers }
-    }
-}
-
-impl AuthProvider for LayeredAuthProvider {
-    fn name(&self) -> &str {
-        self.primary.name()
-    }
-
-    fn has_credentials(&self) -> bool {
-        // Optional layers don't gate satisfiability — the primary decides
-        // whether the CLI can authenticate at all.
-        self.primary.has_credentials()
-    }
-
-    fn credential_hints(&self) -> Vec<String> {
-        // Surface only the primary's hints in the friendly auth-error path:
-        // a missing optional layer (e.g. no sandbox token in production) is
-        // not a misconfiguration and shouldn't be reported as a missing
-        // credential.
-        self.primary.credential_hints()
-    }
-
-    fn has_credentials_for(&self, endpoint: &EndpointAuthMetadata) -> bool {
-        self.primary.has_credentials_for(endpoint)
-    }
-
-    fn apply(
-        &self,
-        request: reqwest::RequestBuilder,
-        endpoint: &EndpointAuthMetadata,
-    ) -> Result<reqwest::RequestBuilder, CliError> {
-        // Explicitly anonymous endpoints (`security: []`) opt out of auth
-        // entirely. The executor already short-circuits these before calling
-        // `apply`, but guard here too so a supplementary header can never
-        // leak onto an opt-out endpoint regardless of the call path.
-        if endpoint.is_explicit_anonymous() {
-            return Ok(request);
-        }
-        let mut req = self.primary.apply(request, endpoint)?;
-        for layer in &self.layers {
-            if layer.has_credentials() {
-                req = layer.apply(req, endpoint)?;
-            }
         }
         Ok(req)
     }
@@ -278,18 +187,6 @@ impl AuthProvider for RoutingAuthProvider {
     fn has_credentials(&self) -> bool {
         self.schemes.values().any(|p| p.has_credentials())
             || self.default.as_ref().is_some_and(|p| p.has_credentials())
-    }
-
-    fn credential_hints(&self) -> Vec<String> {
-        let mut hints: Vec<String> = self
-            .schemes
-            .values()
-            .flat_map(|p| p.credential_hints())
-            .collect();
-        if let Some(d) = &self.default {
-            hints.extend(d.credential_hints());
-        }
-        hints
     }
 
     /// Endpoint-aware credential check.
@@ -494,101 +391,6 @@ mod tests {
             .apply(req(), &EndpointAuthMetadata::unspecified())
             .unwrap_err();
         assert!(matches!(err, CliError::Auth(_)));
-    }
-
-    // -------- LayeredAuthProvider --------
-
-    #[tokio::test]
-    async fn layered_applies_primary_and_present_layer() {
-        let primary: DynAuthProvider = bearer("bearer", "tok");
-        let layer: DynAuthProvider = Arc::new(HeaderAuthProvider::new(
-            "sandbox",
-            "Anduril-Sandbox-Authorization",
-            AuthCredentialSource::literal("sbx"),
-            true,
-        ));
-        let p = LayeredAuthProvider::new(primary, vec![layer]);
-        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
-        let built = r.build().unwrap();
-        assert_eq!(
-            built.headers().get("authorization").and_then(|v| v.to_str().ok()),
-            Some("Bearer tok"),
-        );
-        assert_eq!(
-            built
-                .headers()
-                .get("anduril-sandbox-authorization")
-                .and_then(|v| v.to_str().ok()),
-            Some("Bearer sbx"),
-        );
-    }
-
-    #[tokio::test]
-    async fn layered_skips_layer_without_credentials() {
-        // Production case: no sandbox token set. The layer is silently
-        // skipped and the request behaves as if it weren't configured.
-        let primary: DynAuthProvider = bearer("bearer", "tok");
-        let layer: DynAuthProvider = Arc::new(HeaderAuthProvider::new(
-            "sandbox",
-            "Anduril-Sandbox-Authorization",
-            AuthCredentialSource::Missing,
-            true,
-        ));
-        let p = LayeredAuthProvider::new(primary, vec![layer]);
-        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
-        let built = r.build().unwrap();
-        assert_eq!(
-            built.headers().get("authorization").and_then(|v| v.to_str().ok()),
-            Some("Bearer tok"),
-        );
-        assert!(built.headers().get("anduril-sandbox-authorization").is_none());
-    }
-
-    #[test]
-    fn layered_satisfiability_follows_primary_only() {
-        // A present layer must not make an otherwise-unauthenticated CLI
-        // claim it has credentials.
-        let primary: DynAuthProvider = Arc::new(BearerAuthProvider::new(
-            "bearer",
-            AuthCredentialSource::Missing,
-        ));
-        let layer: DynAuthProvider = api_key("sandbox", "Anduril-Sandbox-Authorization", "sbx");
-        let p = LayeredAuthProvider::new(primary, vec![layer]);
-        assert!(!p.has_credentials());
-        assert_eq!(p.name(), "bearer");
-    }
-
-    #[test]
-    fn layered_credential_hints_exclude_layers() {
-        // The friendly auth-error path should point at the primary's source,
-        // not nag about an optional layer that's missing by design.
-        let primary: DynAuthProvider = Arc::new(BearerAuthProvider::new(
-            "bearer",
-            AuthCredentialSource::from_env("ENVIRONMENT_TOKEN"),
-        ));
-        let layer: DynAuthProvider = Arc::new(HeaderAuthProvider::new(
-            "sandbox",
-            "Anduril-Sandbox-Authorization",
-            AuthCredentialSource::from_env("SANDBOXES_TOKEN"),
-            true,
-        ));
-        let p = LayeredAuthProvider::new(primary, vec![layer]);
-        let hints = p.credential_hints();
-        assert_eq!(hints, vec!["ENVIRONMENT_TOKEN environment variable"]);
-    }
-
-    #[tokio::test]
-    async fn layered_does_not_attach_to_explicit_anonymous_endpoint() {
-        // `security: []` opts the operation out of auth entirely — neither
-        // the primary nor the supplementary layer should be attached.
-        let primary: DynAuthProvider = bearer("bearer", "tok");
-        let layer: DynAuthProvider = api_key("sandbox", "Anduril-Sandbox-Authorization", "sbx");
-        let p = LayeredAuthProvider::new(primary, vec![layer]);
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::explicit_anonymous())
-            .unwrap();
-        let built = r.build().unwrap();
-        assert!(built.headers().get("anduril-sandbox-authorization").is_none());
     }
 
     // -------- RoutingAuthProvider --------
