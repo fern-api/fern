@@ -1,31 +1,51 @@
 //! Custom command handlers.
 //!
-//! This file is yours to edit — it is listed in `.fernignore` so
+//! This file is yours to edit — add it to `.fernignore` so
 //! `fern generate` will never overwrite your changes.
 //!
-//! Each handler receives an `AppContext` with `invoke()` / `execute()`
-//! methods that use the CLI's native HTTP executor. Combine these with
-//! the typed request/response structs from `x_fern_default_test_types` for
-//! strongly-typed serialization and deserialization.
+//! The generated `main.rs` calls `custom::register(app)` at
+//! startup, composing your commands into the CLI at compile time.
+//! This is the same pattern used by other Fern generators (e.g.
+//! Ruby's `requirePaths`) — the generated entrypoint references
+//! this user-owned file, and `.fernignore` keeps it safe across
+//! regenerations.
+//!
+//! Each handler receives an `AppContext` whose `invoke()` and
+//! `execute()` methods use the CLI's native HTTP executor.
+//! Combine these with the typed structs from `x_fern_default_test_types`
+//! for strongly-typed request/response serialization.
 
 use fern_cli_sdk::app::CliApp;
 
 /// Register custom commands on the CLI app builder.
 ///
-/// Called from `main.rs` during startup. Add `.custom_command(...)` calls
-/// here to extend the generated CLI with your own subcommands.
+/// Called from `main.rs` during startup. Uncomment the example
+/// below and adapt it to your API to get started.
 pub fn register(app: CliApp) -> CliApp {
-    // Example using ctx.invoke() with typed request/response structs:
+    // Example: fetch a resource using the native CLI executor
+    // with typed response deserialization.
     //
-    //   use x_fern_default_test_types::SomeRequest;
+    // use x_fern_default_test_types::*;
     //
-    //   app.custom_command("deploy", "Run a deployment", |matches, ctx| {
-    //       let method = ctx.find_method("deployments", "create")?;
-    //       let req = SomeRequest { /* ... */ };
-    //       let body = serde_json::to_string(&req).unwrap();
-    //       let result = ctx.invoke(method, None, Some(&body), None)?;
-    //       ctx.emit(&result)?;
-    //       Ok(())
-    //   })
+    // let app = app.command(
+    //     clap::Command::new("get-plant")
+    //         .about("Fetch a plant by its ID")
+    //         .arg(clap::Arg::new("plant-id").required(true)),
+    //     |matches, ctx| {
+    //         let plant_id = matches.get_one::<String>("plant-id").unwrap();
+    //         let method = ctx.find_method("plants", "get")?;
+    //         let params = serde_json::json!({
+    //             "plantId": plant_id,
+    //         });
+    //         let result = ctx.invoke(
+    //             method,
+    //             Some(&params.to_string()),
+    //             None,
+    //             None,
+    //         )?;
+    //         println!("{}", serde_json::to_string_pretty(&result).unwrap());
+    //         Ok(())
+    //     },
+    // );
     app
 }

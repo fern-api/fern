@@ -19,7 +19,7 @@
 
 import { execFile } from "child_process";
 import { accessSync, constants } from "fs";
-import { mkdir, readFile, rm, unlink, writeFile } from "fs/promises";
+import { mkdir, readdir, readFile, rename, rm, unlink, writeFile } from "fs/promises";
 import { createRequire } from "module";
 import path from "path";
 import { promisify } from "util";
@@ -146,9 +146,44 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         await writeFile(libPath, patched);
     }
 
-    // 4. Remove the .fern/ metadata directory written by the base
+    // 4. Move generated type files into `src/types/` so `lib.rs`'s
+    //    `pub mod types;` resolves to `src/types/mod.rs`. The rust-model
+    //    generator emits `mod.rs` + per-type `.rs` files flat in `src/`;
+    //    Rust expects either `src/types.rs` or `src/types/mod.rs`.
+    await restructureTypesModule(path.join(typesOutputDir, "src"));
+
+    // 5. Remove the .fern/ metadata directory written by the base
     //    generator framework — not needed inside a workspace member.
     await rm(path.join(typesOutputDir, ".fern"), { recursive: true, force: true });
+}
+
+/** Files that live at the `src/` root and must NOT be moved into `src/types/`. */
+const SRC_ROOT_FILES = new Set(["lib.rs", "prelude.rs", "error.rs"]);
+
+/**
+ * Move all generated type `.rs` files (and `mod.rs`) into a `types/`
+ * subdirectory so that `lib.rs`'s `pub mod types;` resolves correctly
+ * to `src/types/mod.rs`. Files listed in `SRC_ROOT_FILES` stay put.
+ */
+async function restructureTypesModule(srcDir: string): Promise<void> {
+    const typesDir = path.join(srcDir, "types");
+    await mkdir(typesDir, { recursive: true });
+
+    const entries = await readdir(srcDir, { withFileTypes: true });
+    for (const entry of entries) {
+        if (!entry.isFile()) {
+            continue;
+        }
+        if (SRC_ROOT_FILES.has(entry.name)) {
+            continue;
+        }
+        if (!entry.name.endsWith(".rs")) {
+            continue;
+        }
+        const src = path.join(srcDir, entry.name);
+        const dest = path.join(typesDir, entry.name === "mod.rs" ? "mod.rs" : entry.name);
+        await rename(src, dest);
+    }
 }
 
 /**
