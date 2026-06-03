@@ -533,6 +533,7 @@ class OAuthTokenProviderGenerator:
         self, client_credentials: ir_types.OAuthClientCredentials
     ) -> AST.FunctionInvocation:
         # TODO(amckinney): Support non-in-lined request types.
+
         # The token endpoint's parameter names come from the configured request-properties
         # mapping (e.g. client-id -> $request.cid), which may differ from "client_id"/"client_secret".
         token_request_properties = client_credentials.token_endpoint.request_properties
