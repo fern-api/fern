@@ -1,7 +1,6 @@
+import { Block, BlockMerger, ReadmeParser } from "@fern-api/generator-cli/readme";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-
-import { Block, BlockMerger, ReadmeParser } from "@fern-api/generator-cli/readme";
 
 import type { DetectedAuthBinding } from "./detectAuth.js";
 import { toEnvVarPrefix } from "./identity.js";
