@@ -228,10 +228,14 @@ class AbstractGenerator(ABC):
                 publisher.run_ruff_check_fix()
                 publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            if not is_source_root:
-                publisher.run_poetry_lock()
-                publisher.run_ruff_check_fix()
-                publisher.run_ruff_format()
+            if is_source_root:
+                raise RuntimeError(
+                    "output_directory='source-root' is incompatible with publish output mode "
+                    "(no pyproject.toml is emitted)"
+                )
+            publisher.run_poetry_lock()
+            publisher.run_ruff_check_fix()
+            publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
 
         self.postrun(
