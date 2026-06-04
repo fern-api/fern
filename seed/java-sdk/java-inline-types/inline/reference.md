@@ -216,3 +216,28 @@ client.getUndiscriminatedUnion(
 </dl>
 </details>
 
+<details><summary><code>client.getMapResponse() -> Map&amp;lt;String, MapResponseValue&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.getMapResponse();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

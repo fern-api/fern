@@ -33,6 +33,10 @@ service:
             foo: string
         content-type: application/json
         name: GetUndiscriminatedUnionRequest
+    getMapResponse:
+      path: /map-response
+      method: GET
+      response: map<string, MapResponseValue>
 
 types:
   # this is also the type that would be produced by
@@ -354,6 +358,12 @@ types:
       ref:
         type: ReferenceType
         docs: lorem ipsum
+
+  MapResponseValue:
+    inline: true
+    properties:
+      name: string
+      description: string
 
   ReferenceType:
     docs: lorem ipsum

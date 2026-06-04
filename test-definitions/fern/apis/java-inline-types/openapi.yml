@@ -76,6 +76,21 @@ paths:
               required:
                 - bar
                 - foo
+  /root/map-response:
+    get:
+      operationId: getMapResponse
+      tags:
+        - ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: "#/components/schemas/MapResponseValue"
 components:
   schemas:
     AliasMapInline:
@@ -772,4 +787,15 @@ components:
           type: string
       required:
         - prop
+    MapResponseValue:
+      title: MapResponseValue
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
   securitySchemes: {}
