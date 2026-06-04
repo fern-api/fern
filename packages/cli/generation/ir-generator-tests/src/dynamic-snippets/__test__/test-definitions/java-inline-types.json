@@ -2875,6 +2875,225 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_:MapResponseValue": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "MapResponseValue",
+                    "camelCase": {
+                        "unsafeName": "mapResponseValue",
+                        "safeName": "mapResponseValue"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "map_response_value",
+                        "safeName": "map_response_value"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MAP_RESPONSE_VALUE",
+                        "safeName": "MAP_RESPONSE_VALUE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MapResponseValue",
+                        "safeName": "MapResponseValue"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "nested",
+                        "name": {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:MapResponseValueNested"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:MapResponseValueNested": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "MapResponseValueNested",
+                    "camelCase": {
+                        "unsafeName": "mapResponseValueNested",
+                        "safeName": "mapResponseValueNested"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "map_response_value_nested",
+                        "safeName": "map_response_value_nested"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MAP_RESPONSE_VALUE_NESTED",
+                        "safeName": "MAP_RESPONSE_VALUE_NESTED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MapResponseValueNested",
+                        "safeName": "MapResponseValueNested"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "key",
+                        "name": {
+                            "originalName": "key",
+                            "camelCase": {
+                                "unsafeName": "key",
+                                "safeName": "key"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "key",
+                                "safeName": "key"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KEY",
+                                "safeName": "KEY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Key",
+                                "safeName": "Key"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "value",
+                        "name": {
+                            "originalName": "value",
+                            "camelCase": {
+                                "unsafeName": "value",
+                                "safeName": "value"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "value",
+                                "safeName": "value"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "VALUE",
+                                "safeName": "VALUE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Value",
+                                "safeName": "Value"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_:ReferenceType": {
             "type": "object",
             "declaration": {
@@ -4882,6 +5101,48 @@
                     "includePathParameters": false,
                     "onlyPathParameters": false
                 }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getMapResponse": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getMapResponse",
+                    "camelCase": {
+                        "unsafeName": "getMapResponse",
+                        "safeName": "getMapResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_map_response",
+                        "safeName": "get_map_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_MAP_RESPONSE",
+                        "safeName": "GET_MAP_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetMapResponse",
+                        "safeName": "GetMapResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/map-response"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
             },
             "response": {
                 "type": "json"
