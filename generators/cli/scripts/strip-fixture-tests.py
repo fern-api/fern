@@ -313,7 +313,7 @@ def _extract_items(lines: list[str], body_start: int, body_end: int) -> list[dic
 def process_file(path: Path) -> bool:
     """Process a single .rs file. Returns True if the file was modified."""
     content = path.read_text()
-    if '../../cli/' not in content:
+    if '../../cli/' not in content and '../bin/' not in content:
         return False
 
     lines = content.split('\n')
