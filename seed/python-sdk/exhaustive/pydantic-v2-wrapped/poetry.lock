@@ -213,7 +213,7 @@ description = "Timeout context manager for asyncio programs"
 optional = true
 python-versions = ">=3.8"
 groups = ["main"]
-markers = "extra == \"aiohttp\" and python_version == \"3.10\""
+markers = "python_version == \"3.10\" and extra == \"aiohttp\""
 files = [
     {file = "async_timeout-5.0.1-py3-none-any.whl", hash = "sha256:39e3809566ff85354557ec2398b55e096c8364bacac9405a7a1fa429e77fe76c"},
     {file = "async_timeout-5.0.1.tar.gz", hash = "sha256:d9321a7a3d5a6a5e187e824d2fa0793ce379a202935782d555d6e9d2735677d3"},
@@ -1466,4 +1466,4 @@ aiohttp = ["aiohttp", "httpx-aiohttp"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "6d017883ae3f49fef0ec9a414b43f5bd59615f47f710ee77cd3391f327695c67"
+content-hash = "a898159e6d9bba33fe1648ff96b1c381f707eabbd83b3ef73b9d34a96e855a15"
