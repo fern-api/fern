@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.9.0
+  changelogEntry:
+    - summary: |
+        Embed typed Rust model crate as a workspace member in all generated
+        CLI output by default. The CLI generator invokes the rust-model
+        generator as a child process to produce a `<api>-types` library crate
+        alongside the CLI crate, wired as a path dependency. Custom command
+        handlers use `ctx.invoke()` with typed serde structs from the types
+        crate for serialization/deserialization while all HTTP execution stays
+        on the CLI's native executor. Set `embedTypes: false` in customConfig
+        to opt out.
+      type: feat
+    - summary: |
+        Exclude `.synced-from` provenance file from generated CLI output.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
 - version: 0.8.0
   changelogEntry:
     - summary: |
