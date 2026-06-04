@@ -11,6 +11,7 @@
 
 <br/>
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=fern-api%2Ffern)
 [![npm version](https://img.shields.io/npm/v/fern-api)](https://www.npmjs.com/package/fern-api)
 [![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
