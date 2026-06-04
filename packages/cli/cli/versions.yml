@@ -1,4 +1,66 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.8
+  changelogEntry:
+    - summary: |
+        Fix example generation for nested allOf $ref chains. When a schema uses
+        multi-level allOf (e.g. UserPost → UserBase → UserStrict), properties from
+        grandparent schemas were missing from generated code snippets because
+        mergeAllOfProperties only resolved one level of allOf. Now recursively
+        resolves the full chain so all required fields appear in examples.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.7
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v2 enum collision where multiple channels with identically
+        named query parameters (or headers/path params) that have different enum
+        values would overwrite each other. The v2 channel converter now passes
+        `parameterNamePrefix` (the channel path) to the ParameterConverter,
+        matching the v3 converter behavior.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.6
+  changelogEntry:
+    - summary: |
+        Update CLI irVersion metadata from 66 to 67 so that FDR correctly
+        reports IR 67-compatible generator versions (e.g. CLI generator ≥ 0.2.0)
+        when resolving `fern generator upgrade`.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.5
+  changelogEntry:
+    - summary: |
+        Rename the CLI generator Docker image from `fernapi/fern-cli` to
+        `fernapi/fern-cli-generator`.
+      type: chore
+  createdAt: "2026-06-03"
+  irVersion: 66
+- version: 5.44.4
+  changelogEntry:
+    - summary: |
+        Fix docs rendering dropping parent properties when an allOf parent schema
+        itself uses allOf with $ref elements. The v3 OpenAPI parser now recursively
+        resolves nested $ref objects during allOf flattening instead of silently
+        filtering them out.
+      type: fix
+    - summary: |
+        Fix OpenAPI parser emitting redundant or wrongly-required base properties for
+        discriminated unions when `infer-discriminated-union-base-properties: true`.
+        The inference now (1) skips properties every variant already inherits via a
+        shared `allOf $ref` parent — the parent schema is the single source of truth —
+        and (2) lifts an inferred property as `optional` if any variant declares it as
+        not-required. Together these prevent generated TypeScript SDKs from synthesizing
+        a `_Base` interface that collides with the real parent on either presence or
+        optionality (`TS2320`).
+      type: fix
+    - summary: |
+        Fix localized docs builds so translated OpenAPI specs are used for API reference content and navigation titles.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
 - version: 5.44.3
   changelogEntry:
     - summary: |
@@ -251,7 +313,7 @@
         and `GraphQLSpec.namespace`). Enables generators that opt into
         `generatorWantsSpecs` to route multi-spec workspaces by their
         workspace-declared namespace instead of inferring one from the
-        runner-assigned filename. The new `fernapi/fern-cli-generator` generator
+        runner-assigned filename. The new `fernapi/fern-cli` generator
         uses this to emit `.spec_under("<ns>", ...)` in the generated
         `main.rs` when the user namespaces their specs.
       type: feat
@@ -715,7 +777,7 @@
 - version: 5.25.0
   changelogEntry:
     - summary: |
-        Register the new `fernapi/fern-cli-generator` generator in the CLI configuration.
+        Register the new `fernapi/fern-cli` generator in the CLI configuration.
       type: feat
   createdAt: "2026-05-14"
   irVersion: 66

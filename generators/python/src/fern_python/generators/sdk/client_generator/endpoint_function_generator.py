@@ -1288,15 +1288,14 @@ class EndpointFunctionGenerator:
         )
 
     def _get_nested_json_response_type(self, response: ir_types.JsonResponseBodyWithProperty) -> AST.TypeHint:
-        response_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-            response.response_body_type
-        )
         property_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
             response.response_property.value_type
             if response.response_property is not None
             else response.response_body_type
         )
-        if response_type.is_optional:
+        # When the response body resolves to an optional type (including named aliases such as
+        # optional<...>), an empty response yields data=None, so the property type must be optional.
+        if self._context.resolved_schema_is_optional_or_unknown(response.response_body_type):
             return AST.TypeHint.optional(property_type)
         return property_type
 

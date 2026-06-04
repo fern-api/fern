@@ -2,6 +2,7 @@
 
 pub mod flexible_datetime;
 mod http_client;
+pub mod number_serializers;
 mod oauth_token_provider;
 pub mod pagination;
 mod query_parameter_builder;

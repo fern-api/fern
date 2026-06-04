@@ -299,7 +299,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
             case "samePropertiesAsObject":
                 return php.Type.reference(this.context.phpTypeMapper.convertToClassReference(variant.shape));
             case "singleProperty":
-                return this.context.phpTypeMapper.convert({ reference: variant.shape.type });
+                return this.context.phpTypeMapper.convert({ reference: variant.shape.type, preserveEnums: true });
             case "noProperties":
                 return php.Type.null();
             default:

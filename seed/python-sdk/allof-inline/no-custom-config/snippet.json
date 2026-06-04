@@ -65,6 +65,32 @@
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.get_organization()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.create_plant(\n    species=\"species\",\n    family=\"family\",\n    genus=\"genus\",\n    common_name=\"commonName\",\n    watering_frequency=\"daily\",\n    sun_exposure=\"full\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.create_plant(\n        species=\"species\",\n        family=\"family\",\n        genus=\"genus\",\n        common_name=\"commonName\",\n        watering_frequency=\"daily\",\n        sun_exposure=\"full\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/trees",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTree"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.create_tree(\n    id=\"id\",\n    tree_name=\"treeName\",\n    tree_species=\"treeSpecies\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.create_tree(\n        id=\"id\",\n        tree_name=\"treeName\",\n        tree_species=\"treeSpecies\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
         }
     ]
 }

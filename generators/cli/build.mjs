@@ -1,4 +1,6 @@
 import { buildGenerator, getDirname } from "@fern-api/configs/build-utils.mjs";
+import { cp } from "fs/promises";
+import path from "path";
 
 // Glob patterns (minimatch syntax, relative to ./sdk) of files we don't want
 // shipped inside the generator image. The remaining tree is what gets copied
@@ -59,9 +61,34 @@ const SDK_IGNORE = [
 
     // Changelog entries for the SDK template itself — not relevant to
     // customer output.
-    "changes/**"
+    "changes/**",
+
+    // Provenance marker written by sync-sdk.sh — internal to the
+    // generator repo, never belongs in customer output.
+    ".synced-from"
 ];
 
-await buildGenerator(getDirname(import.meta.url), {
+const dirname = getDirname(import.meta.url);
+
+await buildGenerator(dirname, {
     copy: { from: "./sdk", to: "./dist/sdk", ignore: SDK_IGNORE }
 });
+
+// Copy the pre-built rust-model generator CLI into dist/ so the Docker
+// image can invoke it as a child process for embedded types generation.
+// In the monorepo the package resolves via pnpm workspaces; the
+// `dist:cli` turbo task must have run for @fern-api/rust-model first.
+try {
+    // Follow the pnpm workspace symlink to find the real package root.
+    const symlink = path.resolve(dirname, "node_modules", "@fern-api", "rust-model");
+    const { readlink } = await import("fs/promises");
+    const target = await readlink(symlink);
+    const rustModelPkg = path.resolve(path.dirname(symlink), target);
+    // Copy the entire rust-model dist tree into dist/rust-model-dist/ so the
+    // subprocess has access to all its bundled assets (asIs/).
+    const rustModelDistDir = path.join(rustModelPkg, "dist");
+    await cp(rustModelDistDir, path.join(dirname, "dist", "rust-model-dist"), { recursive: true });
+} catch (_e) {
+    // Non-fatal: the rust-model dist may not exist during a plain
+    // `pnpm compile`. It's only required for `dist:cli` / Docker.
+}

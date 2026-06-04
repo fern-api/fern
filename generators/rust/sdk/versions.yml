@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.38.0
+  changelogEntry:
+    - summary: |
+        Support embedding as a library crate inside CLI generator output.
+        Async command handlers, `AppContext::client()` returning a
+        forward-compatible `ApiClient` trait, and `ResolvedClientConfig`
+        for auth credential resolution.
+      type: feat
+  createdAt: "2026-06-04"
+  irVersion: 66
+- version: 0.37.1
+  changelogEntry:
+    - summary: |
+        Fix the root client failing to compile when root-level endpoints return
+        Server-Sent Event streams, return binary bodies, or use query parameters.
+        The root client now imports `SseStream`, `ByteStream`, and `QueryBuilder`
+        when those endpoints are present, matching sub-client behavior.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 66
 - version: 0.37.0
   changelogEntry:
     - summary: |

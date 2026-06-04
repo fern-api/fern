@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "url-form-encoded-api-types"]
 
 # Config for 'dist'
 [dist]

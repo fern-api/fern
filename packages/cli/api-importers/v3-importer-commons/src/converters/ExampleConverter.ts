@@ -1365,13 +1365,17 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
      *
      * Precedence: the override's fields win; the base's fields fill in anything missing.
      */
-    private mergeAllOfProperties(resolvedSchema: OpenAPIV3_1.SchemaObject): {
+    private mergeAllOfProperties(
+        resolvedSchema: OpenAPIV3_1.SchemaObject,
+        visited: Set<string> = new Set(),
+        depth: number = 0
+    ): {
         mergedProperties: Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject>;
         mergedRequired: string[];
     } {
         const directProps = resolvedSchema.properties ?? {};
         const directRequired = resolvedSchema.required ?? [];
-        if (resolvedSchema.allOf == null || resolvedSchema.allOf.length === 0) {
+        if (depth > this.MAX_DEPTH || resolvedSchema.allOf == null || resolvedSchema.allOf.length === 0) {
             return { mergedProperties: directProps, mergedRequired: directRequired };
         }
 
@@ -1386,6 +1390,39 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             if (resolved == null) {
                 continue;
             }
+
+            // Prevent cycles when recursing into nested allOf
+            const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : undefined;
+            if (refKey != null && visited.has(refKey)) {
+                continue;
+            }
+
+            // Recursively resolve nested allOf chains so grandparent properties
+            // are included (e.g. UserPost → UserBase → UserStrict).
+            // Clone visited per recursive call so it only tracks on-stack ancestors,
+            // not globally consumed siblings (preserves last-wins in diamond patterns).
+            if (resolved.allOf != null && resolved.allOf.length > 0) {
+                const childVisited = new Set(visited);
+                if (refKey != null) {
+                    childVisited.add(refKey);
+                }
+                const nested = this.mergeAllOfProperties(resolved, childVisited, depth + 1);
+                for (const req of nested.mergedRequired) {
+                    baseRequired.add(req);
+                }
+                for (const [key, value] of Object.entries(nested.mergedProperties)) {
+                    if (typeof value === "object" && value !== null) {
+                        const existing = baseProps[key];
+                        if (existing != null && isInlineSchema(existing) && isInlineSchema(value)) {
+                            baseProps[key] = { ...existing, ...value };
+                        } else {
+                            baseProps[key] = value;
+                        }
+                    }
+                }
+                continue;
+            }
+
             if (resolved.required != null) {
                 for (const req of resolved.required) {
                     baseRequired.add(req);
