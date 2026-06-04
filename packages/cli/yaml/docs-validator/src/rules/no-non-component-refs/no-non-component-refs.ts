@@ -3,6 +3,18 @@ import { readFile } from "fs/promises";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 
+/**
+ * Checks whether a regex match at the given index falls inside a YAML comment.
+ * Strips quoted strings from the text preceding the match on the same line,
+ * then returns true if a bare '#' remains — indicating a comment.
+ */
+function isInYamlComment(contents: string, matchIndex: number): boolean {
+    const lineStart = contents.lastIndexOf("\n", matchIndex - 1) + 1;
+    const textBeforeMatch = contents.substring(lineStart, matchIndex);
+    const withoutQuotes = textBeforeMatch.replace(/"[^"]*"|'[^']*'/g, "");
+    return withoutQuotes.includes("#");
+}
+
 export const NoNonComponentRefsRule: Rule = {
     name: "no-non-component-refs",
     create: ({ ossWorkspaces, logger, workspace: docsWorkspace }) => {
@@ -54,7 +66,7 @@ export const NoNonComponentRefsRule: Rule = {
 
                                     for (const match of refMatches) {
                                         const ref = match[1];
-                                        if (!ref) {
+                                        if (!ref || (match.index != null && isInYamlComment(contents, match.index))) {
                                             continue;
                                         }
 

@@ -3,6 +3,17 @@ import { describe, expect, it, vi } from "vitest";
 import type { RuleContext } from "../../../Rule.js";
 import { NoNonComponentRefsRule } from "../no-non-component-refs.js";
 
+/**
+ * Mirror of the private `isInYamlComment` helper in the rule file,
+ * duplicated here so we can unit-test comment detection directly.
+ */
+function isInYamlComment(contents: string, matchIndex: number): boolean {
+    const lineStart = contents.lastIndexOf("\n", matchIndex - 1) + 1;
+    const textBeforeMatch = contents.substring(lineStart, matchIndex);
+    const withoutQuotes = textBeforeMatch.replace(/"[^"]*"|'[^']*'/g, "");
+    return withoutQuotes.includes("#");
+}
+
 describe("NoNonComponentRefsRule", () => {
     it("should be defined and have correct name", () => {
         expect(NoNonComponentRefsRule).toBeDefined();
@@ -66,6 +77,40 @@ info:
 }`;
             const isAsyncAPI = openapiContent.includes("asyncapi:") || openapiContent.includes('"asyncapi":');
             expect(isAsyncAPI).toBe(false);
+        });
+    });
+
+    describe("isInYamlComment", () => {
+        it("should detect full-line YAML comments", () => {
+            const contents = `  # $ref: "#/components/schemas/Foo"`;
+            const matchIndex = contents.indexOf("$ref");
+            expect(isInYamlComment(contents, matchIndex)).toBe(true);
+        });
+
+        it("should detect inline YAML comments", () => {
+            const contents = `key: value  # $ref: "#/paths/~1foo"`;
+            const matchIndex = contents.indexOf("$ref");
+            expect(isInYamlComment(contents, matchIndex)).toBe(true);
+        });
+
+        it("should not flag a real $ref", () => {
+            const contents = `    $ref: "#/components/schemas/Bar"`;
+            const matchIndex = contents.indexOf("$ref");
+            expect(isInYamlComment(contents, matchIndex)).toBe(false);
+        });
+
+        it("should not flag a quoted $ref", () => {
+            const contents = `    "$ref": "#/components/schemas/Baz"`;
+            const matchIndex = contents.indexOf('"$ref"');
+            expect(isInYamlComment(contents, matchIndex)).toBe(false);
+        });
+
+        it("should handle comment on a later line while earlier line has real ref", () => {
+            const contents = `    $ref: "#/components/schemas/Real"\n  # $ref: "#/paths/~1fake"`;
+            const realIndex = contents.indexOf("$ref");
+            const commentIndex = contents.lastIndexOf("$ref");
+            expect(isInYamlComment(contents, realIndex)).toBe(false);
+            expect(isInYamlComment(contents, commentIndex)).toBe(true);
         });
     });
 });

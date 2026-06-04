@@ -79,6 +79,18 @@ function createInformativeErrorMessage(invalidRefs: string[]): string {
     return message;
 }
 
+/**
+ * Checks whether a regex match at the given index falls inside a YAML comment.
+ * Strips quoted strings from the text preceding the match on the same line,
+ * then returns true if a bare '#' remains — indicating a comment.
+ */
+function isInYamlComment(contents: string, matchIndex: number): boolean {
+    const lineStart = contents.lastIndexOf("\n", matchIndex - 1) + 1;
+    const textBeforeMatch = contents.substring(lineStart, matchIndex);
+    const withoutQuotes = textBeforeMatch.replace(/"[^"]*"|'[^']*'/g, "");
+    return withoutQuotes.includes("#");
+}
+
 export const ValidLocalReferencesRule: Rule = {
     name: "valid-local-references",
     create: ({ ossWorkspaces, logger, workspace: docsWorkspace }) => {
@@ -131,7 +143,12 @@ export const ValidLocalReferencesRule: Rule = {
 
                                 for (const match of refMatches) {
                                     const ref = match[1];
-                                    if (ref && ref.startsWith("#/")) {
+                                    if (
+                                        ref &&
+                                        ref.startsWith("#/") &&
+                                        match.index != null &&
+                                        !isInYamlComment(contents, match.index)
+                                    ) {
                                         allRefs.add(ref);
                                     }
                                 }
