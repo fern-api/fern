@@ -303,10 +303,9 @@ export class GithubStep extends BaseStep {
             }
         }
 
-        // Create a GitHub release if a new version is available.
-        // The release tag points to the signed commit on the PR branch so it exists
-        // immediately — the same pattern commitAndRelease mode uses.
-        if (resolved.newVersion != null) {
+        // Create a GitHub release if a new version is available, the PR was
+        // actually created/updated, and we are not in preview mode.
+        if (!this.config.previewMode && resolved.newVersion != null && result.prNumber != null) {
             try {
                 const tagName = resolved.newVersion;
                 const headSha = await repository.getHeadSha();
