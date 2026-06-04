@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "multi-url-environment-reference-types"]
 
 # Config for 'dist'
 [dist]

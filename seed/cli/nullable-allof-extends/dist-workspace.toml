@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "nullable-allof-extends-test-types"]
 
 # Config for 'dist'
 [dist]
