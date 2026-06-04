@@ -144,14 +144,14 @@ class SdkGenerator(AbstractGenerator):
         project.add_extra(extras)
 
         # Add optional dependencies for aiohttp support.
-        # aiohttp >= 3.13 dropped Python 3.8 support, so the marker restricts install
-        # to Python 3.9+; SDKs that still support 3.8 fall back to not installing the
-        # extra rather than pinning to an older vulnerable aiohttp.
+        # aiohttp >= 3.14 requires Python 3.10+; the marker restricts install
+        # accordingly so SDKs that still support older Python fall back to not
+        # installing the extra rather than pinning to a vulnerable aiohttp.
         project.add_dependency(
             dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True, python=">=3.9")
         )
         project.add_dependency(
-            dependency=AST.Dependency(name="aiohttp", version=">=3.13.4,<4", optional=True, python=">=3.9")
+            dependency=AST.Dependency(name="aiohttp", version=">=3.14.0,<4", optional=True, python=">=3.10")
         )
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():
