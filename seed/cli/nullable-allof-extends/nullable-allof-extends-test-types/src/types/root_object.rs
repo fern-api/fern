@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// Object inheriting from a nullable schema via allOf.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

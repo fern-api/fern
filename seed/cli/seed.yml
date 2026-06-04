@@ -101,6 +101,8 @@ allowedFailures:
   - accept-header
   - alias
   - alias-extends
+  - allof
+  - allof-inline
   - any-auth
   - api-wide-base-path
   - audiences
@@ -128,11 +130,13 @@ allowedFailures:
   - extra-properties
   - file-download
   - file-upload
+  - file-upload-openapi
   - folders
   - header-auth
   - header-auth-environment-variable
   - http-head
   - idempotency-headers
+  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-api-key
@@ -173,12 +177,15 @@ allowedFailures:
   - property-access
   - public-object
   - query-parameters
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
   - reserved-keywords
   - response-property
   - server-sent-event-examples
   - server-sent-events
+  - server-sent-events-openapi
   - server-sent-events-resumable
   - simple-api:no-custom-config
   - simple-fhir

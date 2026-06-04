@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// A user input message. Inherits stream_response from base via allOf.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

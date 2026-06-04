@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// Execution environment for a rule.
 #[non_exhaustive]

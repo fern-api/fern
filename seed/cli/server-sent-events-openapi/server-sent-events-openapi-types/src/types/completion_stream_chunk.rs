@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// A single chunk in a streamed completion response.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

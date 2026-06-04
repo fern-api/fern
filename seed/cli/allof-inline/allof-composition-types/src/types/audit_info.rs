@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// Common audit metadata.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

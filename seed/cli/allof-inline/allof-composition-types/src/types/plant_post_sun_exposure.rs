@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// Required sun exposure level.
 #[non_exhaustive]

@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// This schema has nullable:true at the top level.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

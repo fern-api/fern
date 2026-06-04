@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct CreateMovieRequest {

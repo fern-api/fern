@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// Query parameters for searchRuleTypes
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

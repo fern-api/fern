@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// Request for test_method_name (body + query parameters)
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

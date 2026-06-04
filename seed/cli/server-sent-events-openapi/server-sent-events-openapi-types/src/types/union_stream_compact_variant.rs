@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use super::*;
 
 /// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]

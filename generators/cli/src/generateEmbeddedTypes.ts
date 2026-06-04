@@ -180,11 +180,15 @@ const SRC_ROOT_FILES = new Set(["lib.rs", "prelude.rs", "error.rs"]);
  * Move all generated type `.rs` files (and `mod.rs`) into a `types/`
  * subdirectory so that `lib.rs`'s `pub mod types;` resolves correctly
  * to `src/types/mod.rs`. Files listed in `SRC_ROOT_FILES` stay put.
+ *
+ * After moving, each type file (not `mod.rs`) gets a `use super::*;`
+ * injected so sibling types re-exported by `mod.rs` are in scope.
  */
 async function restructureTypesModule(srcDir: string): Promise<void> {
     const typesDir = path.join(srcDir, "types");
     await mkdir(typesDir, { recursive: true });
 
+    const movedFiles: string[] = [];
     const entries = await readdir(srcDir, { withFileTypes: true });
     for (const entry of entries) {
         if (!entry.isFile()) {
@@ -199,6 +203,24 @@ async function restructureTypesModule(srcDir: string): Promise<void> {
         const src = path.join(srcDir, entry.name);
         const dest = path.join(typesDir, entry.name === "mod.rs" ? "mod.rs" : entry.name);
         await rename(src, dest);
+        if (entry.name !== "mod.rs") {
+            movedFiles.push(dest);
+        }
+    }
+
+    // Inject `use super::*;` into each moved type file so sibling types
+    // (re-exported by mod.rs) are visible alongside prelude imports.
+    for (const filePath of movedFiles) {
+        const content = await readFile(filePath, "utf-8");
+        if (!content.includes("use super::*;")) {
+            const patched = content.replace(
+                "pub use crate::prelude::*;",
+                "pub use crate::prelude::*;\nuse super::*;"
+            );
+            if (patched !== content) {
+                await writeFile(filePath, patched);
+            }
+        }
     }
 }
 
