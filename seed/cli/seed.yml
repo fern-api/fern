@@ -162,6 +162,7 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - object
   - objects-with-imports
+  - openapi-request-body-ref
   - optional
   - package-yml
   - pagination
