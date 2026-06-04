@@ -1396,14 +1396,17 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             if (refKey != null && visited.has(refKey)) {
                 continue;
             }
-            if (refKey != null) {
-                visited.add(refKey);
-            }
 
             // Recursively resolve nested allOf chains so grandparent properties
             // are included (e.g. UserPost → UserBase → UserStrict).
+            // Clone visited per recursive call so it only tracks on-stack ancestors,
+            // not globally consumed siblings (preserves last-wins in diamond patterns).
             if (resolved.allOf != null && resolved.allOf.length > 0) {
-                const nested = this.mergeAllOfProperties(resolved, visited, depth + 1);
+                const childVisited = new Set(visited);
+                if (refKey != null) {
+                    childVisited.add(refKey);
+                }
+                const nested = this.mergeAllOfProperties(resolved, childVisited, depth + 1);
                 for (const req of nested.mergedRequired) {
                     baseRequired.add(req);
                 }
