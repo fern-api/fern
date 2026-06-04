@@ -188,10 +188,9 @@ allowedFailures:
   # Dynamic snippet: union factory method param mismatch.
   - examples:no-custom-config
   - examples:readme-config
-  # Union serialization: jsonSerialize/jsonDeserialize called on enum types.
+  # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).
   - trace
-  - circular-references
-  - circular-references-advanced
+
   # OAuth/InferredAuth custom properties need non-literal property passthrough.
   - oauth-client-credentials-custom
   - oauth-client-credentials-reference

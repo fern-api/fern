@@ -203,7 +203,7 @@ class TestSubmissionStatus extends JsonSerializableType
                 $result['errored'] = $value;
                 break;
             case 'running':
-                $value = $this->asRunning()->jsonSerialize();
+                $value = $this->asRunning()->value;
                 $result['running'] = $value;
                 break;
             case 'testCaseIdToState':
@@ -270,12 +270,12 @@ class TestSubmissionStatus extends JsonSerializableType
                     );
                 }
 
-                if (!(is_array($data['running']))) {
+                if (!(is_string($data['running']))) {
                     throw new Exception(
-                        "Expected property 'running' in JSON data to be array, instead received " . get_debug_type($data['running']),
+                        "Expected property 'running' in JSON data to be string, instead received " . get_debug_type($data['running']),
                     );
                 }
-                $args['value'] = RunningSubmissionState::jsonDeserialize($data['running']);
+                $args['value'] = RunningSubmissionState::from($data['running']);
                 break;
             case 'testCaseIdToState':
                 if (!array_key_exists('testCaseIdToState', $data)) {

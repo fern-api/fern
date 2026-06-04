@@ -137,6 +137,27 @@ describe("findRemovedSlugs", () => {
         expect(findRemovedSlugs(published, local)).toEqual([]);
     });
 
+    it("skips published entries with empty slug even when no local page serves root", () => {
+        // Reproduces the false positives reported against changelog entries and
+        // embedded API-reference content pages: FDR's writer stores `?? ""` for any
+        // page that doesn't resolve to a standalone nav node, and the site's home
+        // page lives under a non-root slug, so nothing locally serves "". These
+        // empty-slug rows must never be reported as removed "/" pages.
+        const published: MarkdownEntry[] = [
+            { pageId: "changelog/2020-05-15.mdx", slug: "", lastUpdated: "2024-01-01T00:00:00.000Z" },
+            {
+                pageId: "docs/pages/api-reference/content-api/pages.mdx",
+                slug: "",
+                lastUpdated: "2024-01-01T00:00:00.000Z"
+            }
+        ];
+        const local = slugMap([
+            ["docs/pages/home.mdx", "welcome"],
+            ["changelog/2026-05-19.mdx", "changelog"]
+        ]);
+        expect(findRemovedSlugs(published, local)).toEqual([]);
+    });
+
     it("still flags removed page when no local page serves the old slug", () => {
         const published: MarkdownEntry[] = [
             { pageId: "docs/old.mdx", slug: "unique-old-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }
