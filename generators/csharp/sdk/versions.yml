@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.66.8
+  changelogEntry:
+    - summary: |
+        Fixed a compile error (CS9035) for discriminated unions that have required base properties.
+        The internal constructor used for property-name deserialization is now annotated with
+        `[SetsRequiredMembers]`, so callers are no longer forced to set the required base properties
+        at that call site.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
 - version: 2.66.7
   changelogEntry:
     - summary: |
