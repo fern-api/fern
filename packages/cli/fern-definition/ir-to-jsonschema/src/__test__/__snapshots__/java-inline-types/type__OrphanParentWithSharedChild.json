@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "child": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SharedChildType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "label"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SharedChildType": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "detail"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
