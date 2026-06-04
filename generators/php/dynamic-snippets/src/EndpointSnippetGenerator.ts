@@ -901,7 +901,9 @@ export class EndpointSnippetGenerator {
         const requiredPathParameterFields: php.ConstructorField[] = [];
         const requiredPathParams = [...requiredIrPathParameters, ...(request.pathParameters ?? [])];
         if (requiredPathParams.length > 0) {
-            requiredPathParameterFields.push(...this.getPathParameters({ namedParameters: requiredPathParams, snippet }));
+            requiredPathParameterFields.push(
+                ...this.getPathParameters({ namedParameters: requiredPathParams, snippet })
+            );
         }
         const optionalPathParameterFields: php.ConstructorField[] = [];
         if (optionalIrPathParameters.length > 0) {
