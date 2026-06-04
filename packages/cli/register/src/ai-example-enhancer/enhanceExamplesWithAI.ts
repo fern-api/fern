@@ -1665,8 +1665,7 @@ export function unwrapLambdaBodyEnvelope(value: unknown): { wasWrapped: boolean;
         typeof value === "object" &&
         value !== null &&
         !Array.isArray(value) &&
-        "body" in value &&
-        Object.keys(value).length === 1
+        "body" in value
     ) {
         return { wasWrapped: true, inner: (value as Record<string, unknown>).body };
     }

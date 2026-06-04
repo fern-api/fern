@@ -87,11 +87,11 @@ describe("unwrapLambdaBodyEnvelope", () => {
         expect(result.inner).toEqual({ channelIds: [101, 202] });
     });
 
-    it("does not unwrap when body is not the only key", () => {
-        const notWrapped = { body: { a: 1 }, extra: "field" };
-        const result = unwrapLambdaBodyEnvelope(notWrapped);
-        expect(result.wasWrapped).toBe(false);
-        expect(result.inner).toBe(notWrapped);
+    it("unwraps even when body is not the only key", () => {
+        const multiKey = { body: { a: 1 }, statusCode: 200 };
+        const result = unwrapLambdaBodyEnvelope(multiKey);
+        expect(result.wasWrapped).toBe(true);
+        expect(result.inner).toEqual({ a: 1 });
     });
 
     it("does not unwrap non-objects", () => {
