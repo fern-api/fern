@@ -2,12 +2,12 @@ import { describe, expect, it } from "vitest";
 import { validateCustomConfig } from "../customConfig.js";
 
 describe("validateCustomConfig", () => {
-    it("returns the empty default for null/undefined", () => {
-        expect(validateCustomConfig(null)).toEqual({});
-        expect(validateCustomConfig(undefined)).toEqual({});
+    it("returns defaults (embedTypes: true) for null/undefined", () => {
+        expect(validateCustomConfig(null)).toEqual({ embedTypes: true });
+        expect(validateCustomConfig(undefined)).toEqual({ embedTypes: true });
     });
 
-    it("returns the empty default for an empty object", () => {
+    it("returns the empty result for an empty object (embedTypes resolved at pipeline level)", () => {
         expect(validateCustomConfig({})).toEqual({});
     });
 

@@ -26,11 +26,14 @@ const MIN_OF_MAXS_KEYS = ["maximum", "exclusiveMaximum", "maxLength", "maxItems"
 
 const SKIP_FROM_CHILDREN = ["allOf", "oneOf", "anyOf"];
 
+export type RefResolver = (ref: OpenAPIV3_1.ReferenceObject) => OpenAPIV3_1.SchemaObject | undefined;
+
 export function mergeAllOfSchemas(
     outerSchema: OpenAPIV3_1.SchemaObject,
-    elements: OpenAPIV3_1.SchemaObject[]
+    elements: OpenAPIV3_1.SchemaObject[],
+    resolveRef?: RefResolver
 ): OpenAPIV3_1.SchemaObject {
-    const flatElements = flattenNestedAllOf(elements);
+    const flatElements = flattenNestedAllOf(elements, resolveRef);
 
     let result: Record<string, unknown> = {};
     for (const element of flatElements) {
@@ -42,17 +45,36 @@ export function mergeAllOfSchemas(
     return result as OpenAPIV3_1.SchemaObject;
 }
 
-function flattenNestedAllOf(elements: OpenAPIV3_1.SchemaObject[]): OpenAPIV3_1.SchemaObject[] {
+function flattenNestedAllOf(
+    elements: OpenAPIV3_1.SchemaObject[],
+    resolveRef?: RefResolver,
+    visitedRefs?: Set<string>
+): OpenAPIV3_1.SchemaObject[] {
+    const visited = visitedRefs ?? new Set<string>();
     const flat: OpenAPIV3_1.SchemaObject[] = [];
     for (const element of elements) {
         if (Array.isArray(element.allOf) && element.allOf.length > 0) {
             const { allOf, ...sibling } = element;
-            // Filter out ReferenceObjects — only include resolved SchemaObjects.
-            // Unresolved $ref entries would corrupt the merged result with a
-            // spurious top-level $ref key.
-            const schemaChildren = allOf.filter((child): child is OpenAPIV3_1.SchemaObject => !("$ref" in child));
-            // Recursively flatten in case extracted children also contain allOf
-            flat.push(...flattenNestedAllOf(schemaChildren));
+            const schemaChildren: OpenAPIV3_1.SchemaObject[] = [];
+            for (const child of allOf) {
+                if ("$ref" in child) {
+                    if (resolveRef == null) {
+                        continue;
+                    }
+                    const refPath = (child as OpenAPIV3_1.ReferenceObject).$ref;
+                    if (visited.has(refPath)) {
+                        continue;
+                    }
+                    visited.add(refPath);
+                    const resolved = resolveRef(child as OpenAPIV3_1.ReferenceObject);
+                    if (resolved != null) {
+                        schemaChildren.push(resolved);
+                    }
+                } else {
+                    schemaChildren.push(child as OpenAPIV3_1.SchemaObject);
+                }
+            }
+            flat.push(...flattenNestedAllOf(schemaChildren, resolveRef, visited));
             if (Object.keys(sibling).length > 0) {
                 flat.push(sibling as OpenAPIV3_1.SchemaObject);
             }

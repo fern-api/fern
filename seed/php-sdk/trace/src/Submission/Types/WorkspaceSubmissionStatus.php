@@ -23,7 +23,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      * @var (
      *    null
      *   |ErrorInfo
-     *   |value-of<RunningSubmissionState>
+     *   |RunningSubmissionState
      *   |WorkspaceRunDetails
      *   |mixed
      * ) $value
@@ -43,7 +43,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
      *   value: (
      *    null
      *   |ErrorInfo
-     *   |value-of<RunningSubmissionState>
+     *   |RunningSubmissionState
      *   |WorkspaceRunDetails
      *   |mixed
      * ),
@@ -80,10 +80,10 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @param value-of<RunningSubmissionState> $running
+     * @param RunningSubmissionState $running
      * @return WorkspaceSubmissionStatus
      */
-    public static function running(string $running): WorkspaceSubmissionStatus
+    public static function running(RunningSubmissionState $running): WorkspaceSubmissionStatus
     {
         return new WorkspaceSubmissionStatus([
             'type' => 'running',
@@ -154,9 +154,9 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
     }
 
     /**
-     * @return value-of<RunningSubmissionState>
+     * @return RunningSubmissionState
      */
-    public function asRunning(): string
+    public function asRunning(): RunningSubmissionState
     {
         if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
             throw new Exception(
@@ -239,7 +239,7 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
                 $result['errored'] = $value;
                 break;
             case 'running':
-                $value = $this->value;
+                $value = $this->asRunning()->jsonSerialize();
                 $result['running'] = $value;
                 break;
             case 'ran':
@@ -310,7 +310,12 @@ class WorkspaceSubmissionStatus extends JsonSerializableType
                     );
                 }
 
-                $args['value'] = $data['running'];
+                if (!(is_array($data['running']))) {
+                    throw new Exception(
+                        "Expected property 'running' in JSON data to be array, instead received " . get_debug_type($data['running']),
+                    );
+                }
+                $args['value'] = RunningSubmissionState::jsonDeserialize($data['running']);
                 break;
             case 'ran':
                 $args['value'] = WorkspaceRunDetails::jsonDeserialize($data);

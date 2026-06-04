@@ -4,6 +4,10 @@ module Seed
   module Users
     module Types
       class ListUsersExtendedOptionalListResponse < Internal::Types::Model
+        field :data, -> { Seed::Users::Types::UserOptionalListContainer }, optional: false, nullable: false
+
+        field :next_, -> { String }, optional: true, nullable: false, api_name: "next"
+
         field :total_count, -> { Integer }, optional: false, nullable: false
       end
     end

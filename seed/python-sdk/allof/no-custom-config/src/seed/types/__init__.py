@@ -18,12 +18,20 @@ if typing.TYPE_CHECKING:
     from .organization import Organization
     from .paginated_result import PaginatedResult
     from .paging_cursors import PagingCursors
+    from .plant_base import PlantBase
+    from .plant_base_watering_frequency import PlantBaseWateringFrequency
+    from .plant_post_sun_exposure import PlantPostSunExposure
+    from .plant_strict import PlantStrict
     from .rule_create_request_execution_context import RuleCreateRequestExecutionContext
     from .rule_execution_context import RuleExecutionContext
     from .rule_response import RuleResponse
     from .rule_response_status import RuleResponseStatus
     from .rule_type import RuleType
     from .rule_type_search_response import RuleTypeSearchResponse
+    from .tree_base import TreeBase
+    from .tree_describable import TreeDescribable
+    from .tree_identifiable import TreeIdentifiable
+    from .tree_record import TreeRecord
     from .user import User
     from .user_search_response import UserSearchResponse
 _dynamic_imports: typing.Dict[str, str] = {
@@ -39,12 +47,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Organization": ".organization",
     "PaginatedResult": ".paginated_result",
     "PagingCursors": ".paging_cursors",
+    "PlantBase": ".plant_base",
+    "PlantBaseWateringFrequency": ".plant_base_watering_frequency",
+    "PlantPostSunExposure": ".plant_post_sun_exposure",
+    "PlantStrict": ".plant_strict",
     "RuleCreateRequestExecutionContext": ".rule_create_request_execution_context",
     "RuleExecutionContext": ".rule_execution_context",
     "RuleResponse": ".rule_response",
     "RuleResponseStatus": ".rule_response_status",
     "RuleType": ".rule_type",
     "RuleTypeSearchResponse": ".rule_type_search_response",
+    "TreeBase": ".tree_base",
+    "TreeDescribable": ".tree_describable",
+    "TreeIdentifiable": ".tree_identifiable",
+    "TreeRecord": ".tree_record",
     "User": ".user",
     "UserSearchResponse": ".user_search_response",
 }
@@ -84,12 +100,20 @@ __all__ = [
     "Organization",
     "PaginatedResult",
     "PagingCursors",
+    "PlantBase",
+    "PlantBaseWateringFrequency",
+    "PlantPostSunExposure",
+    "PlantStrict",
     "RuleCreateRequestExecutionContext",
     "RuleExecutionContext",
     "RuleResponse",
     "RuleResponseStatus",
     "RuleType",
     "RuleTypeSearchResponse",
+    "TreeBase",
+    "TreeDescribable",
+    "TreeIdentifiable",
+    "TreeRecord",
     "User",
     "UserSearchResponse",
 ]

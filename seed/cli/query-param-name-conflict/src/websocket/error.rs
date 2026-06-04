@@ -18,18 +18,40 @@
 //! | local | unparseable JSON from server | `Other` | 5 |
 //!
 //! The abnormal-close hint nudges users toward the most common failure
-//! mode: auth / network / app-level keepalive misses.
+//! mode: missed pings under ElevenLabs' 20-second inactivity timeout.
 
 use tokio_tungstenite::tungstenite;
 
 use crate::error::CliError;
 
 /// Default hint appended to abnormal-close errors. API-neutral by
-/// design — it's the message a user of *any* WS-using CLI should
-/// understand. Override per-CLI by setting
-/// [`super::WsConfig::abnormal_close_hint`] with API-specific guidance.
+/// design — it's the message a customer of *any* WS-using CLI should
+/// understand. Per-API constructors on [`super::WsConfig`] (e.g.
+/// [`super::WsConfig::elevenlabs_convai`], [`super::WsConfig::deepgram_listen`])
+/// override this with API-specific guidance.
 pub const ABNORMAL_CLOSE_HINT: &str =
     "connection ended abnormally; check auth, network, and the API's keepalive/timeout requirements";
+
+/// ElevenLabs-flavoured hint: the most common ElevenLabs failure mode
+/// is a missed app-level pong inside the 20-second inactivity window.
+/// Used by [`super::WsConfig::elevenlabs_convai`] /
+/// [`super::WsConfig::elevenlabs_tts`].
+pub const ELEVENLABS_CLOSE_HINT: &str =
+    "likely missed ping/pong reply; check your auto_responder config";
+
+/// Deepgram-flavoured hint.
+pub const DEEPGRAM_CLOSE_HINT: &str =
+    "check KeepAlive cadence (every 3-8s) and audio encoding/sample_rate";
+
+/// OpenAI Realtime-flavoured hint.
+pub const OPENAI_REALTIME_CLOSE_HINT: &str =
+    "session may have hit the 30-minute cap or the model rejected the config; \
+     see OpenAI Realtime docs";
+
+/// AssemblyAI-flavoured hint.
+pub const ASSEMBLYAI_CLOSE_HINT: &str =
+    "check audio encoding (PCM16 expected) and that the session hasn't \
+     exceeded its idle/max duration";
 
 /// Map a `tungstenite::Error` raised during the handshake phase to a
 /// [`CliError`] following the matrix above. Public so an external caller
@@ -106,16 +128,16 @@ pub(crate) fn map_stream_error(err: tungstenite::Error, hint: &str) -> CliError 
 /// Returns `Ok(())` for **success-shaped** closures:
 /// - `1000 Normal Closure` — protocol-correct end-of-session.
 /// - `1001 Going Away` — peer is leaving (page navigation, server
-///   shutdown, *or* session-cap expiry like a long-running session
-///   hitting a server-side hard limit). For long-running sessions this
-///   is the polite way to say "we're done"; treating it as an error
-///   would cause shell pipelines to spuriously fail on a clean
-///   end-of-session.
+///   shutdown, *or* session-cap expiry like OpenAI Realtime's 30-minute
+///   hard limit). For long-running sessions this is the polite way to
+///   say "we're done"; treating it as an error would cause shell
+///   pipelines to spuriously fail on a clean end-of-session.
 ///
 /// Returns `Err` for everything else, with `hint` woven into the message
 /// when supplied. `hint` is what the user should investigate; pass
-/// [`ABNORMAL_CLOSE_HINT`] for the generic default, or supply an
-/// API-specific string (see [`super::WsConfig::abnormal_close_hint`]).
+/// [`ABNORMAL_CLOSE_HINT`] for the canonical ElevenLabs missed-pong
+/// nudge, or supply an API-specific string (see
+/// [`super::WsConfig::abnormal_close_hint`]).
 pub(crate) fn classify_close_frame(
     frame: Option<&tungstenite::protocol::CloseFrame<'_>>,
     hint: &str,
@@ -193,9 +215,8 @@ mod tests {
     #[test]
     fn close_1001_going_away_is_ok() {
         // 1001 = peer is leaving (page nav, server shutdown, session-cap
-        // expiry). Treated as a clean end-of-session for long-running
-        // sessions that hit a server-side hard limit and similar
-        // "polite hangup" patterns.
+        // expiry). Treated as a clean end-of-session per OpenAI Realtime
+        // 30-minute hard limit and similar "polite hangup" patterns.
         assert!(classify_close_frame(Some(&frame(1001, "session cap")), ABNORMAL_CLOSE_HINT).is_ok());
     }
 
@@ -221,7 +242,7 @@ mod tests {
 
     #[test]
     fn custom_hint_replaces_default_in_message() {
-        let custom = "custom hint: check KeepAlive cadence + audio format";
+        let custom = "Deepgram check: KeepAlive cadence + audio format";
         let err = classify_close_frame(Some(&frame(1006, "")), custom).unwrap_err();
         assert!(err.to_string().contains(custom));
         assert!(!err.to_string().contains(ABNORMAL_CLOSE_HINT),

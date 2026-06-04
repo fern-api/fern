@@ -16,6 +16,10 @@ export interface DetectedAuthBinding {
     placement: "root" | "binding";
     /** Rust type to import from `fern_cli_sdk::auth`, if any. */
     authTypeImport: string | null;
+    /** Resolved environment variable names the user must set for this binding. */
+    envVars: string[];
+    /** Auth kind for documentation purposes. */
+    kind: "bearer" | "header" | "basic";
 }
 
 /**
@@ -62,7 +66,9 @@ function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): Detecte
                 schemeName: bearer.key,
                 rustCall: `.auth(BearerAuth::new("${bearer.key}").env("${env}"))`,
                 placement: "root",
-                authTypeImport: "BearerAuth"
+                authTypeImport: "BearerAuth",
+                envVars: [env],
+                kind: "bearer"
             };
         },
         header: (header) => {
@@ -71,7 +77,9 @@ function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): Detecte
                 schemeName: header.key,
                 rustCall: `.auth(ApiKeyAuth::new("${header.key}").env("${env}"))`,
                 placement: "root",
-                authTypeImport: "ApiKeyAuth"
+                authTypeImport: "ApiKeyAuth",
+                envVars: [env],
+                kind: "header"
             };
         },
         basic: (basic) => {
@@ -88,7 +96,9 @@ function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): Detecte
                     schemeName: basic.key,
                     rustCall: `.auth_provider("${basic.key}", BasicAuthProvider::username_only("${basic.key}", AuthCredentialSource::from_env("${usernameEnv}")))`,
                     placement: "binding",
-                    authTypeImport: "AuthCredentialSource, BasicAuthProvider"
+                    authTypeImport: "AuthCredentialSource, BasicAuthProvider",
+                    envVars: [usernameEnv],
+                    kind: "basic"
                 };
             }
             if (basic.usernameOmit) {
@@ -96,14 +106,18 @@ function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): Detecte
                     schemeName: basic.key,
                     rustCall: `.auth_provider("${basic.key}", BasicAuthProvider::password_only("${basic.key}", AuthCredentialSource::from_env("${passwordEnv}")))`,
                     placement: "binding",
-                    authTypeImport: "AuthCredentialSource, BasicAuthProvider"
+                    authTypeImport: "AuthCredentialSource, BasicAuthProvider",
+                    envVars: [passwordEnv],
+                    kind: "basic"
                 };
             }
             return {
                 schemeName: basic.key,
                 rustCall: `.auth_basic_scheme("${basic.key}", AuthCredentialSource::from_env("${usernameEnv}"), AuthCredentialSource::from_env("${passwordEnv}"))`,
                 placement: "binding",
-                authTypeImport: "AuthCredentialSource"
+                authTypeImport: "AuthCredentialSource",
+                envVars: [usernameEnv, passwordEnv],
+                kind: "basic"
             };
         },
         // The SDK doesn't yet have a runtime provider for OAuth client

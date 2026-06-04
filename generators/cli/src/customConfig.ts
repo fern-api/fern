@@ -13,9 +13,20 @@ export interface FernCliCustomConfig {
      * is no sensible auto-derivation when multiple specs are present.
      */
     binaryName?: string;
+
+    /**
+     * When true (the default), the generator invokes `@fern-api/rust-model`
+     * to produce a `<binaryName>-types` library crate alongside the CLI
+     * crate. Custom command handlers can import typed serde structs from
+     * the types crate for serialization / deserialization while all HTTP
+     * execution stays on the native CLI executor (`ctx.invoke()`).
+     *
+     * Set to `false` to disable types generation.
+     */
+    embedTypes?: boolean;
 }
 
-const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = {};
+const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { embedTypes: true };
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernCliCustomConfig {
     if (generatorConfig.customConfig == null) {
@@ -46,6 +57,12 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             throw new Error(`Invalid customConfig.binaryName: expected a string, got ${typeof obj.binaryName}.`);
         }
         result.binaryName = obj.binaryName;
+    }
+    if ("embedTypes" in obj && obj.embedTypes !== undefined) {
+        if (typeof obj.embedTypes !== "boolean") {
+            throw new Error(`Invalid customConfig.embedTypes: expected a boolean, got ${typeof obj.embedTypes}.`);
+        }
+        result.embedTypes = obj.embedTypes;
     }
     return result;
 }

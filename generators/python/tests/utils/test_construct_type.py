@@ -1135,3 +1135,24 @@ def test_empty_details_does_not_greedily_match_figure() -> None:
     # An empty dict should NOT become a FigureDetails (or TextDetails)
     # because the Literal 'type' field is absent
     assert not isinstance(block.details, FigureDetails), "Empty dict should not greedily match FigureDetails"
+
+
+def test_construct_bare_dict() -> None:
+    """Bare `dict` (no type params) should pass through without raising."""
+    input_dict = {"a": 1, "b": "two"}
+    result = construct_type(type_=dict, object_=input_dict)
+    assert result == input_dict
+
+
+def test_construct_bare_list() -> None:
+    """Bare `list` (no type params) should pass through without raising."""
+    input_list = [1, "two", 3.0]
+    result = construct_type(type_=list, object_=input_list)
+    assert result == input_list
+
+
+def test_construct_bare_set() -> None:
+    """Bare `set` (no type params) should pass through without raising."""
+    input_set = {1, 2, 3}
+    result = construct_type(type_=set, object_=input_set)
+    assert result == input_set

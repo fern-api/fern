@@ -127,16 +127,8 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - schemaless-request-body-examples
-  - api-wide-base-path
-  - bytes-upload
   - audiences
-  - header-auth-environment-variable
-  - client-side-params:with-custom-config
-  - client-side-params:no-custom-config
-  - cross-package-type-names
   - enum
-  - errors
   - examples:no-custom-config
   - examples:readme-config
   - exhaustive
@@ -147,10 +139,7 @@ allowedFailures:
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
   - inferred-auth-implicit-api-key
-  - inferred-auth-implicit-reference
   - literal
-  - mixed-case
-  - mixed-file-directory
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference
@@ -158,13 +147,10 @@ allowedFailures:
   - nullable:nullable-as-optional
   - nullable-optional:no-custom-config
   - nullable-optional:nullable-as-optional
-  - nullable-request-body
-  - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
-  - path-parameters
   - plain-text
   - query-parameters
   - request-parameters
@@ -183,11 +169,6 @@ allowedFailures:
   - server-url-templating
   - variables
   - websocket-inferred-auth
-  # Intermediate failures
-  - any-auth
-  - imdb
-  # Boolean literal enum changes require seed snapshot regeneration
-  - null-type
   # Multipart with $ref body — Swift snippet generator emits args in wrong
   # positional order; tracked separately under FER-10087 follow-up.
   - openapi-request-body-ref

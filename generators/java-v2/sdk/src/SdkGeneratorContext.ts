@@ -271,7 +271,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getRootClientClassReference(): java.ClassReference {
         return java.classReference({
-            name: this.getRootClientClassName(),
+            name: this.getRootClientClassNameForSnippets(),
             packageName: this.getRootPackageName()
         });
     }
@@ -283,6 +283,20 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getRootClientClassName(): string {
         return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`;
+    }
+
+    /**
+     * The client class name surfaced in documentation snippets (README, reference.md).
+     * Customers may export the generated root client under a different, hand-written class name; this
+     * accessor reflects that exported name. Falls back to the internal client class name when unset, so
+     * output is unchanged for users who have not configured `exported-client-class-name`.
+     *
+     * Note: wire tests compile against the generated code and must continue to use the internal
+     * `getRootClientClassName()`; the exported class is hand-written by customers and does not exist
+     * in generator output.
+     */
+    public getRootClientClassNameForSnippets(): string {
+        return this.customConfig?.["exported-client-class-name"] ?? this.getRootClientClassName();
     }
 
     public isSelfHosted(): boolean {

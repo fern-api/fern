@@ -31,14 +31,16 @@ module Seed
     end
 
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries
       )
     end
   end

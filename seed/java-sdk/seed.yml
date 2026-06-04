@@ -137,6 +137,8 @@ fixtures:
       license:
         custom: LICENSE
       outputFolder: custom-license
+  java-idempotency-headers-file-upload:
+    - outputFolder: default
   java-inline-types:
     - customConfig:
         enable-inline-types: true

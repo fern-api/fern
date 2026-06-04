@@ -201,6 +201,18 @@ export class RootClientGenerator {
         // Add HttpClient and RequestOptions imports if root service has endpoints
         if (this.rootServiceGenerator) {
             crateItems.push("HttpClient", "RequestOptions");
+
+            // Mirror SubClientGenerator: root-level endpoints may also need these
+            // crate-level re-exports for binary, SSE, and query-parameter endpoints.
+            if (this.rootServiceGenerator.hasBinaryEndpoints()) {
+                crateItems.push("ByteStream");
+            }
+            if (this.rootServiceGenerator.hasSseEndpoints()) {
+                crateItems.push("SseStream");
+            }
+            if (this.rootServiceGenerator.hasQueryParameters()) {
+                crateItems.push("QueryBuilder");
+            }
         }
 
         const imports: UseStatement[] = [

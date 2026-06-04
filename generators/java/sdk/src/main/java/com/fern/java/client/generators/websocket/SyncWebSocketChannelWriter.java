@@ -208,7 +208,10 @@ public class SyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter {
                 "$T.Builder requestBuilder = new $T.Builder().url(urlBuilder.build())", Request.class, Request.class);
 
         // Apply authentication and configured headers
-        builder.addStatement("$N.headers(null).forEach(requestBuilder::addHeader)", clientOptionsField);
+        builder.addStatement(
+                "$N.headers(($T) null).forEach(requestBuilder::addHeader)",
+                clientOptionsField,
+                clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName());
 
         builder.addStatement("final $T request = requestBuilder.build()", Request.class);
 

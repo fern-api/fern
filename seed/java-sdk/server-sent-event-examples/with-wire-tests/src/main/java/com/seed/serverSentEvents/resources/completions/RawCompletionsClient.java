@@ -133,9 +133,7 @@ public class RawCompletionsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedServerSentEventsHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamEvent.class, new ResponseBodyReader(response), "event", "[DONE]"),
-                        response);
+                        Stream.fromSse(StreamEvent.class, new ResponseBodyReader(response), "[DONE]"), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -192,7 +190,8 @@ public class RawCompletionsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedServerSentEventsHttpResponse<>(
-                        Stream.fromSse(StreamEventDiscriminantInData.class, new ResponseBodyReader(response)),
+                        Stream.fromSseWithEventDiscrimination(
+                                StreamEventDiscriminantInData.class, new ResponseBodyReader(response), "type"),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
