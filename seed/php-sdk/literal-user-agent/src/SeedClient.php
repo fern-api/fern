@@ -51,7 +51,7 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($userAgent != null) {
+        if ($userAgent !== null) {
             $defaultHeaders['user-agent'] = $userAgent;
         }
 
