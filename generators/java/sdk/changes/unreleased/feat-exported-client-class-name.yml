@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `exported-client-class-name` config to the Java SDK generator. When set, docs surfaces
+    (dynamic snippets, README, reference.md) display this name for the root client instead of
+    `client-class-name` — for teams that wrap the generated client with a hand-written public class
+    and want documentation to show the wrapper. Generated source code and wire tests are unaffected.
+  type: feat
