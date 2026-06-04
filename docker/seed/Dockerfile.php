@@ -6,14 +6,15 @@ RUN apk add --no-cache curl && \
     crane pull wiremock/wiremock:3.9.1 /wiremock.tar
 
 # Stage 2: Rebuild containerd v2.3.0 + runc v1.3.5 + moby (dockerd, docker-proxy)
-# + docker CLI from source with go1.26.3 and golang.org/x/net v0.53.0.
+# + docker CLI from source with go1.26.4 and golang.org/x/net v0.53.0.
 # Upstream `docker:29.5.2-dind-alpine3.23` ships dockerd / docker / docker-proxy
 # built with go1.26.2, which grype flags for the unpatched go/stdlib 1.26.2
 # CVEs (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
-# CVE-2026-42499). Rebuilding under GOTOOLCHAIN=go1.26.3 swaps the embedded
-# stdlib without changing functionality. The containerd/runc rebuild also
-# picks up the grpc / otel / go-jose bumps from the v2.3.x release line.
-FROM golang:1.26.3-alpine3.23 AS overlay-binaries
+# CVE-2026-42499). Go 1.26.3 additionally has CVE-2026-42504.
+# Rebuilding under GOTOOLCHAIN=go1.26.4 swaps the embedded stdlib without
+# changing functionality. The containerd/runc rebuild also picks up the
+# grpc / otel / go-jose bumps from the v2.3.x release line.
+FROM golang:1.26.4-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.1
 ARG RUNC_VERSION=1.3.5
 # moby v29.5.2 includes fixes for CVE-2026-33997, CVE-2026-34040,
@@ -26,7 +27,7 @@ ARG XCRYPTO_VERSION=0.52.0
 ARG XSYS_VERSION=0.45.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
-ENV GOTOOLCHAIN=go1.26.3
+ENV GOTOOLCHAIN=go1.26.4
 RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates binutils && \
     mkdir -p /overlay/usr/local/bin
 # Bump in-toto-golang to v0.11.0 (GHSA-pmwq-pjrm-6p5r) and pin the OTLP

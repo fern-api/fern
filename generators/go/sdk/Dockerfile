@@ -33,16 +33,16 @@ RUN set -eux; \
 COPY generators/go-v2/sdk/dist/ /dist/
 
 # Stage 2: Final Go image
-# Built with Go 1.26.3 (vs. golang:1.26.2 previously) so that the resulting
-# /fern-go-sdk binary embeds the Go 1.26.3 stdlib, which fixes the unpatched
-# stdlib CVEs reported against go/stdlib:1.26.2 (CVE-2026-33811,
-# CVE-2026-33814, CVE-2026-39820, CVE-2026-39836, CVE-2026-42499) and the
-# Go toolchain (CVE-2026-42501).
-FROM golang:1.26.3-alpine3.23
+# Built with Go 1.26.4 (vs. golang:1.26.3 previously) so that the resulting
+# /fern-go-sdk binary embeds the Go 1.26.4 stdlib, which fixes CVE-2026-42504
+# (go/stdlib:1.26.3) as well as the earlier go/stdlib:1.26.2 CVEs
+# (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
+# CVE-2026-42499) and the Go toolchain (CVE-2026-42501).
+FROM golang:1.26.4-alpine3.23
 
 WORKDIR /workspace
 
-# Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
+# Go 1.26.4 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
 # still pins old pseudo-versions of x/net and x/crypto, and an old x/sys.
 # Bump the SBOM files so grype no longer flags them.
 # Patch both src/go.mod (stdlib) and src/cmd/go.mod (toolchain commands)

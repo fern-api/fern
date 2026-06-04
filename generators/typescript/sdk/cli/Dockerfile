@@ -1,11 +1,11 @@
-# Stage 1: Rebuild oxlint-tsgolint from source under go1.26.3 so the embedded
-# go/stdlib clears the go1.26.2 CVEs (CVE-2026-33811, CVE-2026-33814,
-# CVE-2026-39820, CVE-2026-39836, CVE-2026-42499). The published
-# @oxlint-tsgolint/linux-{x64,arm64} binaries are still compiled with the
-# upstream go1.26.2 toolchain.
-FROM golang:1.26.3-trixie AS tsgolint-rebuild
+# Stage 1: Rebuild oxlint-tsgolint from source under go1.26.4 so the embedded
+# go/stdlib clears go1.26.3 CVE-2026-42504 and the earlier go1.26.2 CVEs
+# (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
+# CVE-2026-42499). The published @oxlint-tsgolint/linux-{x64,arm64} binaries
+# are still compiled with an older upstream Go toolchain.
+FROM golang:1.26.4-trixie AS tsgolint-rebuild
 ARG TSGOLINT_VERSION=0.22.1
-ENV GOTOOLCHAIN=go1.26.3
+ENV GOTOOLCHAIN=go1.26.4
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "build@example.com" && \
     git config --global user.name "Build" && \
@@ -107,7 +107,7 @@ RUN pnpm add -g typescript@~5.9.3 \
   vitest@^4.1.1
 
 # Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
-# rebuilt one (go1.26.3). pnpm installs the platform-specific binary at
+# rebuilt one (go1.26.4). pnpm installs the platform-specific binary at
 # {pnpm-global-store}/.pnpm/@oxlint-tsgolint+linux-{arch}@.../node_modules/@oxlint-tsgolint/linux-{arch}/tsgolint.
 COPY --from=tsgolint-rebuild /out/tsgolint /tmp/tsgolint-rebuilt
 RUN chmod +x /tmp/tsgolint-rebuilt && \

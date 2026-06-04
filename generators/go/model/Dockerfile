@@ -1,8 +1,8 @@
 FROM node:24.16-alpine3.23 AS node
 
-FROM golang:1.26.3-alpine3.23
+FROM golang:1.26.4-alpine3.23
 
-# Go 1.26.3 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
+# Go 1.26.4 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
 # still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
 RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
