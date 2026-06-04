@@ -48,9 +48,8 @@ public final class TypesGenerator {
     public Result generateFiles() {
         Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces(generatorContext);
 
-        Set<TypeId> nestedInlineTypeIds = generatorContext.getCustomConfig().enableInlineTypes()
-                ? computeNestedInlineTypeIds()
-                : Set.of();
+        Set<TypeId> nestedInlineTypeIds =
+                generatorContext.getCustomConfig().enableInlineTypes() ? computeNestedInlineTypeIds() : Set.of();
 
         Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
                 .map(typeDeclaration -> {
@@ -82,12 +81,12 @@ public final class TypesGenerator {
     }
 
     /**
-     * Computes the set of inline TypeIds that are reachable from at least one non-inline type
-     * declaration. These inline types will be generated as nested classes inside their parent
-     * types and should be skipped during standalone file generation.
+     * Computes the set of inline TypeIds that are reachable from at least one non-inline type declaration. These inline
+     * types will be generated as nested classes inside their parent types and should be skipped during standalone file
+     * generation.
      *
-     * Inline types that are NOT in this set (e.g., those only referenced from endpoint response
-     * types) must still be generated as standalone files.
+     * <p>Inline types that are NOT in this set (e.g., those only referenced from endpoint response types) must still be
+     * generated as standalone files.
      */
     private Set<TypeId> computeNestedInlineTypeIds() {
         Set<TypeId> nestedInlineTypeIds = new HashSet<>();
