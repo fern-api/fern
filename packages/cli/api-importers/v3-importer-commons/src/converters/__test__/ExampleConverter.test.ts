@@ -1084,4 +1084,111 @@ describe("ExampleConverter", () => {
             expect(result.usedProvidedExample).toBe(false);
         });
     });
+
+    describe("nested allOf $ref resolution in examples", () => {
+        const schemas: Record<string, OpenAPIV3_1.SchemaObject> = {
+            UserStrict: {
+                type: "object",
+                required: ["firstName", "lastName", "email"],
+                properties: {
+                    firstName: { type: "string" },
+                    lastName: { type: "string" },
+                    email: { type: "string", format: "email" }
+                }
+            },
+            UserBase: {
+                allOf: [
+                    { $ref: "#/components/schemas/UserStrict" } as unknown as OpenAPIV3_1.SchemaObject,
+                    {
+                        type: "object",
+                        properties: {
+                            role: { type: "string" },
+                            companyId: { type: "integer" }
+                        }
+                    }
+                ]
+            },
+            UserPost: {
+                allOf: [
+                    { $ref: "#/components/schemas/UserBase" } as unknown as OpenAPIV3_1.SchemaObject,
+                    {
+                        required: ["firstName", "lastName", "email", "companyId", "role", "channelIds"],
+                        properties: {
+                            channelIds: {
+                                type: "array",
+                                items: { type: "integer" }
+                            }
+                        }
+                    }
+                ]
+            }
+        };
+
+        const nestedAllOfContext = {
+            ...mockContext,
+            isReferenceObject: vi.fn().mockImplementation((obj: unknown) => {
+                return typeof obj === "object" && obj !== null && "$ref" in obj;
+            }),
+            resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => {
+                if (
+                    typeof schemaOrReference === "object" &&
+                    schemaOrReference !== null &&
+                    "$ref" in schemaOrReference
+                ) {
+                    const ref = (schemaOrReference as { $ref: string }).$ref;
+                    const name = ref.split("/").pop();
+                    if (name != null && name in schemas) {
+                        return schemas[name];
+                    }
+                }
+                return schemaOrReference;
+            }),
+            getExamplesFromSchema: vi.fn().mockReturnValue([])
+        } as unknown as AbstractConverterContext<object>;
+
+        it("should include grandparent properties in auto-generated example (no spec example)", () => {
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: nestedAllOfContext,
+                schema: schemas.UserPost as OpenAPIV3_1.SchemaObject,
+                example: undefined,
+                exampleGenerationStrategy: "request"
+            });
+
+            const result = conv.convert();
+            const example = result.validExample as Record<string, unknown>;
+
+            expect(example).toHaveProperty("firstName");
+            expect(example).toHaveProperty("lastName");
+            expect(example).toHaveProperty("email");
+            expect(example).toHaveProperty("role");
+            expect(example).toHaveProperty("companyId");
+            expect(example).toHaveProperty("channelIds");
+        });
+
+        it("should backfill missing required fields when spec provides partial example", () => {
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: nestedAllOfContext,
+                schema: schemas.UserPost as OpenAPIV3_1.SchemaObject,
+                example: { channelIds: [101, 202] },
+                exampleGenerationStrategy: "request"
+            });
+
+            const result = conv.convert();
+            const example = result.validExample as Record<string, unknown>;
+
+            // Spec-provided value preserved
+            expect(example.channelIds).toEqual([101, 202]);
+
+            // Required fields from grandparent (UserStrict) backfilled
+            expect(example).toHaveProperty("firstName");
+            expect(example).toHaveProperty("lastName");
+            expect(example).toHaveProperty("email");
+
+            // Required fields from parent (UserBase) backfilled
+            expect(example).toHaveProperty("role");
+            expect(example).toHaveProperty("companyId");
+        });
+    });
 });
