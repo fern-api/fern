@@ -2,7 +2,7 @@ import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
 import { Rule, RuleViolation } from "../../Rule.js";
-import { isInYamlComment } from "../yaml-comment-utils.js";
+import { isInYamlComment } from "../isInYamlComment.js";
 
 export const NoNonComponentRefsRule: Rule = {
     name: "no-non-component-refs",

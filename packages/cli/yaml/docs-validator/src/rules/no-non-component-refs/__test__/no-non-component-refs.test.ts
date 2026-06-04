@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { RuleContext } from "../../../Rule.js";
-import { isInYamlComment } from "../../yaml-comment-utils.js";
+import { isInYamlComment } from "../../isInYamlComment.js";
 import { NoNonComponentRefsRule } from "../no-non-component-refs.js";
 
 describe("NoNonComponentRefsRule", () => {

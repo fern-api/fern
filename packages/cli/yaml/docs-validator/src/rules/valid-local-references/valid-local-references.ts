@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { Rule, RuleViolation } from "../../Rule.js";
-import { isInYamlComment } from "../yaml-comment-utils.js";
+import { isInYamlComment } from "../isInYamlComment.js";
 
 /**
  * Validates that a reference path exists in the OpenAPI specification
