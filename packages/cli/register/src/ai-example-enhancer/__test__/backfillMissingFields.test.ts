@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { backfillMissingFields } from "../enhanceExamplesWithAI.js";
+import { backfillMissingFields, unwrapLambdaBodyEnvelope } from "../enhanceExamplesWithAI.js";
 
 describe("backfillMissingFields", () => {
     it("backfills missing fields from original into enhanced", () => {
@@ -76,5 +76,53 @@ describe("backfillMissingFields", () => {
         const enhanced = { a: 1 };
         const result = backfillMissingFields(enhanced, {});
         expect(result).toBe(enhanced);
+    });
+});
+
+describe("unwrapLambdaBodyEnvelope", () => {
+    it("unwraps {body: {...}} envelope", () => {
+        const wrapped = { body: { channelIds: [101, 202] } };
+        const result = unwrapLambdaBodyEnvelope(wrapped);
+        expect(result.wasWrapped).toBe(true);
+        expect(result.inner).toEqual({ channelIds: [101, 202] });
+    });
+
+    it("does not unwrap when body is not the only key", () => {
+        const notWrapped = { body: { a: 1 }, extra: "field" };
+        const result = unwrapLambdaBodyEnvelope(notWrapped);
+        expect(result.wasWrapped).toBe(false);
+        expect(result.inner).toBe(notWrapped);
+    });
+
+    it("does not unwrap non-objects", () => {
+        expect(unwrapLambdaBodyEnvelope("hello")).toEqual({ wasWrapped: false, inner: "hello" });
+        expect(unwrapLambdaBodyEnvelope(null)).toEqual({ wasWrapped: false, inner: null });
+        expect(unwrapLambdaBodyEnvelope(42)).toEqual({ wasWrapped: false, inner: 42 });
+    });
+
+    it("does not unwrap arrays", () => {
+        const arr = [1, 2, 3];
+        expect(unwrapLambdaBodyEnvelope(arr)).toEqual({ wasWrapped: false, inner: arr });
+    });
+
+    it("backfills correctly through body envelope", () => {
+        const wrapped = { body: { channelIds: [101, 202] } };
+        const original = {
+            firstName: "string",
+            lastName: "string",
+            email: "string",
+            channelIds: [1]
+        };
+
+        const unwrapped = unwrapLambdaBodyEnvelope(wrapped);
+        expect(unwrapped.wasWrapped).toBe(true);
+
+        const backfilled = backfillMissingFields(unwrapped.inner, original);
+        expect(backfilled).toEqual({
+            firstName: "string",
+            lastName: "string",
+            email: "string",
+            channelIds: [101, 202]
+        });
     });
 });

@@ -1120,11 +1120,18 @@ async function processEndpoint(
 
         // Backfill any required fields the AI may have missed from the original auto-generated example.
         // The AI Lambda may not fully resolve nested allOf chains, producing partial examples.
+        // Handle the Lambda's {body: {...}} envelope if present.
         if (result.enhancedRequestExample != null && request.originalRequestExample != null) {
-            result.enhancedRequestExample = backfillMissingFields(
-                result.enhancedRequestExample,
-                request.originalRequestExample
-            );
+            const unwrapped = unwrapLambdaBodyEnvelope(result.enhancedRequestExample);
+            if (unwrapped.wasWrapped) {
+                const backfilled = backfillMissingFields(unwrapped.inner, request.originalRequestExample);
+                result.enhancedRequestExample = { body: backfilled };
+            } else {
+                result.enhancedRequestExample = backfillMissingFields(
+                    result.enhancedRequestExample,
+                    request.originalRequestExample
+                );
+            }
         }
 
         // Check if anything was actually enhanced
@@ -1647,6 +1654,23 @@ function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
         default:
             return bodyV3.value;
     }
+}
+
+/**
+ * Detects and unwraps the Lambda's `{body: {...}}` envelope format.
+ * The Lambda sometimes wraps the request example in a "body" key.
+ */
+export function unwrapLambdaBodyEnvelope(value: unknown): { wasWrapped: boolean; inner: unknown } {
+    if (
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value) &&
+        "body" in value &&
+        Object.keys(value).length === 1
+    ) {
+        return { wasWrapped: true, inner: (value as Record<string, unknown>).body };
+    }
+    return { wasWrapped: false, inner: value };
 }
 
 /**
