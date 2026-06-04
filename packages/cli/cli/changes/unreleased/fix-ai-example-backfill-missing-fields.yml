@@ -1,0 +1,6 @@
+- summary: |
+    Fix AI example enhancement to backfill missing required fields from the auto-generated
+    example. When the AI Lambda produces a partial example (e.g., missing fields from nested
+    allOf chains), the missing fields are now merged from the correct auto-generated example,
+    ensuring all required fields are present in published documentation.
+  type: fix

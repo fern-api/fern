@@ -1118,6 +1118,15 @@ async function processEndpoint(
         // Record success in circuit breaker
         circuitBreaker?.recordSuccess();
 
+        // Backfill any required fields the AI may have missed from the original auto-generated example.
+        // The AI Lambda may not fully resolve nested allOf chains, producing partial examples.
+        if (result.enhancedRequestExample != null && request.originalRequestExample != null) {
+            result.enhancedRequestExample = backfillMissingFields(
+                result.enhancedRequestExample,
+                request.originalRequestExample
+            );
+        }
+
         // Check if anything was actually enhanced
         const requestChanged = result.enhancedRequestExample !== request.originalRequestExample;
         const responseChanged = result.enhancedResponseExample !== request.originalResponseExample;
@@ -1638,4 +1647,45 @@ function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
         default:
             return bodyV3.value;
     }
+}
+
+/**
+ * Backfills missing top-level fields from the original auto-generated example into the
+ * AI-enhanced example. Preserves the AI's realistic values for fields it provided while
+ * ensuring all required fields from the schema are present in the final output.
+ */
+export function backfillMissingFields(enhanced: unknown, original: unknown): unknown {
+    if (
+        typeof enhanced !== "object" ||
+        enhanced === null ||
+        typeof original !== "object" ||
+        original === null ||
+        Array.isArray(enhanced) ||
+        Array.isArray(original)
+    ) {
+        return enhanced;
+    }
+
+    const enhancedObj = enhanced as Record<string, unknown>;
+    const originalObj = original as Record<string, unknown>;
+
+    let hasMissing = false;
+    for (const key of Object.keys(originalObj)) {
+        if (!(key in enhancedObj)) {
+            hasMissing = true;
+            break;
+        }
+    }
+
+    if (!hasMissing) {
+        return enhanced;
+    }
+
+    const merged: Record<string, unknown> = { ...enhancedObj };
+    for (const [key, value] of Object.entries(originalObj)) {
+        if (!(key in merged)) {
+            merged[key] = value;
+        }
+    }
+    return merged;
 }
