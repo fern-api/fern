@@ -1,0 +1,7 @@
+- summary: |
+    Fix compilation error on multipart file-upload endpoints when idempotency
+    headers are configured. The generator now emits `headers((RequestOptions) null)`
+    instead of a bare `headers(null)`, which resolves the ambiguous method
+    reference between `headers(RequestOptions)` and
+    `headers(IdempotentRequestOptions)` overloads in `ClientOptions`.
+  type: fix
