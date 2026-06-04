@@ -1126,8 +1126,10 @@ async function processEndpoint(
             const unwrapped = unwrapLambdaBodyEnvelope(result.enhancedRequestExample);
             const originalHasBody = isObjectWithKey(request.originalRequestExample, "body");
             if (unwrapped.wasWrapped && !originalHasBody) {
-                const backfilled = backfillMissingFields(unwrapped.inner, request.originalRequestExample);
-                result.enhancedRequestExample = { body: backfilled };
+                // Lambda envelope detected — backfill the inner value directly.
+                // Do NOT re-wrap: the IR path only handles FDR {type,value} wrappers,
+                // and writeAiExamplesOverride has its own unwrap logic.
+                result.enhancedRequestExample = backfillMissingFields(unwrapped.inner, request.originalRequestExample);
             } else {
                 result.enhancedRequestExample = backfillMissingFields(
                     result.enhancedRequestExample,
