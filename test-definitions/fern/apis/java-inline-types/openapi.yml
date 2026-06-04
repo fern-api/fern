@@ -91,6 +91,32 @@ paths:
                 type: object
                 additionalProperties:
                   $ref: "#/components/schemas/MapResponseValue"
+  /root/shared-child:
+    get:
+      operationId: getSharedChild
+      tags:
+        - ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SharedChildType"
+  /root/orphan-parent:
+    get:
+      operationId: getOrphanParent
+      tags:
+        - ""
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrphanParentWithSharedChild"
 components:
   schemas:
     AliasMapInline:
@@ -795,7 +821,41 @@ components:
           type: string
         description:
           type: string
+        nested:
+          $ref: "#/components/schemas/MapResponseValueNested"
       required:
         - name
         - description
+    MapResponseValueNested:
+      title: MapResponseValueNested
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      required:
+        - key
+        - value
+    SharedChildType:
+      title: SharedChildType
+      type: object
+      properties:
+        name:
+          type: string
+        detail:
+          type: string
+      required:
+        - name
+        - detail
+    OrphanParentWithSharedChild:
+      title: OrphanParentWithSharedChild
+      type: object
+      properties:
+        label:
+          type: string
+        child:
+          $ref: "#/components/schemas/SharedChildType"
+      required:
+        - label
   securitySchemes: {}

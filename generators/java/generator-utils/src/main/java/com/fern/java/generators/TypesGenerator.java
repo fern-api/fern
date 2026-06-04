@@ -86,7 +86,10 @@ public final class TypesGenerator {
      * generation.
      *
      * <p>Inline types that are NOT in this set (e.g., those only referenced from endpoint response types) must still be
-     * generated as standalone files.
+     * generated as standalone files. Note: orphaned inline types that reference other inline types will produce both a
+     * standalone file and a nested class for the child type. This duplication is intentional — suppressing the
+     * standalone file is unsafe because {@code getReferencedTypes()} is the transitive closure and cannot distinguish
+     * direct inline children from self-references, mutually-recursive types, or types shared with endpoints.
      */
     private Set<TypeId> computeNestedInlineTypeIds() {
         Set<TypeId> nestedInlineTypeIds = new HashSet<>();
@@ -110,21 +113,6 @@ public final class TypesGenerator {
                         && referencedDecl.getInline().orElse(false)
                         && nestedInlineTypeIds.add(referencedId)) {
                     queue.add(referencedId);
-                }
-            }
-        }
-
-        // Second pass: orphaned inline types (not in nestedInlineTypeIds) will be generated as
-        // standalone files. Any inline types they reference will be nested inside them, so mark
-        // those as nested too to avoid generating redundant standalone files.
-        for (Map.Entry<TypeId, TypeDeclaration> entry : typeDeclarations.entrySet()) {
-            if (entry.getValue().getInline().orElse(false) && !nestedInlineTypeIds.contains(entry.getKey())) {
-                TypeDeclaration orphanDecl = entry.getValue();
-                for (TypeId refId : orphanDecl.getReferencedTypes()) {
-                    TypeDeclaration refDecl = typeDeclarations.get(refId);
-                    if (refDecl != null && refDecl.getInline().orElse(false)) {
-                        nestedInlineTypeIds.add(refId);
-                    }
                 }
             }
         }
