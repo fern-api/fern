@@ -818,17 +818,33 @@ export class EndpointSnippetGenerator {
         const args: php.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
+        // Endpoint-level path parameters are required and come first.
+        const endpointPathParameters = request.pathParameters ?? [];
+        if (endpointPathParameters.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
+                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet }).map(
+                    (field) => field.value
+                )
             );
         }
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+            const bodyArg = this.getBodyRequestArg({ body: request.body, value: snippet.requestBody });
+            if (!php.TypeLiteral.isNop(bodyArg)) {
+                args.push(bodyArg);
+            }
+        }
+        this.context.errors.unscope();
+
+        // IR-level path parameters have defaults in the generated SDK and come after required params.
+        this.context.errors.scope(Scope.PathParameters);
+        const irPathParameters = this.context.ir.pathParameters ?? [];
+        if (irPathParameters.length > 0) {
+            args.push(
+                ...this.getPathParameters({ namedParameters: irPathParameters, snippet }).map((field) => field.value)
+            );
         }
         this.context.errors.unscope();
 
@@ -873,11 +889,20 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.customConfig?.inlinePathParameters ?? false;
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: php.ConstructorField[] = [];
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
+        // Separate endpoint-level (required) from IR-level (have defaults) path parameters.
+        const endpointPathParameterFields: php.ConstructorField[] = [];
+        const endpointPathParameters = request.pathParameters ?? [];
+        if (endpointPathParameters.length > 0) {
+            endpointPathParameterFields.push(
+                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet })
+            );
         }
+        const irPathParameterFields: php.ConstructorField[] = [];
+        const irPathParameters = this.context.ir.pathParameters ?? [];
+        if (irPathParameters.length > 0) {
+            irPathParameterFields.push(...this.getPathParameters({ namedParameters: irPathParameters, snippet }));
+        }
+        const pathParameterFields = [...endpointPathParameterFields, ...irPathParameterFields];
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
@@ -885,7 +910,8 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            args.push(...pathParameterFields.map((field) => field.value));
+            // Endpoint-level path params (required) come first.
+            args.push(...endpointPathParameterFields.map((field) => field.value));
         }
 
         if (
@@ -909,6 +935,12 @@ export class EndpointSnippetGenerator {
                 })
             );
         }
+
+        // IR-level path parameters have defaults in the generated SDK and come after required params.
+        if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
+            args.push(...irPathParameterFields.map((field) => field.value));
+        }
+
         return args;
     }
 

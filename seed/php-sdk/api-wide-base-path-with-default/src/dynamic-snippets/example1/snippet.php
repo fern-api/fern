@@ -11,8 +11,8 @@ $client = new SeedClient(
     ],
 );
 $client->widgets->create(
-    'apiVersion',
     new Widget([
         'name' => 'name',
     ]),
+    'apiVersion',
 );
