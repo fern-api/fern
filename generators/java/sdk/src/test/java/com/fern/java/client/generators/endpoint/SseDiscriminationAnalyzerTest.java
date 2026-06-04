@@ -78,6 +78,7 @@ class SseDiscriminationAnalyzerTest {
                 SseDiscriminationAnalyzer.analyze(namedReference(UNION_TYPE_ID), declarations);
 
         assertThat(info.getType()).isEqualTo(SseDiscriminationAnalyzer.DiscriminationType.DATA_LEVEL);
+        assertThat(info.getDiscriminatorProperty()).contains("event");
     }
 
     @Test
@@ -89,6 +90,7 @@ class SseDiscriminationAnalyzerTest {
                 SseDiscriminationAnalyzer.analyze(namedReference(UNION_TYPE_ID), declarations);
 
         assertThat(info.getType()).isEqualTo(SseDiscriminationAnalyzer.DiscriminationType.DATA_LEVEL);
+        assertThat(info.getDiscriminatorProperty()).contains("type");
     }
 
     @Test
