@@ -71,6 +71,8 @@ class SeedOauthClientCredentials:
 
     client = SeedOauthClientCredentials(
         base_url="YOUR_BASE_URL",
+        scp="YOUR_SCP",
+        entity_id="YOUR_ENTITY_ID",
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",
     )
@@ -91,6 +93,9 @@ class SeedOauthClientCredentials:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scp: str,
+        entity_id: str,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -105,6 +110,9 @@ class SeedOauthClientCredentials:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scp: str,
+        entity_id: str,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -120,6 +128,9 @@ class SeedOauthClientCredentials:
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
+        scp: str,
+        entity_id: str,
+        scope: typing.Optional[str] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -149,6 +160,9 @@ class SeedOauthClientCredentials:
             oauth_token_provider = OAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scp=scp,
+                entity_id=entity_id,
+                scope=scope,
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
@@ -289,6 +303,8 @@ class AsyncSeedOauthClientCredentials:
 
     client = AsyncSeedOauthClientCredentials(
         base_url="YOUR_BASE_URL",
+        scp="YOUR_SCP",
+        entity_id="YOUR_ENTITY_ID",
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",
     )
@@ -309,6 +325,9 @@ class AsyncSeedOauthClientCredentials:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scp: str,
+        entity_id: str,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -323,6 +342,9 @@ class AsyncSeedOauthClientCredentials:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scp: str,
+        entity_id: str,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -338,6 +360,9 @@ class AsyncSeedOauthClientCredentials:
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
+        scp: str,
+        entity_id: str,
+        scope: typing.Optional[str] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -365,6 +390,9 @@ class AsyncSeedOauthClientCredentials:
             oauth_token_provider = AsyncOAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scp=scp,
+                entity_id=entity_id,
+                scope=scope,
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
                     headers=headers,

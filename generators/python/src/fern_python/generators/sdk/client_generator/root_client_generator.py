@@ -15,6 +15,9 @@ from .inferred_auth_token_provider_generator import (
     CredentialProperty,
     InferredAuthTokenProviderGenerator,
 )
+from .oauth_token_provider_generator import (
+    get_oauth_additional_token_request_properties,
+)
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
@@ -701,6 +704,22 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         ),
                     ),
                 )
+                # The token endpoint may require additional request properties (configured scopes
+                # or custom properties) beyond client_id/client_secret. Expose them as constructor
+                # parameters so they can be forwarded to the OAuth token provider.
+                for additional_property in get_oauth_additional_token_request_properties(oauth):
+                    additional_type_hint = AST.TypeHint.str_()
+                    if additional_property.is_optional:
+                        additional_type_hint = AST.TypeHint.optional(additional_type_hint)
+                    parameters.append(
+                        RootClientConstructorParameter(
+                            constructor_parameter_name=additional_property.field_name,
+                            type_hint=additional_type_hint,
+                            initializer=AST.Expression("None") if additional_property.is_optional else None,
+                            docs="A property required by the OAuth token endpoint.",
+                            exclude_from_wrapper_construction=True,
+                        ),
+                    )
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
@@ -1056,6 +1075,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 "client_secret",
                                 AST.Expression("client_secret"),
                             ),
+                            *self._get_oauth_additional_property_kwargs(),
                             (
                                 "client_wrapper",
                                 AST.Expression(
@@ -1228,6 +1248,21 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             inferred_auth_scheme=inferred_auth_scheme,
         ).get_credential_properties()
 
+    def _get_oauth_additional_property_kwargs(self) -> List[typing.Tuple[str, AST.Expression]]:
+        """
+        Constructor kwargs forwarding additional token-endpoint request properties (configured
+        scopes or custom properties) from the root client to the OAuth token provider.
+        """
+        if self._oauth_scheme is None:
+            return []
+        oauth = self._oauth_scheme.configuration.get_as_union()
+        if oauth.type != "clientCredentials":
+            return []
+        return [
+            (additional_property.field_name, AST.Expression(additional_property.field_name))
+            for additional_property in get_oauth_additional_token_request_properties(oauth)
+        ]
+
     def _write_oauth_token_override_constructor_body(
         self,
         *,
@@ -1314,6 +1349,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             "client_secret",
                             AST.Expression("client_secret"),
                         ),
+                        *self._get_oauth_additional_property_kwargs(),
                         (
                             "client_wrapper",
                             AST.Expression(
