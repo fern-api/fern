@@ -213,10 +213,7 @@ async function restructureTypesModule(srcDir: string): Promise<void> {
     for (const filePath of movedFiles) {
         const content = await readFile(filePath, "utf-8");
         if (!content.includes("use super::*;")) {
-            const patched = content.replace(
-                "pub use crate::prelude::*;",
-                "pub use crate::prelude::*;\nuse super::*;"
-            );
+            const patched = content.replace("pub use crate::prelude::*;", "pub use crate::prelude::*;\nuse super::*;");
             if (patched !== content) {
                 await writeFile(filePath, patched);
             }
