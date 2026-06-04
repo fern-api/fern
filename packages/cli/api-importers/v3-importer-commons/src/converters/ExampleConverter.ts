@@ -1412,7 +1412,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                         const existing = baseProps[key];
                         if (existing != null && isInlineSchema(existing) && isInlineSchema(value)) {
                             baseProps[key] = { ...existing, ...value };
-                        } else if (!(key in baseProps)) {
+                        } else {
                             baseProps[key] = value;
                         }
                     }
