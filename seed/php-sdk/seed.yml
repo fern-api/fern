@@ -196,8 +196,7 @@ allowedFailures:
   - trace
   - circular-references
   - circular-references-advanced
-  # Literal header: ternary condition always true.
-  - literal
+
   # OAuth/InferredAuth custom properties need non-literal property passthrough.
   - oauth-client-credentials-custom
   - oauth-client-credentials-reference

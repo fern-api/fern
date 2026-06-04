@@ -364,7 +364,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
                 for (const param of constructorParameters.literal) {
                     if (param.header != null) {
-                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
                         if (param.value.type === "boolean") {
                             writer.writeTextStatement(`$${param.name} ? 'true' : 'false'`);
