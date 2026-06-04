@@ -1,0 +1,6 @@
+- summary: |
+    Fix AI example staleness detection to mark examples as stale when they are missing
+    required fields from the schema. Previously, only unexpected (extra) properties were
+    detected — missing required fields went unnoticed, causing stale partial examples to
+    persist across regeneration cycles.
+  type: fix

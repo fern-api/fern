@@ -287,9 +287,15 @@ export class ExampleValidator {
                 responseSchema
             });
 
-            // For AI examples, treat warnings or unexpected properties as invalid to ensure freshness
+            // Check if the example is missing required properties from the schema
+            const hasMissingRequired = this.hasMissingRequiredProperties({
+                requestExample: aiExample.request?.body,
+                requestSchema
+            });
+
+            // For AI examples, treat warnings, unexpected properties, or missing required fields as invalid
             const hasErrorsOrWarnings = result.errors.length > 0 || result.warnings.length > 0;
-            const isStale = !result.isValid || hasErrorsOrWarnings || hasUnexpectedProperties;
+            const isStale = !result.isValid || hasErrorsOrWarnings || hasUnexpectedProperties || hasMissingRequired;
 
             if (!isStale) {
                 validExamples.push(aiExample);
@@ -420,6 +426,89 @@ export class ExampleValidator {
         }
 
         return propertyKeys;
+    }
+
+    /**
+     * Check if the request example is missing required properties defined in the schema.
+     * This detects stale AI examples that were generated before schema changes added new required fields.
+     */
+    private hasMissingRequiredProperties({
+        requestExample,
+        requestSchema
+    }: {
+        requestExample?: unknown;
+        requestSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+    }): boolean {
+        if (!requestExample || !requestSchema) {
+            return false;
+        }
+
+        if (typeof requestExample !== "object" || requestExample === null) {
+            return false;
+        }
+
+        const schema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: requestSchema,
+            breadcrumbs: [],
+            skipErrorCollector: true
+        });
+
+        if (!schema) {
+            return false;
+        }
+
+        const requiredKeys = this.collectAllRequiredPropertyKeys(schema);
+        if (requiredKeys.size === 0) {
+            return false;
+        }
+
+        const exampleKeys = new Set(Object.keys(requestExample as Record<string, unknown>));
+        for (const requiredKey of requiredKeys) {
+            if (!exampleKeys.has(requiredKey)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Recursively collects all required property keys from a schema, including
+     * required fields from allOf compositions.
+     */
+    private collectAllRequiredPropertyKeys(
+        schema: OpenAPIV3_1.SchemaObject,
+        visited: Set<string> = new Set()
+    ): Set<string> {
+        const requiredKeys = new Set<string>();
+
+        // Add directly declared required fields
+        if (schema.required) {
+            for (const key of schema.required) {
+                requiredKeys.add(key);
+            }
+        }
+
+        // Recursively collect from allOf schemas
+        for (const subSchema of schema.allOf ?? []) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: [],
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    const nestedKeys = this.collectAllRequiredPropertyKeys(resolved, visited);
+                    for (const key of nestedKeys) {
+                        requiredKeys.add(key);
+                    }
+                }
+            }
+        }
+
+        return requiredKeys;
     }
 
     /**
