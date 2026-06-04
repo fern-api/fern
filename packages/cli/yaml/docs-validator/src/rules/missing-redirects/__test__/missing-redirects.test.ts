@@ -137,6 +137,26 @@ describe("findRemovedSlugs", () => {
         expect(findRemovedSlugs(published, local)).toEqual([]);
     });
 
+    it("skips published entries with empty slug even when no local page serves root", () => {
+        // FDR stores slug "" for pages not in the navigation tree (non-navigable pages).
+        // These were never published at a real URL, so no redirect warning is needed.
+        const published: MarkdownEntry[] = [
+            {
+                pageId: "docs/pages/api-reference/content-api/pages.mdx",
+                slug: "",
+                lastUpdated: "2024-01-01T00:00:00.000Z"
+            },
+            { pageId: "changelog/2026-05-07-mcp-server.mdx", slug: "", lastUpdated: "2024-01-01T00:00:00.000Z" },
+            {
+                pageId: "changelog/2026-05-08-catalyst-core-nextjs-16.mdx",
+                slug: "",
+                lastUpdated: "2024-01-01T00:00:00.000Z"
+            }
+        ];
+        const local = slugMap([["docs/welcome.mdx", "welcome"]]);
+        expect(findRemovedSlugs(published, local)).toEqual([]);
+    });
+
     it("still flags removed page when no local page serves the old slug", () => {
         const published: MarkdownEntry[] = [
             { pageId: "docs/old.mdx", slug: "unique-old-slug", lastUpdated: "2024-01-01T00:00:00.000Z" }
