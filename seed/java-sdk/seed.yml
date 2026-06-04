@@ -381,41 +381,27 @@ scripts:
       - ./gradlew compileJava spotlessCheck
 
 allowedFailures:
+  # Extending an alias (that resolves to an object) is not yet supported by the
+  # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
   - alias-extends
-  - enum:forward-compatible-enums
-  - enum:no-custom-config
   - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
   - examples:readme-config
   - exhaustive:local-files
-  - exhaustive:publish-to
-  - exhaustive:signed_publish
-  - extends
   - java-inline-types:no-wrapped-aliases
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
-  - oauth-client-credentials
-  - oauth-client-credentials:custom-interceptors
   - oauth-client-credentials-custom
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-mandatory-auth:no-custom-config
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-with-variables
-  - oauth-client-credentials-reference
   - request-parameters
   - streaming-parameter
   - inferred-auth-implicit-reference
-  - endpoint-security-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
-  - any-auth
   - java-inline-types:inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
-  - nullable:no-custom-config
   - pagination-custom
 
   - java-pagination-deep-cursor-path:wire-tests
@@ -431,6 +417,3 @@ allowedFailures:
   # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
   - optional:wire-tests
 
-  # Multipart with $ref body — Java snippet generator drops the file argument;
-  # tracked under FER-10085 (will pass once that PR lands).
-  - openapi-request-body-ref:no-custom-config

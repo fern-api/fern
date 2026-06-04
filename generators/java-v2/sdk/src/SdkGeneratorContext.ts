@@ -1,6 +1,6 @@
 import { GeneratorError, GeneratorNotificationService, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { java } from "@fern-api/java-ast";
+import { escapeJavaKeyword, java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -291,7 +291,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? "_" + token : token;
+            return this.startsWithNumber(token) ? "_" + token : escapeJavaKeyword(token);
         });
         return sanitizedTokens.join(".");
     }
