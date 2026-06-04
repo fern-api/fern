@@ -53,3 +53,7 @@ download.html
 # Vitals OS time tracking
 .env.vitals-os
 
+
+# Python bytecode (demo mock servers)
+__pycache__/
+*.pyc
