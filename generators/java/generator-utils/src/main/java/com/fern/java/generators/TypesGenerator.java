@@ -114,6 +114,21 @@ public final class TypesGenerator {
             }
         }
 
+        // Second pass: orphaned inline types (not in nestedInlineTypeIds) will be generated as
+        // standalone files. Any inline types they reference will be nested inside them, so mark
+        // those as nested too to avoid generating redundant standalone files.
+        for (Map.Entry<TypeId, TypeDeclaration> entry : typeDeclarations.entrySet()) {
+            if (entry.getValue().getInline().orElse(false) && !nestedInlineTypeIds.contains(entry.getKey())) {
+                TypeDeclaration orphanDecl = entry.getValue();
+                for (TypeId refId : orphanDecl.getReferencedTypes()) {
+                    TypeDeclaration refDecl = typeDeclarations.get(refId);
+                    if (refDecl != null && refDecl.getInline().orElse(false)) {
+                        nestedInlineTypeIds.add(refId);
+                    }
+                }
+            }
+        }
+
         return nestedInlineTypeIds;
     }
 

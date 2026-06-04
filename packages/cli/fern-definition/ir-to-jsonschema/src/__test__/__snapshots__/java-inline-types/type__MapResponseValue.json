@@ -6,6 +6,16 @@
     },
     "description": {
       "type": "string"
+    },
+    "nested": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/MapResponseValueNested"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
@@ -13,5 +23,22 @@
     "description"
   ],
   "additionalProperties": false,
-  "definitions": {}
+  "definitions": {
+    "MapResponseValueNested": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  }
 }

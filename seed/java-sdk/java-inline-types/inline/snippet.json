@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "7bc5e5eb",
+            "example_identifier": "bbccdaf0",
             "id": {
                 "method": "GET",
                 "path": "/root/map-response",

@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.object.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -23,11 +25,18 @@ public final class MapResponseValue {
 
     private final String description;
 
+    private final Optional<MapResponseValueNested> nested;
+
     private final Map<String, Object> additionalProperties;
 
-    private MapResponseValue(String name, String description, Map<String, Object> additionalProperties) {
+    private MapResponseValue(
+            String name,
+            String description,
+            Optional<MapResponseValueNested> nested,
+            Map<String, Object> additionalProperties) {
         this.name = name;
         this.description = description;
+        this.nested = nested;
         this.additionalProperties = additionalProperties;
     }
 
@@ -39,6 +48,11 @@ public final class MapResponseValue {
     @JsonProperty("description")
     public String getDescription() {
         return description;
+    }
+
+    @JsonProperty("nested")
+    public Optional<MapResponseValueNested> getNested() {
+        return nested;
     }
 
     @java.lang.Override
@@ -53,12 +67,12 @@ public final class MapResponseValue {
     }
 
     private boolean equalTo(MapResponseValue other) {
-        return name.equals(other.name) && description.equals(other.description);
+        return name.equals(other.name) && description.equals(other.description) && nested.equals(other.nested);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.description);
+        return Objects.hash(this.name, this.description, this.nested);
     }
 
     @java.lang.Override
@@ -86,6 +100,10 @@ public final class MapResponseValue {
         _FinalStage additionalProperty(String key, Object value);
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage nested(Optional<MapResponseValueNested> nested);
+
+        _FinalStage nested(MapResponseValueNested nested);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -93,6 +111,8 @@ public final class MapResponseValue {
         private String name;
 
         private String description;
+
+        private Optional<MapResponseValueNested> nested = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -103,6 +123,7 @@ public final class MapResponseValue {
         public Builder from(MapResponseValue other) {
             name(other.getName());
             description(other.getDescription());
+            nested(other.getNested());
             return this;
         }
 
@@ -121,8 +142,21 @@ public final class MapResponseValue {
         }
 
         @java.lang.Override
+        public _FinalStage nested(MapResponseValueNested nested) {
+            this.nested = Optional.ofNullable(nested);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "nested", nulls = Nulls.SKIP)
+        public _FinalStage nested(Optional<MapResponseValueNested> nested) {
+            this.nested = nested;
+            return this;
+        }
+
+        @java.lang.Override
         public MapResponseValue build() {
-            return new MapResponseValue(name, description, additionalProperties);
+            return new MapResponseValue(name, description, nested, additionalProperties);
         }
 
         @java.lang.Override

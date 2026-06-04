@@ -364,6 +364,13 @@ types:
     properties:
       name: string
       description: string
+      nested: optional<MapResponseValueNested>
+
+  MapResponseValueNested:
+    inline: true
+    properties:
+      key: string
+      value: string
 
   ReferenceType:
     docs: lorem ipsum
