@@ -303,6 +303,30 @@ export class GithubStep extends BaseStep {
             }
         }
 
+        // Create a GitHub release if a new version is available.
+        // The release tag points to the signed commit on the PR branch so it exists
+        // immediately — the same pattern commitAndRelease mode uses.
+        if (resolved.newVersion != null) {
+            try {
+                const tagName = resolved.newVersion;
+                const headSha = await repository.getHeadSha();
+                await octokit.repos.createRelease({
+                    owner,
+                    repo,
+                    tag_name: tagName,
+                    target_commitish: headSha,
+                    name: tagName,
+                    body: resolved.changelogEntry ?? resolved.commitMessage,
+                    draft: false,
+                    prerelease: false
+                });
+                this.logger.info(`Created GitHub release ${tagName}`);
+                result.releaseUrl = `https://${remote}/${owner}/${repo}/releases/tag/${tagName}`;
+            } catch (error) {
+                this.logger.warn(`Could not create GitHub release: ${extractErrorMessage(error)}`);
+            }
+        }
+
         return result;
     }
 
