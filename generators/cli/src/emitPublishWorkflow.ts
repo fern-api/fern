@@ -12,8 +12,8 @@ const TARGETS: ReadonlyArray<{
     runner: string;
     npmPlatformSuffix: string;
 }> = [
-    { rustTarget: "x86_64-unknown-linux-gnu", runner: "ubuntu-latest", npmPlatformSuffix: "linux-x64" },
-    { rustTarget: "aarch64-unknown-linux-gnu", runner: "ubuntu-latest", npmPlatformSuffix: "linux-arm64" },
+    { rustTarget: "x86_64-unknown-linux-musl", runner: "ubuntu-latest", npmPlatformSuffix: "linux-x64" },
+    { rustTarget: "aarch64-unknown-linux-musl", runner: "ubuntu-24.04-arm", npmPlatformSuffix: "linux-arm64" },
     { rustTarget: "x86_64-apple-darwin", runner: "macos-latest", npmPlatformSuffix: "darwin-x64" },
     { rustTarget: "aarch64-apple-darwin", runner: "macos-latest", npmPlatformSuffix: "darwin-arm64" },
     { rustTarget: "x86_64-pc-windows-msvc", runner: "windows-latest", npmPlatformSuffix: "win32-x64" }
@@ -28,7 +28,7 @@ const TARGETS: ReadonlyArray<{
  *   - **publish** job runs only on tag pushes, builds cross-platform
  *     binaries, packages each as an embedded-binary npm platform
  *     package, assembles a thin launcher package, and publishes all
- *     to npm via `secrets.NPM_TOKEN`.
+ *     to npm via OIDC or `secrets.NPM_TOKEN`.
  *
  * The embedded-binary packaging model (the esbuild/swc pattern) means
  * the binary bytes live *inside* the npm tarball. This decouples
@@ -94,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -106,7 +106,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -118,7 +118,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -142,7 +142,7 @@ jobs:
 ${matrixIncludes}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -150,19 +150,25 @@ ${matrixIncludes}
           target: \${{ matrix.rust-target }}
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           registry-url: "${npmPublishInfo.registryUrl}"
 
-      - name: Install cross-compilation tools
-        if: matrix.rust-target == 'aarch64-unknown-linux-gnu'
+      - name: Install musl build tools
+        if: contains(matrix.rust-target, '-linux-musl')
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu
-          echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
+          sudo apt-get install -y musl-tools
 
       - name: Build release binary
-        run: cargo build --release --locked --target \${{ matrix.rust-target }}
+        shell: bash
+        run: |
+          if [[ "\${{ matrix.rust-target }}" == *-linux-musl ]]; then
+            cargo build --release --locked --target \${{ matrix.rust-target }} \\
+              --no-default-features --features rustls
+          else
+            cargo build --release --locked --target \${{ matrix.rust-target }}
+          fi
 
       - name: Package and publish npm platform package${tokenEnvBlock}
         shell: bash
@@ -195,16 +201,27 @@ ${matrixIncludes}
           PKGJSON
 
           cd "\${PKG_DIR}"
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "\$@"
+          }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
           # happens to contain "alpha"/"beta" as a substring isn't
           # mis-tagged on npm.
           if [[ "\${VERSION}" == *-alpha* ]]; then
-            npm publish --access public --tag alpha
+            publish --access public --tag alpha
           elif [[ "\${VERSION}" == *-beta* ]]; then
-            npm publish --access public --tag beta
+            publish --access public --tag beta
           else
-            npm publish --access public
+            PKG_NAME=\$(node -p "require('./package.json').name")
+            PKG_VERSION=\$(node -p "require('./package.json').version")
+            CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
+              publish --access public --tag backport
+            else
+              publish --access public
+            fi
           fi
 
   publish-launcher:
@@ -213,10 +230,10 @@ ${matrixIncludes}
     runs-on: ubuntu-latest${oidcPermissions}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           registry-url: "${npmPublishInfo.registryUrl}"
 
@@ -284,16 +301,27 @@ ${launcherPlatformEntries}
           LAUNCHER
 
           cd "\${PKG_DIR}"
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "\$@"
+          }
           # Pre-release detection — require the semver "-" separator so a
           # release tag like v1.0.0 for a package whose version string
           # happens to contain "alpha"/"beta" as a substring isn't
           # mis-tagged on npm.
           if [[ "\${VERSION}" == *-alpha* ]]; then
-            npm publish --access public --tag alpha
+            publish --access public --tag alpha
           elif [[ "\${VERSION}" == *-beta* ]]; then
-            npm publish --access public --tag beta
+            publish --access public --tag beta
           else
-            npm publish --access public
+            PKG_NAME=\$(node -p "require('./package.json').name")
+            PKG_VERSION=\$(node -p "require('./package.json').version")
+            CURRENT_LATEST=\$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
+              publish --access public --tag backport
+            else
+              publish --access public
+            fi
           fi
 `;
 }

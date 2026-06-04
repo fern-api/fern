@@ -57,7 +57,12 @@ pub enum AuthCredentialSource {
     /// A user-supplied closure invoked on every request. The escape hatch
     /// for any source the built-in variants don't cover (token refresh,
     /// shell-out, OS keychain, etc.).
-    Closure(CredentialClosure),
+    ///
+    /// The optional `String` carries a human-readable credential hint
+    /// (e.g. `"--api-token flag"`) so that `credential_hints()` can still
+    /// report the original source after `finalize()` replaces `Cli` with
+    /// a `Closure`.
+    Closure(CredentialClosure, Option<String>),
     /// No source bound. The provider will report itself as unable to
     /// satisfy requests.
     Missing,
@@ -94,7 +99,7 @@ impl AuthCredentialSource {
     where
         F: Fn() -> Option<String> + Send + Sync + 'static,
     {
-        AuthCredentialSource::Closure(Arc::new(f))
+        AuthCredentialSource::Closure(Arc::new(f), None)
     }
 
     /// Resolve the value, if available. Empty strings are treated as
@@ -117,8 +122,26 @@ impl AuthCredentialSource {
             AuthCredentialSource::Literal(v) if v.is_empty() => None,
             AuthCredentialSource::Literal(v) => Some(SecretString::from(v.clone())),
             AuthCredentialSource::Chain(sources) => sources.iter().find_map(|s| s.resolve()),
-            AuthCredentialSource::Closure(f) => f().filter(|v| !v.is_empty()).map(SecretString::from),
+            AuthCredentialSource::Closure(f, _) => f().filter(|v| !v.is_empty()).map(SecretString::from),
             AuthCredentialSource::Missing => None,
+        }
+    }
+
+    /// Human-readable descriptions of where this source reads credentials
+    /// from. Used by the auth-error path to tell the user which env var,
+    /// flag, or file to set.
+    pub fn credential_hints(&self) -> Vec<String> {
+        match self {
+            AuthCredentialSource::Env(name) => vec![format!("{name} environment variable")],
+            AuthCredentialSource::Cli(arg) => vec![format!("--{arg} flag")],
+            AuthCredentialSource::File(path) => vec![format!("{} file", path.display())],
+            AuthCredentialSource::Chain(sources) => {
+                sources.iter().flat_map(|s| s.credential_hints()).collect()
+            }
+            AuthCredentialSource::Closure(_, Some(hint)) => vec![hint.clone()],
+            AuthCredentialSource::Literal(_)
+            | AuthCredentialSource::Closure(_, None)
+            | AuthCredentialSource::Missing => Vec::new(),
         }
     }
 
@@ -145,7 +168,7 @@ impl AuthCredentialSource {
             AuthCredentialSource::Env(_)
             | AuthCredentialSource::File(_)
             | AuthCredentialSource::Literal(_)
-            | AuthCredentialSource::Closure(_)
+            | AuthCredentialSource::Closure(_, _)
             | AuthCredentialSource::Missing => {}
         }
     }
@@ -160,9 +183,13 @@ impl AuthCredentialSource {
         match self {
             AuthCredentialSource::Cli(name) => {
                 let m = Arc::clone(matches);
-                AuthCredentialSource::Closure(Arc::new(move || {
-                    m.try_get_one::<String>(&name).ok().flatten().cloned()
-                }))
+                let hint = format!("--{name} flag");
+                AuthCredentialSource::Closure(
+                    Arc::new(move || {
+                        m.try_get_one::<String>(&name).ok().flatten().cloned()
+                    }),
+                    Some(hint),
+                )
             }
             AuthCredentialSource::Chain(sources) => {
                 AuthCredentialSource::Chain(
@@ -182,7 +209,13 @@ impl std::fmt::Debug for AuthCredentialSource {
             AuthCredentialSource::File(path) => write!(f, "File({})", path.display()),
             AuthCredentialSource::Literal(_) => write!(f, "Literal(<redacted>)"),
             AuthCredentialSource::Chain(sources) => f.debug_tuple("Chain").field(sources).finish(),
-            AuthCredentialSource::Closure(_) => write!(f, "Closure"),
+            AuthCredentialSource::Closure(_, hint) => {
+                if let Some(h) = hint {
+                    write!(f, "Closure({h})")
+                } else {
+                    write!(f, "Closure")
+                }
+            }
             AuthCredentialSource::Missing => write!(f, "Missing"),
         }
     }
@@ -545,5 +578,71 @@ mod tests {
         let dbg = format!("{s:?}");
         assert!(!dbg.contains("super-secret"));
         assert!(dbg.contains("redacted"));
+    }
+
+    // -------- credential_hints --------
+
+    #[test]
+    fn credential_hints_env() {
+        let s = AuthCredentialSource::from_env("MY_TOKEN");
+        assert_eq!(s.credential_hints(), vec!["MY_TOKEN environment variable"]);
+    }
+
+    #[test]
+    fn credential_hints_cli() {
+        let s = AuthCredentialSource::cli("api-token");
+        assert_eq!(s.credential_hints(), vec!["--api-token flag"]);
+    }
+
+    #[test]
+    fn credential_hints_file() {
+        let s = AuthCredentialSource::file("~/.config/token");
+        assert_eq!(
+            s.credential_hints(),
+            vec!["~/.config/token file"],
+        );
+    }
+
+    #[test]
+    fn credential_hints_chain_collects_all() {
+        let s = AuthCredentialSource::any([
+            AuthCredentialSource::cli("api-token"),
+            AuthCredentialSource::from_env("API_TOKEN"),
+            AuthCredentialSource::file("~/.token"),
+        ]);
+        assert_eq!(
+            s.credential_hints(),
+            vec![
+                "--api-token flag",
+                "API_TOKEN environment variable",
+                "~/.token file",
+            ],
+        );
+    }
+
+    #[test]
+    fn credential_hints_missing_is_empty() {
+        assert!(AuthCredentialSource::Missing.credential_hints().is_empty());
+    }
+
+    #[test]
+    fn credential_hints_literal_is_empty() {
+        assert!(AuthCredentialSource::literal("x").credential_hints().is_empty());
+    }
+
+    #[test]
+    fn credential_hints_closure_without_hint_is_empty() {
+        let s = AuthCredentialSource::closure(|| Some("x".into()));
+        assert!(s.credential_hints().is_empty());
+    }
+
+    #[test]
+    fn credential_hints_closure_with_hint_from_finalize() {
+        let cmd = clap::Command::new("test").arg(
+            clap::Arg::new("api-token").long("api-token").num_args(1),
+        );
+        let matches = Arc::new(cmd.try_get_matches_from(vec!["test"]).unwrap());
+        let s = AuthCredentialSource::cli("api-token").finalize(&matches);
+        assert_eq!(s.credential_hints(), vec!["--api-token flag"]);
     }
 }

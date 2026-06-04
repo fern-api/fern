@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.8
+  changelogEntry:
+    - summary: |
+        Fix example generation for nested allOf $ref chains. When a schema uses
+        multi-level allOf (e.g. UserPost → UserBase → UserStrict), properties from
+        grandparent schemas were missing from generated code snippets because
+        mergeAllOfProperties only resolved one level of allOf. Now recursively
+        resolves the full chain so all required fields appear in examples.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.7
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v2 enum collision where multiple channels with identically
+        named query parameters (or headers/path params) that have different enum
+        values would overwrite each other. The v2 channel converter now passes
+        `parameterNamePrefix` (the channel path) to the ParameterConverter,
+        matching the v3 converter behavior.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.6
+  changelogEntry:
+    - summary: |
+        Update CLI irVersion metadata from 66 to 67 so that FDR correctly
+        reports IR 67-compatible generator versions (e.g. CLI generator ≥ 0.2.0)
+        when resolving `fern generator upgrade`.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.5
+  changelogEntry:
+    - summary: |
+        Rename the CLI generator Docker image from `fernapi/fern-cli` to
+        `fernapi/fern-cli-generator`.
+      type: chore
+  createdAt: "2026-06-03"
+  irVersion: 66
 - version: 5.44.4
   changelogEntry:
     - summary: |

@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.5
+  changelogEntry:
+    - summary: |
+        Fix multiple PHP generator bugs: add missing HEAD enum case, fix fully-qualified
+        exception class references, use preserveEnums for union return types, fix required
+        parameter ordering after optional parameters, prevent toJson on literal types, cast
+        boolean header values to strings, and fix basic-auth null checks when env vars are set.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 66
 - version: 2.10.4
   changelogEntry:
     - summary: |

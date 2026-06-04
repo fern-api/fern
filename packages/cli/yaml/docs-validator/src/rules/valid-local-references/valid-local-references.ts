@@ -3,6 +3,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { Rule, RuleViolation } from "../../Rule.js";
+import { isInYamlComment } from "../isInYamlComment.js";
 
 /**
  * Validates that a reference path exists in the OpenAPI specification
@@ -131,7 +132,12 @@ export const ValidLocalReferencesRule: Rule = {
 
                                 for (const match of refMatches) {
                                     const ref = match[1];
-                                    if (ref && ref.startsWith("#/")) {
+                                    if (
+                                        ref &&
+                                        ref.startsWith("#/") &&
+                                        match.index != null &&
+                                        !isInYamlComment(contents, match.index)
+                                    ) {
                                         allRefs.add(ref);
                                     }
                                 }

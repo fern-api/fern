@@ -25,6 +25,12 @@
       "source": "./src/pipeline/index.ts",
       "types": "./lib/pipeline/index.d.ts",
       "default": "./lib/pipeline/index.js"
+    },
+    "./readme": {
+      "development": "./src/readme/index.ts",
+      "source": "./src/readme/index.ts",
+      "types": "./lib/readme/index.d.ts",
+      "default": "./lib/readme/index.js"
     }
   },
   "main": "lib/api.js",

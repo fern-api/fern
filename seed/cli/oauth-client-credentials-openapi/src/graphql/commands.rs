@@ -18,6 +18,7 @@ const BUILTIN_FLAG_NAMES: &[&str] = &[
     "page-all",
     "page-limit",
     "page-delay",
+    "no-retry",
     "quiet",
     "help",
 ];
@@ -59,6 +60,16 @@ pub fn build_cli(doc: &RestDescription) -> Command {
                 .long("quiet")
                 .short('q')
                 .help("Suppress stdout output on success (errors still go to stderr)")
+                .action(clap::ArgAction::SetTrue)
+                .global(true),
+        )
+        .arg(
+            clap::Arg::new("no-retry")
+                .long("no-retry")
+                .help(
+                    "Disable automatic retries on transient failures (5xx, 408, 429, \
+                     network errors). Useful for debugging.",
+                )
                 .action(clap::ArgAction::SetTrue)
                 .global(true),
         );

@@ -22,7 +22,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
 
     /**
      * @var (
-     *    value-of<RunningSubmissionState>
+     *    RunningSubmissionState
      *   |null
      *   |ErrorInfo
      *   |GradedTestCaseUpdate
@@ -44,7 +44,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
      *   |'_unknown'
      * ),
      *   value: (
-     *    value-of<RunningSubmissionState>
+     *    RunningSubmissionState
      *   |null
      *   |ErrorInfo
      *   |GradedTestCaseUpdate
@@ -61,10 +61,10 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
     }
 
     /**
-     * @param value-of<RunningSubmissionState> $running
+     * @param RunningSubmissionState $running
      * @return TestSubmissionUpdateInfo
      */
-    public static function running(string $running): TestSubmissionUpdateInfo
+    public static function running(RunningSubmissionState $running): TestSubmissionUpdateInfo
     {
         return new TestSubmissionUpdateInfo([
             'type' => 'running',
@@ -139,9 +139,9 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
     }
 
     /**
-     * @return value-of<RunningSubmissionState>
+     * @return RunningSubmissionState
      */
-    public function asRunning(): string
+    public function asRunning(): RunningSubmissionState
     {
         if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
             throw new Exception(
@@ -255,7 +255,7 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
 
         switch ($this->type) {
             case 'running':
-                $value = $this->value;
+                $value = $this->asRunning()->jsonSerialize();
                 $result['running'] = $value;
                 break;
             case 'stopped':
@@ -319,7 +319,12 @@ class TestSubmissionUpdateInfo extends JsonSerializableType
                     );
                 }
 
-                $args['value'] = $data['running'];
+                if (!(is_array($data['running']))) {
+                    throw new Exception(
+                        "Expected property 'running' in JSON data to be array, instead received " . get_debug_type($data['running']),
+                    );
+                }
+                $args['value'] = RunningSubmissionState::jsonDeserialize($data['running']);
                 break;
             case 'stopped':
                 $args['value'] = null;

@@ -81,7 +81,7 @@ class SeedClient
             $defaultHeaders['X-API-Version'] = $version;
         }
         if ($auditLogging != null) {
-            $defaultHeaders['X-API-Enable-Audit-Logging'] = $auditLogging;
+            $defaultHeaders['X-API-Enable-Audit-Logging'] = $auditLogging ? 'true' : 'false';
         }
 
         $this->options = $options ?? [];

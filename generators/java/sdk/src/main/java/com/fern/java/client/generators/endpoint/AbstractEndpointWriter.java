@@ -636,11 +636,12 @@ public abstract class AbstractEndpointWriter {
                                 httpEndpoint.getMethod().toString(),
                                 variables.getOkhttpRequestBodyName());
                         methodBody.addStatement(
-                                "$L.headers($T.of(this.$L.$L(null)))",
+                                "$L.headers($T.of(this.$L.$L(($T) null)))",
                                 "_requestBuilder",
                                 ClassName.get("okhttp3", "Headers"),
                                 clientOptionsField.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME);
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName());
                         methodBody.addStatement(
                                 "$T $L = $L.build()",
                                 ClassName.get("okhttp3", "Request"),
@@ -709,11 +710,12 @@ public abstract class AbstractEndpointWriter {
                                 httpEndpoint.getMethod().toString(),
                                 variables.getOkhttpRequestBodyName());
                         withMediaTypeBody.addStatement(
-                                "$L.headers($T.of(this.$L.$L(null)))",
+                                "$L.headers($T.of(this.$L.$L(($T) null)))",
                                 "_requestBuilder",
                                 ClassName.get("okhttp3", "Headers"),
                                 clientOptionsField.name,
-                                ClientOptionsGenerator.HEADERS_METHOD_NAME);
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName());
                         withMediaTypeBody.addStatement(
                                 "$T $L = $L.build()",
                                 ClassName.get("okhttp3", "Request"),

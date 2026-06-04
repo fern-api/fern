@@ -66,7 +66,7 @@ export const DOCKER_IMAGE_TO_GENERATOR_ID: Record<string, string> = {
     "fernapi/fern-swift-model": "swift-model",
     "fernapi/fern-postman": "postman",
     "fernapi/fern-openapi": "openapi",
-    "fernapi/fern-cli": "cli"
+    "fernapi/fern-cli-generator": "cli"
 };
 
 /**

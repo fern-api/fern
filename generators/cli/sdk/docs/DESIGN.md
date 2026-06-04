@@ -429,7 +429,7 @@ The current prototype embeds a single spec at compile time. The full vision (out
 groups:
   cli:
     generators:
-      - name: fernapi/fern-cli
+      - name: fernapi/fern-cli-generator
         version: 0.1.0
         config:
           cli-name: acme

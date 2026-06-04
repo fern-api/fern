@@ -533,13 +533,17 @@ class OAuthTokenProviderGenerator:
         self, client_credentials: ir_types.OAuthClientCredentials
     ) -> AST.FunctionInvocation:
         # TODO(amckinney): Support non-in-lined request types.
+
+        # The token endpoint's parameter names come from the configured request-properties
+        # mapping (e.g. client-id -> $request.cid), which may differ from "client_id"/"client_secret".
+        token_request_properties = client_credentials.token_endpoint.request_properties
         kwargs = [
             (
-                "client_id",
+                self._get_request_property_parameter_name(token_request_properties.client_id),
                 AST.Expression(f"self.{self._get_client_id_member_name()}"),
             ),
             (
-                "client_secret",
+                self._get_request_property_parameter_name(token_request_properties.client_secret),
                 AST.Expression(f"self.{self._get_client_secret_member_name()}"),
             ),
         ]
@@ -561,7 +565,9 @@ class OAuthTokenProviderGenerator:
         )
         kwargs.append(
             (
-                "refresh_token",
+                self._get_request_property_parameter_name(
+                    client_credentials.refresh_endpoint.request_properties.refresh_token
+                ),
                 AST.Expression(f"self.{self._get_refresh_token_member_name()}"),
             ),
         )
@@ -572,6 +578,18 @@ class OAuthTokenProviderGenerator:
                 ),
             ),
             kwargs=kwargs,
+        )
+
+    def _get_request_property_parameter_name(self, request_property: ir_types.RequestProperty) -> str:
+        # Resolve the actual generated parameter name (snake_case, Python-safe) for a request
+        # property, which is derived from the underlying query parameter or body property wire value.
+        return request_property.property.visit(
+            query=lambda query_parameter: resolve_name(
+                get_name_from_wire_value(query_parameter.name)
+            ).snake_case.safe_name,
+            body=lambda object_property: resolve_name(
+                get_name_from_wire_value(object_property.name)
+            ).snake_case.safe_name,
         )
 
     def _get_expires_at_function_declaration(self) -> AST.FunctionDeclaration:
