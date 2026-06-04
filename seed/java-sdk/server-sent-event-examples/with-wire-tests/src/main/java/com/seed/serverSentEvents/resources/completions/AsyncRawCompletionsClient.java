@@ -159,8 +159,7 @@ public class AsyncRawCompletionsClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedServerSentEventsHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
-                                        StreamEvent.class, new ResponseBodyReader(response), "event", "[DONE]"),
+                                Stream.fromSse(StreamEvent.class, new ResponseBodyReader(response), "[DONE]"),
                                 response));
                         return;
                     }
@@ -236,7 +235,8 @@ public class AsyncRawCompletionsClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedServerSentEventsHttpResponse<>(
-                                Stream.fromSse(StreamEventDiscriminantInData.class, new ResponseBodyReader(response)),
+                                Stream.fromSseWithEventDiscrimination(
+                                        StreamEventDiscriminantInData.class, new ResponseBodyReader(response), "type"),
                                 response));
                         return;
                     }

@@ -294,8 +294,7 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
-                                        StreamDataContextResponse.class, new ResponseBodyReader(response), "event"),
+                                Stream.fromSse(StreamDataContextResponse.class, new ResponseBodyReader(response)),
                                 response));
                         return;
                     }
@@ -379,8 +378,7 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
-                                        StreamNoContextResponse.class, new ResponseBodyReader(response), "event"),
+                                Stream.fromSse(StreamNoContextResponse.class, new ResponseBodyReader(response)),
                                 response));
                         return;
                     }
@@ -555,10 +553,9 @@ public class AsyncRawSeedApiClient {
                     ResponseBody responseBody = response.body();
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
-                                Stream.fromSseWithEventDiscrimination(
+                                Stream.fromSse(
                                         StreamDataContextWithEnvelopeSchemaResponse.class,
-                                        new ResponseBodyReader(response),
-                                        "event"),
+                                        new ResponseBodyReader(response)),
                                 response));
                         return;
                     }
