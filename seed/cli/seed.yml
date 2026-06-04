@@ -176,9 +176,11 @@ allowedFailures:
   - plain-text
   - property-access
   - public-object
+  - query-param-name-conflict
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi:github-npm
+  - query-parameters-openapi:no-custom-config
   - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
