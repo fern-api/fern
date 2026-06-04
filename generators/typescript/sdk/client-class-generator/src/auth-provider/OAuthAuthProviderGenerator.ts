@@ -922,9 +922,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const nonLiteralProps = this.getNonLiteralRequestProperties(requestProperties, context);
         for (const { property } of nonLiteralProps) {
             const propertyName = this.getName(property.property.name, context);
-            assignments.push(
-                `\n                    ${propertyName}: this.${OPTIONS_FIELD_NAME}.${propertyName},`
-            );
+            assignments.push(`\n                    ${propertyName}: this.${OPTIONS_FIELD_NAME}.${propertyName},`);
         }
 
         // Literal properties are only emitted for non-inlined bodies. For inlined
