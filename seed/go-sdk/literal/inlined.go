@@ -304,6 +304,8 @@ CustomName string
 defaultName string
 George bool
 literalGeorge bool
+
+rawJSON json.RawMessage
 }
 
 func NewDiscriminatedLiteralWithDefaultName() *DiscriminatedLiteral{
@@ -400,6 +402,7 @@ return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v",
 }
 d.literalGeorge = valueUnmarshaler.LiteralGeorge
 }
+d.rawJSON = json.RawMessage(data)
 return nil
 }
 
@@ -447,6 +450,9 @@ LiteralGeorge: true,
 }
 return json.Marshal(marshaler)
 }
+if len(d.rawJSON) > 0 {
+return d.rawJSON, nil
+}
 return nil, fmt.Errorf("type %T does not define a non-empty union type", d)
 }
 
@@ -492,6 +498,9 @@ fields = append(fields, "literalGeorge")
 }
 if len(fields) == 0 {
 if d.Type != "" {
+if len(d.rawJSON) > 0 {
+return nil
+}
 return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", d, d.Type)
 }
 return fmt.Errorf("type %T is empty", d)
