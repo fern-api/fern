@@ -9,6 +9,7 @@ import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.DisconnectReason;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
+import com.seed.websocket.core.RequestOptions;
 import com.seed.websocket.core.WebSocketReadyState;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
@@ -83,7 +84,7 @@ public class EmptyRealtimeWebSocketClient implements AutoCloseable {
         }
         HttpUrl.Builder urlBuilder = parsedUrl.newBuilder();
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
-        clientOptions.headers(null).forEach(requestBuilder::addHeader);
+        clientOptions.headers((RequestOptions) null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
         ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null

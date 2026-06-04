@@ -9,6 +9,7 @@ import com.seed.websocketMultiUrl.core.ClientOptions;
 import com.seed.websocketMultiUrl.core.DisconnectReason;
 import com.seed.websocketMultiUrl.core.ObjectMappers;
 import com.seed.websocketMultiUrl.core.ReconnectingWebSocketListener;
+import com.seed.websocketMultiUrl.core.RequestOptions;
 import com.seed.websocketMultiUrl.core.WebSocketReadyState;
 import com.seed.websocketMultiUrl.resources.realtime.types.ReceiveEvent;
 import com.seed.websocketMultiUrl.resources.realtime.types.SendEvent;
@@ -100,7 +101,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                     "model", String.valueOf(options.getModel().get()));
         }
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
-        clientOptions.headers(null).forEach(requestBuilder::addHeader);
+        clientOptions.headers((RequestOptions) null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
         ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null
