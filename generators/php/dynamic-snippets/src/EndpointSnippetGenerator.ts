@@ -818,11 +818,14 @@ export class EndpointSnippetGenerator {
         const args: php.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        // Endpoint-level path parameters are required and come first.
-        const endpointPathParameters = request.pathParameters ?? [];
-        if (endpointPathParameters.length > 0) {
+        // IR-level path params with variables have defaults in the SDK and must come after required params.
+        const irPathParameters = this.context.ir.pathParameters ?? [];
+        const requiredIrPathParameters = irPathParameters.filter((p) => p.variable == null);
+        const optionalIrPathParameters = irPathParameters.filter((p) => p.variable != null);
+        const requiredPathParameters = [...requiredIrPathParameters, ...(request.pathParameters ?? [])];
+        if (requiredPathParameters.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet }).map(
+                ...this.getPathParameters({ namedParameters: requiredPathParameters, snippet }).map(
                     (field) => field.value
                 )
             );
@@ -838,12 +841,13 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
-        // IR-level path parameters have defaults in the generated SDK and come after required params.
+        // Optional IR-level path parameters (with variables/defaults) come after body.
         this.context.errors.scope(Scope.PathParameters);
-        const irPathParameters = this.context.ir.pathParameters ?? [];
-        if (irPathParameters.length > 0) {
+        if (optionalIrPathParameters.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: irPathParameters, snippet }).map((field) => field.value)
+                ...this.getPathParameters({ namedParameters: optionalIrPathParameters, snippet }).map(
+                    (field) => field.value
+                )
             );
         }
         this.context.errors.unscope();
@@ -889,20 +893,23 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.customConfig?.inlinePathParameters ?? false;
 
         this.context.errors.scope(Scope.PathParameters);
-        // Separate endpoint-level (required) from IR-level (have defaults) path parameters.
-        const endpointPathParameterFields: php.ConstructorField[] = [];
-        const endpointPathParameters = request.pathParameters ?? [];
-        if (endpointPathParameters.length > 0) {
-            endpointPathParameterFields.push(
-                ...this.getPathParameters({ namedParameters: endpointPathParameters, snippet })
+        // IR-level path params with variables have defaults in the SDK and must come after required params.
+        const irPathParameters = this.context.ir.pathParameters ?? [];
+        const requiredIrPathParameters = irPathParameters.filter((p) => p.variable == null);
+        const optionalIrPathParameters = irPathParameters.filter((p) => p.variable != null);
+
+        const requiredPathParameterFields: php.ConstructorField[] = [];
+        const requiredPathParams = [...requiredIrPathParameters, ...(request.pathParameters ?? [])];
+        if (requiredPathParams.length > 0) {
+            requiredPathParameterFields.push(...this.getPathParameters({ namedParameters: requiredPathParams, snippet }));
+        }
+        const optionalPathParameterFields: php.ConstructorField[] = [];
+        if (optionalIrPathParameters.length > 0) {
+            optionalPathParameterFields.push(
+                ...this.getPathParameters({ namedParameters: optionalIrPathParameters, snippet })
             );
         }
-        const irPathParameterFields: php.ConstructorField[] = [];
-        const irPathParameters = this.context.ir.pathParameters ?? [];
-        if (irPathParameters.length > 0) {
-            irPathParameterFields.push(...this.getPathParameters({ namedParameters: irPathParameters, snippet }));
-        }
-        const pathParameterFields = [...endpointPathParameterFields, ...irPathParameterFields];
+        const pathParameterFields = [...requiredPathParameterFields, ...optionalPathParameterFields];
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
@@ -910,8 +917,7 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            // Endpoint-level path params (required) come first.
-            args.push(...endpointPathParameterFields.map((field) => field.value));
+            args.push(...requiredPathParameterFields.map((field) => field.value));
         }
 
         if (
@@ -936,9 +942,9 @@ export class EndpointSnippetGenerator {
             );
         }
 
-        // IR-level path parameters have defaults in the generated SDK and come after required params.
+        // Optional IR-level path parameters (with variables/defaults) come after body.
         if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            args.push(...irPathParameterFields.map((field) => field.value));
+            args.push(...optionalPathParameterFields.map((field) => field.value));
         }
 
         return args;
