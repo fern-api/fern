@@ -1,18 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { RuleContext } from "../../../Rule.js";
+import { isInYamlComment } from "../../yaml-comment-utils.js";
 import { NoNonComponentRefsRule } from "../no-non-component-refs.js";
-
-/**
- * Mirror of the private `isInYamlComment` helper in the rule file,
- * duplicated here so we can unit-test comment detection directly.
- */
-function isInYamlComment(contents: string, matchIndex: number): boolean {
-    const lineStart = contents.lastIndexOf("\n", matchIndex - 1) + 1;
-    const textBeforeMatch = contents.substring(lineStart, matchIndex);
-    const withoutQuotes = textBeforeMatch.replace(/"[^"]*"|'[^']*'/g, "");
-    return withoutQuotes.includes("#");
-}
 
 describe("NoNonComponentRefsRule", () => {
     it("should be defined and have correct name", () => {
