@@ -125,4 +125,31 @@ describe("unwrapLambdaBodyEnvelope", () => {
             channelIds: [101, 202]
         });
     });
+
+    it("treats body as envelope only when original does NOT have body key", () => {
+        // Lambda envelope case: original has no "body" key → unwrap
+        const envelopeEnhanced = { body: { channelIds: [101] } };
+        const originalNoBody = { channelIds: [1], firstName: "string" };
+
+        const unwrapped = unwrapLambdaBodyEnvelope(envelopeEnhanced);
+        expect(unwrapped.wasWrapped).toBe(true);
+        // Caller should check originalHasBody=false → treat as envelope
+
+        // Schema field case: original HAS a "body" key → not an envelope
+        const schemaEnhanced = { body: "Hello world", subject: "Greetings" };
+        const originalWithBody = { body: "string", subject: "string", to: "string" };
+
+        const unwrappedSchema = unwrapLambdaBodyEnvelope(schemaEnhanced);
+        // unwrapLambdaBodyEnvelope still returns wasWrapped=true (it's a detection helper),
+        // but the caller checks originalHasBody and skips the envelope path.
+        expect(unwrappedSchema.wasWrapped).toBe(true);
+
+        // When original has body, caller uses direct backfill (no unwrap/rewrap)
+        const directBackfill = backfillMissingFields(schemaEnhanced, originalWithBody);
+        expect(directBackfill).toEqual({
+            body: "Hello world",
+            subject: "Greetings",
+            to: "string"
+        });
+    });
 });

@@ -1120,10 +1120,12 @@ async function processEndpoint(
 
         // Backfill any required fields the AI may have missed from the original auto-generated example.
         // The AI Lambda may not fully resolve nested allOf chains, producing partial examples.
-        // Handle the Lambda's {body: {...}} envelope if present.
+        // Handle the Lambda's {body: {...}} envelope if present, but only when the original
+        // does NOT have a "body" key (distinguishes envelope from schemas with a literal body field).
         if (result.enhancedRequestExample != null && request.originalRequestExample != null) {
             const unwrapped = unwrapLambdaBodyEnvelope(result.enhancedRequestExample);
-            if (unwrapped.wasWrapped) {
+            const originalHasBody = isObjectWithKey(request.originalRequestExample, "body");
+            if (unwrapped.wasWrapped && !originalHasBody) {
                 const backfilled = backfillMissingFields(unwrapped.inner, request.originalRequestExample);
                 result.enhancedRequestExample = { body: backfilled };
             } else {
@@ -1654,6 +1656,13 @@ function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
         default:
             return bodyV3.value;
     }
+}
+
+/**
+ * Checks whether a value is a non-array object containing a specific key.
+ */
+function isObjectWithKey(value: unknown, key: string): boolean {
+    return typeof value === "object" && value !== null && !Array.isArray(value) && key in value;
 }
 
 /**
