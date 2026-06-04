@@ -252,9 +252,7 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamDataContextResponse.class, new ResponseBodyReader(response), "event"),
-                        response);
+                        Stream.fromSse(StreamDataContextResponse.class, new ResponseBodyReader(response)), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
@@ -322,9 +320,7 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamNoContextResponse.class, new ResponseBodyReader(response), "event"),
-                        response);
+                        Stream.fromSse(StreamNoContextResponse.class, new ResponseBodyReader(response)), response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
@@ -467,10 +463,8 @@ public class RawSeedApiClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
-                        Stream.fromSseWithEventDiscrimination(
-                                StreamDataContextWithEnvelopeSchemaResponse.class,
-                                new ResponseBodyReader(response),
-                                "event"),
+                        Stream.fromSse(
+                                StreamDataContextWithEnvelopeSchemaResponse.class, new ResponseBodyReader(response)),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";

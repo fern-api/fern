@@ -569,6 +569,8 @@ type Union struct {
 	Type string
 	Foo  *Foo
 	Bar  *Bar
+
+	rawJSON json.RawMessage
 }
 
 func (u *Union) GetType() string {
@@ -621,6 +623,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		}
 		u.Bar = valueUnmarshaler.Bar
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -647,6 +650,9 @@ func (u Union) MarshalJSON() ([]byte, error) {
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -679,6 +685,9 @@ func (u *Union) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -706,6 +715,8 @@ type UnionWithBaseProperties struct {
 	Integer     int
 	FieldString string
 	Foo         *Foo
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithBaseProperties) GetType() string {
@@ -780,6 +791,7 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 		}
 		u.Foo = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -813,6 +825,9 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	}
 	if u.Foo != nil {
 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -852,6 +867,9 @@ func (u *UnionWithBaseProperties) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -878,6 +896,8 @@ type UnionWithDiscriminant struct {
 	// This is a Foo field.
 	Foo *Foo
 	Bar *Bar
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithDiscriminant) GetType() string {
@@ -930,6 +950,7 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 		}
 		u.Bar = valueUnmarshaler.Bar
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -956,6 +977,9 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -988,6 +1012,9 @@ func (u *UnionWithDiscriminant) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1015,6 +1042,8 @@ type UnionWithDuplicatePrimitive struct {
 	Integer2 int
 	String1  string
 	String2  string
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithDuplicatePrimitive) GetType() string {
@@ -1097,6 +1126,7 @@ func (u *UnionWithDuplicatePrimitive) UnmarshalJSON(data []byte) error {
 		}
 		u.String2 = valueUnmarshaler.String2
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1144,6 +1174,9 @@ func (u UnionWithDuplicatePrimitive) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
+	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
 
@@ -1189,6 +1222,9 @@ func (u *UnionWithDuplicatePrimitive) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1214,6 +1250,8 @@ type UnionWithDuplicateTypes struct {
 	Type string
 	Foo1 *Foo
 	Foo2 *Foo
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithDuplicateTypes) GetType() string {
@@ -1262,6 +1300,7 @@ func (u *UnionWithDuplicateTypes) UnmarshalJSON(data []byte) error {
 		}
 		u.Foo2 = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1274,6 +1313,9 @@ func (u UnionWithDuplicateTypes) MarshalJSON() ([]byte, error) {
 	}
 	if u.Foo2 != nil {
 		return internal.MarshalJSONWithExtraProperty(u.Foo2, "type", "foo2")
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -1306,6 +1348,9 @@ func (u *UnionWithDuplicateTypes) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1331,6 +1376,8 @@ type UnionWithDuplicativeDiscriminants struct {
 	Type           string
 	FirstItemType  *FirstItemType
 	SecondItemType *SecondItemType
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithDuplicativeDiscriminants) GetType() string {
@@ -1379,6 +1426,7 @@ func (u *UnionWithDuplicativeDiscriminants) UnmarshalJSON(data []byte) error {
 		}
 		u.SecondItemType = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1391,6 +1439,9 @@ func (u UnionWithDuplicativeDiscriminants) MarshalJSON() ([]byte, error) {
 	}
 	if u.SecondItemType != nil {
 		return internal.MarshalJSONWithExtraProperty(u.SecondItemType, "type", "secondItemType")
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -1423,6 +1474,9 @@ func (u *UnionWithDuplicativeDiscriminants) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1448,6 +1502,8 @@ type UnionWithLiteral struct {
 	Type string
 	fern string
 	base string
+
+	rawJSON json.RawMessage
 }
 
 func NewUnionWithLiteralWithFern() *UnionWithLiteral {
@@ -1504,6 +1560,7 @@ func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 		}
 		u.fern = valueUnmarshaler.Fern
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1522,6 +1579,9 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
 			Fern: "fern",
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -1547,6 +1607,9 @@ func (u *UnionWithLiteral) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1573,6 +1636,8 @@ type UnionWithMultipleNoProperties struct {
 	Foo    *Foo
 	Empty1 interface{}
 	Empty2 interface{}
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithMultipleNoProperties) GetType() string {
@@ -1634,6 +1699,7 @@ func (u *UnionWithMultipleNoProperties) UnmarshalJSON(data []byte) error {
 		}
 		u.Empty2 = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1663,6 +1729,9 @@ func (u UnionWithMultipleNoProperties) MarshalJSON() ([]byte, error) {
 			Empty2: u.Empty2,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -1702,6 +1771,9 @@ func (u *UnionWithMultipleNoProperties) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1727,6 +1799,8 @@ type UnionWithNoProperties struct {
 	Type  string
 	Foo   *Foo
 	Empty interface{}
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithNoProperties) GetType() string {
@@ -1775,6 +1849,7 @@ func (u *UnionWithNoProperties) UnmarshalJSON(data []byte) error {
 		}
 		u.Empty = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1794,6 +1869,9 @@ func (u UnionWithNoProperties) MarshalJSON() ([]byte, error) {
 			Empty: u.Empty,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -1826,6 +1904,9 @@ func (u *UnionWithNoProperties) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1851,6 +1932,8 @@ type UnionWithNullableReference struct {
 	Type string
 	Foo  *Foo
 	Bar  *Bar
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithNullableReference) GetType() string {
@@ -1903,6 +1986,7 @@ func (u *UnionWithNullableReference) UnmarshalJSON(data []byte) error {
 		}
 		u.Bar = valueUnmarshaler.Bar
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1929,6 +2013,9 @@ func (u UnionWithNullableReference) MarshalJSON() ([]byte, error) {
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -1961,6 +2048,9 @@ func (u *UnionWithNullableReference) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -1986,6 +2076,8 @@ type UnionWithOptionalReference struct {
 	Type string
 	Foo  *Foo
 	Bar  *Bar
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithOptionalReference) GetType() string {
@@ -2038,6 +2130,7 @@ func (u *UnionWithOptionalReference) UnmarshalJSON(data []byte) error {
 		}
 		u.Bar = valueUnmarshaler.Bar
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2064,6 +2157,9 @@ func (u UnionWithOptionalReference) MarshalJSON() ([]byte, error) {
 			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -2096,6 +2192,9 @@ func (u *UnionWithOptionalReference) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -2121,6 +2220,8 @@ type UnionWithOptionalTime struct {
 	Type     string
 	Date     *time.Time
 	Datetime *time.Time
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithOptionalTime) GetType() string {
@@ -2173,6 +2274,7 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 		}
 		u.Datetime = valueUnmarshaler.Datetime.TimePtr()
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2199,6 +2301,9 @@ func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
 			Datetime: internal.NewOptionalDateTime(u.Datetime),
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -2231,6 +2336,9 @@ func (u *UnionWithOptionalTime) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -2256,6 +2364,8 @@ type UnionWithPrimitive struct {
 	Type        string
 	Integer     int
 	FieldString string
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithPrimitive) GetType() string {
@@ -2308,6 +2418,7 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		}
 		u.FieldString = valueUnmarshaler.FieldString
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2334,6 +2445,9 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -2366,6 +2480,9 @@ func (u *UnionWithPrimitive) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -2392,6 +2509,8 @@ type UnionWithSameNumberTypes struct {
 	PositiveInt int
 	NegativeInt int
 	AnyNumber   float64
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithSameNumberTypes) GetType() string {
@@ -2459,6 +2578,7 @@ func (u *UnionWithSameNumberTypes) UnmarshalJSON(data []byte) error {
 		}
 		u.AnyNumber = valueUnmarshaler.AnyNumber
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2495,6 +2615,9 @@ func (u UnionWithSameNumberTypes) MarshalJSON() ([]byte, error) {
 			AnyNumber: u.AnyNumber,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -2534,6 +2657,9 @@ func (u *UnionWithSameNumberTypes) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -2560,6 +2686,8 @@ type UnionWithSameStringTypes struct {
 	CustomFormat  string
 	RegularString string
 	PatternString string
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithSameStringTypes) GetType() string {
@@ -2627,6 +2755,7 @@ func (u *UnionWithSameStringTypes) UnmarshalJSON(data []byte) error {
 		}
 		u.PatternString = valueUnmarshaler.PatternString
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2663,6 +2792,9 @@ func (u UnionWithSameStringTypes) MarshalJSON() ([]byte, error) {
 			PatternString: u.PatternString,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -2702,6 +2834,9 @@ func (u *UnionWithSameStringTypes) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -2726,6 +2861,8 @@ func (u *UnionWithSameStringTypes) validate() error {
 type UnionWithSingleElement struct {
 	Type string
 	Foo  *Foo
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithSingleElement) GetType() string {
@@ -2761,6 +2898,7 @@ func (u *UnionWithSingleElement) UnmarshalJSON(data []byte) error {
 		}
 		u.Foo = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2770,6 +2908,9 @@ func (u UnionWithSingleElement) MarshalJSON() ([]byte, error) {
 	}
 	if u.Foo != nil {
 		return internal.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -2795,6 +2936,9 @@ func (u *UnionWithSingleElement) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -2820,6 +2964,8 @@ type UnionWithSubTypes struct {
 	Type        string
 	Foo         *Foo
 	FooExtended *FooExtended
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithSubTypes) GetType() string {
@@ -2868,6 +3014,7 @@ func (u *UnionWithSubTypes) UnmarshalJSON(data []byte) error {
 		}
 		u.FooExtended = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2880,6 +3027,9 @@ func (u UnionWithSubTypes) MarshalJSON() ([]byte, error) {
 	}
 	if u.FooExtended != nil {
 		return internal.MarshalJSONWithExtraProperty(u.FooExtended, "type", "fooExtended")
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -2912,6 +3062,9 @@ func (u *UnionWithSubTypes) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -2938,6 +3091,8 @@ type UnionWithTime struct {
 	Value    int
 	Date     time.Time
 	Datetime time.Time
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithTime) GetType() string {
@@ -3005,6 +3160,7 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 		}
 		u.Datetime = valueUnmarshaler.Datetime.Time()
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -3041,6 +3197,9 @@ func (u UnionWithTime) MarshalJSON() ([]byte, error) {
 			Datetime: internal.NewDateTime(u.Datetime),
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -3080,6 +3239,9 @@ func (u *UnionWithTime) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)
@@ -3106,6 +3268,8 @@ type UnionWithoutKey struct {
 	Foo  *Foo
 	// This is a bar field.
 	Bar *Bar
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionWithoutKey) GetType() string {
@@ -3154,6 +3318,7 @@ func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 		}
 		u.Bar = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -3166,6 +3331,9 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 	}
 	if u.Bar != nil {
 		return internal.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -3198,6 +3366,9 @@ func (u *UnionWithoutKey) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)

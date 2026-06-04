@@ -93,11 +93,9 @@ export function findRemovedSlugs(
     }
     const removed: RemovedSlug[] = [];
     for (const publishedEntry of publishedEntries) {
-        // FDR stores slug "" for pages that exist in the docs definition but are not
-        // present in the navigation tree (e.g., orphaned pages, non-navigable API
-        // reference pages). These pages were never published at a real URL, so warning
-        // about "/" being removed is a false positive.
-        if (publishedEntry.slug === "") {
+        // Empty slugs are FDR's fallback for pages without standalone nav nodes
+        // (for example changelog entries), not distinct redirectable URLs.
+        if (publishedEntry.slug.trim() === "") {
             continue;
         }
         const localSlugs = localPageIdToSlugs.get(publishedEntry.pageId);

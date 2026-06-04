@@ -89,13 +89,23 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getRootClientClassReference(): java.ClassReference {
         return java.classReference({
-            name: this.getRootClientClassName(),
+            name: this.getRootClientClassNameForSnippets(),
             packageName: this.getRootPackageName()
         });
     }
 
     public getRootClientClassName(): string {
         return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`;
+    }
+
+    /**
+     * The client class name surfaced in documentation snippets (dynamic snippets, README, reference.md).
+     * Customers may export the generated root client under a different, hand-written class name; this
+     * accessor reflects that exported name. Falls back to the internal client class name when unset, so
+     * output is unchanged for users who have not configured `exported-client-class-name`.
+     */
+    public getRootClientClassNameForSnippets(): string {
+        return this.customConfig?.["exported-client-class-name"] ?? this.getRootClientClassName();
     }
 
     public getEnvironmentClassName(): string {

@@ -411,6 +411,8 @@ type ContainerValue struct {
 	Type     string
 	List     []*FieldValue
 	Optional *FieldValue
+
+	rawJSON json.RawMessage
 }
 
 func (c *ContainerValue) GetType() string {
@@ -463,6 +465,7 @@ func (c *ContainerValue) UnmarshalJSON(data []byte) error {
 		}
 		c.Optional = valueUnmarshaler.Optional
 	}
+	c.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -489,6 +492,9 @@ func (c ContainerValue) MarshalJSON() ([]byte, error) {
 			Optional: c.Optional,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(c.rawJSON) > 0 {
+		return c.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", c)
 }
@@ -521,6 +527,9 @@ func (c *ContainerValue) validate() error {
 	}
 	if len(fields) == 0 {
 		if c.Type != "" {
+			if len(c.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", c, c.Type)
 		}
 		return fmt.Errorf("type %T is empty", c)
@@ -633,6 +642,8 @@ type FieldValue struct {
 	PrimitiveValue PrimitiveValue
 	ObjectValue    *ObjectValue
 	ContainerValue *ContainerValue
+
+	rawJSON json.RawMessage
 }
 
 func (f *FieldValue) GetType() string {
@@ -698,6 +709,7 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 		}
 		f.ContainerValue = valueUnmarshaler.ContainerValue
 	}
+	f.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -727,6 +739,9 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 			ContainerValue: f.ContainerValue,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
@@ -766,6 +781,9 @@ func (f *FieldValue) validate() error {
 	}
 	if len(fields) == 0 {
 		if f.Type != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Type)
 		}
 		return fmt.Errorf("type %T is empty", f)

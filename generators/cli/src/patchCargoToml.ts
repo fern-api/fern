@@ -23,6 +23,10 @@ import { TEMPLATE_BINARY_NAME } from "./identity.js";
  *     top of [package] and above the openapi-fixture
  *     [[bin]]                                       →  (removed; meant for SDK template authors)
  *
+ * When `typesCrateName` is supplied (second call), the function adds a
+ * `[dependencies.<typesCrateName>]` path dep pointing at the generated
+ * types crate workspace member.
+ *
  * What stays:
  *   - `[package] name = "fern-cli-sdk"` — pinned by the shipped
  *     Cargo.lock; renaming would break `cargo build --locked`.
@@ -30,11 +34,23 @@ import { TEMPLATE_BINARY_NAME } from "./identity.js";
  *     in the shipped src/ tree depends on it.
  *   - All dependency versions, features, and the `[profile.dist]` block.
  */
-export async function patchCargoToml(args: { outputDir: string; binaryName: string; version: string }): Promise<void> {
-    const { outputDir, binaryName, version } = args;
+export async function patchCargoToml(args: {
+    outputDir: string;
+    binaryName: string;
+    version?: string;
+    typesCrateName?: string;
+}): Promise<void> {
+    const { outputDir, binaryName, version, typesCrateName } = args;
     const cargoTomlPath = path.join(outputDir, "Cargo.toml");
     const contents = await readFile(cargoTomlPath, "utf-8");
-    const patched = applyCargoTomlPatch(contents, binaryName, version);
+
+    if (typesCrateName != null) {
+        const patched = addTypesDependency(contents, typesCrateName);
+        await writeFile(cargoTomlPath, patched);
+        return;
+    }
+
+    const patched = applyCargoTomlPatch(contents, binaryName, version ?? "0.0.0");
     if (patched === contents) {
         throw new Error(
             `Cargo.toml at ${cargoTomlPath} did not match the expected template — no substitutions made. ` +
@@ -47,10 +63,12 @@ export async function patchCargoToml(args: { outputDir: string; binaryName: stri
     // dependencies.  When we stamp a resolved version into Cargo.toml,
     // the lockfile entry must match — otherwise `cargo build --locked`
     // rejects the build.
-    const cargoLockPath = path.join(outputDir, "Cargo.lock");
-    const lockContents = await readFile(cargoLockPath, "utf-8");
-    const patchedLock = patchCargoLockVersion(lockContents, version);
-    await writeFile(cargoLockPath, patchedLock);
+    if (version != null) {
+        const cargoLockPath = path.join(outputDir, "Cargo.lock");
+        const lockContents = await readFile(cargoLockPath, "utf-8");
+        const patchedLock = patchCargoLockVersion(lockContents, version);
+        await writeFile(cargoLockPath, patchedLock);
+    }
 }
 
 /**
@@ -74,6 +92,21 @@ export function applyCargoTomlPatch(cargoToml: string, binaryName: string, versi
     );
     patched = replaceVersion(patched, version);
     return patched;
+}
+
+/**
+ * Append a `[dependencies.<typesCrateName>]` path dependency to the
+ * Cargo.toml, linking the CLI crate to the generated types crate.
+ */
+export function addTypesDependency(cargoToml: string, typesCrateName: string): string {
+    const snakeName = typesCrateName.replace(/-/g, "_");
+    const depBlock = `\n[dependencies.${snakeName}]\npath = "${typesCrateName}"\n`;
+    // Append before [profile] sections if present, else at the end.
+    const profileIdx = cargoToml.indexOf("\n[profile.");
+    if (profileIdx !== -1) {
+        return cargoToml.slice(0, profileIdx) + depBlock + cargoToml.slice(profileIdx);
+    }
+    return cargoToml + depBlock;
 }
 
 /**
@@ -107,6 +140,70 @@ export function patchCargoLockVersion(cargoLock: string, version: string): strin
         throw new Error("patchCargoToml: could not find fern-cli-sdk version entry in Cargo.lock");
     }
     return cargoLock.replace(pattern, `$1${version}$3`);
+}
+
+/**
+ * Patch Cargo.lock to include the generated types crate as a workspace
+ * member. `cargo build --locked` requires the lock file to be
+ * consistent with `Cargo.toml` — adding a new `[dependencies.X]` path
+ * dep without a corresponding `[[package]]` entry causes a rejection.
+ *
+ * The types crate's only dependencies (`serde`, `serde_json`) are
+ * already resolved in the lock file from the CLI SDK's own dep tree,
+ * so we only need to:
+ *   1. Append a `[[package]]` entry for the types crate itself.
+ *   2. Add the types crate to `fern-cli-sdk`'s dependency list.
+ */
+export async function patchCargoLockForTypes(args: { outputDir: string; typesCrateName: string }): Promise<void> {
+    const { outputDir, typesCrateName } = args;
+    const lockPath = path.join(outputDir, "Cargo.lock");
+    const contents = await readFile(lockPath, "utf-8");
+    const patched = addTypesCrateToLock(contents, typesCrateName);
+    await writeFile(lockPath, patched);
+}
+
+/**
+ * Pure transformation for unit-test access.
+ */
+export function addTypesCrateToLock(cargoLock: string, typesCrateName: string): string {
+    const snakeName = typesCrateName.replace(/-/g, "_");
+
+    // 1. Append [[package]] entry for the types crate (sorted insertion
+    //    isn't strictly required by Cargo, but we append at the end for
+    //    simplicity — Cargo accepts any order).
+    const packageEntry = [
+        "",
+        "[[package]]",
+        `name = "${snakeName}"`,
+        'version = "0.0.0"',
+        "dependencies = [",
+        ' "serde",',
+        ' "serde_json",',
+        "]",
+        ""
+    ].join("\n");
+
+    let patched = cargoLock.trimEnd() + "\n" + packageEntry;
+
+    // 2. Add the types crate to fern-cli-sdk's dependency list.
+    //    The dependency list is alphabetically sorted; insert after the
+    //    last entry that sorts before our crate name.
+    const sdkDepsPattern = /(name = "fern-cli-sdk"\nversion = "[^"]*"\ndependencies = \[)([\s\S]*?)(\])/;
+    const match = patched.match(sdkDepsPattern);
+    if (match != null) {
+        const fullMatch = match[0];
+        const prefix = match[1] ?? "";
+        const depsBody = match[2] ?? "";
+        const depLine = ` "${snakeName}",`;
+        // Parse existing deps and insert in sorted order.
+        const lines = depsBody.split("\n").filter((l) => l.trim().length > 0);
+        lines.push(depLine);
+        lines.sort((a, b) => a.trim().localeCompare(b.trim()));
+        const newDepsBody = "\n" + lines.join("\n") + "\n";
+        patched = patched.replace(fullMatch, prefix + newDepsBody + match[3]);
+    }
+
+    return patched;
 }
 
 function requireReplace(haystack: string, needle: string, replacement: string): string {

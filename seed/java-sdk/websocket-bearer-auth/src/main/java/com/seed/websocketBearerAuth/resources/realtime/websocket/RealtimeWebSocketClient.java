@@ -9,6 +9,7 @@ import com.seed.websocketBearerAuth.core.ClientOptions;
 import com.seed.websocketBearerAuth.core.DisconnectReason;
 import com.seed.websocketBearerAuth.core.ObjectMappers;
 import com.seed.websocketBearerAuth.core.ReconnectingWebSocketListener;
+import com.seed.websocketBearerAuth.core.RequestOptions;
 import com.seed.websocketBearerAuth.core.WebSocketReadyState;
 import com.seed.websocketBearerAuth.resources.realtime.types.ReceiveEvent;
 import com.seed.websocketBearerAuth.resources.realtime.types.ReceiveEvent2;
@@ -115,7 +116,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                     "temperature", String.valueOf(options.getTemperature().get()));
         }
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
-        clientOptions.headers(null).forEach(requestBuilder::addHeader);
+        clientOptions.headers((RequestOptions) null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
         ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null

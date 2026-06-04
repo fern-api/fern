@@ -13,6 +13,8 @@ type Data struct {
 	Type        string
 	FieldString string
 	Base64      []byte
+
+	rawJSON json.RawMessage
 }
 
 func (d *Data) GetType() string {
@@ -65,6 +67,7 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 		}
 		d.Base64 = valueUnmarshaler.Base64
 	}
+	d.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -91,6 +94,9 @@ func (d Data) MarshalJSON() ([]byte, error) {
 			Base64: d.Base64,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(d.rawJSON) > 0 {
+		return d.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", d)
 }
@@ -123,6 +129,9 @@ func (d *Data) validate() error {
 	}
 	if len(fields) == 0 {
 		if d.Type != "" {
+			if len(d.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", d, d.Type)
 		}
 		return fmt.Errorf("type %T is empty", d)
@@ -148,6 +157,8 @@ type EventInfo struct {
 	Type     string
 	Metadata *Metadata
 	Tag      Tag
+
+	rawJSON json.RawMessage
 }
 
 func (e *EventInfo) GetType() string {
@@ -198,6 +209,7 @@ func (e *EventInfo) UnmarshalJSON(data []byte) error {
 		}
 		e.Tag = valueUnmarshaler.Tag
 	}
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -217,6 +229,9 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 			Tag:  e.Tag,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(e.rawJSON) > 0 {
+		return e.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
@@ -249,6 +264,9 @@ func (e *EventInfo) validate() error {
 	}
 	if len(fields) == 0 {
 		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
 		}
 		return fmt.Errorf("type %T is empty", e)

@@ -1,0 +1,11 @@
+{
+    "extends": ["//"],
+    "tasks": {
+        "dist:cli": {
+            // cli-generator's build.mjs copies the rust-model dist/ tree
+            // into dist/rust-model-dist/ so the Docker image can invoke it
+            // as a child process for embedded types generation.
+            "dependsOn": ["^compile", "compile", "@fern-api/rust-model#dist:cli"]
+        }
+    }
+}

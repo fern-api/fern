@@ -51,6 +51,7 @@ async function generate(configPath: string): Promise<void> {
                 outputDir: config.output.path,
                 customConfig: getCustomConfig(config),
                 ir,
+                irFilepath: config.irFilepath,
                 outputConfig
             });
 

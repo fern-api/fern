@@ -183,6 +183,8 @@ type Shape struct {
 	ID     string
 	Circle *Circle
 	Square *Square
+
+	rawJSON json.RawMessage
 }
 
 func NewShapeFromCircle(value *Circle) *Shape {
@@ -257,6 +259,7 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 		}
 		s.Square = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -266,6 +269,9 @@ func (s Shape) MarshalJSON() ([]byte, error) {
 	}
 	switch s.Type {
 	default:
+		if len(s.rawJSON) > 0 {
+			return s.rawJSON, nil
+		}
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "circle":
 		return internal.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
@@ -303,6 +309,9 @@ func (s *Shape) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Type != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
 		}
 		return fmt.Errorf("type %T is empty", s)

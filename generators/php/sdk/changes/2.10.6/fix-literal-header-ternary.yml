@@ -1,0 +1,4 @@
+- summary: |
+    Fix PHPStan error for literal boolean headers by using strict null comparison
+    (`!== null`) instead of loose comparison (`!= null`).
+  type: fix

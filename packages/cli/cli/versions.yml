@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.9
+  changelogEntry:
+    - summary: |
+        Fix `fern check` validators (`valid-local-references`, `no-non-component-refs`) incorrectly reporting `$ref` values found inside YAML comments.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.8
+  changelogEntry:
+    - summary: |
+        Fix example generation for nested allOf $ref chains. When a schema uses
+        multi-level allOf (e.g. UserPost → UserBase → UserStrict), properties from
+        grandparent schemas were missing from generated code snippets because
+        mergeAllOfProperties only resolved one level of allOf. Now recursively
+        resolves the full chain so all required fields appear in examples.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
 - version: 5.44.7
   changelogEntry:
     - summary: |

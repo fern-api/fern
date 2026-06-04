@@ -233,6 +233,8 @@ type Resource struct {
 	Status       ResourceStatus
 	User         *User
 	Organization *Organization
+
+	rawJSON json.RawMessage
 }
 
 func (r *Resource) GetResourceType() string {
@@ -290,6 +292,7 @@ func (r *Resource) UnmarshalJSON(data []byte) error {
 		}
 		r.Organization = value
 	}
+	r.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -302,6 +305,9 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	}
 	if r.Organization != nil {
 		return internal.MarshalJSONWithExtraProperty(r.Organization, "resource_type", "Organization")
+	}
+	if len(r.rawJSON) > 0 {
+		return r.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", r)
 }
@@ -334,6 +340,9 @@ func (r *Resource) validate() error {
 	}
 	if len(fields) == 0 {
 		if r.ResourceType != "" {
+			if len(r.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", r, r.ResourceType)
 		}
 		return fmt.Errorf("type %T is empty", r)

@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.9.0
+  changelogEntry:
+    - summary: |
+        Add `exported-client-class-name` config to the Java SDK generator. When set, docs surfaces
+        (dynamic snippets, README, reference.md) display this name for the root client instead of
+        `client-class-name` — for teams that wrap the generated client with a hand-written public class
+        and want documentation to show the wrapper. Generated source code and wire tests are unaffected.
+      type: feat
+    - summary: |
+        SSE streaming endpoints now decide protocol-level vs data-level union discrimination from the API spec's x-fern-discriminator-context (IR discriminatorContext) instead of inferring from the discriminator's field name. Unions whose discriminator happens to be named event/id/retry/data but lives in the data payload are now correctly parsed from the data JSON; envelope dispatch only happens when x-fern-discriminator-context: protocol is explicit.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
+- version: 4.8.12
+  changelogEntry:
+    - summary: |
+        Fix compilation error on multipart file-upload endpoints when idempotency
+        headers are configured. The generator now emits `headers((RequestOptions) null)`
+        instead of a bare `headers(null)`, which resolves the ambiguous method
+        reference between `headers(RequestOptions)` and
+        `headers(IdempotentRequestOptions)` overloads in `ClientOptions`.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
 - version: 4.8.11
   changelogEntry:
     - summary: |

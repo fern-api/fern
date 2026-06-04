@@ -1,5 +1,0 @@
-- summary: |
-    Fix false "page removed" warnings in `fern check` for pages stored in FDR's slug
-    table with an empty slug. These entries represent non-navigable pages (not in the
-    navigation tree) that were never published at a real URL.
-  type: fix
