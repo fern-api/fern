@@ -3094,6 +3094,195 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_:SharedChildType": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "SharedChildType",
+                    "camelCase": {
+                        "unsafeName": "sharedChildType",
+                        "safeName": "sharedChildType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "shared_child_type",
+                        "safeName": "shared_child_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SHARED_CHILD_TYPE",
+                        "safeName": "SHARED_CHILD_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SharedChildType",
+                        "safeName": "SharedChildType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "detail",
+                        "name": {
+                            "originalName": "detail",
+                            "camelCase": {
+                                "unsafeName": "detail",
+                                "safeName": "detail"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "detail",
+                                "safeName": "detail"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DETAIL",
+                                "safeName": "DETAIL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Detail",
+                                "safeName": "Detail"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:OrphanParentWithSharedChild": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "OrphanParentWithSharedChild",
+                    "camelCase": {
+                        "unsafeName": "orphanParentWithSharedChild",
+                        "safeName": "orphanParentWithSharedChild"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "orphan_parent_with_shared_child",
+                        "safeName": "orphan_parent_with_shared_child"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ORPHAN_PARENT_WITH_SHARED_CHILD",
+                        "safeName": "ORPHAN_PARENT_WITH_SHARED_CHILD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OrphanParentWithSharedChild",
+                        "safeName": "OrphanParentWithSharedChild"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "label",
+                        "name": {
+                            "originalName": "label",
+                            "camelCase": {
+                                "unsafeName": "label",
+                                "safeName": "label"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "label",
+                                "safeName": "label"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LABEL",
+                                "safeName": "LABEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Label",
+                                "safeName": "Label"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "child",
+                        "name": {
+                            "originalName": "child",
+                            "camelCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "child",
+                                "safeName": "child"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CHILD",
+                                "safeName": "CHILD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Child",
+                                "safeName": "Child"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:SharedChildType"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_:ReferenceType": {
             "type": "object",
             "declaration": {
@@ -5138,6 +5327,90 @@
             "location": {
                 "method": "GET",
                 "path": "/root/map-response"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getSharedChild": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getSharedChild",
+                    "camelCase": {
+                        "unsafeName": "getSharedChild",
+                        "safeName": "getSharedChild"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_shared_child",
+                        "safeName": "get_shared_child"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_SHARED_CHILD",
+                        "safeName": "GET_SHARED_CHILD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetSharedChild",
+                        "safeName": "GetSharedChild"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/shared-child"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getOrphanParent": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getOrphanParent",
+                    "camelCase": {
+                        "unsafeName": "getOrphanParent",
+                        "safeName": "getOrphanParent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_orphan_parent",
+                        "safeName": "get_orphan_parent"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_ORPHAN_PARENT",
+                        "safeName": "GET_ORPHAN_PARENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetOrphanParent",
+                        "safeName": "GetOrphanParent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/root/orphan-parent"
             },
             "request": {
                 "type": "body",
