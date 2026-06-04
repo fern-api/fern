@@ -173,7 +173,7 @@ class FieldValue extends JsonSerializableType
 
         switch ($this->type) {
             case 'primitive_value':
-                $value = $this->asPrimitiveValue()->jsonSerialize();
+                $value = $this->asPrimitiveValue()->value;
                 $result['primitive_value'] = $value;
                 break;
             case 'object_value':
@@ -227,12 +227,12 @@ class FieldValue extends JsonSerializableType
                     );
                 }
 
-                if (!(is_array($data['primitive_value']))) {
+                if (!(is_string($data['primitive_value']))) {
                     throw new Exception(
-                        "Expected property 'primitiveValue' in JSON data to be array, instead received " . get_debug_type($data['primitive_value']),
+                        "Expected property 'primitiveValue' in JSON data to be string, instead received " . get_debug_type($data['primitive_value']),
                     );
                 }
-                $args['value'] = PrimitiveValue::jsonDeserialize($data['primitive_value']);
+                $args['value'] = PrimitiveValue::from($data['primitive_value']);
                 break;
             case 'object_value':
                 $args['value'] = ObjectValue::jsonDeserialize($data);
