@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.11
+  changelogEntry:
+    - summary: |
+        Bump aiohttp lower bound from >=3.13.4 to >=3.14.0 and tighten Python
+        marker to >=3.10 to address CVE-2026-47265 and CVE-2026-47266.
+      type: chore
+  createdAt: "2026-06-04"
+  irVersion: 67
 - version: 5.14.10
   changelogEntry:
     - summary: |
