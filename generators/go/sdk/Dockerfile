@@ -5,11 +5,9 @@ RUN apk --no-cache add git zip
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
-# Patch vulnerable packages bundled inside npm's node_modules that lag behind
-# upstream advisories (ip-address GHSA-v2v4-37r5-5v8g, brace-expansion
-# GHSA-jxxr-4gwj-5jf2, picomatch GHSA-3v7f-55p6-f55p / GHSA-c2c7-rcm5-vvqj).
-# We replace them with the latest patched releases via `npm pack` so the
-# resulting layer does not ship known-vulnerable copies.
+# Patch vulnerable packages bundled inside npm's node_modules. Replace them
+# with the latest patched releases via `npm pack` so the resulting layer does
+# not ship known-vulnerable copies.
 RUN set -eux; \
     NPM_NM=/usr/local/lib/node_modules/npm/node_modules; \
     mkdir -p /tmp/pkg-fix && cd /tmp/pkg-fix; \
@@ -33,20 +31,14 @@ RUN set -eux; \
 COPY generators/go-v2/sdk/dist/ /dist/
 
 # Stage 2: Final Go image
-# Built with Go 1.26.4 (vs. golang:1.26.3 previously) so that the resulting
-# /fern-go-sdk binary embeds the Go 1.26.4 stdlib, which fixes CVE-2026-42504
-# (go/stdlib:1.26.3) as well as the earlier go/stdlib:1.26.2 CVEs
-# (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
-# CVE-2026-42499) and the Go toolchain (CVE-2026-42501).
+# Built with Go 1.26.4 so the resulting /fern-go-sdk binary embeds a patched
+# stdlib that clears vulnerability scanners.
 FROM golang:1.26.4-alpine3.23
 
 WORKDIR /workspace
 
-# Go 1.26.4 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
-# still pins old pseudo-versions of x/net and x/crypto, and an old x/sys.
-# Bump the SBOM files so grype no longer flags them.
-# Patch both src/go.mod (stdlib) and src/cmd/go.mod (toolchain commands)
-# so scanners like grype and AWS Inspector stop reporting CVE-2026-39824.
+# Patch src/go.mod and src/cmd/go.mod to bump declared x/net, x/crypto,
+# x/sys versions so SBOM scanners no longer flag stale pseudo-versions.
 RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum && \
@@ -69,9 +61,8 @@ COPY generators/go/go.mod generators/go/go.sum /workspace/
 COPY generators/go/cmd /workspace/cmd
 COPY generators/go/internal /workspace/internal
 COPY generators/go/version.go /workspace/version.go
-# Bump golang.org/x/net to v0.55.0 (CVE-2026-39821), golang.org/x/crypto
-# to v0.52.0 (CVE-2026-39827), and golang.org/x/sys to v0.45.0
-# (CVE-2026-39824). All are transitives of golang.org/x/tools.
+# Bump golang.org/x/net, x/crypto, x/sys (transitives of golang.org/x/tools)
+# to versions that clear vulnerability scanners.
 RUN go get golang.org/x/net@v0.55.0 golang.org/x/crypto@v0.52.0 golang.org/x/sys@v0.45.0 && go mod tidy && go mod download
 
 COPY generators/go-v2/sdk/features.yml /assets/features.yml
@@ -88,16 +79,8 @@ RUN mv /bin/cli.cjs /bin/go-v2 && chmod +x /bin/go-v2
 
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
 
-# Drop build-time artifacts that grype scans as SBOM sources but that
-# the runtime image doesn't need:
-#   - /workspace/internal/testdata/** ships test fixture go.sum files
-#     that list a very old gopkg.in/yaml.v3 v3.0.0-20200313102051
-#     pseudo-version in the /go.mod hashes (CVE-2022-28948), even though
-#     the runtime never resolves that version.
-#   - /go/pkg/mod and /root/.cache/go-build hold downloaded module
-#     sources (golang.org/x/net v0.39.0 transitively from
-#     golang.org/x/tools v0.32.0) that grype scans even though the
-#     compiled /fern-go-sdk binary does not link x/net.
+# Drop build-time artifacts (testdata, module cache) that scanners flag
+# but the runtime image doesn't need.
 RUN rm -rf /workspace/internal/testdata && \
     go clean -modcache && \
     rm -rf /root/.cache/go-build

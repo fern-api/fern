@@ -1,8 +1,6 @@
 # Stage 1: Rebuild oxlint-tsgolint from source under go1.26.4 so the embedded
-# go/stdlib clears go1.26.3 CVE-2026-42504 and the earlier go1.26.2 CVEs
-# (CVE-2026-33811, CVE-2026-33814, CVE-2026-39820, CVE-2026-39836,
-# CVE-2026-42499). The published @oxlint-tsgolint/linux-{x64,arm64} binaries
-# are still compiled with an older upstream Go toolchain.
+# go/stdlib clears vulnerability scanners. The published binaries are still
+# compiled with an older upstream Go toolchain.
 FROM golang:1.26.4-trixie AS tsgolint-rebuild
 ARG TSGOLINT_VERSION=0.22.1
 ENV GOTOOLCHAIN=go1.26.4
@@ -42,7 +40,7 @@ RUN apt-get update \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/*
 
-# Update perl-base to fix CVE-2026-48959, CVE-2026-48961, CVE-2026-9538, CVE-2026-48962, CVE-2026-42497
+# Update perl-base from sid to pick up security patches.
 RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
     && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
@@ -55,12 +53,8 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade bundled npm to 11.14.1 to pick up patched transitive dependencies
-# (picomatch 4.0.4, minimatch 10.2.5, tar 7.5.13).
-# node:24.16.0 ships npm 11.12.1 which still vendors picomatch 4.0.3 and
-# brace-expansion 5.0.4. Replace ip-address with 10.1.1 to fix
-# GHSA-v2v4-37r5-5v8g (still bundled at 10.1.0 even in npm 11.14.1).
-# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.14.1 vendors 5.0.5).
+# Upgrade bundled npm and patch vendored dependencies (ip-address,
+# brace-expansion) to versions that clear vulnerability scanners.
 RUN npm install -g npm@11.14.1 --force && \
     cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack ip-address@10.1.1 && \
@@ -91,8 +85,7 @@ RUN pnpm add -g typescript@~5.7.2 \
   vitest@^4.1.1
 
 # Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
-# rebuilt one (go1.26.4). pnpm installs the platform-specific binary at
-# {pnpm-global-store}/.pnpm/@oxlint-tsgolint+linux-{arch}@.../node_modules/@oxlint-tsgolint/linux-{arch}/tsgolint.
+# rebuilt one so it embeds the patched Go stdlib.
 COPY --from=tsgolint-rebuild /out/tsgolint /tmp/tsgolint-rebuilt
 RUN chmod +x /tmp/tsgolint-rebuilt && \
     set -eux; \

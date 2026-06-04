@@ -2,8 +2,8 @@ FROM node:24.16-alpine3.23 AS node
 
 FROM golang:1.26.4-alpine3.23
 
-# Go 1.26.4 ships the CVE-2026-33814 fix in h2_bundle.go but src/go.mod
-# still pins x/net v0.47.1; bump SBOM files to v0.53.0 to match the code.
+# Patch src/go.mod to bump x/net so SBOM scanners no longer flag a stale
+# pseudo-version.
 RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
         /usr/local/go/src/go.mod /usr/local/go/src/vendor/modules.txt && \
     sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
@@ -27,9 +27,8 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-# Patch npm's bundled picomatch@4.0.3 -> 4.0.4 (GHSA-c2c7-rcm5-vvqj,
-# GHSA-3v7f-55p6-f55p) and brace-expansion@5.0.4 -> 5.0.6
-# (GHSA-jxxr-4gwj-5jf2) copied from the node stage.
+# Patch npm's bundled picomatch and brace-expansion to versions that clear
+# vulnerability scanners.
 RUN for dir in \
       /usr/local/lib/node_modules/npm/node_modules/picomatch \
       /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch; do \
