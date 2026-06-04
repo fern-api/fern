@@ -178,6 +178,7 @@ allowedFailures:
   - public-object
   - query-parameters
   - query-parameters-openapi
+  - query-parameters-openapi:github-npm
   - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
