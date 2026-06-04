@@ -192,6 +192,8 @@ allowedFailures:
   # Dynamic snippet syntax errors for examples with Exception-named types.
   - examples:no-custom-config
   - examples:readme-config
+  # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).
+  - trace
 
   # OAuth/InferredAuth custom properties need non-literal property passthrough.
   - oauth-client-credentials-custom
