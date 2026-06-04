@@ -19,7 +19,8 @@ const SDK_IGNORE = [
     "docs/**",
 
     // Template-dev integration tests coupled to the SDK template's own
-    // dev fixture under `cli/openapi-fixture/` (also pruned below).
+    // dev fixture under `cli/openapi-fixture/` (synced from cli-sdk's
+    // `src/bin/openapi-fixture/`; also pruned below).
     // `overlay_fixture.rs` `include_str!`s that spec to exercise the
     // overlay → discovery pipeline via library calls; `tests/fixtures/`
     // holds fixture data. `copySpecs` writes a fresh main.rs against the

@@ -6,9 +6,9 @@ Usage:
 
 Removes #[test] functions, #[cfg(test)] helper items, and entire
 #[cfg(test)] modules that reference fixture files via
-include_str!("../../cli/...") paths. Those fixtures exist in the source
-cli-sdk repo but are NOT synced into the vendored copy, so they break
-`cargo test` compilation.
+include_str!("../../cli/...") or include_str!("../bin/...") paths.
+Those fixtures exist in the source cli-sdk repo but are NOT synced into
+the vendored copy, so they break `cargo test` compilation.
 
 Non-fixture tests are preserved. If stripping leaves a #[cfg(test)]
 module with no remaining #[test] functions, the entire module is removed.
@@ -23,7 +23,7 @@ import re
 import sys
 from pathlib import Path
 
-FIXTURE_RE = re.compile(r'include_str!\s*\(\s*"[^"]*\.\./\.\./cli/')
+FIXTURE_RE = re.compile(r'include_str!\s*\(\s*"[^"]*\.\./(\.\./)?(cli|bin)/')
 
 
 # ---------------------------------------------------------------------------

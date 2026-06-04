@@ -36,10 +36,16 @@ echo "==> Syncing cli-sdk@${CLI_SDK_SHORT} (${CLI_SDK_SHA}) into generators/cli/
 # ---------------------------------------------------------------------------
 # 1. Rsync source files + openapi-fixture dev binary
 # ---------------------------------------------------------------------------
-echo "--- Syncing src/, cli/openapi-fixture/ ..."
+echo "--- Syncing src/, src/bin/openapi-fixture/ ..."
 
+# cli-sdk uses autobins — src/bin/ contains ~30 demo binary directories.
+# We exclude them all (--filter) so the vendored SDK only ships the
+# library code + strip_schema.rs. openapi-fixture is synced separately
+# into cli/openapi-fixture/ to preserve the path that patchCargoToml.ts
+# anchors on.
 rsync -a --delete \
   --exclude='.DS_Store' \
+  --filter='- bin/*/' \
   "$CLI_SDK_DIR/src/" "$SDK_DIR/src/"
 
 # Tests are NOT synced. cli-sdk's own CI validates test compilation;
@@ -48,10 +54,13 @@ rsync -a --delete \
 # (smoke tests, parser.rs #[cfg(test)] include_str! calls) and would
 # fail to compile in the projected single-package layout.
 
-# Sync cli/openapi-fixture/ (the dev fixture used by seed)
+# Sync openapi-fixture (the dev fixture used by seed).
+# cli-sdk moved binaries from cli/<name>/ to src/bin/<name>/ (autobins)
+# but the vendored SDK keeps cli/openapi-fixture/ because
+# patchCargoToml.ts anchors on that path.
 mkdir -p "$SDK_DIR/cli/openapi-fixture"
 rsync -a --delete \
-  "$CLI_SDK_DIR/cli/openapi-fixture/" "$SDK_DIR/cli/openapi-fixture/"
+  "$CLI_SDK_DIR/src/bin/openapi-fixture/" "$SDK_DIR/cli/openapi-fixture/"
 
 # Remove stale tests/ directory if present from a prior sync revision
 if [[ -d "$SDK_DIR/tests" ]]; then
@@ -63,8 +72,9 @@ fi
 # 1b. Strip fixture-dependent inline tests from src/
 # ---------------------------------------------------------------------------
 # cli-sdk's #[cfg(test)] modules reference fixture specs via
-# include_str!("../../cli/<dir>/...") that are NOT synced. Removing them
-# keeps `cargo test` clean in both the vendored SDK and generated CLIs.
+# include_str!("../bin/<dir>/...") (or the legacy "../../cli/<dir>/...")
+# that are NOT synced. Removing them keeps `cargo test` clean in both
+# the vendored SDK and generated CLIs.
 echo "--- Stripping fixture-dependent inline tests from src/ ..."
 python3 "$SCRIPT_DIR/strip-fixture-tests.py" "$SDK_DIR/src/"
 
