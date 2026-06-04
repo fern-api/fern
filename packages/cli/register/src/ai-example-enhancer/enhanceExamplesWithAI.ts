@@ -1661,12 +1661,7 @@ function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
  * The Lambda sometimes wraps the request example in a "body" key.
  */
 export function unwrapLambdaBodyEnvelope(value: unknown): { wasWrapped: boolean; inner: unknown } {
-    if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value) &&
-        "body" in value
-    ) {
+    if (typeof value === "object" && value !== null && !Array.isArray(value) && "body" in value) {
         return { wasWrapped: true, inner: (value as Record<string, unknown>).body };
     }
     return { wasWrapped: false, inner: value };
