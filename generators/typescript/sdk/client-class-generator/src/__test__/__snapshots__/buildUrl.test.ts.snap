@@ -1,5 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`buildUrl > collapses duplicate slashes introduced between path parameters 1`] = `"\`/\${id}/\${nestedId}\`"`;
+
 exports[`buildUrl > generates template literal for path with multiple parameters 1`] = `"\`/orgs/\${orgId}/users/\${userId}\`"`;
 
 exports[`buildUrl > generates template literal for path with one parameter 1`] = `"\`/users/\${userId}\`"`;
