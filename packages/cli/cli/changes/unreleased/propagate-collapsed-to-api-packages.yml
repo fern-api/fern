@@ -1,0 +1,5 @@
+- summary: |
+    Propagate `collapsed` config from `- api` entry to child API package nodes (endpoint groups).
+    Setting `collapsed: open-by-default` or `collapsed: true` on an API reference section
+    now cascades to all auto-generated endpoint group sections in the sidebar.
+  type: feat
