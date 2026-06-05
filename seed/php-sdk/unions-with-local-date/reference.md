@@ -192,7 +192,7 @@ $client->types->get(
 
 ```php
 $client->types->update(
-    UnionWithTime::date(),
+    UnionWithTime::date(new DateTime('1994-01-01')),
 );
 ```
 </dd>

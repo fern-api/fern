@@ -196,7 +196,7 @@ export class DynamicTypeLiteralMapper {
                             name: this.context.getClassName(discriminatedUnion.declaration.name),
                             namespace: this.context.getTypesNamespace(discriminatedUnion.declaration.fernFilepath)
                         }),
-                        method: this.context.getMethodName(unionVariant.discriminantValue.name),
+                        method: this.context.getPropertyName(unionVariant.discriminantValue.name),
                         arguments_: this.convertDiscriminatedUnionVariantArgs({
                             discriminatedUnionTypeInstance,
                             unionVariant,
@@ -250,12 +250,14 @@ export class DynamicTypeLiteralMapper {
                             }
                         ];
                     }
+                    const wireValue = unionVariant.discriminantValue.wireValue;
+                    const singlePropertyValue = record[wireValue] ?? record["value"];
                     return [
                         {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue]
+                                value: singlePropertyValue
                             })
                         }
                     ];
@@ -284,14 +286,11 @@ export class DynamicTypeLiteralMapper {
             singleDiscriminatedUnionType: unionVariant
         });
         if (unionVariant.type === "singleProperty") {
-            const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
-            if (record == null && unionProperties.length === 1) {
+            const singleProperty = unionProperties[0];
+            if (singleProperty != null) {
                 return [
                     ...requiredBaseFields,
-                    this.convert({
-                        typeReference: unionVariant.typeReference,
-                        value: discriminatedUnionTypeInstance.value
-                    }),
+                    singleProperty.value,
                     ...optionalBaseFields
                 ];
             }

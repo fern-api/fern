@@ -499,7 +499,7 @@ $client->service->createBigEntity(
             'extra' => 'extra',
         ], [
             'tags',
-        ]),
+        ], 'metadata'),
         'commonMetadata' => new \Seed\Commons\Types\Types\Metadata([
             'id' => 'id',
             'data' => [
@@ -514,7 +514,7 @@ $client->service->createBigEntity(
             ],
             'jsonString' => 'jsonString',
         ])),
-        'data' => Data::string(),
+        'data' => Data::string('data'),
         'migration' => new Migration([
             'name' => 'name',
             'status' => MigrationStatus::Running->value,
@@ -524,7 +524,7 @@ $client->service->createBigEntity(
             'exceptionMessage' => 'exceptionMessage',
             'exceptionStacktrace' => 'exceptionStacktrace',
         ])),
-        'test' => Test::and_(),
+        'test' => Test::and(true),
         'node' => new Node([
             'name' => 'name',
             'nodes' => [
