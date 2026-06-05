@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.8
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation: filter out unsupported bytes body arguments
+        that produced syntax errors, and reorder IR-level path parameters (which have
+        defaults) after required body parameters to match the SDK method signatures.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
 - version: 2.10.7
   changelogEntry:
     - summary: |
