@@ -143,7 +143,6 @@ allowedFailures:
   - header-auth-environment-variable
   - http-head
   - idempotency-headers
-  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-api-key
