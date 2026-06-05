@@ -190,10 +190,11 @@ function convertHttpEndpoint({
             if (url == null) {
                 throw new CliError({ message: "No URL defined for " + baseUrlId, code: CliError.Code.InternalError });
             }
-            const server: OpenAPIV3.ServerObject = { url };
-            if (environment.docs != null) {
-                server.description = environment.docs;
-            }
+            const envName = getOriginalName(environment.name);
+            const server: OpenAPIV3.ServerObject = {
+                url,
+                description: environment.docs != null ? `${envName} (${environment.docs})` : envName
+            };
             return server;
         });
     }
