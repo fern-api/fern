@@ -1,0 +1,5 @@
+- summary: |
+    Fix OAuth token provider to use correct parameter names from request-properties mapping
+    for custom OAuth endpoints, and pass additional required parameters (scopes, custom properties)
+    through the client constructor to the token provider.
+  type: fix
