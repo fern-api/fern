@@ -378,6 +378,7 @@ allowedFailures:
 
   # Dynamic snippet generation produces code that does not compile.
   - examples:exported-client-name # snippet calls client.NewAcmeClient but the SDK exports NewClient
+  - request-body-unwrap # v2 dynamic snippets use nested struct literal but v1 generates flat struct with unwrapPath
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
 
   # Wire tests fail at runtime.
