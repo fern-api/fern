@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.13.0
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime with CliExecutor bridge for SDK
+        execution-sharing in custom commands.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
 - version: 0.12.1
   changelogEntry:
     - summary: |
