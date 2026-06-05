@@ -474,12 +474,17 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 	for _, td := range f.testData {
 		for _, propType := range td.propertyTypes {
 			pkgQualifier := extractPackageQualifier(propType)
-			if pkgQualifier == "" || pkgQualifier == f.packageName || isStdLibPackage(pkgQualifier) {
+			if pkgQualifier == "" || isStdLibPackage(pkgQualifier) {
 				continue
 			}
 			if _, seen := validSubpackages[pkgQualifier]; seen {
 				continue
 			}
+			// A qualifier that resolves to an import in the main file refers to a
+			// separate package even when its package name matches the current
+			// package name (e.g. an imported `common/v2` from within package `v2`).
+			// Such types must keep their qualifier and import rather than being
+			// treated as same-package references and stripped.
 			if importPath, ok := mainAliasToPath[pkgQualifier]; ok {
 				validSubpackages[pkgQualifier] = struct{}{}
 				testWriter.scope.AddImport(importPath)
@@ -501,14 +506,21 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 
 			// Include property if:
 			// 1. No package qualifier (same package)
-			// 2. Package qualifier matches current package (will be stripped)
-			// 3. Package qualifier is in validSubpackages (known generated subpackage)
+			// 2. Package qualifier is in validSubpackages (known generated subpackage,
+			//    including one whose name collides with the current package name)
+			// 3. Package qualifier matches current package (genuine same-package
+			//    reference whose redundant qualifier is stripped)
 			// 4. Package qualifier is a standard library package
+			_, isImportedSubpackage := validSubpackages[pkgQualifier]
 			shouldInclude := false
-			if pkgQualifier == "" || pkgQualifier == f.packageName {
+			stripSelfQualifier := false
+			if pkgQualifier == "" {
 				shouldInclude = true
-			} else if _, isValid := validSubpackages[pkgQualifier]; isValid {
+			} else if isImportedSubpackage {
 				shouldInclude = true
+			} else if pkgQualifier == f.packageName {
+				shouldInclude = true
+				stripSelfQualifier = true
 			} else if isStdLibPackage(pkgQualifier) {
 				shouldInclude = true
 			}
@@ -518,7 +530,11 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 			}
 
 			localPropertyNames = append(localPropertyNames, testData.propertyNames[i])
-			localPropertyTypes = append(localPropertyTypes, stripPackageQualifier(propType, f.packageName))
+			if stripSelfQualifier {
+				localPropertyTypes = append(localPropertyTypes, stripPackageQualifier(propType, f.packageName))
+			} else {
+				localPropertyTypes = append(localPropertyTypes, propType)
+			}
 			if i < len(testData.propertySafeNames) {
 				localPropertySafeNames = append(localPropertySafeNames, testData.propertySafeNames[i])
 			}
