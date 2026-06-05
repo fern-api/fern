@@ -1,0 +1,5 @@
+- summary: |
+    Fix `fern check` parameter-name collision validator to honor `x-fern-parameter-name`.
+    Previously, parameters with distinct `x-fern-parameter-name` overrides were still
+    flagged as collisions based on their raw OpenAPI `name` field.
+  type: fix
