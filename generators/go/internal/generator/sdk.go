@@ -4639,7 +4639,20 @@ func resolveObjectProperties(typeRef *ir.TypeReference, types map[common.TypeId]
 	if !ok || typeDecl.Shape == nil || typeDecl.Shape.Object == nil {
 		return nil
 	}
-	return typeDecl.Shape.Object.Properties
+	var result []*ir.ObjectProperty
+	for _, ext := range typeDecl.Shape.Object.Extends {
+		if extDecl, ok := types[ext.TypeId]; ok && extDecl.Shape != nil && extDecl.Shape.Object != nil {
+			namedRef := &ir.TypeReference{Named: &ir.NamedType{
+				TypeId:       ext.TypeId,
+				FernFilepath: ext.FernFilepath,
+				Name:         ext.Name,
+				DisplayName:  ext.DisplayName,
+			}}
+			result = append(result, resolveObjectProperties(namedRef, types)...)
+		}
+	}
+	result = append(result, typeDecl.Shape.Object.Properties...)
+	return result
 }
 
 // getSingleValueEnumWireValue returns the wire value if the type reference points to
@@ -4774,6 +4787,7 @@ func inlinedRequestBodyToUnwrappedObjectTypeDeclaration(
 ) *ir.ObjectTypeDeclaration {
 	properties := getUnwrappedBodyObjectProperties(inlinedRequestBody, unwrapPath, types)
 	return &ir.ObjectTypeDeclaration{
+		Extends:         inlinedRequestBody.Extends,
 		Properties:      properties,
 		ExtraProperties: inlinedRequestBody.ExtraProperties,
 	}

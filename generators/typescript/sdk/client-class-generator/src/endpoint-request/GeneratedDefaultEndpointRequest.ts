@@ -546,7 +546,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             if (typeDecl?.shape.type === "enum" && typeDecl.shape.values.length === 1) {
                 const singleValue = typeDecl.shape.values[0];
                 if (singleValue != null) {
-                    const wireValue = typeof singleValue.name === "string" ? singleValue.name : getWireValue(singleValue.name);
+                    const wireValue =
+                        typeof singleValue.name === "string" ? singleValue.name : getWireValue(singleValue.name);
                     return ts.factory.createStringLiteral(wireValue);
                 }
             }
