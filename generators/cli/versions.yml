@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.12.0
+  changelogEntry:
+    - summary: |
+        Co-vendor the Rust SDK crate alongside the types crate in CLI generation.
+        When `embedSdk` is enabled (default), the pipeline invokes `@fern-api/rust-sdk`
+        in `cliEmbedded` mode to produce a `<api>-sdk` workspace member with a path
+        dependency on the types crate and a `prelude` module that re-exports all types
+        for single type identity.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
 - version: 0.11.0
   changelogEntry:
     - summary: |
