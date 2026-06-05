@@ -119,6 +119,7 @@ async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<voi
         // does not exist — scaffold it below
     }
     const typesCrate = `${binaryName.replace(/-/g, "_")}_types`;
+    const sdkCrate = `${binaryName.replace(/-/g, "_")}_sdk`;
     const content = [
         "//! Custom command handlers.",
         "//!",
@@ -136,6 +137,8 @@ async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<voi
         "//! `execute()` methods use the CLI's native HTTP executor.",
         `//! Combine these with the typed structs from \`${typesCrate}\``,
         "//! for strongly-typed request/response serialization.",
+        `//! The SDK crate (\`${sdkCrate}\`) provides typed client helpers`,
+        "//! via `ctx.sdk_client()` (available once the runtime handle lands).",
         "",
         "use fern_cli_sdk::app::CliApp;",
         "",
@@ -169,6 +172,10 @@ async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<voi
         "    //         Ok(())",
         "    //     },",
         "    // );",
+        "    //",
+        "    // SDK client usage (available after the runtime handle lands):",
+        `    // use ${sdkCrate}::prelude::*;`,
+        "    // let client = ctx.sdk_client();",
         "    app",
         "}",
         ""

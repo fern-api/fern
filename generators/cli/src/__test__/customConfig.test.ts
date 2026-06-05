@@ -2,9 +2,9 @@ import { describe, expect, it } from "vitest";
 import { validateCustomConfig } from "../customConfig.js";
 
 describe("validateCustomConfig", () => {
-    it("returns defaults (embedTypes: true) for null/undefined", () => {
-        expect(validateCustomConfig(null)).toEqual({ embedTypes: true });
-        expect(validateCustomConfig(undefined)).toEqual({ embedTypes: true });
+    it("returns defaults (embedTypes: true, embedSdk: true) for null/undefined", () => {
+        expect(validateCustomConfig(null)).toEqual({ embedTypes: true, embedSdk: true });
+        expect(validateCustomConfig(undefined)).toEqual({ embedTypes: true, embedSdk: true });
     });
 
     it("returns the empty result for an empty object (embedTypes resolved at pipeline level)", () => {
@@ -37,5 +37,13 @@ describe("validateCustomConfig", () => {
 
     it("throws on non-object input (array)", () => {
         expect(() => validateCustomConfig(["acme"])).toThrow(/expected an object, got array/);
+    });
+
+    it("accepts a boolean embedSdk", () => {
+        expect(validateCustomConfig({ embedSdk: false })).toEqual({ embedSdk: false });
+    });
+
+    it("throws on non-boolean embedSdk", () => {
+        expect(() => validateCustomConfig({ embedSdk: "yes" })).toThrow(/expected a boolean, got string/);
     });
 });
