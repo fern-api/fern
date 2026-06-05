@@ -77,8 +77,16 @@ function generateBlocks(args: {
         generateCommonFlags(binaryName),
         generateEnvironmentVariables(envPrefix),
         generateOutputFormats(binaryName),
-        generateShellCompletion(binaryName)
+        generateShellCompletion(binaryName),
+        generateDocumentation()
     ];
+}
+
+function generateDocumentation(): Block {
+    return new Block({
+        id: "DOCUMENTATION",
+        content: lines("## Documentation", "", "See [reference.md](./reference.md) for the full command reference.", "")
+    });
 }
 
 function generateInstallation(args: { binaryName: string; npmPublishInfo: ResolvedNpmPublishInfo | undefined }): Block {

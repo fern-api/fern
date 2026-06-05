@@ -119,3 +119,7 @@ Generate shell completion scripts:
 query-parameters-api completion <bash|zsh|fish|powershell>
 ```
 
+## Documentation
+
+See [reference.md](./reference.md) for the full command reference.
+

@@ -6,6 +6,7 @@ import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
 import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
+import { emitReference } from "./emitReference.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
@@ -81,6 +82,13 @@ export async function runPipeline(args: {
         apiDisplayName: ir.apiDisplayName,
         authBindings,
         npmPublishInfo: outputConfig.npmPublishInfo
+    });
+    await emitReference({
+        outputDir,
+        binaryName,
+        apiDisplayName: ir.apiDisplayName,
+        authBindings,
+        specsDir
     });
 
     // Generate the embedded types crate (on by default; opt-out via embedTypes: false).
