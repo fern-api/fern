@@ -700,8 +700,8 @@ impl HttpClient {
     ///
     /// # SSE-Specific Headers
     ///
-    /// This method automatically sets the following headers **after** applying custom headers,
-    /// which means these headers will override any user-supplied values:
+    /// In the default path, these headers are applied **after** custom headers,
+    /// which means they will override any user-supplied values:
     /// - `Accept: text/event-stream` - Required for SSE protocol
     /// - `Cache-Control: no-store` - Prevents caching of streaming responses
     ///
@@ -762,18 +762,6 @@ impl HttpClient {
         // Build the request
         let mut req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // SSE-specific headers (applied before both paths)
-        req.headers_mut().insert(
-            "Accept",
-            "text/event-stream"
-                .parse()
-                .map_err(|_| ApiError::InvalidHeader)?,
-        );
-        req.headers_mut().insert(
-            "Cache-Control",
-            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
-        );
-
         // Determine per-event timeout: request-level overrides client-level
         let timeout = options
             .as_ref()
@@ -782,10 +770,33 @@ impl HttpClient {
             .unwrap_or(self.config.timeout);
 
         let response = if let Some(executor) = &self.executor {
+            // SSE-specific headers for the executor path
+            req.headers_mut().insert(
+                "Accept",
+                "text/event-stream"
+                    .parse()
+                    .map_err(|_| ApiError::InvalidHeader)?,
+            );
+            req.headers_mut().insert(
+                "Cache-Control",
+                "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
             executor.execute(req).await.map_err(ApiError::Network)?
         } else {
             self.apply_auth_headers(&mut req, &options).await?;
             self.apply_custom_headers(&mut req, &options)?;
+            // SSE-specific headers applied after custom headers to ensure
+            // proper SSE behavior even if custom headers are provided
+            req.headers_mut().insert(
+                "Accept",
+                "text/event-stream"
+                    .parse()
+                    .map_err(|_| ApiError::InvalidHeader)?,
+            );
+            req.headers_mut().insert(
+                "Cache-Control",
+                "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
             self.execute_with_retries(req, &options).await?
         };
 
