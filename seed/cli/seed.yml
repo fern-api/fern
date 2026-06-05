@@ -125,6 +125,7 @@ allowedFailures:
   - error-property
   - errors
   - examples
+  - exhaustive
   - extends
   - extra-properties
   - file-download
