@@ -3090,6 +3090,19 @@ fn flatten_body_params_prefix(
                     let nested = flatten_body_params_prefix(resolved, component_schemas, depth + 1, &full_key);
                     if !nested.is_empty() {
                         out.extend(nested);
+                        out.insert(
+                            full_key.clone(),
+                            MethodParameter {
+                                param_type: Some("object".to_string()),
+                                location: Some("body".to_string()),
+                                required: false,
+                                description: prop
+                                    .description
+                                    .clone()
+                                    .or_else(|| resolved.description.clone()),
+                                ..Default::default()
+                            },
+                        );
                         continue;
                     }
                 }
@@ -3132,6 +3145,16 @@ fn flatten_body_params_prefix(
             let nested = flatten_body_params_prefix(prop, component_schemas, depth + 1, &full_key);
             if !nested.is_empty() {
                 out.extend(nested);
+                out.insert(
+                    full_key.clone(),
+                    MethodParameter {
+                        param_type: Some("object".to_string()),
+                        location: Some("body".to_string()),
+                        required: false,
+                        description: prop.description.clone(),
+                        ..Default::default()
+                    },
+                );
                 continue;
             }
         }
@@ -4728,8 +4751,125 @@ components:
         assert!(create.parameters.contains_key("address.city"), "'address.city' should be a flag after $ref resolution");
         assert!(create.parameters.contains_key("address.zip"), "'address.zip' should be a flag after $ref resolution");
 
-        // The $ref itself should NOT appear as a typeless flag.
-        assert!(!create.parameters.contains_key("address"), "'address' $ref should not appear as a bare typeless flag");
+        // The $ref itself should appear as an object-typed shorthand flag (not a typeless flag).
+        let addr = create.parameters.get("address").expect("'address' should appear as an object-typed shorthand flag");
+        assert_eq!(addr.param_type.as_deref(), Some("object"), "'address' must have param_type 'object', not be typeless");
+    }
+
+    #[test]
+    fn test_inline_object_body_param_emits_parent_object_flag() {
+        // For an inline object property, flatten_body_params_prefix should emit BOTH
+        // the parent key (param_type: "object", required: false) AND the dot-notation
+        // sub-flags (e.g. "name.first", "name.last").
+        let yaml = r#"
+openapi: "3.0.0"
+info:
+  title: API
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /users:
+    post:
+      x-fern-sdk-group-name: ["users"]
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: object
+                  description: Full name of the user
+                  properties:
+                    first:
+                      type: string
+                    last:
+                      type: string
+      responses:
+        "201":
+          description: created
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let create = &doc.resources["users"].methods["create"];
+
+        // Sub-flags must exist.
+        assert!(create.parameters.contains_key("name.first"), "name.first sub-flag must be present");
+        assert!(create.parameters.contains_key("name.last"), "name.last sub-flag must be present");
+
+        // Parent object-level flag must ALSO exist.
+        let parent = create.parameters.get("name")
+            .expect("parent 'name' object flag must be present");
+        assert_eq!(parent.param_type.as_deref(), Some("object"), "parent flag must have param_type 'object'");
+        assert_eq!(parent.location.as_deref(), Some("body"), "parent flag must have location 'body'");
+        // required is always false at CLI level for object shorthand flags.
+        assert!(!parent.required, "parent object flag must be required: false regardless of schema required");
+        assert_eq!(parent.description.as_deref(), Some("Full name of the user"), "parent flag should carry description");
+    }
+
+    #[test]
+    fn test_ref_object_body_param_emits_parent_object_flag() {
+        // For a $ref that resolves to an object, flatten_body_params_prefix should emit
+        // BOTH the parent key (param_type: "object", required: false) AND the dot-notation
+        // sub-flags.
+        let yaml = r#"
+openapi: "3.0.0"
+info:
+  title: API
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /orders:
+    post:
+      x-fern-sdk-group-name: ["orders"]
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  $ref: '#/components/schemas/Address'
+      responses:
+        "201":
+          description: Created order
+components:
+  schemas:
+    Address:
+      type: object
+      description: Shipping address
+      properties:
+        city:
+          type: string
+        zip:
+          type: string
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let create = &doc.resources["orders"].methods["create"];
+
+        // Sub-flags must still exist.
+        assert!(create.parameters.contains_key("address.city"), "'address.city' must be present");
+        assert!(create.parameters.contains_key("address.zip"), "'address.zip' must be present");
+
+        // Parent object-level flag must ALSO exist now.
+        let parent = create.parameters.get("address")
+            .expect("parent 'address' object flag must be present for $ref branch");
+        assert_eq!(parent.param_type.as_deref(), Some("object"), "parent flag must have param_type 'object'");
+        assert_eq!(parent.location.as_deref(), Some("body"), "parent flag must have location 'body'");
+        assert!(!parent.required, "parent object flag must be required: false");
+        // $ref properties typically carry no inline description; the parent
+        // flag must fall back to the resolved schema's description so --help
+        // is not blank.
+        assert_eq!(
+            parent.description.as_deref(),
+            Some("Shipping address"),
+            "parent $ref object flag should fall back to the resolved schema's description"
+        );
     }
 
     #[test]
