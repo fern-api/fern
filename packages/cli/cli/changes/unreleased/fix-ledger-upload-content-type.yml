@@ -1,0 +1,5 @@
+- summary: |
+    Fix ledger file uploads sending incorrect Content-Type header. The upload
+    function now infers MIME type from the file extension (e.g. image/png for
+    .png files) instead of hardcoding application/octet-stream for all blobs.
+  type: fix
