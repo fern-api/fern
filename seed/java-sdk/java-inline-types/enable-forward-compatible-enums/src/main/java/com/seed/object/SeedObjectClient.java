@@ -9,7 +9,9 @@ import com.seed.object.requests.GetDiscriminatedUnionRequest;
 import com.seed.object.requests.GetUndiscriminatedUnionRequest;
 import com.seed.object.requests.PostRootRequest;
 import com.seed.object.types.MapResponseValue;
+import com.seed.object.types.OrphanParentWithSharedChild;
 import com.seed.object.types.RootType1;
+import com.seed.object.types.SharedChildType;
 import java.util.Map;
 
 public class SeedObjectClient {
@@ -59,6 +61,22 @@ public class SeedObjectClient {
 
     public Map<String, MapResponseValue> getMapResponse(RequestOptions requestOptions) {
         return this.rawClient.getMapResponse(requestOptions).body();
+    }
+
+    public SharedChildType getSharedChild() {
+        return this.rawClient.getSharedChild().body();
+    }
+
+    public SharedChildType getSharedChild(RequestOptions requestOptions) {
+        return this.rawClient.getSharedChild(requestOptions).body();
+    }
+
+    public OrphanParentWithSharedChild getOrphanParent() {
+        return this.rawClient.getOrphanParent().body();
+    }
+
+    public OrphanParentWithSharedChild getOrphanParent(RequestOptions requestOptions) {
+        return this.rawClient.getOrphanParent(requestOptions).body();
     }
 
     public static SeedObjectClientBuilder builder() {

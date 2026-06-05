@@ -51,6 +51,32 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.object.SeedObjectClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectClient client = SeedObjectClient\n            .builder()\n            .build();\n\n        client.getMapResponse();\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.object.SeedObjectClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectClient client = SeedObjectClient\n            .builder()\n            .build();\n\n        client.getMapResponse();\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "daa48610",
+            "id": {
+                "method": "GET",
+                "path": "/root/shared-child",
+                "identifier_override": "endpoint_.getSharedChild"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.object.SeedObjectClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectClient client = SeedObjectClient\n            .builder()\n            .build();\n\n        client.getSharedChild();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.object.SeedObjectClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectClient client = SeedObjectClient\n            .builder()\n            .build();\n\n        client.getSharedChild();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "84cf4e9b",
+            "id": {
+                "method": "GET",
+                "path": "/root/orphan-parent",
+                "identifier_override": "endpoint_.getOrphanParent"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.object.SeedObjectClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectClient client = SeedObjectClient\n            .builder()\n            .build();\n\n        client.getOrphanParent();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.object.SeedObjectClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectClient client = SeedObjectClient\n            .builder()\n            .build();\n\n        client.getOrphanParent();\n    }\n}\n"
+            }
         }
     ],
     "types": {}
