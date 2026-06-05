@@ -9,11 +9,7 @@ use std::collections::BTreeSet;
 use std::path::Path;
 
 fn main() {
-    // Only emit constants when the spec exists (cli-sdk dev environment).
-    // In the Fern generator template context, these specs are not present.
-    if Path::new("cli/box/openapi.yaml").exists() {
-        emit_cli_constants("box", "cli/box/openapi.yaml", "box_expected.rs");
-    }
+    emit_cli_constants("box", "src/bin/box/openapi.yaml", "box_expected.rs");
 }
 
 /// Mirrors `parser.rs::camel_to_kebab` so the generated smoke-test constants

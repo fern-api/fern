@@ -6,6 +6,15 @@ on:
   pull_request:
 
 jobs:
+  sync-manifest:
+    name: Sync manifest coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check all tracked files are classified
+        run: python3 scripts/check-sync-manifest.py
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
