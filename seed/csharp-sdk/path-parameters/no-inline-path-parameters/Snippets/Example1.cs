@@ -12,8 +12,7 @@ public partial class Examples
         await client.Organizations.GetOrganizationUserAsync(
             "tenant_id",
             "organization_id",
-            "user_id",
-            new GetOrganizationUserRequest()
+            "user_id"
         );
     }
 

@@ -12,15 +12,13 @@ public partial class Examples
         await client.User.UpdateUserAsync(
             "tenant_id",
             "user_id",
-            new UpdateUserRequest {
-                Body = new User {
-                    Name = "name",
-                    Tags = new List<string>(){
-                        "tags",
-                        "tags",
-                    }
-
+            new User {
+                Name = "name",
+                Tags = new List<string>(){
+                    "tags",
+                    "tags",
                 }
+
             }
         );
     }

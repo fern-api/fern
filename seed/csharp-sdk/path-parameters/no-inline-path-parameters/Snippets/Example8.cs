@@ -13,8 +13,7 @@ public partial class Examples
             "tenant_id",
             "user_id",
             1,
-            "thought",
-            new GetUserSpecificsRequest()
+            "thought"
         );
     }
 

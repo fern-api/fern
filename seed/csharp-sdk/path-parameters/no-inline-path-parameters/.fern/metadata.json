@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "inline-path-parameters": false
+    "inline-path-parameters": false,
+    "elide-path-parameter-wrappers": true
   },
   "originGitCommit": "DUMMY",
   "invokedBy": "manual",
