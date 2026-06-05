@@ -20,7 +20,7 @@ const FULL_CONFIG: RawThemeConfig = {
     typography: {
         bodyFont: { paths: [{ path: "body.woff2", weight: "400" }] },
         headingsFont: { paths: [{ path: "heading.woff2", weight: "700" }] },
-        codeFont: { paths: [{ path: "code.woff2", weight: "400" }] }
+        codeFont: { paths: ["code-bare.woff2", { path: "code.woff2", weight: "400" }] }
     },
     css: ["style.css", "extra.css"],
     js: [
@@ -47,6 +47,7 @@ const EXPECTED_PATHS = [
     "bg-light.jpg",
     "body.woff2",
     "heading.woff2",
+    "code-bare.woff2",
     "code.woff2",
     "style.css",
     "extra.css",

@@ -235,7 +235,9 @@ export class ThemeConfigProcessor {
                 const font = raw.typography[fontKey];
                 if (font != null && Array.isArray(font.paths)) {
                     for (const entry of font.paths) {
-                        if (typeof entry === "object") {
+                        if (typeof entry === "string") {
+                            collect(entry);
+                        } else if (typeof entry === "object") {
                             collect(entry.path);
                         }
                     }
@@ -317,20 +319,24 @@ export class ThemeConfigProcessor {
         }
 
         if (raw.typography != null && typeof raw.typography === "object") {
-            const typo = { ...raw.typography };
+            const typo: Record<string, unknown> = { ...raw.typography };
             for (const fontKey of FONT_KEYS) {
-                const font = typo[fontKey];
+                const font = raw.typography[fontKey];
                 if (font != null && Array.isArray(font.paths)) {
-                    const processedFont = { ...font };
-                    processedFont.paths = await Promise.all(
-                        font.paths.map(async (entry) => {
-                            if (typeof entry === "object" && entry.path != null) {
-                                return { ...entry, path: await field(entry.path) } as unknown as ThemeFontPathEntry;
-                            }
-                            return entry;
-                        })
-                    );
-                    typo[fontKey] = processedFont;
+                    typo[fontKey] = {
+                        ...font,
+                        paths: await Promise.all(
+                            font.paths.map(async (entry) => {
+                                if (typeof entry === "string") {
+                                    return field(entry);
+                                }
+                                if (entry.path != null) {
+                                    return { ...entry, path: await field(entry.path) };
+                                }
+                                return entry;
+                            })
+                        )
+                    };
                 }
             }
             cfg.typography = typo;
