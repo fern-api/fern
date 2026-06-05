@@ -21,9 +21,7 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "tsc",
@@ -35,8 +33,7 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@fern-api/configuration": "workspace:*",
-    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/configuration": "workspace:*"
   },
   "optionalDependencies": {
     "@boundaryml/baml": "catalog:"

@@ -1,5 +1,5 @@
 - summary: |
-    Fix `bedrock` AI provider config for `sdk-diff` command. The provider name
-    is now correctly mapped to `aws-bedrock` (the BAML provider identifier)
-    before configuring the client registry.
-  type: fix
+    The `ai.provider` field in `generators.yml` now uses BAML provider
+    identifiers directly. `bedrock` has been renamed to `aws-bedrock`.
+    Update your config: `provider: bedrock` → `provider: aws-bedrock`.
+  type: break
