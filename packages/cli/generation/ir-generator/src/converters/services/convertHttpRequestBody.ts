@@ -21,10 +21,12 @@ import { getExtensionsAsList, getPropertyName } from "../type-declarations/conve
 
 export function convertHttpRequestBody({
     request,
-    file
+    file,
+    requestBodyUnwrapPath
 }: {
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
     file: FernFileContext;
+    requestBodyUnwrapPath?: string;
 }): HttpRequestBody | undefined {
     const bytesRequest = request != null ? parseBytesRequest(request) : undefined;
     if (bytesRequest != null) {
@@ -129,7 +131,12 @@ export function convertHttpRequestBody({
                     : [],
             extraProperties: request.body["extra-properties"] ?? false,
             extendedProperties: undefined,
-            unwrapPath: undefined,
+            unwrapPath:
+                requestBodyUnwrapPath != null
+                    ? requestBodyUnwrapPath
+                          .split(".")
+                          .filter((segment) => segment.length > 0)
+                    : undefined,
             v2Examples: undefined
         });
     }

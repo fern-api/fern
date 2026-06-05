@@ -310,7 +310,8 @@ function visitEndpoint({
         pagination: noop,
         source: noop,
         transport: noop,
-        retries: noop
+        retries: noop,
+        "request-body-unwrap": noop
     });
 }
 

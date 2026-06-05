@@ -209,7 +209,11 @@ export function convertHttpService({
                               convertHttpHeader({ headerKey, header, file })
                           )
                         : [],
-                requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
+                requestBody: convertHttpRequestBody({
+                    request: endpoint.request,
+                    file,
+                    requestBodyUnwrapPath: endpoint["request-body-unwrap"]
+                }),
                 v2RequestBodies: undefined,
                 sdkRequest: convertHttpSdkRequest({
                     service: serviceDefinition,

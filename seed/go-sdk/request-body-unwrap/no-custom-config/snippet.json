@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/payments",
+                "method": "POST",
+                "identifier_override": "endpoint_payment.createPayment"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/request-body-unwrap/fern\"\n\tfernclient \"github.com/request-body-unwrap/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Payment.CreatePayment(\n\tcontext.TODO(),\n\t\u0026fern.CreatePaymentRequest{\n\t\tData: \u0026fern.CreatePaymentRequestData{\n\t\t\tType: fern.CreatePaymentRequestDataTypePayment,\n\t\t\tAttributes: \u0026fern.CreatePaymentRequestDataAttributes{\n\t\t\t\tAmount:   1,\n\t\t\t\tCurrency: \"currency\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/payments/{payment_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_payment.getPayment"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/request-body-unwrap/fern\"\n\tfernclient \"github.com/request-body-unwrap/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Payment.GetPayment(\n\tcontext.TODO(),\n\t\u0026fern.GetPaymentRequest{\n\t\tPaymentID: \"payment_id\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/transfers",
+                "method": "POST",
+                "identifier_override": "endpoint_transfer.createTransfer"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/request-body-unwrap/fern\"\n\tfernclient \"github.com/request-body-unwrap/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Transfer.CreateTransfer(\n\tcontext.TODO(),\n\t\u0026fern.CreateTransferRequest{\n\t\tAttributes: \u0026fern.CreateTransferRequestAttributes{\n\t\t\tAmount:               1,\n\t\t\tSourceAccountID:      \"source_account_id\",\n\t\t\tDestinationAccountID: \"destination_account_id\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

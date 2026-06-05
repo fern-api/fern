@@ -2,6 +2,16 @@ import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-gen
 import { noop, SetRequired } from "@fern-api/core-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+
+/**
+ * Extended type for InlinedRequestBody with unwrapPath (IR 67.4.0+).
+ * The published @fern-fern/ir-sdk may not yet include this field,
+ * but it is present at runtime when produced by the current CLI.
+ */
+interface InlinedRequestBodyWithUnwrap extends FernIr.InlinedRequestBody {
+    unwrapPath?: string[];
+}
+
 import {
     deduplicateExamples,
     generateInlinePropertiesModule,
@@ -246,7 +256,17 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody != null) {
             FernIr.HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    if (this.flattenRequestParameters) {
+                    const bodyWithUnwrap = inlinedRequestBody as InlinedRequestBodyWithUnwrap;
+                    if (
+                        bodyWithUnwrap.unwrapPath != null &&
+                        bodyWithUnwrap.unwrapPath.length > 0
+                    ) {
+                        const unwrappedProperties = this.getUnwrappedProperties(
+                            bodyWithUnwrap,
+                            context
+                        );
+                        properties.push(...unwrappedProperties);
+                    } else if (this.flattenRequestParameters) {
                         const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(
                             inlinedRequestBody,
                             context
@@ -904,6 +924,90 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ?.useDefaultRequestParameterValues;
 
         return hasDefaultValue && Boolean(useDefaultValues);
+    }
+
+    private getUnwrappedProperties(
+        inlinedRequestBody: InlinedRequestBodyWithUnwrap,
+        context: FileContext
+    ): GeneratedRequestWrapper.Property[] {
+        const properties: GeneratedRequestWrapper.Property[] = [];
+        const unwrapPath = inlinedRequestBody.unwrapPath ?? [];
+
+        // Add non-path, non-literal top-level properties
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            const resolvedType = context.type.resolveTypeReference(prop.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            if (!isLiteral) {
+                const requestProperty = this.getInlineProperty(inlinedRequestBody, prop, context);
+                properties.push(requestProperty);
+            }
+        }
+
+        // Walk the unwrap path to find properties at each level
+        let currentProps: FernIr.ObjectProperty[] | undefined;
+        const firstPathProp = inlinedRequestBody.properties.find(
+            (p) => getWireValue(p.name) === unwrapPath[0]
+        );
+        if (firstPathProp == null || firstPathProp.valueType.type !== "named") {
+            return properties;
+        }
+
+        const firstTypeDecl = context.type.getTypeDeclaration({
+            typeId: firstPathProp.valueType.typeId,
+            fernFilepath: firstPathProp.valueType.fernFilepath,
+            name: firstPathProp.valueType.name,
+            displayName: firstPathProp.valueType.displayName
+        });
+        if (firstTypeDecl?.shape.type !== "object") {
+            return properties;
+        }
+        currentProps = firstTypeDecl.shape.properties;
+
+        for (let i = 1; i < unwrapPath.length; i++) {
+            const segment = unwrapPath[i];
+            // Skip intermediate-level non-path properties — they are part of the
+            // nesting structure and handled automatically during serialization.
+
+            // Navigate to next level
+            const pathProp = currentProps?.find((p) => getWireValue(p.name) === segment);
+            if (pathProp == null || pathProp.valueType.type !== "named") {
+                return properties;
+            }
+            const typeDecl = context.type.getTypeDeclaration({
+                typeId: pathProp.valueType.typeId,
+                fernFilepath: pathProp.valueType.fernFilepath,
+                name: pathProp.valueType.name,
+                displayName: pathProp.valueType.displayName
+            });
+            if (typeDecl?.shape.type !== "object") {
+                return properties;
+            }
+            currentProps = typeDecl.shape.properties;
+        }
+
+        // At the leaf level, add all non-literal properties
+        if (currentProps != null) {
+            for (const prop of currentProps) {
+                const resolvedType = context.type.resolveTypeReference(prop.valueType);
+                const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+                if (!isLiteral) {
+                    const type = context.type.getReferenceToType(prop.valueType);
+                    const propName = this.getPropertyNameOfTypeDeclarationProperty(prop);
+                    properties.push({
+                        name: getPropertyKey(propName.propertyName),
+                        safeName: getPropertyKey(propName.safeName),
+                        type: type.typeNodeWithoutUndefined,
+                        isOptional: type.isOptional,
+                        docs: prop.docs ? [prop.docs] : undefined
+                    });
+                }
+            }
+        }
+
+        return properties;
     }
 
     private getFlattenedInlinedRequestBodyProperties(

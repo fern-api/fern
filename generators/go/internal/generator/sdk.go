@@ -3467,12 +3467,25 @@ func (f *fileWriter) WriteRequestType(
 
 	// Collect from request body properties if it's an inlined request body
 	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
-		for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
-			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
-				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
-				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
-				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-				propertyTypes = append(propertyTypes, goType)
+		unwrapPath := getUnwrapPath(endpoint.RequestBody.InlinedRequestBody)
+		if unwrapPath != nil {
+			flatProps := getUnwrappedBodyObjectProperties(endpoint.RequestBody.InlinedRequestBody, unwrapPath, f.types)
+			for _, prop := range flatProps {
+				if prop.ValueType.Container == nil || prop.ValueType.Container.Literal == nil {
+					propertyNames = append(propertyNames, goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName))
+					propertySafeNames = append(propertySafeNames, prop.Name.Name.CamelCase.SafeName)
+					goType := typeReferenceToGoType(prop.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+					propertyTypes = append(propertyTypes, goType)
+				}
+			}
+		} else {
+			for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
+				if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
+					propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
+					propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
+					goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+					propertyTypes = append(propertyTypes, goType)
+				}
 			}
 		}
 	}
@@ -3612,6 +3625,14 @@ func (f *fileWriter) WriteRequestType(
 		if reference.RequestBodyType.Container != nil && reference.RequestBodyType.Container.Literal != nil {
 			referenceLiteral = literalToValue(reference.RequestBodyType.Container.Literal)
 		}
+	}
+
+	if requestBody.unwrapPath != nil {
+		// For unwrapped request bodies, generate custom MarshalJSON/UnmarshalJSON
+		// that builds/parses the nested wire format from/to flat struct fields.
+		writeUnwrappedMarshalJSON(f, receiver, typeName, endpoint.RequestBody.InlinedRequestBody, requestBody.unwrapPath, importPath)
+		writeUnwrappedUnmarshalJSON(f, receiver, typeName, endpoint.RequestBody.InlinedRequestBody, requestBody.unwrapPath, importPath)
+		return nil
 	}
 
 	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties && len(propertyNames) == 0 {
@@ -3914,6 +3935,7 @@ type requestBody struct {
 	dates           []*date
 	literals        []*literal
 	extraProperties bool
+	unwrapPath      []string
 }
 
 func requestBodyToFieldDeclaration(
@@ -3941,6 +3963,7 @@ func requestBodyToFieldDeclaration(
 		dates:           visitor.dates,
 		literals:        visitor.literals,
 		extraProperties: visitor.extraProperties,
+		unwrapPath:      visitor.unwrapPath,
 	}, nil
 }
 
@@ -3948,6 +3971,7 @@ type requestBodyVisitor struct {
 	dates           []*date
 	literals        []*literal
 	extraProperties bool
+	unwrapPath      []string
 
 	bodyField      string
 	baseImportPath string
@@ -3962,6 +3986,9 @@ type requestBodyVisitor struct {
 }
 
 func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
+	unwrapPath := getUnwrapPath(inlinedRequestBody)
+	r.unwrapPath = unwrapPath
+
 	typeVisitor := &typeVisitor{
 		typeName:                     inlinedRequestBody.Name.PascalCase.UnsafeName,
 		baseImportPath:               r.baseImportPath,
@@ -3970,7 +3997,14 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 		gettersPassByValue:           r.writer.gettersPassByValue,
 		alwaysSendRequiredProperties: r.writer.alwaysSendRequiredProperties,
 	}
-	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
+
+	var objectTypeDeclaration *ir.ObjectTypeDeclaration
+	if unwrapPath != nil {
+		objectTypeDeclaration = inlinedRequestBodyToUnwrappedObjectTypeDeclaration(inlinedRequestBody, unwrapPath, r.types)
+	} else {
+		objectTypeDeclaration = inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
+	}
+
 	objectProperties := typeVisitor.visitObjectProperties(
 		objectTypeDeclaration,
 		true,  // includeJSONTags
@@ -4606,4 +4640,338 @@ func resolveObjectProperties(typeRef *ir.TypeReference, types map[common.TypeId]
 		return nil
 	}
 	return typeDecl.Shape.Object.Properties
+}
+
+// getUnwrapPath extracts the unwrapPath from the inlined request body's extra properties.
+func getUnwrapPath(inlinedRequestBody *ir.InlinedRequestBody) []string {
+	extras := inlinedRequestBody.GetExtraProperties()
+	if extras == nil {
+		return nil
+	}
+	raw, ok := extras["unwrapPath"]
+	if !ok || raw == nil {
+		return nil
+	}
+	arr, ok := raw.([]interface{})
+	if !ok || len(arr) == 0 {
+		return nil
+	}
+	result := make([]string, 0, len(arr))
+	for _, v := range arr {
+		s, ok := v.(string)
+		if !ok {
+			return nil
+		}
+		result = append(result, s)
+	}
+	return result
+}
+
+// getUnwrappedBodyObjectProperties returns the flat list of ObjectProperty for an unwrapped
+// request body. This includes top-level non-path properties and leaf-level properties.
+func getUnwrappedBodyObjectProperties(
+	inlinedRequestBody *ir.InlinedRequestBody,
+	unwrapPath []string,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) []*ir.ObjectProperty {
+	var result []*ir.ObjectProperty
+	pathRoot := unwrapPath[0]
+
+	// Top-level non-path properties
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue != pathRoot {
+			result = append(result, &ir.ObjectProperty{
+				Docs:      prop.Docs,
+				Name:      prop.Name,
+				ValueType: prop.ValueType,
+			})
+		}
+	}
+
+	// Walk to the leaf type
+	var currentTypeRef *ir.TypeReference
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue == pathRoot {
+			currentTypeRef = prop.ValueType
+			break
+		}
+	}
+	if currentTypeRef == nil {
+		return result
+	}
+
+	for i := 1; i < len(unwrapPath); i++ {
+		segment := unwrapPath[i]
+		objProps := resolveObjectProperties(currentTypeRef, types)
+		if objProps == nil {
+			return result
+		}
+		found := false
+		for _, p := range objProps {
+			if p.Name.WireValue == segment {
+				currentTypeRef = p.ValueType
+				found = true
+				break
+			}
+		}
+		if !found {
+			return result
+		}
+	}
+
+	// Add leaf properties
+	leafProps := resolveObjectProperties(currentTypeRef, types)
+	result = append(result, leafProps...)
+	return result
+}
+
+// inlinedRequestBodyToUnwrappedObjectTypeDeclaration creates an ObjectTypeDeclaration
+// with flattened properties for an unwrapped request body.
+func inlinedRequestBodyToUnwrappedObjectTypeDeclaration(
+	inlinedRequestBody *ir.InlinedRequestBody,
+	unwrapPath []string,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) *ir.ObjectTypeDeclaration {
+	properties := getUnwrappedBodyObjectProperties(inlinedRequestBody, unwrapPath, types)
+	return &ir.ObjectTypeDeclaration{
+		Properties:      properties,
+		ExtraProperties: inlinedRequestBody.ExtraProperties,
+	}
+}
+
+// extractLiteralValue extracts the literal from a type reference, handling optional/nullable wrappers.
+func extractLiteralValue(typeRef *ir.TypeReference) *ir.Literal {
+	if typeRef.Container != nil {
+		if typeRef.Container.Literal != nil {
+			return typeRef.Container.Literal
+		}
+		if typeRef.Container.Optional != nil {
+			return extractLiteralValue(typeRef.Container.Optional)
+		}
+		if typeRef.Container.Nullable != nil {
+			return extractLiteralValue(typeRef.Container.Nullable)
+		}
+	}
+	return nil
+}
+
+// writeUnwrappedMarshalJSON generates a MarshalJSON method that builds the nested wire format
+// from flat struct fields.
+func writeUnwrappedMarshalJSON(
+	f *fileWriter,
+	receiver string,
+	typeName string,
+	inlinedRequestBody *ir.InlinedRequestBody,
+	unwrapPath []string,
+	importPath string,
+) {
+	pathRoot := unwrapPath[0]
+
+	f.P("func (", receiver, " *", typeName, ") MarshalJSON() ([]byte, error) {")
+	f.P("body := make(map[string]interface{})")
+
+	// Top-level non-path properties
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue == pathRoot {
+			continue
+		}
+		if isTypeReferenceLiteral(prop.ValueType) {
+			lit := extractLiteralValue(prop.ValueType)
+			if lit != nil {
+				f.P(`body["`, prop.Name.WireValue, `"] = `, literalToValue(lit))
+			}
+			continue
+		}
+		fieldName := goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName)
+		goType := typeReferenceToGoType(prop.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		if strings.HasPrefix(goType, "*") {
+			f.P("if ", receiver, ".", fieldName, " != nil {")
+			f.P(`body["`, prop.Name.WireValue, `"] = `, receiver, ".", fieldName)
+			f.P("}")
+		} else {
+			f.P(`body["`, prop.Name.WireValue, `"] = `, receiver, ".", fieldName)
+		}
+	}
+
+	// Find the path root type reference
+	var currentTypeRef *ir.TypeReference
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue == pathRoot {
+			currentTypeRef = prop.ValueType
+			break
+		}
+	}
+
+	// Build intermediate level maps
+	type intermediateLevel struct {
+		varName string
+		segment string
+	}
+	var levels []intermediateLevel
+
+	for i := 1; i < len(unwrapPath); i++ {
+		segment := unwrapPath[i]
+		varName := fmt.Sprintf("level%d", i-1)
+		levels = append(levels, intermediateLevel{varName: varName, segment: segment})
+
+		f.P(varName, " := make(map[string]interface{})")
+
+		// Add literal properties at this level (excluding the path segment property)
+		objProps := resolveObjectProperties(currentTypeRef, f.types)
+		for _, p := range objProps {
+			if p.Name.WireValue == segment {
+				continue
+			}
+			if isTypeReferenceLiteral(p.ValueType) {
+				lit := extractLiteralValue(p.ValueType)
+				if lit != nil {
+					f.P(varName, `["`, p.Name.WireValue, `"] = `, literalToValue(lit))
+				}
+			}
+		}
+
+		// Navigate to next level
+		for _, p := range objProps {
+			if p.Name.WireValue == segment {
+				currentTypeRef = p.ValueType
+				break
+			}
+		}
+	}
+
+	// Leaf level
+	f.P("leaf := make(map[string]interface{})")
+	leafProps := resolveObjectProperties(currentTypeRef, f.types)
+	for _, p := range leafProps {
+		if isTypeReferenceLiteral(p.ValueType) {
+			lit := extractLiteralValue(p.ValueType)
+			if lit != nil {
+				f.P(`leaf["`, p.Name.WireValue, `"] = `, literalToValue(lit))
+			}
+			continue
+		}
+		fieldName := goExportedFieldName(p.Name.Name.PascalCase.UnsafeName)
+		goType := typeReferenceToGoType(p.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		if strings.HasPrefix(goType, "*") {
+			f.P("if ", receiver, ".", fieldName, " != nil {")
+			f.P(`leaf["`, p.Name.WireValue, `"] = `, receiver, ".", fieldName)
+			f.P("}")
+		} else {
+			f.P(`leaf["`, p.Name.WireValue, `"] = `, receiver, ".", fieldName)
+		}
+	}
+
+	// Chain: innermost level wraps leaf, outer levels wrap inner
+	if len(levels) > 0 {
+		lastIdx := len(levels) - 1
+		f.P(levels[lastIdx].varName, `["`, levels[lastIdx].segment, `"] = leaf`)
+		for i := lastIdx; i > 0; i-- {
+			f.P(levels[i-1].varName, `["`, levels[i-1].segment, `"] = `, levels[i].varName)
+		}
+		f.P(`body["`, pathRoot, `"] = `, levels[0].varName)
+	} else {
+		f.P(`body["`, pathRoot, `"] = leaf`)
+	}
+
+	f.P("return json.Marshal(body)")
+	f.P("}")
+	f.P()
+}
+
+// writeUnwrappedUnmarshalJSON generates an UnmarshalJSON method that parses the nested
+// wire format and populates flat struct fields.
+func writeUnwrappedUnmarshalJSON(
+	f *fileWriter,
+	receiver string,
+	typeName string,
+	inlinedRequestBody *ir.InlinedRequestBody,
+	unwrapPath []string,
+	importPath string,
+) {
+	pathRoot := unwrapPath[0]
+
+	// Pre-compute the leaf type by walking the type graph (same as MarshalJSON).
+	var leafTypeRef *ir.TypeReference
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue == pathRoot {
+			leafTypeRef = prop.ValueType
+			break
+		}
+	}
+	if leafTypeRef != nil {
+		for i := 1; i < len(unwrapPath); i++ {
+			objProps := resolveObjectProperties(leafTypeRef, f.types)
+			for _, p := range objProps {
+				if p.Name.WireValue == unwrapPath[i] {
+					leafTypeRef = p.ValueType
+					break
+				}
+			}
+		}
+	}
+
+	f.P("func (", receiver, " *", typeName, ") UnmarshalJSON(data []byte) error {")
+	f.P("var raw map[string]json.RawMessage")
+	f.P("if err := json.Unmarshal(data, &raw); err != nil {")
+	f.P("return err")
+	f.P("}")
+
+	// Unmarshal top-level non-path properties
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue == pathRoot {
+			continue
+		}
+		if isTypeReferenceLiteral(prop.ValueType) {
+			continue
+		}
+		fieldName := goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName)
+		f.P(`if v, ok := raw["`, prop.Name.WireValue, `"]; ok {`)
+		f.P("if err := json.Unmarshal(v, &", receiver, ".", fieldName, "); err != nil {")
+		f.P("return err")
+		f.P("}")
+		f.P("}")
+	}
+
+	// Navigate through nested path segments via json.RawMessage
+	currentMapVar := "raw"
+	for i := 0; i < len(unwrapPath); i++ {
+		segment := unwrapPath[i]
+		nextMapVar := fmt.Sprintf("nested%d", i)
+		f.P(`if v, ok := `, currentMapVar, `["`, segment, `"]; ok {`)
+		if i < len(unwrapPath)-1 {
+			f.P("var ", nextMapVar, " map[string]json.RawMessage")
+			f.P("if err := json.Unmarshal(v, &", nextMapVar, "); err != nil {")
+			f.P("return err")
+			f.P("}")
+			currentMapVar = nextMapVar
+		} else {
+			// Leaf level: unmarshal leaf properties using pre-computed leaf type
+			f.P("var leafMap map[string]json.RawMessage")
+			f.P("if err := json.Unmarshal(v, &leafMap); err != nil {")
+			f.P("return err")
+			f.P("}")
+
+			leafProps := resolveObjectProperties(leafTypeRef, f.types)
+			for _, p := range leafProps {
+				if isTypeReferenceLiteral(p.ValueType) {
+					continue
+				}
+				leafFieldName := goExportedFieldName(p.Name.Name.PascalCase.UnsafeName)
+				f.P(`if lv, ok := leafMap["`, p.Name.WireValue, `"]; ok {`)
+				f.P("if err := json.Unmarshal(lv, &", receiver, ".", leafFieldName, "); err != nil {")
+				f.P("return err")
+				f.P("}")
+				f.P("}")
+			}
+		}
+	}
+
+	// Close all the if blocks
+	for i := 0; i < len(unwrapPath); i++ {
+		f.P("}")
+	}
+
+	f.P("return nil")
+	f.P("}")
+	f.P()
 }

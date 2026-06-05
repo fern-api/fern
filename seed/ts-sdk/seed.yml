@@ -236,6 +236,9 @@ fixtures:
   openapi-request-body-ref:
     - outputFolder: no-custom-config
       customConfig: null
+  request-body-unwrap:
+    - outputFolder: no-custom-config
+      customConfig: null
   trace:
     - outputFolder: no-custom-config
       customConfig: null

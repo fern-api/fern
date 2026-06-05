@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/payments",
+                "method": "POST",
+                "identifier_override": "endpoint_payment.createPayment"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/request-body-unwrap\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.payment.createPayment({\n    data: {\n        type: \"payment\",\n        attributes: {\n            amount: 1,\n            currency: \"currency\"\n        }\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/payments/{payment_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_payment.getPayment"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/request-body-unwrap\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.payment.getPayment({\n    payment_id: \"payment_id\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/transfers",
+                "method": "POST",
+                "identifier_override": "endpoint_transfer.createTransfer"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/request-body-unwrap\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.transfer.createTransfer({\n    attributes: {\n        amount: 1,\n        source_account_id: \"source_account_id\",\n        destination_account_id: \"destination_account_id\"\n    }\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

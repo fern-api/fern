@@ -209,6 +209,9 @@ fixtures:
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
+  request-body-unwrap:
+    - outputFolder: no-custom-config
+      customConfig: null
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0

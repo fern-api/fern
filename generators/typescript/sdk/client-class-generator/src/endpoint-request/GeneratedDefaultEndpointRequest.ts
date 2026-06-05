@@ -1,6 +1,16 @@
 import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+/**
+ * Extended type for InlinedRequestBody with unwrapPath (IR 67.4.0+).
+ * The published @fern-fern/ir-sdk may not yet include this field,
+ * but it is present at runtime when produced by the current CLI.
+ */
+interface InlinedRequestBodyWithUnwrap extends FernIr.InlinedRequestBody {
+    unwrapPath?: string[];
+}
+
 import {
     Fetcher,
     GetReferenceOpts,
@@ -278,6 +288,14 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     ): ts.Expression {
         switch (requestBody.type) {
             case "inlinedRequestBody": {
+                const bodyWithUnwrap = requestBody as InlinedRequestBodyWithUnwrap;
+                if (bodyWithUnwrap.unwrapPath != null && bodyWithUnwrap.unwrapPath.length > 0) {
+                    return this.buildUnwrappedRequestBodyExpression(
+                        bodyWithUnwrap,
+                        referenceToRequestBody,
+                        context
+                    );
+                }
                 const serializeExpression = context.sdkInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context);
@@ -349,6 +367,170 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             }
         }
         return result;
+    }
+
+    private buildUnwrappedRequestBodyExpression(
+        inlinedRequestBody: InlinedRequestBodyWithUnwrap,
+        referenceToRequestBody: ts.Expression,
+        context: FileContext
+    ): ts.Expression {
+        const unwrapPath = inlinedRequestBody.unwrapPath ?? [];
+        const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
+            this.packageId,
+            this.endpoint.name
+        );
+
+        // Collect the chain of type declarations along the unwrap path
+        interface PathLevelInfo {
+            properties: FernIr.ObjectProperty[];
+            pathSegment: string;
+        }
+        const levels: PathLevelInfo[] = [];
+
+        // First level starts from the inlined request body properties
+        const firstPathProp = inlinedRequestBody.properties.find(
+            (p) => getWireValue(p.name) === unwrapPath[0]
+        );
+        if (firstPathProp == null || firstPathProp.valueType.type !== "named") {
+            return referenceToRequestBody;
+        }
+
+        let currentTypeDecl = context.type.getTypeDeclaration({
+            typeId: firstPathProp.valueType.typeId,
+            fernFilepath: firstPathProp.valueType.fernFilepath,
+            name: firstPathProp.valueType.name,
+            displayName: firstPathProp.valueType.displayName
+        });
+        if (currentTypeDecl?.shape.type !== "object") {
+            return referenceToRequestBody;
+        }
+
+        levels.push({ properties: currentTypeDecl.shape.properties, pathSegment: unwrapPath[0]! });
+
+        for (let i = 1; i < unwrapPath.length; i++) {
+            const segment = unwrapPath[i]!;
+            const pathProp = currentTypeDecl.shape.properties.find(
+                (p) => getWireValue(p.name) === segment
+            );
+            if (pathProp == null || pathProp.valueType.type !== "named") {
+                return referenceToRequestBody;
+            }
+            currentTypeDecl = context.type.getTypeDeclaration({
+                typeId: pathProp.valueType.typeId,
+                fernFilepath: pathProp.valueType.fernFilepath,
+                name: pathProp.valueType.name,
+                displayName: pathProp.valueType.displayName
+            });
+            if (currentTypeDecl?.shape.type !== "object") {
+                return referenceToRequestBody;
+            }
+            levels.push({ properties: currentTypeDecl.shape.properties, pathSegment: segment });
+        }
+
+        // Build leaf object: map flat request properties to wire-format keys
+        const leafProps = currentTypeDecl.shape.properties;
+        const leafAssignments: ts.ObjectLiteralElementLike[] = [];
+        for (const prop of leafProps) {
+            const resolvedType = context.type.resolveTypeReference(prop.valueType);
+            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                leafAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        this.createLiteralExpression(resolvedType.container.literal)
+                    )
+                );
+            } else {
+                const sdkName = requestWrapper.getPropertyNameOfTypeDeclarationProperty(prop).propertyName;
+                leafAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        ts.factory.createPropertyAccessExpression(referenceToRequestBody, sdkName)
+                    )
+                );
+            }
+        }
+        let currentExpr: ts.Expression = ts.factory.createObjectLiteralExpression(leafAssignments, true);
+
+        // Wrap with intermediate levels (from leaf-1 up to level 0)
+        for (let i = levels.length - 2; i >= 0; i--) {
+            const level = levels[i]!;
+            const nextPathSegment = levels[i + 1]!.pathSegment;
+            const assignments: ts.ObjectLiteralElementLike[] = [];
+
+            // Only include literal properties at intermediate levels — non-literal
+            // non-path properties are not exposed in the SDK interface.
+            for (const prop of level.properties) {
+                if (getWireValue(prop.name) === nextPathSegment) {
+                    continue;
+                }
+                const resolvedType = context.type.resolveTypeReference(prop.valueType);
+                if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                    assignments.push(
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createStringLiteral(getWireValue(prop.name)),
+                            this.createLiteralExpression(resolvedType.container.literal)
+                        )
+                    );
+                }
+            }
+
+            // Add the nested path property pointing to the inner level
+            assignments.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createStringLiteral(nextPathSegment),
+                    currentExpr
+                )
+            );
+
+            currentExpr = ts.factory.createObjectLiteralExpression(assignments, true);
+        }
+
+        // Build top-level object with the path property and non-path top-level properties
+        const topLevelAssignments: ts.ObjectLiteralElementLike[] = [];
+
+        // Add non-path, non-literal top-level properties
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            const resolvedType = context.type.resolveTypeReference(prop.valueType);
+            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                topLevelAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        this.createLiteralExpression(resolvedType.container.literal)
+                    )
+                );
+            } else {
+                const sdkName = requestWrapper.getInlinedRequestBodyPropertyKey(prop).propertyName;
+                topLevelAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        ts.factory.createPropertyAccessExpression(referenceToRequestBody, sdkName)
+                    )
+                );
+            }
+        }
+
+        // Add the path property (first segment of unwrapPath)
+        topLevelAssignments.push(
+            ts.factory.createPropertyAssignment(
+                ts.factory.createStringLiteral(unwrapPath[0]!),
+                currentExpr
+            )
+        );
+
+        return ts.factory.createObjectLiteralExpression(topLevelAssignments, true);
+    }
+
+    private createLiteralExpression(literal: FernIr.Literal): ts.Expression {
+        return literal._visit<ts.Expression>({
+            string: (val: string) => ts.factory.createStringLiteral(val),
+            boolean: (val: boolean) => (val ? ts.factory.createTrue() : ts.factory.createFalse()),
+            _other: () => {
+                throw new Error("Encountered non-boolean, non-string literal");
+            }
+        });
     }
 
     public getReferenceToRequestBody(context: FileContext): ts.Expression | undefined {
