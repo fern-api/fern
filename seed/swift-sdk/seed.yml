@@ -39,21 +39,22 @@ scripts:
     - image: swift:6.1.2
       commands:
         build:
-          - swift build -c release --build-tests
+          - swift test -c release
         test:
-          - swift test
+          # Tests run during the build step via `swift test -c release` to avoid a
+          # second SPM invocation. Seed always runs build→test sequentially.
+          - echo "tests ran during build step"
   local:
     - commands:
         build:
           - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
           - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
           - export PATH="$HOME/.local/bin:$PATH"
-          - swift build -c release --build-tests
+          - swift test -c release
         test:
-          - if [ -d /Applications/Xcode.app/Contents/Developer ]; then export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer; else export DEVELOPER_DIR=/Library/Developer/CommandLineTools; fi
-          - if [ -d /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk ]; then export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk; else export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk; fi
-          - export PATH="$HOME/.local/bin:$PATH"
-          - swift test
+          # Tests run during the build step via `swift test -c release` to avoid a
+          # second SPM invocation. Seed always runs build→test sequentially.
+          - echo "tests ran during build step"
 
 fixtures:
   client-side-params:
