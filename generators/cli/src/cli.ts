@@ -18,7 +18,15 @@ if (pathToConfig == null) {
     throw new Error("No argument for config filepath.");
 }
 
-void generate(pathToConfig);
+generate(pathToConfig)
+    .then(() => {
+        process.exit(0);
+    })
+    .catch((e: unknown) => {
+        // biome-ignore lint/suspicious/noConsole: fatal error on exit
+        console.error("Encountered error", e);
+        process.exit(1);
+    });
 
 async function generate(configPath: string): Promise<void> {
     let sentryClient: SentryClient | undefined;
@@ -75,13 +83,6 @@ async function generate(configPath: string): Promise<void> {
                 )
             );
         }
-    } catch (e) {
-        // biome-ignore lint/suspicious/noConsole: generator CLI output
-        console.error("Encountered error", e);
-        if (shouldReportToSentry(e)) {
-            await sentryClient?.captureException(e, { errorCode: resolveErrorCode(e) });
-        }
-        throw e;
     } finally {
         // Flush queued Sentry events before the process exits.
         await sentryClient?.flush();
