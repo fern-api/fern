@@ -16,7 +16,9 @@ import com.seed.object.requests.GetDiscriminatedUnionRequest;
 import com.seed.object.requests.GetUndiscriminatedUnionRequest;
 import com.seed.object.requests.PostRootRequest;
 import com.seed.object.types.MapResponseValue;
+import com.seed.object.types.OrphanParentWithSharedChild;
 import com.seed.object.types.RootType1;
+import com.seed.object.types.SharedChildType;
 import java.io.IOException;
 import java.util.Map;
 import okhttp3.Headers;
@@ -204,6 +206,85 @@ public class RawSeedObjectClient {
                 return new SeedObjectHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
                                 responseBodyString, new TypeReference<Map<String, MapResponseValue>>() {}),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedObjectApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedObjectException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedObjectHttpResponse<SharedChildType> getSharedChild() {
+        return getSharedChild(null);
+    }
+
+    public SeedObjectHttpResponse<SharedChildType> getSharedChild(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("root")
+                .addPathSegments("shared-child");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedObjectHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, SharedChildType.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedObjectApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedObjectException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedObjectHttpResponse<OrphanParentWithSharedChild> getOrphanParent() {
+        return getOrphanParent(null);
+    }
+
+    public SeedObjectHttpResponse<OrphanParentWithSharedChild> getOrphanParent(RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("root")
+                .addPathSegments("orphan-parent");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedObjectHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, OrphanParentWithSharedChild.class),
                         response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
