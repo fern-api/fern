@@ -210,21 +210,25 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         request = request.multipart(form);
 
         // Build the request
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // Execute directly without retries (multipart requests cannot be cloned)
-        let response = self.client.execute(req).await.map_err(ApiError::Network)?;
-
-        // Check response status
-        if !response.status().is_success() {
-            let status_code = response.status().as_u16();
-            let body = response.text().await.ok();
-            return Err(ApiError::from_response(status_code, body.as_deref()));
-        }
+        // Multipart requests cannot be cloned, so they skip retries
+        // even in the default path. With an injected executor, delegate
+        // entirely to the executor.
+        let response = if let Some(executor) = &self.executor {
+            executor.execute(req).await.map_err(ApiError::Network)?
+        } else {
+            let mut req = req;
+            self.apply_auth_headers(&mut req, &options).await?;
+            self.apply_custom_headers(&mut req, &options)?;
+            let response = self.client.execute(req).await.map_err(ApiError::Network)?;
+            if !response.status().is_success() {
+                let status_code = response.status().as_u16();
+                let body = response.text().await.ok();
+                return Err(ApiError::from_response(status_code, body.as_deref()));
+            }
+            response
+        };
 
         self.parse_response(response).await
     }
@@ -270,12 +274,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
                 .body(body);
         }
 
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = self.send_request(req, &options).await?;
         self.parse_response(response).await
     }
 
@@ -358,11 +359,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         // Build the request
         let mut req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // SSE-specific headers
+        // SSE-specific headers (applied before both paths)
         req.headers_mut().insert(
             "Accept",
             "text/event-stream"
@@ -383,8 +380,13 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             .map(std::time::Duration::from_secs)
             .unwrap_or(self.config.timeout);
 
-        // Execute with retries
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = if let Some(executor) = &self.executor {
+            executor.execute(req).await.map_err(ApiError::Network)?
+        } else {
+            self.apply_auth_headers(&mut req, &options).await?;
+            self.apply_custom_headers(&mut req, &options)?;
+            self.execute_with_retries(req, &options).await?
+        };
 
         // Return SSE stream with per-event timeout
         crate::SseStream::new(response, terminator, timeout).await

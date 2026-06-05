@@ -274,8 +274,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug(`Generating ${serviceCount} service client(s)...`);
         this.generateSubClientFiles(context, files);
 
-        // Types/**/*.rs
-        if (this.hasTypes(context)) {
+        // Types/**/*.rs — skipped in cliEmbedded mode (types come from co-generated types crate)
+        if (this.hasTypes(context) && !context.customConfig.cliEmbedded) {
             const typeCount = Object.keys(context.ir.types).length;
             context.logger.debug(`Generating ${typeCount} type definition(s)...`);
             files.push(...this.generateTypeFiles(context));
@@ -364,7 +364,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("pub mod number_serializers;");
         }
         lines.push("");
-        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse};");
+        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse, RequestExecutor};");
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
         lines.push("pub use request_options::RequestOptions;");
         lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
