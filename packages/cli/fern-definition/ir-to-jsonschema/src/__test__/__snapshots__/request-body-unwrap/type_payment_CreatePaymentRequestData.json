@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Client-generated idempotency key"
+    },
+    "type": {
+      "$ref": "#/definitions/payment.CreatePaymentRequestDataType"
+    },
+    "attributes": {
+      "$ref": "#/definitions/payment.CreatePaymentRequestDataAttributes"
+    }
+  },
+  "required": [
+    "type",
+    "attributes"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "payment.CreatePaymentRequestDataType": {
+      "type": "string",
+      "enum": [
+        "payment"
+      ]
+    },
+    "payment.CreatePaymentRequestDataAttributes": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "description": "Amount in cents"
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code"
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

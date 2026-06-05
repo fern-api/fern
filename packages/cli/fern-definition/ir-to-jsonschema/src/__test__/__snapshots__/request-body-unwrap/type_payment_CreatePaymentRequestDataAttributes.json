@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "integer",
+      "description": "Amount in cents"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code"
+    },
+    "description": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "amount",
+    "currency"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
