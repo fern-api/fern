@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.12.1
+  changelogEntry:
+    - summary: |
+        Fix process hanging indefinitely after generation completes by
+        explicitly calling process.exit() instead of relying on the
+        event loop to drain.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
 - version: 0.12.0
   changelogEntry:
     - summary: |
