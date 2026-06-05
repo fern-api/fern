@@ -31,7 +31,7 @@ export class FernRequestBodyUnwrapExtension extends AbstractExtension<FernReques
 
         if (typeof extensionValue !== "string") {
             this.context.errorCollector.collect({
-                message: "Expected a dot-separated string for x-fern-request-body-unwrap (e.g. \"data.attributes\")",
+                message: 'Expected a dot-separated string for x-fern-request-body-unwrap (e.g. "data.attributes")',
                 path: this.breadcrumbs
             });
             return undefined;
