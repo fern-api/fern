@@ -290,11 +290,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             case "inlinedRequestBody": {
                 const bodyWithUnwrap = requestBody as InlinedRequestBodyWithUnwrap;
                 if (bodyWithUnwrap.unwrapPath != null && bodyWithUnwrap.unwrapPath.length > 0) {
-                    return this.buildUnwrappedRequestBodyExpression(
-                        bodyWithUnwrap,
-                        referenceToRequestBody,
-                        context
-                    );
+                    return this.buildUnwrappedRequestBodyExpression(bodyWithUnwrap, referenceToRequestBody, context);
                 }
                 const serializeExpression = context.sdkInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, this.endpoint.name)
@@ -375,10 +371,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: FileContext
     ): ts.Expression {
         const unwrapPath = inlinedRequestBody.unwrapPath ?? [];
-        const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
-            this.packageId,
-            this.endpoint.name
-        );
+        const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
 
         // Collect the chain of type declarations along the unwrap path
         interface PathLevelInfo {
@@ -388,9 +381,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         const levels: PathLevelInfo[] = [];
 
         // First level starts from the inlined request body properties
-        const firstPathProp = inlinedRequestBody.properties.find(
-            (p) => getWireValue(p.name) === unwrapPath[0]
-        );
+        const firstPathProp = inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
         if (firstPathProp == null || firstPathProp.valueType.type !== "named") {
             return referenceToRequestBody;
         }
@@ -405,13 +396,18 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             return referenceToRequestBody;
         }
 
-        levels.push({ properties: currentTypeDecl.shape.properties, pathSegment: unwrapPath[0]! });
+        const firstSegment = unwrapPath[0];
+        if (firstSegment == null) {
+            return referenceToRequestBody;
+        }
+        levels.push({ properties: currentTypeDecl.shape.properties, pathSegment: firstSegment });
 
         for (let i = 1; i < unwrapPath.length; i++) {
-            const segment = unwrapPath[i]!;
-            const pathProp = currentTypeDecl.shape.properties.find(
-                (p) => getWireValue(p.name) === segment
-            );
+            const segment = unwrapPath[i];
+            if (segment == null) {
+                return referenceToRequestBody;
+            }
+            const pathProp = currentTypeDecl.shape.properties.find((p) => getWireValue(p.name) === segment);
             if (pathProp == null || pathProp.valueType.type !== "named") {
                 return referenceToRequestBody;
             }
@@ -453,8 +449,12 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
         // Wrap with intermediate levels (from leaf-1 up to level 0)
         for (let i = levels.length - 2; i >= 0; i--) {
-            const level = levels[i]!;
-            const nextPathSegment = levels[i + 1]!.pathSegment;
+            const level = levels[i];
+            const nextLevel = levels[i + 1];
+            if (level == null || nextLevel == null) {
+                continue;
+            }
+            const nextPathSegment = nextLevel.pathSegment;
             const assignments: ts.ObjectLiteralElementLike[] = [];
 
             // Only include literal properties at intermediate levels — non-literal
@@ -476,10 +476,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
             // Add the nested path property pointing to the inner level
             assignments.push(
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createStringLiteral(nextPathSegment),
-                    currentExpr
-                )
+                ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(nextPathSegment), currentExpr)
             );
 
             currentExpr = ts.factory.createObjectLiteralExpression(assignments, true);
@@ -514,10 +511,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
         // Add the path property (first segment of unwrapPath)
         topLevelAssignments.push(
-            ts.factory.createPropertyAssignment(
-                ts.factory.createStringLiteral(unwrapPath[0]!),
-                currentExpr
-            )
+            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(firstSegment), currentExpr)
         );
 
         return ts.factory.createObjectLiteralExpression(topLevelAssignments, true);

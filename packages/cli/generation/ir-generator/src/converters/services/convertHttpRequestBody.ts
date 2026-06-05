@@ -133,9 +133,7 @@ export function convertHttpRequestBody({
             extendedProperties: undefined,
             unwrapPath:
                 requestBodyUnwrapPath != null
-                    ? requestBodyUnwrapPath
-                          .split(".")
-                          .filter((segment) => segment.length > 0)
+                    ? requestBodyUnwrapPath.split(".").filter((segment) => segment.length > 0)
                     : undefined,
             v2Examples: undefined
         });

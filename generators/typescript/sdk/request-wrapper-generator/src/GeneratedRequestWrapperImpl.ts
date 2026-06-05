@@ -257,14 +257,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             FernIr.HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     const bodyWithUnwrap = inlinedRequestBody as InlinedRequestBodyWithUnwrap;
-                    if (
-                        bodyWithUnwrap.unwrapPath != null &&
-                        bodyWithUnwrap.unwrapPath.length > 0
-                    ) {
-                        const unwrappedProperties = this.getUnwrappedProperties(
-                            bodyWithUnwrap,
-                            context
-                        );
+                    if (bodyWithUnwrap.unwrapPath != null && bodyWithUnwrap.unwrapPath.length > 0) {
+                        const unwrappedProperties = this.getUnwrappedProperties(bodyWithUnwrap, context);
                         properties.push(...unwrappedProperties);
                     } else if (this.flattenRequestParameters) {
                         const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(
@@ -948,9 +942,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         // Walk the unwrap path to find properties at each level
         let currentProps: FernIr.ObjectProperty[] | undefined;
-        const firstPathProp = inlinedRequestBody.properties.find(
-            (p) => getWireValue(p.name) === unwrapPath[0]
-        );
+        const firstPathProp = inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
         if (firstPathProp == null || firstPathProp.valueType.type !== "named") {
             return properties;
         }
