@@ -11,6 +11,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
+import * as mime from "mime-types";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
@@ -329,19 +330,27 @@ export async function uploadMissingBlobs(
         const results = await asyncPool(UPLOAD_CONCURRENCY, [...missingContent], async ({ hash, uploadUrl }) => {
             // Prefer in-memory blobs (pages, config, apiManifest).
             let blob = blobs.get(hash);
+            let contentType = "application/octet-stream";
             if (blob == null && filePaths != null) {
                 // Lazy read: only load file content for blobs the server
                 // actually needs, and discard after upload.
                 const filePath = filePaths.get(hash);
                 if (filePath != null) {
                     blob = await readFile(filePath);
+                    // Infer MIME type from the file extension so S3 stores the
+                    // correct Content-Type (e.g. image/png for .png files).
+                    // The presigned URL enforces this value in its signature.
+                    const inferred = mime.lookup(filePath);
+                    if (inferred !== false) {
+                        contentType = inferred;
+                    }
                 }
             }
             if (blob == null) {
                 context.logger.warn(`[ledger] Server requested blob ${hash} but we don't have it — skipping`);
                 return "skipped" as const;
             }
-            return uploadBlobWithRetry(blob, uploadUrl, hash, context);
+            return uploadBlobWithRetry(blob, uploadUrl, hash, contentType, context);
         });
 
         const uploaded = results.filter((r) => r === "uploaded").length;
@@ -371,6 +380,7 @@ async function uploadBlobWithRetry(
     blob: Buffer,
     uploadUrl: string,
     hash: string,
+    contentType: string,
     context: TaskContext
 ): Promise<UploadResult> {
     const body = blob.buffer.slice(blob.byteOffset, blob.byteOffset + blob.byteLength) as ArrayBuffer;
@@ -378,7 +388,7 @@ async function uploadBlobWithRetry(
     for (let attempt = 0; attempt <= UPLOAD_MAX_RETRIES; attempt++) {
         const response = await fetch(uploadUrl, {
             method: "PUT",
-            headers: { "Content-Type": "application/octet-stream" },
+            headers: { "Content-Type": contentType },
             body
         });
 
