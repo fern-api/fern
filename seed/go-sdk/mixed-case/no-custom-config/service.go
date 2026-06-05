@@ -387,15 +387,15 @@ func (r ResourceStatus) Ptr() *ResourceStatus {
 }
 
 var (
-	userFieldUserName        = big.NewInt(1 << 0)
-	userFieldMetadataTags    = big.NewInt(1 << 1)
-	userFieldExtraProperties = big.NewInt(1 << 2)
+	userFieldUserName             = big.NewInt(1 << 0)
+	userFieldMetadataTags         = big.NewInt(1 << 1)
+	userFieldFieldExtraProperties = big.NewInt(1 << 2)
 )
 
 type User struct {
-	UserName        string            `json:"userName" url:"userName"`
-	MetadataTags    []string          `json:"metadata_tags" url:"metadata_tags"`
-	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES" url:"EXTRA_PROPERTIES"`
+	UserName             string            `json:"userName" url:"userName"`
+	MetadataTags         []string          `json:"metadata_tags" url:"metadata_tags"`
+	FieldExtraProperties map[string]string `json:"EXTRA_PROPERTIES" url:"EXTRA_PROPERTIES"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -418,11 +418,11 @@ func (u *User) GetMetadataTags() []string {
 	return u.MetadataTags
 }
 
-func (u *User) GetExtraProperties() map[string]string {
+func (u *User) GetFieldExtraProperties() map[string]string {
 	if u == nil {
 		return nil
 	}
-	return u.ExtraProperties
+	return u.FieldExtraProperties
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -453,11 +453,11 @@ func (u *User) SetMetadataTags(metadataTags []string) {
 	u.require(userFieldMetadataTags)
 }
 
-// SetExtraProperties sets the ExtraProperties field and marks it as non-optional;
+// SetFieldExtraProperties sets the FieldExtraProperties field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetExtraProperties(extraProperties map[string]string) {
-	u.ExtraProperties = extraProperties
-	u.require(userFieldExtraProperties)
+func (u *User) SetFieldExtraProperties(extraProperties map[string]string) {
+	u.FieldExtraProperties = extraProperties
+	u.require(userFieldFieldExtraProperties)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
