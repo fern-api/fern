@@ -8,6 +8,118 @@ import mime from "mime-types";
 import path from "path";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "./themeOrigin.js";
 
+// ─── Theme config type definitions ───────────────────────────────────────────
+// These mirror the Zod schemas in @fern-api/configuration (DocsYmlSchemas)
+// using the raw YAML kebab-case key format.
+
+export interface ThemeLogoConfig {
+    dark?: string;
+    light?: string;
+    height?: number;
+    href?: string;
+    "right-text"?: string;
+}
+
+export interface ThemeFontPathEntry {
+    path?: string;
+    weight?: string | number;
+    style?: string;
+}
+
+export interface ThemeFontConfig {
+    name?: string;
+    path?: string;
+    weight?: string | number;
+    style?: string;
+    paths?: Array<string | ThemeFontPathEntry>;
+    display?: string;
+    fallback?: string[];
+    "font-variation-settings"?: string;
+}
+
+export interface ThemeTypographyConfig {
+    bodyFont?: ThemeFontConfig;
+    headingsFont?: ThemeFontConfig;
+    codeFont?: ThemeFontConfig;
+}
+
+export interface ThemeBackgroundImageConfig {
+    dark?: string;
+    light?: string;
+}
+
+export interface ThemeJsFileConfig {
+    path: string;
+    strategy?: string;
+}
+
+export interface ThemeJsRemoteConfig {
+    url: string;
+    strategy?: string;
+}
+
+export type ThemeJsEntry = string | ThemeJsFileConfig | ThemeJsRemoteConfig;
+
+export interface ThemeMetadataConfig {
+    "og:site_name"?: string;
+    "og:title"?: string;
+    "og:description"?: string;
+    "og:url"?: string;
+    "og:image"?: string;
+    "og:image:width"?: number;
+    "og:image:height"?: number;
+    "og:locale"?: string;
+    "og:logo"?: string;
+    "twitter:title"?: string;
+    "twitter:description"?: string;
+    "twitter:handle"?: string;
+    "twitter:image"?: string;
+    "twitter:site"?: string;
+    "twitter:url"?: string;
+    "twitter:card"?: string;
+    "og:dynamic"?: boolean;
+    "og:dynamic:background-image"?: string;
+    "og:dynamic:text-color"?: string;
+    "og:dynamic:background-color"?: string;
+    "og:dynamic:logo-color"?: string;
+    "og:dynamic:show-logo"?: boolean;
+    "og:dynamic:show-section"?: boolean;
+    "og:dynamic:show-description"?: boolean;
+    "og:dynamic:show-url"?: boolean;
+    "og:dynamic:show-gradient"?: boolean;
+    "canonical-host"?: string;
+}
+
+/**
+ * The raw theme configuration as parsed from theme.yml.
+ * Contains the file-bearing fields in their YAML (kebab-case) form.
+ * Additional theme-eligible fields (colors, layout, settings, etc.)
+ * pass through unchanged via the index signature.
+ */
+export interface RawThemeConfig {
+    logo?: ThemeLogoConfig;
+    favicon?: string;
+    "background-image"?: string | ThemeBackgroundImageConfig;
+    typography?: ThemeTypographyConfig;
+    css?: string | string[];
+    js?: ThemeJsEntry | ThemeJsEntry[];
+    header?: string;
+    footer?: string;
+    metadata?: ThemeMetadataConfig;
+    [key: string]: unknown;
+}
+
+/** A file reference after processing — either an unchanged URL or a CAS hash object. */
+type FileRef = string | { hash: string } | undefined;
+
+/** Metadata image keys that contain file paths eligible for CAS upload. */
+const METADATA_IMAGE_KEYS = ["og:image", "twitter:image", "og:dynamic:background-image", "og:logo"] as const;
+
+/** Font config keys that contain font file definitions. */
+const FONT_KEYS = ["bodyFont", "headingsFont", "codeFont"] as const;
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
 function getGitRoot(): string {
     try {
         return execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
@@ -21,6 +133,20 @@ function posixBindPath(gitRoot: string, absolutePath: string): string {
     const relative = path.relative(gitRoot, absolutePath);
     return [repoName, ...relative.split(path.sep)].join("/");
 }
+
+function isThemeJsFileConfig(entry: ThemeJsEntry): entry is ThemeJsFileConfig {
+    return typeof entry === "object" && "path" in entry;
+}
+
+function isThemeJsRemoteConfig(entry: ThemeJsEntry): entry is ThemeJsRemoteConfig {
+    return typeof entry === "object" && "url" in entry;
+}
+
+function isBackgroundImageObject(value: string | ThemeBackgroundImageConfig): value is ThemeBackgroundImageConfig {
+    return typeof value === "object";
+}
+
+// ─── Public interface ────────────────────────────────────────────────────────
 
 export interface ProcessedThemeConfig {
     config: Record<string, unknown>;
@@ -52,12 +178,12 @@ export class ThemeConfigProcessor {
         this.context = context;
     }
 
-    public async process(raw: Record<string, unknown>): Promise<ProcessedThemeConfig> {
+    public async process(raw: RawThemeConfig): Promise<ProcessedThemeConfig> {
         await this.validateAllFiles(raw);
         return this.uploadAllFiles(raw);
     }
 
-    private async validateAllFiles(raw: Record<string, unknown>): Promise<void> {
+    private async validateAllFiles(raw: RawThemeConfig): Promise<void> {
         const filePaths = this.collectFilePaths(raw);
         const errors: string[] = [];
         await Promise.all(
@@ -78,7 +204,7 @@ export class ThemeConfigProcessor {
         }
     }
 
-    public collectFilePaths(raw: Record<string, unknown>): string[] {
+    public collectFilePaths(raw: RawThemeConfig): string[] {
         const paths: string[] = [];
 
         const collect = (value: string | undefined): void => {
@@ -88,28 +214,29 @@ export class ThemeConfigProcessor {
         };
 
         if (raw.logo != null && typeof raw.logo === "object") {
-            const logo = raw.logo as Record<string, unknown>;
-            collect(logo.dark as string | undefined);
-            collect(logo.light as string | undefined);
+            collect(raw.logo.dark);
+            collect(raw.logo.light);
         }
 
-        collect(raw.favicon as string | undefined);
+        collect(raw.favicon);
 
-        if (raw["background-image"] != null && typeof raw["background-image"] === "object") {
-            const bg = raw["background-image"] as Record<string, unknown>;
-            collect(bg.dark as string | undefined);
-            collect(bg.light as string | undefined);
+        const bg = raw["background-image"];
+        if (bg != null) {
+            if (typeof bg === "string") {
+                collect(bg);
+            } else if (isBackgroundImageObject(bg)) {
+                collect(bg.dark);
+                collect(bg.light);
+            }
         }
 
         if (raw.typography != null && typeof raw.typography === "object") {
-            const typo = raw.typography as Record<string, unknown>;
-            for (const fontKey of ["bodyFont", "headingsFont", "codeFont"]) {
-                const font = typo[fontKey];
-                if (font != null && typeof font === "object") {
-                    const fontObj = font as Record<string, unknown>;
-                    if (Array.isArray(fontObj.paths)) {
-                        for (const entry of fontObj.paths as Array<Record<string, unknown>>) {
-                            collect(entry.path as string | undefined);
+            for (const fontKey of FONT_KEYS) {
+                const font = raw.typography[fontKey];
+                if (font != null && Array.isArray(font.paths)) {
+                    for (const entry of font.paths) {
+                        if (typeof entry === "object") {
+                            collect(entry.path);
                         }
                     }
                 }
@@ -127,22 +254,20 @@ export class ThemeConfigProcessor {
         for (const entry of jsList) {
             if (typeof entry === "string") {
                 collect(entry);
-            } else if (entry != null && typeof entry === "object") {
-                const e = entry as Record<string, unknown>;
-                if (typeof e.path === "string") {
-                    collect(e.path);
-                }
+            } else if (isThemeJsFileConfig(entry)) {
+                collect(entry.path);
             }
+            // Remote JS entries (with url) are intentionally skipped.
         }
 
-        collect(raw.header as string | undefined);
-        collect(raw.footer as string | undefined);
+        collect(raw.header);
+        collect(raw.footer);
 
         if (raw.metadata != null && typeof raw.metadata === "object") {
-            const meta = raw.metadata as Record<string, unknown>;
-            for (const imgKey of ["og:image", "twitter:image", "og:dynamic:background-image", "og:logo"]) {
-                if (typeof meta[imgKey] === "string") {
-                    collect(meta[imgKey] as string);
+            for (const imgKey of METADATA_IMAGE_KEYS) {
+                const value = raw.metadata[imgKey];
+                if (typeof value === "string") {
+                    collect(value);
                 }
             }
         }
@@ -150,11 +275,11 @@ export class ThemeConfigProcessor {
         return paths;
     }
 
-    private async uploadAllFiles(raw: Record<string, unknown>): Promise<ProcessedThemeConfig> {
+    private async uploadAllFiles(raw: RawThemeConfig): Promise<ProcessedThemeConfig> {
         const cfg: Record<string, unknown> = { ...raw };
         let filesUploaded = 0;
 
-        const field = async (value: string | undefined): Promise<string | { hash: string } | undefined> => {
+        const field = async (value: string | undefined): Promise<FileRef> => {
             if (value == null) {
                 return undefined;
             }
@@ -168,80 +293,81 @@ export class ThemeConfigProcessor {
             return { hash };
         };
 
-        if (cfg.logo != null && typeof cfg.logo === "object") {
-            const logo = { ...(cfg.logo as Record<string, unknown>) };
-            logo.dark = await field(logo.dark as string | undefined);
-            logo.light = await field(logo.light as string | undefined);
-            cfg.logo = logo;
+        if (raw.logo != null && typeof raw.logo === "object") {
+            cfg.logo = {
+                ...raw.logo,
+                dark: await field(raw.logo.dark),
+                light: await field(raw.logo.light)
+            };
         }
 
-        cfg.favicon = await field(cfg.favicon as string | undefined);
+        cfg.favicon = await field(raw.favicon);
 
-        if (cfg["background-image"] != null && typeof cfg["background-image"] === "object") {
-            const bg = { ...(cfg["background-image"] as Record<string, unknown>) };
-            bg.dark = await field(bg.dark as string | undefined);
-            bg.light = await field(bg.light as string | undefined);
-            cfg["background-image"] = bg;
+        const bg = raw["background-image"];
+        if (bg != null) {
+            if (typeof bg === "string") {
+                cfg["background-image"] = await field(bg);
+            } else if (isBackgroundImageObject(bg)) {
+                cfg["background-image"] = {
+                    ...bg,
+                    dark: await field(bg.dark),
+                    light: await field(bg.light)
+                };
+            }
         }
 
-        if (cfg.typography != null && typeof cfg.typography === "object") {
-            const typo = { ...(cfg.typography as Record<string, unknown>) };
-            for (const fontKey of ["bodyFont", "headingsFont", "codeFont"]) {
+        if (raw.typography != null && typeof raw.typography === "object") {
+            const typo = { ...raw.typography };
+            for (const fontKey of FONT_KEYS) {
                 const font = typo[fontKey];
-                if (font != null && typeof font === "object") {
-                    const fontObj = { ...(font as Record<string, unknown>) };
-                    if (Array.isArray(fontObj.paths)) {
-                        fontObj.paths = await Promise.all(
-                            (fontObj.paths as Array<Record<string, unknown>>).map(async (entry) => {
-                                const p = entry.path as string | undefined;
-                                if (p == null) {
-                                    return entry;
-                                }
-                                return { ...entry, path: await field(p) };
-                            })
-                        );
-                    }
-                    typo[fontKey] = fontObj;
+                if (font != null && Array.isArray(font.paths)) {
+                    const processedFont = { ...font };
+                    processedFont.paths = await Promise.all(
+                        font.paths.map(async (entry) => {
+                            if (typeof entry === "object" && entry.path != null) {
+                                return { ...entry, path: await field(entry.path) } as unknown as ThemeFontPathEntry;
+                            }
+                            return entry;
+                        })
+                    );
+                    typo[fontKey] = processedFont;
                 }
             }
             cfg.typography = typo;
         }
 
-        if (cfg.css != null) {
-            const cssList: unknown[] = Array.isArray(cfg.css) ? cfg.css : [cfg.css];
-            cfg.css = await Promise.all(cssList.map((item) => (typeof item === "string" ? field(item) : item)));
+        if (raw.css != null) {
+            const cssList: string[] = Array.isArray(raw.css) ? raw.css : [raw.css];
+            cfg.css = await Promise.all(cssList.map((item) => field(item)));
         }
 
-        if (cfg.js != null) {
-            const jsList: unknown[] = Array.isArray(cfg.js) ? cfg.js : [cfg.js];
+        if (raw.js != null) {
+            const jsList: ThemeJsEntry[] = Array.isArray(raw.js) ? raw.js : [raw.js];
             cfg.js = await Promise.all(
                 jsList.map(async (entry) => {
                     if (typeof entry === "string") {
                         return field(entry);
                     }
-                    if (entry != null && typeof entry === "object") {
-                        const e = { ...(entry as Record<string, unknown>) };
-                        if (typeof e.url === "string") {
-                            return e;
-                        }
-                        if (typeof e.path === "string") {
-                            e.path = await field(e.path);
-                        }
-                        return e;
+                    if (isThemeJsRemoteConfig(entry)) {
+                        return entry;
+                    }
+                    if (isThemeJsFileConfig(entry)) {
+                        return { ...entry, path: await field(entry.path) };
                     }
                     return entry;
                 })
             );
         }
 
-        cfg.header = await field(cfg.header as string | undefined);
-        cfg.footer = await field(cfg.footer as string | undefined);
+        cfg.header = await field(raw.header);
+        cfg.footer = await field(raw.footer);
 
-        if (cfg.metadata != null && typeof cfg.metadata === "object") {
-            const meta = { ...(cfg.metadata as Record<string, unknown>) };
-            for (const imgKey of ["og:image", "twitter:image", "og:dynamic:background-image", "og:logo"]) {
-                if (typeof meta[imgKey] === "string") {
-                    meta[imgKey] = await field(meta[imgKey] as string);
+        if (raw.metadata != null && typeof raw.metadata === "object") {
+            const meta: Record<string, unknown> = { ...raw.metadata };
+            for (const imgKey of METADATA_IMAGE_KEYS) {
+                const value = raw.metadata[imgKey];
+                if (typeof value === "string") {
+                    meta[imgKey] = await field(value);
                 }
             }
             cfg.metadata = meta;

@@ -6,6 +6,7 @@ import yaml from "js-yaml";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js";
+import type { RawThemeConfig } from "./ThemeConfigProcessor.js";
 import { ThemeConfigProcessor } from "./ThemeConfigProcessor.js";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "./themeOrigin.js";
 
@@ -72,7 +73,7 @@ export async function uploadDocsTheme({
         context.logger.debug(`FDR origin: ${FDR_ORIGIN}`);
 
         const processor = new ThemeConfigProcessor({ docsWorkspace, orgId, token: token.value, context });
-        const { config: processedConfig, filesUploaded } = await processor.process(rawYaml as Record<string, unknown>);
+        const { config: processedConfig, filesUploaded } = await processor.process(rawYaml as RawThemeConfig);
 
         if (filesUploaded > 0) {
             context.logger.info(`Uploaded ${filesUploaded} file asset(s) to CAS`);

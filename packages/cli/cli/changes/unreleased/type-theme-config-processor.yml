@@ -1,0 +1,5 @@
+- summary: |
+    Add proper TypeScript types to ThemeConfigProcessor, replacing
+    `Record<string, unknown>` with concrete interfaces for each
+    config field (logo, typography, JS/CSS, metadata, etc.).
+  type: chore

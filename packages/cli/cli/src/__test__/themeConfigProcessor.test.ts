@@ -2,6 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { RawThemeConfig } from "../commands/docs-theme/ThemeConfigProcessor.js";
 import { ThemeConfigProcessor } from "../commands/docs-theme/ThemeConfigProcessor.js";
 
 vi.mock("fs/promises", () => ({
@@ -12,7 +13,7 @@ vi.mock("fs/promises", () => ({
 // A config with every file-bearing field populated.
 // When you add a new file field to ThemeConfigProcessor, add it here too —
 // the sync test below will catch the omission.
-const FULL_CONFIG: Record<string, unknown> = {
+const FULL_CONFIG: RawThemeConfig = {
     logo: { dark: "logo-dark.png", light: "logo-light.png" },
     favicon: "favicon.ico",
     "background-image": { dark: "bg-dark.jpg", light: "bg-light.jpg" },
