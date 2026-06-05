@@ -4,6 +4,7 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\Types\Types\UnionWithTime;
+use DateTime;
 
 $client = new SeedClient(
     options: [
@@ -11,5 +12,5 @@ $client = new SeedClient(
     ],
 );
 $client->types->update(
-    UnionWithTime::datetime(),
+    UnionWithTime::datetime(new DateTime('1994-01-01T01:01:01Z')),
 );

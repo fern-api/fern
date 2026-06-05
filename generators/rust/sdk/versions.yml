@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.39.0
+  changelogEntry:
+    - summary: |
+        Parameterize core module path in model generator to support
+        standalone types crate usage.
+      type: internal
+  createdAt: "2026-06-05"
+  irVersion: 66
 - version: 0.38.0
   changelogEntry:
     - summary: |

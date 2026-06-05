@@ -1,0 +1,6 @@
+- summary: |
+    Generate `reference.md` documenting all CLI commands, subcommands, flags,
+    and HTTP mappings. Produced automatically during generation by parsing the
+    mounted OpenAPI spec(s). A link to the reference is added to the generated
+    README's Documentation section.
+  type: feat

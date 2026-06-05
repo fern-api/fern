@@ -156,10 +156,11 @@ export class UndiscriminatedUnionGenerator {
 
         if (isDateTimeOnlyType(variant.typeRef)) {
             const dateTimeType = this.context.getDateTimeType();
+            const coreModulePath = this.context.getCoreModulePath();
             const modulePath =
                 dateTimeType === "utc"
-                    ? "crate::core::flexible_datetime::utc"
-                    : "crate::core::flexible_datetime::offset";
+                    ? `${coreModulePath}::flexible_datetime::utc`
+                    : `${coreModulePath}::flexible_datetime::offset`;
             writer.writeLine(`    ${variant.variantName}(`);
             writer.writeLine(`        #[serde(with = "${modulePath}")]`);
             writer.writeLine(`        ${memberType.toString()}`);

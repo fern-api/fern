@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.44.14
+  changelogEntry:
+    - summary: |
+        Fix `fern export` to emit top-level `servers` array for multi-URL environments
+        (`multipleBaseUrls`). Previously only single-URL environments produced servers.
+        Each environment × base-URL combination is now listed with a description like
+        `"Production (api)"`. Endpoint-level servers also now include the environment
+        name in their description.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
 - version: 5.44.13
   changelogEntry:
     - summary: |
