@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.13.1
+  changelogEntry:
+    - summary: |
+        Fix Docker image build to include rust-sdk dist by adding
+        @fern-api/rust-sdk#dist:cli to turbo dependency graph.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
 - version: 0.13.0
   changelogEntry:
     - summary: |
