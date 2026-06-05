@@ -4946,11 +4946,16 @@ func writeUnwrappedUnmarshalJSON(
 	if leafTypeRef != nil {
 		for i := 1; i < len(unwrapPath); i++ {
 			objProps := resolveObjectProperties(leafTypeRef, f.types)
+			found := false
 			for _, p := range objProps {
 				if p.Name.WireValue == unwrapPath[i] {
 					leafTypeRef = p.ValueType
+					found = true
 					break
 				}
+			}
+			if !found {
+				break
 			}
 		}
 	}
