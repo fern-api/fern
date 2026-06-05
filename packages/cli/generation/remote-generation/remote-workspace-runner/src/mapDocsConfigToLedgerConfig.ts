@@ -1,5 +1,6 @@
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
+import { assertNever } from "@fern-api/core-utils";
 
 type DocsConfig = DocsV1Write.DocsConfig;
 
@@ -112,17 +113,22 @@ function mapColorsV3(
     if (colors == null) {
         return undefined;
     }
-    if (colors.type === "dark" || colors.type === "light") {
-        return {
-            type: colors.type,
-            ...mapTheme(colors, fileManifest, fileIdToPath)
-        };
+    switch (colors.type) {
+        case "dark":
+        case "light":
+            return {
+                type: colors.type,
+                ...mapTheme(colors, fileManifest, fileIdToPath)
+            };
+        case "darkAndLight":
+            return {
+                type: "darkAndLight",
+                dark: mapTheme(colors.dark, fileManifest, fileIdToPath),
+                light: mapTheme(colors.light, fileManifest, fileIdToPath)
+            };
+        default:
+            assertNever(colors);
     }
-    return {
-        type: "darkAndLight",
-        dark: mapTheme(colors.dark, fileManifest, fileIdToPath),
-        light: mapTheme(colors.light, fileManifest, fileIdToPath)
-    };
 }
 
 function mapMetadata(
@@ -141,35 +147,24 @@ function mapMetadata(
         "og:dynamic:background-image": ogDynamicBackgroundImage,
         ...rest
     } = metadata;
-    const mapped: Record<string, unknown> = { ...rest };
-    const ogImageMapped = toPathOrUrl(ogImage, fileIdToPath);
-    if (ogImageMapped != null) {
-        mapped["og:image"] = ogImageMapped;
-    }
-    const ogLogoMapped = toPathOrUrl(ogLogo, fileIdToPath);
-    if (ogLogoMapped != null) {
-        mapped["og:logo"] = ogLogoMapped;
-    }
-    const twitterImageMapped = toPathOrUrl(twitterImage, fileIdToPath);
-    if (twitterImageMapped != null) {
-        mapped["twitter:image"] = twitterImageMapped;
-    }
-    const ogBackgroundImageMapped = toPathOrUrl(ogBackgroundImage, fileIdToPath);
-    if (ogBackgroundImageMapped != null) {
-        mapped["og:background-image"] = ogBackgroundImageMapped;
-    }
-    const ogDynamicBackgroundImageMapped = toPathOrUrl(ogDynamicBackgroundImage, fileIdToPath);
-    if (ogDynamicBackgroundImageMapped != null) {
-        mapped["og:dynamic:background-image"] = ogDynamicBackgroundImageMapped;
-    }
-    return mapped as LedgerConfig["metadata"];
+    type LedgerMetadata = NonNullable<LedgerConfig["metadata"]>;
+    const mapped: LedgerMetadata = {
+        ...rest,
+        "og:image": toPathOrUrl(ogImage, fileIdToPath) ?? undefined,
+        "og:logo": toPathOrUrl(ogLogo, fileIdToPath) ?? undefined,
+        "twitter:image": toPathOrUrl(twitterImage, fileIdToPath) ?? undefined,
+        "og:background-image": toPathOrUrl(ogBackgroundImage, fileIdToPath) ?? undefined,
+        "og:dynamic:background-image": toPathOrUrl(ogDynamicBackgroundImage, fileIdToPath) ?? undefined
+    };
+    return mapped;
 }
+
+type LedgerJsFile = NonNullable<NonNullable<LedgerConfig["js"]>["files"]>[number];
 
 function mapJsFiles(js: DocsConfig["js"], fileIdToPath: Map<string, string> | undefined): LedgerConfig["js"] {
     if (js == null) {
         return undefined;
     }
-    type LedgerJsFile = NonNullable<LedgerConfig["js"]>["files"] extends Array<infer T> | undefined ? T : never;
     const files: LedgerJsFile[] = [];
     for (const file of js.files) {
         const path = resolveFileIdToPath(file.fileId, fileIdToPath);

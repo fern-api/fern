@@ -12,6 +12,9 @@ import type { TaskContext } from "@fern-api/task-context";
 
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
+import { asyncPool } from "./utils/asyncPool.js";
+
+const TRANSLATION_BUILD_CONCURRENCY = 4;
 
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
@@ -220,8 +223,10 @@ async function buildAllTranslationDefinitions({
     const localeEntries = Object.entries(translationPages);
     context.logger.info(`[ledger-preview] Building ${localeEntries.length} translation locale(s)...`);
 
-    return Promise.all(
-        localeEntries.map(async ([locale, localePages]): Promise<BuiltTranslationDef> => {
+    return asyncPool(
+        TRANSLATION_BUILD_CONCURRENCY,
+        localeEntries,
+        async ([locale, localePages]): Promise<BuiltTranslationDef> => {
             const translatedDefinition = await buildTranslatedDocsDefinition({
                 docsDefinition,
                 locale,
@@ -231,8 +236,27 @@ async function buildAllTranslationDefinitions({
                 context
             });
             return { locale, localePages, translatedDefinition };
-        })
+        }
     );
+}
+
+interface PreviewRegisterInput {
+    orgId: string;
+    previewId: string | null;
+    basePath: string;
+    defaultLocale: string;
+    locales: LocaleEntry[];
+    root: LocaleEntry["root"];
+    pages: LocaleEntry["pages"];
+    apiManifest: LocaleEntry["apiManifest"];
+    config: LocaleEntry["config"];
+    fileManifest: LocaleEntry["fileManifest"];
+    jsFiles: LocaleEntry["jsFiles"];
+    redirects: LocaleEntry["redirects"];
+    locale: string;
+    version?: LocaleEntry["version"];
+    repo?: LocaleEntry["repo"];
+    git?: DocsPublishGitInput;
 }
 
 async function previewRegisterWithLocales({
@@ -244,7 +268,7 @@ async function previewRegisterWithLocales({
     fdrOrigin: string;
     token: string;
     headers: Record<string, string>;
-    input: Record<string, unknown>;
+    input: PreviewRegisterInput;
 }): Promise<LedgerPreviewRegisterResponse> {
     const response = await fetch(`${fdrOrigin.replace(/\/+$/, "")}/docs-ledger/preview/init`, {
         method: "POST",

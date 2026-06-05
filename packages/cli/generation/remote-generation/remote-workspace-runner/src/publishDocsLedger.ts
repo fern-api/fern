@@ -16,6 +16,7 @@ import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const UPLOAD_CONCURRENCY = 10;
+const TRANSLATION_BUILD_CONCURRENCY = 4;
 const UPLOAD_MAX_RETRIES = 3;
 const UPLOAD_INITIAL_DELAY_MS = 1_000;
 
@@ -485,9 +486,9 @@ interface BuiltTranslation {
 /**
  * Build ledger inputs for every translation locale the resolver discovered.
  *
- * All locales are built in parallel. If ANY locale fails, the returned
- * promise rejects — callers should let the error propagate to abort the
- * entire publish.
+ * Locales are built with bounded concurrency. If ANY locale fails, the
+ * returned promise rejects — callers should let the error propagate to
+ * abort the entire publish.
  */
 async function buildAllTranslationInputs({
     docsDefinition,
@@ -521,8 +522,10 @@ async function buildAllTranslationInputs({
     context.logger.info(`[ledger] Building ${localeEntries.length} translation locale(s)...`);
     const { buildTranslatedDocsDefinition } = await import("./buildTranslatedDocsDefinition.js");
 
-    return Promise.all(
-        localeEntries.map(async ([locale, localePages]): Promise<BuiltTranslation> => {
+    return asyncPool(
+        TRANSLATION_BUILD_CONCURRENCY,
+        localeEntries,
+        async ([locale, localePages]): Promise<BuiltTranslation> => {
             const translatedDefinition = await buildTranslatedDocsDefinition({
                 docsDefinition,
                 locale,
@@ -542,6 +545,6 @@ async function buildAllTranslationInputs({
             });
 
             return { locale, localePages, translatedDefinition, localeEntry, blobs };
-        })
+        }
     );
 }
