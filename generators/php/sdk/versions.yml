@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.9
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet argument ordering for discriminated union factory methods
+        with optional base properties. Required base fields now come before the variant
+        value, and optional base fields come after, matching the PHP Method AST's
+        automatic parameter reordering.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
 - version: 2.10.8
   changelogEntry:
     - summary: |
