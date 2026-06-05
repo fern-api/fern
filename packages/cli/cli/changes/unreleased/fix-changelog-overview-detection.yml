@@ -1,0 +1,7 @@
+- summary: |
+    Fix changelog overview page detection to recognize non-date files beyond
+    the reserved names (summary, index, overview). When no reserved-name file
+    is present, the first non-date file in the changelog directory is now
+    treated as the overview page, allowing its frontmatter slug override to
+    propagate correctly to the V1 navigation tree.
+  type: fix
