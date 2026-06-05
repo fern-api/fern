@@ -18,15 +18,16 @@ if (pathToConfig == null) {
     throw new Error("No argument for config filepath.");
 }
 
-generate(pathToConfig)
-    .then(() => {
+(async () => {
+    try {
+        await generate(pathToConfig);
         process.exit(0);
-    })
-    .catch((e: unknown) => {
+    } catch (e: unknown) {
         // biome-ignore lint/suspicious/noConsole: fatal error on exit
         console.error("Encountered error", e);
         process.exit(1);
-    });
+    }
+})();
 
 async function generate(configPath: string): Promise<void> {
     let sentryClient: SentryClient | undefined;
