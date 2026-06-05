@@ -1,5 +1,6 @@
 import { ClientRegistry, getLogLevel, setLogLevel } from "@boundaryml/baml";
 import { generatorsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 
 /**
  * Maps the Fern provider name (from generators.yml) to the BAML provider string.
@@ -12,6 +13,8 @@ function toBamlProvider(provider: generatorsYml.ModelProvider): string {
         case "anthropic":
         case "openai":
             return provider;
+        default:
+            assertNever(provider);
     }
 }
 
