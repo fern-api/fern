@@ -2,6 +2,20 @@ import { ClientRegistry, getLogLevel, setLogLevel } from "@boundaryml/baml";
 import { generatorsYml } from "@fern-api/configuration";
 
 /**
+ * Maps the Fern provider name (from generators.yml) to the BAML provider string.
+ * BAML uses "aws-bedrock" while the Fern config uses "bedrock".
+ */
+function toBamlProvider(provider: generatorsYml.ModelProvider): string {
+    switch (provider) {
+        case "bedrock":
+            return "aws-bedrock";
+        case "anthropic":
+        case "openai":
+            return provider;
+    }
+}
+
+/**
  * Creates and configures a BAML ClientRegistry based on the provided AI service configuration.
  * This allows dynamic runtime configuration of LLM providers without modifying BAML files.
  *
@@ -21,8 +35,8 @@ export function configureBamlClient(config: generatorsYml.AiServicesSchema): Cli
         model: config.model
     };
 
-    // Add the LLM client to the registry
-    registry.addLlmClient("ConfiguredClient", config.provider, clientOptions);
+    // Add the LLM client to the registry with the BAML-expected provider name
+    registry.addLlmClient("ConfiguredClient", toBamlProvider(config.provider), clientOptions);
 
     // Set it as the primary client
     registry.setPrimary("ConfiguredClient");

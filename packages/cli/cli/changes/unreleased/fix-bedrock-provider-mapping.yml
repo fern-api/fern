@@ -1,0 +1,5 @@
+- summary: |
+    Fix `bedrock` AI provider config for `sdk-diff` command. The provider name
+    is now correctly mapped to `aws-bedrock` (the BAML provider identifier)
+    before configuring the client registry.
+  type: fix
