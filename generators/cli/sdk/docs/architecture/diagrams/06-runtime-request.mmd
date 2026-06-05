@@ -1,0 +1,57 @@
+%% Runtime view — CLI invocation sequence for a typical OpenAPI request.
+%% (GraphQL is structurally identical; substitute the GraphQL path.)
+
+sequenceDiagram
+    autonumber
+    participant U as Caller<br/>(human / agent / CI)
+    participant M as cli/&lt;name&gt;/main.rs<br/>(CliApp::run)
+    participant SP as openapi/parser<br/>+ overlay
+    participant CB as openapi/commands<br/>(clap::Command builder)
+    participant EI as early_intercept
+    participant CL as clap parse
+    participant AU as auth/compose<br/>(RoutingAuthProvider)
+    participant EX as openapi/executor
+    participant HC as http::HttpConfig
+    participant API as Target API
+    participant FP as formatter<br/>(OutputPipeline)
+    participant OUT as stdout / stderr
+
+    U->>M: $ <cli> <subcommand> [flags]
+    M->>SP: parse include_str! spec (+ overlays / overrides)
+    SP-->>M: RestDescription
+    M->>CB: build clap::Command tree
+    CB-->>M: Command (cached for this process)
+
+    M->>EI: short-circuit?<br/>(completion / man / errors)
+    alt completion or man or errors subcommand
+        EI-->>OUT: emit and exit
+    end
+
+    M->>CL: parse argv against Command
+    CL-->>M: ArgMatches
+
+    M->>AU: resolve auth for matched operation
+    AU->>AU: pick first security: requirement<br/>that all bound providers can satisfy
+    AU-->>EX: AuthProvider handle (applied later inside request)
+
+    M->>HC: build reqwest::Client from HttpConfig<br/>(reads &lt;NAME&gt;_CA_BUNDLE, _INSECURE, _PROXY, _TIMEOUT_SECS)
+    HC-->>EX: reqwest::Client
+
+    M->>EX: execute(operation, args)
+    EX->>EX: percent-encode path segments<br/>(validate::encode_path_segment)
+    EX->>AU: AuthProvider::apply(request, endpoint)
+    AU-->>EX: request with auth headers
+    EX->>API: HTTP request
+    alt retryable status + x-fern-retries enabled + !--no-retry
+        API-->>EX: retryable status
+        EX->>EX: backoff with real-entropy jitter
+        EX->>API: HTTP retry
+    end
+    API-->>EX: HTTP response
+    EX->>FP: response body + format flags
+
+    FP->>FP: --json projection / --jq / --template / colors
+    FP-->>OUT: stdout (body)
+    alt error
+        EX-->>OUT: stdout (CliError JSON) + stderr (color label + hint)
+    end

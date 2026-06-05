@@ -87,16 +87,40 @@ export function convertToOpenApi({
         }
     };
 
-    if (ir.environments != null && ir.environments.environments.type === "singleBaseUrl") {
-        openAPISpec.servers = ir.environments.environments.environments.map((environment) => {
-            return {
-                url: environment.url,
-                description:
-                    environment.docs != null
-                        ? `${getOriginalName(environment.name)} (${environment.docs})`
-                        : getOriginalName(environment.name)
-            };
-        });
+    if (ir.environments != null) {
+        const envs = ir.environments.environments;
+        if (envs.type === "singleBaseUrl") {
+            openAPISpec.servers = envs.environments.map((environment) => {
+                return {
+                    url: environment.url,
+                    description:
+                        environment.docs != null
+                            ? `${getOriginalName(environment.name)} (${environment.docs})`
+                            : getOriginalName(environment.name)
+                };
+            });
+        } else if (envs.type === "multipleBaseUrls") {
+            const servers: OpenAPIV3.ServerObject[] = [];
+            for (const environment of envs.environments) {
+                const envName = getOriginalName(environment.name);
+                for (const baseUrlDef of envs.baseUrls) {
+                    const url = environment.urls[baseUrlDef.id];
+                    if (url != null) {
+                        const urlName = getOriginalName(baseUrlDef.name);
+                        servers.push({
+                            url,
+                            description:
+                                environment.docs != null
+                                    ? `${envName} - ${urlName} (${environment.docs})`
+                                    : `${envName} (${urlName})`
+                        });
+                    }
+                }
+            }
+            if (servers.length > 0) {
+                openAPISpec.servers = servers;
+            }
+        }
     }
 
     return openAPISpec as unknown as OpenAPIV3_1.Document;
