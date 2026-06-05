@@ -74,6 +74,13 @@ fixtures:
         registryUrl: https://registry.npmjs.org
         packageName: "@fern/query-parameters-openapi"
         token: "${NPM_TOKEN}"
+    # Github output mode WITHOUT npm publish info — verifies that the
+    # generator emits a build+test-only `.github/workflows/ci.yml`
+    # (check, compile, test jobs; no publish jobs).
+    - customConfig: null
+      outputFolder: github-no-publish
+      outputMode: github
+      outputVersion: "1.0.0"
   # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
   # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
   # refuses to guess a single name across multiple titles).
