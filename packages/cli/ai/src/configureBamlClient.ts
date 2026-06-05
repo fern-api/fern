@@ -5,10 +5,8 @@ import { generatorsYml } from "@fern-api/configuration";
  * Creates and configures a BAML ClientRegistry based on the provided AI service configuration.
  * This allows dynamic runtime configuration of LLM providers without modifying BAML files.
  *
- * API keys are automatically read from environment variables:
- * - OpenAI: OPENAI_API_KEY
- * - Anthropic: ANTHROPIC_API_KEY
- * - Bedrock: Uses AWS SDK credentials from environment
+ * The `provider` value from generators.yml is passed directly to BAML as the client provider.
+ * Supported values match BAML's provider identifiers (e.g., "openai", "anthropic", "aws-bedrock").
  *
  * @param config - The AI service configuration from generators.yml
  * @returns A configured ClientRegistry instance
@@ -16,15 +14,11 @@ import { generatorsYml } from "@fern-api/configuration";
 export function configureBamlClient(config: generatorsYml.AiServicesSchema): ClientRegistry {
     const registry = new ClientRegistry();
 
-    // Configure the client - BAML will automatically read API keys from environment variables
     const clientOptions = {
         model: config.model
     };
 
-    // Add the LLM client to the registry
     registry.addLlmClient("ConfiguredClient", config.provider, clientOptions);
-
-    // Set it as the primary client
     registry.setPrimary("ConfiguredClient");
 
     // BAML logs are too verbose by default (includes prompt and request/response bodies)
