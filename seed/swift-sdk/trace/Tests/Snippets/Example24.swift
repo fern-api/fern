@@ -8,6 +8,6 @@ enum Example24 {
             token: "<token>"
         )
 
-        _ = try await client.submission.createExecutionSession(language: .java)
+        _ = try await client.submission.createExecutionSession(language: "JAVA")
     }
 }

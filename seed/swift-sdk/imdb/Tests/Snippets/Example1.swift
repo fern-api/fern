@@ -8,6 +8,9 @@ enum Example1 {
             token: "<token>"
         )
 
-        _ = try await client.imdb.getMovie(movieId: "movieId")
+        _ = try await client.imdb.createMovie(request: .init(
+            title: "title",
+            rating: 1.1
+        ))
     }
 }
