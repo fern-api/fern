@@ -19,7 +19,7 @@
 
 import { execFile } from "child_process";
 import { accessSync, constants } from "fs";
-import { mkdir, readdir, readFile, rename, rm, unlink, writeFile } from "fs/promises";
+import { cp, mkdir, readdir, readFile, rename, rm, unlink, writeFile } from "fs/promises";
 import { createRequire } from "module";
 import path from "path";
 import { promisify } from "util";
@@ -98,6 +98,11 @@ export async function generateEmbeddedTypes(args: {
  * produce: `Cargo.toml`, `src/prelude.rs`, and a `pub mod prelude;`
  * declaration in `src/lib.rs`.
  *
+ * Also detects references to `crate::core::` helper modules (e.g.
+ * `flexible_datetime`, `base64_bytes`) in generated type files and
+ * copies those modules into the types crate with the necessary
+ * dependencies.
+ *
  * Also cleans up the `.fern/` metadata directory that the base generator
  * framework writes — it's useful for standalone crates but noise inside
  * the CLI workspace.
@@ -106,7 +111,26 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
     const { typesOutputDir, typesCrateName } = args;
     const crateName = typesCrateName.replace(/-/g, "_");
 
-    // 1. Cargo.toml — minimal lib crate with serde derives.
+    // Detect which crate::core:: modules the generated types reference.
+    const coreModules = await detectCoreModuleReferences(path.join(typesOutputDir, "src"));
+
+    // 1. Cargo.toml — minimal lib crate with serde derives + any
+    //    additional deps required by detected core modules.
+    const depLines = [
+        'serde = { version = "1", features = ["derive"] }',
+        'serde_json = "1"'
+    ];
+    if (coreModules.has("flexible_datetime")) {
+        depLines.push('chrono = { version = "0.4", features = ["serde"] }');
+    }
+    if (coreModules.has("base64_bytes")) {
+        depLines.push('base64 = "0.22"');
+    }
+    if (coreModules.has("bigint_string")) {
+        depLines.push('num-bigint = "0.4"');
+        depLines.push('num-traits = "0.2"');
+    }
+
     const cargoToml = [
         "[package]",
         `name = "${crateName}"`,
@@ -117,8 +141,7 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         "doctest = false",
         "",
         "[dependencies]",
-        'serde = { version = "1", features = ["derive"] }',
-        'serde_json = "1"',
+        ...depLines,
         ""
     ].join("\n");
     await writeFile(path.join(typesOutputDir, "Cargo.toml"), cargoToml);
@@ -147,6 +170,11 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         preludeLines.push("pub use crate::error::BuildError;");
     }
 
+    // Re-export chrono types into prelude when datetime modules are used.
+    if (coreModules.has("flexible_datetime")) {
+        preludeLines.push("pub use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, Utc};");
+    }
+
     preludeLines.push("");
     await writeFile(path.join(typesOutputDir, "src", "prelude.rs"), preludeLines.join("\n"));
 
@@ -162,6 +190,20 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         await writeFile(libPath, patched);
     }
 
+    // 3b. If core modules are needed, copy them and declare `pub mod core;`.
+    if (coreModules.size > 0) {
+        await copyCoreModules(typesOutputDir, coreModules);
+        // Inject `pub mod core;` into lib.rs.
+        const updatedLib = await readFile(libPath, "utf-8");
+        if (!updatedLib.includes("pub mod core;")) {
+            const patchedWithCore = updatedLib.replace(
+                "pub mod prelude;\n",
+                "pub mod prelude;\npub mod core;\n"
+            );
+            await writeFile(libPath, patchedWithCore);
+        }
+    }
+
     // 4. Move generated type files into `src/types/` so `lib.rs`'s
     //    `pub mod types;` resolves to `src/types/mod.rs`. The rust-model
     //    generator emits `mod.rs` + per-type `.rs` files flat in `src/`;
@@ -173,8 +215,134 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
     await rm(path.join(typesOutputDir, ".fern"), { recursive: true, force: true });
 }
 
-/** Files that live at the `src/` root and must NOT be moved into `src/types/`. */
+/** Files/dirs that live at the `src/` root and must NOT be moved into `src/types/`. */
 const SRC_ROOT_FILES = new Set(["lib.rs", "prelude.rs", "error.rs"]);
+
+/**
+ * Known `crate::core::` helper modules that the rust-model generator may
+ * reference in generated type files via `#[serde(with = "crate::core::...")]`.
+ */
+const CORE_MODULE_DEFS: Record<string, { filename: string }> = {
+    flexible_datetime: { filename: "flexible_datetime.rs" },
+    base64_bytes: { filename: "base64_bytes.rs" },
+    bigint_string: { filename: "bigint_string.rs" },
+    number_serializers: { filename: "number_serializers.rs" }
+};
+
+/**
+ * Scan all `.rs` files under `srcDir` for references to `crate::core::<module>`
+ * and return the set of module names that are actually used.
+ */
+async function detectCoreModuleReferences(srcDir: string): Promise<Set<string>> {
+    const found = new Set<string>();
+    const files = await collectRsFiles(srcDir);
+    for (const filePath of files) {
+        const content = await readFile(filePath, "utf-8");
+        for (const moduleName of Object.keys(CORE_MODULE_DEFS)) {
+            if (content.includes(`crate::core::${moduleName}`)) {
+                found.add(moduleName);
+            }
+        }
+    }
+    return found;
+}
+
+/**
+ * Recursively collect all `.rs` file paths under a directory.
+ */
+async function collectRsFiles(dir: string): Promise<string[]> {
+    const results: string[] = [];
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+            results.push(...await collectRsFiles(fullPath));
+        } else if (entry.isFile() && entry.name.endsWith(".rs")) {
+            results.push(fullPath);
+        }
+    }
+    return results;
+}
+
+/**
+ * Copy the needed core helper modules into `<typesOutputDir>/src/core/`
+ * and write a `mod.rs` that declares them.
+ *
+ * The source files are read from the rust-model generator's bundled
+ * `asIs/` directory (copied there by `build.mjs`).
+ */
+async function copyCoreModules(typesOutputDir: string, modules: Set<string>): Promise<void> {
+    const coreDir = path.join(typesOutputDir, "src", "core");
+    await mkdir(coreDir, { recursive: true });
+
+    const asIsDir = resolveAsIsDirectory();
+    const modLines: string[] = [];
+
+    for (const moduleName of modules) {
+        const def = CORE_MODULE_DEFS[moduleName];
+        if (def == null) {
+            continue;
+        }
+        const srcFile = path.join(asIsDir, def.filename);
+        const destFile = path.join(coreDir, def.filename);
+        await cp(srcFile, destFile);
+        modLines.push(`pub mod ${moduleName};`);
+    }
+
+    // Write core/mod.rs
+    modLines.push("");
+    await writeFile(path.join(coreDir, "mod.rs"), modLines.join("\n"));
+}
+
+/**
+ * Resolve the `asIs/` directory containing the static Rust helper modules.
+ *
+ * Resolution order (mirrors `resolveRustModelCli`):
+ *   1. Docker: `<scriptDir>/rust-model-dist/asIs/`
+ *   2. Monorepo dev: `@fern-api/rust-model` package's `dist/asIs/` or
+ *      the base package's `src/asIs/`.
+ */
+function resolveAsIsDirectory(): string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const scriptDir: string = import.meta.dirname ?? (typeof __dirname !== "undefined" ? __dirname : ".");
+
+    // 1. Docker / dist:cli build — asIs/ lives next to the bundled model CLI.
+    const bundled = path.resolve(scriptDir, "rust-model-dist", "asIs");
+    try {
+        accessSync(bundled, constants.R_OK);
+        return bundled;
+    } catch (_e: unknown) {
+        // fall through
+    }
+
+    // 2. Monorepo dev — resolve via @fern-api/rust-model dist/asIs or
+    //    fall back to @fern-api/rust-base src/asIs.
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        const base = import.meta.url || (typeof __filename !== "undefined" ? `file://${__filename}` : "file:///");
+        const require = createRequire(base);
+        const modelPkg = require.resolve("@fern-api/rust-model/package.json");
+        const modelRoot = path.dirname(modelPkg);
+        const modelAsIs = path.join(modelRoot, "dist", "asIs");
+        try {
+            accessSync(modelAsIs, constants.R_OK);
+            return modelAsIs;
+        } catch (_e: unknown) {
+            // dist not built yet — try source
+        }
+        // In development the base package's asIs dir is the canonical source.
+        const baseAsIs = path.resolve(modelRoot, "..", "base", "src", "asIs");
+        accessSync(baseAsIs, constants.R_OK);
+        return baseAsIs;
+    } catch (_e: unknown) {
+        // fall through
+    }
+
+    throw new Error(
+        "Could not resolve the asIs/ directory for core helper modules. " +
+            "Ensure `pnpm turbo run dist:cli --filter @fern-api/rust-model` has been run."
+    );
+}
 
 /**
  * Move all generated type `.rs` files (and `mod.rs`) into a `types/`

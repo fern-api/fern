@@ -1,0 +1,6 @@
+- summary: |
+    Fix compilation errors in the generated `-types` crate when datetime,
+    base64, bigint, or number serialization modules are referenced. The
+    types crate now includes the required `core/` module structure, chrono
+    dependency, and prelude re-exports.
+  type: fix
