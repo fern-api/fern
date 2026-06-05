@@ -133,7 +133,12 @@ export class OperationConverter extends AbstractOperationConverter {
             convertedRequestBodies != null ? convertedRequestBodies[0]?.inlinedPropertiesByAudience : undefined;
 
         const v2RequestBodies: V2HttpRequestBodies = {
-            requestBodies: convertedRequestBodies?.map((body) => body.requestBody)
+            requestBodies: convertedRequestBodies?.map((body, index) => {
+                if (index === 0 && unwrapPath != null && body.requestBody.type === "inlinedRequestBody") {
+                    return { ...body.requestBody, unwrapPath };
+                }
+                return body.requestBody;
+            })
         };
 
         const convertedResponseBody = this.convertResponseBody({

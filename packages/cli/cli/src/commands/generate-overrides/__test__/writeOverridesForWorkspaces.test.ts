@@ -70,7 +70,8 @@ function createMinimalEndpoint(overrides: {
         availability: undefined,
         source: undefined,
         namespace: undefined,
-        retries: undefined
+        retries: undefined,
+        requestBodyUnwrapPath: undefined
     };
 }
 
