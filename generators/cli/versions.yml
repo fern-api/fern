@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.10.0
+  changelogEntry:
+    - summary: |
+        Restructure generated README to follow progressive disclosure: TOC,
+        Install → Auth → Quick start → Usage → Documentation link → Advanced
+        (Common flags, Environment variables, Output formats, Shell completion
+        collapsed as subsections). Removes the --help dump from Usage.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
 - version: 0.9.1
   changelogEntry:
     - summary: |
