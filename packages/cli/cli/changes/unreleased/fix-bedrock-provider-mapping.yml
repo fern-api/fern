@@ -2,4 +2,4 @@
     The `ai.provider` field in `generators.yml` now uses BAML provider
     identifiers directly. `bedrock` has been renamed to `aws-bedrock`.
     Update your config: `provider: bedrock` → `provider: aws-bedrock`.
-  type: break
+  type: feat
