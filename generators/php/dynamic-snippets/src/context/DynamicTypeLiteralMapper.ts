@@ -288,11 +288,7 @@ export class DynamicTypeLiteralMapper {
         if (unionVariant.type === "singleProperty") {
             const singleProperty = unionProperties[0];
             if (singleProperty != null) {
-                return [
-                    ...requiredBaseFields,
-                    singleProperty.value,
-                    ...optionalBaseFields
-                ];
+                return [...requiredBaseFields, singleProperty.value, ...optionalBaseFields];
             }
         }
         if (unionVariant.type === "samePropertiesAsObject") {
