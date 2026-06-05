@@ -1,0 +1,7 @@
+- summary: |
+    Add support for the `x-fern-request-body-unwrap` OpenAPI extension. When set
+    on an operation (e.g. `x-fern-request-body-unwrap: "data.attributes"`), the
+    importer populates a new `unwrapPath` field on `InlinedRequestBody` in the IR,
+    enabling generators to flatten nested request body properties into the SDK
+    method signature while still serializing to the full nested wire format.
+  type: feat

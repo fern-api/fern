@@ -45,6 +45,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         generatedRequestName: core.serialization.string(),
         requestNameOverride: core.serialization.string().optional(),
         request: RequestWithExample.optional(),
+        requestBodyUnwrapPath: core.serialization.list(core.serialization.string()).optional(),
         response: ResponseWithExample.optional(),
         errors: core.serialization.record(StatusCode, HttpErrorWithExample),
         servers: core.serialization.list(HttpEndpointServer),
@@ -76,6 +77,7 @@ export declare namespace EndpointWithExample {
         generatedRequestName: string;
         requestNameOverride?: string | null;
         request?: RequestWithExample.Raw | null;
+        requestBodyUnwrapPath?: string[] | null;
         response?: ResponseWithExample.Raw | null;
         errors: Record<StatusCode.Raw, HttpErrorWithExample.Raw>;
         servers: HttpEndpointServer.Raw[];

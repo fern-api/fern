@@ -129,6 +129,7 @@ export function convertHttpRequestBody({
                     : [],
             extraProperties: request.body["extra-properties"] ?? false,
             extendedProperties: undefined,
+            unwrapPath: undefined,
             v2Examples: undefined
         });
     }

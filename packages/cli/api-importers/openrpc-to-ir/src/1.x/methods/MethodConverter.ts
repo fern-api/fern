@@ -190,6 +190,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                           extendedProperties: [],
                           contentType: "application/json",
                           extraProperties: false,
+                          unwrapPath: undefined,
                           v2Examples: undefined
                       })
                     : undefined,

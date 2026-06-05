@@ -19,6 +19,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples.js";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples.js";
 import { FernExplorerExtension } from "../../../extensions/x-fern-explorer.js";
+import { FernRequestBodyUnwrapExtension } from "../../../extensions/x-fern-request-body-unwrap.js";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming.js";
 import { ResponseBodyConverter } from "../ResponseBodyConverter.js";
 import { ResponseErrorConverter } from "../ResponseErrorConverter.js";
@@ -113,7 +114,19 @@ export class OperationConverter extends AbstractOperationConverter {
             streamingExtension: this.streamingExtension,
             queryParameters
         });
-        const requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
+        let requestBody = convertedRequestBodies != null ? convertedRequestBodies[0]?.requestBody : undefined;
+
+        const unwrapPath = new FernRequestBodyUnwrapExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation,
+            context: this.context
+        }).convert();
+        if (unwrapPath != null && requestBody != null && requestBody.type === "inlinedRequestBody") {
+            requestBody = {
+                ...requestBody,
+                unwrapPath
+            };
+        }
         const streamRequestBody =
             convertedRequestBodies != null ? convertedRequestBodies[0]?.streamRequestBody : undefined;
         const inlinedRequestPropertiesByAudience =

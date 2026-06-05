@@ -21,6 +21,7 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
         properties: core.serialization.list(InlinedRequestBodyProperty),
         extendedProperties: core.serialization.list(ObjectProperty).optional(),
         extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
+        unwrapPath: core.serialization.list(core.serialization.string()).optional(),
     })
     .extend(WithDocs)
     .extend(WithV2Examples)
@@ -33,5 +34,6 @@ export declare namespace InlinedRequestBody {
         properties: InlinedRequestBodyProperty.Raw[];
         extendedProperties?: ObjectProperty.Raw[] | null;
         "extra-properties": boolean;
+        unwrapPath?: string[] | null;
     }
 }

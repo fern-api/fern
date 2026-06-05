@@ -10,4 +10,13 @@ export interface InlinedRequestBody extends FernIr.WithDocs, FernIr.WithV2Exampl
     extendedProperties: FernIr.ObjectProperty[] | undefined;
     /** Whether to allow extra properties on the request. */
     extraProperties: boolean;
+    /**
+     * When set, generators flatten the properties of the nested object at
+     * this path into the SDK method signature, while still serializing to
+     * the full nested wire format. For example, ["data", "attributes"]
+     * means the properties of `requestBody.data.attributes` are presented
+     * as top-level parameters in the generated SDK method.
+     * Populated from the `x-fern-request-body-unwrap` OpenAPI extension.
+     */
+    unwrapPath: string[] | undefined;
 }
