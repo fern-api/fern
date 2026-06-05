@@ -6,18 +6,585 @@ settings:
 
 catalogs:
   default:
+    '@babel/core':
+      specifier: ^7.29.0
+      version: 7.29.0
+    '@babel/preset-env':
+      specifier: ^7.29.5
+      version: 7.29.5
+    '@babel/preset-typescript':
+      specifier: ^7.28.5
+      version: 7.28.5
+    '@biomejs/biome':
+      specifier: 2.4.10
+      version: 2.4.10
+    '@blueprintjs/eslint-plugin':
+      specifier: ^6.1.24
+      version: 6.1.24
+    '@blueprintjs/stylelint-plugin':
+      specifier: ^4.1.14
+      version: 4.1.18
     '@boundaryml/baml':
       specifier: ^0.219.0
       version: 0.219.0
+    '@bufbuild/protobuf':
+      specifier: ^2.2.5
+      version: 2.2.5
+    '@bufbuild/protoplugin':
+      specifier: 2.2.5
+      version: 2.2.5
+    '@fern-api/fai-sdk':
+      specifier: 0.0.6-2ee1b7e28
+      version: 0.0.6-2ee1b7e28
+    '@fern-api/generator-cli':
+      specifier: 0.9.35
+      version: 0.9.35
+    '@fern-api/venus-api-sdk':
+      specifier: 0.22.34
+      version: 0.22.34
+    '@fern-fern/docs-config':
+      specifier: 0.0.80
+      version: 0.0.80
+    '@fern-fern/fdr-test-sdk':
+      specifier: ^0.0.5297
+      version: 0.0.5297
+    '@fern-fern/fiddle-sdk':
+      specifier: 1.1.0
+      version: 1.1.0
+    '@fern-fern/generator-exec-sdk':
+      specifier: ^0.0.1167
+      version: 0.0.1167
+    '@fern-fern/generators-sdk':
+      specifier: 0.114.0-5745f9e74
+      version: 0.114.0-5745f9e74
+    '@fern-fern/ir-v53-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v54-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v55-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v56-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v57-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v58-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v59-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v60-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v61-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v62-sdk':
+      specifier: 1.0.1
+      version: 1.0.1
+    '@fern-fern/ir-v63-sdk':
+      specifier: 1.0.2
+      version: 1.0.2
+    '@fern-fern/ir-v65-sdk':
+      specifier: 0.0.5
+      version: 0.0.5
+    '@fern-fern/ir-v66-sdk':
+      specifier: 0.0.1
+      version: 0.0.1
+    '@fern-fern/legacy-docs-config':
+      specifier: 0.0.58
+      version: 0.0.58
+    '@inquirer/prompts':
+      specifier: ^7.1.0
+      version: 7.10.1
+    '@octokit/rest':
+      specifier: ^22.0.1
+      version: 22.0.1
+    '@open-rpc/meta-schema':
+      specifier: ^1.14.9
+      version: 1.14.9
+    '@redocly/openapi-core':
+      specifier: ^1.4.1
+      version: 1.34.11
+    '@rolldown/binding-darwin-arm64':
+      specifier: 1.0.0
+      version: 1.0.0
+    '@sentry/cli':
+      specifier: ^2.42.2
+      version: 2.58.5
+    '@types/cli-progress':
+      specifier: ^3.11.6
+      version: 3.11.6
+    '@types/cors':
+      specifier: ^2.8.13
+      version: 2.8.19
+    '@types/decompress':
+      specifier: ^4.2.7
+      version: 4.2.7
+    '@types/diff':
+      specifier: ^5.2.1
+      version: 5.2.3
+    '@types/estree':
+      specifier: ^1.0.6
+      version: 1.0.8
+    '@types/estree-jsx':
+      specifier: ^1.0.5
+      version: 1.0.5
+    '@types/esutils':
+      specifier: ^2.0.0
+      version: 2.0.2
+    '@types/express':
+      specifier: ^4.17.21
+      version: 4.17.25
+    '@types/fast-levenshtein':
+      specifier: ^0.0.4
+      version: 0.0.4
+    '@types/fs-extra':
+      specifier: ^11.0.1
+      version: 11.0.4
+    '@types/hast':
+      specifier: ^3.0.4
+      version: 3.0.4
+    '@types/inquirer':
+      specifier: ^9.0.7
+      version: 9.0.9
+    '@types/is-ci':
+      specifier: ^3.0.4
+      version: 3.0.4
+    '@types/js-yaml':
+      specifier: ^4.0.8
+      version: 4.0.9
+    '@types/json-schema':
+      specifier: ^7.0.15
+      version: 7.0.15
+    '@types/jsonwebtoken':
+      specifier: ^9.0.6
+      version: 9.0.10
+    '@types/lodash':
+      specifier: ^4.17.24
+      version: 4.17.24
+    '@types/lodash-es':
+      specifier: ^4.17.12
+      version: 4.17.12
+    '@types/mdast':
+      specifier: ^4.0.4
+      version: 4.0.4
+    '@types/mime-types':
+      specifier: ^2.1.4
+      version: 2.1.4
     '@types/node':
       specifier: 22.19.17
       version: 22.19.17
+    '@types/node-fetch':
+      specifier: 2.6.13
+      version: 2.6.13
+    '@types/number-to-words':
+      specifier: 1.2.3
+      version: 1.2.3
+    '@types/object-hash':
+      specifier: ^3.0.6
+      version: 3.0.6
+    '@types/pngjs':
+      specifier: ^6.0.5
+      version: 6.0.5
+    '@types/prettier2':
+      specifier: npm:@types/prettier@^2.7.3
+      version: 2.7.3
+    '@types/qs':
+      specifier: 6.15.0
+      version: 6.15.0
+    '@types/semver':
+      specifier: ^7.5.8
+      version: 7.7.1
+    '@types/stream-json':
+      specifier: ^1.7.7
+      version: 1.7.8
+    '@types/swagger2openapi':
+      specifier: ^7.0.4
+      version: 7.0.4
+    '@types/tar':
+      specifier: ^6.1.11
+      version: 6.1.13
+    '@types/tinycolor2':
+      specifier: ^1.4.6
+      version: 1.4.6
+    '@types/title':
+      specifier: ^3.4.3
+      version: 3.4.3
+    '@types/ua-parser-js':
+      specifier: ^0.7.39
+      version: 0.7.39
+    '@types/unist':
+      specifier: ^3.0.3
+      version: 3.0.3
+    '@types/validate-npm-package-name':
+      specifier: ^4.0.0
+      version: 4.0.2
+    '@types/whatwg-mimetype':
+      specifier: ^3.0.2
+      version: 3.0.2
+    '@types/ws':
+      specifier: ^8.5.10
+      version: 8.18.1
+    '@types/xml2js':
+      specifier: ^0.4.14
+      version: 0.4.14
+    '@types/yauzl':
+      specifier: ^2.10.3
+      version: 2.10.3
+    '@types/yazl':
+      specifier: ^3.3.0
+      version: 3.3.1
+    '@vitest/coverage-v8':
+      specifier: 4.1.4
+      version: 4.1.4
+    '@wasm-fmt/gofmt':
+      specifier: ^0.4.9
+      version: 0.4.9
+    '@wasm-fmt/ruff_fmt':
+      specifier: ^0.6.1
+      version: 0.6.1
+    ajv-formats:
+      specifier: ^3.0.1
+      version: 3.0.1
+    ansi-escapes:
+      specifier: ^5.0.0
+      version: 5.0.0
+    axios:
+      specifier: ^1.16.0
+      version: 1.16.0
+    boxen:
+      specifier: ^7.1.1
+      version: 7.1.1
+    chalk:
+      specifier: ^5.3.0
+      version: 5.6.2
+    chardet:
+      specifier: ^2.0.0
+      version: 2.1.1
+    cli-progress:
+      specifier: ^3.12.0
+      version: 3.12.0
+    console-table-printer:
+      specifier: ^2.12.0
+      version: 2.15.0
+    cors:
+      specifier: ^2.8.5
+      version: 2.8.6
+    cross-env:
+      specifier: ^10.1.0
+      version: 10.1.0
+    cspell:
+      specifier: ^9.6.4
+      version: 9.8.0
+    dayjs:
+      specifier: ^1.11.20
+      version: 1.11.20
+    decompress:
+      specifier: ^4.2.1
+      version: 4.2.1
+    dedent:
+      specifier: ^1.7.2
+      version: 1.7.2
+    diff:
+      specifier: ^8.0.4
+      version: 8.0.4
+    domhandler:
+      specifier: ^5.0.3
+      version: 5.0.3
+    es-toolkit:
+      specifier: ^1.45.1
+      version: 1.45.1
+    esbuild:
+      specifier: ^0.27.3
+      version: 0.27.7
+    esbuild-plugin-polyfill-node:
+      specifier: ^0.3.0
+      version: 0.3.0
+    eslint:
+      specifier: ^9.26.0
+      version: 9.39.4
+    estree-walker:
+      specifier: ^3.0.3
+      version: 3.0.3
+    esutils:
+      specifier: ^2.0.3
+      version: 2.0.3
+    express:
+      specifier: ^4.22.0
+      version: 4.22.1
+    fast-levenshtein:
+      specifier: ^3.0.0
+      version: 3.0.0
+    file-type:
+      specifier: ^21.3.4
+      version: 21.3.4
+    find-up:
+      specifier: ^6.3.0
+      version: 6.3.0
+    fs-extra:
+      specifier: ^11.3.4
+      version: 11.3.4
+    glob:
+      specifier: ^11.1.0
+      version: 11.1.0
+    graphql:
+      specifier: ^16.13.2
+      version: 16.13.2
+    gray-matter:
+      specifier: ^4.0.3
+      version: 4.0.3
+    hast-util-to-mdast:
+      specifier: ^10.1.0
+      version: 10.1.2
+    heap-js:
+      specifier: ^2.6.0
+      version: 2.7.1
+    htmlparser2:
+      specifier: ^9.0.0
+      version: 9.1.0
+    husky:
+      specifier: ^9.1.7
+      version: 9.1.7
+    image-size:
+      specifier: ^1.2.1
+      version: 1.2.1
+    is-ci:
+      specifier: ^3.0.1
+      version: 3.0.1
+    js-yaml:
+      specifier: ^4.1.1
+      version: 4.1.1
+    js-yaml-source-map:
+      specifier: ^0.2.2
+      version: 0.2.2
+    json-schema:
+      specifier: ^0.4.0
+      version: 0.4.0
+    json-stream-stringify:
+      specifier: ^3.1.4
+      version: 3.1.6
+    jsonpath-plus:
+      specifier: 10.4.0
+      version: 10.4.0
+    jsonwebtoken:
+      specifier: ^9.0.2
+      version: 9.0.3
+    jwks-rsa:
+      specifier: ^3.1.0
+      version: 3.2.2
+    knip:
+      specifier: ^5.84.1
+      version: 5.88.1
+    latest-version:
+      specifier: ^9.0.0
+      version: 9.0.0
+    lodash-es:
+      specifier: ^4.18.1
+      version: 4.18.1
+    mdast-util-from-markdown:
+      specifier: ^2.0.3
+      version: 2.0.3
+    mdast-util-gfm:
+      specifier: ^3.0.0
+      version: 3.1.0
+    mdast-util-math:
+      specifier: ^3.0.0
+      version: 3.0.0
+    mdast-util-mdx:
+      specifier: ^3.0.0
+      version: 3.0.0
+    mdast-util-mdx-expression:
+      specifier: ^2.0.1
+      version: 2.0.1
+    mdast-util-to-hast:
+      specifier: ^13.2.0
+      version: 13.2.1
+    memfs:
+      specifier: ^3.4.1
+      version: 3.5.3
+    micromark-extension-gfm:
+      specifier: ^3.0.0
+      version: 3.0.0
+    micromark-extension-math:
+      specifier: ^3.1.0
+      version: 3.1.0
+    micromark-extension-mdxjs:
+      specifier: ^3.0.0
+      version: 3.0.0
+    mime-types:
+      specifier: ^2.1.35
+      version: 2.1.35
+    moment:
+      specifier: ^2.30.1
+      version: 2.30.1
+    next-mdx-remote:
+      specifier: ^6.0.0
+      version: 6.0.0
+    node-fetch:
+      specifier: 2.7.0
+      version: 2.7.0
+    number-to-words:
+      specifier: 1.2.4
+      version: 1.2.4
+    object-hash:
+      specifier: ^3.0.0
+      version: 3.0.0
+    open:
+      specifier: ^11.0.0
+      version: 11.0.0
+    ora:
+      specifier: ^7.0.1
+      version: 7.0.1
+    package-json-type:
+      specifier: ^1.0.3
+      version: 1.1.2
+    path-to-regexp:
+      specifier: 6.3.0
+      version: 6.3.0
+    pixelmatch:
+      specifier: ^6.0.0
+      version: 6.0.0
+    pngjs:
+      specifier: ^7.0.0
+      version: 7.0.0
+    prettier:
+      specifier: ^3.8.1
+      version: 3.8.1
+    prettier2:
+      specifier: npm:prettier@^2.7.1
+      version: 2.8.8
+    pretty-ms:
+      specifier: ^9.0.0
+      version: 9.3.0
+    puppeteer:
+      specifier: ^24.40.0
+      version: 24.40.0
+    rehype-katex:
+      specifier: ^7.0.0
+      version: 7.0.1
+    rehype-parse:
+      specifier: ^9.0.0
+      version: 9.0.1
+    remark-gfm:
+      specifier: ^4.0.0
+      version: 4.0.1
+    remark-math:
+      specifier: ^6.0.0
+      version: 6.0.0
+    remark-mdx:
+      specifier: ^3.0.1
+      version: 3.1.1
+    remark-stringify:
+      specifier: ^11.0.0
+      version: 11.0.0
+    semver-diff:
+      specifier: ^4.0.0
+      version: 4.0.0
+    simple-git:
+      specifier: ^3.36.0
+      version: 3.36.0
+    sort-package-json:
+      specifier: 3.6.1
+      version: 3.6.1
+    stream-json:
+      specifier: ^1.8.0
+      version: 1.9.1
+    strip-ansi:
+      specifier: ^7.2.0
+      version: 7.2.0
+    stylelint-config-prettier-scss:
+      specifier: ^0.0.1
+      version: 0.0.1
+    stylelint-config-standard-scss:
+      specifier: ^5.0.0
+      version: 5.0.0
+    swagger2openapi:
+      specifier: 7.0.8
+      version: 7.0.8
+    tar:
+      specifier: ^7.5.13
+      version: 7.5.13
+    terminal-link:
+      specifier: ^3.0.0
+      version: 3.0.0
+    tinycolor2:
+      specifier: ^1.6.0
+      version: 1.6.0
+    title:
+      specifier: ^3.5.3
+      version: 3.5.3
+    tmp-promise:
+      specifier: ^3.0.3
+      version: 3.0.3
+    ts-morph:
+      specifier: ^27.0.2
+      version: 27.0.2
+    ts-poet:
+      specifier: ^6.7.0
+      version: 6.12.0
+    tsdown:
+      specifier: 0.22.0
+      version: 0.22.0
+    tsup:
+      specifier: ^8.5.1
+      version: 8.5.1
+    tsx:
+      specifier: ^4.21.0
+      version: 4.21.0
+    turbo:
+      specifier: ^2.9.14
+      version: 2.9.14
     typescript:
       specifier: 5.9.3
       version: 5.9.3
+    ua-parser-js:
+      specifier: ^1.0.37
+      version: 1.0.41
+    undici:
+      specifier: ^6.24.0
+      version: 6.24.1
+    unified:
+      specifier: ^11.0.5
+      version: 11.0.5
+    unist-util-visit:
+      specifier: ^5.0.0
+      version: 5.1.0
+    uuid:
+      specifier: ^14.0.0
+      version: 14.0.0
+    validate-npm-package-name:
+      specifier: ^5.0.1
+      version: 5.0.1
     vitest:
       specifier: 4.1.4
       version: 4.1.4
+    watcher:
+      specifier: ^2.3.1
+      version: 2.3.1
+    whatwg-mimetype:
+      specifier: ^4.0.0
+      version: 4.0.0
+    ws:
+      specifier: ^8.20.1
+      version: 8.20.1
+    xml2js:
+      specifier: ^0.6.2
+      version: 0.6.2
+    yaml:
+      specifier: ^2.8.3
+      version: 2.8.3
+    yazl:
+      specifier: ^3.3.1
+      version: 3.3.1
+    zod:
+      specifier: ^3.22.3
+      version: 3.25.76
 
 overrides:
   ajv: 8.18.0
@@ -3152,7 +3719,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 4.1.4(@types/node@22.19.17)(vite@7.3.2(@types/node@22.19.17))
+        version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
     optionalDependencies:
       '@boundaryml/baml':
         specifier: 'catalog:'
@@ -17593,14 +18160,6 @@ snapshots:
     optionalDependencies:
       vite: 7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3)
 
-  '@vitest/mocker@4.1.4(vite@7.3.2(@types/node@22.19.17))':
-    dependencies:
-      '@vitest/spy': 4.1.4
-      estree-walker: 3.0.3
-      magic-string: 0.30.21
-    optionalDependencies:
-      vite: 7.3.2(@types/node@22.19.17)
-
   '@vitest/pretty-format@4.1.4':
     dependencies:
       tinyrainbow: 3.1.0
@@ -22149,18 +22708,6 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@7.3.2(@types/node@22.19.17):
-    dependencies:
-      esbuild: 0.27.7
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
-      postcss: 8.5.14
-      rollup: 4.60.4
-      tinyglobby: 0.2.16
-    optionalDependencies:
-      '@types/node': 22.19.17
-      fsevents: 2.3.3
-
   vite@7.3.2(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3):
     dependencies:
       esbuild: 0.27.7
@@ -22202,33 +22749,6 @@ snapshots:
       '@opentelemetry/api': 1.9.1
       '@types/node': 22.19.17
       '@vitest/coverage-v8': 4.1.4(vitest@4.1.4)
-    transitivePeerDependencies:
-      - msw
-
-  vitest@4.1.4(@types/node@22.19.17)(vite@7.3.2(@types/node@22.19.17)):
-    dependencies:
-      '@vitest/expect': 4.1.4
-      '@vitest/mocker': 4.1.4(vite@7.3.2(@types/node@22.19.17))
-      '@vitest/pretty-format': 4.1.4
-      '@vitest/runner': 4.1.4
-      '@vitest/snapshot': 4.1.4
-      '@vitest/spy': 4.1.4
-      '@vitest/utils': 4.1.4
-      es-module-lexer: 2.0.0
-      expect-type: 1.3.0
-      magic-string: 0.30.21
-      obug: 2.1.1
-      pathe: 2.0.3
-      picomatch: 4.0.4
-      std-env: 4.0.0
-      tinybench: 2.9.0
-      tinyexec: 1.1.2
-      tinyglobby: 0.2.16
-      tinyrainbow: 3.1.0
-      vite: 7.3.2(@types/node@22.19.17)
-      why-is-node-running: 2.3.0
-    optionalDependencies:
-      '@types/node': 22.19.17
     transitivePeerDependencies:
       - msw
 
