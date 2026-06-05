@@ -9,7 +9,7 @@ enum Example17 {
         )
 
         _ = try await client.playlist.updatePlaylist(
-            serviceParam: 1,
+            serviceParam: "1",
             playlistId: "playlistId",
             request: UpdatePlaylistRequest(
                 name: "name",

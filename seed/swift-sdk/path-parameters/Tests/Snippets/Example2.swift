@@ -6,6 +6,7 @@ enum Example2 {
         let client = PathParametersClient(baseURL: "https://api.fern.com")
 
         _ = try await client.organizations.searchOrganizations(
+            tenantId: "tenant_id",
             organizationId: "organization_id",
             limit: 1
         )

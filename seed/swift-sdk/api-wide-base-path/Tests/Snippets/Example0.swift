@@ -8,7 +8,7 @@ enum Example0 {
         _ = try await client.service.post(
             pathParam: "pathParam",
             serviceParam: "serviceParam",
-            endpointParam: 1,
+            endpointParam: "1",
             resourceParam: "resourceParam"
         )
     }

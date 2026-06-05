@@ -9,7 +9,7 @@ enum Example12 {
         )
 
         _ = try await client.playlist.createPlaylist(
-            serviceParam: 1,
+            serviceParam: "1",
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             request: PlaylistCreateRequest(

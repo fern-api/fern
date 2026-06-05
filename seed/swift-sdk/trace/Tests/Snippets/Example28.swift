@@ -9,8 +9,8 @@ enum Example28 {
         )
 
         _ = try await client.sysprop.setNumWarmInstances(
-            language: .java,
-            numWarmInstances: 1
+            language: "JAVA",
+            numWarmInstances: "1"
         )
     }
 }
