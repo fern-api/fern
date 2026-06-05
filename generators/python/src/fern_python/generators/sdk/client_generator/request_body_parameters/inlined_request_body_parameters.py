@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional, Tuple, Union
 
+import fern.ir.resources as ir_types
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
@@ -7,14 +8,13 @@ from .flattened_request_body_parameter_utils import (
     are_any_properties_optional_in_inlined_request,
     get_json_body_for_inlined_request,
 )
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
     NamedFunctionParameter,
 )
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
-
-import fern.ir.resources as ir_types
 
 
 class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
@@ -98,6 +98,25 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
         return self._context.get_literal_value(reference=type_reference) is not None
 
+    def _is_auto_fill_property(self, type_reference: ir_types.TypeReference) -> bool:
+        if self._is_type_literal(type_reference):
+            return True
+        return self._get_single_value_enum(type_reference) is not None
+
+    def _get_single_value_enum(self, type_reference: ir_types.TypeReference) -> Optional[str]:
+        type_union = type_reference.get_as_union()
+        if type_union.type != "named":
+            return None
+        try:
+            decl = self._context.pydantic_generator_context.get_declaration_for_type_id(type_union.type_id)
+            shape = decl.shape.get_as_union()
+            if shape.type == "enum" and len(shape.values) == 1:
+                val = shape.values[0]
+                return get_wire_value(val.name)
+            return None
+        except (RuntimeError, AttributeError):
+            return None
+
     def _get_all_properties_for_inlined_request_body(self) -> List[ir_types.InlinedRequestBodyProperty]:
         unwrap_path = self._get_unwrap_path()
         if unwrap_path is not None:
@@ -129,7 +148,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         path_root = unwrap_path[0]
 
         for prop in all_top_level:
-            if get_wire_value(prop.name) != path_root:
+            if get_wire_value(prop.name) != path_root and not self._is_auto_fill_property(prop.value_type):
                 result.append(prop)
 
         path_prop = next((p for p in all_top_level if get_wire_value(p.name) == path_root), None)
@@ -150,19 +169,18 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         leaf_props = self._resolve_object_properties(current_type_ref)
         if leaf_props is not None:
             for prop in leaf_props:
-                result.append(
-                    ir_types.InlinedRequestBodyProperty(
-                        name=prop.name,
-                        value_type=prop.value_type,
-                        docs=prop.docs,
+                if not self._is_auto_fill_property(prop.value_type):
+                    result.append(
+                        ir_types.InlinedRequestBodyProperty(
+                            name=prop.name,
+                            value_type=prop.value_type,
+                            docs=prop.docs,
+                        )
                     )
-                )
 
         return result
 
-    def _resolve_object_properties(
-        self, type_ref: ir_types.TypeReference
-    ) -> Optional[List[ir_types.ObjectProperty]]:
+    def _resolve_object_properties(self, type_ref: ir_types.TypeReference) -> Optional[List[ir_types.ObjectProperty]]:
         type_union = type_ref.get_as_union()
         if type_union.type != "named":
             return None
@@ -205,11 +223,10 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
             if props is None:
                 return get_json_body_for_inlined_request(context, self._get_properties())
 
-            literal_props = [
-                p for p in props
-                if get_wire_value(p.name) != segment and self._is_type_literal(p.value_type)
+            auto_fill_props = [
+                p for p in props if get_wire_value(p.name) != segment and self._is_auto_fill_property(p.value_type)
             ]
-            intermediate_levels.append((literal_props, segment))
+            intermediate_levels.append((auto_fill_props, segment))
 
             next_prop = next((p for p in props if get_wire_value(p.name) == segment), None)
             if next_prop is None:
@@ -225,9 +242,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 param_by_wire[p.raw_name] = p
 
         def write_param(writer: AST.NodeWriter, param: NamedFunctionParameter) -> None:
-            possible_literal = (
-                context.get_literal_value(param.raw_type) if param.raw_type is not None else None
-            )
+            possible_literal = context.get_literal_value(param.raw_type) if param.raw_type is not None else None
             if possible_literal is not None and type(possible_literal) is str:
                 writer.write_line(f'"{param.raw_name}": "{possible_literal}",')
             elif possible_literal is not None and type(possible_literal) is bool:
@@ -260,21 +275,25 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 else:
                     writer.write_line(f"{param.name},")
 
-        def write_literal_prop(writer: AST.NodeWriter, prop: ir_types.ObjectProperty) -> None:
+        def write_auto_fill_prop(writer: AST.NodeWriter, prop: ir_types.ObjectProperty) -> None:
             wire = get_wire_value(prop.name)
             lit_val = context.get_literal_value(reference=prop.value_type)
             if lit_val is not None and type(lit_val) is str:
                 writer.write_line(f'"{wire}": "{lit_val}",')
             elif lit_val is not None and type(lit_val) is bool:
                 writer.write_line(f'"{wire}": {lit_val},')
+            else:
+                enum_val = self._get_single_value_enum(prop.value_type)
+                if enum_val is not None:
+                    writer.write_line(f'"{wire}": "{enum_val}",')
 
         def write_ir_prop(writer: AST.NodeWriter, prop_ir: ir_types.ObjectProperty) -> None:
             wire = get_wire_value(prop_ir.name)
             param = param_by_wire.get(wire)
             if param is not None:
                 write_param(writer, param)
-            elif self._is_type_literal(prop_ir.value_type):
-                write_literal_prop(writer, prop_ir)
+            elif self._is_auto_fill_property(prop_ir.value_type):
+                write_auto_fill_prop(writer, prop_ir)
 
         def write_nested(writer: AST.NodeWriter, depth: int) -> None:
             if depth >= len(intermediate_levels):
@@ -282,9 +301,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     write_ir_prop(writer, prop_ir)
                 return
 
-            lit_props, next_segment = intermediate_levels[depth]
-            for lp in lit_props:
-                write_literal_prop(writer, lp)
+            auto_fill_at_depth, next_segment = intermediate_levels[depth]
+            for lp in auto_fill_at_depth:
+                write_auto_fill_prop(writer, lp)
 
             writer.write(f'"{next_segment}": ')
             writer.write_line("{")
@@ -300,12 +319,8 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     param = param_by_wire.get(wire)
                     if param is not None:
                         write_param(writer, param)
-                    elif self._is_type_literal(prop_ir.value_type):
-                        lit_val = context.get_literal_value(reference=prop_ir.value_type)
-                        if lit_val is not None and type(lit_val) is str:
-                            writer.write_line(f'"{wire}": "{lit_val}",')
-                        elif lit_val is not None and type(lit_val) is bool:
-                            writer.write_line(f'"{wire}": {lit_val},')
+                    elif self._is_auto_fill_property(prop_ir.value_type):
+                        write_auto_fill_prop(writer, prop_ir)
 
                 writer.write(f'"{path_root}": ')
                 writer.write_line("{")

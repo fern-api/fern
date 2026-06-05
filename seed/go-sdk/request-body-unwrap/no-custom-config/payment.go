@@ -57,6 +57,7 @@ func (c *CreatePaymentRequest) SetDescription(description *string) {
 func (c *CreatePaymentRequest) MarshalJSON() ([]byte, error) {
 	body := make(map[string]interface{})
 	level0 := make(map[string]interface{})
+	level0["type"] = "payment"
 	leaf := make(map[string]interface{})
 	leaf["amount"] = c.Amount
 	leaf["currency"] = c.Currency

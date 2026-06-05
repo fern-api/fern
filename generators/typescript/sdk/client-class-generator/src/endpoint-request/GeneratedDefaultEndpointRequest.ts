@@ -457,18 +457,18 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             const nextPathSegment = nextLevel.pathSegment;
             const assignments: ts.ObjectLiteralElementLike[] = [];
 
-            // Only include literal properties at intermediate levels — non-literal
-            // non-path properties are not exposed in the SDK interface.
+            // Include auto-fillable properties (literals, single-value enums)
+            // at intermediate levels — they are not exposed in the SDK interface.
             for (const prop of level.properties) {
                 if (getWireValue(prop.name) === nextPathSegment) {
                     continue;
                 }
-                const resolvedType = context.type.resolveTypeReference(prop.valueType);
-                if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                const autoFillExpr = this.getAutoFillExpression(prop, context);
+                if (autoFillExpr != null) {
                     assignments.push(
                         ts.factory.createPropertyAssignment(
                             ts.factory.createStringLiteral(getWireValue(prop.name)),
-                            this.createLiteralExpression(resolvedType.container.literal)
+                            autoFillExpr
                         )
                     );
                 }
@@ -525,6 +525,39 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 throw new Error("Encountered non-boolean, non-string literal");
             }
         });
+    }
+
+    /**
+     * Returns a constant expression if the property can be auto-filled:
+     * either a container.literal or a single-value enum.
+     */
+    private getAutoFillExpression(
+        prop: FernIr.ObjectProperty,
+        context: FileContext
+    ): ts.Expression | undefined {
+        const resolvedType = context.type.resolveTypeReference(prop.valueType);
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return this.createLiteralExpression(resolvedType.container.literal);
+        }
+        if (prop.valueType.type === "named") {
+            const typeDecl = context.type.getTypeDeclaration({
+                typeId: prop.valueType.typeId,
+                fernFilepath: prop.valueType.fernFilepath,
+                name: prop.valueType.name,
+                displayName: prop.valueType.displayName
+            });
+            if (typeDecl?.shape.type === "enum" && typeDecl.shape.values.length === 1) {
+                const singleValue = typeDecl.shape.values[0];
+                if (singleValue != null) {
+                    const wireValue =
+                        typeof singleValue.name === "string"
+                            ? singleValue.name
+                            : getWireValue(singleValue.name);
+                    return ts.factory.createStringLiteral(wireValue);
+                }
+            }
+        }
+        return undefined;
     }
 
     public getReferenceToRequestBody(context: FileContext): ts.Expression | undefined {

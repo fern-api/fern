@@ -377,7 +377,6 @@ allowedFailures:
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline
 
   # Dynamic snippet generation produces code that does not compile.
-  - request-body-unwrap # v2 dynamic snippets use nested struct literal but v1 generates flat struct with unwrapPath
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
 
   # Wire tests fail at runtime.

@@ -53,6 +53,7 @@ class RawPaymentClient:
             method="POST",
             json={
                 "data": {
+                    "type": "payment",
                     "attributes": {
                         "amount": amount,
                         "currency": currency,
@@ -162,6 +163,7 @@ class AsyncRawPaymentClient:
             method="POST",
             json={
                 "data": {
+                    "type": "payment",
                     "attributes": {
                         "amount": amount,
                         "currency": currency,

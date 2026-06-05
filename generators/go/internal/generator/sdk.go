@@ -4642,6 +4642,37 @@ func resolveObjectProperties(typeRef *ir.TypeReference, types map[common.TypeId]
 	return typeDecl.Shape.Object.Properties
 }
 
+// getSingleValueEnumWireValue returns the wire value if the type reference points to
+// a single-value enum, or empty string otherwise.
+func getSingleValueEnumWireValue(typeRef *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) string {
+	if typeRef == nil || typeRef.Named == nil {
+		return ""
+	}
+	typeDecl, ok := types[typeRef.Named.TypeId]
+	if !ok || typeDecl.Shape == nil || typeDecl.Shape.Enum == nil {
+		return ""
+	}
+	if len(typeDecl.Shape.Enum.Values) == 1 {
+		return typeDecl.Shape.Enum.Values[0].Name.WireValue
+	}
+	return ""
+}
+
+// getAutoFillValue returns the Go source literal if the type reference can be
+// auto-filled (literal or single-value enum), or empty string otherwise.
+func getAutoFillValue(typeRef *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) string {
+	if isTypeReferenceLiteral(typeRef) {
+		lit := extractLiteralValue(typeRef)
+		if lit != nil {
+			return literalToValue(lit)
+		}
+	}
+	if wv := getSingleValueEnumWireValue(typeRef, types); wv != "" {
+		return fmt.Sprintf("%q", wv)
+	}
+	return ""
+}
+
 // getUnwrapPath extracts the unwrapPath from the inlined request body's extra properties.
 func getUnwrapPath(inlinedRequestBody *ir.InlinedRequestBody) []string {
 	extras := inlinedRequestBody.GetExtraProperties()
@@ -4677,15 +4708,19 @@ func getUnwrappedBodyObjectProperties(
 	var result []*ir.ObjectProperty
 	pathRoot := unwrapPath[0]
 
-	// Top-level non-path properties
+	// Top-level non-path, non-auto-fill properties
 	for _, prop := range inlinedRequestBody.Properties {
-		if prop.Name.WireValue != pathRoot {
-			result = append(result, &ir.ObjectProperty{
-				Docs:      prop.Docs,
-				Name:      prop.Name,
-				ValueType: prop.ValueType,
-			})
+		if prop.Name.WireValue == pathRoot {
+			continue
 		}
+		if getAutoFillValue(prop.ValueType, types) != "" {
+			continue
+		}
+		result = append(result, &ir.ObjectProperty{
+			Docs:      prop.Docs,
+			Name:      prop.Name,
+			ValueType: prop.ValueType,
+		})
 	}
 
 	// Walk to the leaf type
@@ -4719,9 +4754,14 @@ func getUnwrappedBodyObjectProperties(
 		}
 	}
 
-	// Add leaf properties
+	// Add leaf properties (excluding auto-fillable ones)
 	leafProps := resolveObjectProperties(currentTypeRef, types)
-	result = append(result, leafProps...)
+	for _, p := range leafProps {
+		if getAutoFillValue(p.ValueType, types) != "" {
+			continue
+		}
+		result = append(result, p)
+	}
 	return result
 }
 
@@ -4816,17 +4856,14 @@ func writeUnwrappedMarshalJSON(
 
 		f.P(varName, " := make(map[string]interface{})")
 
-		// Add literal properties at this level (excluding the path segment property)
+		// Add auto-fillable properties (literals, single-value enums) at this level
 		objProps := resolveObjectProperties(currentTypeRef, f.types)
 		for _, p := range objProps {
 			if p.Name.WireValue == segment {
 				continue
 			}
-			if isTypeReferenceLiteral(p.ValueType) {
-				lit := extractLiteralValue(p.ValueType)
-				if lit != nil {
-					f.P(varName, `["`, p.Name.WireValue, `"] = `, literalToValue(lit))
-				}
+			if val := getAutoFillValue(p.ValueType, f.types); val != "" {
+				f.P(varName, `["`, p.Name.WireValue, `"] = `, val)
 			}
 		}
 

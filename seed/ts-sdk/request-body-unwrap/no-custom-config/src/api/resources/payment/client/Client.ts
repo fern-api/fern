@@ -61,6 +61,7 @@ export class PaymentClient {
             requestType: "json",
             body: {
                 data: {
+                    type: "payment",
                     attributes: {
                         amount: request.amount,
                         currency: request.currency,
