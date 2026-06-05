@@ -1,8 +1,10 @@
-import type { APIV1Write } from "@fern-api/fdr-sdk";
-import type { FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 import { createHash } from "crypto";
 import { describe, expect, it } from "vitest";
 import { buildLedgerInput } from "../publishDocsLedger.js";
+
+type BuildLedgerInputArgs = Parameters<typeof buildLedgerInput>[0];
+type ApiDefinition = BuildLedgerInputArgs["apiDefinitions"] extends Map<string, infer T> ? T : never;
+type FileManifestEntry = NonNullable<BuildLedgerInputArgs["fileManifest"]>[string];
 
 function sha256(data: string): string {
     return createHash("sha256").update(Buffer.from(data, "utf-8")).digest("hex");
@@ -48,6 +50,28 @@ describe("buildLedgerInput", () => {
             contentLength: Buffer.byteLength(markdown, "utf-8")
         });
         expect(blobs.has(expectedHash)).toBe(true);
+    });
+
+    it("rewrites legacy FileId markdown refs to path refs before hashing page blobs", () => {
+        const fileId = "5ea17f4b-98bd-4d97-a07b-e92a314825d0";
+        const fullPath = "docs/assets/docs/astro-hypervisor.svg";
+        const markdown = `![Diagram](file:${fileId})\n<img src="file:${fileId}" />`;
+        const expectedMarkdown = `![Diagram](file:${fullPath})\n<img src="file:${fullPath}" />`;
+        const { localeEntry, blobs } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition({ pages: { "page-1": { markdown } } }),
+            apiDefinitions: new Map(),
+            fileIdToPath: new Map([[fileId, fullPath]])
+        });
+
+        const expectedHash = sha256(expectedMarkdown);
+        expect(localeEntry.pages["page-1"]).toEqual({
+            hash: expectedHash,
+            contentType: "text/markdown",
+            contentLength: Buffer.byteLength(expectedMarkdown, "utf-8"),
+            referencedFiles: [fullPath]
+        });
+        expect(blobs.get(expectedHash)?.toString("utf-8")).toBe(expectedMarkdown);
+        expect([...blobs.values()].some((buf) => buf.toString("utf-8").includes(fileId))).toBe(false);
     });
 
     it("skips null/undefined pages", () => {
@@ -219,7 +243,7 @@ describe("buildLedgerInput", () => {
         // across publishes and the docs-ledger "no-op republish" fast-path
         // would never fire. The two manifests below have identical entries
         // inserted in opposite orders and MUST produce the same blob hash.
-        const minimalApiDefinition: APIV1Write.ApiDefinition = {
+        const minimalApiDefinition: ApiDefinition = {
             types: {},
             subpackages: {},
             rootPackage: {
@@ -234,11 +258,11 @@ describe("buildLedgerInput", () => {
             globalHeaders: []
         };
 
-        const forward = new Map<string, APIV1Write.ApiDefinition>();
+        const forward = new Map<string, ApiDefinition>();
         forward.set("api-def-a", minimalApiDefinition);
         forward.set("api-def-b", minimalApiDefinition);
 
-        const reverse = new Map<string, APIV1Write.ApiDefinition>();
+        const reverse = new Map<string, ApiDefinition>();
         reverse.set("api-def-b", minimalApiDefinition);
         reverse.set("api-def-a", minimalApiDefinition);
 
@@ -256,7 +280,7 @@ describe("buildLedgerInput", () => {
     });
 
     it("serializes apiManifest as a JSON blob ref when apiDefinitions is non-empty", () => {
-        const minimalApiDefinition: APIV1Write.ApiDefinition = {
+        const minimalApiDefinition: ApiDefinition = {
             types: {},
             subpackages: {},
             rootPackage: {
@@ -271,7 +295,7 @@ describe("buildLedgerInput", () => {
             globalHeaders: []
         };
 
-        const apiDefinitions = new Map<string, APIV1Write.ApiDefinition>();
+        const apiDefinitions = new Map<string, ApiDefinition>();
         apiDefinitions.set("api-def-1", minimalApiDefinition);
 
         const { localeEntry, blobs } = buildLedgerInput({

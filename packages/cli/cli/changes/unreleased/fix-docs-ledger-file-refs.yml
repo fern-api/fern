@@ -1,0 +1,3 @@
+- summary: |
+    Fix docs ledger dual-write publishes to store page markdown with stable file path references instead of legacy file IDs.
+  type: fix
