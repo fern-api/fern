@@ -3,9 +3,9 @@ import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
+import { SPECS_MANIFEST_FILENAME } from "../copySpecs.js";
 import type { DetectedAuthBinding } from "../detectAuth.js";
 import { emitReference } from "../emitReference.js";
-import { SPECS_MANIFEST_FILENAME } from "../copySpecs.js";
 
 describe("emitReference", () => {
     let tmpDir: string;

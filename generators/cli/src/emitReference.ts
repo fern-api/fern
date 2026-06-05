@@ -1,8 +1,8 @@
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 
-import type { DetectedAuthBinding } from "./detectAuth.js";
 import { readSpecsManifest } from "./copySpecs.js";
+import type { DetectedAuthBinding } from "./detectAuth.js";
 
 /**
  * Emit `reference.md` — a full command reference for the generated CLI.
@@ -173,7 +173,8 @@ function collectResources(
             if (!resources.has(groupName)) {
                 resources.set(groupName, { methods: new Map() });
             }
-            const resource = resources.get(groupName)!;
+            // Safe: we just ensured the key exists above.
+            const resource = resources.get(groupName) ?? { methods: new Map() };
             resource.methods.set(methodName, {
                 description: operation.description ?? operation.summary,
                 httpMethod: method.toUpperCase(),
