@@ -125,7 +125,6 @@ allowedFailures:
   - error-property
   - errors
   - examples
-  - exhaustive
   - extends
   - extra-properties
   - file-download
@@ -136,7 +135,6 @@ allowedFailures:
   - header-auth-environment-variable
   - http-head
   - idempotency-headers
-  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-api-key
