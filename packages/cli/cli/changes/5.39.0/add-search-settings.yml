@@ -1,0 +1,13 @@
+- summary: |
+    Add a `settings.search` object to `docs.yml` with two new options:
+    - `prioritize-current-product`: boosts search results from the current
+      product/version via Algolia `optionalFilters` without excluding results
+      from other products/versions.
+    - `default-filter-by-current-product`: auto-selects the current product as
+      a facet filter so only results from the current product are shown by
+      default.
+
+    `settings.default-search-filters` is preserved as an alias for
+    `settings.search.default-filter-by-current-product` for backwards
+    compatibility.
+  type: feat

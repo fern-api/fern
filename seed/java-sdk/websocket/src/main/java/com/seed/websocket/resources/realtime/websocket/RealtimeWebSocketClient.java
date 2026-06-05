@@ -9,6 +9,7 @@ import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.DisconnectReason;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
+import com.seed.websocket.core.RequestOptions;
 import com.seed.websocket.core.WebSocketReadyState;
 import com.seed.websocket.resources.realtime.types.ErrorEvent;
 import com.seed.websocket.resources.realtime.types.FlushedEvent;
@@ -128,7 +129,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
                     "language-code", String.valueOf(options.getLanguageCode().get()));
         }
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
-        clientOptions.headers(null).forEach(requestBuilder::addHeader);
+        clientOptions.headers((RequestOptions) null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
         ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null

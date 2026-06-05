@@ -1,0 +1,6 @@
+- summary: |
+    Add `RequestExecutor` trait and `HttpClient::with_executor()` constructor
+    to enable CLI execution-sharing. When an external executor is injected,
+    the SDK delegates HTTP execution entirely — auth, headers, and retries
+    are handled by the caller's transport stack.
+  type: feat

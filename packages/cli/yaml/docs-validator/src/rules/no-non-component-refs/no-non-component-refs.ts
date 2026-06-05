@@ -2,6 +2,7 @@ import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
 import { Rule, RuleViolation } from "../../Rule.js";
+import { isInYamlComment } from "../isInYamlComment.js";
 
 export const NoNonComponentRefsRule: Rule = {
     name: "no-non-component-refs",
@@ -54,7 +55,7 @@ export const NoNonComponentRefsRule: Rule = {
 
                                     for (const match of refMatches) {
                                         const ref = match[1];
-                                        if (!ref) {
+                                        if (!ref || (match.index != null && isInYamlComment(contents, match.index))) {
                                             continue;
                                         }
 

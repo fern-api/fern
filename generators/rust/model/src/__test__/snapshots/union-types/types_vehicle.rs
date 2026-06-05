@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "vehicle_type")]
+#[non_exhaustive]
 pub enum Vehicle {
         #[serde(rename = "car")]
         #[non_exhaustive]
@@ -40,6 +41,12 @@ pub enum Vehicle {
             manufacturer: String,
             year: i64,
         },
+
+        /// Catch-all variant for unrecognized discriminant values.
+        /// If the server sends a discriminant not recognized by the current SDK
+        /// version, the raw payload is captured here so callers can still inspect it.
+        #[serde(untagged)]
+        __Unknown(serde_json::Value),
 }
 
 impl Vehicle {
@@ -55,11 +62,16 @@ impl Vehicle {
         Self::Truck { payload_capacity, axles, id, manufacturer, year }
     }
 
+    pub fn unknown(value: serde_json::Value) -> Self {
+        Self::__Unknown(value)
+    }
+
     pub fn get_id(&self) -> &str {
         match self {
                     Self::Car { id, .. } => id,
                     Self::Motorcycle { id, .. } => id,
                     Self::Truck { id, .. } => id,
+                    Self::__Unknown(_) => panic!("get_id() called on __Unknown variant; inspect the raw JSON value directly"),
                 }
     }
 
@@ -68,6 +80,7 @@ impl Vehicle {
                     Self::Car { manufacturer, .. } => manufacturer,
                     Self::Motorcycle { manufacturer, .. } => manufacturer,
                     Self::Truck { manufacturer, .. } => manufacturer,
+                    Self::__Unknown(_) => panic!("get_manufacturer() called on __Unknown variant; inspect the raw JSON value directly"),
                 }
     }
 
@@ -76,6 +89,7 @@ impl Vehicle {
                     Self::Car { year, .. } => year,
                     Self::Motorcycle { year, .. } => year,
                     Self::Truck { year, .. } => year,
+                    Self::__Unknown(_) => panic!("get_year() called on __Unknown variant; inspect the raw JSON value directly"),
                 }
     }
 }

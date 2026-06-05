@@ -427,7 +427,25 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     public hasToJsonMethod(typeReference: FernIr.TypeReference): boolean {
-        return typeReference.type === "named" && !this.isPrimitive(typeReference) && !this.isEnum(typeReference);
+        return (
+            typeReference.type === "named" &&
+            !this.isPrimitive(typeReference) &&
+            !this.isEnum(typeReference) &&
+            !this.isLiteral(typeReference)
+        );
+    }
+
+    public isLiteral(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type === "container" && typeReference.container.type === "literal") {
+            return true;
+        }
+        if (typeReference.type === "named") {
+            const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+            if (declaration.shape.type === "alias") {
+                return this.isLiteral(declaration.shape.aliasOf);
+            }
+        }
+        return false;
     }
 
     public isEnum(typeReference: FernIr.TypeReference): boolean {

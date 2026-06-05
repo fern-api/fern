@@ -212,6 +212,8 @@ type BigUnion struct {
 	PotableBad         *PotableBad
 	TriangularRepair   *TriangularRepair
 	GaseousRoad        *GaseousRoad
+
+	rawJSON json.RawMessage
 }
 
 func (b *BigUnion) GetType() string {
@@ -638,6 +640,7 @@ func (b *BigUnion) UnmarshalJSON(data []byte) error {
 		}
 		b.GaseousRoad = value
 	}
+	b.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -731,6 +734,9 @@ func (b BigUnion) MarshalJSON() ([]byte, error) {
 	}
 	if b.GaseousRoad != nil {
 		return internal.MarshalJSONWithExtraProperty(b.GaseousRoad, "type", "gaseousRoad")
+	}
+	if len(b.rawJSON) > 0 {
+		return b.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", b)
 }
@@ -952,6 +958,9 @@ func (b *BigUnion) validate() error {
 	}
 	if len(fields) == 0 {
 		if b.Type != "" {
+			if len(b.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", b, b.Type)
 		}
 		return fmt.Errorf("type %T is empty", b)

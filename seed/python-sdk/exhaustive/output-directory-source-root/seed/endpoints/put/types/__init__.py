@@ -4,20 +4,12 @@
 
 import typing
 from importlib import import_module
-
 if typing.TYPE_CHECKING:
     from .error import Error
     from .error_category import ErrorCategory
     from .error_code import ErrorCode
     from .put_response import PutResponse
-_dynamic_imports: typing.Dict[str, str] = {
-    "Error": ".error",
-    "ErrorCategory": ".error_category",
-    "ErrorCode": ".error_code",
-    "PutResponse": ".put_response",
-}
-
-
+_dynamic_imports: typing.Dict[str, str] = {"Error": ".error", "ErrorCategory": ".error_category", "ErrorCode": ".error_code", "PutResponse": ".put_response"}
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
@@ -32,11 +24,7 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
         raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
-
-
 def __dir__():
     lazy_attrs = list(_dynamic_imports.keys())
     return sorted(lazy_attrs)
-
-
 __all__ = ["Error", "ErrorCategory", "ErrorCode", "PutResponse"]

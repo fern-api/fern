@@ -149,6 +149,127 @@ paths:
                       domain: domain
                     name: name
       summary: Get an organization with merged object-typed properties
+  /plants:
+    post:
+      description: >-
+        Tests three-level allOf chain where a parent schema itself uses allOf
+        with $ref elements. The grandparent's properties must be resolved
+        through the nested $ref.
+      operationId: createPlant
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Created plant
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlantStrict'
+              examples:
+                Example1:
+                  value:
+                    species: species
+                    family: family
+                    genus: genus
+      summary: Create a plant (nested allOf with $ref chain)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                species:
+                  type: string
+                  description: The botanical species name.
+                  examples:
+                    - species
+                family:
+                  type: string
+                  description: The botanical family.
+                  examples:
+                    - family
+                genus:
+                  type: string
+                  description: The botanical genus.
+                  examples:
+                    - genus
+                commonName:
+                  type: string
+                  description: The common name of the plant.
+                  examples:
+                    - commonName
+                wateringFrequency:
+                  $ref: '#/components/schemas/PlantPostWateringFrequency'
+                sunExposure:
+                  $ref: '#/components/schemas/PlantPostSunExposure'
+                  description: Required sun exposure level.
+                plantedAt:
+                  type:
+                    - string
+                    - 'null'
+                  format: date
+                  description: Date the plant was planted.
+                soilType:
+                  type:
+                    - string
+                    - 'null'
+                  description: Preferred soil type.
+              required:
+                - species
+                - family
+                - genus
+                - commonName
+                - wateringFrequency
+                - sunExposure
+            examples:
+              Example1:
+                value:
+                  species: species
+                  family: family
+                  genus: genus
+                  commonName: commonName
+                  wateringFrequency: daily
+                  sunExposure: full
+  /trees:
+    post:
+      description: >-
+        Tests that when a parent's allOf contains multiple $ref entries, all of
+        them are resolved and their properties merged.
+      operationId: createTree
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: Created tree
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TreeRecord'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    treeName: treeName
+                    treeDescription: treeDescription
+                    treeSpecies: treeSpecies
+                    heightInFeet: 1.1
+                    plantedDate: '2023-01-15'
+      summary: Create a tree (multiple nested $ref in parent allOf)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TreeRecord'
+            examples:
+              Example1:
+                value:
+                  id: id
+                  treeName: treeName
+                  treeSpecies: treeSpecies
 components:
   schemas:
     RuleCreateRequestExecutionContext:
@@ -159,6 +280,22 @@ components:
         - staging
         - dev
       description: Execution context for the rule, excluding the prod environment.
+    PlantPostWateringFrequency:
+      title: PlantPostWateringFrequency
+      type: string
+      enum:
+        - daily
+        - weekly
+        - biweekly
+        - monthly
+    PlantPostSunExposure:
+      title: PlantPostSunExposure
+      type: string
+      enum:
+        - full
+        - partial
+        - shade
+      description: Required sun exposure level.
     PaginatedResult:
       title: PaginatedResult
       type: object
@@ -468,6 +605,159 @@ components:
       required:
         - id
         - name
+    PlantStrict:
+      title: PlantStrict
+      type: object
+      properties:
+        species:
+          type: string
+          description: The botanical species name.
+          examples:
+            - species
+        family:
+          type: string
+          description: The botanical family.
+          examples:
+            - family
+        genus:
+          type: string
+          description: The botanical genus.
+          examples:
+            - genus
+      required:
+        - species
+        - family
+        - genus
+    PlantBaseWateringFrequency:
+      title: PlantBaseWateringFrequency
+      type: string
+      enum:
+        - daily
+        - weekly
+        - biweekly
+        - monthly
+    PlantBase:
+      title: PlantBase
+      type: object
+      properties:
+        species:
+          type: string
+          description: The botanical species name.
+        family:
+          type: string
+          description: The botanical family.
+        genus:
+          type: string
+          description: The botanical genus.
+        commonName:
+          type:
+            - string
+            - 'null'
+          description: The common name of the plant.
+        wateringFrequency:
+          anyOf:
+            - $ref: '#/components/schemas/PlantBaseWateringFrequency'
+            - type: 'null'
+      required:
+        - species
+        - family
+        - genus
+    TreeIdentifiable:
+      title: TreeIdentifiable
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique tree identifier.
+      required:
+        - id
+    TreeDescribable:
+      title: TreeDescribable
+      type: object
+      properties:
+        treeName:
+          type:
+            - string
+            - 'null'
+          description: Display name of the tree.
+        treeDescription:
+          type:
+            - string
+            - 'null'
+          description: A description of the tree.
+    TreeBase:
+      title: TreeBase
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique tree identifier.
+        treeName:
+          type:
+            - string
+            - 'null'
+          description: Display name of the tree.
+        treeDescription:
+          type:
+            - string
+            - 'null'
+          description: A description of the tree.
+        treeSpecies:
+          type:
+            - string
+            - 'null'
+          description: The species of tree.
+        heightInFeet:
+          type:
+            - number
+            - 'null'
+          format: double
+          description: Height of the tree in feet.
+      required:
+        - id
+    TreeRecord:
+      title: TreeRecord
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique tree identifier.
+          examples:
+            - id
+        treeName:
+          type: string
+          description: Display name of the tree.
+          examples:
+            - treeName
+        treeDescription:
+          type:
+            - string
+            - 'null'
+          description: A description of the tree.
+        treeSpecies:
+          type: string
+          description: The species of tree.
+          examples:
+            - treeSpecies
+        heightInFeet:
+          type:
+            - number
+            - 'null'
+          format: double
+          description: Height of the tree in feet.
+        plantedDate:
+          type:
+            - string
+            - 'null'
+          format: date
+          description: Date the tree was planted.
+      required:
+        - id
+        - treeName
+        - treeSpecies
   securitySchemes: {}
 servers:
   - url: https://api.example.com

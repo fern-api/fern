@@ -591,7 +591,7 @@ overrides:
   cross-spawn: ^7.0.6
   node-fetch@2.x>whatwg-url: ^14.0.0
   minimatch: '>=10.2.3'
-  qs: 6.15.0
+  qs: 6.15.2
   url-join: ^4.0.1
   '@fern-api/fdr-sdk': 1.2.16-b5078a0a01
   form-data: ^4.0.4
@@ -792,9 +792,21 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
+      '@fern-api/generator-cli':
+        specifier: workspace:*
+        version: link:../../packages/generator-cli
+      '@fern-api/rust-base':
+        specifier: workspace:*
+        version: link:../rust/base
+      '@fern-api/rust-model':
+        specifier: workspace:*
+        version: link:../rust/model
       '@fern-fern/ir-sdk':
         specifier: 67.0.0
         version: 67.0.0
@@ -4769,6 +4781,12 @@ importers:
       dotenv:
         specifier: ^16.0.0
         version: 16.6.1
+      pngjs:
+        specifier: 'catalog:'
+        version: 7.0.0
+      puppeteer:
+        specifier: 'catalog:'
+        version: 24.40.0(typescript@5.9.3)
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -4926,6 +4944,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
+      '@types/pngjs':
+        specifier: 'catalog:'
+        version: 6.0.5
       '@types/semver':
         specifier: 'catalog:'
         version: 7.7.1
@@ -6600,8 +6621,8 @@ importers:
         specifier: 'catalog:'
         version: 11.0.0
       qs:
-        specifier: 6.15.0
-        version: 6.15.0
+        specifier: 6.15.2
+        version: 6.15.2
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -13922,8 +13943,8 @@ packages:
     resolution: {integrity: sha512-n7mar4T0xQ+39dE2vGTAlbxUEpndwPANH0kDef1/MYsB8Bba9wshkybIRx74qgcvKQPEWErf9AqAdYjhzY2Ilg==}
     engines: {node: '>=20'}
 
-  qs@6.15.0:
-    resolution: {integrity: sha512-mAZTtNCeetKMH+pSjrb76NAM8V9a05I9aBZOHztWy/UqcJdQYNsf59vrRKWnojAT9Y+GbIvoTBC++CPHqpDBhQ==}
+  qs@6.15.2:
+    resolution: {integrity: sha512-Rzq0KEyX/w/tEybncDgdkZrJgVUsUMk3xjh3t5bv3S1HTAtg+uOYt72+ZfwiQwKdysThkTBdL/rTi6HDmX9Ddw==}
     engines: {node: '>=0.6'}
 
   quansync@1.0.0:
@@ -14229,8 +14250,8 @@ packages:
   should@13.2.3:
     resolution: {integrity: sha512-ggLesLtu2xp+ZxI+ysJTmNjh2U0TsC+rQ/pfED9bUZZ4DKefP27D+7YJVVTvKsmjLpIi9jAa7itwDGkDDmt1GQ==}
 
-  side-channel-list@1.0.0:
-    resolution: {integrity: sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==}
+  side-channel-list@1.0.1:
+    resolution: {integrity: sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==}
     engines: {node: '>= 0.4'}
 
   side-channel-map@1.0.1:
@@ -14592,8 +14613,8 @@ packages:
   tmp-promise@3.0.3:
     resolution: {integrity: sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==}
 
-  tmp@0.2.5:
-    resolution: {integrity: sha512-voyz6MApa1rQGUxT3E+BK7/ROe8itEx7vD8/HEvt4xwXucvQ5G5oeEiHkmHZJuBO21RpOf+YYm9MOivj709jow==}
+  tmp@0.2.6:
+    resolution: {integrity: sha512-5sJPdPjfI5Kx+qbrDesxkglRBxW//g7hCsqspEjwkewGvBMGIKMOTKzLt1hFVJzyadba3lDUN20O9qhvbQUSTA==}
     engines: {node: '>=14.14'}
 
   to-buffer@1.2.2:
@@ -16453,7 +16474,7 @@ snapshots:
       httpsnippet-lite: 3.0.5
       js-base64: 3.7.7
       node-fetch: 2.7.0
-      qs: 6.15.0
+      qs: 6.15.2
       readable-stream: 4.7.0
       tinycolor2: 1.6.0
       ts-essentials: 10.1.1(typescript@5.9.3)
@@ -16499,7 +16520,7 @@ snapshots:
       form-data: 4.0.5
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.15.0
+      qs: 6.15.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -16511,7 +16532,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.15.0
+      qs: 6.15.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -16521,7 +16542,7 @@ snapshots:
       form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
-      qs: 6.15.0
+      qs: 6.15.2
       readable-stream: 4.7.0
     transitivePeerDependencies:
       - encoding
@@ -16530,7 +16551,7 @@ snapshots:
     dependencies:
       form-data: 4.0.5
       node-fetch: 2.7.0
-      qs: 6.15.0
+      qs: 6.15.2
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
@@ -16541,7 +16562,7 @@ snapshots:
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
-      qs: 6.15.0
+      qs: 6.15.2
       readable-stream: 4.7.0
       url-join: 4.0.1
     transitivePeerDependencies:
@@ -18392,7 +18413,7 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.4.24
       on-finished: 2.4.1
-      qs: 6.15.0
+      qs: 6.15.2
       raw-body: 2.5.3
       type-is: 1.6.18
       unpipe: 1.0.0
@@ -19278,7 +19299,7 @@ snapshots:
       parseurl: 1.3.3
       path-to-regexp: 0.1.13
       proxy-addr: 2.0.7
-      qs: 6.15.0
+      qs: 6.15.2
       range-parser: 1.2.1
       safe-buffer: 5.2.1
       send: 0.19.2
@@ -21431,7 +21452,7 @@ snapshots:
     dependencies:
       hookified: 2.1.1
 
-  qs@6.15.0:
+  qs@6.15.2:
     dependencies:
       side-channel: 1.1.0
 
@@ -21866,7 +21887,7 @@ snapshots:
       should-type-adaptors: 1.1.0
       should-util: 1.0.1
 
-  side-channel-list@1.0.0:
+  side-channel-list@1.0.1:
     dependencies:
       es-errors: 1.3.0
       object-inspect: 1.13.4
@@ -21890,7 +21911,7 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       object-inspect: 1.13.4
-      side-channel-list: 1.0.0
+      side-channel-list: 1.0.1
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
 
@@ -22374,9 +22395,9 @@ snapshots:
 
   tmp-promise@3.0.3:
     dependencies:
-      tmp: 0.2.5
+      tmp: 0.2.6
 
-  tmp@0.2.5: {}
+  tmp@0.2.6: {}
 
   to-buffer@1.2.2:
     dependencies:

@@ -1,0 +1,31 @@
+%% Component view — GraphQL protocol path (src/graphql/).
+%% Self-contained: no imports from src/openapi/. Reference implementation —
+%% new features land here first.
+
+flowchart TB
+    IntrospectionJson[("introspection JSON")]
+
+    parser["parser.rs<br/><i>introspection JSON → GraphQLSchema</i>"]
+    discovery["discovery.rs<br/><i>GraphQLSchema,<br/>GraphQLOperation (Query/Mutation),<br/>input types</i>"]
+    commands["commands.rs<br/><i>clap::Command builder;<br/>dot-notation body flags</i>"]
+    executor["executor.rs<br/><i>request construction,<br/>variables map,<br/>auth, response handling;<br/>HttpConfig threaded through</i>"]
+    app["app.rs<br/><i>CliApp&lt;GraphQL&gt;;<br/>AppContext;<br/>HandlerFn</i>"]
+    help["help.rs<br/><i>help rendering</i>"]
+
+    IntrospectionJson --> parser
+    parser --> discovery
+    discovery --> commands
+    discovery --> executor
+    commands --> app
+    executor --> app
+    help --> commands
+
+    SharedAuth(("src/auth/")):::shared --> executor
+    SharedHttp(("src/http.rs")):::shared --> executor
+    SharedFormatter(("src/formatter.rs")):::shared --> executor
+    SharedValidate(("src/validate.rs")):::shared --> executor
+    SharedError(("src/error.rs")):::shared --> executor
+
+    classDef shared fill:#e8f5e9,stroke:#2e7d32
+    classDef path fill:#e1f5fe,stroke:#01579b
+    class parser,discovery,commands,executor,app,help path

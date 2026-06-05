@@ -160,16 +160,88 @@ module Seed
       end
     end
 
+    # Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's
+    # properties must be resolved through the nested $ref.
+    #
+    # @param request_options [Hash]
+    # @param params [Seed::Types::PlantPost]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @return [Seed::Types::PlantStrict]
+    def create_plant(request_options: {}, **params)
+      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url],
+        method: "POST",
+        path: "plants",
+        body: Seed::Types::PlantPost.new(params).to_h,
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      if code.between?(200, 299)
+        Seed::Types::PlantStrict.load(response.body)
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+    end
+
+    # Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties
+    # merged.
+    #
+    # @param request_options [Hash]
+    # @param params [Seed::Types::TreeRecord]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @return [Seed::Types::TreeRecord]
+    def create_tree(request_options: {}, **params)
+      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url],
+        method: "POST",
+        path: "trees",
+        body: Seed::Types::TreeRecord.new(params).to_h,
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      if code.between?(200, 299)
+        Seed::Types::TreeRecord.load(response.body)
+      else
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
+      end
+    end
+
     # @param base_url [String, nil]
+    # @param max_retries [Integer]
     #
     # @return [void]
-    def initialize(base_url: nil)
+    def initialize(base_url: nil, max_retries: 2)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url || Seed::Environment::DEFAULT,
         headers: {
           "User-Agent" => "fern_allof/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }
+        },
+        max_retries: max_retries
       )
     end
   end

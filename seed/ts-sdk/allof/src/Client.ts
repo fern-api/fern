@@ -276,6 +276,123 @@ export class SeedApiClient {
     }
 
     /**
+     * Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+     *
+     * @param {SeedApi.PlantPost} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.createPlant({
+     *         species: "species",
+     *         family: "family",
+     *         genus: "genus",
+     *         sunExposure: "full"
+     *     })
+     */
+    public createPlant(
+        request: SeedApi.PlantPost,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.PlantStrict> {
+        return core.HttpResponsePromise.fromPromise(this.__createPlant(request, requestOptions));
+    }
+
+    private async __createPlant(
+        request: SeedApi.PlantPost,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.PlantStrict>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Default,
+                "plants",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.PlantStrict, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/plants");
+    }
+
+    /**
+     * Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+     *
+     * @param {SeedApi.TreeRecord} request
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.createTree({
+     *         id: "id"
+     *     })
+     */
+    public createTree(
+        request: SeedApi.TreeRecord,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedApi.TreeRecord> {
+        return core.HttpResponsePromise.fromPromise(this.__createTree(request, requestOptions));
+    }
+
+    private async __createTree(
+        request: SeedApi.TreeRecord,
+        requestOptions?: SeedApiClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedApi.TreeRecord>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Default,
+                "trees",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedApi.TreeRecord, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/trees");
+    }
+
+    /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
      * This is useful for making requests to endpoints not yet supported in the SDK.
      * The input can be a URL string, URL object, or Request object. Relative paths are resolved against the configured base URL.

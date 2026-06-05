@@ -2110,7 +2110,6 @@ POST bytes with path param returning object
 ```php
 $client->endpoints->params->uploadWithPath(
     'upload-path',
-    ,
 );
 ```
 </dd>

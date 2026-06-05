@@ -136,7 +136,16 @@ export const ValidMarkdownLinks: Rule = {
             .filter(FernNavigation.isInternalProductNode)
             .map((p) => p.slug);
 
-        const specialDocPages = ["/llms-full.txt", "/llms.txt"];
+        const specialDocPages = [
+            "/llms-full.txt",
+            "/llms.txt",
+            "/openapi.json",
+            "/openapi.yaml",
+            "/openapi.yml",
+            "/asyncapi.json",
+            "/asyncapi.yaml",
+            "/asyncapi.yml"
+        ];
 
         for (const specialPage of specialDocPages) {
             const pageWithBasePath = baseUrl.basePath
@@ -250,6 +259,8 @@ export const ValidMarkdownLinks: Rule = {
                     }
                 }
 
+                const apiReferenceTitle = typeof config.api === "string" ? config.api : "API Reference";
+
                 // Batch-check all unique pathnames
                 const pathToCheckViolations = await Promise.all(
                     [...uniquePathnames.values()].map(async (pathnameToCheck) => {
@@ -269,17 +280,21 @@ export const ValidMarkdownLinks: Rule = {
                             return [];
                         }
 
-                        return exists.map((brokenPathname) => {
-                            const [message, relFilePath] = createLinkViolationMessage({
+                        // API descriptions have no source-page context, so `exists` may be an
+                        // empty array. Emit at least one violation either way; otherwise broken
+                        // links in endpoint, type, property, etc. docs are silently dropped
+                        // (see FER-10165).
+                        const numBrokenSourceContexts = exists.length > 0 ? exists.length : 1;
+                        return Array.from({ length: numBrokenSourceContexts }, () => {
+                            const [message, relFilePath] = createApiReferenceLinkViolationMessage({
                                 pathnameToCheck,
-                                targetPathname: brokenPathname,
-                                absoluteFilepathToWorkspace: workspace.absoluteFilePath
+                                apiReferenceTitle
                             });
                             return {
                                 name: ValidMarkdownLinks.name,
                                 severity: "error" as const,
                                 message,
-                                relFilepath: relFilePath
+                                relativeFilepath: relFilePath
                             };
                         });
                     })
@@ -316,6 +331,27 @@ function createLinkViolationMessage({
     const relativeFilepath = relative(absoluteFilepathToWorkspace, sourceFilepath);
     msg += `\n\tfix here: ${relativeFilepath}:${position.start.line}:${position.start.column}`;
     return [msg, relativeFilepath];
+}
+
+/**
+ * Build a violation message for a broken link found inside an API Reference
+ * description (e.g. an endpoint, type, property, or parameter `docs` / OpenAPI
+ * `description` field).
+ *
+ * Descriptions in API definitions are not tracked with source positions in the
+ * IR, so we can't point the user at a specific file:line:column the way we do
+ * for markdown pages. Surface the API Reference title instead so authors at
+ * least know which navigation section to look in.
+ */
+function createApiReferenceLinkViolationMessage({
+    pathnameToCheck,
+    apiReferenceTitle
+}: {
+    pathnameToCheck: PathnameToCheck;
+    apiReferenceTitle: string;
+}): [msg: string, relFilePath: RelativeFilePath] {
+    const msg = `broken link to ${chalk.bold(pathnameToCheck.pathname)} in ${apiReferenceTitle} description`;
+    return [msg, RelativeFilePath.of("")];
 }
 
 function toLatest(apiDefinition: APIV1Read.ApiDefinition) {

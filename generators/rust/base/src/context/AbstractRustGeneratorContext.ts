@@ -23,6 +23,14 @@ export abstract class AbstractRustGeneratorContext<
     private readonly irUsesTypeCache = new Map<string, boolean>();
     private readonly featureCache = new Map<string, boolean>();
 
+    /**
+     * Returns the path prefix for core serde helper modules used in
+     * `#[serde(with = "...")]` attributes. Defaults to `"crate::core"`.
+     */
+    public getCoreModulePath(): string {
+        return this.customConfig.coreModulePath ?? "crate::core";
+    }
+
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,

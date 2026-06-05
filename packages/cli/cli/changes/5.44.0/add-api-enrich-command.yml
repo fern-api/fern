@@ -1,0 +1,4 @@
+- summary: |
+    Add `fern api enrich` command to CLI v2 for merging AI-generated examples
+    from an overrides file into native OpenAPI example fields.
+  type: feat

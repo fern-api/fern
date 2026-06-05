@@ -9,4 +9,5 @@ enum HttpMethod
     case PUT;
     case PATCH;
     case DELETE;
+    case HEAD;
 }

@@ -260,7 +260,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<Void>> future = new CompletableFuture<>();
@@ -303,7 +303,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<Void>> future = new CompletableFuture<>();
@@ -662,7 +662,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<Void>> future = new CompletableFuture<>();
@@ -705,7 +705,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<Void>> future = new CompletableFuture<>();
@@ -911,7 +911,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<Void>> future = new CompletableFuture<>();
@@ -954,7 +954,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<Void>> future = new CompletableFuture<>();
@@ -1322,7 +1322,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -1366,7 +1366,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -1577,7 +1577,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -1621,7 +1621,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -1836,7 +1836,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -1880,7 +1880,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -2097,7 +2097,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -2141,7 +2141,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -2413,7 +2413,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();
@@ -2457,7 +2457,7 @@ public class AsyncRawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         CompletableFuture<SeedFileUploadHttpResponse<String>> future = new CompletableFuture<>();

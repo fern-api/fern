@@ -51,6 +51,41 @@
           "auth": false,
           "base-path": "",
           "endpoints": {
+            "createAutodetectResumable": {
+              "auth": undefined,
+              "docs": "SSE endpoint whose streaming is auto-detected from the text/event-stream response. Sets operation-level resumable=true without a format, so the parser must honor resumable in the content-type fallback.",
+              "examples": [
+                {
+                  "request": {
+                    "prompt": "prompt",
+                  },
+                  "response": {
+                    "stream": [
+                      {
+                        "data": {
+                          "text": "text",
+                        },
+                        "event": "",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/completions/chat-autodetect-resume",
+              "request": "root.CreateCompletionRequest",
+              "response-stream": {
+                "docs": "Success!",
+                "format": "sse",
+                "resumable": true,
+                "terminator": undefined,
+                "type": "root.CompletionChunk",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "createInheritsResumable": {
               "auth": undefined,
               "docs": "SSE endpoint that inherits resumable=true from the document-level config.",
@@ -167,6 +202,29 @@ service:
         type: root.CompletionChunk
         format: sse
         resumable: false
+      examples:
+        - request:
+            prompt: prompt
+          response:
+            stream:
+              - event: ''
+                data:
+                  text: text
+    createAutodetectResumable:
+      path: /completions/chat-autodetect-resume
+      method: POST
+      docs: >-
+        SSE endpoint whose streaming is auto-detected from the text/event-stream
+        response. Sets operation-level resumable=true without a format, so the
+        parser must honor resumable in the content-type fallback.
+      source:
+        openapi: ../openapi.yml
+      request: root.CreateCompletionRequest
+      response-stream:
+        docs: Success!
+        type: root.CompletionChunk
+        format: sse
+        resumable: true
       examples:
         - request:
             prompt: prompt

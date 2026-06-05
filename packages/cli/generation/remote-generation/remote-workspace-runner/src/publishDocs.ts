@@ -3,8 +3,34 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
-import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
+import {
+    applyTranslatedApiTitlesToNavTree,
+    applyTranslatedFrontmatterToNavTree,
+    applyTranslatedNavigationOverlays,
+    DocsDefinitionResolver,
+    getTranslatedAnnouncement,
+    type RegisterApiFn,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
+    stripMdxComments,
+    type TranslatedApiSpec,
+    transformAtPrefixImports,
+    UploadedFile,
+    updateApiDefinitionIdInTree,
+    wrapWithHttps
+} from "@fern-api/docs-resolver";
+import {
+    APIV1Read,
+    APIV1Write,
+    FdrAPI as CjsFdrSdk,
+    convertAPIDefinitionToDb,
+    convertDbAPIDefinitionToRead,
+    DocsV1Write,
+    DocsV2Write,
+    FdrClient,
+    SDKSnippetHolder
+} from "@fern-api/fdr-sdk";
 import type { DocsPublishGitInput, FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 
 type DynamicIr = APIV1Write.DynamicIr;
@@ -13,7 +39,14 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { stitchGlobalTheme } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    convertToFernHostRelativeFilePath,
+    doesPathExist,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -28,9 +61,9 @@ import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
-import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { mapDocsDefinitionToLegacyFileIds } from "./mapDocsDefinitionToLegacyFileIds.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
@@ -103,6 +136,12 @@ export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | str
     return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
 }
 
+export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
+    // Replace ../ segments with _dot_dot_/ to prevent HTTP client normalization issues
+    // that cause S3 signature mismatches when paths contain parent directory references
+    return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
+}
+
 /**
  * Read a file once and return its bytes + sha256 hash. Avoids the double-read
  * we'd otherwise do for files that need both hashing (legacy register) and
@@ -112,12 +151,6 @@ async function readAndHashFile(absoluteFilePath: AbsoluteFilePath | string): Pro
     const buffer = await readFile(absoluteFilePath);
     const hash = createHash("sha256").update(new Uint8Array(buffer)).digest("hex");
     return { buffer, hash };
-}
-
-export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
-    // Replace ../ segments with _dot_dot_/ to prevent HTTP client normalization issues
-    // that cause S3 signature mismatches when paths contain parent directory references
-    return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
 
 interface CISource {
@@ -205,16 +238,16 @@ export async function publishDocs({
     if (deployerAuthor?.email != null) {
         headers["X-Deployer-Author-Email"] = deployerAuthor.email;
     }
-    const deployMode = getDocsDeployMode();
-    if (deployMode !== "legacy") {
-        context.logger.info(`Docs deploy mode: ${deployMode}`);
-    }
-
     const fdr = createFdrService({
         token: token.value,
         ...(Object.keys(headers).length > 0 && { headers })
     });
     const authConfig = { type: "public" as const };
+
+    const deployMode = getDocsDeployMode();
+    if (deployMode !== "legacy") {
+        context.logger.info(`Docs deploy mode: ${deployMode}`);
+    }
 
     if (excludeApis) {
         context.logger.debug(
@@ -266,6 +299,15 @@ export async function publishDocs({
             taskContext: context
         });
 
+        // Translated API definitions are registered to FDR after the base definition
+        // resolves; the per-locale nav tree is then repointed at them (see below), which
+        // is all FDR needs to embed localized API reference content on published sites.
+        const buildTranslatedApiDefinitions =
+            docsWorkspace.config.translations != null && docsWorkspace.config.translations.length > 1;
+
+        // Read-form API definitions captured during registration, keyed by FDR
+        // apiDefinitionId, used to localize sidebar (navigation) titles. Only populated
+        // when translations are configured, to avoid extra conversion on normal publishes.
         // Collect API definitions (keyed by FDR definition ID) for the ledger manifest.
         const apiDefinitionCollector = new Map<string, APIV1Write.ApiDefinition>();
 
@@ -289,6 +331,172 @@ export async function publishDocs({
         //     sanitizedPath resolve to the ledger fullPath.
         const ledgerFileIdToPath = new Map<string, string>();
         const legacyFilePathToId = new Map<string, string>();
+
+        const readApiDefinitionsById = new Map<string, APIV1Read.ApiDefinition>();
+        const captureReadApiDefinition = (definition: APIV1Write.ApiDefinition, apiDefinitionId: string): void => {
+            if (!buildTranslatedApiDefinitions) {
+                return;
+            }
+            try {
+                const dbApiDefinition = convertAPIDefinitionToDb(
+                    definition,
+                    CjsFdrSdk.ApiDefinitionId(apiDefinitionId),
+                    new SDKSnippetHolder({
+                        snippetsConfigWithSdkId: {},
+                        snippetsBySdkId: {},
+                        snippetTemplatesByEndpoint: {},
+                        snippetTemplatesByEndpointId: {},
+                        snippetsBySdkIdAndEndpointId: {}
+                    })
+                );
+                readApiDefinitionsById.set(apiDefinitionId, convertDbAPIDefinitionToRead(dbApiDefinition));
+            } catch (error) {
+                context.logger.debug(
+                    `Failed to build read API definition for ${apiDefinitionId} (translated sidebar titles may stay in the default language): ${String(error)}`
+                );
+            }
+        };
+
+        /**
+         * Registers an API definition with FDR (with AI example enhancement and dynamic
+         * snippet generation) and returns the resulting apiDefinitionId. Used for the base
+         * definition (via the resolver) and, after resolve, for each locale's translated
+         * definition.
+         */
+        const registerApiToFdr: RegisterApiFn = async ({
+            ir,
+            snippetsConfig,
+            playgroundConfig,
+            apiName,
+            workspace,
+            graphqlOperations,
+            graphqlTypes
+        }) => {
+            // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
+            // reference APIs by their folder name in docs components.
+            let apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig,
+                graphqlOperations,
+                graphqlTypes,
+                context,
+                apiNameOverride: apiName
+            });
+
+            const isSelfHosted = token.value === "dummy";
+            const aiEnhancerConfig = getAIEnhancerConfig(
+                withAiExamples && !isSelfHosted,
+                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
+            );
+            if (aiEnhancerConfig) {
+                const sources = workspace?.getSources();
+                const openApiSources = sources
+                    ?.filter((source) => source.type === "openapi")
+                    .map((source) => ({
+                        absoluteFilePath: source.absoluteFilePath,
+                        absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
+                    }));
+
+                if (openApiSources == null || openApiSources.length === 0) {
+                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
+                } else {
+                    apiDefinition = await enhanceExamplesWithAI(
+                        apiDefinition,
+                        aiEnhancerConfig,
+                        context,
+                        token,
+                        organization,
+                        openApiSources
+                    );
+                }
+            }
+
+            // create dynamic IR + metadata for each generator language
+            let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
+            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
+            if (Object.keys(snippetsConfig).length === 0) {
+                context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
+            } else if (!disableDynamicSnippets) {
+                const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
+                    fdr,
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig
+                });
+
+                if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
+                    dynamicIRsByLanguage = existingSdkDynamicIrs;
+                    languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
+                    context.logger.debug(
+                        `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
+                    );
+                }
+
+                const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig,
+                    skipLanguages: languagesWithExistingSdkDynamicIr
+                });
+
+                if (generatedDynamicIRs) {
+                    dynamicIRsByLanguage = {
+                        ...dynamicIRsByLanguage,
+                        ...generatedDynamicIRs
+                    };
+                }
+            }
+
+            let response;
+            try {
+                response = await fdr.api.register.registerApiDefinition({
+                    orgId: CjsFdrSdk.OrgId(organization),
+                    apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
+                    definition: apiDefinition,
+                    dynamicIRs: dynamicIRsByLanguage
+                });
+            } catch (error) {
+                const errorDetails = extractErrorDetails(error);
+                context.logger.error(
+                    `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                );
+                if (apiName != null) {
+                    return context.failAndThrow(
+                        `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
+                        errorDetails,
+                        { code: CliError.Code.NetworkError }
+                    );
+                } else {
+                    return context.failAndThrow(
+                        `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
+                        errorDetails,
+                        { code: CliError.Code.NetworkError }
+                    );
+                }
+            }
+
+            context.logger.debug(`Registered API Definition ${apiName}: ${response.apiDefinitionId}`);
+
+            if (response.dynamicIRs && dynamicIRsByLanguage) {
+                if (skipUpload) {
+                    context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
+                } else {
+                    await uploadDynamicIRs({
+                        dynamicIRs: dynamicIRsByLanguage,
+                        dynamicIRUploadUrls: response.dynamicIRs,
+                        context,
+                        apiId: response.apiDefinitionId
+                    });
+                }
+            }
+
+            captureReadApiDefinition(apiDefinition, response.apiDefinitionId);
+            apiDefinitionCollector.set(response.apiDefinitionId, apiDefinition);
+            return response.apiDefinitionId;
+        };
 
         const resolver = new DocsDefinitionResolver({
             domain,
@@ -353,7 +561,6 @@ export async function publishDocs({
                             filename: basename(filePath.sanitizedPath),
                             width: image.width,
                             height: image.height
-                            // blurDataURL: not populated yet (caching is a separate concern)
                         };
                         ledgerFilePaths.set(hash, filePath.absoluteFilePath);
 
@@ -392,16 +599,12 @@ export async function publishDocs({
                         const { buffer, hash } = await readAndHashFile(file.absoluteFilePath);
 
                         // Populate the ledger file manifest entry for this non-image file.
-                        // If mime.lookup fails (unknown extension), fall back to
-                        // application/octet-stream — both S3 and the docs CDN accept it,
-                        // and the manifest only needs *some* content-type for routing.
                         const contentType = mime.lookup(file.absoluteFilePath) || "application/octet-stream";
                         ledgerFileManifest[file.sanitizedPath] = {
                             hash,
                             contentType,
                             contentLength: buffer.byteLength,
                             filename: basename(file.sanitizedPath)
-                            // width/height/blurDataURL omitted: non-image
                         };
                         ledgerFilePaths.set(hash, file.absoluteFilePath);
 
@@ -461,11 +664,6 @@ export async function publishDocs({
                         if (manifestEntry == null) {
                             continue;
                         }
-                        // mapDocsConfigToLedgerConfig keys this lookup by
-                        // whatever string the DocsConfig stores as a FileId.
-                        // In ledger mode the FileId we emit IS the fullPath,
-                        // so the map is identity (fullPath → fullPath) — kept
-                        // populated for parity with the dual/legacy paths.
                         ledgerFileIdToPath.set(file.sanitizedPath, file.sanitizedPath);
                         uploadedFiles.push({
                             relativeFilePath: file.relativeFilePath,
@@ -588,141 +786,8 @@ export async function publishDocs({
                     return canonicalizeUploadedFilesForResolver(uploadedFiles);
                 }
             },
-            registerApi: async ({
-                ir,
-                snippetsConfig,
-                playgroundConfig,
-                apiName,
-                workspace,
-                graphqlOperations,
-                graphqlTypes
-            }) => {
-                // Use apiName from docs.yml (folder name) as the API identifier for FDR
-                // This ensures users can reference APIs by their folder name in docs components
-                let apiDefinition = convertIrToFdrApi({
-                    ir,
-                    snippetsConfig,
-                    playgroundConfig,
-                    graphqlOperations,
-                    graphqlTypes,
-                    context,
-                    apiNameOverride: apiName
-                });
-
-                const aiEnhancerConfig = getAIEnhancerConfig(
-                    withAiExamples,
-                    docsWorkspace.config.aiExamples?.style ??
-                        docsWorkspace.config.experimental?.aiExampleStyleInstructions
-                );
-                if (aiEnhancerConfig) {
-                    const sources = workspace?.getSources();
-                    const openApiSources = sources
-                        ?.filter((source) => source.type === "openapi")
-                        .map((source) => ({
-                            absoluteFilePath: source.absoluteFilePath,
-                            absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
-                        }));
-
-                    if (openApiSources == null || openApiSources.length === 0) {
-                        context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
-                    } else {
-                        apiDefinition = await enhanceExamplesWithAI(
-                            apiDefinition,
-                            aiEnhancerConfig,
-                            context,
-                            token,
-                            organization,
-                            openApiSources
-                        );
-                    }
-                }
-
-                // create dynamic IR + metadata for each generator language
-                let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-                let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
-                if (Object.keys(snippetsConfig).length === 0) {
-                    context.logger.debug(`No snippets configuration defined, skipping snippet generation...`);
-                } else if (!disableDynamicSnippets) {
-                    // Check for existing SDK dynamic IRs before generating
-                    const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
-                        fdr,
-                        workspace,
-                        organization,
-                        context,
-                        snippetsConfig
-                    });
-
-                    if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
-                        dynamicIRsByLanguage = existingSdkDynamicIrs;
-                        languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
-                        context.logger.debug(
-                            `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
-                        );
-                    }
-
-                    // Generate dynamic IRs for languages that don't have existing SDK dynamic IRs
-                    const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
-                        workspace,
-                        organization,
-                        context,
-                        snippetsConfig,
-                        skipLanguages: languagesWithExistingSdkDynamicIr
-                    });
-
-                    if (generatedDynamicIRs) {
-                        dynamicIRsByLanguage = {
-                            ...dynamicIRsByLanguage,
-                            ...generatedDynamicIRs
-                        };
-                    }
-                }
-
-                let response;
-                try {
-                    response = await fdr.api.register.registerApiDefinition({
-                        orgId: CjsFdrSdk.OrgId(organization),
-                        apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
-                        definition: apiDefinition,
-                        dynamicIRs: dynamicIRsByLanguage
-                    });
-                } catch (error) {
-                    const errorDetails = extractErrorDetails(error);
-                    context.logger.error(
-                        `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
-                    );
-                    if (apiName != null) {
-                        return context.failAndThrow(
-                            `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
-                            errorDetails,
-                            { code: CliError.Code.NetworkError }
-                        );
-                    } else {
-                        return context.failAndThrow(
-                            `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
-                            errorDetails,
-                            { code: CliError.Code.NetworkError }
-                        );
-                    }
-                }
-
-                context.logger.debug(`Registered API Definition ${apiName}: ${response.apiDefinitionId}`);
-                apiDefinitionCollector.set(response.apiDefinitionId, apiDefinition);
-
-                if (response.dynamicIRs && dynamicIRsByLanguage) {
-                    if (skipUpload) {
-                        context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
-                    } else {
-                        await uploadDynamicIRs({
-                            dynamicIRs: dynamicIRsByLanguage,
-                            dynamicIRUploadUrls: response.dynamicIRs,
-                            context,
-                            apiId: response.apiDefinitionId
-                        });
-                    }
-                }
-
-                return response.apiDefinitionId;
-            },
+            registerApi: registerApiToFdr,
+            buildTranslatedApiDefinitions,
             targetAudiences
         });
 
@@ -800,9 +865,6 @@ export async function publishDocs({
 
             try {
                 if (preview) {
-                    // ADR 0012: preview publishes go through the dedicated
-                    // /preview/init endpoint so they land on the server-generated
-                    // preview hostname instead of the production domain.
                     const previewResult = await publishDocsViaLedgerPreview({
                         docsDefinition,
                         organization,
@@ -819,8 +881,6 @@ export async function publishDocs({
                         fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                         resolver
                     });
-                    // In ledger-only mode the preview URL comes from the ledger;
-                    // in dual mode the V2 URL was already set above.
                     if (deployMode === "ledger") {
                         urlToOutput = previewResult.previewUrl;
                     }
@@ -859,6 +919,40 @@ export async function publishDocs({
             }
         }
 
+        // Register the translated API definitions for each locale. FDR keys API content
+        // by apiDefinitionId, so each translated definition gets its own content-addressed
+        // id; we map base -> translated ids per locale and rewrite the nav tree below.
+        const translatedApiSpecsByLocale: Map<string, Map<string, TranslatedApiSpec>> = buildTranslatedApiDefinitions
+            ? resolver.getTranslatedApiSpecs()
+            : new Map();
+        const translatedApiIdsByLocale = new Map<string, Map<string, string>>();
+        if (translatedApiSpecsByLocale.size > 0) {
+            context.logger.info(
+                `Registering translated API definitions for ${translatedApiSpecsByLocale.size} locale(s)...`
+            );
+            for (const [locale, specsByBaseApiId] of translatedApiSpecsByLocale) {
+                const idMap = new Map<string, string>();
+                for (const [baseApiId, spec] of specsByBaseApiId) {
+                    try {
+                        const translatedApiId = await registerApiToFdr(spec);
+                        // A content-addressed id identical to the base means this
+                        // locale has no API translations; leave the nav untouched.
+                        if (translatedApiId !== baseApiId) {
+                            idMap.set(baseApiId, translatedApiId);
+                        }
+                    } catch (error) {
+                        context.logger.warn(
+                            `Failed to register translated API definition for locale "${locale}" ` +
+                                `(API reference will render in the default language): ${String(error)}`
+                        );
+                    }
+                }
+                if (idMap.size > 0) {
+                    translatedApiIdsByLocale.set(locale, idMap);
+                }
+            }
+        }
+
         // Register translated page content for each configured locale via the V2 endpoint.
         // In ledger-only mode, translations are handled by publishDocsViaLedger (above),
         // so this block only runs for legacy and dual-write modes.
@@ -877,19 +971,195 @@ export async function publishDocs({
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {
                     try {
-                        const translatedDefinition = await buildTranslatedDocsDefinition({
-                            docsDefinition,
-                            locale,
-                            localePages,
-                            translationNavigationOverlays,
-                            resolver,
-                            context
-                        });
-                        const legacyTranslatedDefinition = mapDocsDefinitionToLegacyFileIds({
-                            docsDefinition: translatedDefinition,
-                            pathToFileId: legacyFilePathToId
-                        });
+                        // Build a translated DocsDefinition by taking the base definition,
+                        // overriding translated pages, and updating the nav tree to reflect
+                        // any sidebar-title / slug frontmatter in the translated pages.
+                        //
+                        // For each translated page, we apply the same transformations as default locale pages:
+                        // 1. Resolve <Markdown src="..."/> and <Code src="..."/> snippet references
+                        // 2. Transform @/ prefix imports to relative paths
+                        // 3. Strip MDX comments to prevent leakage
+                        // 4. Replace relative image paths with file IDs (using base page path for resolution)
+                        // 5. Preserve editThisPageUrl/editThisPageLaunch from the base page
+                        const collectedFileIds = resolver.getCollectedFileIds();
+                        const docsWorkspacePath = resolver.getDocsWorkspacePath();
 
+                        // Create a locale-aware file loader that prefers translated snippets
+                        // (e.g., translations/zh/snippets/foo.mdx) over base snippets.
+                        const resolveLocalePath = async (filepath: AbsoluteFilePath): Promise<AbsoluteFilePath> => {
+                            const relPath = relative(docsWorkspacePath, filepath);
+                            const translatedPath = resolve(
+                                docsWorkspacePath,
+                                RelativeFilePath.of(`translations/${locale}/${relPath}`)
+                            );
+                            return (await doesPathExist(translatedPath)) ? translatedPath : filepath;
+                        };
+
+                        const localeAwareMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                            const pathToRead = await resolveLocalePath(filepath);
+                            const raw = await readFile(pathToRead, "utf-8");
+                            // Strip frontmatter (---\n...\n---) from snippet files
+                            const fmMatch = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/);
+                            return fmMatch != null ? raw.slice(fmMatch[0].length) : raw;
+                        };
+
+                        const localeAwareFileLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+                            const pathToRead = await resolveLocalePath(filepath);
+                            return readFile(pathToRead, "utf-8");
+                        };
+
+                        const translatedPageEntries = await Promise.all(
+                            Object.entries(localePages).map(async ([path, rawMarkdown]) => {
+                                try {
+                                    const basePage = docsDefinition.pages[path as DocsV1Write.PageId];
+                                    const absolutePathToMarkdownFile = resolve(
+                                        docsWorkspacePath,
+                                        RelativeFilePath.of(path)
+                                    );
+
+                                    // Resolve <Markdown src="..."/> snippets (must happen before image processing).
+                                    // Uses locale-aware loader to prefer translated snippets when available.
+                                    const { markdown: markdownResolved } = await replaceReferencedMarkdown({
+                                        markdown: rawMarkdown,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile,
+                                        context,
+                                        markdownLoader: localeAwareMarkdownLoader
+                                    });
+
+                                    // Resolve <Code src="..."/> references (also locale-aware)
+                                    const codeResolved = await replaceReferencedCode({
+                                        markdown: markdownResolved,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile,
+                                        context,
+                                        fileLoader: localeAwareFileLoader
+                                    });
+
+                                    // Transform @/ prefix imports to relative paths
+                                    const importsResolved = transformAtPrefixImports({
+                                        markdown: codeResolved,
+                                        absolutePathToFernFolder: docsWorkspacePath,
+                                        absolutePathToMarkdownFile
+                                    });
+
+                                    // Strip MDX comments
+                                    let processedMarkdown = stripMdxComments(importsResolved);
+
+                                    // Replace image paths using the base page's location for resolution
+                                    // (translated pages reference the same images as the default locale)
+                                    processedMarkdown = replaceImagePathsAndUrls(
+                                        processedMarkdown,
+                                        collectedFileIds,
+                                        {}, // markdownFilesToPathName not needed for translations
+                                        {
+                                            absolutePathToMarkdownFile,
+                                            absolutePathToFernFolder: docsWorkspacePath
+                                        },
+                                        context
+                                    );
+
+                                    // Rewrite editThisPageUrl to point to the translated file
+                                    let editThisPageUrl = basePage?.editThisPageUrl;
+                                    if (editThisPageUrl != null) {
+                                        const fernPathPattern = `/fern/${path}`;
+                                        const translatedPath = `/fern/translations/${locale}/${path}`;
+                                        editThisPageUrl = editThisPageUrl.replace(
+                                            fernPathPattern,
+                                            translatedPath
+                                        ) as typeof editThisPageUrl;
+                                    }
+                                    return [
+                                        path,
+                                        {
+                                            markdown: processedMarkdown,
+                                            rawMarkdown: processedMarkdown,
+                                            editThisPageUrl,
+                                            editThisPageLaunch: basePage?.editThisPageLaunch
+                                        }
+                                    ];
+                                } catch (pageError) {
+                                    context.logger.warn(
+                                        `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
+                                    );
+                                    return undefined;
+                                }
+                            })
+                        );
+
+                        const translatedPages = {
+                            ...docsDefinition.pages,
+                            ...Object.fromEntries(
+                                translatedPageEntries.filter(
+                                    (entry): entry is NonNullable<typeof entry> => entry != null
+                                )
+                            )
+                        };
+                        let updatedRoot = applyTranslatedFrontmatterToNavTree(
+                            docsDefinition.config.root,
+                            // localePages is Record<RelativeFilePath, string> (path -> raw markdown)
+                            localePages as Record<string, string>,
+                            context
+                        );
+
+                        // Apply navigation overlay (translated display-names, titles, etc.)
+                        const localeNavOverlay = translationNavigationOverlays?.[locale];
+                        let translatedAnnouncement = docsDefinition.config.announcement;
+                        let translatedNavbarLinks = docsDefinition.config.navbarLinks;
+                        if (localeNavOverlay != null) {
+                            updatedRoot = applyTranslatedNavigationOverlays(updatedRoot, localeNavOverlay);
+                            translatedAnnouncement =
+                                getTranslatedAnnouncement(localeNavOverlay) ?? translatedAnnouncement;
+                            if (localeNavOverlay.navbarLinks != null) {
+                                translatedNavbarLinks = localeNavOverlay.navbarLinks;
+                            }
+                        }
+
+                        // Localize API reference content for this locale: patch the sidebar
+                        // titles (while the nav still references the base apiDefinitionId),
+                        // then repoint the nav's apiDefinitionId references at the translated
+                        // definitions registered above.
+                        const localeApiIdMap = translatedApiIdsByLocale.get(locale);
+                        if (localeApiIdMap != null && localeApiIdMap.size > 0 && updatedRoot != null) {
+                            const baseApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
+                            const translatedApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
+                            for (const [baseApiId, translatedApiId] of localeApiIdMap) {
+                                const baseRead = readApiDefinitionsById.get(baseApiId);
+                                const translatedRead = readApiDefinitionsById.get(translatedApiId);
+                                if (baseRead != null) {
+                                    baseApisForTitles[baseApiId] = baseRead;
+                                }
+                                if (translatedRead != null) {
+                                    // Key by the base id so titles match the (still base-keyed) nav tree.
+                                    translatedApisForTitles[baseApiId] = translatedRead;
+                                }
+                            }
+                            // Work on a deep clone before the in-place id rewrite below, since
+                            // locales run concurrently off the shared base nav tree. Title
+                            // patching already clones, so only clone explicitly when it's skipped.
+                            updatedRoot =
+                                Object.keys(translatedApisForTitles).length > 0
+                                    ? applyTranslatedApiTitlesToNavTree(
+                                          updatedRoot,
+                                          baseApisForTitles,
+                                          translatedApisForTitles
+                                      )
+                                    : structuredClone(updatedRoot);
+                            for (const [baseApiId, translatedApiId] of localeApiIdMap) {
+                                updateApiDefinitionIdInTree(updatedRoot, baseApiId, translatedApiId);
+                            }
+                        }
+
+                        const translatedDefinition: DocsDefinition = {
+                            ...docsDefinition,
+                            pages: translatedPages,
+                            config: {
+                                ...docsDefinition.config,
+                                root: updatedRoot,
+                                announcement: translatedAnnouncement,
+                                navbarLinks: translatedNavbarLinks
+                            }
+                        };
                         const pageCount = Object.keys(localePages).length;
                         context.logger.debug(
                             `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
@@ -912,7 +1182,7 @@ export async function publishDocs({
                                 customDomains: preview ? [] : customDomains,
                                 orgId: organization,
                                 locale,
-                                docsDefinition: legacyTranslatedDefinition
+                                docsDefinition: translatedDefinition
                             })
                         });
                         if (!translationResponse.ok) {

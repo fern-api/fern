@@ -2,6 +2,6 @@
 
 import typing
 
-from ..types.my_object import MyObject
+from .my_object import MyObjectParams
 
-MyCollectionAliasObjectParams = typing.List[MyObject]
+MyCollectionAliasObjectParams = typing.Sequence[MyObjectParams]

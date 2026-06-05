@@ -75,6 +75,21 @@ describe("Test getResponseBody", () => {
         }
     });
 
+    it("should retain a reference to the parent Response for sse responses", async () => {
+        if (RUNTIME.type === "node") {
+            const mockStream = new ReadableStream();
+            const mockResponse = new Response(mockStream);
+            const result = (await getResponseBody(mockResponse, "sse")) as ReadableStream & {
+                __fern_response_ref?: Response;
+            };
+            // Pins the parent Response so undici's FinalizationRegistry can't GC it and cancel the stream.
+            expect(result.__fern_response_ref).toBe(mockResponse);
+            // The pin must be non-enumerable so it does not leak through JSON.stringify or Object.keys.
+            const descriptor = Object.getOwnPropertyDescriptor(result, "__fern_response_ref");
+            expect(descriptor?.enumerable).toBe(false);
+        }
+    });
+
 <% if (streamType === "wrapper") { %>
     it("should handle streaming response type", async () => {
         if (RUNTIME.type === "node") {
@@ -83,6 +98,19 @@ describe("Test getResponseBody", () => {
             const result = await getResponseBody(mockResponse, "streaming");
             // need to reinstantiate string as a result of locked state in Readable Stream after registration with Response
             expect(JSON.stringify(result)).toBe(JSON.stringify(await chooseStreamWrapper(new ReadableStream())));
+        }
+    });
+
+    it("should retain a reference to the parent Response on the stream wrapper", async () => {
+        if (RUNTIME.type === "node") {
+            const mockStream = new ReadableStream();
+            const mockResponse = new Response(mockStream);
+            const result = (await getResponseBody(mockResponse, "streaming")) as object & {
+                __fern_response_ref?: Response;
+            };
+            expect(result.__fern_response_ref).toBe(mockResponse);
+            const descriptor = Object.getOwnPropertyDescriptor(result, "__fern_response_ref");
+            expect(descriptor?.enumerable).toBe(false);
         }
     });
 <% } else { %>
@@ -106,6 +134,17 @@ describe("Test getResponseBody", () => {
         const { value } = await reader.read();
         const streamContent = decoder.decode(value);
         expect(streamContent).toBe(testData);
+    });
+
+    it("should retain a reference to the parent Response for streaming responses", async () => {
+        const mockStream = new ReadableStream();
+        const mockResponse = new Response(mockStream);
+        const result = (await getResponseBody(mockResponse, "streaming")) as ReadableStream & {
+            __fern_response_ref?: Response;
+        };
+        expect(result.__fern_response_ref).toBe(mockResponse);
+        const descriptor = Object.getOwnPropertyDescriptor(result, "__fern_response_ref");
+        expect(descriptor?.enumerable).toBe(false);
     });
 <% } %>
 });

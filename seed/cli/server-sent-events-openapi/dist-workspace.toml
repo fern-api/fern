@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "server-sent-events-openapi-types"]
 
 # Config for 'dist'
 [dist]

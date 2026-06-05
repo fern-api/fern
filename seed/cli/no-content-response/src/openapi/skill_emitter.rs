@@ -248,7 +248,8 @@ fn describe_credential_source(src: &AuthCredentialSource) -> String {
         AuthCredentialSource::Cli(arg) => format!("`--{arg}` flag"),
         AuthCredentialSource::File(path) => format!("`{}` file", path.display()),
         AuthCredentialSource::Literal(_) => "built-in literal".to_string(),
-        AuthCredentialSource::Closure(_) => "custom resolver".to_string(),
+        AuthCredentialSource::Closure(_, Some(hint)) => hint.clone(),
+        AuthCredentialSource::Closure(_, None) => "custom resolver".to_string(),
         AuthCredentialSource::Chain(sources) => sources
             .iter()
             .map(describe_credential_source)

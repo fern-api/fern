@@ -1,6 +1,6 @@
 [package]
 name = "fern-cli-sdk"
-version = "0.18.1"
+version = "0.0.0"
 edition = "2021"
 description = "CLI generator — dynamic command surface from OpenAPI and GraphQL schemas"
 license = "Apache-2.0"
@@ -40,6 +40,7 @@ rustls = ["reqwest/rustls-tls-native-roots", "tokio-tungstenite/rustls-tls-nativ
 anyhow = "1"
 base64 = "0.22"
 bytes = "1"
+chrono = { version = "0.4", features = ["serde"] }
 clap = { version = "4", features = ["derive", "string", "env"] }
 clap_complete = "4"
 clap_mangen = "0.2"
@@ -48,8 +49,10 @@ dotenvy = "0.15"
 futures-util = "0.3"
 httpdate = "1"
 libc = "0.2"
+num-bigint = { version = "0.4", features = ["serde"] }
+ordered-float = { version = "4.5", features = ["serde"] }
 percent-encoding = "2.3.2"
-reqwest = { version = "0.12", features = ["json", "stream"], default-features = false }
+reqwest = { version = "0.12", features = ["json", "multipart", "stream"], default-features = false }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_json_path = "0.7"
@@ -64,12 +67,16 @@ tokio-util = { version = "0.7", features = ["io"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
 tracing-appender = "0.2"
+unicode-normalization = "0.1.25"
 form_urlencoded = "1"
 
 [package.metadata.dist]
 dist = true
 
 # The profile that 'cargo dist' will build with
+[dependencies.query_parameters_api_types]
+path = "query-parameters-api-types"
+
 [profile.dist]
 inherits = "release"
 lto = "thin"

@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.4
+  changelogEntry:
+    - summary: |
+        Fix request URLs containing duplicate slashes (e.g. `/{id}//{nestedId}`) when a
+        base-path, service base-path, and endpoint path are joined together. Consecutive
+        slashes in the generated URL are now collapsed into a single slash, matching the
+        URL used in generated wire tests.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 3.71.3
+  changelogEntry:
+    - summary: |
+        Retain a reference to the upstream `Response` on streaming and SSE response
+        bodies so that undici's `FinalizationRegistry` does not garbage-collect the
+        `Response` and cancel the body stream on Node 18+.
+      type: fix
+  createdAt: "2026-05-27"
+  irVersion: 67
 - version: 3.71.2
   changelogEntry:
     - summary: |

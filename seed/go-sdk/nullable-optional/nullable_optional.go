@@ -1579,6 +1579,8 @@ type NotificationMethod struct {
 	Email *EmailNotification
 	Sms   *SmsNotification
 	Push  *PushNotification
+
+	rawJSON json.RawMessage
 }
 
 func (n *NotificationMethod) GetType() string {
@@ -1640,6 +1642,7 @@ func (n *NotificationMethod) UnmarshalJSON(data []byte) error {
 		}
 		n.Push = value
 	}
+	n.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1655,6 +1658,9 @@ func (n NotificationMethod) MarshalJSON() ([]byte, error) {
 	}
 	if n.Push != nil {
 		return internal.MarshalJSONWithExtraProperty(n.Push, "type", "push")
+	}
+	if len(n.rawJSON) > 0 {
+		return n.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", n)
 }
@@ -1694,6 +1700,9 @@ func (n *NotificationMethod) validate() error {
 	}
 	if len(fields) == 0 {
 		if n.Type != "" {
+			if len(n.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", n, n.Type)
 		}
 		return fmt.Errorf("type %T is empty", n)
@@ -1991,6 +2000,8 @@ type SearchResult struct {
 	User         *UserResponse
 	Organization *Organization
 	Document     *Document
+
+	rawJSON json.RawMessage
 }
 
 func (s *SearchResult) GetType() string {
@@ -2052,6 +2063,7 @@ func (s *SearchResult) UnmarshalJSON(data []byte) error {
 		}
 		s.Document = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2067,6 +2079,9 @@ func (s SearchResult) MarshalJSON() ([]byte, error) {
 	}
 	if s.Document != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Document, "type", "document")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -2106,6 +2121,9 @@ func (s *SearchResult) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Type != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
 		}
 		return fmt.Errorf("type %T is empty", s)

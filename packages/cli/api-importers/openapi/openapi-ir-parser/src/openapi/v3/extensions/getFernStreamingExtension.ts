@@ -107,6 +107,16 @@ export function getDocumentLevelResumable(document: OpenAPIV3.Document): boolean
     return typeof docStreaming.resumable === "boolean" ? docStreaming.resumable : undefined;
 }
 
+export function getOperationLevelResumable(operation: OpenAPIV3.OperationObject): boolean | undefined {
+    const streaming = getExtension<Raw.StreamingExtensionSchema>(operation, FernOpenAPIExtension.STREAMING);
+    if (streaming == null || typeof streaming === "boolean") {
+        // Boolean shorthand emits format: "json", which has no Last-Event-ID semantics —
+        // mirror getFernStreamingExtension and do not treat it as resumable.
+        return undefined;
+    }
+    return typeof streaming.resumable === "boolean" ? streaming.resumable : undefined;
+}
+
 function maybeTrimRequestPrefix(streamCondition: string): string {
     if (streamCondition.startsWith(REQUEST_PREFIX)) {
         return streamCondition.slice(REQUEST_PREFIX.length);

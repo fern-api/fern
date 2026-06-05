@@ -1,0 +1,3 @@
+- summary: |
+    Fix `fern check` validators (`valid-local-references`, `no-non-component-refs`) incorrectly reporting `$ref` values found inside YAML comments.
+  type: fix

@@ -13,6 +13,8 @@ type Animal struct {
 	Animal string
 	Dog    *Dog
 	Cat    *Cat
+
+	rawJSON json.RawMessage
 }
 
 func (a *Animal) GetAnimal() string {
@@ -61,6 +63,7 @@ func (a *Animal) UnmarshalJSON(data []byte) error {
 		}
 		a.Cat = value
 	}
+	a.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -73,6 +76,9 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 	}
 	if a.Cat != nil {
 		return internal.MarshalJSONWithExtraProperty(a.Cat, "animal", "cat")
+	}
+	if len(a.rawJSON) > 0 {
+		return a.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", a)
 }
@@ -105,6 +111,9 @@ func (a *Animal) validate() error {
 	}
 	if len(fields) == 0 {
 		if a.Animal != "" {
+			if len(a.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", a, a.Animal)
 		}
 		return fmt.Errorf("type %T is empty", a)

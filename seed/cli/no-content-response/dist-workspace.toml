@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "no-content-response-types"]
 
 # Config for 'dist'
 [dist]

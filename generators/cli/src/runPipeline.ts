@@ -1,12 +1,19 @@
-import { mkdir } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
+import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
+import { emitReadme } from "./emitReadme.js";
+import { emitReference } from "./emitReference.js";
+import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
-import { patchCargoToml } from "./patchCargoToml.js";
+import { patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
+import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
+import { writeGitignore } from "./writeGitignore.js";
 
 export type PipelineOutcome =
     | { status: "skipped"; reason: "no-openapi-specs" }
@@ -30,10 +37,13 @@ export async function runPipeline(args: {
     outputDir: string;
     customConfig: FernCliCustomConfig;
     ir: IrSummary;
+    /** Path to the IR JSON file for embedded types codegen. */
+    irFilepath?: string;
+    outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
     specsDir?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -56,10 +66,70 @@ export async function runPipeline(args: {
     //      identifying bits don't leak Fern's template-author branding.
     //   3. copySpecs writes the spec files + main.rs into
     //      `cli/<binaryName>/`, wiring the IR-derived auth bindings.
+    //   4. generateEmbeddedTypes generates the typed Rust model crate
+    //      as a workspace member (path dependency from the CLI crate).
+    //   5. emitCiWorkflow / emitPublishWorkflow writes
+    //      `.github/workflows/ci.yml` when output mode is `github`.
+    //      Build+test jobs are always emitted; publish jobs only when
+    //      npm publish info is present.
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
-    await patchCargoToml({ outputDir, binaryName });
+    await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
-    await copySpecs({ outputDir, binaryName, authBindings, specsDir });
+    const embedTypes = customConfig.embedTypes !== false && irFilepath != null;
+    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes });
+    await writeGitignore(outputDir);
+    await emitReadme({
+        outputDir,
+        binaryName,
+        apiDisplayName: ir.apiDisplayName,
+        authBindings,
+        npmPublishInfo: outputConfig.npmPublishInfo
+    });
+    await emitReference({
+        outputDir,
+        binaryName,
+        apiDisplayName: ir.apiDisplayName,
+        authBindings,
+        specsDir
+    });
+
+    // Generate the embedded types crate (on by default; opt-out via embedTypes: false).
+    if (embedTypes && irFilepath != null) {
+        const typesCrateName = await generateEmbeddedTypes({
+            irFilepath,
+            outputDir,
+            binaryName
+        });
+        await patchCargoToml({ outputDir, binaryName, typesCrateName });
+        await patchCargoLockForTypes({ outputDir, typesCrateName });
+        await patchDistWorkspaceToml({ outputDir, typesCrateName });
+        await writeFernignore(outputDir, binaryName);
+    }
+
+    if (outputConfig.isGithubOutput) {
+        if (outputConfig.npmPublishInfo != null) {
+            await emitPublishWorkflow({
+                outputDir,
+                binaryName,
+                npmPublishInfo: outputConfig.npmPublishInfo
+            });
+        } else {
+            await emitCiWorkflow({ outputDir, binaryName });
+        }
+    }
 
     return { status: "generated", binaryName };
+}
+
+/**
+ * Write a `.fernignore` listing files the user owns. `fern generate`
+ * should not overwrite these on subsequent runs.
+ */
+async function writeFernignore(outputDir: string, binaryName: string): Promise<void> {
+    const content = [
+        "# Files owned by the user — fern generate will not overwrite these.",
+        `cli/${binaryName}/custom.rs`,
+        ""
+    ].join("\n");
+    await writeFile(path.join(outputDir, ".fernignore"), content);
 }

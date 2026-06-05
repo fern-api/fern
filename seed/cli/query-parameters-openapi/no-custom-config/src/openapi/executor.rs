@@ -69,6 +69,28 @@ pub enum UploadSource<'a> {
     },
 }
 
+/// A single part in a multipart/form-data request, collected from CLI
+/// flags for operations that declare `multipart/form-data` bodies.
+pub enum MultipartPart {
+    /// UTF-8 text value sent as a plain form field. `content_type` carries
+    /// an explicit per-part `Content-Type` from the OpenAPI `encoding`
+    /// object; `None` means reqwest's default (`text/plain`).
+    Text {
+        name: String,
+        value: String,
+        content_type: Option<String>,
+    },
+    /// File read from disk (or stdin). The `path` is already validated.
+    /// `content_type` is the per-part `Content-Type` resolved from the
+    /// OpenAPI `encoding` object (falling back to the schema-inferred
+    /// `application/octet-stream` for file fields).
+    File {
+        name: String,
+        path: String,
+        content_type: Option<String>,
+    },
+}
+
 /// Configuration for auto-pagination.
 #[derive(Debug, Clone)]
 pub struct PaginationConfig {
@@ -111,27 +133,18 @@ pub(crate) struct RetryOutcome<'a> {
     pub retry_after: Option<&'a str>,
 }
 
-/// Returns the default set of retryable HTTP status codes.
+/// Returns `true` when the HTTP status code is considered retryable.
 ///
-/// Matches fern's TypeScript SDK `retryStatusCodes: recommended` mode
-/// ([fern PR](https://github.com/fern-api/fern/blob/main/generators/typescript/sdk/changes/3.67.0/feat-retry-status-codes.yml)):
-///
+/// Retryable statuses (FER-10521):
 ///   - 408 Request Timeout      — server gave up before reading; safe.
 ///   - 429 Too Many Requests    — backoff signal; safe.
-///   - 502 Bad Gateway          — upstream layer failed; transient.
-///   - 503 Service Unavailable  — explicitly transient by spec.
-///   - 504 Gateway Timeout      — upstream timeout; transient.
+///   - 500–599 (all server errors) — transient infrastructure failures.
 ///
-/// Deliberately *excludes* 500 Internal Server Error — a 500 often
-/// indicates a non-transient bug on the server (bad input shape, app
-/// crash) where retrying just masks the underlying issue. Servers that
-/// genuinely want us to retry a 500 can still surface a `Retry-After`
-/// header and the executor will honor it.
-///
-/// Also excludes 425 Too Early (TLS 1.3 0-RTT replay protection) —
-/// never seen in practice from reqwest's HTTP/1.1 client.
+/// Prior to FER-10521 this excluded 500 (often a non-transient bug).
+/// The broader 5xx set aligns with the cross-SDK default and with
+/// the expectation that CLIs retry aggressively on server-side errors.
 pub(crate) fn is_retryable_status(status: u16) -> bool {
-    matches!(status, 408 | 429 | 502 | 503 | 504)
+    status == 408 || status == 429 || (500..=599).contains(&status)
 }
 
 /// Whether the per-method retry policy allows retrying *non-idempotent*
@@ -157,6 +170,22 @@ pub(crate) fn method_allows_retry(http_method: &str, marked_idempotent: bool) ->
 pub(crate) fn binary_body_is_stdin(binary_body_path: Option<&str>) -> bool {
     match binary_body_path {
         Some(raw) => matches!(BinaryBodySource::parse(raw), BinaryBodySource::Stdin),
+        None => false,
+    }
+}
+
+/// Whether any `MultipartPart::File` in the list uses stdin (`-` or `@-`).
+/// Stdin-sourced file parts cannot be replayed on retry because the pipe is
+/// consumed by the first `read_to_end`. Mirrors `binary_body_is_stdin`.
+pub(crate) fn multipart_has_stdin(parts: &Option<Vec<MultipartPart>>) -> bool {
+    match parts {
+        Some(parts) => parts.iter().any(|p| match p {
+            MultipartPart::File { path, .. } => {
+                let stripped = path.strip_prefix('@').unwrap_or(path);
+                stripped == "-"
+            }
+            MultipartPart::Text { .. } => false,
+        }),
         None => false,
     }
 }
@@ -300,6 +329,31 @@ pub(crate) fn decide_retry(
     }
 }
 
+/// Returns true if any dotted ancestor of `leaf_path` is present in `supplied`
+/// and is declared as an object-shorthand parameter (`param_type == "object"`).
+/// Used so a required leaf like `name.first` is not reported missing when the
+/// user satisfied it via `--name '{"first": "..."}'`.
+fn ancestor_object_shorthand_supplied(
+    leaf_path: &str,
+    supplied: &Map<String, Value>,
+    parameters: &std::collections::HashMap<String, MethodParameter>,
+) -> bool {
+    let segments: Vec<&str> = leaf_path.split('.').collect();
+    // Walk ancestors longest-first: a.b.c.d → a.b.c, a.b, a
+    for prefix_len in (1..segments.len()).rev() {
+        let ancestor = segments[..prefix_len].join(".");
+        if supplied.contains_key(&ancestor)
+            && parameters
+                .get(&ancestor)
+                .and_then(|p| p.param_type.as_deref())
+                == Some("object")
+        {
+            return true;
+        }
+    }
+    false
+}
+
 /// Parsed and validated inputs ready for request execution.
 #[derive(Debug)]
 struct ExecutionInput {
@@ -327,22 +381,13 @@ fn parse_and_validate_inputs(
         Map::new()
     };
 
-    // Helper: build the `Provide it via …` hint listing every channel a
-    // user can satisfy this parameter through. Mirrors `commands.rs`'s
-    // flag-name resolution so the suggested `--<flag>` is the actual flag
-    // the user can pass: `flag_name_override` wins verbatim (synthetic
-    // injections that already encode the wire name); otherwise kebab the
-    // `display_name` from `x-fern-parameter-name`, falling back to the
-    // wire name. Body fields also accept `--json`; every other location
-    // only accepts the per-field flag or `--params`.
+    // Helper: build the `Provide it via …` hint. Uses the same
+    // `resolve_param_flag_name` that the command builder uses so the
+    // suggested `--<flag>` matches the actually registered flag
+    // (including body-param dot-notation and `-param` builtin suffix).
     let missing_param_hint = |param_def: &MethodParameter, param_name: &str| -> String {
-        let flag = if let Some(override_flag) = param_def.flag_name_override.as_deref() {
-            override_flag.to_string()
-        } else {
-            crate::text::to_kebab_flag(
-                param_def.display_name.as_deref().unwrap_or(param_name),
-            )
-        };
+        let flag = crate::openapi::commands::resolve_param_flag_name(param_def, param_name)
+            .unwrap_or_else(|| crate::text::to_kebab_flag(param_name));
         if param_def.location.as_deref() == Some("body") {
             format!("Provide it via --{flag}, --json, or --params")
         } else {
@@ -371,6 +416,16 @@ fn parse_and_validate_inputs(
             if param_def.location.as_deref() == Some("body") && body_json.is_some() {
                 continue;
             }
+            // When the user supplied an ancestor object-shorthand flag
+            // (e.g. `--name '{...}'`) the required-ness of nested leaves
+            // (`name.first`) is satisfied inside the JSON payload, not via
+            // a per-leaf flag — skip them here.
+            if param_def.location.as_deref() == Some("body")
+                && param_name.contains('.')
+                && ancestor_object_shorthand_supplied(param_name, &params, &method.parameters)
+            {
+                continue;
+            }
             let hint = missing_param_hint(param_def, param_name);
             return Err(CliError::Validation(format!(
                 "Required parameter '{param_name}' is missing. {hint}"
@@ -379,23 +434,29 @@ fn parse_and_validate_inputs(
     }
 
     // Split params by `location` into header / body / non-header buckets.
-    // Body-located params are coerced by type and merged into the JSON body
-    // (with --json overriding any individual flag values).
+    // Body-located params are coerced by type and turned into the JSON body
+    // when no --json is also supplied. (JFL-1.2 makes those modes mutually
+    // exclusive — see the conflict checks below.)
     let mut header_params: Vec<(String, String)> = Vec::new();
     let mut body_from_flags = Map::new();
     let mut non_header_params = Map::new();
+    // Track the raw (pre-`set_nested_value`) body flag keys the user provided
+    // so we can detect collisions between an object-shorthand flag and a
+    // dot-notation leaf flag for the same field. We can't introspect
+    // `body_from_flags` after the fact because `set_nested_value` collapses
+    // dotted keys into nested maps, erasing the original input shape.
+    let mut raw_body_flag_keys: Vec<String> = Vec::new();
 
     for (key, value) in &params {
         let location = method.parameters.get(key).and_then(|p| p.location.as_deref());
         match location {
             Some("header") => {
-                let str_value = match value {
-                    Value::String(s) => s.clone(),
-                    other => other.to_string(),
-                };
+                let param_def = method.parameters.get(key);
+                let str_value = serialize_header_simple(value, param_def)?;
                 header_params.push((key.clone(), str_value));
             }
             Some("body") => {
+                raw_body_flag_keys.push(key.clone());
                 let coerced = coerce_body_param_value(
                     value,
                     method.parameters.get(key).and_then(|p| p.param_type.as_deref()),
@@ -405,6 +466,38 @@ fn parse_and_validate_inputs(
             _ => {
                 non_header_params.insert(key.clone(), value.clone());
             }
+        }
+    }
+
+    // JFL-1.2: enforce mutually exclusive body input modes. The three modes
+    // are (1) `--json` whole-body, (2) dot-notation leaf flags, and
+    // (3) object-shorthand JSON for a single field (`--name '{...}'`).
+    // Mixing any two is a validation error so the user's intent is
+    // unambiguous and the precedence rules are not surprising.
+    if body_json.is_some() && !raw_body_flag_keys.is_empty() {
+        let conflicting = raw_body_flag_keys
+            .iter()
+            .map(|k| format!("--{k}"))
+            .collect::<Vec<_>>()
+            .join(", ");
+        return Err(CliError::Validation(format!(
+            "Cannot combine --json with per-field body flags ({conflicting}). Use one or the other."
+        )));
+    }
+    for object_key in &raw_body_flag_keys {
+        let is_object = method
+            .parameters
+            .get(object_key)
+            .and_then(|p| p.param_type.as_deref())
+            == Some("object");
+        if !is_object {
+            continue;
+        }
+        let prefix = format!("{object_key}.");
+        if let Some(leaf_key) = raw_body_flag_keys.iter().find(|k| k.starts_with(&prefix)) {
+            return Err(CliError::Validation(format!(
+                "Cannot combine --{object_key} with --{leaf_key}. Use the JSON shorthand or individual flags, not both."
+            )));
         }
     }
 
@@ -420,30 +513,17 @@ fn parse_and_validate_inputs(
         }
     }
 
-    let body: Option<Value> = match (body_json, body_from_flags.is_empty()) {
-        (None, true) => None,
-        (None, false) => Some(Value::Object(body_from_flags)),
-        (Some(b), flags_empty) => {
-            let json_val: Value = serde_json::from_str(b)
-                .map_err(|e| CliError::Validation(format!("Invalid --json body: {e}")))?;
-            // Object `--json` merges per-field flag values, with `--json`
-            // winning on overlapping keys (documented "--json > flag"
-            // precedence). Non-object `--json` (top-level array or scalar)
-            // replaces the body wholesale — there is no sensible way to
-            // merge per-field fields into it. The full precedence chain is
-            // `--json` > `--params` > per-field flag.
-            let merged = match json_val {
-                Value::Object(json_map) if !flags_empty => {
-                    let mut merged = body_from_flags;
-                    for (k, v) in json_map {
-                        merged.insert(k, v);
-                    }
-                    Value::Object(merged)
-                }
-                other => other,
-            };
-            Some(merged)
-        }
+    // The conflict checks above guarantee that `body_json` and
+    // `body_from_flags` are never both populated, so the body is sourced
+    // from exactly one channel here.
+    let body: Option<Value> = if let Some(b) = body_json {
+        let json_val: Value = serde_json::from_str(b)
+            .map_err(|e| CliError::Validation(format!("Invalid --json body: {e}")))?;
+        Some(json_val)
+    } else if !body_from_flags.is_empty() {
+        Some(Value::Object(body_from_flags))
+    } else {
+        None
     };
 
     // Validate the assembled body against the request schema regardless of
@@ -575,19 +655,46 @@ async fn build_http_request(
     pages_fetched: u32,
     upload: &Option<UploadSource<'_>>,
     binary_body_path: Option<&str>,
+    multipart_parts: &Option<Vec<MultipartPart>>,
     pagination: &PaginationConfig,
 ) -> Result<reqwest::RequestBuilder, CliError> {
     // Uri / Path pagination supplies a fully-resolved next URL in the
     // page state; use it verbatim so that the server's cursor / query
     // params travel as-is.
-    let target_url = page_state.url_override().unwrap_or(&input.full_url);
+    let base_target_url = page_state.url_override().unwrap_or(&input.full_url);
+
+    // Build the query string ourselves (rather than reqwest's `.query()`,
+    // which form-encodes: space -> `+`, comma -> `%2C`). The OpenAPI 3.0
+    // query styles need RFC 3986 percent-encoding with style delimiters left
+    // literal in the joined value (spaceDelimited -> `%20`, pipeDelimited ->
+    // `%7C`, form/no-explode arrays keep `,`). When the URL is supplied by the
+    // server (uri / path pagination) it already carries every query param the
+    // server cares about, so we honor it as-is.
+    let target_url = if page_state.url_override().is_some() {
+        base_target_url.to_string()
+    } else {
+        let mut all_query_params = input.query_params.clone();
+        if let Some((name, value)) =
+            page_state.injection(method.pagination.as_ref(), &pagination.token_query_param)
+        {
+            all_query_params.push((name, value));
+        }
+        // Upload operations carry `uploadType=multipart`; route it through the
+        // same RFC-3986 query encoder as every other param instead of reqwest's
+        // `.query()` (the value is an ASCII literal, so the encoded form is
+        // identical — this just keeps a single query encoder).
+        if pages_fetched == 0 && upload.is_some() {
+            all_query_params.push(("uploadType".to_string(), "multipart".to_string()));
+        }
+        append_query_string(base_target_url, &all_query_params)
+    };
 
     let mut request = match method.http_method.as_str() {
-        "GET" => client.get(target_url),
-        "POST" => client.post(target_url),
-        "PUT" => client.put(target_url),
-        "PATCH" => client.patch(target_url),
-        "DELETE" => client.delete(target_url),
+        "GET" => client.get(&target_url),
+        "POST" => client.post(&target_url),
+        "PUT" => client.put(&target_url),
+        "PATCH" => client.patch(&target_url),
+        "DELETE" => client.delete(&target_url),
         other => {
             return Err(CliError::Other(anyhow::anyhow!(
                 "Unsupported HTTP method: {other}"
@@ -624,25 +731,8 @@ async fn build_http_request(
         }
     }
 
-    // When the URL is supplied by the server (uri / path pagination)
-    // the URL already carries every query param the server cares about
-    // — re-appending the user's initial filters would either double them
-    // up or fight the server's own cursor. Honor the server's URL as-is.
-    if page_state.url_override().is_none() {
-        let mut all_query_params = input.query_params.clone();
-        if let Some((name, value)) =
-            page_state.injection(method.pagination.as_ref(), &pagination.token_query_param)
-        {
-            all_query_params.push((name, value));
-        }
-        if !all_query_params.is_empty() {
-            request = request.query(&all_query_params);
-        }
-    }
-
     if pages_fetched == 0 {
         if let Some(upload_source) = upload {
-            request = request.query(&[("uploadType", "multipart")]);
             let (body, content_type, content_length) = match upload_source {
                 UploadSource::Bytes { data, content_type } => {
                     if content_type.contains('\r') || content_type.contains('\n') {
@@ -693,6 +783,9 @@ async fn build_http_request(
                     request = request.body(build_stdin_body_stream());
                 }
             }
+        } else if let Some(parts) = multipart_parts {
+            let form = build_multipart_form(parts).await?;
+            request = request.multipart(form);
         } else if let Some(ref body_val) = input.body {
             request = encode_request_body(request, body_val, &method.body_encoding);
         } else if matches!(method.http_method.as_str(), "POST" | "PUT" | "PATCH") {
@@ -1027,7 +1120,8 @@ async fn handle_json_response(
     Ok(false)
 }
 
-/// Handle a binary response by streaming it to a file.
+/// Handle a binary response by streaming it to a file (or to stdout when
+/// `output_path == Some("-")`, the curl/wget stdout sentinel).
 async fn handle_binary_response(
     response: reqwest::Response,
     content_type: &str,
@@ -1035,16 +1129,55 @@ async fn handle_binary_response(
     pipeline: &crate::formatter::OutputPipeline,
     capture_output: bool,
 ) -> Result<Option<Value>, CliError> {
+    // `--output -` pipes raw bytes to stdout and skips both the disk write
+    // and the success-metadata JSON — so the body is consumable downstream
+    // (e.g. `<bin> <op> ... --output - | ffplay -` for audio responses,
+    // `... | tar x` for archives). The validator in binding.rs treats `-`
+    // as a sentinel and does NOT canonicalize it to `cwd/-`, so we receive
+    // the literal here.
+    //
+    // We use std::io::stdout (sync) rather than tokio::io::stdout because
+    // tokio's stdout writer routes through a per-runtime blocking worker
+    // that can be left undrained when a one-shot CLI tears down the runtime
+    // after this return, causing the process to wedge before exit. The
+    // metadata-emit path further down already uses std::io::stdout in the
+    // same async context, so mixing is fine.
+    if output_path == Some("-") {
+        use std::io::Write;
+        let mut stream = response.bytes_stream();
+        while let Some(chunk) = stream.next().await {
+            let chunk = chunk.context("Failed to read response chunk")?;
+            // We re-acquire the stdout lock per chunk because StdoutLock is
+            // !Send and cannot be held across the await above (the binding
+            // adapter returns a Send-required boxed future).
+            std::io::stdout()
+                .write_all(&chunk)
+                .context("Failed to write to stdout")?;
+        }
+        std::io::stdout()
+            .flush()
+            .context("Failed to flush stdout")?;
+        return Ok(None);
+    }
+
     let file_path = if let Some(p) = output_path {
         PathBuf::from(p)
+    } else if let Some(name) = response
+        .headers()
+        .get(reqwest::header::CONTENT_DISPOSITION)
+        .and_then(|v| v.to_str().ok())
+        .and_then(extract_content_disposition_filename)
+    {
+        // The server named the file via RFC 6266 Content-Disposition — use
+        // it. The helper has already reduced the value to its safe basename
+        // so the server can never pick the output directory.
+        PathBuf::from(name)
     } else {
         let ext = mime_to_extension(content_type);
         PathBuf::from(format!("download.{ext}"))
     };
 
-    let mut file = tokio::fs::File::create(&file_path)
-        .await
-        .context("Failed to create output file")?;
+    let mut file = create_file_no_follow(&file_path).await?;
 
     let mut stream = response.bytes_stream();
     let mut total_bytes: u64 = 0;
@@ -1463,6 +1596,7 @@ pub async fn execute_method(
     output_path: Option<&str>,
     upload: Option<UploadSource<'_>>,
     binary_body_path: Option<&str>,
+    multipart_parts: Option<Vec<MultipartPart>>,
     dry_run: bool,
     pagination: &PaginationConfig,
     pipeline: &crate::formatter::OutputPipeline,
@@ -1547,6 +1681,28 @@ pub async fn execute_method(
                 "flag": flag_name,
             });
         }
+        if let Some(ref parts) = multipart_parts {
+            let part_info: Vec<Value> = parts
+                .iter()
+                .map(|p| match p {
+                    MultipartPart::Text {
+                        name,
+                        value,
+                        content_type,
+                    } => {
+                        json!({ "name": name, "type": "text", "value": value, "content_type": content_type })
+                    }
+                    MultipartPart::File {
+                        name,
+                        path,
+                        content_type,
+                    } => {
+                        json!({ "name": name, "type": "file", "path": path, "content_type": content_type })
+                    }
+                })
+                .collect();
+            dry_run_info["multipart_form_data"] = json!(part_info);
+        }
         if capture_output {
             return Ok(Some(dry_run_info));
         }
@@ -1591,14 +1747,38 @@ pub async fn execute_method(
         // an empty body. Disable retries for that case so we preserve
         // the pre-retry behavior (a single attempt, surface whatever
         // the server returns) rather than masking the original failure.
-        let retries_cfg = if binary_body_is_stdin(binary_body_path) {
-            None
+        // Disable retries when the body is a streamed stdin or multipart
+        // body — those can't be replayed on a second attempt.
+        let default_retries = RetriesConfig::default();
+        let retries_cfg =
+            if binary_body_is_stdin(binary_body_path) || multipart_has_stdin(&multipart_parts) {
+                None
+            } else {
+                Some(method.retries.as_ref().unwrap_or(&default_retries))
+            };
+
+        // Auto Idempotency-Key: generate once before the retry loop so
+        // the same key is sent on every attempt. Only for POST/PUT/PATCH
+        // unless opted out via `x-fern-cli-idempotency: false`, or when
+        // the operation already has an explicit idempotency-header
+        // mechanism (x-fern-idempotent: true provides --idempotency-key).
+        let user_provides_idempotency = method.idempotent
+            || input
+                .header_params
+                .iter()
+                .any(|(k, _)| k.eq_ignore_ascii_case("idempotency-key"));
+        let idempotency_key = if !method.no_auto_idempotency_key
+            && !user_provides_idempotency
+            && crate::http::needs_idempotency_key(&method.http_method)
+        {
+            Some(crate::http::generate_idempotency_key())
         } else {
-            method.retries.as_ref()
+            None
         };
+
         let mut retry_attempt: u32 = 0;
         let response = loop {
-            let request = build_http_request(
+            let mut request = build_http_request(
                 &client,
                 method,
                 &input,
@@ -1608,9 +1788,14 @@ pub async fn execute_method(
                 pages_fetched,
                 &upload,
                 binary_body_path,
+                &multipart_parts,
                 pagination,
             )
             .await?;
+
+            if let Some(ref key) = idempotency_key {
+                request = request.header("Idempotency-Key", key.as_str());
+            }
 
             match request.send().await {
                 Ok(resp) => {
@@ -1630,7 +1815,7 @@ pub async fn execute_method(
                             &outcome,
                             cfg,
                             &method.http_method,
-                            method.idempotent,
+                            method.idempotent || idempotency_key.is_some(),
                             no_retry,
                         ) {
                             tracing::warn!(
@@ -1665,7 +1850,7 @@ pub async fn execute_method(
                             &outcome,
                             cfg,
                             &method.http_method,
-                            method.idempotent,
+                            method.idempotent || idempotency_key.is_some(),
                             no_retry,
                         ) {
                             tracing::warn!(
@@ -1856,7 +2041,30 @@ fn serialize_query_param(
 
     match style {
         "deepObject" => serialize_deep_object(key, value),
+        // spaceDelimited / pipeDelimited only define array behavior; the
+        // elements are joined by a single space / pipe under one key. For
+        // non-array values they degrade to the same scalar shape as form.
+        "spaceDelimited" => serialize_delimited(key, value, ' '),
+        "pipeDelimited" => serialize_delimited(key, value, '|'),
         _ => serialize_form(key, value, explode),
+    }
+}
+
+/// `spaceDelimited` / `pipeDelimited` array serialization: a single key whose
+/// value is the elements joined by `delim`. The delimiter is a literal here;
+/// the request encoder percent-encodes it on the wire (space -> `%20`,
+/// pipe -> `%7C`).
+fn serialize_delimited(key: &str, value: &Value, delim: char) -> Vec<(String, String)> {
+    match value {
+        Value::Array(arr) => {
+            let joined = arr
+                .iter()
+                .map(value_to_query_string)
+                .collect::<Vec<_>>()
+                .join(&delim.to_string());
+            vec![(key.to_string(), joined)]
+        }
+        _ => vec![(key.to_string(), value_to_query_string(value))],
     }
 }
 
@@ -1907,6 +2115,23 @@ fn serialize_form(key: &str, value: &Value, explode: bool) -> Vec<(String, Strin
                 .join(",");
             vec![(key.to_string(), joined)]
         }
+        // form / object / explode=true: each property becomes its own
+        // top-level key (`role=admin&active=true`), dropping the parameter
+        // name entirely — the OpenAPI 3.0 rule for an exploded object.
+        Value::Object(map) if explode => map
+            .iter()
+            .map(|(k, v)| (k.clone(), value_to_query_string(v)))
+            .collect(),
+        // form / object / explode=false: comma-joined `key,value` pairs under
+        // the single parameter key (`profile=role,admin,active,true`).
+        Value::Object(map) => {
+            let joined = map
+                .iter()
+                .flat_map(|(k, v)| [k.clone(), value_to_query_string(v)])
+                .collect::<Vec<_>>()
+                .join(",");
+            vec![(key.to_string(), joined)]
+        }
         _ => vec![(key.to_string(), value_to_query_string(value))],
     }
 }
@@ -1919,6 +2144,86 @@ fn value_to_query_string(v: &Value) -> String {
         Value::Null => String::new(),
         other => other.to_string(),
     }
+}
+
+/// Serialize a header parameter value into its OpenAPI `simple`-style wire
+/// representation (the only style permitted for `in: header` parameters).
+///
+/// - primitive → the scalar rendered as-is (`X-Custom: hello`)
+/// - array → elements comma-joined under one name; `explode` does not change
+///   the delimiter for `simple` (`X-Tags: a,b`)
+/// - object, `explode: false` → flattened `k,v,k2,v2` (`X-Filter: k,v,k2,v2`)
+/// - object, `explode: true` → `k=v,k2=v2`
+///
+/// The fully-assembled value is rejected if it contains control characters,
+/// which would otherwise enable header injection (CR/LF) when the value
+/// arrives from an untrusted CLI argument.
+fn serialize_header_simple(
+    value: &Value,
+    param_def: Option<&crate::openapi::discovery::MethodParameter>,
+) -> Result<String, CliError> {
+    let explode = param_def.and_then(|p| p.explode).unwrap_or(false);
+
+    let rendered = match value {
+        Value::Array(arr) => arr
+            .iter()
+            .map(value_to_query_string)
+            .collect::<Vec<_>>()
+            .join(","),
+        Value::Object(map) => map
+            .iter()
+            .flat_map(|(k, v)| {
+                let v = value_to_query_string(v);
+                if explode {
+                    vec![format!("{k}={v}")]
+                } else {
+                    vec![k.clone(), v]
+                }
+            })
+            .collect::<Vec<_>>()
+            .join(","),
+        other => value_to_query_string(other),
+    };
+
+    crate::output::reject_dangerous_chars(&rendered, "header value")?;
+    Ok(rendered)
+}
+
+/// Percent-encode set for a query-string component (key or value).
+///
+/// RFC 3986 unreserved characters (`A-Za-z0-9-_.~`) are left intact; the comma
+/// is also kept literal so a form/no-explode array reads `ids=1,2` rather than
+/// `ids=1%2C2`. Everything else — including space (`%20`, *not* the form
+/// `+`), `|` (`%7C`), `&`, `=`, `#`, and `[` `]` — is percent-encoded. This is
+/// the RFC 3986 encoding the OpenAPI 3.0 query styles expect, and is stricter
+/// than reqwest's `serde_urlencoded`-based `.query()` form encoding.
+const QUERY_COMPONENT: &percent_encoding::AsciiSet = &percent_encoding::NON_ALPHANUMERIC
+    .remove(b'-')
+    .remove(b'_')
+    .remove(b'.')
+    .remove(b'~')
+    .remove(b',');
+
+fn encode_query_component(s: &str) -> String {
+    percent_encoding::utf8_percent_encode(s, QUERY_COMPONENT).to_string()
+}
+
+/// Append already-style-serialized `(key, value)` query pairs to `base_url`,
+/// percent-encoding each component per [`QUERY_COMPONENT`]. Pairs are joined
+/// with `&`; the leading separator is `?` unless `base_url` already carries a
+/// query string, in which case `&` continues it. Returns `base_url` unchanged
+/// when there are no pairs.
+fn append_query_string(base_url: &str, pairs: &[(String, String)]) -> String {
+    if pairs.is_empty() {
+        return base_url.to_string();
+    }
+    let query = pairs
+        .iter()
+        .map(|(k, v)| format!("{}={}", encode_query_component(k), encode_query_component(v)))
+        .collect::<Vec<_>>()
+        .join("&");
+    let sep = if base_url.contains('?') { '&' } else { '?' };
+    format!("{base_url}{sep}{query}")
 }
 
 fn effective_root_url(method: &RestMethod, doc: &RestDescription) -> String {
@@ -1996,7 +2301,7 @@ fn build_url(
     let rendered_base_path = doc
         .base_path
         .as_deref()
-        .map(|bp| render_path_template(bp, params))
+        .map(|bp| render_path_template(bp, params, Some(&method.parameters)))
         .transpose()?;
     let base_path_parameters: HashSet<&str> = doc
         .base_path
@@ -2080,7 +2385,7 @@ fn build_url(
         query_params.extend(pairs);
     }
 
-    let url_path = render_path_template(path_template, params)?;
+    let url_path = render_path_template(path_template, params, Some(&method.parameters))?;
 
     let full_url = if is_upload {
         // Use the upload endpoint from the Discovery Document
@@ -2096,7 +2401,7 @@ fn build_url(
                         .to_string(),
                 )
             })?;
-        let upload_path = render_path_template(upload_endpoint, params)?;
+        let upload_path = render_path_template(upload_endpoint, params, Some(&method.parameters))?;
         // Compose the upload host with the spec-level base_path the same
         // way the non-upload branch does, so x-fern-base-path is applied
         // uniformly. This branch is currently unreachable from OpenAPI
@@ -2145,6 +2450,7 @@ fn extract_template_path_parameters(path_template: &str) -> HashSet<&str> {
 fn render_path_template(
     path_template: &str,
     params: &Map<String, Value>,
+    param_defs: Option<&HashMap<String, MethodParameter>>,
 ) -> Result<String, CliError> {
     let mut rendered = String::with_capacity(path_template.len());
     let mut cursor = 0;
@@ -2167,15 +2473,21 @@ fn render_path_template(
         };
 
         if let Some(value) = params.get(key) {
-            let val_str = match value {
-                Value::String(s) => s.clone(),
-                other => other.to_string(),
-            };
             let encoded = if is_plus {
+                // RFC 6570 `{+var}` reserved expansion: preserve literal `/`.
+                let val_str = match value {
+                    Value::String(s) => s.clone(),
+                    other => other.to_string(),
+                };
                 let validated = crate::validate::validate_resource_name(&val_str)?;
                 crate::validate::encode_path_preserving_slashes(validated)
             } else {
-                crate::validate::encode_path_segment(&val_str)
+                // Consult the parameter's OpenAPI serialization `style`
+                // (simple / label / matrix) and `explode` flag. Falls back
+                // to plain simple/primitive substitution when no definition
+                // is available (e.g. `x-fern-base-path` placeholders).
+                let param_def = param_defs.and_then(|defs| defs.get(key));
+                serialize_path_param(key, value, param_def)
             };
             rendered.push_str(&encoded);
         } else {
@@ -2187,6 +2499,123 @@ fn render_path_template(
 
     rendered.push_str(&path_template[cursor..]);
     Ok(rendered)
+}
+
+/// Serialize a value into a single URL path segment per the OpenAPI 3.0 path
+/// `style` (`simple` default, `label`, `matrix`) and `explode` flag.
+///
+/// Only the user-supplied *values* are percent-encoded
+/// ([`encode_path_segment`](crate::validate::encode_path_segment)); the
+/// structural separators introduced by the style (`,`, `.`, `;`, `=`) are
+/// literal. Because `encode_path_segment` itself encodes those characters,
+/// assembling the segment from already-encoded values keeps the separators
+/// from being double-encoded.
+fn serialize_path_param(
+    name: &str,
+    value: &Value,
+    param_def: Option<&MethodParameter>,
+) -> String {
+    let style = param_def
+        .and_then(|p| p.style.as_deref())
+        .unwrap_or("simple");
+    // OpenAPI default `explode` is false for every path style.
+    let explode = param_def.and_then(|p| p.explode).unwrap_or(false);
+
+    let enc = |v: &Value| crate::validate::encode_path_segment(&value_to_path_string(v));
+
+    match style {
+        "label" => match value {
+            Value::Array(arr) => {
+                // RFC 6570: explode=true -> dot-separated; explode=false -> comma-separated.
+                let joiner = if explode { "." } else { "," };
+                let body = arr.iter().map(&enc).collect::<Vec<_>>().join(joiner);
+                format!(".{body}")
+            }
+            Value::Object(map) => {
+                if explode {
+                    // explode=true: k=v pairs dot-separated.
+                    let body = map
+                        .iter()
+                        .map(|(k, v)| {
+                            format!("{}={}", crate::validate::encode_path_segment(k), enc(v))
+                        })
+                        .collect::<Vec<_>>()
+                        .join(".");
+                    format!(".{body}")
+                } else {
+                    // explode=false: flat k,v,k,v comma-separated.
+                    let body = map
+                        .iter()
+                        .flat_map(|(k, v)| {
+                            [crate::validate::encode_path_segment(k), enc(v)]
+                        })
+                        .collect::<Vec<_>>()
+                        .join(",");
+                    format!(".{body}")
+                }
+            }
+            _ => format!(".{}", enc(value)),
+        },
+        "matrix" => match value {
+            Value::Array(arr) if explode => arr
+                .iter()
+                .map(|v| format!(";{name}={}", enc(v)))
+                .collect::<Vec<_>>()
+                .join(""),
+            Value::Array(arr) => {
+                let body = arr.iter().map(&enc).collect::<Vec<_>>().join(",");
+                format!(";{name}={body}")
+            }
+            Value::Object(map) if explode => map
+                .iter()
+                .map(|(k, v)| {
+                    format!(";{}={}", crate::validate::encode_path_segment(k), enc(v))
+                })
+                .collect::<Vec<_>>()
+                .join(""),
+            Value::Object(map) => {
+                let body = map
+                    .iter()
+                    .map(|(k, v)| {
+                        format!("{},{}", crate::validate::encode_path_segment(k), enc(v))
+                    })
+                    .collect::<Vec<_>>()
+                    .join(",");
+                format!(";{name}={body}")
+            }
+            _ => format!(";{name}={}", enc(value)),
+        },
+        // "simple" (default) and any unrecognized style.
+        _ => match value {
+            Value::Array(arr) => arr.iter().map(&enc).collect::<Vec<_>>().join(","),
+            Value::Object(map) if explode => map
+                .iter()
+                .map(|(k, v)| {
+                    format!("{}={}", crate::validate::encode_path_segment(k), enc(v))
+                })
+                .collect::<Vec<_>>()
+                .join(","),
+            Value::Object(map) => map
+                .iter()
+                .flat_map(|(k, v)| [crate::validate::encode_path_segment(k), enc(v)])
+                .collect::<Vec<_>>()
+                .join(","),
+            _ => enc(value),
+        },
+    }
+}
+
+/// Stringify a JSON value for a path segment. Mirrors `value_to_query_string`
+/// (the query-side equivalent) — strings pass through, numbers/booleans use
+/// their canonical text, null is empty, composites fall back to JSON.
+fn value_to_path_string(v: &Value) -> String {
+    match v {
+        Value::String(s) => s.clone(),
+        Value::Number(n) => n.to_string(),
+        Value::Bool(b) => b.to_string(),
+        Value::Null => String::new(),
+        other => other.to_string(),
+    }
 }
 
 /// Resolves the MIME type for the uploaded media content.
@@ -2371,6 +2800,89 @@ fn build_multipart_stream(
     ))
 }
 
+/// Resolve a file part's `Content-Type`. A per-part value from the OpenAPI
+/// `encoding` object wins; otherwise the OAS default for a binary part,
+/// `application/octet-stream`, applies.
+fn file_part_mime(content_type: Option<&str>) -> &str {
+    content_type.unwrap_or("application/octet-stream")
+}
+
+/// Build a `reqwest::multipart::Form` from the collected CLI flag values.
+/// Text parts are added inline; file parts are read from disk and
+/// streamed. The `Content-Type: multipart/form-data; boundary=...`
+/// header is set by reqwest automatically when `.multipart(form)` is
+/// called on the request builder.
+async fn build_multipart_form(
+    parts: &[MultipartPart],
+) -> Result<reqwest::multipart::Form, CliError> {
+    let mut form = reqwest::multipart::Form::new();
+
+    for part in parts {
+        match part {
+            MultipartPart::Text {
+                name,
+                value,
+                content_type,
+            } => {
+                // A text part is just `Part::text`; an explicit per-part
+                // `Content-Type` from the OpenAPI `encoding` object (e.g.
+                // `application/json`) overrides reqwest's `text/plain`.
+                let mut text_part = reqwest::multipart::Part::text(value.clone());
+                if let Some(ct) = content_type {
+                    text_part = text_part.mime_str(ct).map_err(|e| {
+                        CliError::Validation(format!(
+                            "Invalid Content-Type '{ct}' for multipart field '{name}': {e}"
+                        ))
+                    })?;
+                }
+                form = form.part(name.clone(), text_part);
+            }
+            MultipartPart::File {
+                name,
+                path,
+                content_type,
+            } => {
+                let mime = file_part_mime(content_type.as_deref());
+                let stripped = path.strip_prefix('@').unwrap_or(path);
+                let (bytes, file_name) = if stripped == "-" {
+                    let mut buf = Vec::new();
+                    tokio::io::AsyncReadExt::read_to_end(&mut tokio::io::stdin(), &mut buf)
+                        .await
+                        .map_err(|e| {
+                            CliError::Validation(format!(
+                                "Failed to read stdin for multipart field '{name}': {e}"
+                            ))
+                        })?;
+                    (buf, "stdin".to_string())
+                } else {
+                    let file_bytes = tokio::fs::read(stripped).await.map_err(|e| {
+                        CliError::Validation(format!(
+                            "Failed to read file '{stripped}' for multipart field '{name}': {e}"
+                        ))
+                    })?;
+                    let file_name = std::path::Path::new(stripped)
+                        .file_name()
+                        .and_then(|n| n.to_str())
+                        .unwrap_or("upload")
+                        .to_string();
+                    (file_bytes, file_name)
+                };
+                let file_part = reqwest::multipart::Part::bytes(bytes)
+                    .file_name(file_name)
+                    .mime_str(mime)
+                    .map_err(|e| {
+                        CliError::Validation(format!(
+                            "Invalid Content-Type '{mime}' for multipart field '{name}': {e}"
+                        ))
+                    })?;
+                form = form.part(name.clone(), file_part);
+            }
+        }
+    }
+
+    Ok(form)
+}
+
 /// Builds a multipart/related body from in-memory bytes.
 ///
 /// Used when the upload content is constructed in memory (e.g., a Gmail RFC 5322
@@ -2532,6 +3044,37 @@ fn value_to_form_str(val: &Value) -> String {
 /// unchanged. `object` and `array` types are JSON-decoded so callers can pass
 /// nested structures via individual flags (e.g. `--addresses '[{"city":"SF"}]'`).
 fn coerce_body_param_value(value: &Value, param_type: Option<&str>) -> Result<Value, CliError> {
+    // For object-shorthand body flags, validate shape regardless of whether
+    // the value arrives here as a raw String (legacy / direct unit-test entry)
+    // or as a pre-decoded Value. `collect_params_from_flags` eagerly
+    // JSON-decodes object-typed params for deepObject query handling, so
+    // production calls usually arrive pre-decoded — but the decoded form may
+    // itself be a Value::String (the JSON `"hi"` decodes to one), and the
+    // fallback path leaves Value::String unchanged for un-decodable input.
+    // Try a re-decode on String inputs; if that fails, treat the value as-is.
+    // Either way the final shape must be a JSON object.
+    if param_type == Some("object") {
+        let parsed = if let Value::String(raw) = value {
+            serde_json::from_str::<Value>(raw).unwrap_or_else(|_| value.clone())
+        } else {
+            value.clone()
+        };
+        if !parsed.is_object() {
+            return Err(CliError::Validation(format!(
+                "Object-shorthand flag must be a JSON object, got {}",
+                match &parsed {
+                    Value::Null => "null",
+                    Value::Bool(_) => "boolean",
+                    Value::Number(_) => "number",
+                    Value::String(_) => "string",
+                    Value::Array(_) => "array",
+                    Value::Object(_) => unreachable!(),
+                }
+            )));
+        }
+        return Ok(parsed);
+    }
+
     let Value::String(raw) = value else {
         return Ok(value.clone());
     };
@@ -2555,7 +3098,7 @@ fn coerce_body_param_value(value: &Value, param_type: Option<&str>) -> Result<Va
                 "Invalid boolean body value '{raw}' (expected true/false)"
             ))),
         },
-        Some("object") | Some("array") => serde_json::from_str(raw).map_err(|e| {
+        Some("array") => serde_json::from_str(raw).map_err(|e| {
             CliError::Validation(format!("Invalid JSON body value for nested field: {e}"))
         }),
         _ => Ok(Value::String(raw.clone())),
@@ -2662,6 +3205,13 @@ fn validate_property(
         return;
     }
 
+    // Null on a nullable property is always valid — short-circuits type
+    // checking that would otherwise reject `null` for a `string` /
+    // `integer` / etc. base type.
+    if prop_schema.nullable && value.is_null() {
+        return;
+    }
+
     // 2. Type checking
     if let Some(expected_type) = &prop_schema.prop_type {
         let type_matches = match (expected_type.as_str(), value) {
@@ -2727,35 +3277,399 @@ fn get_value_type(val: &Value) -> &'static str {
     }
 }
 
-/// Maps a MIME type to a file extension.
+/// Open `file_path` for binary-response writing while refusing to write
+/// through anything that isn't a fresh-or-existing single-linked regular
+/// file the CWD-validated path points at directly.
+///
+/// A server-controlled Content-Disposition filename or the predictable
+/// `download.<ext>` default could otherwise be aimed at a pre-planted:
+///   * **symlink** — `voice.mp3 -> ~/.ssh/authorized_keys`. `O_NOFOLLOW`
+///     in the open flags makes the kernel reject this atomically (`ELOOP`).
+///   * **hardlink** — `download.mp3` (link count 2) sharing an inode with
+///     a victim file. `O_NOFOLLOW` does NOT catch this (no symlink in the
+///     resolution chain), so we open *without* `O_TRUNC`, `fstat` the fd,
+///     and refuse if `nlink > 1` before any truncation.
+///   * **FIFO / device / socket** — `mkfifo download.mp3` would block
+///     `open(O_WRONLY)` indefinitely with no reader. `O_NONBLOCK` in the
+///     open flags returns `ENXIO` on reader-less FIFOs; an fstat-after-open
+///     `is_file()` check catches FIFOs and devices that opened successfully.
+///     `O_NONBLOCK` is a no-op for regular files per `open(2)`.
+///
+/// Truncation happens via `set_len(0)` only after the file-type and link-
+/// count checks pass, so a hardlinked or otherwise-suspicious target keeps
+/// its bytes intact.
+///
+/// On non-Unix platforms we fall back to a `symlink_metadata` pre-check
+/// (small TOCTOU window, no readily-available hardlink API); FIFO and
+/// hardlink refusal there is a follow-up.
+async fn create_file_no_follow(file_path: &std::path::Path) -> Result<tokio::fs::File, CliError> {
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::MetadataExt;
+        let mut opts = tokio::fs::OpenOptions::new();
+        opts.write(true)
+            .create(true)
+            // No O_TRUNC at open time — we truncate explicitly via set_len
+            // only after the file-type and link-count checks below pass.
+            .custom_flags(libc::O_NOFOLLOW | libc::O_NONBLOCK);
+        let file = match opts.open(file_path).await {
+            Ok(f) => f,
+            Err(e) if matches!(e.raw_os_error(), Some(c) if c == libc::ELOOP) => {
+                return Err(CliError::Validation(format!(
+                    "Refused to write to '{}': path is a symbolic link",
+                    file_path.display()
+                )));
+            }
+            Err(e) if matches!(e.raw_os_error(), Some(c) if c == libc::ENXIO) => {
+                return Err(CliError::Validation(format!(
+                    "Refused to write to '{}': path is a FIFO with no reader",
+                    file_path.display()
+                )));
+            }
+            Err(e) => {
+                return Err(anyhow::Error::from(e)
+                    .context("Failed to create output file")
+                    .into());
+            }
+        };
+
+        let meta = file
+            .metadata()
+            .await
+            .context("Failed to stat output file")?;
+        if !meta.file_type().is_file() {
+            return Err(CliError::Validation(format!(
+                "Refused to write to '{}': not a regular file",
+                file_path.display()
+            )));
+        }
+        if meta.nlink() > 1 {
+            return Err(CliError::Validation(format!(
+                "Refused to write to '{}': has {} hardlinks",
+                file_path.display(),
+                meta.nlink(),
+            )));
+        }
+        // Clear O_NONBLOCK now that we've confirmed the target is a normal
+        // regular file. The flag was only needed to prevent open() blocking
+        // on a reader-less FIFO; if it stayed set on the fd, FUSE-backed
+        // filesystems (sshfs, gcsfuse, mountpoint-s3) can honor O_NONBLOCK
+        // on write(2) and surface spurious EAGAIN/WouldBlock errors from
+        // write_all.
+        unsafe {
+            use std::os::unix::io::AsRawFd;
+            let raw_fd = file.as_raw_fd();
+            let flags = libc::fcntl(raw_fd, libc::F_GETFL);
+            if flags >= 0 {
+                let _ = libc::fcntl(raw_fd, libc::F_SETFL, flags & !libc::O_NONBLOCK);
+            }
+        }
+        // Safe to truncate now that we've verified the target is a single-
+        // linked regular file. set_len(0) is a no-op on a fresh O_CREAT.
+        file.set_len(0)
+            .await
+            .context("Failed to truncate output file")?;
+        Ok(file)
+    }
+    #[cfg(not(unix))]
+    {
+        if let Ok(meta) = tokio::fs::symlink_metadata(file_path).await {
+            if meta.file_type().is_symlink() {
+                return Err(CliError::Validation(format!(
+                    "Refused to write to '{}': path is a symbolic link",
+                    file_path.display()
+                )));
+            }
+        }
+        tokio::fs::File::create(file_path)
+            .await
+            .context("Failed to create output file")
+            .map_err(Into::into)
+    }
+}
+
+/// Parse an RFC 6266 `Content-Disposition` value and return a sanitized
+/// `filename` hint.
+///
+/// Recognized:
+///   - `attachment; filename="custom-voice.mp3"`             (quoted)
+///   - `attachment; filename=custom-voice.mp3`                (unquoted token)
+///   - `inline; filename="voice.mp3"`                         (inline disposition)
+///   - `attachment; Filename="voice.mp3"`                     (case-insensitive name)
+///   - `attachment; filename="hello;world.mp3"`               (`;` inside quotes)
+///   - `attachment; filename*=UTF-8''%E5%A3%B0.mp3`           (RFC 5987 UTF-8)
+///   - `attachment; filename*=ISO-8859-1''cafe.mp3`           (RFC 5987 ISO-8859-1)
+///
+/// Per RFC 6266 §4.3, `filename*` is preferred over `filename` when both
+/// are present. Per RFC 7578 §4.2, a `form-data` disposition (multipart
+/// upload variant) is not honored on responses. When the first `filename`
+/// occurrence sanitizes to None we keep iterating and pick the next valid
+/// one rather than letting an empty value shadow it.
+fn extract_content_disposition_filename(header_value: &str) -> Option<String> {
+    let (disposition_type, params) = split_content_disposition(header_value);
+    if disposition_type.eq_ignore_ascii_case("form-data") {
+        return None;
+    }
+
+    let mut filename_star: Option<String> = None;
+    let mut filename: Option<String> = None;
+    for (name, value) in params {
+        if name.eq_ignore_ascii_case("filename*") && filename_star.is_none() {
+            if let Some(decoded) = decode_rfc5987_value(&value) {
+                if let Some(safe) = sanitize_server_supplied_filename(&decoded) {
+                    filename_star = Some(safe);
+                }
+            }
+        } else if name.eq_ignore_ascii_case("filename") && filename.is_none() {
+            if let Some(safe) = sanitize_server_supplied_filename(&value) {
+                filename = Some(safe);
+            }
+        }
+    }
+    filename_star.or(filename)
+}
+
+/// Split a Content-Disposition header into `(disposition_type, params)`
+/// with RFC 7230 quoted-string awareness — `;` inside DQUOTE is preserved
+/// and the standard `\X` escape inside quoted-strings is unescaped.
+fn split_content_disposition(header: &str) -> (String, Vec<(String, String)>) {
+    let mut tokens: Vec<String> = Vec::new();
+    let mut current = String::new();
+    let mut in_quotes = false;
+    let mut chars = header.chars();
+    while let Some(c) = chars.next() {
+        if c == '"' {
+            in_quotes = !in_quotes;
+            current.push(c);
+        } else if c == '\\' && in_quotes {
+            // Quoted-pair: the backslash escapes the next char per RFC 7230.
+            // Both the backslash and the escaped char survive into `current`;
+            // the value-unquote step below strips the escape.
+            current.push(c);
+            if let Some(next) = chars.next() {
+                current.push(next);
+            }
+        } else if c == ';' && !in_quotes {
+            tokens.push(std::mem::take(&mut current));
+        } else {
+            current.push(c);
+        }
+    }
+    if !current.is_empty() {
+        tokens.push(current);
+    }
+
+    let mut iter = tokens.into_iter();
+    let disposition_type = iter.next().unwrap_or_default().trim().to_string();
+    let params: Vec<(String, String)> = iter
+        .filter_map(|t| {
+            let t = t.trim();
+            let eq = t.find('=')?;
+            let name = t[..eq].trim().to_string();
+            let raw = t[eq + 1..].trim();
+            let value = unquote_parameter_value(raw);
+            Some((name, value))
+        })
+        .collect();
+    (disposition_type, params)
+}
+
+/// Unwrap a DQUOTE-quoted parameter value and undo `\X` -> `X` escapes per
+/// RFC 7230 quoted-string. Unquoted token values are returned as-is.
+fn unquote_parameter_value(raw: &str) -> String {
+    if raw.len() >= 2 && raw.starts_with('"') && raw.ends_with('"') {
+        let inner = &raw[1..raw.len() - 1];
+        let mut out = String::with_capacity(inner.len());
+        let mut chars = inner.chars();
+        while let Some(c) = chars.next() {
+            if c == '\\' {
+                if let Some(next) = chars.next() {
+                    out.push(next);
+                }
+            } else {
+                out.push(c);
+            }
+        }
+        out
+    } else {
+        raw.to_string()
+    }
+}
+
+/// Decode an RFC 5987 ext-value of the form `charset'language'pct-encoded`.
+/// We support UTF-8 and ISO-8859-1 (the two charsets the RFC singles out);
+/// other charsets fall through as None so the caller can use the ASCII
+/// `filename=` fallback.
+fn decode_rfc5987_value(raw: &str) -> Option<String> {
+    let mut parts = raw.splitn(3, '\'');
+    let charset = parts.next()?.to_ascii_uppercase();
+    let _lang = parts.next()?;
+    let encoded = parts.next()?;
+
+    let bytes = percent_decode_bytes(encoded)?;
+    match charset.as_str() {
+        "UTF-8" => String::from_utf8(bytes).ok(),
+        "ISO-8859-1" => Some(bytes.into_iter().map(|b| b as char).collect()),
+        _ => None,
+    }
+}
+
+/// Strict percent-decoder for RFC 5987 value-chars: `%HH` must be two hex
+/// digits; any other non-ASCII byte invalidates the value (returns None).
+fn percent_decode_bytes(s: &str) -> Option<Vec<u8>> {
+    let mut out = Vec::with_capacity(s.len());
+    let mut chars = s.chars();
+    while let Some(c) = chars.next() {
+        if c == '%' {
+            let h1 = chars.next()?.to_digit(16)?;
+            let h2 = chars.next()?.to_digit(16)?;
+            out.push(((h1 << 4) | h2) as u8);
+        } else if c.is_ascii() {
+            out.push(c as u8);
+        } else {
+            return None;
+        }
+    }
+    Some(out)
+}
+
+/// Reduce a server-supplied filename to a safe basename, dropping any
+/// directory components, control characters, or empty / dot-only names.
+/// The server picks the *name*; the client always picks the *directory*.
+///
+/// Rejection rules (server-controlled input must be conservative):
+/// - empty or whitespace-only
+/// - ASCII control chars (`is_control`, General_Category=Cc)
+/// - Unicode bidi / format chars (U+200E/F, U+202A–E, U+2066–9) — these
+///   are spoof vectors for displayed-name vs actual-extension mismatch
+/// - embedded `\` — keeps Unix/Windows behavior aligned; on Windows this
+///   would be a path separator, so the safe rule is to reject it everywhere
+/// - basename equal to `.` or `..`
+/// - basename starting with `.` — prevents server-driven dotfile clobber
+///   (`.env`, `.bashrc`, `.gitignore`, etc.) in the user's CWD
+fn sanitize_server_supplied_filename(raw: &str) -> Option<String> {
+    let s = raw.trim();
+    if s.is_empty() || s.chars().any(is_unsafe_filename_char) {
+        return None;
+    }
+    let basename = std::path::Path::new(s).file_name()?.to_str()?;
+    if basename.is_empty()
+        || basename == "."
+        || basename == ".."
+        || basename.starts_with('.')
+    {
+        return None;
+    }
+    Some(basename.to_string())
+}
+
+/// A character we will never accept in a server-supplied filename: ASCII
+/// controls, the C1 controls (already caught by is_control), bidi/format
+/// overrides that cause spoofed displayed names, and path separators of
+/// either platform's convention.
+fn is_unsafe_filename_char(c: char) -> bool {
+    if c.is_control() || c == '\\' {
+        return true;
+    }
+    matches!(
+        c,
+        // RFC 3987 bidi controls — LRM/RLM, LRE/RLE/PDF/LRO/RLO, isolates.
+        '\u{200E}' | '\u{200F}' | '\u{202A}'..='\u{202E}' | '\u{2066}'..='\u{2069}'
+    )
+}
+
+/// True iff `mime` (already lowercased) is exactly `target`, or `target`
+/// followed by a parameter delimiter (`;`) or whitespace. Used to anchor
+/// MIME-type matching so e.g. `audio/mpegurl` does not collide with
+/// `audio/mpeg`.
+fn is_media_type(mime: &str, target: &str) -> bool {
+    if let Some(rest) = mime.strip_prefix(target) {
+        rest.is_empty() || rest.starts_with(';') || rest.starts_with(char::is_whitespace)
+    } else {
+        false
+    }
+}
+
 pub fn mime_to_extension(mime: &str) -> &str {
-    if mime.contains("pdf") {
+    // Lowercased lookup so `Audio/MPEG` and `audio/mpeg` map the same way —
+    // RFC 6838 declares media types case-insensitive. The cheap lowercase is
+    // amortized by the single allocation per response (binary downloads are
+    // rare relative to JSON), and a missing branch silently degrading audio
+    // responses to `.bin` was the original FER-10871 bug.
+    let m = mime.to_ascii_lowercase();
+    // Audio / video — checked before the generic `mpeg` / `mp4` substrings
+    // because `audio/mpeg` and `video/mpeg` must not collide.
+    //
+    // The exact-match-with-optional-params helper (`is_media_type`) is used
+    // for the foundational `audio/mpeg` / `audio/wav` / etc. branches so a
+    // related-but-distinct subtype like `audio/mpegurl` (M3U playlist) or
+    // `audio/wavpack` (lossless codec) does NOT collapse into the wrong
+    // extension via prefix matching. Variant subtypes (`audio/x-wav`,
+    // `audio/wave`, `audio/x-m4a`, …) are enumerated explicitly.
+    if is_media_type(&m, "audio/mpegurl") || is_media_type(&m, "audio/x-mpegurl") {
+        "m3u"
+    } else if is_media_type(&m, "audio/mpeg") || is_media_type(&m, "audio/mp3") {
+        "mp3"
+    } else if is_media_type(&m, "audio/wavpack") {
+        "wv"
+    } else if is_media_type(&m, "audio/wav")
+        || is_media_type(&m, "audio/x-wav")
+        || is_media_type(&m, "audio/wave")
+    {
+        "wav"
+    } else if m.starts_with("audio/ogg") || m.starts_with("audio/vorbis") {
+        "ogg"
+    } else if m.starts_with("audio/opus") {
+        "opus"
+    } else if m.starts_with("audio/flac") || m.starts_with("audio/x-flac") {
+        "flac"
+    } else if m.starts_with("audio/aac") || m.starts_with("audio/x-aac") {
+        "aac"
+    } else if m.starts_with("audio/mp4") || m.starts_with("audio/x-m4a") {
+        "m4a"
+    } else if m.starts_with("audio/webm") {
+        "weba"
+    } else if m.starts_with("video/mp4") {
+        "mp4"
+    } else if m.starts_with("video/webm") {
+        "webm"
+    } else if m.starts_with("video/quicktime") {
+        "mov"
+    } else if m.starts_with("video/x-matroska") {
+        "mkv"
+    } else if m.starts_with("video/mpeg") {
+        "mpeg"
+    } else if m.contains("pdf") {
         "pdf"
-    } else if mime.contains("png") {
+    } else if m.contains("png") {
         "png"
-    } else if mime.contains("jpeg") || mime.contains("jpg") {
+    } else if m.contains("jpeg") || m.contains("jpg") {
         "jpg"
-    } else if mime.contains("gif") {
+    } else if m.contains("gif") {
         "gif"
-    } else if mime.contains("csv") {
+    } else if m.contains("svg") {
+        "svg"
+    } else if m.contains("webp") {
+        "webp"
+    } else if m.contains("csv") {
         "csv"
-    } else if mime.contains("zip") {
+    } else if m.contains("zip") {
         "zip"
-    } else if mime.contains("xml") {
+    } else if m.contains("xml") {
         "xml"
-    } else if mime.contains("html") {
+    } else if m.contains("html") {
         "html"
-    } else if mime.contains("plain") {
+    } else if m.contains("plain") {
         "txt"
-    } else if mime.contains("octet-stream") {
+    } else if m.contains("octet-stream") {
         "bin"
-    } else if mime.contains("spreadsheet") || mime.contains("xlsx") {
+    } else if m.contains("spreadsheet") || m.contains("xlsx") {
         "xlsx"
-    } else if mime.contains("document") || mime.contains("docx") {
+    } else if m.contains("document") || m.contains("docx") {
         "docx"
-    } else if mime.contains("presentation") || mime.contains("pptx") {
+    } else if m.contains("presentation") || m.contains("pptx") {
         "pptx"
-    } else if mime.contains("script") {
+    } else if m.contains("script") {
         "json"
     } else {
         "bin"
@@ -2780,16 +3694,13 @@ mod tests {
 
     #[test]
     fn test_is_retryable_status_set_matches_docs() {
-        // Matches fern TS SDK retryStatusCodes: recommended set:
-        // 408 / 429 / 502 / 503 / 504.
-        for s in [408u16, 429, 502, 503, 504] {
+        // All 5xx plus 408 and 429 are retryable (FER-10521).
+        for s in [408u16, 429, 500, 501, 502, 503, 504, 505, 599] {
             assert!(is_retryable_status(s), "{s} should retry");
         }
-        // 500 is deliberately NOT retried \u2014 see is_retryable_status
-        // docstring. 425 (Too Early), 501 Not Implemented, and other
-        // 5xx outside the recommended set are terminal. 4xx client
-        // errors won't change on retry, so they're terminal too.
-        for s in [200u16, 301, 400, 401, 403, 404, 422, 425, 500, 501, 505] {
+        // 4xx client errors (except 408/429) won't change on retry \u2014 see is_retryable_status
+        // and 2xx/3xx are obviously terminal.
+        for s in [200u16, 301, 400, 401, 403, 404, 422, 425] {
             assert!(!is_retryable_status(s), "{s} should NOT retry");
         }
     }
@@ -2822,6 +3733,147 @@ mod tests {
         assert!(!binary_body_is_stdin(Some("@/tmp/audio.mp3")));
         // No binary body at all — retries decided by other policy.
         assert!(!binary_body_is_stdin(None));
+    }
+
+    #[test]
+    fn test_multipart_has_stdin() {
+        // File part with `-` — retries must be disabled.
+        assert!(multipart_has_stdin(&Some(vec![MultipartPart::File {
+            name: "file".into(),
+            path: "-".into(),
+            content_type: None,
+        }])));
+        // File part with `@-` — also stdin.
+        assert!(multipart_has_stdin(&Some(vec![MultipartPart::File {
+            name: "file".into(),
+            path: "@-".into(),
+            content_type: None,
+        }])));
+        // File part with real path — retries are safe.
+        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::File {
+            name: "file".into(),
+            path: "/tmp/upload.bin".into(),
+            content_type: None,
+        }])));
+        // Text-only parts — retries are safe.
+        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::Text {
+            name: "purpose".into(),
+            value: "test".into(),
+            content_type: None,
+        }])));
+        // Mixed: one stdin file + one text — still disables retries.
+        assert!(multipart_has_stdin(&Some(vec![
+            MultipartPart::Text {
+                name: "purpose".into(),
+                value: "test".into(),
+                content_type: None,
+            },
+            MultipartPart::File {
+                name: "file".into(),
+                path: "-".into(),
+                content_type: None,
+            },
+        ])));
+        // No multipart parts at all.
+        assert!(!multipart_has_stdin(&None));
+    }
+
+    #[test]
+    fn test_file_part_mime_defaults_and_override() {
+        // No per-part content type → OAS binary default.
+        assert_eq!(file_part_mime(None), "application/octet-stream");
+        // An encoding-supplied content type wins.
+        assert_eq!(file_part_mime(Some("image/png")), "image/png");
+        assert_eq!(file_part_mime(Some("text/plain")), "text/plain");
+    }
+
+    /// Send a built multipart form to a local mock server and return the raw
+    /// captured body so we can assert the per-part framing the wire carries.
+    /// reqwest serializes multipart forms as a stream, so the only faithful
+    /// way to inspect the bytes is to actually transmit them.
+    async fn multipart_body_string(parts: Vec<MultipartPart>) -> String {
+        use wiremock::matchers::method as wm_method;
+        use wiremock::{Mock, MockServer, ResponseTemplate};
+
+        let server = MockServer::start().await;
+        Mock::given(wm_method("POST"))
+            .respond_with(ResponseTemplate::new(200))
+            .mount(&server)
+            .await;
+
+        let client = reqwest::Client::new();
+        let form = build_multipart_form(&parts).await.unwrap();
+        client
+            .post(format!("{}/upload", server.uri()))
+            .multipart(form)
+            .send()
+            .await
+            .unwrap();
+
+        let received = server.received_requests().await.unwrap();
+        String::from_utf8_lossy(&received[0].body).into_owned()
+    }
+
+    #[tokio::test]
+    async fn test_build_multipart_form_text_part_uses_encoding_content_type() {
+        // A text part with an explicit encoding contentType emits that
+        // Content-Type header instead of the default text/plain.
+        let body = multipart_body_string(vec![MultipartPart::Text {
+            name: "metadata".into(),
+            value: "{\"k\":1}".into(),
+            content_type: Some("application/json".into()),
+        }])
+        .await;
+        assert!(
+            body.contains("Content-Disposition: form-data; name=\"metadata\""),
+            "text part should carry its Content-Disposition; got: {body}"
+        );
+        assert!(
+            body.contains("Content-Type: application/json"),
+            "text part Content-Type should come from encoding; got: {body}"
+        );
+        assert!(body.contains("{\"k\":1}"), "value should be in body; got: {body}");
+    }
+
+    #[tokio::test]
+    async fn test_build_multipart_form_file_part_default_octet_stream() {
+        // A file part without an encoding entry defaults to octet-stream.
+        let tmp = std::env::temp_dir().join("fern_multipart_default.bin");
+        std::fs::write(&tmp, b"payload-bytes").unwrap();
+        let body = multipart_body_string(vec![MultipartPart::File {
+            name: "file".into(),
+            path: tmp.to_string_lossy().into_owned(),
+            content_type: None,
+        }])
+        .await;
+        let _ = std::fs::remove_file(&tmp);
+        assert!(
+            body.contains("Content-Disposition: form-data; name=\"file\""),
+            "file part should carry its Content-Disposition; got: {body}"
+        );
+        assert!(
+            body.contains("Content-Type: application/octet-stream"),
+            "file part should default to octet-stream; got: {body}"
+        );
+        assert!(body.contains("payload-bytes"), "file bytes should stream; got: {body}");
+    }
+
+    #[tokio::test]
+    async fn test_build_multipart_form_file_part_honors_encoding_content_type() {
+        // A file part with an encoding contentType overrides the default.
+        let tmp = std::env::temp_dir().join("fern_multipart_override.png");
+        std::fs::write(&tmp, b"\x89PNG").unwrap();
+        let body = multipart_body_string(vec![MultipartPart::File {
+            name: "file".into(),
+            path: tmp.to_string_lossy().into_owned(),
+            content_type: Some("image/png".into()),
+        }])
+        .await;
+        let _ = std::fs::remove_file(&tmp);
+        assert!(
+            body.contains("Content-Type: image/png"),
+            "file part Content-Type should come from encoding; got: {body}"
+        );
     }
 
     #[test]
@@ -3259,6 +4311,7 @@ mod tests {
             0,
             &None,
             None,
+            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -3306,6 +4359,7 @@ mod tests {
             0,
             &None,
             None,
+            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -3357,6 +4411,7 @@ mod tests {
             0,
             &None,
             None,
+            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -3416,6 +4471,64 @@ mod tests {
         )
         .unwrap();
         assert_eq!(obj, json!({ "city": "SF" }));
+    }
+
+    #[test]
+    fn test_coerce_body_param_value_object_rejects_non_object_json() {
+        // Object-shorthand flag must receive a JSON object — arrays, scalars,
+        // and null are rejected with a clear validation error, mirroring the
+        // GraphQL `coerce_graphql_value` guard.
+        for bad in [
+            (r#"[1,2,3]"#, "array"),
+            (r#""hi""#, "string"),
+            ("42", "number"),
+            ("true", "boolean"),
+            ("null", "null"),
+        ] {
+            let err = coerce_body_param_value(&Value::String(bad.0.into()), Some("object"))
+                .unwrap_err();
+            match err {
+                CliError::Validation(msg) => assert!(
+                    msg.contains("must be a JSON object") && msg.contains(bad.1),
+                    "expected 'must be a JSON object, got {}' for {}, got: {msg}",
+                    bad.1,
+                    bad.0,
+                ),
+                other => panic!("expected Validation error for {}, got {other:?}", bad.0),
+            }
+        }
+
+        // Malformed JSON (not a JSON literal at all) falls through to the
+        // shape check and reports "got string" — consistent with the
+        // already-decoded `"hi"` case from collect_params_from_flags.
+        let err =
+            coerce_body_param_value(&Value::String("{not json}".into()), Some("object")).unwrap_err();
+        match err {
+            CliError::Validation(msg) => assert!(
+                msg.contains("must be a JSON object") && msg.contains("string"),
+                "expected 'must be a JSON object, got string' for malformed JSON, got: {msg}"
+            ),
+            _ => panic!("expected Validation error for malformed JSON"),
+        }
+
+        // Pre-parsed values (collect_params_from_flags eagerly JSON-decodes
+        // object-typed params for deepObject query handling) must also be
+        // shape-validated — the function must not short-circuit on non-String.
+        for (pre_parsed, kind) in [
+            (json!([1, 2, 3]), "array"),
+            (json!(42), "number"),
+            (json!(true), "boolean"),
+            (Value::Null, "null"),
+        ] {
+            let err = coerce_body_param_value(&pre_parsed, Some("object")).unwrap_err();
+            match err {
+                CliError::Validation(msg) => assert!(
+                    msg.contains("must be a JSON object") && msg.contains(kind),
+                    "expected 'must be a JSON object, got {kind}' for pre-parsed {pre_parsed}: {msg}"
+                ),
+                other => panic!("expected Validation error for pre-parsed {pre_parsed}, got {other:?}"),
+            }
+        }
     }
 
     #[test]
@@ -3489,8 +4602,9 @@ mod tests {
 
     #[test]
     fn test_json_flag_overrides_body_field_flags() {
-        // When both per-field flags AND `--json` are set, `--json` wins on
-        // overlapping keys (mirrors `--params` overriding individual flags).
+        // BREAKING (JFL-1.2): Mixing `--json` with per-field body flags is now
+        // a validation error. Previously `--json` won on overlapping keys; now
+        // the user must pick one mode or the other so intent is unambiguous.
         let mut parameters = std::collections::HashMap::new();
         parameters.insert(
             "name".to_string(),
@@ -3522,7 +4636,7 @@ mod tests {
 
         let params_json = r#"{"name": "from-flag", "description": "kept-from-flag"}"#;
         let body_json = r#"{"name": "from-json"}"#;
-        let input = parse_and_validate_inputs(
+        let err = parse_and_validate_inputs(
             &doc,
             &method,
             Some(params_json),
@@ -3531,14 +4645,20 @@ mod tests {
             None,
             &[],
         )
-        .unwrap();
-
-        let body = input.body.expect("body should be populated");
-        assert_eq!(
-            body,
-            json!({ "name": "from-json", "description": "kept-from-flag" }),
-            "--json overrides overlapping per-field values, leaves the rest alone"
-        );
+        .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(
+                    msg.contains("--json"),
+                    "error must mention --json: {msg}"
+                );
+                assert!(
+                    msg.contains("--name") || msg.contains("--description"),
+                    "error must name a conflicting per-field flag: {msg}"
+                );
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
     }
 
     #[test]
@@ -3627,12 +4747,10 @@ mod tests {
 
     #[test]
     fn test_non_object_json_replaces_body_and_drops_per_field_flags() {
-        // A top-level non-object `--json` (array/scalar) has no shape to
-        // merge per-field flag values into, so flags are dropped and the
-        // `--json` payload is used wholesale. Lock in that behavior so
-        // future refactors of the body-assembly match don't accidentally
-        // start emitting nonsense (e.g. wrapping the array in an object
-        // with the flag values).
+        // BREAKING (JFL-1.2): combining `--json` with per-field body flags is
+        // now a validation error regardless of the JSON's top-level shape.
+        // Previously a non-object `--json` would silently drop the per-field
+        // flag values; now the user is told to pick one mode.
         let mut parameters = std::collections::HashMap::new();
         parameters.insert(
             "name".to_string(),
@@ -3657,7 +4775,7 @@ mod tests {
         // `--name` is supplied via params; `--json` is a bare array.
         let params_json = r#"{"name": "from-flag-loses"}"#;
         let body_json = r#"[1, 2, 3]"#;
-        let input = parse_and_validate_inputs(
+        let err = parse_and_validate_inputs(
             &doc,
             &method,
             Some(params_json),
@@ -3666,14 +4784,14 @@ mod tests {
             None,
             &[],
         )
-        .unwrap();
-
-        let body = input.body.expect("body should be populated");
-        assert_eq!(
-            body,
-            json!([1, 2, 3]),
-            "non-object --json must replace the body wholesale, not be merged"
-        );
+        .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("--json"), "error must mention --json: {msg}");
+                assert!(msg.contains("--name"), "error must name the per-field flag: {msg}");
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
     }
 
     #[test]
@@ -3710,6 +4828,96 @@ mod tests {
                 assert!(msg.contains("--limit"), "error names the per-field flag: {msg}");
                 assert!(msg.contains("--params"), "error names --params: {msg}");
                 assert!(!msg.contains("--json"), "non-body error should not mention --json: {msg}");
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn test_missing_body_param_hint_preserves_dot_notation() {
+        // Gap 1a: For a body param with dot-notation (e.g. `address.street`),
+        // the missing-required-param error must suggest `--address.street`
+        // (dots preserved via `to_kebab_flag`), NOT `--address-street`.
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert(
+            "address.street".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("string".to_string()),
+                required: true,
+                ..Default::default()
+            },
+        );
+
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "contacts".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+            .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(
+                    msg.contains("--address.street"),
+                    "hint must preserve dots for body params: {msg}",
+                );
+                assert!(
+                    !msg.contains("--address-street"),
+                    "hint must NOT kebab-ify dots to hyphens: {msg}",
+                );
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn test_missing_param_hint_uses_builtin_collision_suffix() {
+        // Gap 1b: When a required param's flag name collides with a builtin
+        // (e.g. a param named `format`), the hint must suggest
+        // `--format-param` (the actually registered flag), NOT `--format`.
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert(
+            "format".to_string(),
+            MethodParameter {
+                location: Some("query".to_string()),
+                param_type: Some("string".to_string()),
+                required: true,
+                ..Default::default()
+            },
+        );
+
+        let method = RestMethod {
+            http_method: "GET".to_string(),
+            path: "reports".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+            .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(
+                    msg.contains("--format-param"),
+                    "hint must use the -param suffixed flag for builtin collisions: {msg}",
+                );
+                // Verify it does NOT suggest bare `--format ` (with trailing
+                // space to avoid matching `--format-param`).
+                assert!(
+                    !msg.contains("--format ") && !msg.contains("--format,"),
+                    "hint must NOT suggest the bare builtin flag: {msg}",
+                );
             }
             other => panic!("expected Validation error, got {other:?}"),
         }
@@ -3783,6 +4991,225 @@ mod tests {
     }
 
     #[test]
+    fn test_json_plus_body_flag_returns_validation_error() {
+        // JFL-1.2: --json and per-field body flags are mutually exclusive.
+        // The error must name both --json and the conflicting flag so the
+        // user can immediately see which inputs are fighting.
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert(
+            "name".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        );
+
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "things".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+
+        let params_json = r#"{"name": "from-flag"}"#;
+        let body_json = r#"{"name": "from-json"}"#;
+        let err = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(params_json),
+            Some(body_json),
+            false,
+            None,
+            &[],
+        )
+        .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("--json"), "error must mention --json: {msg}");
+                assert!(msg.contains("--name"), "error must name the per-field flag: {msg}");
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn test_object_shorthand_plus_leaf_flag_returns_validation_error() {
+        // JFL-1.2: `--name` (object shorthand) and `--name.first` (dot-notation
+        // leaf) target the same field. Mixing both is a validation error.
+        let mut parameters = std::collections::HashMap::new();
+        // Object-level shorthand flag (param_type=="object") emitted by parser.
+        parameters.insert(
+            "name".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("object".to_string()),
+                ..Default::default()
+            },
+        );
+        // Leaf flag for the same field via dot-notation.
+        parameters.insert(
+            "name.first".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        );
+
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "people".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+
+        let params_json = r#"{"name": "{\"last\":\"Lincoln\"}", "name.first": "Abraham"}"#;
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+            .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("--name"), "error must mention --name: {msg}");
+                assert!(
+                    msg.contains("--name.first"),
+                    "error must mention --name.first: {msg}"
+                );
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn test_object_shorthand_alone_parses_and_sets_nested() {
+        // JFL-1.2: passing the object-shorthand flag alone JSON-parses the
+        // string and lands the resulting object at the parent key. This is
+        // the user-facing alternative to `--name.first X --name.last Y`.
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert(
+            "name".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("object".to_string()),
+                ..Default::default()
+            },
+        );
+
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "people".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+
+        let params_json = r#"{"name": "{\"first\":\"Abraham\",\"last\":\"Lincoln\"}"}"#;
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+            .unwrap();
+        let body = input.body.expect("body should be populated");
+        assert_eq!(body, json!({ "name": { "first": "Abraham", "last": "Lincoln" } }));
+    }
+
+    #[test]
+    fn test_object_shorthand_satisfies_required_leaf() {
+        // Spec marks `name.first` required and `name` itself as the shorthand
+        // umbrella. User provides the data via `--name '{"first":"x"}'` only.
+        // The required-leaf check must not fire — the value lives in the
+        // shorthand payload, not as a `name.first` flag entry.
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert(
+            "name".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("object".to_string()),
+                required: false,
+                ..Default::default()
+            },
+        );
+        parameters.insert(
+            "name.first".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("string".to_string()),
+                required: true,
+                ..Default::default()
+            },
+        );
+
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "people".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+
+        let params_json = r#"{"name": "{\"first\":\"Abraham\"}"}"#;
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[])
+            .expect("required leaf satisfied by ancestor shorthand should pass");
+        let body = input.body.expect("body should be populated");
+        assert_eq!(body, json!({ "name": { "first": "Abraham" } }));
+    }
+
+    #[test]
+    fn test_required_leaf_still_reported_when_no_ancestor_shorthand() {
+        // Sanity check: with the same shape as above but no shorthand value
+        // supplied, the required-leaf check still fires.
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert(
+            "name".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("object".to_string()),
+                required: false,
+                ..Default::default()
+            },
+        );
+        parameters.insert(
+            "name.first".to_string(),
+            MethodParameter {
+                location: Some("body".to_string()),
+                param_type: Some("string".to_string()),
+                required: true,
+                ..Default::default()
+            },
+        );
+
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "people".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+
+        let err = parse_and_validate_inputs(&doc, &method, None, None, false, None, &[])
+            .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("name.first"), "error should name leaf: {msg}");
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    #[test]
     fn test_pagination_config_default() {
         let config = PaginationConfig::default();
         assert!(!config.page_all);
@@ -3835,6 +5262,62 @@ mod tests {
 
         let body = json!({ "name": "My File" });
         assert!(validate_body_against_schema(&body, "File", &doc).is_ok());
+    }
+
+    #[test]
+    fn test_validate_body_accepts_null_on_nullable_property() {
+        // A property whose schema declares `nullable: true` must accept JSON
+        // null without raising "Expected type 'string', found null".
+        let mut properties = HashMap::new();
+        properties.insert(
+            "userId".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                nullable: true,
+                ..Default::default()
+            },
+        );
+        let schemas = HashMap::from([(
+            "Event".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({ "userId": null });
+        assert!(
+            validate_body_against_schema(&body, "Event", &doc).is_ok(),
+            "JSON null on a nullable: true property must validate",
+        );
+    }
+
+    #[test]
+    fn test_validate_body_rejects_null_on_non_nullable_property() {
+        // Regression guard: a property with no `nullable` flag must still
+        // reject JSON null. Keeps the validator strict outside the explicit
+        // nullable opt-in.
+        let mut properties = HashMap::new();
+        properties.insert(
+            "code".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        );
+        let schemas = HashMap::from([(
+            "Item".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({ "code": null });
+        let result = validate_body_against_schema(&body, "Item", &doc);
+        assert!(result.is_err(), "null on non-nullable property must still be rejected");
     }
 
     #[test]
@@ -5139,6 +6622,374 @@ mod tests {
         assert_eq!(result, vec![("q".to_string(), "hello".to_string())]);
     }
 
+    fn param_with(style: &str, explode: Option<bool>) -> MethodParameter {
+        MethodParameter {
+            style: Some(style.to_string()),
+            explode,
+            ..Default::default()
+        }
+    }
+
+    fn path_param(style: &str, explode: Option<bool>) -> MethodParameter {
+        MethodParameter {
+            location: Some("path".to_string()),
+            style: Some(style.to_string()),
+            explode,
+            ..Default::default()
+        }
+    }
+
+    // ── query-param style tests (from main) ──────────────────────────────
+
+    #[test]
+    fn test_serialize_space_delimited_array() {
+        // spaceDelimited joins elements with a literal space; the encoder
+        // turns that into `%20` on the wire.
+        let value = json!(["1", "2"]);
+        let result = serialize_query_param("ids", &value, Some(&param_with("spaceDelimited", Some(false))));
+        assert_eq!(result, vec![("ids".to_string(), "1 2".to_string())]);
+    }
+
+    #[test]
+    fn test_serialize_pipe_delimited_array() {
+        let value = json!(["1", "2"]);
+        let result = serialize_query_param("ids", &value, Some(&param_with("pipeDelimited", Some(false))));
+        assert_eq!(result, vec![("ids".to_string(), "1|2".to_string())]);
+    }
+
+    #[test]
+    fn test_serialize_delimited_scalar_degrades_to_value() {
+        // A non-array under a delimited style is just the scalar value.
+        let value = json!("solo");
+        let result = serialize_query_param("ids", &value, Some(&param_with("spaceDelimited", Some(false))));
+        assert_eq!(result, vec![("ids".to_string(), "solo".to_string())]);
+    }
+
+    #[test]
+    fn test_serialize_form_explode_object() {
+        // form/object/explode=true: each property becomes its own top-level
+        // key; the parameter name is dropped.
+        let value = json!({"role": "admin", "active": "true"});
+        let result = serialize_query_param("profile", &value, Some(&param_with("form", Some(true))));
+        assert!(result.contains(&("role".to_string(), "admin".to_string())), "got: {result:?}");
+        assert!(result.contains(&("active".to_string(), "true".to_string())), "got: {result:?}");
+        assert!(
+            !result.iter().any(|(k, _)| k == "profile"),
+            "parameter name must be dropped for exploded object; got: {result:?}"
+        );
+    }
+
+    #[test]
+    fn test_serialize_form_no_explode_object() {
+        // form/object/explode=false: comma-joined key,value pairs under the
+        // single parameter key.
+        let value = json!({"role": "admin"});
+        let result = serialize_query_param("profile", &value, Some(&param_with("form", Some(false))));
+        assert_eq!(result, vec![("profile".to_string(), "role,admin".to_string())]);
+    }
+
+    #[test]
+    fn test_encode_query_component_space_is_percent20_not_plus() {
+        // RFC 3986: a literal space encodes as %20, never the form `+`.
+        assert_eq!(encode_query_component("a b"), "a%20b");
+    }
+
+    #[test]
+    fn test_encode_query_component_reserved_chars() {
+        assert_eq!(encode_query_component("a&b=c#d"), "a%26b%3Dc%23d");
+        // Brackets (deepObject keys) are percent-encoded.
+        assert_eq!(encode_query_component("filter[status]"), "filter%5Bstatus%5D");
+        // The pipe delimiter encodes to %7C.
+        assert_eq!(encode_query_component("1|2"), "1%7C2");
+    }
+
+    #[test]
+    fn test_encode_query_component_comma_stays_literal() {
+        // The comma is the form/no-explode delimiter and must stay literal.
+        assert_eq!(encode_query_component("1,2"), "1,2");
+    }
+
+    #[test]
+    fn test_encode_query_component_unreserved_untouched() {
+        assert_eq!(encode_query_component("Aa0-_.~"), "Aa0-_.~");
+    }
+
+    #[test]
+    fn test_append_query_string_first_param_uses_question_mark() {
+        let pairs = vec![("ids".to_string(), "1 2".to_string())];
+        assert_eq!(
+            append_query_string("https://api.example.com/x", &pairs),
+            "https://api.example.com/x?ids=1%202"
+        );
+    }
+
+    #[test]
+    fn test_append_query_string_continues_existing_query() {
+        let pairs = vec![("b".to_string(), "2".to_string())];
+        assert_eq!(
+            append_query_string("https://api.example.com/x?a=1", &pairs),
+            "https://api.example.com/x?a=1&b=2"
+        );
+    }
+
+    #[test]
+    fn test_append_query_string_empty_pairs_is_unchanged() {
+        assert_eq!(
+            append_query_string("https://api.example.com/x", &[]),
+            "https://api.example.com/x"
+        );
+    }
+
+    #[test]
+    fn test_append_query_string_joins_multiple_with_ampersand() {
+        let pairs = vec![
+            ("role".to_string(), "admin".to_string()),
+            ("active".to_string(), "true".to_string()),
+        ];
+        assert_eq!(
+            append_query_string("https://api.example.com/x", &pairs),
+            "https://api.example.com/x?role=admin&active=true"
+        );
+    }
+
+    // ── header style tests (from main) ───────────────────────────────────
+
+    #[test]
+    fn test_serialize_header_simple_primitive() {
+        let v = serialize_header_simple(&json!("hello"), None).unwrap();
+        assert_eq!(v, "hello");
+    }
+
+    #[test]
+    fn test_serialize_header_simple_array_comma_joined() {
+        // simple/array: elements comma-joined, regardless of explode.
+        let value = json!(["a", "b"]);
+        let v = serialize_header_simple(&value, None).unwrap();
+        assert_eq!(v, "a,b");
+    }
+
+    #[test]
+    fn test_serialize_header_simple_object_no_explode() {
+        // simple/object explode=false -> k,v,k2,v2 (keys sorted by Map order).
+        let value = json!({"k": "v", "k2": "v2"});
+        let v = serialize_header_simple(
+            &value,
+            Some(&MethodParameter {
+                style: Some("simple".to_string()),
+                explode: Some(false),
+                ..Default::default()
+            }),
+        )
+        .unwrap();
+        assert_eq!(v, "k,v,k2,v2");
+    }
+
+    #[test]
+    fn test_serialize_header_simple_object_explode() {
+        // simple/object explode=true -> k=v,k2=v2.
+        let value = json!({"k": "v", "k2": "v2"});
+        let v = serialize_header_simple(
+            &value,
+            Some(&MethodParameter {
+                explode: Some(true),
+                ..Default::default()
+            }),
+        )
+        .unwrap();
+        assert_eq!(v, "k=v,k2=v2");
+    }
+
+    #[test]
+    fn test_serialize_header_simple_array_numbers() {
+        // non-string scalars render via value_to_query_string.
+        let value = json!([1, 2, 3]);
+        let v = serialize_header_simple(&value, None).unwrap();
+        assert_eq!(v, "1,2,3");
+    }
+
+    #[test]
+    fn test_serialize_header_simple_rejects_control_chars() {
+        // CR/LF in a value would enable header injection — must be rejected.
+        let value = json!("a\r\nInjected: yes");
+        assert!(serialize_header_simple(&value, None).is_err());
+    }
+
+    #[test]
+    fn test_serialize_header_simple_rejects_control_chars_in_array() {
+        let value = json!(["ok", "bad\nvalue"]);
+        assert!(serialize_header_simple(&value, None).is_err());
+    }
+
+    // ── path-param style tests ───────────────────────────────────────────
+
+    #[test]
+    fn test_serialize_path_param_default_simple_primitive() {
+        // No definition -> simple/primitive: just the encoded value.
+        assert_eq!(serialize_path_param("id", &json!("42"), None), "42");
+    }
+
+    #[test]
+    fn test_serialize_path_param_simple_array() {
+        let def = path_param("simple", Some(false));
+        assert_eq!(
+            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
+            "a,b"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_simple_object() {
+        // serde_json sorts object keys -> k1,v1,k2,v2 for this input.
+        let def = path_param("simple", Some(false));
+        assert_eq!(
+            serialize_path_param("filter", &json!({"k1": "v1", "k2": "v2"}), Some(&def)),
+            "k1,v1,k2,v2"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_simple_object_explode() {
+        let def = path_param("simple", Some(true));
+        assert_eq!(
+            serialize_path_param("filter", &json!({"k1": "v1", "k2": "v2"}), Some(&def)),
+            "k1=v1,k2=v2"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_label_primitive() {
+        let def = path_param("label", None);
+        assert_eq!(serialize_path_param("id", &json!("42"), Some(&def)), ".42");
+    }
+
+    #[test]
+    fn test_serialize_path_param_label_array() {
+        // label/array/explode=false: members comma-joined after leading dot.
+        let def = path_param("label", Some(false));
+        assert_eq!(
+            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
+            ".a,b"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_label_array_explode() {
+        // label/array/explode=true: members dot-joined after leading dot.
+        let def = path_param("label", Some(true));
+        assert_eq!(
+            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
+            ".a.b"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_label_object_no_explode() {
+        // label/object/explode=false: flat k,v,k,v comma-joined after leading dot.
+        let def = path_param("label", Some(false));
+        assert_eq!(
+            serialize_path_param("color", &json!({"R": "100", "G": "200"}), Some(&def)),
+            ".G,200,R,100"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_label_object_explode() {
+        // label/object/explode=true: k=v pairs dot-joined after leading dot.
+        let def = path_param("label", Some(true));
+        assert_eq!(
+            serialize_path_param("color", &json!({"R": "100", "G": "200"}), Some(&def)),
+            ".G=200.R=100"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_matrix_primitive() {
+        let def = path_param("matrix", None);
+        assert_eq!(
+            serialize_path_param("id", &json!("42"), Some(&def)),
+            ";id=42"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_matrix_array_no_explode() {
+        let def = path_param("matrix", Some(false));
+        assert_eq!(
+            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
+            ";ids=a,b"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_matrix_array_explode() {
+        let def = path_param("matrix", Some(true));
+        assert_eq!(
+            serialize_path_param("ids", &json!(["a", "b"]), Some(&def)),
+            ";ids=a;ids=b"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_matrix_object_explode() {
+        // matrix/object/explode=true: each k=v gets its own ;k=v prefix.
+        let def = path_param("matrix", Some(true));
+        assert_eq!(
+            serialize_path_param("color", &json!({"R": "100", "G": "200"}), Some(&def)),
+            ";G=200;R=100"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_encodes_values_not_separators() {
+        // The structural commas stay literal; only the user values are
+        // percent-encoded (a space -> %20, a comma inside a value -> %2C).
+        let def = path_param("simple", Some(false));
+        assert_eq!(
+            serialize_path_param("ids", &json!(["a b", "c,d"]), Some(&def)),
+            "a%20b,c%2Cd"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_matrix_encodes_value_not_prefix() {
+        let def = path_param("matrix", None);
+        assert_eq!(
+            serialize_path_param("id", &json!("a b"), Some(&def)),
+            ";id=a%20b"
+        );
+    }
+
+    #[test]
+    fn test_serialize_path_param_simple_array_with_null() {
+        // A null element serializes as an empty string.
+        let def = path_param("simple", Some(false));
+        assert_eq!(
+            serialize_path_param("ids", &json!(["a", null, "b"]), Some(&def)),
+            "a,,b"
+        );
+    }
+
+    #[test]
+    fn test_render_path_template_label_style() {
+        let mut defs: HashMap<String, MethodParameter> = HashMap::new();
+        defs.insert("id".to_string(), path_param("label", None));
+        let mut params = Map::new();
+        params.insert("id".to_string(), json!("42"));
+        let rendered =
+            render_path_template("/path/label/{id}", &params, Some(&defs)).unwrap();
+        assert_eq!(rendered, "/path/label/.42");
+    }
+
+    #[test]
+    fn test_render_path_template_no_defs_falls_back_to_simple() {
+        // Base-path placeholders pass `None` for defs -> plain encoded value.
+        let mut params = Map::new();
+        params.insert("tenant".to_string(), json!("acme"));
+        let rendered =
+            render_path_template("/{tenant}/v1", &params, None).unwrap();
+        assert_eq!(rendered, "/acme/v1");
+    }
+
     #[test]
     fn test_get_nested_str_simple() {
         let val = json!({"nextPageToken": "tok123"});
@@ -6005,6 +7856,258 @@ mod tests {
     }
 
     #[test]
+    fn test_extract_content_disposition_filename_quoted() {
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\"voice.mp3\""),
+            Some("voice.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_unquoted() {
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=voice.mp3"),
+            Some("voice.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_inline() {
+        // disposition type is irrelevant — `inline` should also yield the name.
+        assert_eq!(
+            extract_content_disposition_filename("inline; filename=\"page.pdf\""),
+            Some("page.pdf".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_missing() {
+        assert_eq!(extract_content_disposition_filename("attachment"), None);
+        assert_eq!(extract_content_disposition_filename(""), None);
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_rfc5987_unsupported_charset() {
+        // Charsets other than UTF-8 / ISO-8859-1 fall through and the caller
+        // ends up with the `download.<ext>` default.
+        assert_eq!(
+            extract_content_disposition_filename(
+                "attachment; filename*=Shift_JIS''%82%a0.mp3"
+            ),
+            None,
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_strips_directory() {
+        // Server cannot escape its lane — directory components are discarded.
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\"../etc/passwd\""),
+            Some("passwd".to_string())
+        );
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\"/etc/passwd\""),
+            Some("passwd".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_rejects_dot_only() {
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\".\""),
+            None
+        );
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\"..\""),
+            None
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_case_insensitive_param_name() {
+        // RFC 7231 §3.2.6: parameter names are case-insensitive.
+        assert_eq!(
+            extract_content_disposition_filename("attachment; Filename=\"voice.mp3\""),
+            Some("voice.mp3".to_string())
+        );
+        assert_eq!(
+            extract_content_disposition_filename("ATTACHMENT; FILENAME=voice.mp3"),
+            Some("voice.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_quoted_with_semicolon() {
+        // RFC 6266 / RFC 2616 quoted-string allows `;` inside DQUOTE.
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\"hello;world.mp3\""),
+            Some("hello;world.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_ignores_form_data_disposition() {
+        // form-data is the multipart-upload variant; clients must not honor
+        // it as a download-name hint on a response (RFC 7578 §4.2).
+        assert_eq!(
+            extract_content_disposition_filename(
+                "form-data; name=\"file\"; filename=\"voice.mp3\""
+            ),
+            None
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_prefers_filename_star() {
+        // RFC 6266 §4.3: when both `filename` and `filename*` are present
+        // recipients MUST prefer `filename*` (the encoded i18n form).
+        assert_eq!(
+            extract_content_disposition_filename(
+                "attachment; filename=\"ascii.mp3\"; filename*=UTF-8''utf8-name.mp3"
+            ),
+            Some("utf8-name.mp3".to_string())
+        );
+        // Order in the header does not matter — `filename*` wins either way.
+        assert_eq!(
+            extract_content_disposition_filename(
+                "attachment; filename*=UTF-8''utf8-name.mp3; filename=\"ascii.mp3\""
+            ),
+            Some("utf8-name.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_decodes_rfc5987_utf8() {
+        // RFC 5987: charset'lang'percent-encoded-bytes. We support UTF-8.
+        assert_eq!(
+            extract_content_disposition_filename(
+                "attachment; filename*=UTF-8''%E5%A3%B0.mp3"
+            ),
+            Some("声.mp3".to_string())
+        );
+        // ISO-8859-1 is also RFC-listed; supported as raw bytes (no decode).
+        assert_eq!(
+            extract_content_disposition_filename(
+                "attachment; filename*=ISO-8859-1''cafe.mp3"
+            ),
+            Some("cafe.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_falls_through_to_next_part() {
+        // If the first matching `filename=` sanitizes to None (empty, bidi
+        // override, dotfile, etc.) the parser must keep iterating and pick
+        // a valid later occurrence rather than shadowing it with None.
+        assert_eq!(
+            extract_content_disposition_filename(
+                "attachment; filename=\"\"; filename=\"real.mp3\""
+            ),
+            Some("real.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_extract_content_disposition_filename_rejects_empty_and_control() {
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\"\""),
+            None
+        );
+        assert_eq!(
+            extract_content_disposition_filename("attachment; filename=\"\r\n\""),
+            None
+        );
+    }
+
+    #[test]
+    fn test_sanitize_rejects_unicode_bidi_override() {
+        // U+202E (RIGHT-TO-LEFT OVERRIDE) is General_Category=Cf, not Cc — so
+        // char::is_control returns false. We must reject it explicitly to
+        // prevent server-controlled extension spoofing where the displayed
+        // name reads `invoice.jpg` but the saved file is actually `.exe`.
+        assert_eq!(sanitize_server_supplied_filename("invoice\u{202E}gpj.exe"), None);
+        // Other bidi/format chars in the same family.
+        assert_eq!(sanitize_server_supplied_filename("a\u{200E}b.mp3"), None);
+        assert_eq!(sanitize_server_supplied_filename("a\u{200F}b.mp3"), None);
+        assert_eq!(sanitize_server_supplied_filename("a\u{2066}b.mp3"), None);
+        assert_eq!(sanitize_server_supplied_filename("a\u{2069}b.mp3"), None);
+    }
+
+    #[test]
+    fn test_sanitize_rejects_leading_dot_filenames() {
+        // A server choosing `.env`, `.bashrc`, etc. could silently overwrite
+        // a sensitive dotfile in the user's CWD. The default `download.<ext>`
+        // name is intentionally NOT a dotfile, so this rule only affects the
+        // Content-Disposition path.
+        assert_eq!(sanitize_server_supplied_filename(".env"), None);
+        assert_eq!(sanitize_server_supplied_filename(".bashrc"), None);
+        assert_eq!(sanitize_server_supplied_filename(".gitignore"), None);
+        // But a regular filename containing an internal dot is fine.
+        assert_eq!(
+            sanitize_server_supplied_filename("voice.mp3"),
+            Some("voice.mp3".to_string())
+        );
+    }
+
+    #[test]
+    fn test_sanitize_rejects_embedded_backslashes() {
+        // Path::file_name treats backslash as a regular char on Unix, so a
+        // Windows-style traversal slips through Path::file_name unchanged.
+        // Reject explicitly to keep the cross-platform contract straight.
+        assert_eq!(
+            sanitize_server_supplied_filename("..\\..\\.ssh\\authorized_keys"),
+            None
+        );
+        assert_eq!(sanitize_server_supplied_filename("a\\b.mp3"), None);
+    }
+
+    #[test]
+    fn test_mime_to_extension_audio_subtypes_disambiguated() {
+        // `audio/mpegurl` (M3U/M3U8 playlists, IANA-registered) must not be
+        // absorbed into the `audio/mpeg` → mp3 branch via prefix matching.
+        assert_eq!(mime_to_extension("audio/mpegurl"), "m3u");
+        assert_eq!(mime_to_extension("audio/x-mpegurl"), "m3u");
+        // `audio/wavpack` (IANA-registered WavPack lossless codec) must not
+        // collapse into `audio/wav`.
+        assert_eq!(mime_to_extension("audio/wavpack"), "wv");
+        // The original `audio/mpeg` and `audio/wav` branches still resolve
+        // correctly, with or without trailing parameters.
+        assert_eq!(mime_to_extension("audio/mpeg"), "mp3");
+        assert_eq!(mime_to_extension("audio/mpeg; codecs=mp3"), "mp3");
+        assert_eq!(mime_to_extension("audio/wav"), "wav");
+        assert_eq!(mime_to_extension("audio/wav; rate=44100"), "wav");
+    }
+
+    #[test]
+    fn test_mime_to_extension_audio_and_video() {
+        // Audio/MPEG was the original FER-10871 regression — TTS-style
+        // audio responses silently dropped through to `.bin`.
+        assert_eq!(mime_to_extension("audio/mpeg"), "mp3");
+        assert_eq!(mime_to_extension("audio/mp3"), "mp3");
+        assert_eq!(mime_to_extension("audio/wav"), "wav");
+        assert_eq!(mime_to_extension("audio/x-wav"), "wav");
+        assert_eq!(mime_to_extension("audio/wave"), "wav");
+        assert_eq!(mime_to_extension("audio/ogg"), "ogg");
+        assert_eq!(mime_to_extension("audio/opus"), "opus");
+        assert_eq!(mime_to_extension("audio/flac"), "flac");
+        assert_eq!(mime_to_extension("audio/aac"), "aac");
+        assert_eq!(mime_to_extension("audio/mp4"), "m4a");
+        assert_eq!(mime_to_extension("audio/webm"), "weba");
+        // video — `video/mpeg` must NOT cross-collide with `audio/mpeg`.
+        assert_eq!(mime_to_extension("video/mp4"), "mp4");
+        assert_eq!(mime_to_extension("video/webm"), "webm");
+        assert_eq!(mime_to_extension("video/quicktime"), "mov");
+        assert_eq!(mime_to_extension("video/mpeg"), "mpeg");
+        // images
+        assert_eq!(mime_to_extension("image/svg+xml"), "svg");
+        assert_eq!(mime_to_extension("image/webp"), "webp");
+        // case-insensitivity per RFC 6838
+        assert_eq!(mime_to_extension("Audio/MPEG"), "mp3");
+        // charset / parameter suffix (e.g. `audio/mpeg; codecs=...`) is harmless
+        assert_eq!(mime_to_extension("audio/mpeg; codecs=mp3"), "mp3");
+    }
+
+    #[test]
     fn test_resolve_upload_mime_strips_control_chars() {
         let mime = resolve_upload_mime(Some("text/plain\rinjected"), None, &None);
         assert_eq!(mime, "text/plaininjected");
@@ -6081,8 +8184,8 @@ mod tests {
     #[test]
     fn test_build_url_method_root_url_overrides_doc_root_url() {
         // Per-operation server override: method.root_url must win over doc.root_url.
-        // If this is broken, requests route to the wrong host (e.g. uploads
-        // go to api.example.com instead of upload.example.com).
+        // If this is broken, requests route to the wrong host (e.g. Box uploads
+        // go to api.box.com instead of upload.box.com).
         let doc = RestDescription {
             root_url: "https://api.example.com/".to_string(),
             service_path: "v1/".to_string(),
@@ -6180,6 +8283,7 @@ mod tests {
             0,
             &None,
             None,
+            &None,
             &PaginationConfig::default(),
         )
         .await
@@ -6214,6 +8318,7 @@ mod tests {
                 0,
                 &None,
                 None,
+                &None,
                 &PaginationConfig::default(),
             )
             .await;
@@ -6600,6 +8705,7 @@ async fn test_execute_method_dry_run() {
         None,
         None,
         None,
+        None, // multipart_parts
         true, // dry_run
         &pagination,
         &crate::formatter::OutputPipeline::default(),
@@ -6647,6 +8753,7 @@ async fn test_execute_method_missing_path_param() {
         None,
         None,
         None,
+        None, // multipart_parts
         true,
         &PaginationConfig::default(),
         &crate::formatter::OutputPipeline::default(),
@@ -6704,6 +8811,7 @@ async fn test_post_without_body_sets_content_length_zero() {
         0,
         &None,
         None,
+        &None,
         &PaginationConfig::default(),
     )
     .await
@@ -6746,6 +8854,7 @@ async fn test_post_with_body_does_not_add_content_length_zero() {
         0,
         &None,
         None,
+        &None,
         &PaginationConfig::default(),
     )
     .await
@@ -6786,6 +8895,7 @@ async fn test_get_does_not_set_content_length_zero() {
         0,
         &None,
         None,
+        &None,
         &PaginationConfig::default(),
     )
     .await
@@ -6836,6 +8946,7 @@ async fn test_bearer_header_sends_bearer_prefix() {
         0,
         &None,
         None,
+        &None,
         &PaginationConfig::default(),
     )
     .await

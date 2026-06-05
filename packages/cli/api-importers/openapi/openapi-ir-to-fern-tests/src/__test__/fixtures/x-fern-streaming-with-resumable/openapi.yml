@@ -44,6 +44,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CompletionChunk"
+  "/completions/chat-autodetect-resume":
+    post:
+      x-fern-sdk-group-name: chatCompletions
+      x-fern-sdk-method-name: createAutodetectResumable
+      description: >-
+        SSE endpoint whose streaming is auto-detected from the text/event-stream
+        response. Sets operation-level resumable=true without a format, so the
+        parser must honor resumable in the content-type fallback.
+      x-fern-streaming:
+        resumable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCompletionRequest"
+      responses:
+        "200":
+          description: "Success!"
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/CompletionChunk"
 components:
   schemas:
     CreateCompletionRequest:

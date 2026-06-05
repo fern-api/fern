@@ -257,6 +257,8 @@ function createExamplesForResponseStatusCodes({
                 firstAutoResponseName ?? "base",
                 response?.statusCode
             );
+            // If using a user-specified request, store in userResults; else store synthesized pair in autoResults.
+            const userOrAutoStore = firstUserRequestExample != null ? userResults : autoResults;
             if (
                 maybeCreateAndStoreExample({
                     key,
@@ -264,7 +266,7 @@ function createExamplesForResponseStatusCodes({
                     request: firstUserRequestExample ?? firstAutoRequestExample ?? baseRequestExample,
                     response: firstAutoResponseExample ?? baseResponseExample,
                     exampleStore,
-                    userOrAutoStore: autoResults
+                    userOrAutoStore
                 })
             ) {
                 examplesCreatedForResponse = true;
