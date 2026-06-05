@@ -2,6 +2,19 @@
 
 Command-line interface for the server-sent-events-openapi.
 
+## Table of contents
+
+- [Installation](#installation)
+- [Authentication](#authentication)
+- [Quick start](#quick-start)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Advanced](#advanced)
+  - [Common flags](#common-flags)
+  - [Environment variables](#environment-variables)
+  - [Output formats](#output-formats)
+  - [Shell completion](#shell-completion)
+
 ## Installation
 
 Install the [Rust toolchain](https://rustup.rs/) if you don't have it:
@@ -21,65 +34,55 @@ cargo build --release
 
 This API requires authentication. Run `server-sent-events-openapi --help` for details.
 
+## Quick start
+
+List available commands:
+
+```bash
+server-sent-events-openapi --help
+```
+
+Call an API endpoint:
+
+```bash
+server-sent-events-openapi <resource> <method>
+```
+
+Run `server-sent-events-openapi <resource> --help` to see available methods for a resource.
+
 ## Usage
-
-```
-server-sent-events-openapi
-
-Usage: server-sent-events-openapi [OPTIONS] <COMMAND>
-
-Commands:
-  ...                API resource commands (run --help to list)
-  generate-skills    Generate SKILL.md files for AI agent integration
-  completion         Generate shell completion scripts
-  man                Generate a man page (roff format)
-  help               Print this message or the help of the given subcommand(s)
-
-Options:
-      --dry-run          Validate the request locally without sending it to the API
-      --format <FORMAT>  Output format: json (default), table, yaml, csv
-      --base-url <URL>   Override the API base URL (e.g. for testing against a mock server)
-  -q, --quiet            Suppress stdout output on success (errors still go to stderr)
-  -h, --help             Print help
-  -V, --version          Print version
-
-Environment variables:
-  SERVER_SENT_EVENTS_OPENAPI_BASE_URL Override the API base URL
-  SERVER_SENT_EVENTS_OPENAPI_CA_BUNDLEPath to PEM file with extra trust roots (or SSL_CERT_FILE)
-  SERVER_SENT_EVENTS_OPENAPI_INSECURE=1Skip TLS verification (debugging only)
-  SERVER_SENT_EVENTS_OPENAPI_PROXY    HTTP(S) proxy URL
-  SERVER_SENT_EVENTS_OPENAPI_TIMEOUT_SECSTotal request timeout
-
-Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored.
-```
 
 Every API resource appears as a subcommand (e.g. `server-sent-events-openapi <resource> <method>`). Run `server-sent-events-openapi <resource> --help` to see available methods.
 
-## Common flags
+Provide request parameters as flags or as JSON:
+
+```bash
+server-sent-events-openapi <resource> <method> --json '{"key": "value"}'
+```
+
+## Documentation
+
+See [reference.md](./reference.md) for the full command reference.
+
+## Advanced
+
+### Common flags
 
 These flags are available on every operation:
 
 | Flag | Description |
 |------|-------------|
-| `--dry-run` | Validate the request locally and print the HTTP request without sending it — useful for scripting and agent workflows |
-| `--json <JSON\|->` | Supply a request body as JSON (or `-` to read stdin); individual body fields also have their own flags |
+| `--dry-run` | Validate the request locally and print the HTTP request without sending it |
+| `--json <JSON\|->` | Supply a request body as JSON (or `-` to read stdin) |
 | `--params <JSON>` | Merge extra parameters as JSON (overrides individual flags) |
 | `--format <json\|table\|yaml\|csv>` | Output format (default `json`) |
 | `--output <PATH>` | Write binary responses to a file |
-| `--base-url <URL>` | Override the API base URL (e.g. for testing against a mock server) |
+| `--base-url <URL>` | Override the API base URL |
 | `--page-all` | Auto-paginate and stream results as NDJSON |
 | `--page-limit <N>` | Max pages to fetch when auto-paginating (default `10`) |
 | `-q, --quiet` | Suppress stdout output on success (errors still go to stderr) |
 
-### Dry run
-
-The `--dry-run` flag renders the exact HTTP request the CLI would send, without executing it. This is particularly valuable for AI agent integration — agents can validate their intent before committing to a write operation:
-
-```bash
-server-sent-events-openapi <resource> <method> --dry-run
-```
-
-## Environment variables
+### Environment variables
 
 | Variable | Description |
 |----------|-------------|
@@ -91,7 +94,7 @@ server-sent-events-openapi <resource> <method> --dry-run
 
 Standard environment variables (`HTTPS_PROXY` / `HTTP_PROXY` / `NO_PROXY` / `SSL_CERT_FILE`) are also honored.
 
-## Output formats
+### Output formats
 
 Use the global `--format` flag to control output. Supported values: `json` (default), `table`, `yaml`, `csv`.
 
@@ -103,11 +106,15 @@ server-sent-events-openapi <resource> <method> --format json | jq
 server-sent-events-openapi --help --format json | jq 'length'
 ```
 
-## Shell completion
+### Shell completion
 
 Generate shell completion scripts:
 
 ```bash
 server-sent-events-openapi completion <bash|zsh|fish|powershell>
 ```
+
+## Documentation
+
+See [reference.md](./reference.md) for the full command reference.
 

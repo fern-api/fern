@@ -1,0 +1,90 @@
+name: Build CLI
+
+on:
+  workflow_dispatch:
+    inputs:
+      cli:
+        description: Which CLI binary to build
+        required: true
+        type: choice
+        options:
+          - assemblyai
+          - bigcommerce
+          - box
+          - paid
+          - linear
+          - square
+      version_suffix:
+        description: Optional suffix appended to artifact names (e.g. "preview-1")
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  build:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-14,     target: aarch64-apple-darwin,        zig: false }
+          - { os: ubuntu-22.04, target: x86_64-unknown-linux-musl,   zig: true  }
+          - { os: ubuntu-22.04, target: aarch64-unknown-linux-musl,  zig: true  }
+          - { os: windows-2022, target: x86_64-pc-windows-msvc,      zig: false }
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      - name: Install zigbuild
+        if: matrix.zig
+        uses: mlugg/setup-zig@v2
+      - name: Install cargo-zigbuild
+        if: matrix.zig
+        run: cargo install --locked cargo-zigbuild
+
+      - name: Build
+        shell: bash
+        run: |
+          if [[ "${{ matrix.zig }}" == "true" ]]; then
+            cargo zigbuild \
+              --release \
+              --bin ${{ inputs.cli }} \
+              --no-default-features \
+              --features rustls \
+              --target ${{ matrix.target }}
+          else
+            cargo build \
+              --release \
+              --bin ${{ inputs.cli }} \
+              --no-default-features \
+              --features rustls \
+              --target ${{ matrix.target }}
+          fi
+
+      - name: Stage artifact
+        shell: bash
+        run: |
+          mkdir -p dist
+          if [[ "${{ matrix.target }}" == *windows* ]]; then
+            cp "target/${{ matrix.target }}/release/${{ inputs.cli }}.exe" "dist/${{ inputs.cli }}.exe"
+          else
+            cp "target/${{ matrix.target }}/release/${{ inputs.cli }}" "dist/${{ inputs.cli }}"
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.cli }}-${{ matrix.target }}${{ inputs.version_suffix && format('-{0}', inputs.version_suffix) || '' }}
+          path: dist/*
+          if-no-files-found: error

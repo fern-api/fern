@@ -1,0 +1,6 @@
+- summary: |
+    Honor the `exportedClientName` config when naming the generated root client
+    constructor. Previously the SDK always exported `NewClient` while generated
+    dynamic snippets referenced `New<exportedClientName>`, producing snippets
+    that did not compile.
+  type: fix

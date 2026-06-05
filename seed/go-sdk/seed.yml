@@ -367,13 +367,10 @@ allowedFailures:
   # Generated Go code does not compile. Each needs a generator fix.
   - enum # enum-union header value is not converted to a string
   - literal
-  - mixed-case:no-custom-config # user property `extraProperties` collides with the generated accessor
-  - mixed-case:default-values
   - trace # generated v2/ subpackage references undefined test types
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline
 
   # Dynamic snippet generation produces code that does not compile.
-  - examples:exported-client-name # snippet calls client.NewAcmeClient but the SDK exports NewClient
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
 
   # Wire tests fail at runtime.

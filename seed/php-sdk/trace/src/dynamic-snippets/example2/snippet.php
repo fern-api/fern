@@ -6,6 +6,7 @@ use Seed\SeedClient;
 use Seed\Submission\Types\TestSubmissionUpdate;
 use DateTime;
 use Seed\Submission\Types\TestSubmissionUpdateInfo;
+use Seed\Submission\Types\RunningSubmissionState;
 
 $client = new SeedClient(
     token: '<token>',
@@ -17,6 +18,6 @@ $client->admin->sendTestSubmissionUpdate(
     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     new TestSubmissionUpdate([
         'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-        'updateInfo' => TestSubmissionUpdateInfo::running(),
+        'updateInfo' => TestSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission->value),
     ]),
 );

@@ -4,8 +4,9 @@ import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
-import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
+import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
+import { emitReference } from "./emitReference.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
@@ -67,8 +68,10 @@ export async function runPipeline(args: {
     //      `cli/<binaryName>/`, wiring the IR-derived auth bindings.
     //   4. generateEmbeddedTypes generates the typed Rust model crate
     //      as a workspace member (path dependency from the CLI crate).
-    //   5. emitPublishWorkflow writes `.github/workflows/ci.yml` when
-    //      output mode is `github` with npm publish info.
+    //   5. emitCiWorkflow / emitPublishWorkflow writes
+    //      `.github/workflows/ci.yml` when output mode is `github`.
+    //      Build+test jobs are always emitted; publish jobs only when
+    //      npm publish info is present.
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
@@ -81,6 +84,13 @@ export async function runPipeline(args: {
         apiDisplayName: ir.apiDisplayName,
         authBindings,
         npmPublishInfo: outputConfig.npmPublishInfo
+    });
+    await emitReference({
+        outputDir,
+        binaryName,
+        apiDisplayName: ir.apiDisplayName,
+        authBindings,
+        specsDir
     });
 
     // Generate the embedded types crate (on by default; opt-out via embedTypes: false).
@@ -96,12 +106,16 @@ export async function runPipeline(args: {
         await writeFernignore(outputDir, binaryName);
     }
 
-    if (outputConfig.npmPublishInfo != null) {
-        await emitPublishWorkflow({
-            outputDir,
-            binaryName,
-            npmPublishInfo: outputConfig.npmPublishInfo
-        });
+    if (outputConfig.isGithubOutput) {
+        if (outputConfig.npmPublishInfo != null) {
+            await emitPublishWorkflow({
+                outputDir,
+                binaryName,
+                npmPublishInfo: outputConfig.npmPublishInfo
+            });
+        } else {
+            await emitCiWorkflow({ outputDir, binaryName });
+        }
     }
 
     return { status: "generated", binaryName };

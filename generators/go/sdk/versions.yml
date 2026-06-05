@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.44.1
+  changelogEntry:
+    - summary: |
+        Honor the `exportedClientName` config when naming the generated root client
+        constructor. Previously the SDK always exported `NewClient` while generated
+        dynamic snippets referenced `New<exportedClientName>`, producing snippets
+        that did not compile.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
 - version: 1.44.0
   changelogEntry:
     - summary: |

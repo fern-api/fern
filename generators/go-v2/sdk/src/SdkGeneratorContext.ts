@@ -102,6 +102,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             if (this.customConfig.clientConstructorName != null) {
                 return this.customConfig.clientConstructorName;
             }
+            if (this.customConfig.exportedClientName != null) {
+                return `New${this.customConfig.exportedClientName}`;
+            }
             if (this.customConfig.clientName != null) {
                 return `New${this.customConfig.clientName}`;
             }

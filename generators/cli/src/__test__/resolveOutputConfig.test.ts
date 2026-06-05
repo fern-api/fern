@@ -44,6 +44,7 @@ describe("resolveOutputConfig", () => {
         );
 
         expect(result.version).toBe("2.0.0");
+        expect(result.isGithubOutput).toBe(true);
         expect(result.npmPublishInfo).toEqual<ResolvedNpmPublishInfo>({
             packageName: "@acme/cli",
             registryUrl: "https://registry.npmjs.org",
@@ -52,22 +53,24 @@ describe("resolveOutputConfig", () => {
         });
     });
 
-    it("github mode without publishInfo returns version + no npmPublishInfo", () => {
+    it("github mode without publishInfo returns version + isGithubOutput true + no npmPublishInfo", () => {
         const result = resolveOutputConfig(githubOutput({ version: "1.0.0" }));
 
         expect(result.version).toBe("1.0.0");
+        expect(result.isGithubOutput).toBe(true);
         expect(result.npmPublishInfo).toBeUndefined();
     });
 
     // ── output mode: downloadFiles ─────────────────────────────────
 
-    it("downloadFiles mode returns default version with no npmPublishInfo", () => {
+    it("downloadFiles mode returns default version with isGithubOutput false", () => {
         const result = resolveOutputConfig({
             path: "/out",
             mode: FernGeneratorExec.OutputMode.downloadFiles()
         });
 
         expect(result.version).toBe("0.0.0");
+        expect(result.isGithubOutput).toBe(false);
         expect(result.npmPublishInfo).toBeUndefined();
     });
 

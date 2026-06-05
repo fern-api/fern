@@ -31,3 +31,12 @@ components:
     Bearer:
       type: http
       scheme: bearer
+servers:
+  - url: https://api.production.com
+    description: Production (rest)
+  - url: wss://ws.production.com
+    description: Production (wss)
+  - url: https://api.staging.com
+    description: Staging (rest)
+  - url: wss://ws.staging.com
+    description: Staging (wss)
