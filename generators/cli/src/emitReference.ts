@@ -349,7 +349,7 @@ function renderReference(args: {
 
         // TOC
         for (const [resourceName] of sortedResources) {
-            const anchor = resourceName.replace(/\s+/g, "-").toLowerCase();
+            const anchor = `${binaryName} ${resourceName}`.replace(/\s+/g, "-").toLowerCase();
             lines.push(`- [\`${binaryName} ${resourceName}\`](#${anchor})`);
         }
         lines.push("");

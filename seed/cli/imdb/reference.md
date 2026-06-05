@@ -4,7 +4,7 @@ Full command reference for `api`.
 
 ## Commands
 
-- [`api imdb`](#imdb)
+- [`api imdb`](#api-imdb)
 
 ---
 

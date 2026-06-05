@@ -4,7 +4,7 @@ Full command reference for `query-parameters-api`.
 
 ## Commands
 
-- [`query-parameters-api user`](#user)
+- [`query-parameters-api user`](#query-parameters-api-user)
 
 ---
 
