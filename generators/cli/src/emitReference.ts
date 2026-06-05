@@ -434,7 +434,7 @@ function renderMethod(args: {
         for (const param of allParams) {
             const flagName = param.name.startsWith("--") ? param.name : `--${toFlagName(param.name)}`;
             const required = param.required ? "Yes" : "No";
-            const desc = param.description ?? "";
+            const desc = (param.description ?? "").replace(/\|/g, "\\|");
             lines.push(`| \`${flagName}\` | \`${param.type}\` | ${required} | ${desc} |`);
         }
         lines.push("");
