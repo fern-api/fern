@@ -145,6 +145,7 @@ struct OAuthTokenResponse {
 }
 
 /// Internal HTTP client that handles requests with authentication and retries
+#[derive(Clone)]
 pub struct HttpClient {
     client: Client,
     executor: Option<Arc<dyn RequestExecutor>>,
@@ -674,14 +675,9 @@ impl HttpClient {
         }
 
         // Build the request
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // Execute with retries
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = self.send_request(req, &options).await?;
 
         // Parse response as JSON string and decode base64
         let text = response.text().await.map_err(ApiError::Network)?;

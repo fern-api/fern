@@ -296,7 +296,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
 
     private generateLibFile(context: SdkGeneratorContext): RustFile {
-        const hasTypes = this.hasTypes(context);
+        const hasTypes = this.hasTypes(context) && !context.customConfig.cliEmbedded;
         const clientName = context.getClientName();
 
         const libModule = this.buildLibModule(context, hasTypes, clientName);
@@ -388,7 +388,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     }
 
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
-        const hasTypes = this.hasTypes(context);
+        const hasTypes = this.hasTypes(context) && !context.customConfig.cliEmbedded;
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 

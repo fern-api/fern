@@ -143,6 +143,7 @@ struct OAuthTokenResponse {
 }
 
 /// Internal HTTP client that handles requests with authentication and retries
+#[derive(Clone)]
 pub struct HttpClient {
     client: Client,
     executor: Option<Arc<dyn RequestExecutor>>,
