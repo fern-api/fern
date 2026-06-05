@@ -148,9 +148,9 @@ export function patchCargoLockVersion(cargoLock: string, version: string): strin
  * consistent with `Cargo.toml` — adding a new `[dependencies.X]` path
  * dep without a corresponding `[[package]]` entry causes a rejection.
  *
- * The types crate's only dependencies (`serde`, `serde_json`) are
- * already resolved in the lock file from the CLI SDK's own dep tree,
- * so we only need to:
+ * The types crate's dependencies (`serde`, `serde_json`, `chrono`,
+ * `base64`, `num-bigint`, `ordered-float`) are already resolved in
+ * the lock file from the CLI SDK's own dep tree, so we only need to:
  *   1. Append a `[[package]]` entry for the types crate itself.
  *   2. Add the types crate to `fern-cli-sdk`'s dependency list.
  */
