@@ -905,6 +905,37 @@ paths:
         "201":
           description: Created person
 
+  # Endpoint with REQUIRED nested object fields. Used to verify that the
+  # object-shorthand body flag (--name '{...}') satisfies required leaf
+  # parameters whose values come from the JSON payload rather than per-leaf
+  # flags. See test_object_shorthand_satisfies_required_nested_leaves.
+  /persons/required-nested:
+    post:
+      x-fern-sdk-group-name:
+        - persons
+      x-fern-sdk-method-name: createRequiredNested
+      operationId: persons_create_required_nested
+      summary: Create a person with required nested fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: object
+                  required: [first, last]
+                  properties:
+                    first:
+                      type: string
+                    last:
+                      type: string
+      responses:
+        "201":
+          description: Created person
+
   # --- articles ---
   # Endpoint with an array body field. Exercises repeated:true so
   # --tag admin --tag reviewer accumulates into ["admin","reviewer"].
