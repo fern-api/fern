@@ -46,31 +46,20 @@ echo "==> Syncing cli-sdk@${CLI_SDK_SHORT} (${CLI_SDK_SHA}) into generators/cli/
 echo "--- Reading sync-manifest.toml ..."
 MANIFEST_JSON="$(python3 "$SCRIPT_DIR/read-manifest.py" "$MANIFEST")"
 
-# Helper: check if a glob pattern appears in a manifest category.
-manifest_has_glob() {
-  local category="$1" glob="$2"
-  echo "$MANIFEST_JSON" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-for entry in data.get('$category', []):
-    if '$glob' in entry.get('globs', []):
-        sys.exit(0)
-sys.exit(1)
-"
-}
-
-# Helper: get the dest override for a glob, or empty string.
-manifest_dest() {
-  local category="$1" glob="$2"
-  echo "$MANIFEST_JSON" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-for entry in data.get('$category', []):
-    if '$glob' in entry.get('globs', []):
-        print(entry.get('dest', ''))
-        sys.exit(0)
-print('')
-"
+# Validate that a manifest-supplied relative path stays within a given root.
+# Rejects empty, absolute, or traversal paths.
+safe_relative_path() {
+  local root="$1" rel="$2" label="$3"
+  if [[ -z "$rel" || "$rel" == /* || "$rel" == *..* ]]; then
+    echo "Error: unsafe $label path from manifest: '$rel'" >&2
+    exit 1
+  fi
+  local resolved
+  resolved="$(realpath -m --no-symlinks "$root/$rel")"
+  case "$resolved" in
+    "$root"/*) ;; # good — stays under root
+    *) echo "Error: $label path '$rel' escapes root '$root'" >&2; exit 1 ;;
+  esac
 }
 
 # ---------------------------------------------------------------------------
@@ -103,6 +92,8 @@ for entry in data.get('dev_only', []):
             src = g.rstrip('*').rstrip('/')
             print(f'{src}|{dest}')
 " | while IFS='|' read -r src dest; do
+  safe_relative_path "$CLI_SDK_DIR" "$src" "source"
+  safe_relative_path "$SDK_DIR" "$dest" "dest"
   echo "    rsync $src/ → $dest/"
   mkdir -p "$SDK_DIR/$dest"
   rsync -a --delete \
@@ -120,6 +111,8 @@ for entry in data.get('ship', []):
             continue
         print(g)
 " | while read -r filepath; do
+  safe_relative_path "$CLI_SDK_DIR" "$filepath" "ship file"
+  safe_relative_path "$SDK_DIR" "$filepath" "ship file dest"
   if [[ -f "$CLI_SDK_DIR/$filepath" ]]; then
     echo "    copy $filepath"
     cp "$CLI_SDK_DIR/$filepath" "$SDK_DIR/$filepath"
@@ -142,6 +135,8 @@ for entry in data.get('dev_only', []):
   if [[ "$glob" == *"/**" ]]; then
     # Directory glob: rsync the directory
     dir="${glob%/**}"
+    safe_relative_path "$CLI_SDK_DIR" "$dir" "dev-only dir"
+    safe_relative_path "$SDK_DIR" "$dir" "dev-only dir dest"
     if [[ -d "$CLI_SDK_DIR/$dir" ]]; then
       echo "    rsync $dir/"
       mkdir -p "$SDK_DIR/$dir"
@@ -149,6 +144,8 @@ for entry in data.get('dev_only', []):
     fi
   else
     # Single file
+    safe_relative_path "$CLI_SDK_DIR" "$glob" "dev-only file"
+    safe_relative_path "$SDK_DIR" "$glob" "dev-only file dest"
     if [[ -f "$CLI_SDK_DIR/$glob" ]]; then
       echo "    copy $glob"
       dir="$(dirname "$glob")"
