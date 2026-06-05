@@ -1,7 +1,6 @@
 [
   "cli/openapi-fixture/**",
   "src/bin/strip_schema.rs",
-  "build.rs",
   ".gitignore",
   "docs/**",
   "changes/**",

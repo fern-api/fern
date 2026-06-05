@@ -57,7 +57,6 @@ rustls = ["reqwest/rustls-tls-native-roots", "tokio-tungstenite/rustls-tls-nativ
 anyhow = "1"
 base64 = "0.22"
 bytes = "1"
-chrono = { version = "0.4", features = ["serde"] }
 clap = { version = "4", features = ["derive", "string", "env"] }
 clap_complete = "4"
 clap_mangen = "0.2"
@@ -66,8 +65,6 @@ dotenvy = "0.15"
 futures-util = "0.3"
 httpdate = "1"
 libc = "0.2"
-num-bigint = { version = "0.4", features = ["serde"] }
-ordered-float = { version = "4.5", features = ["serde"] }
 percent-encoding = "2.3.2"
 reqwest = { version = "0.12", features = ["json", "multipart", "stream"], default-features = false }
 serde = { version = "1", features = ["derive"] }
