@@ -376,5 +376,3 @@ allowedFailures:
 
   # Wire tests fail at runtime.
   - oauth-client-credentials:.
-  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
-  - exhaustive:omit-empty-request-wrappers
