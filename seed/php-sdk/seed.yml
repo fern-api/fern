@@ -182,14 +182,14 @@ scripts:
       test:
         - composer test
 allowedFailures:
-  # Dynamic snippet issues (wrong types, missing args, syntax errors in generated snippets).
+  # Dynamic snippet: default-valued base-path param ordered before request body.
   - api-wide-base-path-with-default
-  - exhaustive:no-custom-config
+  # Wire test: path param request failures unrelated to dynamic snippets.
   - exhaustive:wire-tests
-  - bytes-upload
+  # Dynamic snippet: variable-typed path params not provided in snippet request.
   - variables
   - oauth-client-credentials-with-variables
-  # Dynamic snippet syntax errors for examples with Exception-named types.
+  # Dynamic snippet: union factory method param mismatch.
   - examples:no-custom-config
   - examples:readme-config
   # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).

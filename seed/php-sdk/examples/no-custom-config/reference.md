@@ -701,9 +701,7 @@ $client->service->createBigEntity(
 <dd>
 
 ```php
-$client->service->refreshToken(
-    ,
-);
+$client->service->refreshToken();
 ```
 </dd>
 </dl>
