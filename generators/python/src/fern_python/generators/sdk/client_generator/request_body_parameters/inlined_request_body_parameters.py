@@ -1,6 +1,5 @@
 from typing import Dict, List, Optional, Tuple, Union
 
-import fern.ir.resources as ir_types
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
@@ -8,13 +7,14 @@ from .flattened_request_body_parameter_utils import (
     are_any_properties_optional_in_inlined_request,
     get_json_body_for_inlined_request,
 )
-
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
     NamedFunctionParameter,
 )
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_wire_value, resolve_name
+
+import fern.ir.resources as ir_types
 
 
 class InlinedRequestBodyParameters(AbstractRequestBodyParameters):

@@ -4829,11 +4829,8 @@ func writeUnwrappedMarshalJSON(
 		if prop.Name.WireValue == pathRoot {
 			continue
 		}
-		if isTypeReferenceLiteral(prop.ValueType) {
-			lit := extractLiteralValue(prop.ValueType)
-			if lit != nil {
-				f.P(`body["`, prop.Name.WireValue, `"] = `, literalToValue(lit))
-			}
+		if val := getAutoFillValue(prop.ValueType, f.types); val != "" {
+			f.P(`body["`, prop.Name.WireValue, `"] = `, val)
 			continue
 		}
 		fieldName := goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName)
@@ -4894,11 +4891,8 @@ func writeUnwrappedMarshalJSON(
 	f.P("leaf := make(map[string]interface{})")
 	leafProps := resolveObjectProperties(currentTypeRef, f.types)
 	for _, p := range leafProps {
-		if isTypeReferenceLiteral(p.ValueType) {
-			lit := extractLiteralValue(p.ValueType)
-			if lit != nil {
-				f.P(`leaf["`, p.Name.WireValue, `"] = `, literalToValue(lit))
-			}
+		if val := getAutoFillValue(p.ValueType, f.types); val != "" {
+			f.P(`leaf["`, p.Name.WireValue, `"] = `, val)
 			continue
 		}
 		fieldName := goExportedFieldName(p.Name.Name.PascalCase.UnsafeName)
@@ -4972,7 +4966,7 @@ func writeUnwrappedUnmarshalJSON(
 		if prop.Name.WireValue == pathRoot {
 			continue
 		}
-		if isTypeReferenceLiteral(prop.ValueType) {
+		if getAutoFillValue(prop.ValueType, f.types) != "" {
 			continue
 		}
 		fieldName := goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName)
@@ -5004,7 +4998,7 @@ func writeUnwrappedUnmarshalJSON(
 
 			leafProps := resolveObjectProperties(leafTypeRef, f.types)
 			for _, p := range leafProps {
-				if isTypeReferenceLiteral(p.ValueType) {
+				if getAutoFillValue(p.ValueType, f.types) != "" {
 					continue
 				}
 				leafFieldName := goExportedFieldName(p.Name.Name.PascalCase.UnsafeName)
