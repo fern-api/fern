@@ -83,6 +83,7 @@ async function generate(configPath: string): Promise<void> {
                     })
                 )
             );
+            throw e;
         }
     } finally {
         // Flush queued Sentry events before the process exits.
