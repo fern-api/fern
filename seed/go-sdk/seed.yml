@@ -365,7 +365,6 @@ allowedFailures:
   - pagination-uri-path
 
   # Generated Go code does not compile. Each needs a generator fix.
-  - enum # enum-union header value is not converted to a string
   - literal
   - mixed-case:no-custom-config # user property `extraProperties` collides with the generated accessor
   - mixed-case:default-values

@@ -92,6 +92,19 @@ func (c *ColorOrOperand) EncodeQueryValues(key string, values *url.Values) error
 	return nil
 }
 
+func (c *ColorOrOperand) String() string {
+	if c == nil {
+		return ""
+	}
+	if c.typ == "Color" || c.Color != "" {
+		return fmt.Sprintf("%v", c.Color)
+	}
+	if c.typ == "Operand" || c.Operand != "" {
+		return fmt.Sprintf("%v", c.Operand)
+	}
+	return ""
+}
+
 type ColorOrOperandVisitor interface {
 	VisitColor(Color) error
 	VisitOperand(Operand) error

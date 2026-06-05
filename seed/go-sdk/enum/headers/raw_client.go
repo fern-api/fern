@@ -52,9 +52,9 @@ func (r *RawClient) Send(
 	if request.MaybeOperand != nil {
 		headers.Add("maybeOperand", string(*request.MaybeOperand))
 	}
-	headers.Add("operandOrColor", request.OperandOrColor)
+	headers.Add("operandOrColor", request.OperandOrColor.String())
 	if request.MaybeOperandOrColor != nil {
-		headers.Add("maybeOperandOrColor", request.MaybeOperandOrColor)
+		headers.Add("maybeOperandOrColor", request.MaybeOperandOrColor.String())
 	}
 
 	raw, err := r.caller.Call(
