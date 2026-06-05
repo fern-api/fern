@@ -127,6 +127,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": "application/merge-patch+json"
@@ -662,6 +663,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": "application/merge-patch+json"
@@ -1209,6 +1211,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": "application/merge-patch+json"
@@ -1526,6 +1529,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": "application/merge-patch+json"
@@ -1850,6 +1854,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": null
