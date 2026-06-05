@@ -116,10 +116,7 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
 
     // 1. Cargo.toml — minimal lib crate with serde derives + any
     //    additional deps required by detected core modules.
-    const depLines = [
-        'serde = { version = "1", features = ["derive"] }',
-        'serde_json = "1"'
-    ];
+    const depLines = ['serde = { version = "1", features = ["derive"] }', 'serde_json = "1"'];
     if (coreModules.has("flexible_datetime")) {
         depLines.push('chrono = { version = "0.4", features = ["serde"] }');
     }
@@ -196,10 +193,7 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         // Inject `pub mod core;` into lib.rs.
         const updatedLib = await readFile(libPath, "utf-8");
         if (!updatedLib.includes("pub mod core;")) {
-            const patchedWithCore = updatedLib.replace(
-                "pub mod prelude;\n",
-                "pub mod prelude;\npub mod core;\n"
-            );
+            const patchedWithCore = updatedLib.replace("pub mod prelude;\n", "pub mod prelude;\npub mod core;\n");
             await writeFile(libPath, patchedWithCore);
         }
     }
@@ -256,7 +250,7 @@ async function collectRsFiles(dir: string): Promise<string[]> {
     for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
         if (entry.isDirectory()) {
-            results.push(...await collectRsFiles(fullPath));
+            results.push(...(await collectRsFiles(fullPath)));
         } else if (entry.isFile() && entry.name.endsWith(".rs")) {
             results.push(fullPath);
         }
