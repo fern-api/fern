@@ -25,8 +25,11 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -44,10 +47,16 @@ public final class TypesGenerator {
 
     public Result generateFiles() {
         Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces(generatorContext);
+
+        Set<TypeId> nestedInlineTypeIds =
+                generatorContext.getCustomConfig().enableInlineTypes() ? computeNestedInlineTypeIds() : Set.of();
+
         Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
                 .map(typeDeclaration -> {
                     if (generatorContext.getCustomConfig().enableInlineTypes()
-                            && typeDeclaration.getInline().orElse(false)) {
+                            && typeDeclaration.getInline().orElse(false)
+                            && nestedInlineTypeIds.contains(
+                                    typeDeclaration.getName().getTypeId())) {
                         return Optional.<GeneratedJavaFile>empty();
                     }
 
@@ -69,6 +78,46 @@ public final class TypesGenerator {
                 .map(Optional::get)
                 .collectToMap();
         return new Result(generatedInterfaces, generatedTypes);
+    }
+
+    /**
+     * Computes the set of inline TypeIds that are reachable from at least one non-inline type declaration. These inline
+     * types will be generated as nested classes inside their parent types and should be skipped during standalone file
+     * generation.
+     *
+     * <p>Inline types that are NOT in this set (e.g., those only referenced from endpoint response types) must still be
+     * generated as standalone files. Note: orphaned inline types that reference other inline types will produce both a
+     * standalone file and a nested class for the child type. This duplication is intentional — suppressing the
+     * standalone file is unsafe because {@code getReferencedTypes()} is the transitive closure and cannot distinguish
+     * direct inline children from self-references, mutually-recursive types, or types shared with endpoints.
+     */
+    private Set<TypeId> computeNestedInlineTypeIds() {
+        Set<TypeId> nestedInlineTypeIds = new HashSet<>();
+        Queue<TypeId> queue = new LinkedList<>();
+
+        for (Map.Entry<TypeId, TypeDeclaration> entry : typeDeclarations.entrySet()) {
+            if (!entry.getValue().getInline().orElse(false)) {
+                queue.add(entry.getKey());
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            TypeId current = queue.poll();
+            TypeDeclaration currentDecl = typeDeclarations.get(current);
+            if (currentDecl == null) {
+                continue;
+            }
+            for (TypeId referencedId : currentDecl.getReferencedTypes()) {
+                TypeDeclaration referencedDecl = typeDeclarations.get(referencedId);
+                if (referencedDecl != null
+                        && referencedDecl.getInline().orElse(false)
+                        && nestedInlineTypeIds.add(referencedId)) {
+                    queue.add(referencedId);
+                }
+            }
+        }
+
+        return nestedInlineTypeIds;
     }
 
     public static Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces(
