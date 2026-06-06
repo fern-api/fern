@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.13.2
+  changelogEntry:
+    - summary: |
+        Fix compilation failure in cliEmbedded mode by re-exporting the
+        co-generated types crate in api/mod.rs so service resource files
+        can resolve request/response types via `use crate::api::*`.
+      type: fix
+  createdAt: "2026-06-06"
+  irVersion: 67
 - version: 0.13.1
   changelogEntry:
     - summary: |
