@@ -49,16 +49,16 @@ function parseRootClient(modRsContent: string): RootClientInfo {
         throw new Error("Could not find root client struct in SDK's api/resources/mod.rs");
     }
 
-    const name = structMatch[1]!;
-    const body = structMatch[2]!;
+    const name = structMatch[1] ?? "";
+    const body = structMatch[2] ?? "";
     const subClients: SubClientField[] = [];
 
     // Match each `pub <field>: <Type>,` line, skipping `config: ClientConfig`
     const fieldRegex = /pub\s+(\w+)\s*:\s*(\w+)\s*,?/g;
     let match;
     while ((match = fieldRegex.exec(body)) !== null) {
-        const fieldName = match[1]!;
-        const typeName = match[2]!;
+        const fieldName = match[1] ?? "";
+        const typeName = match[2] ?? "";
         if (typeName === "ClientConfig") {
             continue; // skip the config field
         }
@@ -73,7 +73,10 @@ function parseRootClient(modRsContent: string): RootClientInfo {
  */
 function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): string {
     const subClientInits = rootClient.subClients
-        .map((sc) => `        ${sc.fieldName}: ${sdkCrateSnake}::api::${sc.typeName} { http_client: http_client.clone() },`)
+        .map(
+            (sc) =>
+                `        ${sc.fieldName}: ${sdkCrateSnake}::api::${sc.typeName} { http_client: http_client.clone() },`
+        )
         .join("\n");
 
     return `\

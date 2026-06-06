@@ -92,7 +92,13 @@ export async function copySpecs(args: {
 
     await writeFile(
         path.join(binDir, "main.rs"),
-        renderMainRs({ binaryName, entries, authBindings, embedTypes: embedTypes ?? false, embedSdk: embedSdk ?? false })
+        renderMainRs({
+            binaryName,
+            entries,
+            authBindings,
+            embedTypes: embedTypes ?? false,
+            embedSdk: embedSdk ?? false
+        })
     );
 
     // Scaffold custom.rs for user-authored command handlers.
