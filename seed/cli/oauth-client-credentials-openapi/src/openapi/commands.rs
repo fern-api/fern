@@ -298,7 +298,7 @@ fn build_resource_command(
                 Arg::new("output")
                     .long("output")
                     .short('o')
-                    .help("Output file path for binary responses")
+                    .help("Output file path for binary responses (use '-' to stream to stdout)")
                     .value_name("PATH"),
             );
 

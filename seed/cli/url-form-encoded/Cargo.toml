@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.url_form_encoded_api_types]
-path = "url-form-encoded-api-types"
+[dependencies.url_form_encoded_api_sdk]
+path = "url-form-encoded-api-sdk"
 
 [profile.dist]
 inherits = "release"
