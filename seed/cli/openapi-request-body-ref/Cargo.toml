@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.openapi_request_body_ref_types]
-path = "openapi-request-body-ref-types"
+[dependencies.openapi_request_body_ref_sdk]
+path = "openapi-request-body-ref-sdk"
 
 [profile.dist]
 inherits = "release"

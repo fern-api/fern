@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.webhook_audience_test_types]
-path = "webhook-audience-test-types"
+[dependencies.webhook_audience_test_sdk]
+path = "webhook-audience-test-sdk"
 
 [profile.dist]
 inherits = "release"
