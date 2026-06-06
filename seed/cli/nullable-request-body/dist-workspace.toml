@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "nullable-request-body-types"]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "nullable-request-body-types", "nullable-request-body-sdk"]
 
 # Config for 'dist'
 [dist]

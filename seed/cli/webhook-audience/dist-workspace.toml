@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "webhook-audience-test-types"]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "webhook-audience-test-types", "webhook-audience-test-sdk"]
 
 # Config for 'dist'
 [dist]

@@ -449,6 +449,24 @@ fn build_parameters_from_args(
                 &mut params,
                 0,
             );
+            // JFL-1.4: also emit an object-shorthand flag for the whole input
+            // arg, mirroring the OpenAPI body parent emission. Users can pass
+            // `--filter '{"query":"x"}'` as an alternative to `--query x`.
+            // `required: false` at the CLI level — a required input may be
+            // satisfied via per-field flags instead. `graphql_field_path` is
+            // empty: the executor merges the parsed object into the input
+            // map at the top level. `or_insert` so a same-named leaf flag
+            // (pathological) wins.
+            params
+                .entry(flag_key.clone())
+                .or_insert(MethodParameter {
+                    param_type: Some("object".to_string()),
+                    graphql_input_arg: Some(arg_name.to_string()),
+                    graphql_field_path: Some(String::new()),
+                    description: desc(arg),
+                    required: false,
+                    ..Default::default()
+                });
             arg_defs.push(GraphQLArgDef {
                 name: arg_name.to_string(),
                 flag_key,
@@ -549,6 +567,14 @@ fn flatten_input_type(
                 params,
                 depth + 1,
             );
+            params.entry(full_flag.clone()).or_insert(MethodParameter {
+                param_type: Some("object".to_string()),
+                graphql_input_arg: Some(arg_name.to_string()),
+                graphql_field_path: Some(full_path.clone()),
+                description: desc(input_field),
+                required: false,
+                ..Default::default()
+            });
         } else {
             // Undeclared custom scalar — treat as string
             params.insert(
@@ -906,7 +932,7 @@ mod tests {
                 "kind": "INPUT_OBJECT", "name": "SearchFilter",
                 "inputFields": [
                     {"name": "query", "type": scalar("String")},
-                    {"name": "dateRange", "type": input_obj("DateRangeInput")},
+                    {"name": "dateRange", "type": input_obj("DateRangeInput"), "description": "Bounded date range for filtering."},
                     {"name": "minAmount", "type": scalar("Int")}
                 ]
             },
@@ -929,6 +955,87 @@ mod tests {
         assert!(all_params.iter().any(|k| k == "query"), "missing top-level query param: {all_params:?}");
         assert!(all_params.iter().any(|k| k.contains("start")), "missing dateRange.start: {all_params:?}");
         assert!(all_params.iter().any(|k| k.contains("end")), "missing dateRange.end: {all_params:?}");
+
+        // Parent object-level flag must ALSO be emitted for the nested input type.
+        // The flag key is "date-range" (no arg prefix, since flatten_input_type is called
+        // with an empty flag_prefix for top-level input args).
+        let search = doc.resources.get("search").expect("search resource missing");
+        let list = search.methods.get("list").expect("search.list method missing");
+        let date_range_flag = list.parameters.get("date-range")
+            .expect("parent 'date-range' object flag must be present");
+        assert_eq!(date_range_flag.param_type.as_deref(), Some("object"),
+            "parent input-type flag must have param_type 'object'");
+        assert!(!date_range_flag.required,
+            "parent object flag must be required: false at CLI level");
+        assert_eq!(date_range_flag.graphql_input_arg.as_deref(), Some("filter"),
+            "parent object flag must have graphql_input_arg set");
+        assert_eq!(date_range_flag.graphql_field_path.as_deref(), Some("dateRange"),
+            "parent object flag must have graphql_field_path set to the dotted path");
+        // Description must flow through to the nested object-shorthand flag
+        // so --help shows the input field's description, not blank.
+        assert_eq!(date_range_flag.description.as_deref(), Some("Bounded date range for filtering."),
+            "nested object-shorthand flag must carry the input field's description");
+
+        // JFL-1.4: input-arg-level object-shorthand flag must also be emitted
+        // for the whole input arg `filter`. Lets users pass
+        // `--filter '{"query":"x","dateRange":{...}}'` as a single payload.
+        let filter_flag = list.parameters.get("filter")
+            .expect("input-arg-level 'filter' object flag must be present");
+        assert_eq!(filter_flag.param_type.as_deref(), Some("object"),
+            "input-arg flag must have param_type 'object'");
+        assert!(!filter_flag.required,
+            "input-arg flag must be required: false at CLI level");
+        assert_eq!(filter_flag.graphql_input_arg.as_deref(), Some("filter"),
+            "input-arg flag must have graphql_input_arg set to the arg name");
+        assert_eq!(filter_flag.graphql_field_path.as_deref(), Some(""),
+            "input-arg flag must have empty graphql_field_path");
+    }
+
+    #[test]
+    fn test_input_arg_object_shorthand_basic() {
+        // JFL-1.4: for `mutation foo(input: BarInput!)`, params must contain
+        // both `--input` (object) and per-field leaf flags from BarInput.
+        let schema = make_schema(json!([
+            {
+                "kind": "OBJECT", "name": "Query", "fields": []
+            },
+            {
+                "kind": "OBJECT", "name": "Mutation",
+                "fields": [{
+                    "name": "foo",
+                    "args": [{"name": "input", "type": nn(input_obj("BarInput"))}],
+                    "type": nn(obj("BarPayload")), "isDeprecated": false
+                }]
+            },
+            {"kind": "OBJECT", "name": "BarPayload", "fields": [
+                {"name": "id", "args": [], "type": nn(scalar("ID")), "isDeprecated": false}
+            ]},
+            {
+                "kind": "INPUT_OBJECT", "name": "BarInput",
+                "inputFields": [
+                    {"name": "field", "type": nn(scalar("String"))}
+                ]
+            }
+        ]));
+
+        let doc = load_graphql_schema(&schema, "test", "https://api.example.com/graphql").unwrap();
+        let foo_method = doc.resources.get("foo")
+            .expect("foo resource missing")
+            .methods.get("execute")
+            .expect("foo.execute method missing");
+
+        let input_flag = foo_method.parameters.get("input")
+            .expect("--input arg-level object flag must be present");
+        assert_eq!(input_flag.param_type.as_deref(), Some("object"));
+        assert_eq!(input_flag.graphql_input_arg.as_deref(), Some("input"));
+        assert_eq!(input_flag.graphql_field_path.as_deref(), Some(""));
+        assert!(!input_flag.required);
+
+        let field_flag = foo_method.parameters.get("field")
+            .expect("--field per-field leaf flag must be present");
+        assert_eq!(field_flag.param_type.as_deref(), Some("string"));
+        assert_eq!(field_flag.graphql_input_arg.as_deref(), Some("input"));
+        assert_eq!(field_flag.graphql_field_path.as_deref(), Some("field"));
     }
 
     #[test]
