@@ -151,6 +151,20 @@ async function patchSdkCrate(args: {
     const preludeContent = `pub use ${typesSnakeName}::*;\n`;
     await writeFile(path.join(srcDir, "prelude.rs"), preludeContent);
 
+    // 2b. Patch src/api/mod.rs — re-export the types crate so that
+    //     service resource files (`use crate::api::*;`) can resolve
+    //     request/response types from the co-generated types crate.
+    const apiModPath = path.join(srcDir, "api", "mod.rs");
+    try {
+        const apiModContent = await readFile(apiModPath, "utf-8");
+        const typesReExport = `pub use ${typesSnakeName}::*;`;
+        if (!apiModContent.includes(typesReExport)) {
+            await writeFile(apiModPath, apiModContent.trimEnd() + `\n\n${typesReExport}\n`);
+        }
+    } catch (_e: unknown) {
+        // api/mod.rs doesn't exist — nothing to patch.
+    }
+
     // 3. Inject `pub mod prelude;` into lib.rs if not already present.
     const libPath = path.join(srcDir, "lib.rs");
     try {
