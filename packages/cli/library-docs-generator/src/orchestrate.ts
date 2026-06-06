@@ -12,6 +12,8 @@ import type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
 
 const POLL_INTERVAL_MS = 3000;
 const POLL_TIMEOUT_MS = 3 * 60 * 1000; // 3 minutes
+const REQUEST_TIMEOUT_MS = 30_000; // 30 seconds per HTTP request
+const DOWNLOAD_TIMEOUT_MS = 60_000; // 60 seconds for downloading IR
 
 type LibraryLanguage = "PYTHON" | "CPP";
 
@@ -63,14 +65,31 @@ export function createLibraryDocsClient({ token }: { token: string }): LibraryDo
     const docsBase = `${baseUrl}/v2/registry/docs`;
 
     async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
-        const response = await fetch(`${docsBase}${path}`, {
-            method,
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
-            body: body != null ? JSON.stringify(body) : undefined
-        });
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+        let response: Response;
+        try {
+            response = await fetch(`${docsBase}${path}`, {
+                method,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: body != null ? JSON.stringify(body) : undefined,
+                signal: controller.signal
+            });
+        } catch (error: unknown) {
+            if (isAbortError(error)) {
+                throw new CliError({
+                    message: `Request to ${method} ${path} timed out after ${REQUEST_TIMEOUT_MS / 1000}s`,
+                    code: CliError.Code.NetworkError
+                });
+            }
+            throw error;
+        } finally {
+            clearTimeout(timer);
+        }
 
         if (!response.ok) {
             const text = await response.text().catch(() => "");
@@ -91,6 +110,10 @@ export function createLibraryDocsClient({ token }: { token: string }): LibraryDo
             return request("GET", `/library-docs/result/${input.jobId}`);
         }
     };
+}
+
+function isAbortError(error: unknown): boolean {
+    return error instanceof Error && (error.name === "AbortError" || error.name === "TimeoutError");
 }
 
 function isGitLibraryInput(
@@ -412,7 +435,27 @@ async function downloadIr(
         });
     }
 
-    const irFetchResponse = await fetch(resultUrl);
+    const downloadController = new AbortController();
+    const downloadTimer = setTimeout(() => downloadController.abort(), DOWNLOAD_TIMEOUT_MS);
+
+    let irFetchResponse: Response;
+    try {
+        irFetchResponse = await fetch(resultUrl, { signal: downloadController.signal });
+    } catch (error: unknown) {
+        if (isAbortError(error)) {
+            throw new CliError({
+                message: `IR download timed out for library '${libraryName}' after ${DOWNLOAD_TIMEOUT_MS / 1000}s`,
+                code: CliError.Code.NetworkError
+            });
+        }
+        throw new CliError({
+            message: `Failed to download IR for library '${libraryName}': ${extractErrorMessage(error)}`,
+            code: CliError.Code.NetworkError
+        });
+    } finally {
+        clearTimeout(downloadTimer);
+    }
+
     if (!irFetchResponse.ok) {
         throw new CliError({
             message: `Failed to download IR for library '${libraryName}': HTTP ${irFetchResponse.status}`,
