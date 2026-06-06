@@ -47,11 +47,15 @@ export async function patchCargoToml(args: {
 
     if (typesCrateName != null || sdkCrateName != null) {
         let patched = contents;
-        if (typesCrateName != null) {
-            patched = addCrateDependency(patched, typesCrateName);
-        }
         if (sdkCrateName != null) {
+            // The SDK crate re-exports all types via its prelude, so it
+            // is the single entry point for custom commands — no need
+            // for a separate types dependency on the CLI binary.
             patched = addCrateDependency(patched, sdkCrateName);
+        } else if (typesCrateName != null) {
+            // Types-only mode (embedSdk: false) — add the types crate
+            // as a direct dependency so custom commands can import it.
+            patched = addCrateDependency(patched, typesCrateName);
         }
         await writeFile(cargoTomlPath, patched);
         return;
@@ -167,18 +171,24 @@ export function patchCargoLockVersion(cargoLock: string, version: string): strin
  *   1. Append a `[[package]]` entry for the types crate itself.
  *   2. Add the types crate to `fern-cli-sdk`'s dependency list.
  */
-export async function patchCargoLockForTypes(args: { outputDir: string; typesCrateName: string }): Promise<void> {
-    const { outputDir, typesCrateName } = args;
+export async function patchCargoLockForTypes(args: {
+    outputDir: string;
+    typesCrateName: string;
+    /** When true, skip adding the types crate to fern-cli-sdk's dep list
+     *  (e.g. when the SDK crate is the direct dep instead). */
+    skipCliDep?: boolean;
+}): Promise<void> {
+    const { outputDir, typesCrateName, skipCliDep } = args;
     const lockPath = path.join(outputDir, "Cargo.lock");
     const contents = await readFile(lockPath, "utf-8");
-    const patched = addTypesCrateToLock(contents, typesCrateName);
+    const patched = addTypesCrateToLock(contents, typesCrateName, skipCliDep);
     await writeFile(lockPath, patched);
 }
 
 /**
  * Pure transformation for unit-test access.
  */
-export function addTypesCrateToLock(cargoLock: string, typesCrateName: string): string {
+export function addTypesCrateToLock(cargoLock: string, typesCrateName: string, skipCliDep?: boolean): string {
     const snakeName = typesCrateName.replace(/-/g, "_");
 
     // 1. Append [[package]] entry for the types crate (sorted insertion
@@ -202,22 +212,23 @@ export function addTypesCrateToLock(cargoLock: string, typesCrateName: string): 
 
     let patched = cargoLock.trimEnd() + "\n" + packageEntry;
 
-    // 2. Add the types crate to fern-cli-sdk's dependency list.
-    //    The dependency list is alphabetically sorted; insert after the
-    //    last entry that sorts before our crate name.
-    const sdkDepsPattern = /(name = "fern-cli-sdk"\nversion = "[^"]*"\ndependencies = \[)([\s\S]*?)(\])/;
-    const match = patched.match(sdkDepsPattern);
-    if (match != null) {
-        const fullMatch = match[0];
-        const prefix = match[1] ?? "";
-        const depsBody = match[2] ?? "";
-        const depLine = ` "${snakeName}",`;
-        // Parse existing deps and insert in sorted order.
-        const lines = depsBody.split("\n").filter((l) => l.trim().length > 0);
-        lines.push(depLine);
-        lines.sort((a, b) => a.trim().localeCompare(b.trim()));
-        const newDepsBody = "\n" + lines.join("\n") + "\n";
-        patched = patched.replace(fullMatch, prefix + newDepsBody + match[3]);
+    // 2. Add the types crate to fern-cli-sdk's dependency list
+    //    (skipped when the SDK crate is the direct dep instead).
+    if (skipCliDep !== true) {
+        const sdkDepsPattern = /(name = "fern-cli-sdk"\nversion = "[^"]*"\ndependencies = \[)([\s\S]*?)(\])/;
+        const match = patched.match(sdkDepsPattern);
+        if (match != null) {
+            const fullMatch = match[0];
+            const prefix = match[1] ?? "";
+            const depsBody = match[2] ?? "";
+            const depLine = ` "${snakeName}",`;
+            // Parse existing deps and insert in sorted order.
+            const lines = depsBody.split("\n").filter((l) => l.trim().length > 0);
+            lines.push(depLine);
+            lines.sort((a, b) => a.trim().localeCompare(b.trim()));
+            const newDepsBody = "\n" + lines.join("\n") + "\n";
+            patched = patched.replace(fullMatch, prefix + newDepsBody + match[3]);
+        }
     }
 
     return patched;

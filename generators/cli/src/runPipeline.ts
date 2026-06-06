@@ -9,6 +9,7 @@ import { emitReadme } from "./emitReadme.js";
 import { emitReference } from "./emitReference.js";
 import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
+import { generateSdkGlue } from "./generateSdkGlue.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import { patchCargoLockForSdk, patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
@@ -80,7 +81,8 @@ export async function runPipeline(args: {
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
     const embedTypes = customConfig.embedTypes !== false && irFilepath != null;
-    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes });
+    const embedSdk = customConfig.embedSdk !== false && embedTypes;
+    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes, embedSdk });
     await writeGitignore(outputDir);
     await emitReadme({
         outputDir,
@@ -119,11 +121,20 @@ export async function runPipeline(args: {
         });
     }
 
+    // Generate the SDK glue module (sdk_client + block_on) that bridges
+    // the CLI's AppContext to the co-generated SDK client.
+    if (sdkCrateName != null) {
+        await generateSdkGlue({ outputDir, binaryName, sdkCrateName });
+    }
+
     // Wire up path dependencies and workspace members for generated crates.
     if (typesCrateName != null || sdkCrateName != null) {
         await patchCargoToml({ outputDir, binaryName, typesCrateName, sdkCrateName });
         if (typesCrateName != null) {
-            await patchCargoLockForTypes({ outputDir, typesCrateName });
+            // When the SDK crate exists, the CLI binary depends on the
+            // SDK (which re-exports types) — so skip adding types as a
+            // direct dep of fern-cli-sdk in the lockfile.
+            await patchCargoLockForTypes({ outputDir, typesCrateName, skipCliDep: sdkCrateName != null });
         }
         if (sdkCrateName != null && typesCrateName != null) {
             await patchCargoLockForSdk({ outputDir, sdkCrateName, typesCrateName });
