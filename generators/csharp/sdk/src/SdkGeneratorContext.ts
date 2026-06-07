@@ -169,10 +169,13 @@ export class SdkGeneratorContext extends GeneratorContext {
         if (!(wrapper.includePathParameters ?? false)) {
             return false;
         }
+        const service = this.getHttpService(serviceId);
         if (wrapper.onlyPathParameters) {
+            if (service != null && service.headers.length > 0) {
+                return false;
+            }
             return "skip";
         }
-        const service = this.getHttpService(serviceId);
         if (
             endpoint.queryParameters.length === 0 &&
             endpoint.headers.length === 0 &&

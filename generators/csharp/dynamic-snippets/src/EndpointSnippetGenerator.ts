@@ -909,13 +909,17 @@ export class EndpointSnippetGenerator extends WithGeneration {
             return false;
         }
         if (request.metadata?.onlyPathParameters) {
+            if (request.headers != null && request.headers.length > 0) {
+                return false;
+            }
             return "skip";
         }
         if (
             (request.queryParameters == null || request.queryParameters.length === 0) &&
             (request.headers == null || request.headers.length === 0) &&
             request.body != null &&
-            request.body.type === "referenced"
+            request.body.type === "referenced" &&
+            request.body.bodyType.type === "typeReference"
         ) {
             return "unwrap-body";
         }
