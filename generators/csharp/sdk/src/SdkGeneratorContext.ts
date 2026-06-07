@@ -174,6 +174,9 @@ export class SdkGeneratorContext extends GeneratorContext {
             if (service != null && service.headers.length > 0) {
                 return false;
             }
+            if (endpoint.headers.length > 0) {
+                return false;
+            }
             return "skip";
         }
         if (
