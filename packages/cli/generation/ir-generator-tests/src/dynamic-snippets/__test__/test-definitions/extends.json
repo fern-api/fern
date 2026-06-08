@@ -378,6 +378,302 @@
                 "type_:Docs"
             ],
             "additionalProperties": false
+        },
+        "type_:ExampleStatus": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "ExampleStatus",
+                    "camelCase": {
+                        "unsafeName": "exampleStatus",
+                        "safeName": "exampleStatus"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "example_status",
+                        "safeName": "example_status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EXAMPLE_STATUS",
+                        "safeName": "EXAMPLE_STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ExampleStatus",
+                        "safeName": "ExampleStatus"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "active",
+                    "name": {
+                        "originalName": "active",
+                        "camelCase": {
+                            "unsafeName": "active",
+                            "safeName": "active"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "active",
+                            "safeName": "active"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ACTIVE",
+                            "safeName": "ACTIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Active",
+                            "safeName": "Active"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "inactive",
+                    "name": {
+                        "originalName": "inactive",
+                        "camelCase": {
+                            "unsafeName": "inactive",
+                            "safeName": "inactive"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "inactive",
+                            "safeName": "inactive"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INACTIVE",
+                            "safeName": "INACTIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Inactive",
+                            "safeName": "Inactive"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:BaseWithEnum": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "BaseWithEnum",
+                    "camelCase": {
+                        "unsafeName": "baseWithEnum",
+                        "safeName": "baseWithEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "base_with_enum",
+                        "safeName": "base_with_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BASE_WITH_ENUM",
+                        "safeName": "BASE_WITH_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BaseWithEnum",
+                        "safeName": "BaseWithEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "status",
+                        "name": {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:ExampleStatus"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ExtendedWithEnum": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ExtendedWithEnum",
+                    "camelCase": {
+                        "unsafeName": "extendedWithEnum",
+                        "safeName": "extendedWithEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "extended_with_enum",
+                        "safeName": "extended_with_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EXTENDED_WITH_ENUM",
+                        "safeName": "EXTENDED_WITH_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ExtendedWithEnum",
+                        "safeName": "ExtendedWithEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "status",
+                        "name": {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:ExampleStatus"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": [
+                "type_:BaseWithEnum"
+            ],
+            "additionalProperties": false
+        },
+        "type_:WrapperWithExtendedEnum": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "WrapperWithExtendedEnum",
+                    "camelCase": {
+                        "unsafeName": "wrapperWithExtendedEnum",
+                        "safeName": "wrapperWithExtendedEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "wrapper_with_extended_enum",
+                        "safeName": "wrapper_with_extended_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WRAPPER_WITH_EXTENDED_ENUM",
+                        "safeName": "WRAPPER_WITH_EXTENDED_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WrapperWithExtendedEnum",
+                        "safeName": "WrapperWithExtendedEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "item",
+                        "name": {
+                            "originalName": "item",
+                            "camelCase": {
+                                "unsafeName": "item",
+                                "safeName": "item"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "item",
+                                "safeName": "item"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ITEM",
+                                "safeName": "ITEM"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Item",
+                                "safeName": "Item"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:ExtendedWithEnum"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
         }
     },
     "headers": [],
