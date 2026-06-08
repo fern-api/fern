@@ -34,13 +34,14 @@ use query_parameters_api_sdk::api::*;
 
 pub fn register(app: CliApp) -> CliApp {
     let app = app.command(
-        clap::Command::new("search")
-            .about("Run user search")
-        ,
+        clap::Command::new("my-command")
+            .about("Description of your command")
+            .arg(clap::Arg::new("id").required(true)),
         |matches, ctx| {
+            let id = matches.get_one::<String>("id").unwrap();
             let client = super::sdk_glue::sdk_client(ctx);
             let result = super::sdk_glue::block_on(
-                client.user.search(),
+                client.resource.get(id),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
             Ok(())
@@ -48,12 +49,6 @@ pub fn register(app: CliApp) -> CliApp {
     );
     app
 }
-```
-
-Then build and test:
-```bash
-cargo build
-query-parameters-api search
 ```
 
 ### 2. Available SDK Clients
