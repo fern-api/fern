@@ -257,11 +257,15 @@ function renderSkill(args: {
     lines.push("overwrite it. Register commands in the `register()` function:");
     lines.push("");
 
-    // Render example with real endpoint data
-    if (example != null) {
+    // Render example with real endpoint data, but only if the sub-client
+    // field actually exists on the generated SDK client.
+    const visibleClients = subClients.filter((sc) => sc.typeName !== "HttpClient");
+    const exampleMatchesClient =
+        example != null && visibleClients.some((sc) => sc.fieldName === example.subClientField);
+    if (example != null && exampleMatchesClient) {
         renderExampleWithEndpoint(lines, binaryName, sdkCrateSnake, example);
     } else {
-        renderGenericExample(lines, binaryName, sdkCrateSnake, subClients);
+        renderGenericExample(lines, binaryName, sdkCrateSnake, visibleClients);
     }
 
     // Available sub-clients
@@ -270,7 +274,6 @@ function renderSkill(args: {
     lines.push(`The \`sdk_glue::sdk_client(ctx)\` call returns a \`${sdkCrateSnake}::api::Client\``);
     lines.push("with the following sub-clients:");
     lines.push("");
-    const visibleClients = subClients.filter((sc) => sc.typeName !== "HttpClient");
     if (visibleClients.length > 0) {
         lines.push("| Field | Type | Description |");
         lines.push("|-------|------|-------------|");
