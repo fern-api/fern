@@ -4,31 +4,13 @@
 
 import typing
 from importlib import import_module
-
 if typing.TYPE_CHECKING:
     from . import endpoints, general_errors, inlined_requests, no_auth, no_req_body, req_with_headers, types
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedExhaustive, SeedExhaustive
     from .general_errors import BadObjectRequestInfo, BadRequestBody
     from .version import __version__
-_dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedExhaustive": ".client",
-    "BadObjectRequestInfo": ".general_errors",
-    "BadRequestBody": ".general_errors",
-    "DefaultAioHttpClient": "._default_clients",
-    "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedExhaustive": ".client",
-    "__version__": ".version",
-    "endpoints": ".endpoints",
-    "general_errors": ".general_errors",
-    "inlined_requests": ".inlined_requests",
-    "no_auth": ".no_auth",
-    "no_req_body": ".no_req_body",
-    "req_with_headers": ".req_with_headers",
-    "types": ".types",
-}
-
-
+_dynamic_imports: typing.Dict[str, str] = {"AsyncSeedExhaustive": ".client", "BadObjectRequestInfo": ".general_errors", "BadRequestBody": ".general_errors", "DefaultAioHttpClient": "._default_clients", "DefaultAsyncHttpxClient": "._default_clients", "SeedExhaustive": ".client", "__version__": ".version", "endpoints": ".endpoints", "general_errors": ".general_errors", "inlined_requests": ".inlined_requests", "no_auth": ".no_auth", "no_req_body": ".no_req_body", "req_with_headers": ".req_with_headers", "types": ".types"}
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
@@ -43,26 +25,7 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
         raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
-
-
 def __dir__():
     lazy_attrs = list(_dynamic_imports.keys())
     return sorted(lazy_attrs)
-
-
-__all__ = [
-    "AsyncSeedExhaustive",
-    "BadObjectRequestInfo",
-    "BadRequestBody",
-    "DefaultAioHttpClient",
-    "DefaultAsyncHttpxClient",
-    "SeedExhaustive",
-    "__version__",
-    "endpoints",
-    "general_errors",
-    "inlined_requests",
-    "no_auth",
-    "no_req_body",
-    "req_with_headers",
-    "types",
-]
+__all__ = ["AsyncSeedExhaustive", "BadObjectRequestInfo", "BadRequestBody", "DefaultAioHttpClient", "DefaultAsyncHttpxClient", "SeedExhaustive", "__version__", "endpoints", "general_errors", "inlined_requests", "no_auth", "no_req_body", "req_with_headers", "types"]

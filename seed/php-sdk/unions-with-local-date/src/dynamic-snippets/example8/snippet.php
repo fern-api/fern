@@ -11,5 +11,5 @@ $client = new SeedClient(
     ],
 );
 $client->types->update(
-    UnionWithTime::value(),
+    UnionWithTime::value(1),
 );

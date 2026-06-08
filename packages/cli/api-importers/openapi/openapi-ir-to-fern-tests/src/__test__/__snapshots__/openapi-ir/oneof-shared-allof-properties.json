@@ -77,21 +77,21 @@
                 "value": {
                   "id": {
                     "value": {
-                      "value": "string",
+                      "value": "id",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "name": {
                     "value": {
-                      "value": "string",
+                      "value": "name",
                       "type": "string"
                     },
                     "type": "primitive"
                   },
                   "display_name": {
                     "value": {
-                      "value": "string",
+                      "value": "display_name",
                       "type": "string"
                     },
                     "type": "primitive"
@@ -204,44 +204,7 @@
       },
       "ConnectionResponse": {
         "value": {
-          "commonProperties": [
-            {
-              "key": "id",
-              "schema": {
-                "description": "The connection's identifier.",
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "ConnectionCommonId",
-                "groupName": [],
-                "type": "primitive"
-              }
-            },
-            {
-              "key": "name",
-              "schema": {
-                "description": "The connection's display name.",
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "ConnectionCommonName",
-                "groupName": [],
-                "type": "primitive"
-              }
-            },
-            {
-              "key": "display_name",
-              "schema": {
-                "description": "Connection name shown in the login screen.",
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "ConnectionCommonDisplayName",
-                "groupName": [],
-                "type": "primitive"
-              }
-            }
-          ],
+          "commonProperties": [],
           "description": "Discriminated union of connection strategies.",
           "discriminantProperty": "strategy",
           "discriminatorContext": "data",

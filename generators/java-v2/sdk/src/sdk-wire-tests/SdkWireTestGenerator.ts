@@ -9,6 +9,7 @@ import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSn
 import { convertIr } from "../utils/convertIr.js";
 import { TestClassBuilder } from "./builders/TestClassBuilder.js";
 import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
+import { buildWireTestSnippetsConfig } from "./buildWireTestSnippetsConfig.js";
 import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "./resources/TestResourceWriter.js";
@@ -56,7 +57,9 @@ export class SdkWireTestGenerator {
         const convertedIr: any = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertedIr,
-            config: this.context.config
+            // Wire tests compile against the generated SDK, so their snippets must use the
+            // internal client class name — docs-only overrides are stripped here.
+            config: buildWireTestSnippetsConfig(this.context.config)
         });
 
         await this.generateTestFiles(dynamicIr, dynamicSnippetsGenerator);

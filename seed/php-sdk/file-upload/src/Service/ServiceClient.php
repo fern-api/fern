@@ -762,7 +762,7 @@ class ServiceClient
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
         if ($request->modelType != null) {
-            $body->add(name: 'model_type', value: $request->modelType->toJson());
+            $body->add(name: 'model_type', value: $request->modelType);
         }
         if ($request->openEnum != null) {
             $body->add(name: 'open_enum', value: $request->openEnum);

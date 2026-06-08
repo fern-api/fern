@@ -1,6 +1,6 @@
 irVersion: v67
 displayName: CLI
-image: fernapi/fern-cli
+image: fernapi/fern-cli-generator
 changelogLocation: ../../generators/cli/versions.yml
 
 buildScripts:
@@ -16,17 +16,19 @@ publish:
     - pnpm turbo run dist:cli --filter @fern-api/cli-generator
   docker:
     file: ./generators/cli/Dockerfile
-    image: fernapi/fern-cli
+    image: fernapi/fern-cli-generator
     context: ./generators/cli
 
 test:
   docker:
-    image: fernapi/fern-cli:latest
-    command: pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
+    image: fernapi/fern-cli-generator:latest
+    command: pnpm turbo run dist:cli --filter @fern-api/rust-model && pnpm turbo run dockerTagLatest --filter @fern-api/cli-generator
   local:
     workingDirectory: generators/cli
     buildCommand:
-      - pnpm turbo run dist:cli --filter @fern-api/cli-generator
+      # Build rust-model dist first — the CLI's build.mjs copies
+      # rust-model-cli.cjs into its own dist/ for subprocess invocation.
+      - pnpm turbo run dist:cli --filter @fern-api/rust-model && pnpm turbo run dist:cli --filter @fern-api/cli-generator
     runCommand: node --enable-source-maps dist/cli.cjs {CONFIG_PATH}
 
 scripts:
@@ -60,6 +62,25 @@ fixtures:
   query-parameters-openapi:
     - customConfig: null
       outputFolder: no-custom-config
+    # Github output mode with npm publish info — verifies that the
+    # generator emits `.github/workflows/ci.yml` and stamps the
+    # resolved version into Cargo.toml.
+    - customConfig: null
+      outputFolder: github-npm
+      outputMode: github
+      outputVersion: "1.0.0"
+      publishConfig:
+        type: npm
+        registryUrl: https://registry.npmjs.org
+        packageName: "@fern/query-parameters-openapi"
+        token: "${NPM_TOKEN}"
+    # Github output mode WITHOUT npm publish info — verifies that the
+    # generator emits a build+test-only `.github/workflows/ci.yml`
+    # (check, compile, test jobs; no publish jobs).
+    - customConfig: null
+      outputFolder: github-no-publish
+      outputMode: github
+      outputVersion: "1.0.0"
   # Multi-spec fixture — declares two OpenAPI specs with NO namespaces.
   # `customConfig.binaryName` is REQUIRED for multi-spec (the generator
   # refuses to guess a single name across multiple titles).
@@ -87,6 +108,8 @@ allowedFailures:
   - accept-header
   - alias
   - alias-extends
+  - allof
+  - allof-inline
   - any-auth
   - api-wide-base-path
   - audiences
@@ -114,6 +137,7 @@ allowedFailures:
   - extra-properties
   - file-download
   - file-upload
+  - file-upload-openapi
   - folders
   - header-auth
   - header-auth-environment-variable
@@ -148,6 +172,7 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - object
   - objects-with-imports
+  - openapi-request-body-ref
   - optional
   - package-yml
   - pagination
@@ -157,13 +182,19 @@ allowedFailures:
   - plain-text
   - property-access
   - public-object
+  - query-param-name-conflict
   - query-parameters
+  - query-parameters-openapi
+  - query-parameters-openapi:github-npm
+  - query-parameters-openapi:no-custom-config
+  - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
   - reserved-keywords
   - response-property
   - server-sent-event-examples
   - server-sent-events
+  - server-sent-events-openapi
   - server-sent-events-resumable
   - simple-api:no-custom-config
   - simple-fhir

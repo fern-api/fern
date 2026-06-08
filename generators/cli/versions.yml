@@ -1,4 +1,193 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.14.0
+  changelogEntry:
+    - summary: |
+        Generate `sdk_glue.rs` module providing `sdk_client()` and `block_on()`
+        helpers that bridge the CLI's AppContext to the co-generated SDK client.
+        Custom command handlers can now use typed SDK calls without manual
+        Cargo.toml edits — the SDK crate is the sole direct dependency and
+        re-exports all types.
+      type: feat
+  createdAt: "2026-06-06"
+  irVersion: 67
+- version: 0.13.2
+  changelogEntry:
+    - summary: |
+        Fix compilation failure in cliEmbedded mode by re-exporting the
+        co-generated types crate in api/mod.rs so service resource files
+        can resolve request/response types via `use crate::api::*`.
+      type: fix
+  createdAt: "2026-06-06"
+  irVersion: 67
+- version: 0.13.1
+  changelogEntry:
+    - summary: |
+        Fix Docker image build to include rust-sdk dist by adding
+        @fern-api/rust-sdk#dist:cli to turbo dependency graph.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.13.0
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime with CliExecutor bridge for SDK
+        execution-sharing in custom commands.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.12.1
+  changelogEntry:
+    - summary: |
+        Fix process hanging indefinitely after generation completes by
+        explicitly calling process.exit() instead of relying on the
+        event loop to drain.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.12.0
+  changelogEntry:
+    - summary: |
+        Co-vendor the Rust SDK crate alongside the types crate in CLI generation.
+        When `embedSdk` is enabled (default), the pipeline invokes `@fern-api/rust-sdk`
+        in `cliEmbedded` mode to produce a `<api>-sdk` workspace member with a path
+        dependency on the types crate and a `prelude` module that re-exports all types
+        for single type identity.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.11.0
+  changelogEntry:
+    - summary: |
+        Always emit a build+test CI workflow (check, compile, test) for GitHub
+        outputs, even when npm publishing is not configured. Previously, no
+        ci.yml was emitted unless npmPublishInfo was present.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.10.1
+  changelogEntry:
+    - summary: |
+        Fix datetime, base64, bigint, and number types failing to compile
+        in the generated -types crate by copying serde helper modules and
+        adding missing dependencies.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.10.0
+  changelogEntry:
+    - summary: |
+        Restructure generated README to follow progressive disclosure: TOC,
+        Install → Auth → Quick start → Usage → Documentation link → Advanced
+        (Common flags, Environment variables, Output formats, Shell completion
+        collapsed as subsections). Removes the --help dump from Usage.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.9.1
+  changelogEntry:
+    - summary: |
+        Derive sync-sdk.sh rsync set and build.mjs SDK_IGNORE from cli-sdk's
+        sync-manifest.toml instead of hardcoded path lists. Eliminates layout
+        drift between the two repos.
+      type: chore
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 0.9.0
+  changelogEntry:
+    - summary: |
+        Embed typed Rust model crate as a workspace member in all generated
+        CLI output by default. The CLI generator invokes the rust-model
+        generator as a child process to produce a `<api>-types` library crate
+        alongside the CLI crate, wired as a path dependency. Custom command
+        handlers use `ctx.invoke()` with typed serde structs from the types
+        crate for serialization/deserialization while all HTTP execution stays
+        on the CLI's native executor. Set `embedTypes: false` in customConfig
+        to opt out.
+      type: feat
+    - summary: |
+        Exclude `.synced-from` provenance file from generated CLI output.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 0.8.0
+  changelogEntry:
+    - summary: |
+        Generate a README.md in every generated CLI project. The README includes
+        installation, authentication, usage, output formats, configuration, and
+        shell completion sections. Customer-authored H2 sections are preserved
+        on regeneration via the existing Fern SDK README merge mechanism.
+      type: feat
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 0.7.0
+  changelogEntry:
+    - summary: |
+        Generated publish workflow improvements: uses `npx -y npm@latest publish`
+        for OIDC support, adds backport tag detection for older-than-latest releases,
+        switches Linux targets from glibc to musl for fully static binaries,
+        builds aarch64-linux natively on `ubuntu-24.04-arm` instead of cross-compiling,
+        conditionally uses `--no-default-features --features rustls` for musl targets,
+        and bumps `actions/checkout` and `actions/setup-node` to v6.
+      type: feat
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 0.6.1
+  changelogEntry:
+    - summary: |
+        Publish new docker image after name change fernapi/fern-cli -> fernapi/fern-cli-generator
+      type: chore
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 0.6.0
+  changelogEntry:
+    - summary: Strip fixture-dependent inline tests from vendored cli-sdk so `cargo test` passes in both the SDK and generated
+        CLIs
+      type: fix
+    - summary: |
+        Generated CLIs now serialize OpenAPI query parameters according to their
+        declared `style`/`explode` (form, spaceDelimited, pipeDelimited, deepObject).
+        (cli-sdk #144, FER-10569)
+      type: feat
+    - summary: |
+        Generated CLIs now serialize OpenAPI header parameters using the `simple`
+        style. (cli-sdk #137, FER-10569)
+      type: feat
+    - summary: |
+        Generated CLIs now serialize OpenAPI path parameters using the `simple`,
+        `label`, and `matrix` styles. (cli-sdk #138, FER-10569)
+      type: feat
+    - summary: |
+        Generated CLIs support `multipart/form-data` request bodies, exposing each
+        part as its own flag. (cli-sdk #88, FER-10569)
+      type: feat
+    - summary: |
+        `multipart/form-data` request bodies accept `--file` parts, so file-upload
+        endpoints can stream a file from disk. (cli-sdk #145, FER-10569)
+      type: feat
+    - summary: |
+        HTTP requests now retry on transient failures with exponential backoff and
+        automatically attach an `Idempotency-Key` header to retried mutations.
+        (cli-sdk #86, FER-10521)
+      type: feat
+    - summary: |
+        OpenAPI parameter names are sanitized into valid, readable CLI flags instead
+        of being passed through verbatim. (cli-sdk #87, FER-10430)
+      type: feat
+    - summary: |
+        Auth error messages now name the specific environment variable the CLI
+        expected, making missing-credential failures easier to diagnose.
+        (cli-sdk #81, FER-10702)
+      type: feat
+    - summary: |
+        Auth schemes support multiple headers, enabling APIs that require more than
+        one credential header (e.g. Sandboxes). (cli-sdk #116)
+      type: feat
+    - summary: |
+        Nullable scalar request-body flags emit a null sentinel, letting users
+        distinguish an explicit `null` from an omitted value. (cli-sdk 8234544)
+      type: feat
+  createdAt: "2026-06-02"
+  irVersion: 67
 - version: 0.5.0
   changelogEntry:
     - summary: |

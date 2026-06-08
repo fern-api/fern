@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.4
+  changelogEntry:
+    - summary: |
+        Fix request URLs containing duplicate slashes (e.g. `/{id}//{nestedId}`) when a
+        base-path, service base-path, and endpoint path are joined together. Consecutive
+        slashes in the generated URL are now collapsed into a single slash, matching the
+        URL used in generated wire tests.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
 - version: 3.71.3
   changelogEntry:
     - summary: |

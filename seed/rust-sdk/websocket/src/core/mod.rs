@@ -9,7 +9,7 @@ mod websocket;
 mod utils;
 pub mod pagination;
 
-pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse};
+pub use http_client::{ByteStream, HttpClient, OAuthConfig, RawResponse, RequestExecutor};
 pub use oauth_token_provider::OAuthTokenProvider;
 pub use request_options::RequestOptions;
 pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};

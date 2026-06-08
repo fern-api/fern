@@ -1,4 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.44.2
+  changelogEntry:
+    - summary: |
+        Reserve the `ExtraProperties` field name so a user-defined property named
+        `EXTRA_PROPERTIES` (or any casing of it) no longer collides with the built-in
+        `GetExtraProperties()` accessor. The user property is now generated as
+        `FieldExtraProperties` (its JSON wire name is unchanged), so the generated Go
+        compiles.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
+- version: 1.44.1
+  changelogEntry:
+    - summary: |
+        Honor the `exportedClientName` config when naming the generated root client
+        constructor. Previously the SDK always exported `NewClient` while generated
+        dynamic snippets referenced `New<exportedClientName>`, producing snippets
+        that did not compile.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
+- version: 1.44.0
+  changelogEntry:
+    - summary: |
+        Forward-compatible discriminated unions: unmarshaling JSON with an unknown
+        discriminant value no longer drops the variant payload. The raw JSON is
+        preserved internally and returned verbatim when the union is re-marshaled,
+        so unknown server-introduced variants round-trip losslessly. Known
+        discriminants and `Accept` visitor behavior are unchanged.
+      type: feat
+  createdAt: "2026-06-04"
+  irVersion: 66
 - version: 1.43.0
   changelogEntry:
     - summary: |

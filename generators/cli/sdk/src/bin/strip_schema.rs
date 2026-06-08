@@ -11,8 +11,8 @@
 ///   - `defaultValue` — wired to `MethodParameter.default` (clap default values)
 ///
 /// Usage:
-///   cargo run --bin strip-schema -- path/to/schema.json > cli/myapi/schema.json
-///   cat schema.json | cargo run --bin strip-schema > cli/myapi/schema.json
+///   cargo run --bin strip-schema -- path/to/schema.json > src/bin/myapi/schema.json
+///   cat schema.json | cargo run --bin strip-schema > src/bin/myapi/schema.json
 use serde_json::Value;
 use std::{env, fs, io::{self, Read}};
 

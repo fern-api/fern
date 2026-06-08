@@ -1,4 +1,174 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.45.0
+  changelogEntry:
+    - summary: |
+        The `ai.provider` field in `generators.yml` now uses BAML provider
+        identifiers directly. `bedrock` has been renamed to `aws-bedrock`.
+        Update your config: `provider: bedrock` → `provider: aws-bedrock`.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.14
+  changelogEntry:
+    - summary: |
+        Fix `fern export` to emit top-level `servers` array for multi-URL environments
+        (`multipleBaseUrls`). Previously only single-URL environments produced servers.
+        Each environment × base-URL combination is now listed with a description like
+        `"Production (api)"`. Endpoint-level servers also now include the environment
+        name in their description.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.13
+  changelogEntry:
+    - summary: |
+        Fix `fern check` parameter-name collision validator to honor `x-fern-parameter-name`.
+        Previously, parameters with distinct `x-fern-parameter-name` overrides were still
+        flagged as collisions based on their raw OpenAPI `name` field.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.12
+  changelogEntry:
+    - summary: |
+        Fix SPM auto-compiling dynamic snippet files as 650+ separate executables by
+        moving snippets into Tests/Snippets/ and wrapping them as library code (compiled
+        as part of the test target instead of standalone executables).
+      type: fix
+    - summary: |
+        Combine build and test into single `swift test -c release` invocation to avoid
+        redundant recompilation in seed scripts.
+      type: chore
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.11
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement to backfill missing required fields from the auto-generated
+        example. When the AI Lambda produces a partial example (e.g., missing fields from nested
+        allOf chains), the missing fields are now merged from the correct auto-generated example,
+        ensuring all required fields are present in published documentation.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.10
+  changelogEntry:
+    - summary: |
+        Fix false positive warnings in the `missing-redirects` check for changelog
+        entries and embedded content pages. FDR stores an empty slug for pages that
+        don't resolve to a standalone navigation node; these are no longer reported as
+        removed pages whose previously published URL was "/", even when the site's home
+        page lives under a non-root slug or basepath.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.9
+  changelogEntry:
+    - summary: |
+        Fix `fern check` validators (`valid-local-references`, `no-non-component-refs`) incorrectly reporting `$ref` values found inside YAML comments.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.8
+  changelogEntry:
+    - summary: |
+        Fix example generation for nested allOf $ref chains. When a schema uses
+        multi-level allOf (e.g. UserPost → UserBase → UserStrict), properties from
+        grandparent schemas were missing from generated code snippets because
+        mergeAllOfProperties only resolved one level of allOf. Now recursively
+        resolves the full chain so all required fields appear in examples.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.7
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v2 enum collision where multiple channels with identically
+        named query parameters (or headers/path params) that have different enum
+        values would overwrite each other. The v2 channel converter now passes
+        `parameterNamePrefix` (the channel path) to the ParameterConverter,
+        matching the v3 converter behavior.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.6
+  changelogEntry:
+    - summary: |
+        Update CLI irVersion metadata from 66 to 67 so that FDR correctly
+        reports IR 67-compatible generator versions (e.g. CLI generator ≥ 0.2.0)
+        when resolving `fern generator upgrade`.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.5
+  changelogEntry:
+    - summary: |
+        Rename the CLI generator Docker image from `fernapi/fern-cli` to
+        `fernapi/fern-cli-generator`.
+      type: chore
+  createdAt: "2026-06-03"
+  irVersion: 66
+- version: 5.44.4
+  changelogEntry:
+    - summary: |
+        Fix docs rendering dropping parent properties when an allOf parent schema
+        itself uses allOf with $ref elements. The v3 OpenAPI parser now recursively
+        resolves nested $ref objects during allOf flattening instead of silently
+        filtering them out.
+      type: fix
+    - summary: |
+        Fix OpenAPI parser emitting redundant or wrongly-required base properties for
+        discriminated unions when `infer-discriminated-union-base-properties: true`.
+        The inference now (1) skips properties every variant already inherits via a
+        shared `allOf $ref` parent — the parent schema is the single source of truth —
+        and (2) lifts an inferred property as `optional` if any variant declares it as
+        not-required. Together these prevent generated TypeScript SDKs from synthesizing
+        a `_Base` interface that collides with the real parent on either presence or
+        optionality (`TS2320`).
+      type: fix
+    - summary: |
+        Fix localized docs builds so translated OpenAPI specs are used for API reference content and navigation titles.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
+- version: 5.44.3
+  changelogEntry:
+    - summary: |
+        Fix `ENOTEMPTY` error during local generation when removing the temporary
+        `.git` directory in `copyGeneratedFilesWithFernIgnoreInTempRepo`. The `fs.rm`
+        call now uses `maxRetries: 3` to handle race conditions with git background
+        processes (e.g. auto-gc) that may still hold references to `.git/objects/pack`.
+        Also disables git auto-gc during the temporary `git init` to reduce the
+        likelihood of the race condition.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
+- version: 5.44.2
+  changelogEntry:
+    - summary: |
+        Fix false-positive "Example is missing required property" errors when validating
+        examples of discriminated unions whose `base-properties` overlap with properties
+        each variant also inherits via its own `extends` chain. The union validator now
+        preserves keys claimed by the variant when constructing the example handed to
+        variant-level validation, so inherited required properties are no longer dropped.
+      type: fix
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.44.1
+  changelogEntry:
+    - summary: |
+        Replace external petstore3.swagger.io URL with a local OpenAPI server in the v2 generate ETE test to remove a flaky dependency on the public petstore endpoint.
+      type: chore
+  createdAt: "2026-06-01"
+  irVersion: 66
+- version: 5.44.0
+  changelogEntry:
+    - summary: |
+        Add `fern api enrich` command to CLI v2 for merging AI-generated examples
+        from an overrides file into native OpenAPI example fields.
+      type: feat
+  createdAt: "2026-06-01"
+  irVersion: 66
 - version: 5.43.0
   changelogEntry:
     - summary: |

@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "no-content-response-types", "no-content-response-sdk"]
 
 # Config for 'dist'
 [dist]

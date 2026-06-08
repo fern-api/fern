@@ -14,7 +14,9 @@ paths:
           description: No content
       servers:
         - url: https://ec2.aws.com
+          description: Production
         - url: https://staging.ec2.aws.com
+          description: Staging
       security:
         - Bearer: []
       requestBody:
@@ -43,7 +45,9 @@ paths:
                 type: string
       servers:
         - url: https://s3.aws.com
+          description: Production
         - url: https://staging.s3.aws.com
+          description: Staging
       security:
         - Bearer: []
       requestBody:
@@ -63,3 +67,12 @@ components:
     Bearer:
       type: http
       scheme: bearer
+servers:
+  - url: https://ec2.aws.com
+    description: Production (ec2)
+  - url: https://s3.aws.com
+    description: Production (s3)
+  - url: https://staging.ec2.aws.com
+    description: Staging (ec2)
+  - url: https://staging.s3.aws.com
+    description: Staging (s3)

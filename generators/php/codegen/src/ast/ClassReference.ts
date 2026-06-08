@@ -1,4 +1,5 @@
 import { AstNode } from "./core/AstNode.js";
+import { GLOBAL_NAMESPACE } from "./core/Constant.js";
 import { Writer } from "./core/Writer.js";
 import { Type } from "./Type.js";
 
@@ -32,7 +33,11 @@ export class ClassReference extends AstNode {
 
     public write(writer: Writer): void {
         writer.addReference(this);
-        const refString = this.fullyQualified ? `\\${this.namespace}\\${this.name}` : this.name;
+        const refString = this.fullyQualified
+            ? this.namespace === GLOBAL_NAMESPACE
+                ? `\\${this.name}`
+                : `\\${this.namespace}\\${this.name}`
+            : this.name;
         writer.write(`${refString}`);
     }
 }

@@ -170,6 +170,65 @@ describe("buildUrl", () => {
         expect(text).toMatchSnapshot();
     });
 
+    it("collapses duplicate slashes in static path with no parameters", () => {
+        const result = buildUrl({
+            endpoint: {
+                sdkRequest: undefined,
+                fullPath: { head: "/api//v1///users", parts: [] },
+                allPathParameters: [],
+                path: { head: "/api//v1///users", parts: [] }
+            },
+            generatedClientClass: createMockGeneratedClientClass(),
+            context: createMockContext(),
+            includeSerdeLayer: false,
+            retainOriginalCasing: false,
+            omitUndefined: false,
+            parameterNaming: "default",
+            getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
+        });
+
+        assert(result != null, "expected buildUrl to return an expression for static path");
+        expect(getTextOfTsNode(result)).toBe('"/api/v1/users"');
+    });
+
+    it("collapses duplicate slashes introduced between path parameters", () => {
+        const idParam = createPathParameter("id");
+        const nestedIdParam = createPathParameter("nestedId");
+
+        const result = buildUrl({
+            endpoint: {
+                sdkRequest: undefined,
+                fullPath: {
+                    head: "/",
+                    parts: [
+                        { pathParameter: "id", tail: "//" },
+                        { pathParameter: "nestedId", tail: "" }
+                    ]
+                },
+                allPathParameters: [idParam, nestedIdParam],
+                path: {
+                    head: "/",
+                    parts: [
+                        { pathParameter: "id", tail: "//" },
+                        { pathParameter: "nestedId", tail: "" }
+                    ]
+                }
+            },
+            generatedClientClass: createMockGeneratedClientClass(),
+            context: createMockContext(),
+            includeSerdeLayer: false,
+            retainOriginalCasing: false,
+            omitUndefined: false,
+            parameterNaming: "default",
+            getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
+        });
+
+        assert(result != null, "expected buildUrl to return an expression for nested path parameters");
+        const text = getTextOfTsNode(result);
+        expect(text).not.toContain("}//$");
+        expect(text).toMatchSnapshot();
+    });
+
     it("uses root path parameter reference for ROOT location", () => {
         const rootParam = createPathParameter("tenantId", "ROOT");
 

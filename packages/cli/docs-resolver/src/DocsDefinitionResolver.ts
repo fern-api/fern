@@ -1,4 +1,4 @@
-import { GraphQLSpec } from "@fern-api/api-workspace-commons";
+import { GraphQLSpec, type Spec } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import {
@@ -99,7 +99,7 @@ type AsyncOrSync<T> = T | Promise<T>;
 
 type UploadFilesFn = (files: FilePathPair[]) => AsyncOrSync<UploadedFile[]>;
 
-type RegisterApiFn = (opts: {
+export type RegisterApiFn = (opts: {
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
     playgroundConfig?: PlaygroundConfig;
@@ -108,6 +108,29 @@ type RegisterApiFn = (opts: {
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }) => AsyncOrSync<string>;
+
+/**
+ * A translated API definition for a single locale, produced from an OpenAPI
+ * spec under `translations/<locale>/apis/<apiName>/`. The `ir` is structurally
+ * identical to the base (English) API definition — only human-readable strings
+ * (summaries, descriptions, etc.) differ — and is keyed by the SAME
+ * `apiDefinitionId` as the base so the per-locale navigation tree resolves to it
+ * without modification. See {@link DocsDefinitionResolver.getTranslatedApiSpecs}.
+ */
+export interface TranslatedApiSpec {
+    ir: IntermediateRepresentation;
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    playgroundConfig?: PlaygroundConfig;
+    apiName?: string;
+    graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+    graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+    /**
+     * The base API's Fern workspace, reused as-is when registering the translated
+     * definition for production publishing (it carries the generators.yml config and
+     * source paths for dynamic snippets / AI examples, which are identical across locales).
+     */
+    workspace?: FernWorkspace;
+}
 
 type ConfigureAiChatFn = (opts: { aiChatConfig: DocsV1Write.AIChatConfig | undefined }) => AsyncOrSync<void>;
 
@@ -133,6 +156,13 @@ export interface DocsDefinitionResolverArgs {
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
+    /**
+     * When true, also builds per-locale translated API IRs from OpenAPI specs under
+     * `translations/<locale>/apis/<apiName>/`, exposed via
+     * {@link DocsDefinitionResolver.getTranslatedApiSpecs}. Defaults to false to avoid
+     * the extra parsing work where translated API references aren't needed.
+     */
+    buildTranslatedApiDefinitions?: boolean;
 }
 
 export class DocsDefinitionResolver {
@@ -145,6 +175,7 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private buildTranslatedApiDefinitions: boolean;
 
     constructor({
         domain,
@@ -155,7 +186,8 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
-        targetAudiences
+        targetAudiences,
+        buildTranslatedApiDefinitions = false
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -166,6 +198,7 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
+        this.buildTranslatedApiDefinitions = buildTranslatedApiDefinitions;
     }
 
     #idgen = NodeIdGenerator.init();
@@ -306,6 +339,14 @@ export class DocsDefinitionResolver {
         return this.docsWorkspace.absoluteFilePath;
     }
 
+    /**
+     * Returns per-locale translated API definitions, keyed by locale then by the base
+     * `apiDefinitionId`. Must be called after `resolve()`.
+     */
+    public getTranslatedApiSpecs(): Map<string, Map<string, TranslatedApiSpec>> {
+        return this.translatedApiSpecs;
+    }
+
     private getDocsTranslationsConfig(): DocsConfigWithTranslations["translations"] {
         const translations = this.parsedDocsConfig.translations;
         if (translations == null || translations.length === 0) {
@@ -342,8 +383,20 @@ export class DocsDefinitionResolver {
         graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
         tempApiDefinitionId: string;
         apiReferenceNode: FernNavigation.V1.ApiReferenceNode;
+        /**
+         * Translated IRs (one per non-default locale that has a translated spec
+         * under `translations/<locale>/apis/<apiName>/`). Resolved into
+         * {@link translatedApiSpecs} once the real apiDefinitionId is known.
+         */
+        translatedIrsByLocale?: Map<string, IntermediateRepresentation>;
     }> = [];
     private pendingApiCounter = 0;
+    /**
+     * Per-locale translated API definitions, keyed by locale then by the base
+     * `apiDefinitionId`. Populated during {@link resolve} when an API section has
+     * a translated OpenAPI spec under `translations/<locale>/apis/<apiName>/`.
+     */
+    private translatedApiSpecs: Map<string, Map<string, TranslatedApiSpec>> = new Map();
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         const resolveStartTime = performance.now();
         const startMemory = process.memoryUsage();
@@ -561,6 +614,29 @@ export class DocsDefinitionResolver {
 
                 // Update all apiDefinitionId references in the navigation subtree
                 updateApiDefinitionIdInTree(pending.apiReferenceNode, pending.tempApiDefinitionId, realApiDefinitionId);
+
+                // Key translated IRs by the real apiDefinitionId so consumers can splice
+                // them into per-locale docs definitions without touching the nav tree.
+                if (pending.translatedIrsByLocale != null) {
+                    for (const [locale, translatedIr] of pending.translatedIrsByLocale) {
+                        this.resolveLinksInIrDocs(translatedIr, markdownFilesToPathName);
+
+                        let localeMap = this.translatedApiSpecs.get(locale);
+                        if (localeMap == null) {
+                            localeMap = new Map();
+                            this.translatedApiSpecs.set(locale, localeMap);
+                        }
+                        localeMap.set(realApiDefinitionId, {
+                            ir: translatedIr,
+                            snippetsConfig: pending.snippetsConfig,
+                            playgroundConfig: pending.playgroundConfig,
+                            apiName: pending.apiName,
+                            graphqlOperations: pending.graphqlOperations,
+                            graphqlTypes: pending.graphqlTypes,
+                            workspace: pending.workspace
+                        });
+                    }
+                }
             }
             const deferredTime = performance.now() - deferredStart;
             this.taskContext.logger.debug(`Processed deferred API registrations in ${deferredTime.toFixed(0)}ms`);
@@ -1029,6 +1105,150 @@ export class DocsDefinitionResolver {
             ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
             : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
         throw new CliError({ message: errorMessage, code: CliError.Code.ConfigError });
+    }
+
+    /**
+     * Builds a translated IR for each configured non-default locale whose
+     * `translations/<locale>/apis/<apiName>/` directory contains a translated copy of
+     * the API's OpenAPI spec. The translated spec must be structurally identical to the
+     * base (same paths, operationIds, schema names) so the derived IR lines up 1:1 and
+     * can be keyed by the same `apiDefinitionId`.
+     */
+    private async buildTranslatedApiIrs(
+        item: docsYml.DocsNavigationItem.ApiSection,
+        baseOssWorkspace: OSSWorkspace
+    ): Promise<Map<string, IntermediateRepresentation> | undefined> {
+        const translationsConfig = this.getDocsTranslationsConfig();
+        if (translationsConfig?.translations == null || translationsConfig.translations.length === 0) {
+            return undefined;
+        }
+
+        const { defaultLocale, translations } = translationsConfig;
+        const fernFolder = this.docsWorkspace.absoluteFilePath;
+        const result = new Map<string, IntermediateRepresentation>();
+
+        for (const locale of translations) {
+            if (locale === defaultLocale) {
+                continue;
+            }
+
+            const translatedWorkspace = this.createTranslatedOssWorkspace(baseOssWorkspace, locale, fernFolder);
+            if (translatedWorkspace == null) {
+                continue;
+            }
+
+            try {
+                const translatedIr = await translatedWorkspace.getIntermediateRepresentation({
+                    context: this.taskContext,
+                    audiences: item.audiences,
+                    enableUniqueErrorsPerEndpoint: true,
+                    generateV1Examples: false,
+                    logWarnings: false
+                });
+                result.set(locale, translatedIr);
+                this.taskContext.logger.debug(
+                    `Built translated API definition for locale "${locale}" (api: ${
+                        item.apiName ?? baseOssWorkspace.workspaceName ?? "<default>"
+                    })`
+                );
+            } catch (error) {
+                // A broken translated spec must never fail the docs build; fall back
+                // to the base (untranslated) API for this locale.
+                this.taskContext.logger.warn(
+                    `Failed to build translated API definition for locale "${locale}": ${extractErrorMessage(
+                        error
+                    )}. Falling back to the default-locale API for this locale.`
+                );
+            }
+        }
+
+        return result.size > 0 ? result : undefined;
+    }
+
+    /**
+     * Clones an OSS (OpenAPI) workspace, remapping spec file paths from `apis/<...>` to
+     * `translations/<locale>/apis/<...>` wherever a translated file exists. Returns
+     * `undefined` when no primary spec has a translated counterpart. Override/overlay
+     * files fall back to the base copy when untranslated, keeping structural metadata
+     * (x-fern-* extensions, audiences, etc.) consistent with the base definition.
+     */
+    private createTranslatedOssWorkspace(
+        base: OSSWorkspace,
+        locale: string,
+        fernFolder: AbsoluteFilePath
+    ): OSSWorkspace | undefined {
+        let hasTranslatedSpec = false;
+
+        const toTranslatedPath = (absPath: AbsoluteFilePath, countsAsTranslation: boolean): AbsoluteFilePath => {
+            const rel = relative(fernFolder, absPath);
+            // Specs outside the fern folder (e.g. absolute/remote refs) have no
+            // translation directory equivalent — leave them untouched.
+            if (String(rel).startsWith("..")) {
+                return absPath;
+            }
+            const candidate = join(fernFolder, RelativeFilePath.of(`translations/${locale}`), rel);
+            if (existsSync(candidate)) {
+                if (countsAsTranslation) {
+                    hasTranslatedSpec = true;
+                }
+                return candidate;
+            }
+            return absPath;
+        };
+
+        const remapOverrides = (
+            overrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined
+        ): AbsoluteFilePath | AbsoluteFilePath[] | undefined => {
+            if (overrides == null) {
+                return overrides;
+            }
+            if (Array.isArray(overrides)) {
+                return overrides.map((p) => toTranslatedPath(p, false));
+            }
+            return toTranslatedPath(overrides, false);
+        };
+
+        const remapSpec = (spec: Spec): Spec => {
+            switch (spec.type) {
+                case "openapi":
+                    return {
+                        ...spec,
+                        absoluteFilepath: toTranslatedPath(spec.absoluteFilepath, true),
+                        absoluteFilepathToOverrides: remapOverrides(spec.absoluteFilepathToOverrides),
+                        absoluteFilepathToOverlays:
+                            spec.absoluteFilepathToOverlays != null
+                                ? toTranslatedPath(spec.absoluteFilepathToOverlays, false)
+                                : undefined
+                    };
+                case "openrpc":
+                case "graphql":
+                    return {
+                        ...spec,
+                        absoluteFilepath: toTranslatedPath(spec.absoluteFilepath, true),
+                        absoluteFilepathToOverrides: remapOverrides(spec.absoluteFilepathToOverrides)
+                    };
+                default:
+                    // Protobuf specs are generated, not hand-translated — leave as-is.
+                    return spec;
+            }
+        };
+
+        const translatedSpecs = base.specs.map((spec) => remapSpec(spec)) as OSSWorkspace.Args["specs"];
+        const translatedAllSpecs = base.allSpecs.map((spec) => remapSpec(spec));
+
+        if (!hasTranslatedSpec) {
+            return undefined;
+        }
+
+        return new OSSWorkspace({
+            allSpecs: translatedAllSpecs,
+            specs: translatedSpecs,
+            generatorsConfiguration: base.generatorsConfiguration,
+            workspaceName: base.workspaceName,
+            cliVersion: base.cliVersion,
+            absoluteFilePath: base.absoluteFilePath,
+            changelog: base.changelog
+        });
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
@@ -1660,6 +1880,13 @@ export class DocsDefinitionResolver {
 
         const apiReferenceNode = node.get();
 
+        // Only the v3 (OpenAPI) parser path supports translated API IRs, since it needs
+        // an OSS workspace whose spec file paths can be remapped to the translated dir.
+        let translatedIrsByLocale: Map<string, IntermediateRepresentation> | undefined;
+        if (this.buildTranslatedApiDefinitions && openapiWorkspace != null) {
+            translatedIrsByLocale = await this.buildTranslatedApiIrs(item, openapiWorkspace);
+        }
+
         // Store pending registration for deferred processing after markdownFilesToPathName is available
         this.pendingApiRegistrations.push({
             ir,
@@ -1670,7 +1897,8 @@ export class DocsDefinitionResolver {
             graphqlOperations: graphqlData.operations,
             graphqlTypes: graphqlData.types,
             tempApiDefinitionId,
-            apiReferenceNode
+            apiReferenceNode,
+            translatedIrsByLocale
         });
 
         return apiReferenceNode;

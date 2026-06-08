@@ -490,6 +490,8 @@ type UserOrAdminDiscriminated struct {
 	User   *User
 	Admin  *Admin
 	Empty  interface{}
+
+	rawJSON json.RawMessage
 }
 
 func (u *UserOrAdminDiscriminated) GetType() string {
@@ -598,6 +600,7 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 		}
 		u.Empty = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -648,6 +651,9 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
+	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
 
@@ -686,6 +692,9 @@ func (u *UserOrAdminDiscriminated) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)

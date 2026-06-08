@@ -212,6 +212,8 @@ type BigUnion struct {
 	PotableBad         *PotableBad
 	TriangularRepair   *TriangularRepair
 	GaseousRoad        *GaseousRoad
+
+	rawJSON json.RawMessage
 }
 
 func NewBigUnionFromNormalSweet(value *NormalSweet) *BigUnion {
@@ -754,6 +756,7 @@ func (b *BigUnion) UnmarshalJSON(data []byte) error {
 		}
 		b.GaseousRoad = value
 	}
+	b.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -763,6 +766,9 @@ func (b BigUnion) MarshalJSON() ([]byte, error) {
 	}
 	switch b.Type {
 	default:
+		if len(b.rawJSON) > 0 {
+			return b.rawJSON, nil
+		}
 		return nil, fmt.Errorf("invalid type %s in %T", b.Type, b)
 	case "normalSweet":
 		return internal.MarshalJSONWithExtraProperty(b.NormalSweet, "type", "normalSweet")
@@ -1016,6 +1022,9 @@ func (b *BigUnion) validate() error {
 	}
 	if len(fields) == 0 {
 		if b.Type != "" {
+			if len(b.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", b, b.Type)
 		}
 		return fmt.Errorf("type %T is empty", b)

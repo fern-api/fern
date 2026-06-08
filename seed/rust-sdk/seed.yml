@@ -164,5 +164,3 @@ fixtures:
         packageLicense: "Apache-2.0"
         packageLicenseFile: "LICENSE.md"
       outputFolder: both-license-options
-allowedFailures:
-  - server-sent-events-openapi

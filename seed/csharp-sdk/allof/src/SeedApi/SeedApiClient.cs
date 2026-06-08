@@ -358,6 +358,139 @@ public partial class SeedApiClient : ISeedApiClient
         }
     }
 
+    private async Task<WithRawResponse<PlantStrict>> CreatePlantAsyncCore(
+        PlantPost request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "plants",
+                    Body = request,
+                    Headers = _headers,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<PlantStrict>(responseBody)!;
+                return new WithRawResponse<PlantStrict>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<WithRawResponse<TreeRecord>> CreateTreeAsyncCore(
+        TreeRecord request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "trees",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<TreeRecord>(responseBody)!;
+                return new WithRawResponse<TreeRecord>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     /// <example><code>
     /// await client.SearchRuleTypesAsync(new SearchRuleTypesRequest());
     /// </code></example>
@@ -428,6 +561,48 @@ public partial class SeedApiClient : ISeedApiClient
     {
         return new WithRawResponseTask<Organization>(
             GetOrganizationAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+    /// </summary>
+    /// <example><code>
+    /// await client.CreatePlantAsync(
+    ///     new PlantPost
+    ///     {
+    ///         Species = "species",
+    ///         Family = "family",
+    ///         Genus = "genus",
+    ///         SunExposure = PlantPostSunExposure.Full,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<PlantStrict> CreatePlantAsync(
+        PlantPost request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<PlantStrict>(
+            CreatePlantAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+    /// </summary>
+    /// <example><code>
+    /// await client.CreateTreeAsync(new TreeRecord { Id = "id" });
+    /// </code></example>
+    public WithRawResponseTask<TreeRecord> CreateTreeAsync(
+        TreeRecord request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<TreeRecord>(
+            CreateTreeAsyncCore(request, options, cancellationToken)
         );
     }
 }

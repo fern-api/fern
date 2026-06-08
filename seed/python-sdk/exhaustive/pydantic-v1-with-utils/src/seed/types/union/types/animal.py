@@ -45,10 +45,6 @@ class Animal(pydantic.BaseModel):
         if unioned_value.animal == "cat":
             return cat(types_union_types_cat_Cat(**unioned_value.dict(exclude_unset=True, exclude={"animal"})))
 
-    __root__: typing_extensions.Annotated[
-        typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
-    ]
-
     class Config:
         frozen = True
         smart_union = True

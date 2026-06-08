@@ -434,6 +434,10 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	for _, literal := range literals {
 		t.writer.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
+	if t.includeRawJSON {
+		t.writer.P()
+		t.writer.P("rawJSON json.RawMessage")
+	}
 	t.writer.P("}")
 	t.writer.P()
 
@@ -564,6 +568,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(receiver, ".", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " = value")
 	}
 	t.writer.P("}")
+	if t.includeRawJSON {
+		// Preserve the raw payload so that unknown union variants can be re-marshaled
+		// without loss; this makes the union forward-compatible with new variants
+		// introduced server-side.
+		t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
+	}
 	t.writer.P("return nil")
 	t.writer.P("}")
 	t.writer.P()
@@ -580,6 +590,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if i == 0 && t.unionVersion != UnionVersionV1 {
 			// Implement the default case first.
 			t.writer.P("default:")
+			if t.includeRawJSON {
+				// Forward-compatible: return the preserved raw payload when the
+				// discriminant does not match any known variant.
+				t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+				t.writer.P("return ", receiver, ".rawJSON, nil")
+				t.writer.P("}")
+			}
 			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".", discriminantName, ", ", receiver, ")")
 		}
 		var (
@@ -688,6 +705,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		// Close the switch statement, if present.
 		t.writer.P("}")
 	} else {
+		if t.includeRawJSON {
+			// Forward-compatible: return the preserved raw payload when no known
+			// variant is set (e.g. an unknown discriminant was unmarshaled).
+			t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+			t.writer.P("return ", receiver, ".rawJSON, nil")
+			t.writer.P("}")
+		}
 		t.writer.P("return nil, fmt.Errorf(\"type %T does not define a non-empty union type\", ", receiver, ")")
 	}
 	t.writer.P("}")
@@ -793,6 +817,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	}
 	t.writer.P("if len(fields) == 0 {")
 	t.writer.P("if ", receiver, ".", discriminantName, ` != "" {`)
+	if t.includeRawJSON {
+		// Allow round-tripping an unknown variant: the discriminant is set and
+		// the raw payload is preserved, but no known variant field matches.
+		t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+		t.writer.P("return nil")
+		t.writer.P("}")
+	}
 	t.writer.P(`return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", `, receiver, ", ", receiver, ".", discriminantName, ")")
 	t.writer.P("}")
 	t.writer.P(`return fmt.Errorf("type %T is empty", `, receiver, ")")
@@ -2425,9 +2456,13 @@ func capitalizeFirstLetter(s string) string {
 // goReservedIdentifiers contains Go keywords and predeclared types that should be
 // avoided as struct field names. We check case-insensitively since PascalCase versions
 // like "String" should also be prefixed.
+// "extraproperties" is reserved because every generated object already exposes a
+// built-in GetExtraProperties() accessor for unmodeled JSON fields; a user property
+// of the same name would otherwise produce a duplicate field/getter that fails to compile.
 // We will just add to this list as needed
 var goReservedIdentifiers = map[string]bool{
-	"string": true,
+	"string":          true,
+	"extraproperties": true,
 }
 
 // goExportedFieldName converts a name to a valid Go exported identifier.

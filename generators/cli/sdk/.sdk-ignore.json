@@ -1,0 +1,8 @@
+[
+  "cli/openapi-fixture/**",
+  "src/bin/strip_schema.rs",
+  ".gitignore",
+  "docs/**",
+  "changes/**",
+  ".github/**"
+]
