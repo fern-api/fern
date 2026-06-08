@@ -14,6 +14,8 @@
 | [0001](../../adr/0001-auth-provider-no-cred-extraction.md) | `AuthProvider` never exposes resolved credentials | Accepted (2026-05-13) | [`docs/adr/0001`](../../adr/0001-auth-provider-no-cred-extraction.md) | [FER-10523](https://linear.app/buildwithfern/issue/FER-10523) (WebSocket bidirectional client) |
 | [0002](../../adr/0002-transport-neutral-http-config-resolve.md) | Transport-neutral `HttpConfig::resolve()` pattern | Accepted (2026-05-13) | [`docs/adr/0002`](../../adr/0002-transport-neutral-http-config-resolve.md) | [FER-10523](https://linear.app/buildwithfern/issue/FER-10523) (WebSocket bidirectional client) |
 | [0003](../../adr/0003-null-sentinel-on-nullable-scalar-body-flags.md) | Null sentinel on nullable scalar body flags | Accepted (2026-05-27) | [`docs/adr/0003`](../../adr/0003-null-sentinel-on-nullable-scalar-body-flags.md) | [FER-10753](https://linear.app/buildwithfern/issue/FER-10753) (OpenAPI 3.0/3.1 nullable scalar flags) |
+| [0004](../../adr/0004-all-of-flattening-into-per-field-flags.md) | `allOf` flattening into per-field flags | Accepted (2026-05-28) | [`docs/adr/0004`](../../adr/0004-all-of-flattening-into-per-field-flags.md) | [PR #124](https://github.com/fern-api/cli-sdk/pull/124) (allOf + nullable-union composition lowering) |
+| [0005](../../adr/0005-nullable-union-promotion-via-composition.md) | Nullable-union promotion via composition | Accepted (2026-05-28) | [`docs/adr/0005`](../../adr/0005-nullable-union-promotion-via-composition.md) | [PR #124](https://github.com/fern-api/cli-sdk/pull/124) (allOf + nullable-union composition lowering) |
 
 ## Implicit decisions — candidates for promotion
 
@@ -271,6 +273,48 @@ the listed risk materializes). Listed in rough priority order.
 - **Why this should be promoted:** Every agent integration depends on
   predictable body assembly. A silent merge makes it impossible to reason
   about what the CLI sends; mutual exclusivity makes body source explicit.
+
+### D-Y. `CliExecutor` routes SDK execution through CLI transport stack (Level-2 parity)
+
+- **Where documented today:** [FER-11027](https://linear.app/buildwithfern/issue/FER-11027); [PR #168](https://github.com/fern-api/cli-sdk/pull/168); `src/sdk_executor.rs`; [`ARCHITECTURE.md` §8.17](../ARCHITECTURE.md#817-sdk-execution-sharing-cliexecutor).
+- **Driver:** Co-generated SDK crates need HTTP execution that matches
+  the CLI's on-the-wire behavior exactly (auth, retries, headers, TLS).
+  Level-1 (copy scalar config into a second HTTP stack) is insufficient —
+  Level-2 (route through the CLI's actual transport stack) is required.
+- **Implementation:** `CliExecutor` implements the SDK's `RequestExecutor`
+  trait, holding references to `HttpConfig`, `DynAuthProvider`, global
+  headers, and base-URL override. `execute()` builds the client via
+  `HttpConfig::build_client()`, applies auth via `auth_provider.apply()`,
+  and uses `decide_retry()`. ADR-0001 compliant: credentials never
+  extracted.
+- **Security hardening:** [PR #171](https://github.com/fern-api/cli-sdk/pull/171)
+  made `build_request` return `Result` — auth errors now propagate instead
+  of silently sending unauthenticated requests (fail-closed).
+- **Why this should be promoted:** The execution-sharing boundary is a
+  foundational contract between the CLI runtime and co-generated SDKs.
+  Any drift (e.g. auth bypass, missing retry) silently breaks custom
+  commands.
+
+### D-Z. Source-owned sync manifest for vendor file classification
+
+- **Where documented today:** [FER-11015](https://linear.app/buildwithfern/issue/FER-11015); [PR #165](https://github.com/fern-api/cli-sdk/pull/165); `sync-manifest.toml`.
+- **Driver:** The fern repo's `sync-sdk.sh` and `build.mjs` hardcoded
+  cli-sdk's file layout in two places that must be kept in sync by hand.
+  When cli-sdk refactored its layout (autobins migration), the fern-side
+  lists silently drifted.
+- **Implementation:** `sync-manifest.toml` classifies every tracked file
+  as `ship` / `dev-only` / `templatized` / `not-synced`. CI
+  (`scripts/check-sync-manifest.py`) fails on any unclassified file,
+  preventing layout changes from silently drifting the sync.
+  [PR #170](https://github.com/fern-api/cli-sdk/pull/170) follow-up
+  reclassified `build.rs` as `not-synced`.
+- **Trade-off:** cli-sdk now owns layout knowledge that was previously
+  fern-side. The fern sync script must read the manifest — coupling
+  direction inverted from "fern knows cli-sdk" to "cli-sdk declares,
+  fern consumes".
+- **Why this should be promoted:** Drift in vendor classification is
+  invisible to seed tests (which only validate generated output, not
+  dev-only files). A manifest violation surfaces at the source.
 
 ---
 
