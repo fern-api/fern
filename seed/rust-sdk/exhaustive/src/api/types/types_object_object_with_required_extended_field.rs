@@ -3,10 +3,9 @@ pub use crate::prelude::*;
 /// Tests that a struct with a required field whose type extends a non-Default
 /// base type does NOT incorrectly derive Default in Rust. Reproduces the bug
 /// where namedTypeSupportsDefault only checked properties but not extends.
-#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ObjectWithRequiredExtendedField {
     #[serde(rename = "requiredExtended")]
-    #[serde(default)]
     pub required_extended: ExtendedObjectWithInheritedEnum,
 }
 
