@@ -14,7 +14,7 @@
  * step is skipped and a note is written instead.
  */
 
-import { mkdir, readFile, symlink, writeFile } from "fs/promises";
+import { lstat, mkdir, readFile, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 
 import { readSpecsManifest } from "./copySpecs.js";
@@ -465,11 +465,20 @@ async function createClaudeSymlink(outputDir: string): Promise<void> {
     const target = ".agents";
     const linkPath = path.join(outputDir, ".claude");
 
+    // Remove any existing .claude (symlink or directory) to avoid EEXIST.
+    try {
+        const stat = await lstat(linkPath);
+        if (stat.isSymbolicLink() || stat.isDirectory()) {
+            await rm(linkPath, { recursive: true });
+        }
+    } catch {
+        // Does not exist — fine.
+    }
+
     try {
         await symlink(target, linkPath, "dir");
     } catch {
         // Symlink not supported (e.g. Windows without developer mode).
-        // Write a note file instead.
         await mkdir(path.join(outputDir, ".claude", "skills", "custom-commands"), { recursive: true });
         const note = [
             "# This directory mirrors .agents/skills/",
