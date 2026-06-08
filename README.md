@@ -23,15 +23,15 @@
 
 # 🌿 What is Fern?
 
-Fern is a platform that transforms your API definitions into production-ready SDKs and beautiful documentation in minutes. 
+Docs, SDKs, and CLIs for your API. Designed for the AI era.
 
 With Fern, you can offer your users:
 
-- 🧩 **Type-safe SDKs** in multiple languages, including TypeScript, Python, Java, Go, Ruby, PHP, and C#
-- 📘 **Developer documentation** featuring an interactive UI and auto-generated API + SDK references
-- ✨ **AI Search** powered by an assistant trained on your docs, APIs, and SDKs that can instantly answer a developer's questions
+- 📘 **Agent-friendly documentation** with built-in AI search, auto-generated [`llms.txt`](https://buildwithfern.com/learn/docs/ai-features/llms-txt), and an [MCP server](https://buildwithfern.com/learn/docs/ai-features/mcp-server) so AI tools can query your API in real time
+- 🧩 **Type-safe SDKs** in TypeScript, Python, Java, Go, Ruby, PHP, C#, Swift, and Rust
+- ✨ **AI search** powered by an assistant trained on your docs, APIs, and SDKs that can instantly answer developer questions
 
-Fern supports leading API specifications including OpenAPI (REST, Webhooks), AsyncAPI (WebSockets), Protobuf (gRPC), and OpenRPC.
+Fern supports OpenAPI (REST, Webhooks), AsyncAPI (WebSockets), Protobuf (gRPC), and GraphQL.
 
 <div align="center">
     <a href="/fern/images/overview-dark.png" target="_blank">
@@ -94,8 +94,6 @@ Get started [here](https://github.com/fern-api/docs-starter).
 
 Generators are processes that take your API Definition as input and output artifacts (SDKs, Server boilerplate, etc.). To add a generator, run `fern add <generator id>`.
 
-### SDK Generators
-
 | Generator ID                       | Latest Version                                                                                    | Changelog                                                                                                      |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `fernapi/fern-typescript-sdk`      | ![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-sdk)      | [Changelog](https://buildwithfern.com/learn/sdks/generators/typescript/changelog)                               |
@@ -107,16 +105,6 @@ Generators are processes that take your API Definition as input and output artif
 | `fernapi/fern-php-sdk`             | ![PHP Generator Version](https://img.shields.io/docker/v/fernapi/fern-php-sdk)                    | [Changelog](https://buildwithfern.com/learn/sdks/generators/php/changelog)                                      |
 | `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)                                    |
 | `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)                                     |
-
-### Spec Generators
-
-Fern's spec generators can output an OpenAPI spec.
-
-> **Note**: The OpenAPI spec generator is primarily intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI.
-
-| Generator ID           | Latest Version                                                                     | Changelog                                              |
-| ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `fernapi/fern-openapi` | ![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi) | [versions.yml](./generators/openapi/versions.yml)      |
 
 ## 🌿 CLI Commands
 
@@ -138,7 +126,11 @@ Fern is inspired by internal tooling built to enhance the developer experience. 
 
 ## Community
 
-[Join our Slack!](https://buildwithfern.com/slack) We are here to answer questions and help you get the most out of Fern.
+We're here to answer questions and help you get the most out of Fern.
+
+- [𝕏 Follow us on X](https://x.com/buildwithfern)
+- [GitHub Issues](https://github.com/fern-api/fern/issues) — Bug reports and feature requests
+- [LinkedIn](https://www.linkedin.com/company/buildwithfern)
 
 ## Contributing
 
