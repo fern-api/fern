@@ -1,0 +1,4 @@
+- summary: |
+    Update scaffolded `custom.rs` to show the typed `#[derive(clap::Args)]` + `command_typed` pattern
+    as the primary example for custom command handlers.
+  type: feat
