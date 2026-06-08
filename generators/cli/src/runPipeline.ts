@@ -7,8 +7,10 @@ import { detectAuthBindings } from "./detectAuth.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
 import { emitReference } from "./emitReference.js";
+import { generateAgentSkills } from "./generateAgentSkills.js";
 import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
+import type { SubClientField } from "./generateSdkGlue.js";
 import { generateSdkGlue } from "./generateSdkGlue.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
@@ -123,8 +125,22 @@ export async function runPipeline(args: {
 
     // Generate the SDK glue module (sdk_client + block_on) that bridges
     // the CLI's AppContext to the co-generated SDK client.
+    let subClients: SubClientField[] = [];
     if (sdkCrateName != null) {
-        await generateSdkGlue({ outputDir, binaryName, sdkCrateName });
+        subClients = await generateSdkGlue({ outputDir, binaryName, sdkCrateName });
+    }
+
+    // Generate agent skills (.agents/skills/ + .claude symlink) so coding
+    // agents can author custom commands following the prescribed patterns.
+    if (sdkCrateName != null) {
+        await generateAgentSkills({
+            outputDir,
+            binaryName,
+            sdkCrateName,
+            subClients,
+            authBindings,
+            specsDir
+        });
     }
 
     // Wire up path dependencies and workspace members for generated crates.
