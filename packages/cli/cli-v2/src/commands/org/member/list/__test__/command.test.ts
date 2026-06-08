@@ -62,7 +62,7 @@ describe("ListMembersCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(context.stdout.info).toHaveBeenCalledTimes(2);
     });
 

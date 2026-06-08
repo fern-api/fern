@@ -54,7 +54,7 @@ describe("RevokeTokenCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockRevoke).toHaveBeenCalledWith("tok_123");
+        expect(mockRevoke).toHaveBeenCalledWith({ tokenId: "tok_123" });
         expect(context.stderr.info).toHaveBeenCalledWith(expect.stringContaining("has been revoked"));
     });
 

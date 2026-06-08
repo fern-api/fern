@@ -62,7 +62,7 @@ describe("RemoveMemberCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(mockRemoveUser).toHaveBeenCalledWith({
             userId: "user123",
             auth0OrgId: "org_abc123"

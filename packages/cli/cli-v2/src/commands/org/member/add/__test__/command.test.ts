@@ -62,7 +62,7 @@ describe("InviteMemberCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(mockInviteUser).toHaveBeenCalledWith({
             emailAddress: "user@example.com",
             auth0OrgId: "org_abc123"

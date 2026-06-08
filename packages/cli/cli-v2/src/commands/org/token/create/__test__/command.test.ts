@@ -66,7 +66,7 @@ describe("CreateTokenCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(mockCreate).toHaveBeenCalledWith({
             organizationId: "org_abc123",
             description: "CI token"

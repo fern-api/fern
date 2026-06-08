@@ -79,8 +79,8 @@ describe("ListTokensCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockGet).toHaveBeenCalledWith("acme");
-        expect(mockGetTokens).toHaveBeenCalledWith("org_abc123");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
+        expect(mockGetTokens).toHaveBeenCalledWith({ organizationId: "org_abc123" });
         expect(context.stdout.info).toHaveBeenCalledTimes(2);
     });
 
