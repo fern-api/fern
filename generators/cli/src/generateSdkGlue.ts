@@ -59,8 +59,8 @@ function parseRootClient(modRsContent: string): RootClientInfo {
     while ((match = fieldRegex.exec(body)) !== null) {
         const fieldName = match[1] ?? "";
         const typeName = match[2] ?? "";
-        if (typeName === "ClientConfig") {
-            continue; // skip the config field
+        if (typeName === "ClientConfig" || typeName === "HttpClient") {
+            continue;
         }
         subClients.push({ fieldName, typeName });
     }

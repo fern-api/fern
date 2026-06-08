@@ -356,11 +356,12 @@ function renderExampleWithEndpoint(
 ): void {
     const cmdName = example.method;
     const about = example.summary ?? `Run ${example.group} ${example.method}`;
-    const argDefs = example.pathParams.map((p) => `        .arg(clap::Arg::new("${p}").required(true))`);
-    const argReads = example.pathParams.map(
-        (p) => `        let ${toSnake(p)} = matches.get_one::<String>("${p}").unwrap();`
+    const safeParams = example.pathParams.map(sanitizeIdentifier);
+    const argDefs = safeParams.map((p) => `            .arg(clap::Arg::new("${p}").required(true))`);
+    const argReads = safeParams.map(
+        (p) => `            let ${toSnake(p)} = matches.get_one::<String>("${p}").unwrap();`
     );
-    const sdkCallArgs = example.pathParams.map((p) => `${toSnake(p)}`).join(", ");
+    const sdkCallArgs = safeParams.map((p) => `${toSnake(p)}`).join(", ");
 
     lines.push("```rust");
     lines.push(`use ${sdkCrateSnake}::api::*;`);
@@ -392,7 +393,7 @@ function renderExampleWithEndpoint(
     lines.push("Then build and test:");
     lines.push("```bash");
     lines.push("cargo build");
-    const exampleArgs = example.pathParams.map((p) => `<${p}>`).join(" ");
+    const exampleArgs = safeParams.map((p) => `<${p}>`).join(" ");
     lines.push(`${binaryName} ${cmdName}${exampleArgs.length > 0 ? " " + exampleArgs : ""}`);
     lines.push("```");
     lines.push("");
@@ -440,7 +441,20 @@ function toSnake(s: string): string {
 }
 
 function escapeRust(s: string): string {
-    return s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    return s
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\r?\n|\r/g, " ")
+        .replace(/`{3,}/g, "` ` `");
+}
+
+/**
+ * Sanitize a spec-derived identifier (e.g. path parameter name) so it
+ * cannot break out of a markdown code block or inject instructions.
+ * Only alphanumerics, underscores, and hyphens are kept.
+ */
+function sanitizeIdentifier(s: string): string {
+    return s.replace(/[^a-zA-Z0-9_-]/g, "");
 }
 
 // ---------------------------------------------------------------------------
