@@ -1,0 +1,68 @@
+name: CI - cli-rust
+
+on:
+  pull_request:
+    paths:
+      - "packages/cli/cli-rust/**"
+      - ".github/workflows/ci-cli-rust.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/cli/cli-rust/**"
+      - ".github/workflows/ci-cli-rust.yml"
+  workflow_dispatch:
+
+# Cancel stale runs on PRs.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  build-and-test:
+    name: build & test (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        # Cover the platforms the cli-v2 binary already cross-compiles for so
+        # the dispatcher can be exercised end-to-end on each.
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            packages/cli/cli-rust/target
+          key: ${{ runner.os }}-cargo-cli-rust-${{ hashFiles('packages/cli/cli-rust/Cargo.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-cli-rust-
+
+      - name: cargo fmt --check
+        working-directory: packages/cli/cli-rust
+        run: cargo fmt --all -- --check
+
+      - name: cargo clippy
+        working-directory: packages/cli/cli-rust
+        run: cargo clippy --all-targets --locked -- -D warnings
+
+      - name: cargo test
+        working-directory: packages/cli/cli-rust
+        run: cargo test --locked
+
+      - name: cargo build --release (no embed)
+        working-directory: packages/cli/cli-rust
+        run: cargo build --release --locked

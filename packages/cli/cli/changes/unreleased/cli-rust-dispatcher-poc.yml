@@ -1,0 +1,9 @@
+- summary: |
+    Introduce `packages/cli/cli-rust/` — a proof-of-concept Rust dispatcher
+    that wraps the existing bun-compiled cli-v2 binary. Owns the `fern`
+    entrypoint, handles a small static set of subcommands natively (just
+    `doctor` today), and forwards every other invocation to the bundled
+    fern-ts unchanged via `execvp`/spawn. No user-visible CLI behavior
+    changes; this lays the groundwork for porting cli-v2 to Rust
+    command-by-command without losing features.
+  type: internal

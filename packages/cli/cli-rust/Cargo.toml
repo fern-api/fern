@@ -1,0 +1,69 @@
+[package]
+name = "cli-rust"
+version = "0.0.0"
+edition = "2021"
+publish = false
+description = "Rust dispatcher for the Fern CLI. Routes commands to either Rust-native handlers or a bundled TypeScript (Bun-compiled) cli-v2 binary."
+license = "MIT"
+repository = "https://github.com/fern-api/fern"
+rust-version = "1.82"
+
+[[bin]]
+name = "fern"
+path = "src/main.rs"
+
+# Test fixtures, built as standalone binaries so they run on every platform
+# in our CI matrix (no bash dependency). Only used by integration tests.
+[[bin]]
+name = "fake-fern-ts"
+path = "tests/fixtures/bin/fake-fern-ts.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "explode"
+path = "tests/fixtures/bin/explode.rs"
+test = false
+doc = false
+
+[lib]
+name = "cli_rust"
+path = "src/lib.rs"
+
+[features]
+# When enabled, the build embeds the bun-compiled cli-v2 binary
+# (whose absolute path is provided via the FERN_TS_EMBED_PATH env var at
+# `cargo build` time) directly into the Rust binary. The resulting `fern`
+# binary self-extracts the payload to `$XDG_CACHE_HOME/fern/runtime/<sha>/`
+# on first run.
+#
+# When disabled (the default), the dispatcher looks for fern-ts via:
+#   1. the FERN_TS_BIN env var (highest priority — used by tests)
+#   2. a sibling binary named `fern-ts` (or `fern-ts.exe` on Windows) next
+#      to the `fern` executable
+# This dual mode keeps `cargo build` working out of the box without forcing
+# every contributor to first run `pnpm dist:bin`.
+default = []
+embed-fern-ts = []
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive", "wrap_help", "string"] }
+dirs = "5.0"
+sha2 = "0.10"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.59", features = ["Win32_Foundation", "Win32_System_Console", "Win32_System_Threading"] }
+
+[dev-dependencies]
+assert_cmd = "2.0"
+tempfile = "3.13"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+panic = "abort"
