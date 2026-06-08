@@ -150,9 +150,16 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	// Collect property names and types from extended objects recursively
 	var collectProperties func(*ir.ObjectTypeDeclaration)
 	collectProperties = func(obj *ir.ObjectTypeDeclaration) {
-		// First collect from extended objects
+		if obj == nil {
+			return
+		}
+		// First collect from extended objects, resolving through any alias indirection.
 		for _, extend := range obj.Extends {
-			collectProperties(t.writer.types[extend.TypeId].Shape.Object)
+			extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+			if extended == nil {
+				continue
+			}
+			collectProperties(extended)
 		}
 		// Then collect from this object's properties
 		for _, property := range obj.Properties {
@@ -388,7 +395,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	var literals []*literal
 	for _, extend := range union.Extends {
 		extendedObjectProperties := t.visitObjectProperties(
-			t.writer.types[extend.TypeId].Shape.Object,
+			resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 			false, // includeJSONTags
 			false, // includeURLTags
 			false, // includeOptionals
@@ -486,7 +493,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	var propertyNames []string
 	for _, extend := range union.Extends {
 		extendedObjectProperties := t.visitObjectProperties(
-			t.writer.types[extend.TypeId].Shape.Object,
+			resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 			true,  // includeJSONTags
 			true,  // includeURLTags
 			false, // includeOptionals
@@ -646,7 +653,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
 			_ = t.visitObjectProperties(
-				t.writer.types[extend.TypeId].Shape.Object,
+				resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 				true,  // includeJSONTags
 				true,  // includeURLTags
 				false, // includeOptionals
@@ -1465,8 +1472,14 @@ func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[com
 // getTypeFieldsForObject retrieves the type fields for the given object.
 func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) []*typeField {
 	var fields []*typeField
+	if object == nil {
+		return fields
+	}
 	for _, extend := range object.Extends {
-		extended := t.writer.types[extend.TypeId].Shape.Object
+		extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extended == nil {
+			continue
+		}
 		fields = append(fields, t.getTypeFieldsForObject(extended)...)
 	}
 	for _, property := range object.Properties {
@@ -1499,7 +1512,10 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 		},
 	)
 	for _, extend := range union.Extends {
-		extended := t.writer.types[extend.TypeId].Shape.Object
+		extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extended == nil {
+			continue
+		}
 		fields = append(fields, t.getTypeFieldsForObject(extended)...)
 	}
 	for _, property := range union.BaseProperties {
