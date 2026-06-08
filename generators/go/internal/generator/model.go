@@ -2456,9 +2456,13 @@ func capitalizeFirstLetter(s string) string {
 // goReservedIdentifiers contains Go keywords and predeclared types that should be
 // avoided as struct field names. We check case-insensitively since PascalCase versions
 // like "String" should also be prefixed.
+// "extraproperties" is reserved because every generated object already exposes a
+// built-in GetExtraProperties() accessor for unmodeled JSON fields; a user property
+// of the same name would otherwise produce a duplicate field/getter that fails to compile.
 // We will just add to this list as needed
 var goReservedIdentifiers = map[string]bool{
-	"string": true,
+	"string":          true,
+	"extraproperties": true,
 }
 
 // goExportedFieldName converts a name to a valid Go exported identifier.

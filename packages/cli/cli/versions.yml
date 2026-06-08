@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.45.0
+  changelogEntry:
+    - summary: |
+        The `ai.provider` field in `generators.yml` now uses BAML provider
+        identifiers directly. `bedrock` has been renamed to `aws-bedrock`.
+        Update your config: `provider: bedrock` → `provider: aws-bedrock`.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
 - version: 5.44.14
   changelogEntry:
     - summary: |

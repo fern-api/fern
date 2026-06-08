@@ -20,6 +20,19 @@ const TARGETS: ReadonlyArray<{
 ];
 
 /**
+ * Emit `.github/workflows/ci.yml` with only build+test jobs (check,
+ * compile, test). Used when the output mode is `github` but no npm
+ * publish info is configured.
+ */
+export async function emitCiWorkflow(args: { outputDir: string; binaryName: string }): Promise<void> {
+    const { outputDir, binaryName } = args;
+    const workflowsDir = path.join(outputDir, ".github", "workflows");
+    await mkdir(workflowsDir, { recursive: true });
+    const yaml = constructBuildTestYaml({ binaryName });
+    await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
+}
+
+/**
  * Emit `.github/workflows/ci.yml` into the generated CLI output.
  *
  * The workflow:
@@ -46,6 +59,61 @@ export async function emitPublishWorkflow(args: {
     await mkdir(workflowsDir, { recursive: true });
     const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
+}
+
+/**
+ * Build+test-only workflow YAML — the `check`, `compile`, and `test`
+ * jobs with no publish steps.
+ */
+function constructBuildTestYaml(args: { binaryName: string }): string {
+    return `name: ci
+
+on: [push]
+
+concurrency:
+  group: \${{ github.workflow }}-\${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RUSTFLAGS: "-A warnings"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check
+        run: cargo check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Compile
+        run: cargo build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Test
+        run: cargo test
+`;
 }
 
 function constructWorkflowYaml(args: { binaryName: string; npmPublishInfo: ResolvedNpmPublishInfo }): string {
@@ -164,10 +232,10 @@ ${matrixIncludes}
         shell: bash
         run: |
           if [[ "\${{ matrix.rust-target }}" == *-linux-musl ]]; then
-            cargo build --release --locked --target \${{ matrix.rust-target }} \\
+            cargo build --release --target \${{ matrix.rust-target }} \\
               --no-default-features --features rustls
           else
-            cargo build --release --locked --target \${{ matrix.rust-target }}
+            cargo build --release --target \${{ matrix.rust-target }}
           fi
 
       - name: Package and publish npm platform package${tokenEnvBlock}

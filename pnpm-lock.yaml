@@ -801,9 +801,15 @@ importers:
       '@fern-api/generator-cli':
         specifier: workspace:*
         version: link:../../packages/generator-cli
+      '@fern-api/rust-base':
+        specifier: workspace:*
+        version: link:../rust/base
       '@fern-api/rust-model':
         specifier: workspace:*
         version: link:../rust/model
+      '@fern-api/rust-sdk':
+        specifier: workspace:*
+        version: link:../rust/sdk
       '@fern-fern/ir-sdk':
         specifier: 67.0.0
         version: 67.0.0

@@ -367,7 +367,7 @@ dependencies = [
  "serde_yaml",
  "serde",
  "serial_test",
- "server_sent_events_openapi_types",
+ "server_sent_events_openapi_sdk",
  "sha2",
  "tempfile",
  "thiserror 2.0.18",
@@ -939,9 +939,9 @@ dependencies = [
 
 [[package]]
 name = "log"
-version = "0.4.31"
+version = "0.4.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "113b30b4cd05f7c06868fdb2854f66a7b9fece9a48425351cd532e810d74024f"
+checksum = "953f07c43838f8e6f9758cab68bf5bed85465e7587ebe0b823f1bcd81978ad3a"
 
 [[package]]
 name = "lru-slab"
@@ -2727,9 +2727,9 @@ checksum = "1ffae5123b2d3fc086436f8834ae3ab053a283cfac8fe0a0b8eaae044768a4c4"
 
 [[package]]
 name = "yoke"
-version = "0.8.2"
+version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "abe8c5fda708d9ca3df187cae8bfb9ceda00dd96231bed36e445a1a48e66f9ca"
+checksum = "709fe23a0424b6a435d82152b1bd3fdfb0833487d5fa90d05d42762a9891fef5"
 dependencies = [
  "stable_deref_trait",
  "yoke-derive",
@@ -2838,6 +2838,22 @@ checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
 name = "server_sent_events_openapi_types"
 version = "0.0.0"
 dependencies = [
+ "base64",
+ "chrono",
+ "num-bigint",
+ "ordered-float",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "server_sent_events_openapi_sdk"
+version = "0.0.0"
+dependencies = [
+ "server_sent_events_openapi_types",
+ "futures",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tokio",
 ]

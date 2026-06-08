@@ -4,13 +4,15 @@ import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
 import { detectAuthBindings } from "./detectAuth.js";
-import { emitPublishWorkflow } from "./emitPublishWorkflow.js";
+import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
 import { emitReference } from "./emitReference.js";
+import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
+import { generateSdkGlue } from "./generateSdkGlue.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
-import { patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
+import { patchCargoLockForSdk, patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
 import { writeGitignore } from "./writeGitignore.js";
@@ -68,13 +70,19 @@ export async function runPipeline(args: {
     //      `cli/<binaryName>/`, wiring the IR-derived auth bindings.
     //   4. generateEmbeddedTypes generates the typed Rust model crate
     //      as a workspace member (path dependency from the CLI crate).
-    //   5. emitPublishWorkflow writes `.github/workflows/ci.yml` when
-    //      output mode is `github` with npm publish info.
+    //   5. generateEmbeddedSdk generates the Rust SDK crate in
+    //      cliEmbedded mode as a workspace member, with a path dep
+    //      on the types crate for single type identity.
+    //   6. emitCiWorkflow / emitPublishWorkflow writes
+    //      `.github/workflows/ci.yml` when output mode is `github`.
+    //      Build+test jobs are always emitted; publish jobs only when
+    //      npm publish info is present.
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
     const embedTypes = customConfig.embedTypes !== false && irFilepath != null;
-    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes });
+    const embedSdk = customConfig.embedSdk !== false && embedTypes;
+    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes, embedSdk });
     await writeGitignore(outputDir);
     await emitReadme({
         outputDir,
@@ -92,24 +100,58 @@ export async function runPipeline(args: {
     });
 
     // Generate the embedded types crate (on by default; opt-out via embedTypes: false).
+    let typesCrateName: string | undefined;
     if (embedTypes && irFilepath != null) {
-        const typesCrateName = await generateEmbeddedTypes({
+        typesCrateName = await generateEmbeddedTypes({
             irFilepath,
             outputDir,
             binaryName
         });
-        await patchCargoToml({ outputDir, binaryName, typesCrateName });
-        await patchCargoLockForTypes({ outputDir, typesCrateName });
-        await patchDistWorkspaceToml({ outputDir, typesCrateName });
         await writeFernignore(outputDir, binaryName);
     }
 
-    if (outputConfig.npmPublishInfo != null) {
-        await emitPublishWorkflow({
+    // Generate the embedded SDK crate (on by default; requires embedTypes).
+    let sdkCrateName: string | undefined;
+    if (customConfig.embedSdk !== false && embedTypes && irFilepath != null && typesCrateName != null) {
+        sdkCrateName = await generateEmbeddedSdk({
+            irFilepath,
             outputDir,
             binaryName,
-            npmPublishInfo: outputConfig.npmPublishInfo
+            typesCrateName
         });
+    }
+
+    // Generate the SDK glue module (sdk_client + block_on) that bridges
+    // the CLI's AppContext to the co-generated SDK client.
+    if (sdkCrateName != null) {
+        await generateSdkGlue({ outputDir, binaryName, sdkCrateName });
+    }
+
+    // Wire up path dependencies and workspace members for generated crates.
+    if (typesCrateName != null || sdkCrateName != null) {
+        await patchCargoToml({ outputDir, binaryName, typesCrateName, sdkCrateName });
+        if (typesCrateName != null) {
+            // When the SDK crate exists, the CLI binary depends on the
+            // SDK (which re-exports types) — so skip adding types as a
+            // direct dep of fern-cli-sdk in the lockfile.
+            await patchCargoLockForTypes({ outputDir, typesCrateName, skipCliDep: sdkCrateName != null });
+        }
+        if (sdkCrateName != null && typesCrateName != null) {
+            await patchCargoLockForSdk({ outputDir, sdkCrateName, typesCrateName });
+        }
+        await patchDistWorkspaceToml({ outputDir, typesCrateName, sdkCrateName });
+    }
+
+    if (outputConfig.isGithubOutput) {
+        if (outputConfig.npmPublishInfo != null) {
+            await emitPublishWorkflow({
+                outputDir,
+                binaryName,
+                npmPublishInfo: outputConfig.npmPublishInfo
+            });
+        } else {
+            await emitCiWorkflow({ outputDir, binaryName });
+        }
     }
 
     return { status: "generated", binaryName };

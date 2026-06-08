@@ -1708,7 +1708,28 @@ impl AppContext {
         &self.entries[0].http_config
     }
 
+    /// Returns the base-URL override resolved from `--base-url` /
+    /// `{NAME}_BASE_URL`, or `None` if not set.
+    pub fn base_url_override(&self) -> Option<&str> {
+        self.base_url_override.as_deref()
+    }
+
+    /// Build a [`CliExecutor`] wired to this context's HTTP/auth/retry stack.
+    ///
+    /// The executor is constructed from the first binding entry's config
+    /// and shared via `Arc` across all SDK client instances. This method
+    /// keeps `auth_provider` and `global_headers` internal to `AppContext`,
+    /// satisfying ADR-0001 (no credential exposure via public getters).
+    pub fn build_sdk_executor(&self) -> std::sync::Arc<crate::sdk_executor::CliExecutor> {
+        std::sync::Arc::new(crate::sdk_executor::CliExecutor::new(
+            self.entries[0].http_config.clone(),
+            self.entries[0].auth_provider.clone(),
+            self.entries[0].global_headers.clone(),
+            self.base_url_override.as_ref().map(|s| s.to_string()),
+        ))
+    }
 }
+
 
 /// Recursively check whether any method in the resource tree is the
 /// same object (pointer-equal) as `target`. Used by

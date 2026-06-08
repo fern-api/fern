@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.44.2
+  changelogEntry:
+    - summary: |
+        Reserve the `ExtraProperties` field name so a user-defined property named
+        `EXTRA_PROPERTIES` (or any casing of it) no longer collides with the built-in
+        `GetExtraProperties()` accessor. The user property is now generated as
+        `FieldExtraProperties` (its JSON wire name is unchanged), so the generated Go
+        compiles.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
 - version: 1.44.1
   changelogEntry:
     - summary: |
