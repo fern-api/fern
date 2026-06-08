@@ -47,3 +47,17 @@ Pick the narrowest matching **`softwareDirectory`** when several could apply (e.
    - **`type`**: `fix` | `chore` | `feat` | `internal`
 
 Those types drive semver bumps when releases run (`fix`/`chore` → patch, `feat`/`internal` → minor). The automated release flow does **not** produce major version bumps. To ship a major release, a human edits the relevant `versions.yml` directly so the breaking change is explicitly acknowledged in review. The validator rejects `type: break` in `unreleased/`.
+
+## Cross-product propagation (`propagatesTo`)
+
+Some products embed another product's output. For example, the CLI Generator bundles the Rust SDK Generator's generated code. When the Rust SDK ships a fix, the CLI Generator must also release a new version with that fix.
+
+**`propagatesTo`** in `release-config.json` automates this. When a software entry with `propagatesTo` is released, the release script creates an auto-generated changelog entry (`auto-propagated-from-<source>.yml`) in each target's `unreleased/` folder. The entry inherits the highest severity type from the source so the target receives at least a matching semver bump.
+
+Current propagation relationships:
+
+| Source | Propagates to |
+|--------|--------------|
+| `rust` | `cli-generator` |
+
+**You do not need to manually add a CLI Generator changelog entry when only the Rust SDK changes.** The automation handles it. If your PR also changes CLI Generator code (under `generators/cli/`), add a separate changelog entry as usual — the propagated entry will be combined with it during release.
