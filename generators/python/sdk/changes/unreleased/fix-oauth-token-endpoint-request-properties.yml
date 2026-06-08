@@ -1,0 +1,8 @@
+- summary: |
+    Forward all OAuth token-endpoint request properties from the generated client to the
+    `OAuthTokenProvider`. Previously only `client_id`/`client_secret` were passed, so token
+    endpoints that required configured scopes or custom properties (e.g. `entity_id`, `scope`)
+    generated code that omitted those arguments and failed type checking. These properties are
+    now exposed as client constructor parameters (required ones required, optional ones default
+    to `None`) and threaded through to the token request.
+  type: fix

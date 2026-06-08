@@ -39,6 +39,8 @@ class ApiClient:
 
         client = SeedOauthClientCredentials(
             base_url="YOUR_BASE_URL",
+            scp="YOUR_SCP",
+            entity_id="YOUR_ENTITY_ID",
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
         )
@@ -82,6 +84,8 @@ class AsyncApiClient:
 
         client = AsyncSeedOauthClientCredentials(
             base_url="YOUR_BASE_URL",
+            scp="YOUR_SCP",
+            entity_id="YOUR_ENTITY_ID",
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
         )

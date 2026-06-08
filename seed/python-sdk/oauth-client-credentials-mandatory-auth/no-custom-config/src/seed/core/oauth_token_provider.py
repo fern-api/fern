@@ -14,9 +14,17 @@ from .client_wrapper import AsyncClientWrapper, SyncClientWrapper
 class OAuthTokenProvider:
     BUFFER_IN_MINUTES = 2
 
-    def __init__(self, *, client_id: str, client_secret: str, client_wrapper: SyncClientWrapper):
+    def __init__(
+        self,
+        *,
+        client_id: str,
+        client_secret: str,
+        scope: typing.Optional[str] = None,
+        client_wrapper: SyncClientWrapper,
+    ):
         self._client_id = client_id
         self._client_secret = client_secret
+        self._scope = scope
         self._access_token: typing.Optional[str] = None
         self._expires_at: dt.datetime = dt.datetime.now()
         self._auth_client = AuthClient(client_wrapper=client_wrapper)
@@ -32,7 +40,7 @@ class OAuthTokenProvider:
 
     def _refresh(self) -> str:
         token_response = self._auth_client.get_token_with_client_credentials(
-            client_id=self._client_id, client_secret=self._client_secret
+            client_id=self._client_id, client_secret=self._client_secret, scope=self._scope
         )
         self._access_token = token_response.access_token
         self._expires_at = self._get_expires_at(
@@ -47,9 +55,17 @@ class OAuthTokenProvider:
 class AsyncOAuthTokenProvider:
     BUFFER_IN_MINUTES = 2
 
-    def __init__(self, *, client_id: str, client_secret: str, client_wrapper: AsyncClientWrapper):
+    def __init__(
+        self,
+        *,
+        client_id: str,
+        client_secret: str,
+        scope: typing.Optional[str] = None,
+        client_wrapper: AsyncClientWrapper,
+    ):
         self._client_id = client_id
         self._client_secret = client_secret
+        self._scope = scope
         self._access_token: typing.Optional[str] = None
         self._expires_at: dt.datetime = dt.datetime.now()
         self._auth_client = AsyncAuthClient(client_wrapper=client_wrapper)
@@ -65,7 +81,7 @@ class AsyncOAuthTokenProvider:
 
     async def _refresh(self) -> str:
         token_response = await self._auth_client.get_token_with_client_credentials(
-            client_id=self._client_id, client_secret=self._client_secret
+            client_id=self._client_id, client_secret=self._client_secret, scope=self._scope
         )
         self._access_token = token_response.access_token
         self._expires_at = self._get_expires_at(

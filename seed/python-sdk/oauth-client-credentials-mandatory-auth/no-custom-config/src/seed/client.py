@@ -90,6 +90,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -104,6 +105,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -119,6 +121,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
+        scope: typing.Optional[str] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -148,6 +151,7 @@ class SeedOauthClientCredentialsMandatoryAuth:
             oauth_token_provider = OAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scope=scope,
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
@@ -299,6 +303,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -313,6 +318,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
         *,
         base_url: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -328,6 +334,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
+        scope: typing.Optional[str] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -355,6 +362,7 @@ class AsyncSeedOauthClientCredentialsMandatoryAuth:
             oauth_token_provider = AsyncOAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scope=scope,
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
                     headers=headers,

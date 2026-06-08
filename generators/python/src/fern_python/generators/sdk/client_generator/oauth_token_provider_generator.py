@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List, Optional, Tuple, Union
 
 from ..context.sdk_generator_context import SdkGeneratorContext
@@ -9,6 +10,76 @@ from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_na
 import fern.ir.resources as ir_types
 
 DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
+
+
+@dataclass
+class OAuthAdditionalTokenProperty:
+    """
+    A request property the token endpoint requires beyond client_id/client_secret
+    (e.g. configured scopes or arbitrary custom properties). The SDK user must supply
+    these and they are forwarded to the token endpoint when fetching a token.
+    """
+
+    field_name: str
+    is_optional: bool
+
+
+def _request_property_value_type(request_property: ir_types.RequestProperty) -> ir_types.TypeReference:
+    return request_property.property.visit(
+        query=lambda query_parameter: query_parameter.value_type,
+        body=lambda object_property: object_property.value_type,
+    )
+
+
+def _request_property_name(request_property: ir_types.RequestProperty) -> str:
+    return request_property.property.visit(
+        query=lambda query_parameter: resolve_name(get_name_from_wire_value(query_parameter.name)).snake_case.safe_name,
+        body=lambda object_property: resolve_name(get_name_from_wire_value(object_property.name)).snake_case.safe_name,
+    )
+
+
+def _type_reference_is_literal(type_reference: ir_types.TypeReference) -> bool:
+    type_union = type_reference.get_as_union()
+    if type_union.type == "container":
+        return type_union.container.get_as_union().type == "literal"
+    return False
+
+
+def _type_reference_is_optional(type_reference: ir_types.TypeReference) -> bool:
+    type_union = type_reference.get_as_union()
+    if type_union.type == "container":
+        return type_union.container.get_as_union().type == "optional"
+    return False
+
+
+def get_oauth_additional_token_request_properties(
+    client_credentials: ir_types.OAuthClientCredentials,
+) -> List[OAuthAdditionalTokenProperty]:
+    """
+    Collect the token endpoint's request properties that must be supplied by the SDK user
+    in addition to client_id/client_secret. Literal properties are auto-populated by the
+    generated client method, so they are excluded.
+    """
+    token_request_properties = client_credentials.token_endpoint.request_properties
+
+    candidates: List[ir_types.RequestProperty] = []
+    if token_request_properties.scopes is not None:
+        candidates.append(token_request_properties.scopes)
+    if token_request_properties.custom_properties is not None:
+        candidates.extend(token_request_properties.custom_properties)
+
+    properties: List[OAuthAdditionalTokenProperty] = []
+    for request_property in candidates:
+        value_type = _request_property_value_type(request_property)
+        if _type_reference_is_literal(value_type):
+            continue
+        properties.append(
+            OAuthAdditionalTokenProperty(
+                field_name=_request_property_name(request_property),
+                is_optional=_type_reference_is_optional(value_type),
+            )
+        )
+    return properties
 
 
 class OAuthTokenProviderGenerator:
@@ -50,7 +121,9 @@ class OAuthTokenProviderGenerator:
     def _create_client_credentials_class_declaration(
         self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
     ) -> AST.ClassDeclaration:
-        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+        constructor_parameters = self._get_constructor_parameters(
+            client_credentials=client_credentials, is_async=is_async
+        )
 
         named_parameters = [
             AST.NamedFunctionParameter(
@@ -98,7 +171,9 @@ class OAuthTokenProviderGenerator:
 
         return class_declaration
 
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(
+        self, *, client_credentials: ir_types.OAuthClientCredentials, is_async: bool
+    ) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
 
         parameters.append(
@@ -116,6 +191,22 @@ class OAuthTokenProviderGenerator:
                 type_hint=AST.TypeHint.str_(),
             )
         )
+
+        # The token endpoint may require additional request properties (configured scopes
+        # or custom properties) beyond client_id/client_secret. Accept them so they can be
+        # forwarded when fetching a token.
+        for additional_property in get_oauth_additional_token_request_properties(client_credentials):
+            type_hint = AST.TypeHint.str_()
+            if additional_property.is_optional:
+                type_hint = AST.TypeHint.optional(type_hint)
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=additional_property.field_name,
+                    private_member_name=f"_{additional_property.field_name}",
+                    type_hint=type_hint,
+                    initializer=AST.Expression("None") if additional_property.is_optional else None,
+                )
+            )
 
         parameters.append(
             ConstructorParameter(
@@ -548,6 +639,15 @@ class OAuthTokenProviderGenerator:
             ),
         ]
         if client_credentials.refresh_endpoint is None:
+            # Forward any additional token-endpoint request properties (configured scopes or
+            # custom properties) that the user supplied to the token provider.
+            for additional_property in get_oauth_additional_token_request_properties(client_credentials):
+                kwargs.append(
+                    (
+                        additional_property.field_name,
+                        AST.Expression(f"self._{additional_property.field_name}"),
+                    )
+                )
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
                 client_credentials.token_endpoint.endpoint_reference.endpoint_id
             )
