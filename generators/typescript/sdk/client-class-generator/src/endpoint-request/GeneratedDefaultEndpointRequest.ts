@@ -428,10 +428,36 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             levels.push({ properties: currentLevelProps, pathSegment: segment });
         }
 
+        // Build set of top-level wire names to skip collisions in leaf loop
+        const topLevelWireNames = new Set<string>();
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            if (this.getAutoFillExpression(prop, context) != null) {
+                continue;
+            }
+            topLevelWireNames.add(getWireValue(prop.name));
+        }
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    if (this.getAutoFillExpression(prop, context) != null) {
+                        continue;
+                    }
+                    topLevelWireNames.add(getWireValue(prop.name));
+                }
+            }
+        }
+
         // Build leaf object: map flat request properties to wire-format keys
         const leafProps = currentLevelProps;
         const leafAssignments: ts.ObjectLiteralElementLike[] = [];
         for (const prop of leafProps) {
+            if (topLevelWireNames.has(getWireValue(prop.name))) {
+                continue;
+            }
             const autoFillExpr = this.getAutoFillExpression(prop, context);
             if (autoFillExpr != null) {
                 leafAssignments.push(

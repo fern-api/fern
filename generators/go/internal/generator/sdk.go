@@ -4970,10 +4970,30 @@ func writeUnwrappedMarshalJSON(
 		}
 	}
 
-	// Leaf level
+	// Leaf level — build seen set of top-level wire names to skip collisions
+	topLevelWireNames := make(map[string]bool)
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue == pathRoot {
+			continue
+		}
+		if getAutoFillValue(prop.ValueType, f.types) != "" {
+			continue
+		}
+		topLevelWireNames[prop.Name.WireValue] = true
+	}
+	for _, prop := range extProps {
+		if getAutoFillValue(prop.ValueType, f.types) != "" {
+			continue
+		}
+		topLevelWireNames[prop.Name.WireValue] = true
+	}
+
 	f.P("leaf := make(map[string]interface{})")
 	leafProps := resolveObjectProperties(currentTypeRef, f.types)
 	for _, p := range leafProps {
+		if topLevelWireNames[p.Name.WireValue] {
+			continue
+		}
 		if val := getAutoFillValue(p.ValueType, f.types); val != "" {
 			f.P(`leaf["`, p.Name.WireValue, `"] = `, val)
 			continue
@@ -5093,6 +5113,24 @@ func writeUnwrappedUnmarshalJSON(
 		f.P("}")
 	}
 
+	// Build seen set of top-level wire names to skip collisions in leaf loop
+	unmarshalTopLevelWireNames := make(map[string]bool)
+	for _, prop := range inlinedRequestBody.Properties {
+		if prop.Name.WireValue == pathRoot {
+			continue
+		}
+		if getAutoFillValue(prop.ValueType, f.types) != "" {
+			continue
+		}
+		unmarshalTopLevelWireNames[prop.Name.WireValue] = true
+	}
+	for _, prop := range unmarshalExtProps {
+		if getAutoFillValue(prop.ValueType, f.types) != "" {
+			continue
+		}
+		unmarshalTopLevelWireNames[prop.Name.WireValue] = true
+	}
+
 	// Navigate through nested path segments via json.RawMessage
 	currentMapVar := "raw"
 	for i := 0; i < len(unwrapPath); i++ {
@@ -5114,6 +5152,9 @@ func writeUnwrappedUnmarshalJSON(
 
 			leafProps := resolveObjectProperties(leafTypeRef, f.types)
 			for _, p := range leafProps {
+				if unmarshalTopLevelWireNames[p.Name.WireValue] {
+					continue
+				}
 				if getAutoFillValue(p.ValueType, f.types) != "" {
 					continue
 				}

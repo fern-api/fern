@@ -249,7 +249,15 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 return get_json_body_for_inlined_request(context, self._get_properties())
             current_type_ref = next_prop.value_type
 
-        leaf_props_ir = self._resolve_object_properties(current_type_ref) or []
+        all_leaf_props_ir = self._resolve_object_properties(current_type_ref) or []
+
+        # Filter leaf props to exclude wire-name collisions with top-level non-path properties
+        top_level_wire_names = {
+            get_wire_value(p.name)
+            for p in top_non_path
+            if not self._is_auto_fill_property(p.value_type)
+        }
+        leaf_props_ir = [p for p in all_leaf_props_ir if get_wire_value(p.name) not in top_level_wire_names]
 
         all_params = self._get_properties()
         param_by_wire: Dict[str, NamedFunctionParameter] = {}
