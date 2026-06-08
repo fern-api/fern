@@ -296,6 +296,7 @@ impl OpenApiBinding {
             f(matches, ctx)
         })
     }
+
 }
 
 impl Binding for OpenApiBinding {
