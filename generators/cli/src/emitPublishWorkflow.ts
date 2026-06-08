@@ -232,10 +232,10 @@ ${matrixIncludes}
         shell: bash
         run: |
           if [[ "\${{ matrix.rust-target }}" == *-linux-musl ]]; then
-            cargo build --release --locked --target \${{ matrix.rust-target }} \\
+            cargo build --release --target \${{ matrix.rust-target }} \\
               --no-default-features --features rustls
           else
-            cargo build --release --locked --target \${{ matrix.rust-target }}
+            cargo build --release --target \${{ matrix.rust-target }}
           fi
 
       - name: Package and publish npm platform package${tokenEnvBlock}
