@@ -380,9 +380,43 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	return nil
 }
 
+// unionDiscriminantFieldName returns the exported Go field name used for a
+// discriminated union's discriminant. The union is generated as a flat struct
+// with one field for the discriminant plus one field per member (named after
+// the member's discriminant value). When the discriminant's own name collides
+// with a member field name (or a base property) — e.g. a discriminant "event"
+// alongside a member also keyed "event" — emitting both would produce duplicate
+// identifiers that do not compile, so the discriminant field is given a unique,
+// collision-free name. The member fields keep their names so the public
+// accessors and constructors are unaffected.
+func unionDiscriminantFieldName(union *ir.UnionTypeDeclaration) string {
+	base := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	taken := make(map[string]struct{}, len(union.Types)+len(union.BaseProperties))
+	for _, unionType := range union.Types {
+		taken[goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)] = struct{}{}
+	}
+	for _, property := range union.BaseProperties {
+		taken[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+	}
+	if _, collides := taken[base]; !collides {
+		return base
+	}
+	// Avoid underscores in the disambiguated name so the result stays idiomatic
+	// Go (and lint-clean). "Type" reads naturally for a discriminant selector.
+	for suffix := 0; ; suffix++ {
+		candidate := base + "Type"
+		if suffix > 0 {
+			candidate += fmt.Sprintf("%d", suffix+1)
+		}
+		if _, collides := taken[candidate]; !collides {
+			return candidate
+		}
+	}
+}
+
 func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
-	discriminantName := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	discriminantName := unionDiscriminantFieldName(union)
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
@@ -1453,7 +1487,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	fields = append(
 		fields,
 		&typeField{
-			Name:             goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName),
+			Name:             unionDiscriminantFieldName(union),
 			GoType:           "string",
 			ZeroValue:        `""`,
 			Optional:         false,

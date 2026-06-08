@@ -371,8 +371,5 @@ allowedFailures:
   - trace # generated v2/ subpackage references undefined test types
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline
 
-  # Dynamic snippet generation produces code that does not compile.
-  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-
   # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
   - exhaustive:omit-empty-request-wrappers
