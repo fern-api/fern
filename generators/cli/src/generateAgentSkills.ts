@@ -17,9 +17,9 @@
 import { mkdir, readFile, symlink, writeFile } from "fs/promises";
 import path from "path";
 
+import { readSpecsManifest } from "./copySpecs.js";
 import type { DetectedAuthBinding } from "./detectAuth.js";
 import type { SubClientField } from "./generateSdkGlue.js";
-import { readSpecsManifest } from "./copySpecs.js";
 
 // ---------------------------------------------------------------------------
 // Public API

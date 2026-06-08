@@ -1,10 +1,10 @@
-import { access, lstat, mkdir, mkdtemp, readFile, readlink, rm, writeFile } from "fs/promises";
+import { lstat, mkdir, mkdtemp, readFile, readlink, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import type { DetectedAuthBinding } from "../detectAuth.js";
 import { generateAgentSkills } from "../generateAgentSkills.js";
 import type { SubClientField } from "../generateSdkGlue.js";
-import type { DetectedAuthBinding } from "../detectAuth.js";
 
 describe("generateAgentSkills", () => {
     let tmpDir: string;
