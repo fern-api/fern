@@ -46,6 +46,7 @@ export class ChangelogNodeConverter {
         }[] = [];
 
         let overviewPagePath: AbsoluteFilePath | undefined = undefined;
+        let fallbackOverviewPath: AbsoluteFilePath | undefined = undefined;
         for (const absoluteFilepath of this.changelogFiles ?? []) {
             const filename = last(absoluteFilepath.split("/"));
             if (filename == null) {
@@ -56,6 +57,8 @@ export class ChangelogNodeConverter {
                 const nameWithoutExtension = filename.split(".")[0]?.toLowerCase();
                 if (nameWithoutExtension != null && RESERVED_OVERVIEW_PAGE_NAMES.includes(nameWithoutExtension)) {
                     overviewPagePath = absoluteFilepath;
+                } else if (fallbackOverviewPath == null) {
+                    fallbackOverviewPath = absoluteFilepath;
                 }
 
                 continue;
@@ -66,6 +69,13 @@ export class ChangelogNodeConverter {
                 pageId: FernNavigation.PageId(relativePath),
                 absoluteFilepath
             });
+        }
+
+        // Fall back to any non-date file as the overview when no reserved-name file is found.
+        // This handles changelogs where the overview page has a non-standard filename
+        // (e.g., "release-notes.mdx") and may carry a frontmatter slug override.
+        if (overviewPagePath == null && fallbackOverviewPath != null) {
+            overviewPagePath = fallbackOverviewPath;
         }
 
         const slug = opts.parentSlug.apply({
