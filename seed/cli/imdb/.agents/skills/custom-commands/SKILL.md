@@ -36,10 +36,10 @@ pub fn register(app: CliApp) -> CliApp {
     let app = app.command(
         clap::Command::new("get-movie")
             .about("Run imdb get-movie")
-        .arg(clap::Arg::new("movieId").required(true))
+            .arg(clap::Arg::new("movieId").required(true))
         ,
         |matches, ctx| {
-        let movie_id = matches.get_one::<String>("movieId").unwrap();
+            let movie_id = matches.get_one::<String>("movieId").unwrap();
             let client = super::sdk_glue::sdk_client(ctx);
             let result = super::sdk_glue::block_on(
                 client.imdb.get_movie(movie_id),

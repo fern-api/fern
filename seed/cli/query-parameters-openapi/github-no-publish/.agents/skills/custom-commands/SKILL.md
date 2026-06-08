@@ -61,9 +61,7 @@ query-parameters-api search
 The `sdk_glue::sdk_client(ctx)` call returns a `query_parameters_api_sdk::api::Client`
 with the following sub-clients:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `client.http_client` | `query_parameters_api_sdk::api::HttpClient` | http_client operations |
+(Sub-clients are derived from the API spec at generation time.)
 
 ### 3. Key Patterns
 
