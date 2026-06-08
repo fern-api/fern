@@ -1333,10 +1333,11 @@ export class ApiReferenceNodeConverter {
         for (const entry of insertionOrder) {
             if (entry.type === "flat") {
                 const fieldPath = (entry.operation as { fieldPath?: string[] }).fieldPath;
+                const leafName = entry.operation.name ?? entry.operation.id;
                 const slugSegment =
                     fieldPath != null && fieldPath.length > 0
-                        ? [...fieldPath, entry.operation.name ?? entry.operation.id].join("-")
-                        : (entry.operation.name ?? entry.operation.id);
+                        ? [...fieldPath.map(kebabCase), kebabCase(leafName)].join("-")
+                        : kebabCase(leafName);
                 const operationSlug = parentSlug.append(slugSegment);
                 children.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${entry.operation.id}`),
