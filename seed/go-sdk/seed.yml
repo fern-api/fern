@@ -361,7 +361,6 @@ allowedFailures:
   - bytes-download
   - bytes-upload
   - streaming-parameter
-  - pagination
   - pagination-uri-path
 
   # Generated Go code does not compile. Each needs a generator fix.

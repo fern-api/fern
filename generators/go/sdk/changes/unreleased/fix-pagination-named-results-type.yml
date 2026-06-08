@@ -1,0 +1,7 @@
+- summary: |
+    Fixed a generation failure ("unsupported pagination results type") when a
+    paginated endpoint's results property is a named alias to a list or set
+    (e.g. `results: $response.data` where `data` is a `UserList` alias). The
+    results element type is now resolved through alias indirection and
+    optional/nullable wrappers.
+  type: fix

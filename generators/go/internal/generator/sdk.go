@@ -2198,7 +2198,7 @@ func (f *fileWriter) getPaginationInfo(
 			// TODO: Add support for body property pagination.
 			return nil, nil
 		}
-		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Cursor.Results)
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Cursor.Results, f.types)
 		if err != nil {
 			return nil, err
 		}
@@ -2236,7 +2236,7 @@ func (f *fileWriter) getPaginationInfo(
 			// TODO: Add support for body property pagination.
 			return nil, nil
 		}
-		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Offset.Results)
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Offset.Results, f.types)
 		if err != nil {
 			return nil, err
 		}
@@ -2300,27 +2300,20 @@ func nameAndWireValueFromRequestPropertyValue(requestPropertyValue *ir.RequestPr
 	return nil
 }
 
-func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProperty) (*ir.TypeReference, error) {
+func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProperty, types map[common.TypeId]*ir.TypeDeclaration) (*ir.TypeReference, error) {
 	if responseProperty == nil {
 		return nil, nil
 	}
 	property := responseProperty.Property
 	if property != nil && property.ValueType != nil {
-		valueType := property.ValueType
-		optionalOrNullableContainer := getOptionalOrNullableContainer(property.ValueType)
-		if optionalOrNullableContainer != nil {
-			valueType = optionalOrNullableContainer
+		// The results property may be a list/set directly, an optional/nullable
+		// wrapper around one, or a named alias that resolves to one.
+		// maybeIterableType follows alias indirection and unwraps
+		// optional/nullable containers before extracting the element type.
+		if singleType := maybeIterableType(property.ValueType, types); singleType != nil {
+			return singleType, nil
 		}
-		switch valueType.Type {
-		case "container":
-			switch valueType.Container.Type {
-			case "list":
-				return valueType.Container.List, nil
-			case "set":
-				return valueType.Container.Set, nil
-			}
-		}
-		return nil, fmt.Errorf("unsupported pagination results type %q", valueType.Type)
+		return nil, fmt.Errorf("unsupported pagination results type %q", property.ValueType.Type)
 	}
 	return nil, nil
 }
