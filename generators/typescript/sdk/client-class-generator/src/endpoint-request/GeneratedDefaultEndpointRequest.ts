@@ -554,8 +554,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                             )
                         );
                     } else {
-                        const sdkName =
-                            requestWrapper.getPropertyNameOfTypeDeclarationProperty(prop).propertyName;
+                        const sdkName = requestWrapper.getPropertyNameOfTypeDeclarationProperty(prop).propertyName;
                         topLevelAssignments.push(
                             ts.factory.createPropertyAssignment(
                                 ts.factory.createStringLiteral(getWireValue(prop.name)),
