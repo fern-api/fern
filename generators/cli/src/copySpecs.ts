@@ -153,7 +153,7 @@ function renderCustomRsWithSdk(sdkCrate: string): string {
         "//! name is a compile error instead of a runtime panic.",
         "",
         "use fern_cli_sdk::app::CliApp;",
-        "use fern_cli_sdk::openapi::OpenApiBinding;",
+        "// use fern_cli_sdk::openapi::OpenApiBinding;",
         "",
         "/// Register custom commands on the CLI app builder.",
         "///",
