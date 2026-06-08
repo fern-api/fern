@@ -372,6 +372,15 @@ export class OpenApiIrConverterContext {
     }
 
     /**
+     * Returns true if the given schema is directly referenced as a request body
+     * by two or more endpoints. Such schemas should not be inlined because
+     * inlining would produce duplicate type declarations with the same name.
+     */
+    public isMultiRequestSchema(id: SchemaId): boolean {
+        return this.reachability?.multiRequestSchemas.has(id) ?? false;
+    }
+
+    /**
      * Returns true if the given schema is only reachable from request contexts
      * (not from responses, errors, parameters, webhooks, or channels).
      */

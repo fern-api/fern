@@ -6,6 +6,8 @@ info:
     Tests that when an operation's request body $refs a top-level
     components.schemas.X schema, the importer does NOT synthesize a
     duplicate auto-named request wrapper with the same name.
+    Also tests that when multiple endpoints share the same request body
+    schema, a single shared type is generated instead of duplicates.
 paths:
   /vendors/{vendor_id}:
     put:
@@ -133,6 +135,46 @@ paths:
               schema:
                 $ref: "#/components/schemas/TeamMember"
 
+  /chat:
+    post:
+      operationId: chat
+      tags:
+        - Chat
+      summary: Send a chat message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatResponse"
+
+  /chat/prompt:
+    post:
+      operationId: chatPrompt
+      tags:
+        - Chat
+      summary: Get the prompt for a chat message (shares request body with /chat)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PromptResponse"
+
 components:
   schemas:
     UpdateVendorRequest:
@@ -221,3 +263,36 @@ components:
           type: string
       required:
         - id
+
+    ChatRequest:
+      type: object
+      properties:
+        message:
+          type: string
+        model:
+          type: string
+        temperature:
+          type: number
+      required:
+        - message
+
+    ChatResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+      required:
+        - id
+        - text
+
+    PromptResponse:
+      type: object
+      properties:
+        prompt:
+          type: string
+        token_count:
+          type: integer
+      required:
+        - prompt

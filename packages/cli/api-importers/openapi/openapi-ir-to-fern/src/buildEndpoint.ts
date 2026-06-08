@@ -532,11 +532,15 @@ function getRequest({
         const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
 
-        // the request body is referenced if it is not an object or if other parts of the spec
-        // refer to the same type
+        // The request body is kept as a reference (not inlined) when:
+        //   - the resolved schema is not an object, OR
+        //   - the schema is also used outside of request bodies (response reachable), OR
+        //   - the same schema is referenced as a request body by multiple endpoints
+        //     (inlining would produce duplicate type declarations with the same name)
         if (
             resolvedSchema?.type !== "object" ||
-            (maybeSchemaId != null && context.isResponseReachable(maybeSchemaId))
+            (maybeSchemaId != null &&
+                (context.isResponseReachable(maybeSchemaId) || context.isMultiRequestSchema(maybeSchemaId)))
         ) {
             // When respectReadonlySchemas is enabled on a write endpoint, resolve schema
             // references to the write variant (without readOnly properties)

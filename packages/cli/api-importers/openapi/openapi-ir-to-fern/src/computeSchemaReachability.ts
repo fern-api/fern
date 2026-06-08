@@ -4,6 +4,8 @@ import { OneOfSchema, OpenApiIntermediateRepresentation, Schema, SchemaId, Schem
 export interface SchemaReachability {
     requestReachable: Set<SchemaId>;
     responseReachable: Set<SchemaId>;
+    /** Schema IDs directly referenced as request body by 2+ endpoints. */
+    multiRequestSchemas: Set<SchemaId>;
 }
 
 export interface SchemaVariantPlan {
@@ -108,6 +110,10 @@ export function computeSchemaReachability(ir: OpenApiIntermediateRepresentation)
     const responseReachable = new Set<SchemaId>();
     const { groupedSchemas } = ir;
 
+    // Track how many endpoints directly reference each schema as their request body.
+    // Schemas referenced by 2+ endpoints should not be inlined (would cause duplicate type declarations).
+    const requestBodyRefCount = new Map<SchemaId, number>();
+
     for (const endpoint of ir.endpoints) {
         // Request roots
         if (endpoint.request != null) {
@@ -115,6 +121,10 @@ export function computeSchemaReachability(ir: OpenApiIntermediateRepresentation)
                 case "json":
                 case "formUrlEncoded":
                     seedReachable(endpoint.request.schema, groupedSchemas, requestReachable);
+                    if (endpoint.request.schema.type === "reference") {
+                        const id = endpoint.request.schema.schema;
+                        requestBodyRefCount.set(id, (requestBodyRefCount.get(id) ?? 0) + 1);
+                    }
                     break;
                 case "multipart":
                     for (const prop of endpoint.request.properties) {
@@ -189,7 +199,14 @@ export function computeSchemaReachability(ir: OpenApiIntermediateRepresentation)
         }
     }
 
-    return { requestReachable, responseReachable };
+    const multiRequestSchemas = new Set<SchemaId>();
+    for (const [id, count] of requestBodyRefCount) {
+        if (count >= 2) {
+            multiRequestSchemas.add(id);
+        }
+    }
+
+    return { requestReachable, responseReachable, multiRequestSchemas };
 }
 
 /**
