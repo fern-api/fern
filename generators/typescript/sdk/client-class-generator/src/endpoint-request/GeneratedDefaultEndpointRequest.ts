@@ -523,7 +523,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
      * Returns a constant expression if the property can be auto-filled:
      * either a container.literal or a single-value enum.
      */
-    private getAutoFillExpression(prop: Pick<FernIr.ObjectProperty, "valueType">, context: FileContext): ts.Expression | undefined {
+    private getAutoFillExpression(
+        prop: Pick<FernIr.ObjectProperty, "valueType">,
+        context: FileContext
+    ): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(prop.valueType);
         if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
             return this.createLiteralExpression(resolvedType.container.literal);
