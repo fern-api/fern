@@ -334,10 +334,13 @@ export class StructGenerator {
             return false;
         }
         if (typeDecl.shape.type === "object") {
-            // Object supports Default if all its fields support Default
-            return typeDecl.shape.properties.every((prop) =>
+            const propsOk = typeDecl.shape.properties.every((prop) =>
                 this.typeSupportsDefault(prop.valueType, visited)
             );
+            const extendsOk = typeDecl.shape.extends.every((parentType) =>
+                this.namedTypeSupportsDefault(parentType.typeId, visited)
+            );
+            return propsOk && extendsOk;
         }
         if (typeDecl.shape.type === "enum") {
             return false; // Enums don't derive Default (no #[default] variant)

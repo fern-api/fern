@@ -234,9 +234,13 @@ function namedTypeSupportsDefault(typeId: string, context: ModelGeneratorContext
         return false;
     }
     if (typeDecl.shape.type === "object") {
-        return typeDecl.shape.properties.every((prop) =>
+        const propsOk = typeDecl.shape.properties.every((prop) =>
             hasDefaultImpl(prop.valueType, context)
         );
+        const extendsOk = typeDecl.shape.extends.every((parentType) =>
+            namedTypeSupportsDefault(parentType.typeId, context, visited)
+        );
+        return propsOk && extendsOk;
     }
     if (typeDecl.shape.type === "alias") {
         return hasDefaultImpl(typeDecl.shape.aliasOf, context);
