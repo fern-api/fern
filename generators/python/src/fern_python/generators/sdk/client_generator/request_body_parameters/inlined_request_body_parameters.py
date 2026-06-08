@@ -253,9 +253,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
 
         # Filter leaf props to exclude wire-name collisions with top-level non-path properties
         top_level_wire_names = {
-            get_wire_value(p.name)
-            for p in top_non_path
-            if not self._is_auto_fill_property(p.value_type)
+            get_wire_value(p.name) for p in top_non_path if not self._is_auto_fill_property(p.value_type)
         }
         leaf_props_ir = [p for p in all_leaf_props_ir if get_wire_value(p.name) not in top_level_wire_names]
 

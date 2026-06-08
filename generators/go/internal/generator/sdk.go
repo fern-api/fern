@@ -4823,7 +4823,7 @@ func inlinedRequestBodyToUnwrappedObjectTypeDeclaration(
 ) *ir.ObjectTypeDeclaration {
 	properties := getUnwrappedBodyObjectProperties(inlinedRequestBody, unwrapPath, types)
 	return &ir.ObjectTypeDeclaration{
-		Extends:         inlinedRequestBody.Extends,
+		Extends:         nil,
 		Properties:      properties,
 		ExtraProperties: inlinedRequestBody.ExtraProperties,
 	}
