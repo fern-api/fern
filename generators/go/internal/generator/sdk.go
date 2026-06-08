@@ -4740,24 +4740,31 @@ func getUnwrappedBodyObjectProperties(
 	var result []*ir.ObjectProperty
 	pathRoot := unwrapPath[0]
 
-	// Top-level non-path, non-auto-fill properties
+	// Collect all top-level properties (direct + inherited via extends)
+	allTopLevel := make([]*ir.ObjectProperty, 0, len(inlinedRequestBody.Properties))
 	for _, prop := range inlinedRequestBody.Properties {
+		allTopLevel = append(allTopLevel, &ir.ObjectProperty{
+			Docs:      prop.Docs,
+			Name:      prop.Name,
+			ValueType: prop.ValueType,
+		})
+	}
+	allTopLevel = append(allTopLevel, resolveExtendsProperties(inlinedRequestBody, types)...)
+
+	// Top-level non-path, non-auto-fill properties
+	for _, prop := range allTopLevel {
 		if prop.Name.WireValue == pathRoot {
 			continue
 		}
 		if getAutoFillValue(prop.ValueType, types) != "" {
 			continue
 		}
-		result = append(result, &ir.ObjectProperty{
-			Docs:      prop.Docs,
-			Name:      prop.Name,
-			ValueType: prop.ValueType,
-		})
+		result = append(result, prop)
 	}
 
 	// Walk to the leaf type
 	var currentTypeRef *ir.TypeReference
-	for _, prop := range inlinedRequestBody.Properties {
+	for _, prop := range allTopLevel {
 		if prop.Name.WireValue == pathRoot {
 			currentTypeRef = prop.ValueType
 			break
@@ -4907,12 +4914,20 @@ func writeUnwrappedMarshalJSON(
 		}
 	}
 
-	// Find the path root type reference
+	// Find the path root type reference (search direct + extended properties)
 	var currentTypeRef *ir.TypeReference
 	for _, prop := range inlinedRequestBody.Properties {
 		if prop.Name.WireValue == pathRoot {
 			currentTypeRef = prop.ValueType
 			break
+		}
+	}
+	if currentTypeRef == nil {
+		for _, prop := range extProps {
+			if prop.Name.WireValue == pathRoot {
+				currentTypeRef = prop.ValueType
+				break
+			}
 		}
 	}
 
@@ -5014,6 +5029,15 @@ func writeUnwrappedUnmarshalJSON(
 		if prop.Name.WireValue == pathRoot {
 			leafTypeRef = prop.ValueType
 			break
+		}
+	}
+	if leafTypeRef == nil {
+		extPropsForPath := resolveExtendsProperties(inlinedRequestBody, f.types)
+		for _, prop := range extPropsForPath {
+			if prop.Name.WireValue == pathRoot {
+				leafTypeRef = prop.ValueType
+				break
+			}
 		}
 	}
 	if leafTypeRef != nil {
