@@ -108,7 +108,7 @@
     "json-stream-stringify": "catalog:",
     "jsonwebtoken": "catalog:",
     "ora": "catalog:",
-    "posthog-node": "^5.28.6",
+    "posthog-node": "^5.35.1",
     "semver": "^7.6.2",
     "tsup": "catalog:",
     "typescript": "catalog:",
