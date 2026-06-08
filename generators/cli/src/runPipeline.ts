@@ -82,9 +82,8 @@ export async function runPipeline(args: {
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
-    const embedTypes = customConfig.embedTypes !== false && irFilepath != null;
-    const embedSdk = customConfig.embedSdk !== false && embedTypes;
-    await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes, embedSdk });
+    const customCommands = customConfig.customCommands !== false && irFilepath != null;
+    await copySpecs({ outputDir, binaryName, authBindings, specsDir, customCommands });
     await writeGitignore(outputDir);
     await emitReadme({
         outputDir,
@@ -101,26 +100,25 @@ export async function runPipeline(args: {
         specsDir
     });
 
-    // Generate the embedded types crate (on by default; opt-out via embedTypes: false).
+    // Generate the embedded types + SDK crates (on by default; opt-out via customCommands: false).
     let typesCrateName: string | undefined;
-    if (embedTypes && irFilepath != null) {
+    let sdkCrateName: string | undefined;
+    if (customCommands && irFilepath != null) {
         typesCrateName = await generateEmbeddedTypes({
             irFilepath,
             outputDir,
             binaryName
         });
         await writeFernignore(outputDir, binaryName);
-    }
 
-    // Generate the embedded SDK crate (on by default; requires embedTypes).
-    let sdkCrateName: string | undefined;
-    if (customConfig.embedSdk !== false && embedTypes && irFilepath != null && typesCrateName != null) {
-        sdkCrateName = await generateEmbeddedSdk({
-            irFilepath,
-            outputDir,
-            binaryName,
-            typesCrateName
-        });
+        if (typesCrateName != null) {
+            sdkCrateName = await generateEmbeddedSdk({
+                irFilepath,
+                outputDir,
+                binaryName,
+                typesCrateName
+            });
+        }
     }
 
     // Generate the SDK glue module (sdk_client + block_on) that bridges
