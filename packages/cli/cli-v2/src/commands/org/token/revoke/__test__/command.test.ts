@@ -88,9 +88,7 @@ describe("RevokeTokenCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
-            }
+            rawResponse: { status: 403 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
@@ -106,9 +104,7 @@ describe("RevokeTokenCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { tokenNotFoundError: () => void }) => visitor.tokenNotFoundError()
-            }
+            rawResponse: { status: 404 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }
@@ -124,9 +120,7 @@ describe("RevokeTokenCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockRevoke = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
+            rawResponse: { status: 500 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             apiKeys: { revokeTokenById: mockRevoke }

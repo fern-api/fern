@@ -103,9 +103,7 @@ describe("RemoveMemberCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
+            rawResponse: { status: 404 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
@@ -124,9 +122,7 @@ describe("RemoveMemberCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
-            }
+            rawResponse: { status: 403 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
@@ -147,9 +143,7 @@ describe("RemoveMemberCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { userIdDoesNotExistError: () => void }) => visitor.userIdDoesNotExistError()
-            }
+            rawResponse: { status: 404 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
@@ -168,9 +162,7 @@ describe("RemoveMemberCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockRemoveUser = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
+            rawResponse: { status: 500 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet, removeUser: mockRemoveUser }
