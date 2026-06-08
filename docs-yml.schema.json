@@ -5943,7 +5943,7 @@
               "type": "null"
             }
           ],
-          "description": "If `hide-feedback` is set to true, the feedback widget will not be rendered.\nIf either this property or `layout.hide-feedback` is true, feedback is hidden.\n\n@default: false"
+          "description": "If `hide-feedback` is set to true, the feedback widget will not be rendered.\nNote: `feedback.hide-feedback` and `layout.hide-feedback` cannot both be set. Use one or the other.\n\n@default: false"
         },
         "require-email": {
           "oneOf": [
