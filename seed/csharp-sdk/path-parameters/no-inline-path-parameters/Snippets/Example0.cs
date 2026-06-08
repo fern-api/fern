@@ -9,11 +9,11 @@ public partial class Examples
             }
         );
 
-        await client.Headers.GetHeadersPathParamAsync(
+        await client.EndpointHeaders.GetEndpointHeadersPathParamAsync(
             "tenant_id",
             "header_id",
-            new GetHeadersPathParamRequest {
-                XTenantId = "X-Tenant-Id"
+            new GetEndpointHeadersPathParamRequest {
+                XApiVersion = "X-API-Version"
             }
         );
     }

@@ -9,11 +9,18 @@ public partial class Examples
             }
         );
 
-        await client.User.SearchUsersAsync(
-            new SearchUsersRequest {
+        await client.User.UpdateUserAsync(
+            new UpdateUserRequest {
                 TenantId = "tenant_id",
                 UserId = "user_id",
-                Limit = 1
+                Body = new User {
+                    Name = "name",
+                    Tags = new List<string>(){
+                        "tags",
+                        "tags",
+                    }
+
+                }
             }
         );
     }

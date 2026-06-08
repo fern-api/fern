@@ -1,5 +1,67 @@
 # Reference
 ## Bytes
+## EndpointHeaders
+<details><summary><code>client.EndpointHeaders.<a href="/src/SeedPathParameters/EndpointHeaders/EndpointHeadersClient.cs">GetEndpointHeadersPathParamAsync</a>(GetEndpointHeadersPathParamRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Endpoint with only path parameters and endpoint-level headers but NO service-level headers. The wrapper should NOT be elided because it holds the endpoint header field.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.EndpointHeaders.GetEndpointHeadersPathParamAsync(
+    new GetEndpointHeadersPathParamRequest
+    {
+        TenantId = "tenant_id",
+        HeaderId = "header_id",
+        XApiVersion = "X-API-Version",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetEndpointHeadersPathParamRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Headers
 <details><summary><code>client.Headers.<a href="/src/SeedPathParameters/Headers/HeadersClient.cs">GetHeadersPathParamAsync</a>(GetHeadersPathParamRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>

@@ -9,11 +9,11 @@ public partial class Examples
             }
         );
 
-        await client.Organizations.SearchOrganizationsAsync(
-            "tenant_id",
-            "organization_id",
-            new SearchOrganizationsRequest {
-                Limit = 1
+        await client.Organizations.GetOrganizationUserAsync(
+            new GetOrganizationUserRequest {
+                TenantId = "tenant_id",
+                OrganizationId = "organization_id",
+                UserId = "user_id"
             }
         );
     }

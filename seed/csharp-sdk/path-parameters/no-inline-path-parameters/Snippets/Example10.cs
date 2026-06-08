@@ -9,11 +9,10 @@ public partial class Examples
             }
         );
 
-        await client.User.GetUserSpecificsAsync(
+        await client.User.GetUserMetadataAsync(
             "tenant_id",
             "user_id",
-            1,
-            "thought"
+            1
         );
     }
 

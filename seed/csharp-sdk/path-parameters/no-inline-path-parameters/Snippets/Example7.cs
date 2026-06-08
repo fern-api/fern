@@ -9,9 +9,8 @@ public partial class Examples
             }
         );
 
-        await client.User.UpdateUserAsync(
+        await client.User.CreateUserAsync(
             "tenant_id",
-            "user_id",
             new User {
                 Name = "name",
                 Tags = new List<string>(){

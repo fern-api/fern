@@ -1,0 +1,21 @@
+imports:
+  user: user.yml
+
+service:
+  base-path: /endpoint-headers
+  auth: false
+  endpoints:
+    getEndpointHeadersPathParam:
+      docs: >
+        Endpoint with only path parameters and endpoint-level headers
+        but NO service-level headers. The wrapper should NOT be elided
+        because it holds the endpoint header field.
+      path: "/{header_id}"
+      method: GET
+      request:
+        name: GetEndpointHeadersPathParamRequest
+        path-parameters:
+          header_id: string
+        headers:
+          X-API-Version: string
+      response: user.User
