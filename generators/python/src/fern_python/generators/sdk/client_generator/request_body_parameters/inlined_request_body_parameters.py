@@ -166,17 +166,25 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 return result
             current_type_ref = next_prop.value_type
 
+        # Track wire names already seen from top-level to avoid duplicates
+        seen_wire_names = {get_wire_value(p.name) for p in result}
+
         leaf_props: Optional[List[ir_types.ObjectProperty]] = self._resolve_object_properties(current_type_ref)
         if leaf_props is not None:
             for leaf_prop in leaf_props:
-                if not self._is_auto_fill_property(leaf_prop.value_type):
-                    result.append(
-                        ir_types.InlinedRequestBodyProperty(
-                            name=leaf_prop.name,
-                            value_type=leaf_prop.value_type,
-                            docs=leaf_prop.docs,
-                        )
+                wire_name = get_wire_value(leaf_prop.name)
+                if self._is_auto_fill_property(leaf_prop.value_type):
+                    continue
+                if wire_name in seen_wire_names:
+                    continue
+                seen_wire_names.add(wire_name)
+                result.append(
+                    ir_types.InlinedRequestBodyProperty(
+                        name=leaf_prop.name,
+                        value_type=leaf_prop.value_type,
+                        docs=leaf_prop.docs,
                     )
+                )
 
         return result
 

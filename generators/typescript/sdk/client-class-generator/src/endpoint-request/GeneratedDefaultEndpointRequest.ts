@@ -382,17 +382,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
         // First level starts from the inlined request body properties
         const firstPathProp = inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
-        if (firstPathProp == null || firstPathProp.valueType.type !== "named") {
-            return referenceToRequestBody;
-        }
-
-        let currentTypeDecl = context.type.getTypeDeclaration({
-            typeId: firstPathProp.valueType.typeId,
-            fernFilepath: firstPathProp.valueType.fernFilepath,
-            name: firstPathProp.valueType.name,
-            displayName: firstPathProp.valueType.displayName
-        });
-        if (currentTypeDecl?.shape.type !== "object") {
+        if (firstPathProp == null) {
             return referenceToRequestBody;
         }
 
@@ -400,39 +390,41 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         if (firstSegment == null) {
             return referenceToRequestBody;
         }
-        levels.push({ properties: currentTypeDecl.shape.properties, pathSegment: firstSegment });
 
+        let firstLevelProps = this.resolveAllObjectProperties(firstPathProp.valueType, context);
+        if (firstLevelProps == null) {
+            return referenceToRequestBody;
+        }
+        levels.push({ properties: firstLevelProps, pathSegment: firstSegment });
+
+        let currentLevelProps = firstLevelProps;
         for (let i = 1; i < unwrapPath.length; i++) {
             const segment = unwrapPath[i];
             if (segment == null) {
                 return referenceToRequestBody;
             }
-            const pathProp = currentTypeDecl.shape.properties.find((p) => getWireValue(p.name) === segment);
-            if (pathProp == null || pathProp.valueType.type !== "named") {
+            const pathProp = currentLevelProps.find((p) => getWireValue(p.name) === segment);
+            if (pathProp == null) {
                 return referenceToRequestBody;
             }
-            currentTypeDecl = context.type.getTypeDeclaration({
-                typeId: pathProp.valueType.typeId,
-                fernFilepath: pathProp.valueType.fernFilepath,
-                name: pathProp.valueType.name,
-                displayName: pathProp.valueType.displayName
-            });
-            if (currentTypeDecl?.shape.type !== "object") {
+            const nextProps = this.resolveAllObjectProperties(pathProp.valueType, context);
+            if (nextProps == null) {
                 return referenceToRequestBody;
             }
-            levels.push({ properties: currentTypeDecl.shape.properties, pathSegment: segment });
+            currentLevelProps = nextProps;
+            levels.push({ properties: currentLevelProps, pathSegment: segment });
         }
 
         // Build leaf object: map flat request properties to wire-format keys
-        const leafProps = currentTypeDecl.shape.properties;
+        const leafProps = currentLevelProps;
         const leafAssignments: ts.ObjectLiteralElementLike[] = [];
         for (const prop of leafProps) {
-            const resolvedType = context.type.resolveTypeReference(prop.valueType);
-            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            const autoFillExpr = this.getAutoFillExpression(prop, context);
+            if (autoFillExpr != null) {
                 leafAssignments.push(
                     ts.factory.createPropertyAssignment(
                         ts.factory.createStringLiteral(getWireValue(prop.name)),
-                        this.createLiteralExpression(resolvedType.container.literal)
+                        autoFillExpr
                     )
                 );
             } else {
@@ -485,17 +477,17 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         // Build top-level object with the path property and non-path top-level properties
         const topLevelAssignments: ts.ObjectLiteralElementLike[] = [];
 
-        // Add non-path, non-literal top-level properties
+        // Add non-path top-level properties (auto-fill literals/single-value enums, reference the rest)
         for (const prop of inlinedRequestBody.properties) {
             if (getWireValue(prop.name) === unwrapPath[0]) {
                 continue;
             }
-            const resolvedType = context.type.resolveTypeReference(prop.valueType);
-            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            const autoFillExpr = this.getAutoFillExpression(prop, context);
+            if (autoFillExpr != null) {
                 topLevelAssignments.push(
                     ts.factory.createPropertyAssignment(
                         ts.factory.createStringLiteral(getWireValue(prop.name)),
-                        this.createLiteralExpression(resolvedType.container.literal)
+                        autoFillExpr
                     )
                 );
             } else {
@@ -531,7 +523,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
      * Returns a constant expression if the property can be auto-filled:
      * either a container.literal or a single-value enum.
      */
-    private getAutoFillExpression(prop: FernIr.ObjectProperty, context: FileContext): ts.Expression | undefined {
+    private getAutoFillExpression(prop: Pick<FernIr.ObjectProperty, "valueType">, context: FileContext): ts.Expression | undefined {
         const resolvedType = context.type.resolveTypeReference(prop.valueType);
         if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
             return this.createLiteralExpression(resolvedType.container.literal);
@@ -553,6 +545,53 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             }
         }
         return undefined;
+    }
+
+    /**
+     * Resolves a type reference to its object properties, following aliases and walking extends.
+     */
+    private resolveAllObjectProperties(
+        valueType: FernIr.TypeReference,
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        if (valueType.type !== "named") {
+            return undefined;
+        }
+        return this.resolveObjectPropertiesFromNamedType(
+            { typeId: valueType.typeId, fernFilepath: valueType.fernFilepath, name: valueType.name, displayName: valueType.displayName },
+            context
+        );
+    }
+
+    private resolveObjectPropertiesFromNamedType(
+        namedType: { typeId: string; fernFilepath: FernIr.FernFilepath; name: FernIr.NameOrString; displayName: string | undefined },
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        let typeDecl = context.type.getTypeDeclaration(namedType);
+        if (typeDecl == null) {
+            return undefined;
+        }
+        // Follow alias chain
+        while (typeDecl?.shape.type === "alias" && typeDecl.shape.aliasOf.type === "named") {
+            typeDecl = context.type.getTypeDeclaration({
+                typeId: typeDecl.shape.aliasOf.typeId,
+                fernFilepath: typeDecl.shape.aliasOf.fernFilepath,
+                name: typeDecl.shape.aliasOf.name,
+                displayName: typeDecl.shape.aliasOf.displayName
+            });
+        }
+        if (typeDecl?.shape.type !== "object") {
+            return undefined;
+        }
+        const result: FernIr.ObjectProperty[] = [];
+        for (const ext of typeDecl.shape.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(ext, context);
+            if (extProps != null) {
+                result.push(...extProps);
+            }
+        }
+        result.push(...typeDecl.shape.properties);
+        return result;
     }
 
     public getReferenceToRequestBody(context: FileContext): ts.Expression | undefined {

@@ -325,7 +325,9 @@ export function convertHttpOperation({
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
     const rawUnwrapPath = getExtension<string>(operation, FernOpenAPIExtension.REQUEST_BODY_UNWRAP);
     const requestBodyUnwrapPath =
-        rawUnwrapPath != null ? rawUnwrapPath.split(".").filter((segment) => segment.length > 0) : undefined;
+        rawUnwrapPath != null && typeof rawUnwrapPath === "string"
+            ? rawUnwrapPath.split(".").filter((segment) => segment.length > 0)
+            : undefined;
     return convertedRequests.map((request) => ({
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),

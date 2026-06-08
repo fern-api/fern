@@ -3630,8 +3630,8 @@ func (f *fileWriter) WriteRequestType(
 	if requestBody.unwrapPath != nil {
 		// For unwrapped request bodies, generate custom MarshalJSON/UnmarshalJSON
 		// that builds/parses the nested wire format from/to flat struct fields.
-		writeUnwrappedMarshalJSON(f, receiver, typeName, endpoint.RequestBody.InlinedRequestBody, requestBody.unwrapPath, importPath)
-		writeUnwrappedUnmarshalJSON(f, receiver, typeName, endpoint.RequestBody.InlinedRequestBody, requestBody.unwrapPath, importPath)
+		writeUnwrappedMarshalJSON(f, receiver, typeName, endpoint.RequestBody.InlinedRequestBody, requestBody.unwrapPath, importPath, requestBody.extraProperties)
+		writeUnwrappedUnmarshalJSON(f, receiver, typeName, endpoint.RequestBody.InlinedRequestBody, requestBody.unwrapPath, importPath, requestBody.extraProperties)
 		return nil
 	}
 
@@ -4631,25 +4631,31 @@ func resolveInferredAuthParams(auth *ir.ApiAuth, services map[ir.ServiceId]*ir.H
 
 // resolveObjectProperties resolves the properties of a type reference,
 // returning the object properties if the type is a named object type.
+// If the type is an alias, it follows the alias chain until it reaches an object.
 func resolveObjectProperties(typeRef *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) []*ir.ObjectProperty {
 	if typeRef == nil || typeRef.Named == nil {
 		return nil
 	}
 	typeDecl, ok := types[typeRef.Named.TypeId]
-	if !ok || typeDecl.Shape == nil || typeDecl.Shape.Object == nil {
+	if !ok || typeDecl.Shape == nil {
+		return nil
+	}
+	// Follow alias chain to find the underlying object type.
+	if typeDecl.Shape.Alias != nil {
+		return resolveObjectProperties(typeDecl.Shape.Alias.AliasOf, types)
+	}
+	if typeDecl.Shape.Object == nil {
 		return nil
 	}
 	var result []*ir.ObjectProperty
 	for _, ext := range typeDecl.Shape.Object.Extends {
-		if extDecl, ok := types[ext.TypeId]; ok && extDecl.Shape != nil && extDecl.Shape.Object != nil {
-			namedRef := &ir.TypeReference{Named: &ir.NamedType{
-				TypeId:       ext.TypeId,
-				FernFilepath: ext.FernFilepath,
-				Name:         ext.Name,
-				DisplayName:  ext.DisplayName,
-			}}
-			result = append(result, resolveObjectProperties(namedRef, types)...)
-		}
+		extRef := &ir.TypeReference{Named: &ir.NamedType{
+			TypeId:       ext.TypeId,
+			FernFilepath: ext.FernFilepath,
+			Name:         ext.Name,
+			DisplayName:  ext.DisplayName,
+		}}
+		result = append(result, resolveObjectProperties(extRef, types)...)
 	}
 	result = append(result, typeDecl.Shape.Object.Properties...)
 	return result
@@ -4767,12 +4773,22 @@ func getUnwrappedBodyObjectProperties(
 		}
 	}
 
-	// Add leaf properties (excluding auto-fillable ones)
+	// Track wire names already seen from top-level properties to avoid duplicates
+	seen := make(map[string]bool)
+	for _, p := range result {
+		seen[p.Name.WireValue] = true
+	}
+
+	// Add leaf properties (excluding auto-fillable ones and wire-name collisions)
 	leafProps := resolveObjectProperties(currentTypeRef, types)
 	for _, p := range leafProps {
 		if getAutoFillValue(p.ValueType, types) != "" {
 			continue
 		}
+		if seen[p.Name.WireValue] {
+			continue
+		}
+		seen[p.Name.WireValue] = true
 		result = append(result, p)
 	}
 	return result
@@ -4818,6 +4834,7 @@ func writeUnwrappedMarshalJSON(
 	inlinedRequestBody *ir.InlinedRequestBody,
 	unwrapPath []string,
 	importPath string,
+	extraProperties bool,
 ) {
 	pathRoot := unwrapPath[0]
 
@@ -4835,7 +4852,7 @@ func writeUnwrappedMarshalJSON(
 		}
 		fieldName := goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName)
 		goType := typeReferenceToGoType(prop.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-		if strings.HasPrefix(goType, "*") {
+		if strings.HasPrefix(goType, "*") || strings.HasPrefix(goType, "map[") || strings.HasPrefix(goType, "[]") {
 			f.P("if ", receiver, ".", fieldName, " != nil {")
 			f.P(`body["`, prop.Name.WireValue, `"] = `, receiver, ".", fieldName)
 			f.P("}")
@@ -4879,11 +4896,16 @@ func writeUnwrappedMarshalJSON(
 		}
 
 		// Navigate to next level
+		found := false
 		for _, p := range objProps {
 			if p.Name.WireValue == segment {
 				currentTypeRef = p.ValueType
+				found = true
 				break
 			}
+		}
+		if !found {
+			break
 		}
 	}
 
@@ -4897,7 +4919,7 @@ func writeUnwrappedMarshalJSON(
 		}
 		fieldName := goExportedFieldName(p.Name.Name.PascalCase.UnsafeName)
 		goType := typeReferenceToGoType(p.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-		if strings.HasPrefix(goType, "*") {
+		if strings.HasPrefix(goType, "*") || strings.HasPrefix(goType, "map[") || strings.HasPrefix(goType, "[]") {
 			f.P("if ", receiver, ".", fieldName, " != nil {")
 			f.P(`leaf["`, p.Name.WireValue, `"] = `, receiver, ".", fieldName)
 			f.P("}")
@@ -4918,7 +4940,11 @@ func writeUnwrappedMarshalJSON(
 		f.P(`body["`, pathRoot, `"] = leaf`)
 	}
 
-	f.P("return json.Marshal(body)")
+	if extraProperties {
+		f.P("return internal.MarshalJSONWithExtraProperties(body, ", receiver, ".ExtraProperties)")
+	} else {
+		f.P("return json.Marshal(body)")
+	}
 	f.P("}")
 	f.P()
 }
@@ -4932,6 +4958,7 @@ func writeUnwrappedUnmarshalJSON(
 	inlinedRequestBody *ir.InlinedRequestBody,
 	unwrapPath []string,
 	importPath string,
+	extraProperties bool,
 ) {
 	pathRoot := unwrapPath[0]
 
@@ -5021,6 +5048,9 @@ func writeUnwrappedUnmarshalJSON(
 		f.P("}")
 	}
 
+	if extraProperties {
+		f.P(receiver, ".ExtraProperties = raw")
+	}
 	f.P("return nil")
 	f.P("}")
 	f.P()

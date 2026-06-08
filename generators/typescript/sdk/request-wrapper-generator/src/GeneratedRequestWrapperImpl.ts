@@ -927,79 +927,145 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         const properties: GeneratedRequestWrapper.Property[] = [];
         const unwrapPath = inlinedRequestBody.unwrapPath ?? [];
 
-        // Add non-path, non-literal top-level properties
+        // Add non-path, non-auto-fillable top-level properties
         for (const prop of inlinedRequestBody.properties) {
             if (getWireValue(prop.name) === unwrapPath[0]) {
                 continue;
             }
-            const resolvedType = context.type.resolveTypeReference(prop.valueType);
-            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
-            if (!isLiteral) {
-                const requestProperty = this.getInlineProperty(inlinedRequestBody, prop, context);
-                properties.push(requestProperty);
+            if (this.isAutoFillableProperty(prop.valueType, context)) {
+                continue;
             }
+            const requestProperty = this.getInlineProperty(inlinedRequestBody, prop, context);
+            properties.push(requestProperty);
         }
 
         // Walk the unwrap path to find properties at each level
         let currentProps: FernIr.ObjectProperty[] | undefined;
         const firstPathProp = inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
-        if (firstPathProp == null || firstPathProp.valueType.type !== "named") {
+        if (firstPathProp == null) {
             return properties;
         }
 
-        const firstTypeDecl = context.type.getTypeDeclaration({
-            typeId: firstPathProp.valueType.typeId,
-            fernFilepath: firstPathProp.valueType.fernFilepath,
-            name: firstPathProp.valueType.name,
-            displayName: firstPathProp.valueType.displayName
-        });
-        if (firstTypeDecl?.shape.type !== "object") {
+        currentProps = this.resolveObjectPropertiesFromTypeRef(firstPathProp.valueType, context);
+        if (currentProps == null) {
             return properties;
         }
-        currentProps = firstTypeDecl.shape.properties;
 
         for (let i = 1; i < unwrapPath.length; i++) {
             const segment = unwrapPath[i];
-            // Skip intermediate-level non-path properties — they are part of the
-            // nesting structure and handled automatically during serialization.
-
-            // Navigate to next level
             const pathProp = currentProps?.find((p) => getWireValue(p.name) === segment);
-            if (pathProp == null || pathProp.valueType.type !== "named") {
+            if (pathProp == null) {
                 return properties;
             }
-            const typeDecl = context.type.getTypeDeclaration({
-                typeId: pathProp.valueType.typeId,
-                fernFilepath: pathProp.valueType.fernFilepath,
-                name: pathProp.valueType.name,
-                displayName: pathProp.valueType.displayName
-            });
-            if (typeDecl?.shape.type !== "object") {
+            currentProps = this.resolveObjectPropertiesFromTypeRef(pathProp.valueType, context);
+            if (currentProps == null) {
                 return properties;
             }
-            currentProps = typeDecl.shape.properties;
         }
 
-        // At the leaf level, add all non-literal properties
+        // Track wire names already seen from top-level to avoid duplicates
+        const seenWireNames = new Set<string>();
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) !== unwrapPath[0]) {
+                seenWireNames.add(getWireValue(prop.name));
+            }
+        }
+
+        // At the leaf level, add all non-auto-fillable properties (skip wire-name collisions)
         if (currentProps != null) {
             for (const prop of currentProps) {
-                const resolvedType = context.type.resolveTypeReference(prop.valueType);
-                const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
-                if (!isLiteral) {
-                    const type = context.type.getReferenceToType(prop.valueType);
-                    const propName = this.getPropertyNameOfTypeDeclarationProperty(prop);
-                    properties.push({
-                        name: getPropertyKey(propName.propertyName),
-                        safeName: getPropertyKey(propName.safeName),
-                        type: type.typeNodeWithoutUndefined,
-                        isOptional: type.isOptional,
-                        docs: prop.docs ? [prop.docs] : undefined
-                    });
+                if (this.isAutoFillableProperty(prop.valueType, context)) {
+                    continue;
                 }
+                const wireValue = getWireValue(prop.name);
+                if (seenWireNames.has(wireValue)) {
+                    continue;
+                }
+                seenWireNames.add(wireValue);
+                const type = context.type.getReferenceToType(prop.valueType);
+                const propName = this.getPropertyNameOfTypeDeclarationProperty(prop);
+                properties.push({
+                    name: getPropertyKey(propName.propertyName),
+                    safeName: getPropertyKey(propName.safeName),
+                    type: type.typeNodeWithoutUndefined,
+                    isOptional: type.isOptional,
+                    docs: prop.docs ? [prop.docs] : undefined
+                });
             }
         }
 
         return properties;
+    }
+
+    /**
+     * Returns true if the property type is auto-fillable (literal or single-value enum).
+     * Such properties are not exposed to the SDK user — they are auto-filled during serialization.
+     */
+    private isAutoFillableProperty(valueType: FernIr.TypeReference, context: FileContext): boolean {
+        const resolvedType = context.type.resolveTypeReference(valueType);
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return true;
+        }
+        if (valueType.type === "named") {
+            const typeDecl = context.type.getTypeDeclaration({
+                typeId: valueType.typeId,
+                fernFilepath: valueType.fernFilepath,
+                name: valueType.name,
+                displayName: valueType.displayName
+            });
+            if (typeDecl?.shape.type === "enum" && typeDecl.shape.values.length === 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Resolves a type reference to its object properties, following aliases and walking extends.
+     * Returns all properties including those from extended types.
+     */
+    private resolveObjectPropertiesFromTypeRef(
+        valueType: FernIr.TypeReference,
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        if (valueType.type !== "named") {
+            return undefined;
+        }
+        return this.resolveObjectPropertiesFromNamedType(
+            { typeId: valueType.typeId, fernFilepath: valueType.fernFilepath, name: valueType.name, displayName: valueType.displayName },
+            context
+        );
+    }
+
+    private resolveObjectPropertiesFromNamedType(
+        namedType: { typeId: string; fernFilepath: FernIr.FernFilepath; name: FernIr.NameOrString; displayName: string | undefined },
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        let typeDecl = context.type.getTypeDeclaration(namedType);
+        if (typeDecl == null) {
+            return undefined;
+        }
+        // Follow alias chain
+        while (typeDecl?.shape.type === "alias" && typeDecl.shape.aliasOf.type === "named") {
+            typeDecl = context.type.getTypeDeclaration({
+                typeId: typeDecl.shape.aliasOf.typeId,
+                fernFilepath: typeDecl.shape.aliasOf.fernFilepath,
+                name: typeDecl.shape.aliasOf.name,
+                displayName: typeDecl.shape.aliasOf.displayName
+            });
+        }
+        if (typeDecl?.shape.type !== "object") {
+            return undefined;
+        }
+        const result: FernIr.ObjectProperty[] = [];
+        for (const ext of typeDecl.shape.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(ext, context);
+            if (extProps != null) {
+                result.push(...extProps);
+            }
+        }
+        result.push(...typeDecl.shape.properties);
+        return result;
     }
 
     private getFlattenedInlinedRequestBodyProperties(
