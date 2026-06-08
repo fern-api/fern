@@ -86,7 +86,7 @@ the path the patched Cargo.toml references).
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. Only `binaryName` for now. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName` and `customCommands` (unified flag controlling types/SDK/glue generation). |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` per supported scheme. Synchronous — no disk reads. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
