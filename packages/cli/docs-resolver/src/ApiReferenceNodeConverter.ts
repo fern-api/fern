@@ -1358,55 +1358,33 @@ export class ApiReferenceNodeConverter {
                     featureFlags: undefined
                 });
             } else {
+                // Render namespace queries as a single flat entry titled with the parent field name.
+                // The first child operation provides the graphql operation data; the snippet generator
+                // uses fieldPath to wrap the request in the parent field automatically.
                 const groupOps = groupedByParent.get(entry.parentField) ?? [];
+                const firstOp = groupOps[0];
+                if (firstOp == null) {
+                    continue;
+                }
                 const fieldSlug = parentSlug.append(kebabCase(entry.parentField));
-
-                const groupChildren: FernNavigation.V1.ApiPackageChild[] = groupOps.map((op) => {
-                    const operationSlug = fieldSlug.append(op.name ?? op.id);
-                    return {
-                        id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${op.id}`),
-                        type: "graphql" as const,
-                        collapsed: undefined,
-                        operationType: op.operationType,
-                        graphqlOperationId: APIV1Read.GraphQlOperationId(op.id),
-                        apiDefinitionId: this.apiDefinitionId,
-                        availability: convertDocsAvailability(parentAvailability),
-                        title: op.displayName ?? op.name ?? op.id,
-                        slug: operationSlug.get(),
-                        icon: undefined,
-                        hidden: this.hideChildren,
-                        playground: undefined,
-                        authed: undefined,
-                        viewers: undefined,
-                        orphaned: undefined,
-                        featureFlags: undefined
-                    };
-                });
-
                 children.push({
-                    id: this.#idgen.get(
-                        `${this.apiDefinitionId}:graphql-group:${namespace != null ? `${namespace}:` : ""}${operationType}:${entry.parentField}`
-                    ),
-                    type: "apiPackage",
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${firstOp.id}`),
+                    type: "graphql" as const,
                     collapsed: undefined,
-                    children: groupChildren,
-                    title: titleCase(entry.parentField),
+                    operationType: firstOp.operationType,
+                    graphqlOperationId: APIV1Read.GraphQlOperationId(firstOp.id),
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: convertDocsAvailability(parentAvailability),
+                    title: entry.parentField,
                     slug: fieldSlug.get(),
                     icon: undefined,
                     hidden: this.hideChildren,
-                    overviewPageId: undefined,
-                    collapsible: undefined,
-                    collapsedByDefault: undefined,
-                    availability: convertDocsAvailability(parentAvailability),
-                    apiDefinitionId: this.apiDefinitionId,
-                    pointsTo: undefined,
-                    noindex: undefined,
                     playground: undefined,
                     authed: undefined,
                     viewers: undefined,
                     orphaned: undefined,
                     featureFlags: undefined
-                } as ApiPackageNodeWithCollapsibleConfig);
+                });
             }
         }
 
