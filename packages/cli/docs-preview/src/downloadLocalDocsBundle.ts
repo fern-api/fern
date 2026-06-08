@@ -574,7 +574,7 @@ export async function downloadBundle({
             try {
                 // install esbuild
                 logger.debug("Installing esbuild");
-                await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
+                await loggingExeca(logger, "pnpm", ["i", "-w", "esbuild"], {
                     cwd: absolutePathToBundleFolder,
                     doNotPipeOutput: true
                 });
@@ -603,7 +603,7 @@ export async function downloadBundle({
                         try {
                             // Try installing esbuild again after upgrading corepack
                             logger.debug("Installing esbuild after upgrading corepack");
-                            await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
+                            await loggingExeca(logger, "pnpm", ["i", "-w", "esbuild"], {
                                 cwd: absolutePathToBundleFolder,
                                 doNotPipeOutput: true
                             });
