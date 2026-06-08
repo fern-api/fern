@@ -557,6 +557,16 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         valueType: FernIr.TypeReference,
         context: FileContext
     ): FernIr.ObjectProperty[] | undefined {
+        // Unwrap Container.Optional and Container.Nullable to extract the inner reference.
+        if (valueType.type === "container") {
+            if (valueType.container.type === "optional") {
+                return this.resolveAllObjectProperties(valueType.container.optional, context);
+            }
+            if (valueType.container.type === "nullable") {
+                return this.resolveAllObjectProperties(valueType.container.nullable, context);
+            }
+            return undefined;
+        }
         if (valueType.type !== "named") {
             return undefined;
         }

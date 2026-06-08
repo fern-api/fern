@@ -4633,7 +4633,20 @@ func resolveInferredAuthParams(auth *ir.ApiAuth, services map[ir.ServiceId]*ir.H
 // returning the object properties if the type is a named object type.
 // If the type is an alias, it follows the alias chain until it reaches an object.
 func resolveObjectProperties(typeRef *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) []*ir.ObjectProperty {
-	if typeRef == nil || typeRef.Named == nil {
+	if typeRef == nil {
+		return nil
+	}
+	// Unwrap Container.Optional and Container.Nullable to extract the inner reference.
+	if typeRef.Container != nil {
+		if typeRef.Container.Optional != nil {
+			return resolveObjectProperties(typeRef.Container.Optional, types)
+		}
+		if typeRef.Container.Nullable != nil {
+			return resolveObjectProperties(typeRef.Container.Nullable, types)
+		}
+		return nil
+	}
+	if typeRef.Named == nil {
 		return nil
 	}
 	typeDecl, ok := types[typeRef.Named.TypeId]
@@ -4825,6 +4838,21 @@ func extractLiteralValue(typeRef *ir.TypeReference) *ir.Literal {
 	return nil
 }
 
+// resolveExtendsProperties returns all inherited properties from inlinedRequestBody.Extends.
+func resolveExtendsProperties(inlinedRequestBody *ir.InlinedRequestBody, types map[common.TypeId]*ir.TypeDeclaration) []*ir.ObjectProperty {
+	var result []*ir.ObjectProperty
+	for _, ext := range inlinedRequestBody.Extends {
+		extRef := &ir.TypeReference{Named: &ir.NamedType{
+			TypeId:       ext.TypeId,
+			FernFilepath: ext.FernFilepath,
+			Name:         ext.Name,
+			DisplayName:  ext.DisplayName,
+		}}
+		result = append(result, resolveObjectProperties(extRef, types)...)
+	}
+	return result
+}
+
 // writeUnwrappedMarshalJSON generates a MarshalJSON method that builds the nested wire format
 // from flat struct fields.
 func writeUnwrappedMarshalJSON(
@@ -4841,11 +4869,29 @@ func writeUnwrappedMarshalJSON(
 	f.P("func (", receiver, " *", typeName, ") MarshalJSON() ([]byte, error) {")
 	f.P("body := make(map[string]interface{})")
 
-	// Top-level non-path properties
+	// Top-level non-path properties (includes both direct and extended properties)
 	for _, prop := range inlinedRequestBody.Properties {
 		if prop.Name.WireValue == pathRoot {
 			continue
 		}
+		if val := getAutoFillValue(prop.ValueType, f.types); val != "" {
+			f.P(`body["`, prop.Name.WireValue, `"] = `, val)
+			continue
+		}
+		fieldName := goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName)
+		goType := typeReferenceToGoType(prop.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+		if strings.HasPrefix(goType, "*") || strings.HasPrefix(goType, "map[") || strings.HasPrefix(goType, "[]") {
+			f.P("if ", receiver, ".", fieldName, " != nil {")
+			f.P(`body["`, prop.Name.WireValue, `"] = `, receiver, ".", fieldName)
+			f.P("}")
+		} else {
+			f.P(`body["`, prop.Name.WireValue, `"] = `, receiver, ".", fieldName)
+		}
+	}
+
+	// Extended (inherited) properties
+	extProps := resolveExtendsProperties(inlinedRequestBody, f.types)
+	for _, prop := range extProps {
 		if val := getAutoFillValue(prop.ValueType, f.types); val != "" {
 			f.P(`body["`, prop.Name.WireValue, `"] = `, val)
 			continue
@@ -5009,6 +5055,20 @@ func writeUnwrappedUnmarshalJSON(
 		f.P("}")
 	}
 
+	// Unmarshal extended (inherited) properties
+	unmarshalExtProps := resolveExtendsProperties(inlinedRequestBody, f.types)
+	for _, prop := range unmarshalExtProps {
+		if getAutoFillValue(prop.ValueType, f.types) != "" {
+			continue
+		}
+		fieldName := goExportedFieldName(prop.Name.Name.PascalCase.UnsafeName)
+		f.P(`if v, ok := raw["`, prop.Name.WireValue, `"]; ok {`)
+		f.P("if err := json.Unmarshal(v, &", receiver, ".", fieldName, "); err != nil {")
+		f.P("return err")
+		f.P("}")
+		f.P("}")
+	}
+
 	// Navigate through nested path segments via json.RawMessage
 	currentMapVar := "raw"
 	for i := 0; i < len(unwrapPath); i++ {
@@ -5049,7 +5109,32 @@ func writeUnwrappedUnmarshalJSON(
 	}
 
 	if extraProperties {
-		f.P(receiver, ".ExtraProperties = raw")
+		// Collect known top-level wire names to exclude from extra properties.
+		f.P(receiver, ".ExtraProperties = make(map[string]interface{})")
+		f.P("for k, v := range raw {")
+		// Build the set of known wire names inline
+		knownNames := []string{pathRoot}
+		for _, prop := range inlinedRequestBody.Properties {
+			if prop.Name.WireValue != pathRoot {
+				knownNames = append(knownNames, prop.Name.WireValue)
+			}
+		}
+		for _, prop := range resolveExtendsProperties(inlinedRequestBody, f.types) {
+			knownNames = append(knownNames, prop.Name.WireValue)
+		}
+		// Generate switch to skip known names
+		f.P("switch k {")
+		for _, name := range knownNames {
+			f.P(`case "`, name, `":`)
+		}
+		f.P("default:")
+		f.P("var parsed interface{}")
+		f.P("if err := json.Unmarshal(v, &parsed); err != nil {")
+		f.P("return err")
+		f.P("}")
+		f.P(receiver, ".ExtraProperties[k] = parsed")
+		f.P("}")
+		f.P("}")
 	}
 	f.P("return nil")
 	f.P("}")

@@ -190,6 +190,14 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def _resolve_object_properties(self, type_ref: ir_types.TypeReference) -> Optional[List[ir_types.ObjectProperty]]:
         type_union = type_ref.get_as_union()
+        # Unwrap Container.Optional and Container.Nullable to extract the inner reference.
+        if type_union.type == "container":
+            container = type_union.container.get_as_union()
+            if container.type == "optional":
+                return self._resolve_object_properties(container.optional)
+            if container.type == "nullable":
+                return self._resolve_object_properties(container.nullable)
+            return None
         if type_union.type != "named":
             return None
         try:
