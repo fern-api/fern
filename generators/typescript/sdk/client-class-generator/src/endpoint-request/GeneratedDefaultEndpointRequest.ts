@@ -558,13 +558,23 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             return undefined;
         }
         return this.resolveObjectPropertiesFromNamedType(
-            { typeId: valueType.typeId, fernFilepath: valueType.fernFilepath, name: valueType.name, displayName: valueType.displayName },
+            {
+                typeId: valueType.typeId,
+                fernFilepath: valueType.fernFilepath,
+                name: valueType.name,
+                displayName: valueType.displayName
+            },
             context
         );
     }
 
     private resolveObjectPropertiesFromNamedType(
-        namedType: { typeId: string; fernFilepath: FernIr.FernFilepath; name: FernIr.NameOrString; displayName: string | undefined },
+        namedType: {
+            typeId: string;
+            fernFilepath: FernIr.FernFilepath;
+            name: FernIr.NameOrString;
+            displayName: string | undefined;
+        },
         context: FileContext
     ): FernIr.ObjectProperty[] | undefined {
         let typeDecl = context.type.getTypeDeclaration(namedType);
