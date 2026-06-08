@@ -1,12 +1,12 @@
-import { anySignal, getTimeoutSignal } from "../../../core/fetcher/signals";
+import { anySignal, getTimeoutSignal } from "../../../src/core/fetcher/signals";
 
 describe("Test getTimeoutSignal", () => {
     beforeEach(() => {
-        vi.useFakeTimers();
+        jest.useFakeTimers();
     });
 
     afterEach(() => {
-        vi.useRealTimers();
+        jest.useRealTimers();
     });
 
     it("should return an object with signal and abortId", () => {
@@ -24,10 +24,10 @@ describe("Test getTimeoutSignal", () => {
 
         expect(signal.aborted).toBe(false);
 
-        vi.advanceTimersByTime(timeoutMs - 1);
+        jest.advanceTimersByTime(timeoutMs - 1);
         expect(signal.aborted).toBe(false);
 
-        vi.advanceTimersByTime(1);
+        jest.advanceTimersByTime(1);
         expect(signal.aborted).toBe(true);
     });
 });
@@ -65,5 +65,50 @@ describe("Test anySignal", () => {
 
         const signal = anySignal(controller1.signal, controller2.signal);
         expect(signal.aborted).toBe(true);
+    });
+
+    it("should detect a signal that aborts between the initial aborted check and the event listener registration", () => {
+        const ctrlA = new AbortController();
+        const ctrlB = new AbortController();
+
+        const originalAddEventListener = ctrlA.signal.addEventListener.bind(ctrlA.signal);
+        const originalRemoveEventListener = ctrlA.signal.removeEventListener.bind(ctrlA.signal);
+
+        let abortedAccessCount = 0;
+        const proxy = new Proxy(ctrlA.signal, {
+            get(target, prop, receiver) {
+                if (prop === "aborted") {
+                    abortedAccessCount++;
+                    if (abortedAccessCount === 1) return false;
+                    return Reflect.get(target, prop, receiver);
+                }
+                if (prop === "addEventListener") {
+                    return (...args: Parameters<typeof originalAddEventListener>) => {
+                        if (abortedAccessCount >= 1 && args[0] === "abort") {
+                            ctrlA.abort("too-late");
+                        }
+                        return originalAddEventListener(...args);
+                    };
+                }
+                if (prop === "removeEventListener") {
+                    return originalRemoveEventListener;
+                }
+                return Reflect.get(target, prop, receiver);
+            },
+        });
+
+        const combined = anySignal(proxy, ctrlB.signal);
+
+        expect(combined.aborted).toBe(true);
+        expect(combined.reason).toBe("too-late");
+    });
+
+    it("should forward the abort reason from a source signal", () => {
+        const controller = new AbortController();
+        const combined = anySignal(controller.signal);
+
+        controller.abort("test-reason");
+        expect(combined.aborted).toBe(true);
+        expect(combined.reason).toBe("test-reason");
     });
 });

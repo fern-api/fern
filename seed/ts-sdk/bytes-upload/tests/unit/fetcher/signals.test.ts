@@ -2,11 +2,11 @@ import { anySignal, getTimeoutSignal } from "../../../src/core/fetcher/signals";
 
 describe("Test getTimeoutSignal", () => {
     beforeEach(() => {
-        vi.useFakeTimers();
+        jest.useFakeTimers();
     });
 
     afterEach(() => {
-        vi.useRealTimers();
+        jest.useRealTimers();
     });
 
     it("should return an object with signal and abortId", () => {
@@ -24,10 +24,10 @@ describe("Test getTimeoutSignal", () => {
 
         expect(signal.aborted).toBe(false);
 
-        vi.advanceTimersByTime(timeoutMs - 1);
+        jest.advanceTimersByTime(timeoutMs - 1);
         expect(signal.aborted).toBe(false);
 
-        vi.advanceTimersByTime(1);
+        jest.advanceTimersByTime(1);
         expect(signal.aborted).toBe(true);
     });
 });
