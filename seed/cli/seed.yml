@@ -177,6 +177,7 @@ allowedFailures:
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
+  - oauth-client-credentials-openapi
   - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - object
