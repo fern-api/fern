@@ -180,6 +180,8 @@ impl GraphqlBinding {
             f(matches, ctx)
         })
     }
+
+
 }
 
 impl Binding for GraphqlBinding {
