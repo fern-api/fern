@@ -255,6 +255,13 @@ fixtures:
         inline-path-parameters: false
         elide-path-parameter-wrappers: true
       outputFolder: no-inline-path-parameters
+  csharp-elide-path-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inline-path-parameters: false
+        elide-path-parameter-wrappers: true
+      outputFolder: no-inline-path-parameters
   csharp-grpc-proto:
     - customConfig: null
       outputFolder: no-custom-config

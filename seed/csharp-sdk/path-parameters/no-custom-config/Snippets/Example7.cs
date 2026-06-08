@@ -9,15 +9,11 @@ public partial class Examples
             }
         );
 
-        await client.User.CreateUserAsync(
-            "tenant_id",
-            new User {
-                Name = "name",
-                Tags = new List<string>(){
-                    "tags",
-                    "tags",
-                }
-
+        await client.User.GetUserMetadataAsync(
+            new GetUserMetadataRequest {
+                TenantId = "tenant_id",
+                UserId = "user_id",
+                Version = 1
             }
         );
     }

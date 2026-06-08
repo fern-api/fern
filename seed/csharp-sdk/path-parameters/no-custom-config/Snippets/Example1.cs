@@ -9,11 +9,11 @@ public partial class Examples
             }
         );
 
-        await client.Headers.GetHeadersPathParamAsync(
-            new GetHeadersPathParamRequest {
+        await client.Organizations.GetOrganizationUserAsync(
+            new GetOrganizationUserRequest {
                 TenantId = "tenant_id",
-                HeaderId = "header_id",
-                XTenantId = "X-Tenant-Id"
+                OrganizationId = "organization_id",
+                UserId = "user_id"
             }
         );
     }

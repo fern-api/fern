@@ -9,10 +9,11 @@ public partial class Examples
             }
         );
 
-        await client.User.GetUserAsync(
-            new GetUsersRequest {
+        await client.User.SearchUsersAsync(
+            new SearchUsersRequest {
                 TenantId = "tenant_id",
-                UserId = "user_id"
+                UserId = "user_id",
+                Limit = 1
             }
         );
     }

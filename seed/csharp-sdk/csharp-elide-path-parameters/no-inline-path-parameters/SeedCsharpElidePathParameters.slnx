@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedCsharpElidePathParameters.Test/SeedCsharpElidePathParameters.Test.csproj" />
+  <Project Path="src/SeedCsharpElidePathParameters/SeedCsharpElidePathParameters.csproj" />
+</Solution>
