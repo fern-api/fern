@@ -1332,7 +1332,12 @@ export class ApiReferenceNodeConverter {
 
         for (const entry of insertionOrder) {
             if (entry.type === "flat") {
-                const operationSlug = parentSlug.append(entry.operation.name ?? entry.operation.id);
+                const fieldPath = (entry.operation as { fieldPath?: string[] }).fieldPath;
+                const slugSegment =
+                    fieldPath != null && fieldPath.length > 0
+                        ? [...fieldPath, entry.operation.name ?? entry.operation.id].join("-")
+                        : (entry.operation.name ?? entry.operation.id);
+                const operationSlug = parentSlug.append(slugSegment);
                 children.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${entry.operation.id}`),
                     type: "graphql" as const,
@@ -1352,10 +1357,7 @@ export class ApiReferenceNodeConverter {
                     featureFlags: undefined
                 });
             } else {
-                const groupOps = groupedByParent.get(entry.parentField);
-                if (groupOps == null) {
-                    continue;
-                }
+                const groupOps = groupedByParent.get(entry.parentField) ?? [];
                 const fieldSlug = parentSlug.append(kebabCase(entry.parentField));
 
                 const groupChildren: FernNavigation.V1.ApiPackageChild[] = groupOps.map((op) => {
