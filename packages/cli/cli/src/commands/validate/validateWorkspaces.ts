@@ -1,14 +1,17 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { type ValidationViolation } from "@fern-api/fern-definition-validator";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
+import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
+import { validateMdxFiles } from "./validateMdx.js";
 
 export async function validateWorkspaces({
     project,
@@ -69,6 +72,60 @@ export async function validateWorkspaces({
             };
 
             if (collected.hasErrors) {
+                hasAnyErrors = true;
+            }
+        }
+
+        // Run MDX validation and add violations to docsResult
+        const mdValidateSeverity = docsWorkspace.config.check?.rules?.mdValidate ?? "warn";
+        let mdxViolations: ValidationViolation[] = [];
+        await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+            const { errors } = await validateMdxFiles({ workspace: docsWorkspace, context });
+            mdxViolations = errors.map((error) => {
+                const relativePath = path.relative(path.join(docsWorkspace.absoluteFilePath), error.filepath);
+                let richMessage = error.message;
+                if (error.contextLines && error.contextLines.length > 0) {
+                    richMessage += "\n";
+                    const maxLineNum = Math.max(...error.contextLines.map((ctx) => ctx.lineNumber));
+                    const lineNumWidth = String(maxLineNum).length;
+                    for (const ctx of error.contextLines) {
+                        const lineNumStr = String(ctx.lineNumber).padStart(lineNumWidth, " ");
+                        const displayContent = ctx.content.replace(/\t/g, "    ");
+                        if (ctx.isErrorLine) {
+                            richMessage += `\n  ${lineNumStr} | ${displayContent}`;
+                            if (error.column != null && error.column > 0) {
+                                let visualColumn = 0;
+                                for (let i = 0; i < Math.min(error.column - 1, ctx.content.length); i++) {
+                                    visualColumn += ctx.content[i] === "\t" ? 4 : 1;
+                                }
+                                const caretPadding = " ".repeat(lineNumWidth + 3 + visualColumn);
+                                richMessage += `\n  ${caretPadding}^`;
+                            }
+                        } else {
+                            richMessage += `\n  ${lineNumStr} | ${displayContent}`;
+                        }
+                    }
+                }
+                const filePart =
+                    error.line != null
+                        ? `${relativePath}:${error.line}${error.column != null ? `:${error.column}` : ""}`
+                        : relativePath;
+                return {
+                    severity: mdValidateSeverity === "error" ? "error" : "warning",
+                    name: "md-validate",
+                    message: richMessage,
+                    relativeFilepath: RelativeFilePath.of(filePart),
+                    nodePath: []
+                } satisfies ValidationViolation;
+            });
+        });
+
+        if (mdxViolations.length > 0) {
+            if (docsResult == null) {
+                docsResult = { violations: [], elapsedMillis: 0 };
+            }
+            docsResult.violations.push(...mdxViolations);
+            if (mdValidateSeverity === "error") {
                 hasAnyErrors = true;
             }
         }

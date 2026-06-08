@@ -6,10 +6,10 @@ No API definition found. Expected one of the following:
   - An api section in generators.yml pointing to your API spec(s)
   - A definition/ directory with Fern Definition files
 For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
-All checks passed"
+[docs]: Unexpected. Docs have neither navigation or versions defined."
 `;
 
-exports[`validate > no-api 1`] = `"Missing file: api.yml"`;
+exports[`validate > no-api 1`] = `"[docs]:Unexpected. Docs have neither navigation or versions defined."`;
 
 exports[`validate > no-generator 1`] = `
 "Detected empty API definition: api1. Remove to resolve error.
@@ -20,10 +20,16 @@ For more information, see https://buildwithfern.com/learn/api-definition/introdu
 `;
 
 exports[`validate > simple 1`] = `
-"[sdk] 2 errors
+"[api] 2 errors
+
+    No Missing Error Discriminant (1 issue)
+
     [error]
         path: api.yml -> error-discrimination
         issue: error-discrimination is required because this API has declared errors.
+
+
+    No Undefined Type Reference (1 issue)
 
     [error]
         path: other.yml -> types -> MyType
