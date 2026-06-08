@@ -371,14 +371,17 @@ function propagateToDownstream(softwareName: string, config: SoftwareConfig, cha
     const writtenPaths: string[] = [];
 
     // Determine the highest severity type from the source changes.
-    let highestType: ChangelogEntry["type"] = "chore";
+    // Initialize from the first entry so patch-level types propagate
+    // faithfully (fix → fix, not fix → chore).
+    let highestType: ChangelogEntry["type"] | undefined;
     for (const change of changes) {
         for (const entry of change.entries) {
-            if (getSeverityFromType(entry.type) === "minor") {
+            if (highestType === undefined || getSeverityFromType(entry.type) === "minor") {
                 highestType = entry.type;
             }
         }
     }
+    highestType = highestType ?? "chore";
 
     for (const targetKey of targets) {
         const targetConfig = allConfigs.software[targetKey];
