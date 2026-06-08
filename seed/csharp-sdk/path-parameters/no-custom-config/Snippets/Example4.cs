@@ -9,15 +9,11 @@ public partial class Examples
             }
         );
 
-        await client.User.CreateUserAsync(
+        await client.Organizations.SearchOrganizationsAsync(
             "tenant_id",
-            new User {
-                Name = "name",
-                Tags = new List<string>(){
-                    "tags",
-                    "tags",
-                }
-
+            "organization_id",
+            new SearchOrganizationsRequest {
+                Limit = 1
             }
         );
     }

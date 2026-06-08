@@ -4,6 +4,30 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/{tenant_id}/headers/{header_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_headers.getHeadersPathParam"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Headers.GetHeadersPathParamAsync(\n    \"tenant_id\",\n    \"header_id\",\n    new GetHeadersPathParamRequest { XTenantId = \"X-Tenant-Id\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/{tenant_id}/headers/{header_id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_headers.getHeadersPathParamBody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPathParameters;\n\nvar client = new SeedPathParametersClient();\nawait client.Headers.GetHeadersPathParamBodyAsync(\n    \"tenant_id\",\n    \"header_id\",\n    new GetHeadersPathParamBodyRequest\n    {\n        XTenantId = \"X-Tenant-Id\",\n        Body = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}/",
                 "method": "GET",
                 "identifier_override": "endpoint_organizations.getOrganization"

@@ -2,18 +2,18 @@ using SeedPathParameters;
 
 public partial class Examples
 {
-    public async Task Example8() {
+    public async Task Example9() {
         var client = new SeedPathParametersClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.User.SearchUsersAsync(
-            "tenant_id",
-            "user_id",
-            new SearchUsersRequest {
-                Limit = 1
+        await client.User.GetUserMetadataAsync(
+            new GetUserMetadataRequest {
+                TenantId = "tenant_id",
+                UserId = "user_id",
+                Version = 1
             }
         );
     }

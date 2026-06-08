@@ -26,9 +26,15 @@ public partial class SeedPathParametersClient : ISeedPathParametersClient
             }
         }
         _client = new RawClient(clientOptions);
+        Bytes = new BytesClient(_client);
+        Headers = new HeadersClient(_client);
         Organizations = new OrganizationsClient(_client);
         User = new UserClient(_client);
     }
+
+    public IBytesClient Bytes { get; }
+
+    public IHeadersClient Headers { get; }
 
     public IOrganizationsClient Organizations { get; }
 

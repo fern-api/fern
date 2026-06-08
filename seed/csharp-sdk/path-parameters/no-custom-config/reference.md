@@ -1,4 +1,133 @@
 # Reference
+## Bytes
+## Headers
+<details><summary><code>client.Headers.<a href="/src/SeedPathParameters/Headers/HeadersClient.cs">GetHeadersPathParamAsync</a>(GetHeadersPathParamRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Endpoint with only path parameters but service-level headers. The wrapper should NOT be elided because it holds the service header field.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Headers.GetHeadersPathParamAsync(
+    new GetHeadersPathParamRequest
+    {
+        TenantId = "tenant_id",
+        HeaderId = "header_id",
+        XTenantId = "X-Tenant-Id",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetHeadersPathParamRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Headers.<a href="/src/SeedPathParameters/Headers/HeadersClient.cs">GetHeadersPathParamBodyAsync</a>(GetHeadersPathParamBodyRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Endpoint with path parameter + body + service-level headers. The wrapper should NOT be unwrapped because of service headers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Headers.GetHeadersPathParamBodyAsync(
+    new GetHeadersPathParamBodyRequest
+    {
+        TenantId = "tenant_id",
+        HeaderId = "header_id",
+        XTenantId = "X-Tenant-Id",
+        Body = new User
+        {
+            Name = "name",
+            Tags = new List<string>() { "tags", "tags" },
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetHeadersPathParamBodyRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations
 <details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationAsync</a>(tenantId, organizationId) -> WithRawResponseTask&lt;Organization&gt;</code></summary>
 <dl>

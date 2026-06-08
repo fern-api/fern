@@ -2,18 +2,19 @@ using SeedPathParameters;
 
 public partial class Examples
 {
-    public async Task Example0() {
+    public async Task Example10() {
         var client = new SeedPathParametersClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Headers.GetHeadersPathParamAsync(
-            new GetHeadersPathParamRequest {
+        await client.User.GetUserSpecificsAsync(
+            new GetUserSpecificsRequest {
                 TenantId = "tenant_id",
-                HeaderId = "header_id",
-                XTenantId = "X-Tenant-Id"
+                UserId = "user_id",
+                Version = 1,
+                Thought = "thought"
             }
         );
     }

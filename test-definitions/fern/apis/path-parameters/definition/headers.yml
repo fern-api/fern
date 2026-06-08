@@ -1,0 +1,33 @@
+imports:
+  user: user.yml
+
+service:
+  base-path: /headers
+  auth: false
+  headers:
+    X-Tenant-Id: string
+  endpoints:
+    getHeadersPathParam:
+      docs: >
+        Endpoint with only path parameters but service-level headers.
+        The wrapper should NOT be elided because it holds the service header field.
+      path: "/{header_id}"
+      method: GET
+      request:
+        name: GetHeadersPathParamRequest
+        path-parameters:
+          header_id: string
+      response: user.User
+
+    getHeadersPathParamBody:
+      docs: >
+        Endpoint with path parameter + body + service-level headers.
+        The wrapper should NOT be unwrapped because of service headers.
+      path: "/{header_id}"
+      method: PATCH
+      request:
+        name: GetHeadersPathParamBodyRequest
+        path-parameters:
+          header_id: string
+        body: user.User
+      response: user.User
