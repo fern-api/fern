@@ -359,7 +359,7 @@ dependencies = [
  "httpdate",
  "libc",
  "percent-encoding",
- "query_parameters_api_types",
+ "query_parameters_api_sdk",
  "reqwest",
  "secrecy",
  "serde_json_path",
@@ -2838,6 +2838,22 @@ checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
 name = "query_parameters_api_types"
 version = "0.0.0"
 dependencies = [
+ "base64",
+ "chrono",
+ "num-bigint",
+ "ordered-float",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "query_parameters_api_sdk"
+version = "0.0.0"
+dependencies = [
+ "query_parameters_api_types",
+ "futures",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tokio",
 ]

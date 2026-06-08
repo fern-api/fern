@@ -3139,14 +3139,169 @@ fn validate_value(
         }
     };
 
-    // If the top-level schema is an object
-    if schema.schema_type.as_deref() == Some("object") || !schema.properties.is_empty() {
+    // Null on a nullable schema is always valid — mirrors the property-
+    // level null short-circuit in `validate_property`. Without this, a
+    // `$ref`-resolved schema that is `nullable: true` or contains a
+    // nullable-union composition (`oneOf: [T, null]` / `anyOf: [T, null]`)
+    // would incorrectly reject JSON null with "Expected object".
+    if value.is_null()
+        && (schema.nullable
+            || has_null_branch(&schema.one_of)
+            || has_null_branch(&schema.any_of))
+    {
+        return;
+    }
+
+    // Enter the object branch on a standard object schema *or* an
+    // `allOf`-only root (no `type:` declared but composition branches
+    // contribute the property set). See ADR-0004.
+    let has_all_of = !schema.all_of.is_empty();
+    if schema.schema_type.as_deref() == Some("object")
+        || !schema.properties.is_empty()
+        || has_all_of
+    {
         if let Value::Object(obj) = value {
-            validate_properties(obj, &schema.properties, &schema.required, doc, path, errors);
+            if has_all_of {
+                let (merged_props, merged_required) = merge_top_level_all_of(schema, doc);
+                validate_properties(obj, &merged_props, &merged_required, doc, path, errors);
+            } else {
+                validate_properties(obj, &schema.properties, &schema.required, doc, path, errors);
+            }
         } else {
             errors.push(format!("{path}: Expected object"));
         }
     }
+}
+
+/// Mirror of `parser::merge_all_of_properties` for the validator's IR
+/// layer (`JsonSchema` + `JsonSchemaProperty` instead of
+/// `OpenApiSchemaObject`). Walks `allOf` branches, resolving `$ref`s
+/// through `doc.schemas`, and returns the merged property map + sorted
+/// union of `required:` arrays. The schema's own properties are the
+/// final overlay (last-branch-wins per ADR-0004). The returned `Vec` is
+/// sorted so 'Missing required property X' diagnostics surface in
+/// stable order across runs.
+fn merge_top_level_all_of(
+    schema: &crate::openapi::discovery::JsonSchema,
+    doc: &RestDescription,
+) -> (
+    HashMap<String, crate::openapi::discovery::JsonSchemaProperty>,
+    Vec<String>,
+) {
+    let mut props: HashMap<String, crate::openapi::discovery::JsonSchemaProperty> = HashMap::new();
+    let mut required: std::collections::HashSet<String> = std::collections::HashSet::new();
+    for branch in &schema.all_of {
+        walk_all_of_for_validate(branch, doc, &mut props, &mut required, 0);
+    }
+    for (k, v) in &schema.properties {
+        props.insert(k.clone(), v.clone());
+    }
+    for r in &schema.required {
+        required.insert(r.clone());
+    }
+    let mut required_vec: Vec<String> = required.into_iter().collect();
+    required_vec.sort();
+    (props, required_vec)
+}
+
+/// Same merge, but for a nested `JsonSchemaProperty` that has
+/// `prop_type == "object"` with an `allOf` overlay. Returns the merged
+/// property map plus the sorted union of `required:` arrays contributed
+/// by `$ref`-resolved branches.
+///
+/// Inline `JsonSchemaProperty` branches cannot contribute `required`
+/// (the IR doesn't carry it at this layer — ADR-0004 known gap). Only
+/// `$ref`-resolved branches, which `walk_all_of_for_validate` looks up
+/// as `JsonSchema`s, surface their `required:` arrays here.
+fn merge_property_all_of(
+    prop: &crate::openapi::discovery::JsonSchemaProperty,
+    doc: &RestDescription,
+) -> (
+    HashMap<String, crate::openapi::discovery::JsonSchemaProperty>,
+    Vec<String>,
+) {
+    let mut props: HashMap<String, crate::openapi::discovery::JsonSchemaProperty> = HashMap::new();
+    let mut required: std::collections::HashSet<String> = std::collections::HashSet::new();
+    for branch in &prop.all_of {
+        walk_all_of_for_validate(branch, doc, &mut props, &mut required, 0);
+    }
+    for (k, v) in &prop.properties {
+        props.insert(k.clone(), v.clone());
+    }
+    let mut required_vec: Vec<String> = required.into_iter().collect();
+    required_vec.sort();
+    (props, required_vec)
+}
+
+/// Recursion helper for both `merge_top_level_all_of` and
+/// `merge_property_all_of`. `branch` is a `JsonSchemaProperty`; when its
+/// `$ref` is set, the helper resolves through `doc.schemas` (which holds
+/// `JsonSchema`s — the only IR layer that carries `required`).
+fn walk_all_of_for_validate(
+    branch: &crate::openapi::discovery::JsonSchemaProperty,
+    doc: &RestDescription,
+    props: &mut HashMap<String, crate::openapi::discovery::JsonSchemaProperty>,
+    required: &mut std::collections::HashSet<String>,
+    depth: u8,
+) {
+    // Match `parser::MAX_ALL_OF_DEPTH` — see ADR-0004 § Depth budget for
+    // the rationale. Inlined as a constant because the parser-side value
+    // is private and AGENTS.md forbids shared abstractions between paths.
+    const MAX_ALL_OF_DEPTH_VALIDATOR: u8 = 8;
+    if depth >= MAX_ALL_OF_DEPTH_VALIDATOR {
+        // Match the parser-side warning so cyclic $ref chains surface
+        // uniformly whether they're hit at parse time or at body
+        // validation time.
+        tracing::warn!(
+            "allOf recursion exceeded {MAX_ALL_OF_DEPTH_VALIDATOR} levels; truncating. Likely a cyclic $ref chain."
+        );
+        return;
+    }
+    if let Some(ref_name) = &branch.schema_ref {
+        if let Some(referenced) = doc.schemas.get(ref_name) {
+            for inner in &referenced.all_of {
+                walk_all_of_for_validate(inner, doc, props, required, depth + 1);
+            }
+            for (k, v) in &referenced.properties {
+                props.insert(k.clone(), v.clone());
+            }
+            for r in &referenced.required {
+                required.insert(r.clone());
+            }
+        } else {
+            tracing::warn!("allOf branch references unresolvable schema: {ref_name}");
+        }
+        return;
+    }
+    for inner in &branch.all_of {
+        walk_all_of_for_validate(inner, doc, props, required, depth + 1);
+    }
+    for (k, v) in &branch.properties {
+        props.insert(k.clone(), v.clone());
+    }
+    // Inline `JsonSchemaProperty` branches have no `required` (the IR
+    // doesn't carry it at this layer). Branch-level required from inline
+    // composition is a known gap; see ADR-0004 § Consequences.
+}
+
+/// True when any composition branch is a null sentinel — the validator's
+/// null short-circuit for ADR-0005's promoted nullable unions. Mirrors
+/// the three forms the parser's `is_null_sentinel` recognizes, after
+/// lowering to `JsonSchemaProperty`:
+///
+/// | Spec form | Lowered shape |
+/// |---|---|
+/// | `{type: 'null'}` (3.1 scalar) | `prop_type: Some("null")` |
+/// | `{type: ['null']}` (3.1 array) | `prop_type: None, nullable: true` |
+/// | `{nullable: true}` standalone (3.0 idiom) | `prop_type: None, nullable: true` |
+///
+/// Without the second clause, the validator misses the 3.0 / 3.1-array
+/// forms and would reject JSON null on a property the parser correctly
+/// promoted — a parser/validator asymmetry caught by Devin's review.
+fn has_null_branch(branches: &[crate::openapi::discovery::JsonSchemaProperty]) -> bool {
+    branches
+        .iter()
+        .any(|b| b.prop_type.as_deref() == Some("null") || (b.nullable && b.prop_type.is_none()))
 }
 
 fn validate_properties(
@@ -3207,8 +3362,16 @@ fn validate_property(
 
     // Null on a nullable property is always valid — short-circuits type
     // checking that would otherwise reject `null` for a `string` /
-    // `integer` / etc. base type.
-    if prop_schema.nullable && value.is_null() {
+    // `integer` / etc. base type. Also honors ADR-0005's nullable-union
+    // promotion: a property whose composition has a `{type: 'null'}`
+    // branch accepts null even when the intrinsic `nullable` flag is
+    // false (which it is for `anyOf: [scalar, null]` shapes, since the
+    // null-ness lives in the branch, not on the parent schema).
+    if value.is_null()
+        && (prop_schema.nullable
+            || has_null_branch(&prop_schema.one_of)
+            || has_null_branch(&prop_schema.any_of))
+    {
         return;
     }
 
@@ -3246,10 +3409,34 @@ fn validate_property(
         }
     }
 
-    // 4. Object properties validation
-    if prop_schema.prop_type.as_deref() == Some("object") && !prop_schema.properties.is_empty() {
+    // 4. Object properties validation. Enters on a standard object
+    // schema *or* an object property with an `allOf:` overlay
+    // contributing its property set (ADR-0004). Without the `has_all_of`
+    // clause on the *outer* condition, a property declared as bare
+    // `{allOf: [...]}` (no redundant `type: object`) would skip
+    // validation entirely even though the flag layer correctly flattens
+    // it — caught by Devin's review on PR #124. The parser-side mirror
+    // of this condition lives at `flatten_body_params_prefix`.
+    let has_all_of = !prop_schema.all_of.is_empty();
+    if has_all_of
+        || (prop_schema.prop_type.as_deref() == Some("object")
+            && !prop_schema.properties.is_empty())
+    {
         if let Value::Object(obj) = value {
-            validate_properties(obj, &prop_schema.properties, &[], doc, path, errors);
+            if has_all_of {
+                let (merged_props, merged_required) = merge_property_all_of(prop_schema, doc);
+                validate_properties(obj, &merged_props, &merged_required, doc, path, errors);
+            } else {
+                validate_properties(obj, &prop_schema.properties, &[], doc, path, errors);
+            }
+        } else if has_all_of {
+            // Typeless `{allOf: [...]}` property has no `prop_type` to
+            // catch the mismatch at step 2, so a non-object value would
+            // otherwise pass silently. Mirror `validate_value`'s
+            // top-level error so the user gets the same diagnostic
+            // regardless of where in the body tree the typeless allOf
+            // sits. Caught by Devin's review on PR #124.
+            errors.push(format!("{path}: Expected object"));
         }
     }
 
@@ -5492,6 +5679,426 @@ mod tests {
         let err = validate_body_against_schema(&body_not_object, "File", &doc).unwrap_err();
         assert!(err.to_string().contains("Expected object"));
     }
+
+    #[test]
+    fn test_validate_body_accepts_null_on_3_0_nullable_branch() {
+        // Regression: a composition branch in the 3.0 idiom
+        // (`{nullable: true}` with no concrete type) or the 3.1 array
+        // form (`{type: ['null']}`) lowers to a `JsonSchemaProperty`
+        // with `prop_type: None, nullable: true`. The parser's
+        // `is_null_sentinel` already recognizes both; `has_null_branch`
+        // must mirror that or else `--field null` on these spec shapes
+        // gets through the flag layer but fails body validation.
+        // Caught by Devin's review on PR #124.
+        let mut properties = HashMap::new();
+        properties.insert(
+            "authorId".to_string(),
+            JsonSchemaProperty {
+                // Wrapper property has an explicit `prop_type` so the
+                // validator's type-matching step would run and reject
+                // null without the short-circuit. This is the precise
+                // failure mode the missing recognition would create.
+                prop_type: Some("string".to_string()),
+                nullable: false,
+                any_of: vec![
+                    JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    },
+                    // Lowered form of `{nullable: true}` (3.0) or
+                    // `{type: ['null']}` (3.1 array).
+                    JsonSchemaProperty {
+                        prop_type: None,
+                        nullable: true,
+                        ..Default::default()
+                    },
+                ],
+                ..Default::default()
+            },
+        );
+        let schemas = HashMap::from([(
+            "Msg".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({ "authorId": null });
+        assert!(
+            validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+            "null on a property whose composition has a {{nullable:true}}-style branch must validate",
+        );
+    }
+
+    #[test]
+    fn test_validate_body_accepts_null_on_nullable_union_via_any_of() {
+        // ADR-0005: a property whose schema is `anyOf: [{type: string},
+        // {type: 'null'}]` must accept JSON null without raising
+        // "Expected type 'string', found null". The intrinsic
+        // `nullable` flag is false here — null-ness lives in the
+        // composition.
+        let mut properties = HashMap::new();
+        properties.insert(
+            "authorId".to_string(),
+            JsonSchemaProperty {
+                prop_type: None,
+                nullable: false,
+                any_of: vec![
+                    JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    },
+                    JsonSchemaProperty {
+                        prop_type: Some("null".to_string()),
+                        ..Default::default()
+                    },
+                ],
+                ..Default::default()
+            },
+        );
+        let schemas = HashMap::from([(
+            "Msg".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties,
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({ "authorId": null });
+        assert!(
+            validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+            "null on nullable-union must validate via any_of null branch",
+        );
+    }
+
+    #[test]
+    fn test_validate_body_root_level_all_of_enters_object_branch() {
+        // ADR-0004: a top-level schema with no `type:` declared but
+        // `all_of:` populated must still enter the object validation
+        // branch and accept the merged properties from the branches.
+        // Without this, the validator would silently skip the body.
+        let base_properties = HashMap::from([(
+            "subject".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        )]);
+        let overlay_branch = JsonSchemaProperty {
+            prop_type: Some("object".to_string()),
+            properties: HashMap::from([(
+                "body".to_string(),
+                JsonSchemaProperty {
+                    prop_type: Some("string".to_string()),
+                    ..Default::default()
+                },
+            )]),
+            ..Default::default()
+        };
+        let schemas = HashMap::from([
+            (
+                "Base".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    required: vec!["subject".to_string()],
+                    properties: base_properties,
+                    ..Default::default()
+                },
+            ),
+            (
+                "MsgRequest".to_string(),
+                JsonSchema {
+                    schema_type: None,
+                    all_of: vec![
+                        JsonSchemaProperty {
+                            schema_ref: Some("Base".to_string()),
+                            ..Default::default()
+                        },
+                        overlay_branch,
+                    ],
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        // Valid: both merged props present.
+        let body = json!({ "subject": "hi", "body": "world" });
+        assert!(
+            validate_body_against_schema(&body, "MsgRequest", &doc).is_ok(),
+            "all_of-rooted body should accept merged fields",
+        );
+        // Invalid: unknown field surfaces (proves the merged property
+        // set is being consulted, not skipped).
+        let bad = json!({ "subject": "hi", "body": "world", "stray": 1 });
+        let err = validate_body_against_schema(&bad, "MsgRequest", &doc).unwrap_err();
+        assert!(err.to_string().contains("Unknown property"));
+    }
+
+    #[test]
+    fn test_validate_body_object_property_with_all_of_overlay() {
+        // ADR-0004 nested case: an object property whose schema declares
+        // `all_of: [...]` should validate against the merged property
+        // set, not the bare `properties` map (which is empty for the
+        // synthetic JsonSchemaProperty).
+        let base_props = HashMap::from([(
+            "url".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        )]);
+        // The body's `attachment` property is `type: object` with an
+        // allOf overlay that brings in `url` from a $ref base and adds
+        // `checksum` inline.
+        let attachment_prop = JsonSchemaProperty {
+            prop_type: Some("object".to_string()),
+            all_of: vec![
+                JsonSchemaProperty {
+                    schema_ref: Some("AttachmentBase".to_string()),
+                    ..Default::default()
+                },
+                JsonSchemaProperty {
+                    prop_type: Some("object".to_string()),
+                    properties: HashMap::from([(
+                        "checksum".to_string(),
+                        JsonSchemaProperty {
+                            prop_type: Some("string".to_string()),
+                            ..Default::default()
+                        },
+                    )]),
+                    ..Default::default()
+                },
+            ],
+            ..Default::default()
+        };
+        let schemas = HashMap::from([
+            (
+                "AttachmentBase".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: base_props,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([("attachment".to_string(), attachment_prop)]),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({
+            "attachment": { "url": "https://x.example", "checksum": "abc" }
+        });
+        assert!(
+            validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+            "merged nested allOf properties should validate",
+        );
+        let bad = json!({ "attachment": { "stray": 1 } });
+        let err = validate_body_against_schema(&bad, "Msg", &doc).unwrap_err();
+        assert!(err.to_string().contains("Unknown property"));
+    }
+
+    #[test]
+    fn test_validate_body_object_property_with_typeless_all_of_overlay() {
+        // Regression: a property declared as bare `allOf: [...]` (no
+        // redundant `type: object` on the wrapper) lowers to a
+        // `JsonSchemaProperty { prop_type: None, all_of: [...] }`. The
+        // parser-side flattener correctly enters object recursion on
+        // either `prop_type == "object"` OR a non-empty `all_of`; the
+        // validator's condition must mirror that. Without the fix, an
+        // unknown field inside an allOf-typed object property would
+        // silently pass validation. Caught by Devin's review on PR #124.
+        let base_props = HashMap::from([(
+            "url".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        )]);
+        let attachment_prop = JsonSchemaProperty {
+            // Note: no `prop_type` here — the precise gap the fix addresses.
+            prop_type: None,
+            all_of: vec![
+                JsonSchemaProperty {
+                    schema_ref: Some("AttachmentBase".to_string()),
+                    ..Default::default()
+                },
+                JsonSchemaProperty {
+                    properties: HashMap::from([(
+                        "checksum".to_string(),
+                        JsonSchemaProperty {
+                            prop_type: Some("string".to_string()),
+                            ..Default::default()
+                        },
+                    )]),
+                    ..Default::default()
+                },
+            ],
+            ..Default::default()
+        };
+        let schemas = HashMap::from([
+            (
+                "AttachmentBase".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: base_props,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([("attachment".to_string(), attachment_prop)]),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        // Valid: both merged fields present, no unknowns.
+        let body = json!({
+            "attachment": { "url": "https://x.example", "checksum": "abc" }
+        });
+        assert!(
+            validate_body_against_schema(&body, "Msg", &doc).is_ok(),
+            "typeless allOf-property should validate against merged property set",
+        );
+        // Active: an unknown field should be REJECTED. Before the fix,
+        // validation was skipped entirely for this shape — the bug
+        // surfaces precisely here.
+        let bad = json!({ "attachment": { "stray": 1 } });
+        let err = validate_body_against_schema(&bad, "Msg", &doc).unwrap_err();
+        assert!(
+            err.to_string().contains("Unknown property"),
+            "typeless allOf-property should reject unknown fields: got err {err}",
+        );
+        // Active: a non-object value (e.g. string) should also be
+        // rejected. A typeless allOf-property has no `prop_type` to
+        // trigger step-2's type mismatch, so without the else-branch
+        // a non-object would silently pass. Caught by Devin's review.
+        let wrong_shape = json!({ "attachment": "not-an-object" });
+        let err = validate_body_against_schema(&wrong_shape, "Msg", &doc).unwrap_err();
+        assert!(
+            err.to_string().contains("Expected object"),
+            "typeless allOf-property should reject non-object values: got err {err}",
+        );
+    }
+
+    #[test]
+    fn test_validate_body_property_all_of_enforces_ref_resolved_required() {
+        // `merge_property_all_of` previously computed the required set
+        // from $ref-resolved branches and then discarded it, so a body
+        // like `--json '{"attachment": {}}'` against a property whose
+        // allOf includes a $ref to a schema with `required: [url]`
+        // passed silently. Now the required set is threaded through to
+        // `validate_properties`, so the missing field surfaces.
+        // (Inline-branch required is still a documented IR gap; only
+        // $ref-resolved required is enforced at the property level.)
+        let base_props = HashMap::from([(
+            "url".to_string(),
+            JsonSchemaProperty {
+                prop_type: Some("string".to_string()),
+                ..Default::default()
+            },
+        )]);
+        let attachment_prop = JsonSchemaProperty {
+            prop_type: None,
+            all_of: vec![JsonSchemaProperty {
+                schema_ref: Some("AttachmentBase".to_string()),
+                ..Default::default()
+            }],
+            ..Default::default()
+        };
+        let schemas = HashMap::from([
+            (
+                "AttachmentBase".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    required: vec!["url".to_string()],
+                    properties: base_props,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Msg".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([("attachment".to_string(), attachment_prop)]),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+
+        // Happy path: required `url` present.
+        let ok = json!({ "attachment": { "url": "https://x.example" } });
+        assert!(
+            validate_body_against_schema(&ok, "Msg", &doc).is_ok(),
+            "well-formed body should pass",
+        );
+
+        // Failure path: empty attachment object. Without the fix, this
+        // passed silently; now the missing-required check fires.
+        let missing = json!({ "attachment": {} });
+        let err = validate_body_against_schema(&missing, "Msg", &doc).unwrap_err();
+        assert!(
+            err.to_string().contains("Missing required property 'url'"),
+            "$ref-resolved required at property level must be enforced: got err {err}",
+        );
+    }
+
+    #[test]
+    fn test_validate_body_ref_to_nullable_schema_accepts_null() {
+        // A property that `$ref`s a nullable object schema must accept
+        // null. `validate_property` delegates `$ref` properties to
+        // `validate_value` before the property-level null check, so
+        // `validate_value` itself must honor `schema.nullable`.
+        let schemas = HashMap::from([
+            (
+                "NullableAddress".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    nullable: true,
+                    properties: HashMap::from([(
+                        "street".to_string(),
+                        JsonSchemaProperty {
+                            prop_type: Some("string".to_string()),
+                            ..Default::default()
+                        },
+                    )]),
+                    ..Default::default()
+                },
+            ),
+            (
+                "User".to_string(),
+                JsonSchema {
+                    schema_type: Some("object".to_string()),
+                    properties: HashMap::from([(
+                        "address".to_string(),
+                        JsonSchemaProperty {
+                            schema_ref: Some("NullableAddress".to_string()),
+                            ..Default::default()
+                        },
+                    )]),
+                    ..Default::default()
+                },
+            ),
+        ]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let body = json!({ "address": null });
+        assert!(
+            validate_body_against_schema(&body, "User", &doc).is_ok(),
+            "null on a $ref to a nullable schema must be accepted",
+        );
+    }
+
     #[tokio::test]
     async fn test_build_multipart_body() {
         let metadata = Some(json!({ "name": "test.txt", "mimeType": "text/plain" }));
@@ -8333,6 +8940,99 @@ mod tests {
         validate_value(&json!({}), "NonExistentSchema", &doc, "$", &mut errors);
         assert_eq!(errors.len(), 1);
         assert!(errors[0].contains("Schema 'NonExistentSchema' not found"));
+    }
+
+    #[test]
+    fn test_validate_value_nullable_schema_accepts_null() {
+        // A `$ref`-resolved schema with `nullable: true` must accept
+        // JSON null. Without the null short-circuit in `validate_value`,
+        // the object branch fires and emits "Expected object".
+        let schemas = HashMap::from([(
+            "NullableObj".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                nullable: true,
+                properties: HashMap::from([(
+                    "name".to_string(),
+                    JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    },
+                )]),
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let mut errors = Vec::new();
+        validate_value(&Value::Null, "NullableObj", &doc, "body", &mut errors);
+        assert!(
+            errors.is_empty(),
+            "null on a nullable schema must be accepted, got: {errors:?}",
+        );
+    }
+
+    #[test]
+    fn test_validate_value_nullable_union_composition_accepts_null() {
+        // A component schema declared as an object with a nullable-union
+        // composition (`anyOf: [string, null]` on the schema root) must
+        // accept null when accessed via `$ref`.
+        let schemas = HashMap::from([(
+            "NullableUnionObj".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties: HashMap::from([(
+                    "id".to_string(),
+                    JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    },
+                )]),
+                any_of: vec![
+                    JsonSchemaProperty {
+                        prop_type: Some("object".to_string()),
+                        ..Default::default()
+                    },
+                    JsonSchemaProperty {
+                        prop_type: Some("null".to_string()),
+                        ..Default::default()
+                    },
+                ],
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let mut errors = Vec::new();
+        validate_value(&Value::Null, "NullableUnionObj", &doc, "body", &mut errors);
+        assert!(
+            errors.is_empty(),
+            "null on a schema with an anyOf null branch must be accepted, got: {errors:?}",
+        );
+    }
+
+    #[test]
+    fn test_validate_value_non_nullable_schema_rejects_null() {
+        // Guard: a non-nullable object schema must still reject null.
+        let schemas = HashMap::from([(
+            "StrictObj".to_string(),
+            JsonSchema {
+                schema_type: Some("object".to_string()),
+                properties: HashMap::from([(
+                    "name".to_string(),
+                    JsonSchemaProperty {
+                        prop_type: Some("string".to_string()),
+                        ..Default::default()
+                    },
+                )]),
+                ..Default::default()
+            },
+        )]);
+        let doc = RestDescription { schemas, ..Default::default() };
+        let mut errors = Vec::new();
+        validate_value(&Value::Null, "StrictObj", &doc, "body", &mut errors);
+        assert!(
+            !errors.is_empty(),
+            "null on a non-nullable schema must be rejected",
+        );
     }
 
     #[test]

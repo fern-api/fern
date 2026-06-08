@@ -114,7 +114,3 @@ Generate shell completion scripts:
 allof-composition completion <bash|zsh|fish|powershell>
 ```
 
-## Documentation
-
-See [reference.md](./reference.md) for the full command reference.
-

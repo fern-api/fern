@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.query_param_name_conflict_api_types]
-path = "query-param-name-conflict-api-types"
+[dependencies.query_param_name_conflict_api_sdk]
+path = "query-param-name-conflict-api-sdk"
 
 [profile.dist]
 inherits = "release"
