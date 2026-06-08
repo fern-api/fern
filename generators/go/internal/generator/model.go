@@ -1266,6 +1266,36 @@ type literal struct {
 	Value *ir.Literal
 }
 
+// resolveObjectTypeDeclaration resolves a type ID to its underlying object
+// declaration, following alias indirection. Fern permits an object or request
+// body to extend an alias whose target (transitively) resolves to an object.
+// Returns nil if the type cannot be resolved to an object.
+func resolveObjectTypeDeclaration(
+	typeId common.TypeId,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) *ir.ObjectTypeDeclaration {
+	seen := make(map[common.TypeId]struct{})
+	for {
+		if _, ok := seen[typeId]; ok {
+			return nil
+		}
+		seen[typeId] = struct{}{}
+		typeDeclaration, ok := types[typeId]
+		if !ok || typeDeclaration == nil {
+			return nil
+		}
+		if typeDeclaration.Shape.Object != nil {
+			return typeDeclaration.Shape.Object
+		}
+		if alias := typeDeclaration.Shape.Alias; alias != nil &&
+			alias.AliasOf != nil && alias.AliasOf.Named != nil {
+			typeId = alias.AliasOf.Named.TypeId
+			continue
+		}
+		return nil
+	}
+}
+
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with
 // the object's extended properties (if any). The 'includeJSONTags' parameter controls whether or not
 // to generate JSON struct tags, which is only relevant for object types (not unions).
@@ -1284,9 +1314,17 @@ func (t *typeVisitor) visitObjectProperties(
 		literals []*literal
 		dates    []*date
 	)
+	if object == nil {
+		return &objectProperties{}
+	}
 	for _, extend := range object.Extends {
-		// You can only extend other objects.
-		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeJSONTags, includeURLTags, includeOptionals, includeLiterals)
+		// An object may extend another object directly, or an alias that
+		// (transitively) resolves to an object, so resolve through aliases.
+		extendedObject := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extendedObject == nil {
+			continue
+		}
+		extendedObjectProperties := t.visitObjectProperties(extendedObject, includeJSONTags, includeURLTags, includeOptionals, includeLiterals)
 		names = append(names, extendedObjectProperties.names...)
 		literals = append(literals, extendedObjectProperties.literals...)
 		dates = append(dates, extendedObjectProperties.dates...)
