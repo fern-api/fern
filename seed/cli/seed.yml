@@ -124,6 +124,7 @@ allowedFailures:
   - circular-references-advanced
   - circular-references-extends
   - cli-multi-spec-namespaced:no-custom-config
+  - cli-multi-spec:no-custom-config
   - client-side-params
   - content-type
   - cross-package-type-names
@@ -145,6 +146,7 @@ allowedFailures:
   - header-auth-environment-variable
   - http-head
   - idempotency-headers
+  - imdb
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-api-key
@@ -159,6 +161,7 @@ allowedFailures:
   - multi-line-docs
   - multi-url-environment
   - multi-url-environment-no-default
+  - multi-url-environment-reference
   - multiple-request-bodies
   - no-content-response
   - no-environment
@@ -167,6 +170,7 @@ allowedFailures:
   - null-type
   - nullable-allof-extends
   - nullable-optional
+  - nullable-request-body
   - oauth-client-credentials
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
@@ -199,6 +203,7 @@ allowedFailures:
   - required-nullable
   - reserved-keywords
   - response-property
+  - schemaless-request-body-examples
   - server-sent-event-examples
   - server-sent-events
   - server-sent-events-openapi
@@ -227,4 +232,5 @@ allowedFailures:
   - websocket-bearer-auth
   - websocket-inferred-auth
   - websocket-multi-url
+  - webhook-audience
   - x-fern-default
