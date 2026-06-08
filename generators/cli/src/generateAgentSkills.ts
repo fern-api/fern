@@ -263,10 +263,11 @@ function renderSkill(args: {
     lines.push(`The \`sdk_glue::sdk_client(ctx)\` call returns a \`${sdkCrateSnake}::api::Client\``);
     lines.push("with the following sub-clients:");
     lines.push("");
-    if (subClients.length > 0) {
+    const visibleClients = subClients.filter((sc) => sc.typeName !== "HttpClient");
+    if (visibleClients.length > 0) {
         lines.push("| Field | Type | Description |");
         lines.push("|-------|------|-------------|");
-        for (const sc of subClients) {
+        for (const sc of visibleClients) {
             lines.push(
                 `| \`client.${sc.fieldName}\` | \`${sdkCrateSnake}::api::${sc.typeName}\` | ${sc.fieldName} operations |`
             );
