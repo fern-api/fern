@@ -7,8 +7,8 @@ import { detectAuthBindings } from "./detectAuth.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
 import { emitReference } from "./emitReference.js";
-import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
-import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
+import { generateEmbeddedSdk, isRustSdkCliAvailable } from "./generateEmbeddedSdk.js";
+import { generateEmbeddedTypes, isRustModelCliAvailable } from "./generateEmbeddedTypes.js";
 import { generateSdkGlue } from "./generateSdkGlue.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
@@ -80,8 +80,8 @@ export async function runPipeline(args: {
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
-    const embedTypes = customConfig.embedTypes !== false && irFilepath != null;
-    const embedSdk = customConfig.embedSdk !== false && embedTypes;
+    const embedTypes = customConfig.embedTypes !== false && irFilepath != null && isRustModelCliAvailable();
+    const embedSdk = customConfig.embedSdk !== false && embedTypes && isRustSdkCliAvailable();
     await copySpecs({ outputDir, binaryName, authBindings, specsDir, embedTypes, embedSdk });
     await writeGitignore(outputDir);
     await emitReadme({
@@ -107,7 +107,9 @@ export async function runPipeline(args: {
             outputDir,
             binaryName
         });
-        await writeFernignore(outputDir, binaryName);
+        if (typesCrateName != null) {
+            await writeFernignore(outputDir, binaryName);
+        }
     }
 
     // Generate the embedded SDK crate (on by default; requires embedTypes).

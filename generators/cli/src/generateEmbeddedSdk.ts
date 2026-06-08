@@ -29,6 +29,16 @@ import { promisify } from "util";
 const execFileAsync = promisify(execFile);
 
 /**
+ * Returns true if the rust-sdk CLI can be resolved — i.e. the bundled
+ * dist exists (Docker) or the monorepo workspace package is compiled.
+ * Used by the pipeline to decide whether to enable SDK-related codegen
+ * steps *before* generating the SDK crate itself.
+ */
+export function isRustSdkCliAvailable(): boolean {
+    return resolveRustSdkCli() != null;
+}
+
+/**
  * Generate the embedded `<api>-sdk` Rust library crate.
  *
  * @param irFilepath      Path to the IR JSON file on disk.
@@ -36,15 +46,22 @@ const execFileAsync = promisify(execFile);
  *                        The SDK crate will be written to `<outputDir>/<sdkCrateName>/`.
  * @param binaryName      Kebab-case CLI binary name (used to derive crate name).
  * @param typesCrateName  Name of the co-generated types crate (e.g. `"my-api-types"`).
- * @returns The generated crate name (e.g. `"my-api-sdk"`).
+ * @returns The generated crate name, or undefined if the CLI is unavailable.
  */
+
 export async function generateEmbeddedSdk(args: {
     irFilepath: string;
     outputDir: string;
     binaryName: string;
     typesCrateName: string;
-}): Promise<string> {
+}): Promise<string | undefined> {
     const { irFilepath, outputDir, binaryName, typesCrateName } = args;
+
+    const cliEntryPoint = resolveRustSdkCli();
+    if (cliEntryPoint == null) {
+        return undefined;
+    }
+
     const sdkCrateName = `${binaryName}-sdk`;
     const sdkOutputDir = path.join(outputDir, sdkCrateName);
     await mkdir(sdkOutputDir, { recursive: true });
@@ -74,8 +91,6 @@ export async function generateEmbeddedSdk(args: {
 
     const configPath = path.join(sdkOutputDir, ".generator-config.json");
     await writeFile(configPath, JSON.stringify(generatorConfig, null, 2));
-
-    const cliEntryPoint = resolveRustSdkCli();
 
     try {
         await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
@@ -199,7 +214,7 @@ async function patchSdkCrate(args: {
  *   2. Monorepo workspace — `@fern-api/rust-sdk` package's compiled
  *      `lib/cli.js` (development, after `pnpm compile`).
  */
-function resolveRustSdkCli(): string {
+function resolveRustSdkCli(): string | undefined {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     const scriptDir: string = import.meta.dirname ?? (typeof __dirname !== "undefined" ? __dirname : ".");
 
@@ -226,9 +241,5 @@ function resolveRustSdkCli(): string {
         // fall through
     }
 
-    throw new Error(
-        "Could not resolve the @fern-api/rust-sdk CLI. " +
-            "Ensure `pnpm turbo run dist:cli --filter @fern-api/rust-sdk` has been run, " +
-            "or that @fern-api/rust-sdk is installed in the workspace."
-    );
+    return undefined;
 }

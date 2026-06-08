@@ -27,20 +27,34 @@ import { promisify } from "util";
 const execFileAsync = promisify(execFile);
 
 /**
+ * Returns true if the rust-model CLI can be resolved — i.e. the bundled
+ * dist exists (Docker) or the monorepo workspace package is compiled.
+ */
+export function isRustModelCliAvailable(): boolean {
+    return resolveRustModelCli() != null;
+}
+
+/**
  * Generate the embedded `<api>-types` Rust library crate (types only).
  *
  * @param irFilepath Path to the IR JSON file on disk.
  * @param outputDir  Absolute path to the CLI generator's output root.
  *                   The types crate will be written to `<outputDir>/<typesCrateName>/`.
  * @param binaryName Kebab-case CLI binary name (used to derive crate name).
- * @returns The generated crate name (e.g. `"my-api-types"`).
+ * @returns The generated crate name, or undefined if the CLI is unavailable.
  */
 export async function generateEmbeddedTypes(args: {
     irFilepath: string;
     outputDir: string;
     binaryName: string;
-}): Promise<string> {
+}): Promise<string | undefined> {
     const { irFilepath, outputDir, binaryName } = args;
+
+    const cliEntryPoint = resolveRustModelCli();
+    if (cliEntryPoint == null) {
+        return undefined;
+    }
+
     const typesCrateName = `${binaryName}-types`;
     const typesOutputDir = path.join(outputDir, typesCrateName);
     await mkdir(typesOutputDir, { recursive: true });
@@ -68,8 +82,6 @@ export async function generateEmbeddedTypes(args: {
 
     const configPath = path.join(typesOutputDir, ".generator-config.json");
     await writeFile(configPath, JSON.stringify(generatorConfig, null, 2));
-
-    const cliEntryPoint = resolveRustModelCli();
 
     try {
         await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
@@ -305,7 +317,7 @@ function resolveAsIsDir(): string {
  *   2. Monorepo workspace — `@fern-api/rust-model` package's compiled
  *      `lib/cli.js` (development, after `pnpm compile`).
  */
-function resolveRustModelCli(): string {
+function resolveRustModelCli(): string | undefined {
     // Resolve the directory containing this script. In the CJS bundle
     // `import.meta` is empty so we fall back to Node's native `__dirname`.
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -335,9 +347,5 @@ function resolveRustModelCli(): string {
         // fall through
     }
 
-    throw new Error(
-        "Could not resolve the @fern-api/rust-model CLI. " +
-            "Ensure `pnpm turbo run dist:cli --filter @fern-api/rust-model` has been run, " +
-            "or that @fern-api/rust-model is installed in the workspace."
-    );
+    return undefined;
 }

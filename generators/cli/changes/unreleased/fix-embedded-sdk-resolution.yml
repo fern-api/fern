@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Gracefully skip embedded SDK/types generation when the bundled CLI is
+    unavailable instead of crashing the entire generation pipeline.
+  type: fix
