@@ -30,7 +30,6 @@ If a path falls under **`softwareDirectory`**, use the matching **`changelogFold
 | `java` | `generators/java` | `generators/java/sdk/changes/unreleased/` |
 | `php` | `generators/php` | `generators/php/sdk/changes/unreleased/` |
 | `python` | `generators/python` | `generators/python/sdk/changes/unreleased/` |
-| `ruby` | `generators/ruby` | `generators/ruby/sdk/changes/unreleased/` |
 | `ruby-v2` | `generators/ruby-v2` | `generators/ruby-v2/sdk/changes/unreleased/` |
 | `rust` | `generators/rust` | `generators/rust/sdk/changes/unreleased/` |
 | `swift` | `generators/swift` | `generators/swift/sdk/changes/unreleased/` |
