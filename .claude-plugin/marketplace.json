@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "fern-api",
+  "description": "Fern marketplace — Claude Code plugins from the Fern team for generating SDKs and docs from API definitions.",
+  "owner": {
+    "name": "Fern",
+    "email": "support@buildwithfern.com"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "fern",
+      "source": "./fern",
+      "description": "Use Fern to turn an OpenAPI spec into idiomatic SDKs and a docs site. Adds skills for project init, SDK generation, docs scaffolding, validation, and local preview.",
+      "homepage": "https://buildwithfern.com",
+      "version": "0.1.0",
+      "author": {
+        "name": "Fern",
+        "email": "support@buildwithfern.com"
+      },
+      "keywords": ["fern", "openapi", "sdk", "docs", "api"]
+    }
+  ]
+}

@@ -12,3 +12,7 @@
 export function isClaudeCodeSession(): boolean {
     return process.env["CLAUDECODE"] === "1" || process.env["CLAUDE_CODE_ENTRYPOINT"] != null;
 }
+
+export function getClaudeCodeEntrypoint(): string | null {
+    return process.env["CLAUDE_CODE_ENTRYPOINT"] ?? null;
+}

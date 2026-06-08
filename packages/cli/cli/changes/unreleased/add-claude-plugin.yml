@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `fern claude` command group (install / status / skills) that helps
+    users install the Fern plugin for Claude Code. The plugin itself lives at
+    the repo root under `.claude-plugin/marketplace.json` and `plugins/fern/`
+    and ships skills for init, SDK generation, docs scaffolding, validation,
+    and local docs preview. `fern init` now also points users at
+    `fern claude install` as a follow-up.
+  type: feat

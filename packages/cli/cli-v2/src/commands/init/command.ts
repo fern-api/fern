@@ -130,6 +130,10 @@ export class InitCommand {
 
         context.stderr.info(`    3. Learn more:`);
         context.stderr.info(chalk.cyan(`       https://buildwithfern.com/learn`));
+
+        context.stderr.info(
+            `\n  ${chalk.dim("Using Claude Code? Install the Fern plugin: ")}${chalk.cyan("fern claude install")}`
+        );
     }
 
     private async validateArgs({

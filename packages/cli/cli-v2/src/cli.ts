@@ -10,6 +10,7 @@ import { addApiCommand } from "./commands/api/index.js";
 import { addAuthCommand } from "./commands/auth/index.js";
 import { addCacheCommand } from "./commands/cache/index.js";
 import { addCheckCommand } from "./commands/check/index.js";
+import { addClaudeCommand } from "./commands/claude/index.js";
 import { addConfigCommand } from "./commands/config/index.js";
 import { addDocsCommand } from "./commands/docs/index.js";
 import { addInitCommand } from "./commands/init/index.js";
@@ -107,6 +108,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     const cli: Argv<GlobalArgs> = yargs(argv ?? hideBin(process.argv))
         .scriptName("fern")
         .usage("Instant Docs and SDKs for your API.")
+        .epilog("Using Claude Code? Run 'fern claude install' to add the Fern plugin.")
         .version(Version)
         .wrap(Math.min(120, terminalWidth))
         .option("log-level", {
@@ -139,6 +141,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     addAuthCommand(cli);
     addCacheCommand(cli);
     addCheckCommand(cli);
+    addClaudeCommand(cli);
     addConfigCommand(cli);
     addDocsCommand(cli);
     addInitCommand(cli);
