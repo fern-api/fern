@@ -1,0 +1,6 @@
+- summary: |
+    Optimize `fern docs dev` hot reload for markdown-only changes. Skip full
+    project reload (re-reading all API specs and config files) and full snippet
+    dependency rebuild when only `.md`/`.mdx` files are edited, significantly
+    reducing reload times for large docs projects.
+  type: fix

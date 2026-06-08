@@ -42,6 +42,10 @@ import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from ".
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
+function isMarkdownFile(filepath: string): boolean {
+    return filepath.endsWith(".mdx") || filepath.endsWith(".md");
+}
+
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
     apis: {},
@@ -371,6 +375,46 @@ class SnippetDependencyTracker {
             }
         }
         return false;
+    }
+
+    /**
+     * Update dependency map only for specific changed files (incremental update).
+     * Much faster than rebuilding the entire map for markdown-only changes.
+     */
+    async updateDependencyMapForFiles(
+        changedFiles: AbsoluteFilePath[],
+        fernFolderPath: AbsoluteFilePath
+    ): Promise<void> {
+        for (const filePath of changedFiles) {
+            if (!isMarkdownFile(filePath)) {
+                continue;
+            }
+
+            // Remove old entries for this page
+            const oldSnippets = this.pageToSnippets.get(filePath);
+            if (oldSnippets) {
+                for (const snippet of oldSnippets) {
+                    this.snippetToPages.get(snippet)?.delete(filePath);
+                }
+            }
+
+            try {
+                const content = await readFile(filePath, "utf-8");
+                const referencedFiles = this.extractReferences(content, filePath, fernFolderPath);
+
+                this.pageToSnippets.set(filePath, referencedFiles);
+
+                for (const referencedFile of referencedFiles) {
+                    if (!this.snippetToPages.has(referencedFile)) {
+                        this.snippetToPages.set(referencedFile, new Set());
+                    }
+                    this.snippetToPages.get(referencedFile)?.add(filePath);
+                }
+            } catch {
+                this.context.logger.debug(`Failed to read markdown file ${filePath} for incremental update`);
+                this.pageToSnippets.delete(filePath);
+            }
+        }
     }
 
     /**
@@ -915,7 +959,10 @@ export async function runAppPreviewServer({
         return translations;
     }
 
-    const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
+    const reloadDocsDefinition = async (
+        editedAbsoluteFilepaths?: AbsoluteFilePath[],
+        { skipProjectReload = false }: { skipProjectReload?: boolean } = {}
+    ) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
 
@@ -923,27 +970,41 @@ export async function runAppPreviewServer({
         void debugLogger.logCliReloadStart();
 
         try {
-            project = await reloadProject();
+            if (skipProjectReload) {
+                context.logger.debug("Skipping project reload (markdown-only change)");
+                // Incrementally update snippet dependencies for changed files only
+                const fernFolderPath = project.docsWorkspaces?.absoluteFilePath;
+                if (fernFolderPath != null && editedAbsoluteFilepaths != null) {
+                    await snippetTracker.updateDependencyMapForFiles(editedAbsoluteFilepaths, fernFolderPath);
+                }
+            } else {
+                project = await reloadProject();
 
-            // Rebuild dependency map after reloading project
-            await snippetTracker.buildDependencyMap(project);
+                // Rebuild dependency map after reloading project
+                await snippetTracker.buildDependencyMap(project);
+            }
 
             // Start validation in background - don't block the reload
-            const validationStartTime = Date.now();
-            void validateProject(project)
-                .then(() => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, true);
-                })
-                .catch((err) => {
-                    const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
-                    // Still log validation errors to help developers
-                    if (err instanceof Error && err.stack) {
-                        context.logger.debug(`Validation error stack: ${err.stack}`);
-                    }
-                });
+            // Skip background validation for markdown-only changes since config hasn't changed
+            if (!skipProjectReload) {
+                const validationStartTime = Date.now();
+                void validateProject(project)
+                    .then(() => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, true);
+                    })
+                    .catch((err) => {
+                        const validationTime = Date.now() - validationStartTime;
+                        void debugLogger.logCliValidation(validationTime, false);
+                        context.logger.error(
+                            `Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`
+                        );
+                        // Still log validation errors to help developers
+                        if (err instanceof Error && err.stack) {
+                            context.logger.debug(`Validation error stack: ${err.stack}`);
+                        }
+                    });
+            }
 
             const docsGenStartTime = Date.now();
             const newPreviewResult = await getPreviewDocsDefinition({
@@ -1294,7 +1355,22 @@ export async function runAppPreviewServer({
                         );
                     }
 
-                    const reloadedPreviewResult = await reloadDocsDefinition(filesToReload);
+                    // Skip full project reload for markdown-only changes.
+                    // The project config (docs.yml, API specs) hasn't changed,
+                    // so we can reuse the existing project and go straight to
+                    // the incremental markdown update path.
+                    const allMarkdown = editedAbsoluteFilepaths.every(isMarkdownFile);
+                    const canSkipProjectReload = allMarkdown && previewResult != null;
+
+                    if (canSkipProjectReload) {
+                        context.logger.debug(
+                            `Markdown-only change detected (${editedAbsoluteFilepaths.length} file(s)), using fast reload path`
+                        );
+                    }
+
+                    const reloadedPreviewResult = await reloadDocsDefinition(filesToReload, {
+                        skipProjectReload: canSkipProjectReload
+                    });
 
                     // Update the docs definition BEFORE notifying the browser,
                     // so the backend serves fresh data when the browser refreshes.
