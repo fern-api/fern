@@ -6,10 +6,10 @@ changelogLocation: ../../generators/cli/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - cargo build --locked --all-features --tests
+      - cargo build --all-features --tests
   testScript:
     commands:
-      - cargo test --locked --all-features
+      - cargo test --all-features
 
 publish:
   preBuildCommands:
@@ -35,9 +35,9 @@ scripts:
   - image: fernapi/cli-seed
     commands:
       build:
-        - cargo build --locked --all-features --tests
+        - cargo build --all-features --tests
       test:
-        - cargo test --locked --all-features
+        - cargo test --all-features
 
 # Intentionally no `language:` field — setting it would make the
 # local-workspace-runner emit per-language dynamic-snippet tests
