@@ -1,5 +1,6 @@
 import type { Argv } from "yargs";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { makeYargsFailHandler } from "./yargsFailHandler.js";
 
 type CommandAdder = (cli: Argv<GlobalArgs>) => void;
 
@@ -38,17 +39,8 @@ export function commandGroup({
         return yargs
             .usage(usageText)
             .demandCommand(1)
-            .fail((msg, err, y) => {
-                if (err != null) {
-                    process.stderr.write(`${err.message}\n`);
-                    process.exit(1);
-                }
-                if (msg != null) {
-                    process.stderr.write(`Error: ${msg}\n\n`);
-                }
-                y.showHelp();
-                process.exit(1);
-            });
+            .recommendCommands()
+            .fail(makeYargsFailHandler({ showHelp: true }));
     };
 
     if (description == null) {

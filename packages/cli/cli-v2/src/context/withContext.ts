@@ -2,10 +2,7 @@ import { LogLevel } from "@fern-api/logger";
 import { CliError, resolveErrorCode, shouldReportToSentry, TaskAbortSignal } from "@fern-api/task-context";
 
 import chalk from "chalk";
-import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
-import { SourcedValidationError } from "../errors/SourcedValidationError.js";
-import { ValidationError } from "../errors/ValidationError.js";
-import { Icons } from "../ui/format.js";
+import { renderError } from "../errors/renderError.js";
 import { maybeNag as maybeNagForUpgrade } from "../update/UpgradeNagger.js";
 import { Context } from "./Context.js";
 import type { GlobalArgs } from "./GlobalArgs.js";
@@ -52,7 +49,8 @@ export function withContext<T extends GlobalArgs>(
 }
 
 async function createContext(options: GlobalArgs): Promise<Context> {
-    const logLevel = parseLogLevel(options["log-level"] ?? "info");
+    const debugMode = options.debug === true || isFernDebugEnv();
+    const logLevel = debugMode ? LogLevel.Debug : parseLogLevel(options["log-level"] ?? "info");
     const logDebug =
         logLevel === LogLevel.Debug
             ? (msg: string) => process.stderr.write(`${chalk.dim("[debug]")} ${msg}\n`)
@@ -65,50 +63,34 @@ async function createContext(options: GlobalArgs): Promise<Context> {
     });
 }
 
+function isFernDebugEnv(): boolean {
+    const value = process.env.FERN_DEBUG;
+    if (value == null) {
+        return false;
+    }
+    const normalized = value.trim().toLowerCase();
+    return normalized === "1" || normalized === "true" || normalized === "yes";
+}
+
 /**
  * Handles errors by writing appropriate output to stderr.
+ *
+ * Goes through {@link renderError} so every CLI failure has the same
+ * Rust-style envelope (`error[CODE]: <title>` / `hint:` / `see:`).
+ * Also prints the per-run debug log file path so users can find it
+ * on the most common failure path (we previously only did this on
+ * SIGINT and `TaskGroup` failures).
  */
 function handleError(context: Context, error: unknown): void {
-    if (error instanceof SourcedValidationError) {
-        for (const issue of error.issues) {
-            process.stderr.write(`${chalk.red(issue.toString())}\n`);
-        }
-        return;
-    }
-
-    if (error instanceof ValidationError) {
-        for (const violation of error.violations) {
-            const color = violation.severity === "warning" ? chalk.yellow : chalk.red;
-            process.stderr.write(`${color(`${violation.relativeFilepath}: ${violation.message}`)}\n`);
-        }
-        return;
-    }
-
-    if (error instanceof KeyringUnavailableError) {
-        context.stdout.error(`${Icons.error} ${error.message}`);
-        return;
-    }
-
     if (error instanceof TaskAbortSignal) {
         return;
     }
-
-    if (error instanceof CliError) {
-        if (error.message && error.message.length > 0) {
-            process.stderr.write(`${chalk.red(error.message)}\n`);
-        }
-        return;
+    const debug = context.logLevel === LogLevel.Debug;
+    const rendered = renderError(error, { debug });
+    if (rendered != null) {
+        process.stderr.write(`${rendered}\n`);
     }
-
-    if (error instanceof Error) {
-        process.stderr.write(`${chalk.red(error.message)}\n`);
-        if (error.stack != null && context.logLevel === LogLevel.Debug) {
-            process.stderr.write(`${chalk.dim(error.stack)}\n`);
-        }
-        return;
-    }
-
-    process.stderr.write(`${chalk.red(String(error))}\n`);
+    context.printLogFilePath(process.stderr);
 }
 
 /**
