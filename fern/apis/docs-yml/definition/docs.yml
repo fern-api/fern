@@ -919,7 +919,7 @@ types:
         type: optional<boolean>
         docs: |
           If `hide-feedback` is set to true, the feedback widget will not be rendered.
-          If either this property or `layout.hide-feedback` is true, feedback is hidden.
+          Note: `feedback.hide-feedback` and `layout.hide-feedback` cannot both be set. Use one or the other.
 
           @default: false
       require-email:
