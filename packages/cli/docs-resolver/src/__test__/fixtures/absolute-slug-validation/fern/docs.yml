@@ -7,3 +7,9 @@ navigation:
     path: ./page-with-relative-slug.mdx
   - page: Page Without Slug
     path: ./page-without-slug.mdx
+  - section: Learn
+    slug: learn
+    contents:
+      - page: Learn Home
+        path: ./learn-home.mdx
+        slug: /

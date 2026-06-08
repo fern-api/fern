@@ -7,6 +7,7 @@ import { kebabCase, last } from "lodash-es";
 
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle.js";
+import { getDocsYmlSlug } from "./utils/getDocsYmlSlug.js";
 
 dayjs.extend(utc);
 
@@ -71,7 +72,7 @@ export class ChangelogNodeConverter {
         const slug = opts.parentSlug.apply({
             fullSlug: overviewPagePath != null ? this.markdownToFullSlug.get(overviewPagePath)?.split("/") : undefined,
             skipUrlSlug: false, // changelog pages should always have a url slug
-            urlSlug: opts.slug ?? kebabCase(title)
+            urlSlug: getDocsYmlSlug(opts.slug, kebabCase(title))
         });
 
         const noindex = overviewPagePath != null ? this.markdownToNoIndex.get(overviewPagePath) : undefined;

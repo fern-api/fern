@@ -6,6 +6,7 @@ import { kebabCase } from "lodash-es";
 
 import { NodeIdGenerator } from "../NodeIdGenerator.js";
 import { convertDocsAvailability } from "./convertDocsAvailability.js";
+import { getDocsYmlSlug } from "./getDocsYmlSlug.js";
 import { toRelativeFilepath } from "./toRelativeFilepath.js";
 
 export function toPageNode({
@@ -32,7 +33,7 @@ export function toPageNode({
     const pageId = FernNavigation.V1.PageId(toRelativeFilepath(docsWorkspace, page.absolutePath));
     const pageSlug = parentSlug.apply({
         fullSlug: markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
-        urlSlug: page.slug ?? kebabCase(page.title)
+        urlSlug: getDocsYmlSlug(page.slug, kebabCase(page.title))
     });
     return {
         id: idgen.get(pageId),

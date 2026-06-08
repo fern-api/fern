@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix docs navigation pages configured with `slug: /` so they resolve to the parent path.
+  type: fix
