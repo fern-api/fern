@@ -40,12 +40,16 @@ use crate::openapi::executor::{decide_retry, RetryOutcome};
 /// Defined here so the cli-sdk can implement and test the executor without
 /// depending on a generated crate. The CLI generator (FER-11028) emits a
 /// thin adapter that bridges this implementation to the SDK's concrete trait.
+///
+/// The error type is [`SdkError`] rather than `reqwest::Error` so that
+/// pre-send failures (auth, validation) can be surfaced without sending
+/// an unauthenticated request.
 pub trait SdkRequestExecutor: Send + Sync {
     /// Execute a fully-built HTTP request through the CLI's transport stack.
     fn execute(
         &self,
         request: Request,
-    ) -> Pin<Box<dyn Future<Output = Result<Response, reqwest::Error>> + Send + '_>>;
+    ) -> Pin<Box<dyn Future<Output = Result<Response, SdkError>> + Send + '_>>;
 }
 
 // ---------------------------------------------------------------------------
@@ -105,7 +109,7 @@ impl CliExecutor {
     /// 3. Applies global headers
     /// 4. Optionally overrides the base URL
     /// 5. Sends with retry logic (reusing the pooled `Client`)
-    async fn execute_inner(&self, request: Request) -> Result<Response, reqwest::Error> {
+    async fn execute_inner(&self, request: Request) -> Result<Response, SdkError> {
         let client = &self.client;
 
         let method = request.method().clone();
@@ -127,7 +131,7 @@ impl CliExecutor {
         let mut retry_attempt: u32 = 0;
         loop {
             let builder =
-                self.build_request(client, &method, &url, &headers, body_bytes.as_ref());
+                self.build_request(client, &method, &url, &headers, body_bytes.as_ref())?;
 
             let resp = match builder.send().await {
                 Ok(resp) => {
@@ -172,7 +176,7 @@ impl CliExecutor {
                         tokio::time::sleep(delay).await;
                         continue;
                     }
-                    return Err(e);
+                    return Err(SdkError::from(e));
                 }
             };
 
@@ -181,6 +185,11 @@ impl CliExecutor {
     }
 
     /// Decompose parts back into a `RequestBuilder`, apply auth and headers.
+    ///
+    /// Returns `Err` if the auth provider fails — the caller must NOT
+    /// fall back to sending without credentials (fail-closed, consistent
+    /// with `build_http_request` in `openapi/executor.rs` and
+    /// `graphql/executor.rs`).
     fn build_request(
         &self,
         client: &Client,
@@ -188,29 +197,30 @@ impl CliExecutor {
         url: &reqwest::Url,
         headers: &reqwest::header::HeaderMap,
         body_bytes: Option<&bytes::Bytes>,
-    ) -> reqwest::RequestBuilder {
-        let rebuild = |client: &Client| {
-            let mut b = client.request(method.clone(), url.clone());
-            for (name, value) in headers.iter() {
-                b = b.header(name, value);
-            }
-            if let Some(body) = body_bytes {
-                b = b.body(body.clone());
-            }
-            b
-        };
-
-        let mut builder = rebuild(client);
+    ) -> Result<reqwest::RequestBuilder, SdkError> {
+        let mut builder = client.request(method.clone(), url.clone());
+        for (name, value) in headers.iter() {
+            builder = builder.header(name, value);
+        }
+        if let Some(body) = body_bytes {
+            builder = builder.body(body.clone());
+        }
 
         // Apply auth — ADR-0001: credentials stay inside apply().
-        // Auth failures during SDK execution are non-recoverable at this
-        // level (the SDK has no way to surface CliError), so we proceed
-        // without auth on error. The server will return 401/403 which
-        // surfaces to the caller as a normal HTTP error.
+        // Fail closed: if the provider returns an error, we surface it
+        // rather than silently sending without credentials.
         let endpoint = EndpointAuthMetadata::unspecified();
         builder = match self.auth_provider.apply(builder, &endpoint) {
             Ok(b) => b,
-            Err(_) => rebuild(client),
+            Err(e) => {
+                tracing::warn!(
+                    "CLI auth provider failed during SDK request execution; \
+                     request will NOT be sent: {e}"
+                );
+                return Err(SdkError::Auth(format!(
+                    "CLI auth failed: {e}"
+                )));
+            }
         };
 
         // Apply global headers (lower precedence than per-request headers
@@ -220,7 +230,7 @@ impl CliExecutor {
             builder = builder.header(name.as_str(), value.as_str());
         }
 
-        builder
+        Ok(builder)
     }
 
     /// Resolve the final URL, applying base-URL override if configured.
@@ -256,7 +266,7 @@ impl SdkRequestExecutor for CliExecutor {
     fn execute(
         &self,
         request: Request,
-    ) -> Pin<Box<dyn Future<Output = Result<Response, reqwest::Error>> + Send + '_>> {
+    ) -> Pin<Box<dyn Future<Output = Result<Response, SdkError>> + Send + '_>> {
         Box::pin(self.execute_inner(request))
     }
 }
@@ -305,6 +315,8 @@ pub enum SdkError {
     Network(String),
     /// Request timed out.
     Timeout(String),
+    /// Authentication failure (credential resolution, token refresh, etc.).
+    Auth(String),
     /// Any other SDK error.
     Other(String),
 }
@@ -324,6 +336,7 @@ impl SdkError {
             Self::Timeout(msg) => {
                 CliError::Other(anyhow::anyhow!("SDK request timeout: {msg}"))
             }
+            Self::Auth(msg) => CliError::Auth(msg),
             Self::Other(msg) => {
                 CliError::Other(anyhow::anyhow!("SDK error: {msg}"))
             }
@@ -373,7 +386,46 @@ fn http_status_reason(status: u16) -> &'static str {
 mod tests {
     use super::*;
     use std::sync::Arc;
-    use crate::auth::no_auth_provider;
+    use crate::auth::{no_auth_provider, AuthProvider, EndpointAuthMetadata};
+
+    /// Auth provider that always returns a hard error.
+    #[derive(Debug)]
+    struct FailingAuthProvider;
+
+    impl AuthProvider for FailingAuthProvider {
+        fn name(&self) -> &str {
+            "failing-test"
+        }
+
+        fn has_credentials(&self) -> bool {
+            true
+        }
+
+        fn apply(
+            &self,
+            _request: reqwest::RequestBuilder,
+            _endpoint: &EndpointAuthMetadata,
+        ) -> Result<reqwest::RequestBuilder, CliError> {
+            Err(CliError::Auth("token refresh failed".into()))
+        }
+    }
+
+    fn failing_auth_provider() -> DynAuthProvider {
+        Arc::new(FailingAuthProvider)
+    }
+
+    #[test]
+    fn sdk_error_auth_maps_to_cli_auth() {
+        let err = SdkError::Auth("token refresh failed".into());
+        let cli_err = err.into_cli_error();
+        assert_eq!(cli_err.exit_code(), CliError::EXIT_CODE_AUTH);
+        match cli_err {
+            CliError::Auth(msg) => {
+                assert!(msg.contains("token refresh failed"));
+            }
+            _ => panic!("expected CliError::Auth, got: {cli_err:?}"),
+        }
+    }
 
     #[test]
     fn sdk_error_http_maps_to_cli_api() {
@@ -606,5 +658,42 @@ mod tests {
         let resp = executor.execute_inner(request).await.unwrap();
         assert_eq!(resp.status().as_u16(), 200);
         assert!(call_count.load(Ordering::SeqCst) >= 2);
+    }
+
+    #[tokio::test]
+    async fn execute_fails_closed_on_auth_error() {
+        let mock_server = wiremock::MockServer::start().await;
+        wiremock::Mock::given(wiremock::matchers::method("GET"))
+            .respond_with(wiremock::ResponseTemplate::new(200))
+            .expect(0) // must NOT receive any request
+            .mount(&mock_server)
+            .await;
+
+        let http = HttpConfig::new("test-cli").unwrap();
+        let executor = CliExecutor::new(
+            http,
+            failing_auth_provider(),
+            vec![],
+            None,
+        );
+
+        let client = reqwest::Client::new();
+        let request = client
+            .get(format!("{}/should-not-be-sent", mock_server.uri()))
+            .build()
+            .unwrap();
+
+        let result = executor.execute_inner(request).await;
+        assert!(result.is_err(), "expected auth failure to propagate as error");
+        let err_msg = match &result.unwrap_err() {
+            SdkError::Auth(msg) => msg.clone(),
+            other => panic!("expected SdkError::Auth, got: {other:?}"),
+        };
+        assert!(
+            err_msg.contains("auth"),
+            "error should mention auth: {err_msg}"
+        );
+        // wiremock's expect(0) will panic on drop if any request was received,
+        // verifying the request was never sent (fail-closed).
     }
 }

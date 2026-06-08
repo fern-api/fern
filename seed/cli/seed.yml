@@ -6,10 +6,10 @@ changelogLocation: ../../generators/cli/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - cargo build --locked --all-features --tests
+      - cargo build --all-features --tests
   testScript:
     commands:
-      - cargo test --locked --all-features
+      - cargo test --all-features
 
 publish:
   preBuildCommands:
@@ -30,14 +30,18 @@ test:
       # rust-model-cli.cjs into its own dist/ for subprocess invocation.
       - pnpm turbo run dist:cli --filter @fern-api/rust-model && pnpm turbo run dist:cli --filter @fern-api/cli-generator
     runCommand: node --enable-source-maps dist/cli.cjs {CONFIG_PATH}
+    env:
+      # In native (non-Docker) mode, the SDK template lives in the local
+      # build output rather than the Docker image's /dist/sdk.
+      FERN_SDK_TEMPLATE_DIR: dist/sdk
 
 scripts:
   - image: fernapi/cli-seed
     commands:
       build:
-        - cargo build --locked --all-features --tests
+        - cargo build --all-features --tests
       test:
-        - cargo test --locked --all-features
+        - cargo test --all-features
 
 # Intentionally no `language:` field — setting it would make the
 # local-workspace-runner emit per-language dynamic-snippet tests
