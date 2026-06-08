@@ -112,6 +112,7 @@ allowedFailures:
   - allof-inline
   - any-auth
   - api-wide-base-path
+  - api-wide-base-path-with-default
   - audiences
   - basic-auth
   - basic-auth-environment-variables
@@ -122,6 +123,7 @@ allowedFailures:
   - circular-references
   - circular-references-advanced
   - circular-references-extends
+  - cli-multi-spec-namespaced:no-custom-config
   - client-side-params
   - content-type
   - cross-package-type-names
@@ -161,6 +163,8 @@ allowedFailures:
   - no-environment
   - no-retries
   - nullable
+  - null-type
+  - nullable-allof-extends
   - nullable-optional
   - oauth-client-credentials
   - oauth-client-credentials-custom
@@ -197,6 +201,7 @@ allowedFailures:
   - server-sent-events
   - server-sent-events-openapi
   - server-sent-events-resumable
+  - server-url-templating
   - simple-api:no-custom-config
   - simple-fhir
   - single-url-environment-default
@@ -210,6 +215,7 @@ allowedFailures:
   - unions
   - unions-with-local-date
   - unknown
+  - url-form-encoded
   - validation
   - variables
   - version

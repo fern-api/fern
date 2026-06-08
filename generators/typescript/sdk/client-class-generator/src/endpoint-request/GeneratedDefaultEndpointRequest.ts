@@ -540,6 +540,33 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             }
         }
 
+        // Also include inherited (extends) top-level properties
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    const autoFillExpr = this.getAutoFillExpression(prop, context);
+                    if (autoFillExpr != null) {
+                        topLevelAssignments.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createStringLiteral(getWireValue(prop.name)),
+                                autoFillExpr
+                            )
+                        );
+                    } else {
+                        const sdkName =
+                            requestWrapper.getPropertyNameOfTypeDeclarationProperty(prop).propertyName;
+                        topLevelAssignments.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createStringLiteral(getWireValue(prop.name)),
+                                ts.factory.createPropertyAccessExpression(referenceToRequestBody, sdkName)
+                            )
+                        );
+                    }
+                }
+            }
+        }
+
         // Add the path property (first segment of unwrapPath)
         topLevelAssignments.push(
             ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(firstSegment), currentExpr)
