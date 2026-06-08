@@ -939,9 +939,47 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             properties.push(requestProperty);
         }
 
+        // Also include non-path, non-auto-fillable properties from extends
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    if (getWireValue(prop.name) === unwrapPath[0]) {
+                        continue;
+                    }
+                    if (this.isAutoFillableProperty(prop.valueType, context)) {
+                        continue;
+                    }
+                    const type = context.type.getReferenceToType(prop.valueType);
+                    const propName = this.getPropertyNameOfTypeDeclarationProperty(prop);
+                    properties.push({
+                        name: getPropertyKey(propName.propertyName),
+                        safeName: getPropertyKey(propName.safeName),
+                        type: type.typeNodeWithoutUndefined,
+                        isOptional: type.isOptional,
+                        docs: prop.docs ? [prop.docs] : undefined
+                    });
+                }
+            }
+        }
+
         // Walk the unwrap path to find properties at each level
         let currentProps: FernIr.ObjectProperty[] | undefined;
-        const firstPathProp = inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
+        let firstPathProp: FernIr.InlinedRequestBodyProperty | FernIr.ObjectProperty | undefined =
+            inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
+        // Also search extends for the pathRoot
+        if (firstPathProp == null) {
+            for (const extension of inlinedRequestBody.extends) {
+                const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+                if (extProps != null) {
+                    const found = extProps.find((p) => getWireValue(p.name) === unwrapPath[0]);
+                    if (found != null) {
+                        firstPathProp = found;
+                        break;
+                    }
+                }
+            }
+        }
         if (firstPathProp == null) {
             return properties;
         }
@@ -963,11 +1001,29 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             }
         }
 
-        // Track wire names already seen from top-level to avoid duplicates
+        // Track wire names already seen from top-level non-auto-fillable properties to avoid duplicates
         const seenWireNames = new Set<string>();
         for (const prop of inlinedRequestBody.properties) {
-            if (getWireValue(prop.name) !== unwrapPath[0]) {
-                seenWireNames.add(getWireValue(prop.name));
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            if (this.isAutoFillableProperty(prop.valueType, context)) {
+                continue;
+            }
+            seenWireNames.add(getWireValue(prop.name));
+        }
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    if (getWireValue(prop.name) === unwrapPath[0]) {
+                        continue;
+                    }
+                    if (this.isAutoFillableProperty(prop.valueType, context)) {
+                        continue;
+                    }
+                    seenWireNames.add(getWireValue(prop.name));
+                }
             }
         }
 

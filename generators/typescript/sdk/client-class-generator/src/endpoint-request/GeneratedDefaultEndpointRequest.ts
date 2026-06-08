@@ -380,8 +380,21 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         }
         const levels: PathLevelInfo[] = [];
 
-        // First level starts from the inlined request body properties
-        const firstPathProp = inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
+        // First level starts from the inlined request body properties (also search extends)
+        let firstPathProp: FernIr.InlinedRequestBodyProperty | FernIr.ObjectProperty | undefined =
+            inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
+        if (firstPathProp == null) {
+            for (const extension of inlinedRequestBody.extends) {
+                const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+                if (extProps != null) {
+                    const found = extProps.find((p) => getWireValue(p.name) === unwrapPath[0]);
+                    if (found != null) {
+                        firstPathProp = found;
+                        break;
+                    }
+                }
+            }
+        }
         if (firstPathProp == null) {
             return referenceToRequestBody;
         }
