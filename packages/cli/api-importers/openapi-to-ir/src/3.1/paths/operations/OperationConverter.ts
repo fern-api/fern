@@ -1054,6 +1054,16 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private getEndpointBaseUrls(): string[] | undefined {
+        const serverFromOperationNameExtension = new Extensions.ServerFromOperationNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation,
+            context: this.context
+        });
+        const serverFromOperationName = serverFromOperationNameExtension.convert();
+        if (serverFromOperationName != null) {
+            return undefined;
+        }
+
         const operationServers = this.operation.servers ?? this.pathLevelServers;
         if (operationServers == null) {
             return undefined;

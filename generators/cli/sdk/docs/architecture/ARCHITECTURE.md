@@ -121,6 +121,7 @@ These modules sit above both protocol paths. They are imported by
 | [`src/logging.rs`](../../src/logging.rs) | Org-scoped `tracing` setup. `<NAME>_LOG` for stderr filter; `<NAME>_LOG_FILE` for JSON-line file with daily rotation. Off by default. |
 | [`src/cli_args.rs`](../../src/cli_args.rs), [`src/early_intercept.rs`](../../src/early_intercept.rs) | Shared CLI helpers — version flag, `--base-url`, JSON-help detection, pre-parse interception for special subcommands (`completion`, `man`, `errors`, `generate-skills`). |
 | [`src/custom_commands.rs`](../../src/custom_commands.rs) | Registry + dispatch for `.command(...)` / `.command_under(...)` extensions a binary author can attach. |
+| [`src/sdk_executor.rs`](../../src/sdk_executor.rs) | `CliExecutor` — implements the generated SDK's `RequestExecutor` trait, routing SDK-originated HTTP requests through the CLI's transport stack (same `HttpConfig`, `DynAuthProvider`, retry logic, global headers). ADR-0001 compliant. `block_on()` helper for sync→async bridging; `SdkError → CliError` error bridge. ([FER-11027](https://linear.app/buildwithfern/issue/FER-11027), [PR #168](https://github.com/fern-api/cli-sdk/pull/168).) |
 | [`src/completions.rs`](../../src/completions.rs), [`src/man.rs`](../../src/man.rs) | `clap_complete` shell completions + `clap_mangen` man pages. Wired into both OpenAPI and GraphQL CLIs ([FER-10519](https://linear.app/buildwithfern/issue/FER-10519)). |
 
 ### 5.3 Component view — OpenAPI path (`src/openapi/`)
@@ -129,7 +130,7 @@ See [`diagrams/04-component-openapi.mmd`](./diagrams/04-component-openapi.mmd).
 
 | Module | Responsibility |
 |---|---|
-| `parser.rs` | OpenAPI YAML → internal `RestDescription`. Handles 3.0 and 3.1 ([FER-10528](https://linear.app/buildwithfern/issue/FER-10528); [PR #70](https://github.com/fern-api/cli-sdk/pull/70)). Lowers all `x-fern-*` extensions, form-urlencoded bodies, and `oneOf`/`anyOf`/`allOf` composition. Emits object-shorthand flags for nested body properties ([PR #59](https://github.com/fern-api/cli-sdk/pull/59)). |
+| `parser.rs` | OpenAPI YAML → internal `RestDescription`. Handles 3.0 and 3.1 ([FER-10528](https://linear.app/buildwithfern/issue/FER-10528); [PR #70](https://github.com/fern-api/cli-sdk/pull/70)). Lowers all `x-fern-*` extensions, form-urlencoded bodies, and `oneOf`/`anyOf`/`allOf` composition. `allOf` branches flattened consumer-side via `merge_all_of_properties` ([ADR-0004](./decisions/0004-all-of-flattening-into-per-field-flags.md)); nullable-union (`oneOf: [T, null]`) promoted to null sentinel ([ADR-0005](./decisions/0005-nullable-union-promotion-via-composition.md)). Emits object-shorthand flags for nested body properties ([PR #59](https://github.com/fern-api/cli-sdk/pull/59)). |
 | `discovery.rs` | Internal representation: `RestDescription`, `RestMethod`, schemas, security, pagination metadata. `BodyEncoding` enum (`Json` \| `FormUrlEncoded` \| `Multipart`) selects per-operation wire format. |
 | `overlay.rs` | OpenAPI Overlay v1.0.0 + Fern-overrides deep merge. Applied pre-parse. |
 | `commands.rs` | Recursive `clap::Command` builder. Walks `x-fern-sdk-group-name` (list) → nested subcommands; `x-fern-sdk-method-name` → leaf command. |
@@ -310,11 +311,12 @@ The **feature-matrix suite** ([FER-10569](https://linear.app/buildwithfern/issue
 [PR #125](https://github.com/fern-api/cli-sdk/pull/125)) is the canonical
 catalog: one operation per cell in `src/bin/feature-matrix-fixture/openapi.yaml`,
 encoding-exact assertions via `captured_raw_query` / `captured_raw_path` /
-`captured_header` / `captured_body_bytes` helpers. 72 active cells across 13
-areas + 8 honest gaps (cells aligned to post-FER-10521 retry/idempotency
+`captured_header` / `captured_body_bytes` helpers. 74 active cells across 14
+areas + 2 gaps (cells aligned to post-FER-10521 retry/idempotency
 contract in [PR #134](https://github.com/fern-api/cli-sdk/pull/134); query/
 path/header style cells closed in PRs #137, #138, #144, #145; file-response
-cells added in [PR #151](https://github.com/fern-api/cli-sdk/pull/151)).
+cells added in [PR #151](https://github.com/fern-api/cli-sdk/pull/151);
+composition cells added in [PR #124](https://github.com/fern-api/cli-sdk/pull/124)).
 `scripts/list-feature-matrix-gaps.sh` regenerates the gap snapshot.
 
 ### 8.6 Output pipeline
@@ -481,6 +483,57 @@ Both OpenAPI (`parse_and_validate_inputs`) and GraphQL (`build_graphql_body`)
 enforce the same rules. `coerce_graphql_value` now returns `Result` and
 JSON-parses `param_type=="object"` strings (invalid JSON is a hard error).
 
+### 8.17 SDK execution sharing (`CliExecutor`)
+
+The `CliExecutor` ([PR #168](https://github.com/fern-api/cli-sdk/pull/168),
+[FER-11027](https://linear.app/buildwithfern/issue/FER-11027)) implements the
+generated Rust SDK's `RequestExecutor` trait, enabling co-generated SDK crates
+to delegate HTTP execution through the CLI's existing transport stack:
+
+- **Level-2 behavioral parity:** Routes through `HttpConfig::build_client()`,
+  `DynAuthProvider::apply()`, `decide_retry()`, global-header injection, and
+  base-URL override — not a second stack seeded with copied config.
+- **ADR-0001 compliant:** Receives `DynAuthProvider` and calls `apply()` —
+  never extracts or exposes resolved credentials.
+- **`block_on()` helper:** `tokio::task::block_in_place` + `Handle::current()`
+  for sync→async bridging in custom command handlers.
+- **Error bridge:** `SdkError → CliError` preserving HTTP status and context.
+- **Auth fail-closed:** [PR #171](https://github.com/fern-api/cli-sdk/pull/171)
+  hardened `build_request` to return `Result` — auth errors propagate instead
+  of silently sending unauthenticated requests.
+
+Custom commands obtain a typed SDK client via `AppContext` accessors
+(`auth_provider()`, `base_url_override()`, `global_headers()`).
+
+Counterpart changes in `fern-api/fern`: transport seam
+([FER-11025](https://linear.app/buildwithfern/issue/FER-11025)),
+co-vendoring ([FER-11026](https://linear.app/buildwithfern/issue/FER-11026)),
+generated glue + verification
+([FER-11028](https://linear.app/buildwithfern/issue/FER-11028)).
+
+### 8.18 `allOf` composition lowering
+
+`allOf` composition is lowered into per-field flags consumer-side
+([PR #124](https://github.com/fern-api/cli-sdk/pull/124),
+[ADR-0004](./decisions/0004-all-of-flattening-into-per-field-flags.md)):
+
+- `merge_all_of_properties(schema, component_schemas)` walks branches
+  recursively, resolving `$ref`s, and returns the merged property bag +
+  union of `required` arrays. Last-branch-wins on property overlap.
+- Safety cap of `MAX_ALL_OF_DEPTH = 8` bounds pathological `$ref` cycles.
+- `allOf` recursion does not consume from `MAX_BODY_DEPTH = 3` — it adds
+  no user-visible nesting.
+
+Nullable-union composition (`oneOf: [T, {type: null}]`) is promoted to
+the null sentinel pattern
+([ADR-0005](./decisions/0005-nullable-union-promotion-via-composition.md)):
+`is_nullable_composition()` detects the pattern and sets
+`JsonSchemaProperty.nullable = true`, reusing the existing `--field ^`
+null sentinel from ADR-0003.
+
+Both lowerings run in `parser.rs` (flag emission) and `executor.rs`
+(body validation), independently per D-A isolation.
+
 ### 8.10 SKILL.md generation
 
 `<cli> generate-skills [--out-dir PATH]` walks the parsed spec at runtime
@@ -494,11 +547,13 @@ group. Fully deterministic (Rust templates over spec data, no LLM).
 ## 9. Architecture decisions
 
 The decisions index lives in [`decisions/INDEX.md`](./decisions/INDEX.md).
-Three formal ADRs to date:
+Five formal ADRs to date:
 
 - [ADR-0001](./decisions/0001-auth-provider-no-cred-extraction.md) — `AuthProvider` never exposes resolved credentials
 - [ADR-0002](./decisions/0002-transport-neutral-http-config-resolve.md) — Transport-neutral `HttpConfig::resolve()` pattern
 - [ADR-0003](./decisions/0003-null-sentinel-on-nullable-scalar-body-flags.md) — Null sentinel on nullable scalar body flags
+- [ADR-0004](./decisions/0004-all-of-flattening-into-per-field-flags.md) — `allOf` flattening into per-field flags
+- [ADR-0005](./decisions/0005-nullable-union-promotion-via-composition.md) — Nullable-union promotion via composition
 
 The decisions index also tracks **implicit ADRs** — decisions documented
 in `AGENTS.md`, commit history, and Linear that should be promoted to

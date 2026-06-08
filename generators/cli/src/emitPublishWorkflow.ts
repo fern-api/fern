@@ -88,7 +88,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Check
-        run: cargo check
+        run: cargo check --locked
 
   compile:
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Compile
-        run: cargo build
+        run: cargo build --locked
 
   test:
     runs-on: ubuntu-latest
@@ -112,7 +112,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Test
-        run: cargo test
+        run: cargo test --locked
 `;
 }
 
@@ -168,7 +168,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Check
-        run: cargo check
+        run: cargo check --locked
 
   compile:
     runs-on: ubuntu-latest
@@ -180,7 +180,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Compile
-        run: cargo build
+        run: cargo build --locked
 
   test:
     runs-on: ubuntu-latest
@@ -192,7 +192,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Test
-        run: cargo test
+        run: cargo test --locked
 
   publish:
     needs: [check, compile, test]

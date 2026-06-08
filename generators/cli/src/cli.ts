@@ -61,7 +61,9 @@ async function generate(configPath: string): Promise<void> {
                 customConfig: getCustomConfig(config),
                 ir,
                 irFilepath: config.irFilepath,
-                outputConfig
+                outputConfig,
+                specsDir: process.env.FERN_SPECS_DIR,
+                sdkTemplateDir: process.env.FERN_SDK_TEMPLATE_DIR
             });
 
             if (outcome.status === "skipped") {
