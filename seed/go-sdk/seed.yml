@@ -373,6 +373,3 @@ allowedFailures:
 
   # Dynamic snippet generation produces code that does not compile.
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-
-  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
-  - exhaustive:omit-empty-request-wrappers
