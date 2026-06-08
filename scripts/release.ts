@@ -361,7 +361,12 @@ function moveUnreleasedFiles(unreleasedDir: string, versionDir: string, changes:
  * Returns the list of file paths that were written (relative to the repo
  * root) so the caller can stage them in the same git commit.
  */
-function propagateToDownstream(softwareName: string, config: SoftwareConfig, changes: UnreleasedChange[]): string[] {
+function propagateToDownstream(
+    softwareName: string,
+    sourceVersion: string,
+    config: SoftwareConfig,
+    changes: UnreleasedChange[]
+): string[] {
     const targets = config.propagatesTo;
     if (!targets || targets.length === 0) {
         return [];
@@ -395,10 +400,10 @@ function propagateToDownstream(softwareName: string, config: SoftwareConfig, cha
             mkdirSync(targetUnreleasedDir, { recursive: true });
         }
 
-        const filename = `auto-propagated-from-${softwareName}.yml`;
+        const filename = `auto-propagated-from-${softwareName}-${sourceVersion}.yml`;
         const filePath = join(targetUnreleasedDir, filename);
 
-        const content = `- summary: |\n    Includes ${config.name} updates.\n  type: ${highestType}\n`;
+        const content = `- summary: |\n    Includes ${config.name} ${sourceVersion} updates.\n  type: ${highestType}\n`;
         writeFileSync(filePath, content);
 
         const relativePath = join(getUnreleasedDir(targetConfig), filename);
@@ -480,7 +485,7 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     console.log(`   ✅ Files moved to ${getChangelogFolder(config)}/${nextVersion}/\n`);
 
     // Propagate changelog entries to downstream dependents (e.g. rust → cli-generator)
-    const propagatedPaths = propagateToDownstream(softwareName, config, changes);
+    const propagatedPaths = propagateToDownstream(softwareName, nextVersion, config, changes);
 
     // Commit changes
     console.log("💾 Committing changes...");
