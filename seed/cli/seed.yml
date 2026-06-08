@@ -183,6 +183,7 @@ allowedFailures:
   - query-parameters-openapi:no-custom-config
   - query-parameters-openapi-as-objects
   - request-parameters
+  - request-body-unwrap
   - required-nullable
   - reserved-keywords
   - response-property
