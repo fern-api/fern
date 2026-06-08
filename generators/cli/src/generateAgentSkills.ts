@@ -112,9 +112,16 @@ async function pickExampleEndpoint(specsDir?: string): Promise<ExampleEndpoint |
         try {
             raw = await readFile(spec.specPath, "utf-8");
         } catch {
+            // Spec file unreadable — skip and try the next one.
             continue;
         }
-        const doc = JSON.parse(raw) as MinimalOpenApiDoc;
+        let doc: MinimalOpenApiDoc;
+        try {
+            doc = JSON.parse(raw) as MinimalOpenApiDoc;
+        } catch {
+            // Malformed JSON (e.g. YAML spec, truncated file) — skip.
+            continue;
+        }
         const paths = doc.paths ?? {};
 
         for (const [pathStr, pathItem] of Object.entries(paths)) {
@@ -469,7 +476,7 @@ async function createClaudeSymlink(outputDir: string): Promise<void> {
     // Remove any existing .claude (symlink or directory) to avoid EEXIST.
     try {
         const stat = await lstat(linkPath);
-        if (stat.isSymbolicLink() || stat.isDirectory()) {
+        if (stat.isSymbolicLink() || stat.isDirectory() || stat.isFile()) {
             await rm(linkPath, { recursive: true });
         }
     } catch {
