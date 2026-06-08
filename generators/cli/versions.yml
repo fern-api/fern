@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.14.3
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-08"
+  irVersion: 67
 - version: 0.14.2
   changelogEntry:
     - summary: |
