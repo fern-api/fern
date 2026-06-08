@@ -5354,6 +5354,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "errors": {},
       "servers": [],
       "description": "Run a val, with arguments in the request body",
@@ -6384,6 +6385,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "Successfully sent email",
         "schema": {
@@ -7460,6 +7462,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "errors": {},
       "servers": [],
       "description": "Update an existing val",

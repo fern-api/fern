@@ -1,0 +1,4 @@
+- summary: |
+    Make request body optional in generated SDKs when all properties on the
+    request body object are optional or no properties exist.
+  type: feat

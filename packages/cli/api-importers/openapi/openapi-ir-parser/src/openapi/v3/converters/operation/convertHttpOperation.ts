@@ -347,6 +347,7 @@ export function convertHttpOperation({
             context
         }),
         request,
+        requestBodyOptional: computeRequestBodyOptional({ request }),
         response: convertedResponse.value,
         errors: convertedResponse.errors,
         servers:
@@ -415,6 +416,29 @@ function createOperationSdkMethodName({
 
 function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity | undefined {
     return sanitizeSecurityScopes(operation.security);
+}
+
+function isPropertyOptional(schema: SchemaWithExample): boolean {
+    return schema.type === "optional" || schema.type === "nullable";
+}
+
+function computeRequestBodyOptional({ request }: { request: RequestWithExample | undefined }): boolean | undefined {
+    if (request == null) {
+        return undefined;
+    }
+    if (request.type !== "json" && request.type !== "formUrlEncoded") {
+        return undefined;
+    }
+    const schema = request.schema;
+    if (schema.type === "object") {
+        const hasNoRequiredProperties =
+            schema.properties.length === 0 || schema.properties.every((prop) => isPropertyOptional(prop.schema));
+        const hasNoAllOfParents = schema.allOf.length === 0;
+        if (hasNoRequiredProperties && hasNoAllOfParents) {
+            return true;
+        }
+    }
+    return undefined;
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {

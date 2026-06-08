@@ -186,6 +186,7 @@
         },
         "type": "json"
       },
+      "requestBodyOptional": true,
       "response": {
         "description": "",
         "schema": {
