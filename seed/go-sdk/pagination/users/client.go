@@ -879,11 +879,11 @@ func (c *Client) ListWithAliasedData(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.ListUsersAliasedDataPaginationResponse) *core.PageResponse[*string, fern.UserList, *fern.ListUsersAliasedDataPaginationResponse] {
+	readPageResponse := func(response *fern.ListUsersAliasedDataPaginationResponse) *core.PageResponse[*string, *fern.User, *fern.ListUsersAliasedDataPaginationResponse] {
 		var zeroValue string
 		next := response.GetPage().GetNext().GetStartingAfter()
 		results := response.GetData()
-		return &core.PageResponse[*string, fern.UserList, *fern.ListUsersAliasedDataPaginationResponse]{
+		return &core.PageResponse[*string, *fern.User, *fern.ListUsersAliasedDataPaginationResponse]{
 			Results:  results,
 			Response: response,
 			Next:     &next,
