@@ -141,6 +141,37 @@ describe("buildLedgerInput", () => {
         });
     });
 
+    it("carries the favicon FileId through to the LedgerConfig as a fullPath (any extension)", () => {
+        // Favicon is a config-referenced file (like logo/OG): its fullPath is
+        // resolved here and retained in the manifest files map so the read side
+        // can serve it from S3 at its real extension (.svg here, not .ico).
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                favicon: "docs/assets/favicon.svg"
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map(),
+            // Identity map: fileId === sanitizedPath in the current FDR flow.
+            fileIdToPath: new Map([["docs/assets/favicon.svg", "docs/assets/favicon.svg"]])
+        });
+
+        expect(localeEntry.config?.favicon).toBe("docs/assets/favicon.svg");
+    });
+
+    it("omits the favicon from LedgerConfig when absent in DocsConfig", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.config?.favicon).toBeUndefined();
+    });
+
     it("drops a logo ImageRef when the file is not measured (no width/height in manifest)", () => {
         const docsDefinition = {
             pages: {},

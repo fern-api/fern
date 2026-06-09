@@ -253,11 +253,16 @@ function mapIntegrations(integrations: DocsConfig["integrations"]): LedgerConfig
  * has no measured dimensions, the corresponding logo field is dropped rather
  * than emitted with placeholder values.
  *
- * Fields that exist only in DocsConfig (favicon, agents.llmsTxt,
- * languages, navigation, root, logoV2, colors, colorsV2, typography (v1),
- * hideNavLinks, globalTheme, backgroundImage at the top level, logo at the
- * top level) are intentionally omitted: LedgerConfig either exposes them by
- * convention (favicon, llms*) or has dropped them (legacy v1/v2 variants).
+ * Fields that exist only in DocsConfig (agents.llmsTxt, languages,
+ * navigation, root, logoV2, colors, colorsV2, typography (v1), hideNavLinks,
+ * globalTheme, backgroundImage at the top level, logo at the top level) are
+ * intentionally omitted: LedgerConfig either exposes them by convention
+ * (llms*) or has dropped them (legacy v1/v2 variants).
+ *
+ * The favicon IS carried: it's a config-referenced file (like the logo/OG
+ * images) whose fullPath is resolved here and retained in the ledger
+ * manifest's `files` map so the read side can resolve it from S3 at its
+ * real extension (.svg/.png/.ico).
  */
 export function mapDocsConfigToLedgerConfig({
     docsConfig,
@@ -278,6 +283,7 @@ export function mapDocsConfigToLedgerConfig({
         logoHeight: docsConfig.logoHeight,
         logoHref: docsConfig.logoHref,
         logoRightText: docsConfig.logoRightText,
+        favicon: resolveFileIdToPath(docsConfig.favicon, fileIdToPath),
         agents: mapAgents(docsConfig.agents),
         metadata: mapMetadata(docsConfig.metadata, fileIdToPath),
         redirects: docsConfig.redirects,
