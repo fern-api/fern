@@ -132,7 +132,7 @@ public abstract class AsyncBaseClientBuilder<T extends AsyncBaseClientBuilder<T>
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        if (this.token != null) {
+        if (this.token != null && !this.token.isEmpty()) {
             builder.addHeader("Authorization", "Bearer " + this.token);
         }
     }

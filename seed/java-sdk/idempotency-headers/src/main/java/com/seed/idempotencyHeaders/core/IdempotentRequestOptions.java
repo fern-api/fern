@@ -59,7 +59,7 @@ public final class IdempotentRequestOptions {
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
-        if (this.token != null) {
+        if (this.token != null && !this.token.isEmpty()) {
             headers.put("Authorization", "Bearer " + this.token);
         }
         if (this.idempotencyKey != null) {

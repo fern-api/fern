@@ -29,7 +29,9 @@ public final class BearerAuthProvider implements AuthProvider {
             throw new RuntimeException(AUTH_CONFIG_ERROR_MESSAGE);
         }
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + token);
+        if (!token.isEmpty()) {
+            headers.put("Authorization", "Bearer " + token);
+        }
         return headers;
     }
 
