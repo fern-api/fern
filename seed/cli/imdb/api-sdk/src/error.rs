@@ -44,10 +44,10 @@ impl ApiError {
                                 .unwrap_or("Unknown error")
                                 .to_string(),
                             resource_id: parsed
-                                .get("resource_id")
+                                .get("resourceId")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                             resource_type: parsed
-                                .get("resource_type")
+                                .get("resourceType")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
