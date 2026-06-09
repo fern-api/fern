@@ -231,23 +231,17 @@ function namedTypeSupportsDefault(typeId: string, context: ModelGeneratorContext
     visited.add(typeId);
     const typeDecl = context.ir.types[typeId];
     if (!typeDecl) {
-        visited.delete(typeId);
         return false;
     }
-    let result = false;
     if (typeDecl.shape.type === "object") {
-        const propsOk = typeDecl.shape.properties.every((prop) =>
+        return typeDecl.shape.properties.every((prop) =>
             hasDefaultImpl(prop.valueType, context)
         );
-        const extendsOk = typeDecl.shape.extends.every((parentType) =>
-            namedTypeSupportsDefault(parentType.typeId, context, visited)
-        );
-        result = propsOk && extendsOk;
-    } else if (typeDecl.shape.type === "alias") {
-        result = hasDefaultImpl(typeDecl.shape.aliasOf, context);
     }
-    visited.delete(typeId);
-    return result;
+    if (typeDecl.shape.type === "alias") {
+        return hasDefaultImpl(typeDecl.shape.aliasOf, context);
+    }
+    return false;
 }
 
 export function isOptionalType(typeReference: FernIr.TypeReference): boolean {

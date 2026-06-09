@@ -3,7 +3,11 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum ApiError {
     #[error("BadRequestBody: Bad request - {{message}}")]
-    BadRequestBody { message: String },
+    BadRequestBody {
+        message: String,
+        field: Option<String>,
+        details: Option<String>,
+    },
     #[error("ErrorWithEnumBody: Bad request - {{message}}")]
     ErrorWithEnumBody {
         message: String,
@@ -13,33 +17,26 @@ pub enum ApiError {
     #[error("ObjectWithOptionalFieldError: Bad request - {{message}}")]
     ObjectWithOptionalFieldError {
         message: String,
-        string: Option<String>,
-        integer: Option<i64>,
-        long: Option<i64>,
-        double: Option<f64>,
-        bool_: Option<bool>,
-        datetime: Option<DateTime<FixedOffset>>,
-        date: Option<NaiveDate>,
-        uuid: Option<Uuid>,
-        base64: Option<Vec<u8>>,
-        list: Option<Vec<String>>,
-        set: Option<HashSet<String>>,
-        map: Option<HashMap<i64, String>>,
-        bigint: Option<num_bigint::BigInt>,
+        field: Option<String>,
+        details: Option<String>,
     },
     #[error("ObjectWithRequiredFieldError: Bad request - {{message}}")]
-    ObjectWithRequiredFieldError { message: String, string: String },
+    ObjectWithRequiredFieldError {
+        message: String,
+        field: Option<String>,
+        details: Option<String>,
+    },
     #[error("NestedObjectWithOptionalFieldError: Bad request - {{message}}")]
     NestedObjectWithOptionalFieldError {
         message: String,
-        string: Option<String>,
-        nested_object: Option<ObjectWithOptionalField>,
+        field: Option<String>,
+        details: Option<String>,
     },
     #[error("NestedObjectWithRequiredFieldError: Bad request - {{message}}")]
     NestedObjectWithRequiredFieldError {
         message: String,
-        string: String,
-        nested_object: ObjectWithOptionalField,
+        field: Option<String>,
+        details: Option<String>,
     },
     #[error("ErrorWithUnionBody: Bad request - {{message}}")]
     ErrorWithUnionBody {
@@ -51,8 +48,6 @@ pub enum ApiError {
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
-    #[error("Request executor error: {0}")]
-    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]
@@ -82,34 +77,98 @@ impl ApiError {
                             .unwrap_or("Unknown error".to_string());
                         let error_type = parsed.get("error_type").and_then(|v| v.as_str());
                         return match error_type {
-                            Some("BadRequestBody") => Self::BadRequestBody { message: message },
-                            Some("ErrorWithEnumBody") => {
-                                Self::ErrorWithEnumBody { message: message }
-                            }
+                            Some("BadRequestBody") => Self::BadRequestBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
+                            Some("ErrorWithEnumBody") => Self::ErrorWithEnumBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
                             Some("ObjectWithOptionalFieldError") => {
-                                Self::ObjectWithOptionalFieldError { message: message }
+                                Self::ObjectWithOptionalFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
                             }
                             Some("ObjectWithRequiredFieldError") => {
-                                Self::ObjectWithRequiredFieldError { message: message }
+                                Self::ObjectWithRequiredFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
                             }
                             Some("NestedObjectWithOptionalFieldError") => {
-                                Self::NestedObjectWithOptionalFieldError { message: message }
+                                Self::NestedObjectWithOptionalFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
                             }
                             Some("NestedObjectWithRequiredFieldError") => {
-                                Self::NestedObjectWithRequiredFieldError { message: message }
+                                Self::NestedObjectWithRequiredFieldError {
+                                    message: message,
+                                    field: parsed
+                                        .get("field")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    details: parsed
+                                        .get("details")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
                             }
-                            Some("ErrorWithUnionBody") => {
-                                Self::ErrorWithUnionBody { message: message }
-                            }
-                            _ => Self::BadRequestBody { message: message },
+                            Some("ErrorWithUnionBody") => Self::ErrorWithUnionBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
+                            _ => Self::BadRequestBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
                         };
                     }
                     return Self::BadRequestBody {
                         message: body.unwrap_or("Unknown error").to_string(),
+                        field: None,
+                        details: None,
                     };
                 }
                 return Self::BadRequestBody {
                     message: "Unknown error".to_string(),
+                    field: None,
+                    details: None,
                 };
             }
             _ => Self::Http {

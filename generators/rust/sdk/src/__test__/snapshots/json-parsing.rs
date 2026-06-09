@@ -2,16 +2,14 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("ValidationError: Unprocessable entity - {{message}}")]
+    #[error("ValidationError: Unprocessable entity - {message}")]
     ValidationError { message: String, field: Option<String>, validation_error: Option<String> },
-    #[error("ConflictError: Conflict - {{message}}")]
+    #[error("ConflictError: Conflict - {message}")]
     ConflictError { message: String, conflict_type: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
-    #[error("Request executor error: {0}")]
-    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]

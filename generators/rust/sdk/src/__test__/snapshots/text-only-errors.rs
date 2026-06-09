@@ -2,16 +2,14 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("SimpleError: Bad request - {{message}}")]
+    #[error("SimpleError: Bad request - {message}")]
     SimpleError { message: String, field: Option<String>, details: Option<String> },
-    #[error("GenericError: Internal server error - {{message}}")]
+    #[error("GenericError: Internal server error - {message}")]
     GenericError { message: String, error_id: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
-    #[error("Request executor error: {0}")]
-    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]

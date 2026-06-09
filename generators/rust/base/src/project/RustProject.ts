@@ -216,7 +216,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         // even in the default path. With an injected executor, delegate
         // entirely to the executor.
         let response = if let Some(executor) = &self.executor {
-            executor.execute(req).await.map_err(ApiError::Executor)?
+            executor.execute(req).await.map_err(ApiError::Network)?
         } else {
             let mut req = req;
             self.apply_auth_headers(&mut req, &options).await?;
@@ -380,7 +380,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
                     .parse()
                     .map_err(|_| ApiError::InvalidHeader)?,
             );
-            executor.execute(req).await.map_err(ApiError::Executor)?
+            executor.execute(req).await.map_err(ApiError::Network)?
         } else {
             self.apply_auth_headers(&mut req, &options).await?;
             self.apply_custom_headers(&mut req, &options)?;

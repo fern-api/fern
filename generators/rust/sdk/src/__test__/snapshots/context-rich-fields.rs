@@ -2,22 +2,20 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("UnauthorizedError: Authentication failed - {{message}}")]
+    #[error("UnauthorizedError: Authentication failed - {message}")]
     UnauthorizedError { message: String, auth_type: Option<String> },
-    #[error("NotFoundError: Resource not found - {{message}}")]
+    #[error("NotFoundError: Resource not found - {message}")]
     NotFoundError { message: String, resource_id: Option<String>, resource_type: Option<String> },
-    #[error("ValidationError: Unprocessable entity - {{message}}")]
+    #[error("ValidationError: Unprocessable entity - {message}")]
     ValidationError { message: String, field: Option<String>, validation_error: Option<String> },
-    #[error("RateLimitError: Rate limit exceeded - {{message}}")]
+    #[error("RateLimitError: Rate limit exceeded - {message}")]
     RateLimitError { message: String, retry_after_seconds: Option<u64>, limit_type: Option<String> },
-    #[error("InternalServerError: Internal server error - {{message}}")]
+    #[error("InternalServerError: Internal server error - {message}")]
     InternalServerError { message: String, error_id: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
-    #[error("Request executor error: {0}")]
-    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]

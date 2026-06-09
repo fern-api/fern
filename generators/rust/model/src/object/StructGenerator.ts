@@ -331,23 +331,21 @@ export class StructGenerator {
         visited.add(typeId);
         const typeDecl = this.context.ir.types[typeId];
         if (!typeDecl) {
-            visited.delete(typeId);
             return false;
         }
-        let result = false;
         if (typeDecl.shape.type === "object") {
-            const propsOk = typeDecl.shape.properties.every((prop) =>
+            // Object supports Default if all its fields support Default
+            return typeDecl.shape.properties.every((prop) =>
                 this.typeSupportsDefault(prop.valueType, visited)
             );
-            const extendsOk = typeDecl.shape.extends.every((parentType) =>
-                this.namedTypeSupportsDefault(parentType.typeId, visited)
-            );
-            result = propsOk && extendsOk;
-        } else if (typeDecl.shape.type === "alias") {
-            result = this.typeSupportsDefault(typeDecl.shape.aliasOf, visited);
         }
-        // Enums and unions don't derive Default, result stays false
-        visited.delete(typeId);
-        return result;
+        if (typeDecl.shape.type === "enum") {
+            return false; // Enums don't derive Default (no #[default] variant)
+        }
+        if (typeDecl.shape.type === "alias") {
+            return this.typeSupportsDefault(typeDecl.shape.aliasOf, visited);
+        }
+        // Unions don't derive Default
+        return false;
     }
 }

@@ -3,13 +3,15 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum ApiError {
     #[error("PropertyBasedErrorTest: Bad request - {{message}}")]
-    PropertyBasedErrorTest { message: String },
+    PropertyBasedErrorTest {
+        message: String,
+        field: Option<String>,
+        details: Option<String>,
+    },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
-    #[error("Request executor error: {0}")]
-    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]
@@ -39,11 +41,19 @@ impl ApiError {
                                 .and_then(|v| v.as_str())
                                 .unwrap_or("Unknown error")
                                 .to_string(),
+                            field: parsed
+                                .get("field")
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            details: parsed
+                                .get("details")
+                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
                 return Self::PropertyBasedErrorTest {
                     message: body.unwrap_or("Unknown error").to_string(),
+                    field: None,
+                    details: None,
                 };
             }
             _ => Self::Http {
