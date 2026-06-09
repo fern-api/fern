@@ -361,7 +361,6 @@ allowedFailures:
   - bytes-download
   - streaming-parameter
   - pagination
-  - pagination-uri-path
 
   # Generated Go code does not compile. Each needs a generator fix.
   - enum # enum-union header value is not converted to a string

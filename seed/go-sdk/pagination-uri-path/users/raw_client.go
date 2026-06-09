@@ -24,17 +24,18 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
-				Client:      options.HTTPClient,
-				MaxAttempts: options.MaxAttempts,
+				Client:         options.HTTPClient,
+				MaxAttempts:    options.MaxAttempts,
+				DisableRetries: options.DisableRetries,
 			},
 		),
 	}
 }
 
-func (r *RawClient) ListWithUriPagination(
+func (r *RawClient) ListWithURIPagination(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.ListUsersUriPaginationResponse], error) {
+) (*core.Response[*fern.ListUsersURIPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +47,7 @@ func (r *RawClient) ListWithUriPagination(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *fern.ListUsersUriPaginationResponse
+	var response *fern.ListUsersURIPaginationResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -54,6 +55,7 @@ func (r *RawClient) ListWithUriPagination(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
@@ -63,7 +65,7 @@ func (r *RawClient) ListWithUriPagination(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.ListUsersUriPaginationResponse]{
+	return &core.Response[*fern.ListUsersURIPaginationResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -93,6 +95,7 @@ func (r *RawClient) ListWithPathPagination(
 			Method:          http.MethodGet,
 			Headers:         headers,
 			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
