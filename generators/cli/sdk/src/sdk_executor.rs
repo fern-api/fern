@@ -475,6 +475,39 @@ mod tests {
     }
 
     #[test]
+    fn sdk_error_display_formats() {
+        assert_eq!(
+            SdkError::Http { status: 404, body: "not found".into() }.to_string(),
+            "HTTP error 404: not found"
+        );
+        assert_eq!(
+            SdkError::Network("connection refused".into()).to_string(),
+            "network error: connection refused"
+        );
+        assert_eq!(
+            SdkError::Timeout("after 30s".into()).to_string(),
+            "request timeout: after 30s"
+        );
+        assert_eq!(
+            SdkError::Auth("bad token".into()).to_string(),
+            "authentication error: bad token"
+        );
+        assert_eq!(
+            SdkError::Other("unknown".into()).to_string(),
+            "SDK error: unknown"
+        );
+    }
+
+    #[test]
+    fn sdk_error_implements_std_error() {
+        let err: Box<dyn std::error::Error + Send + Sync> =
+            Box::new(SdkError::Network("test".into()));
+        let downcast = err.downcast::<SdkError>();
+        assert!(downcast.is_ok());
+        assert!(matches!(*downcast.unwrap(), SdkError::Network(_)));
+    }
+
+    #[test]
     fn http_status_reason_known_codes() {
         assert_eq!(http_status_reason(401), "unauthorized");
         assert_eq!(http_status_reason(429), "rateLimited");
