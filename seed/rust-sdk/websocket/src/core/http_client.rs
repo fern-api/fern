@@ -111,7 +111,7 @@ pub trait RequestExecutor: Send + Sync {
     fn execute(
         &self,
         request: Request,
-    ) -> BoxFuture<'_, Result<Response, reqwest::Error>>;
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>>;
 }
 
 /// Default executor that delegates to a `reqwest::Client`.
@@ -123,8 +123,13 @@ impl RequestExecutor for ReqwestExecutor {
     fn execute(
         &self,
         request: Request,
-    ) -> BoxFuture<'_, Result<Response, reqwest::Error>> {
-        Box::pin(self.client.execute(request))
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
+        Box::pin(async move {
+            self.client
+                .execute(request)
+                .await
+                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
+        })
     }
 }
 
@@ -339,7 +344,7 @@ impl HttpClient {
         options: &Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         if let Some(executor) = &self.executor {
-            executor.execute(req).await.map_err(ApiError::Network)
+            executor.execute(req).await.map_err(ApiError::Executor)
         } else {
             let mut req = req;
             self.apply_auth_headers(&mut req, options).await?;

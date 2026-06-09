@@ -85,6 +85,9 @@ export class ErrorGenerator {
             this.buildStandardVariant("Network", "Network error: {0}", undefined, [
                 Type.reference(new Reference({ name: "reqwest::Error" }))
             ]),
+            this.buildStandardVariant("Executor", "Request executor error: {0}", undefined, [
+                Type.reference(new Reference({ name: "Box<dyn std::error::Error + Send + Sync>" }))
+            ]),
             this.buildStandardVariant("Serialization", "Serialization error: {0}", undefined, [
                 Type.reference(new Reference({ name: "serde_json::Error" }))
             ]),

@@ -62,7 +62,7 @@ describe("ListMembersCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockGet).toHaveBeenCalledWith("acme");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
         expect(context.stdout.info).toHaveBeenCalledTimes(2);
     });
 
@@ -126,9 +126,7 @@ describe("ListMembersCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
-            }
+            rawResponse: { status: 403 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
@@ -146,9 +144,7 @@ describe("ListMembersCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
+            rawResponse: { status: 500 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }

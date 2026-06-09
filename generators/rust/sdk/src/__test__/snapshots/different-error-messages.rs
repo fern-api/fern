@@ -16,6 +16,8 @@ pub enum ApiError {
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
+    #[error("Request executor error: {0}")]
+    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]
