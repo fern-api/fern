@@ -110,7 +110,10 @@ impl Stream for ByteStream {
 /// auth, retries, and TLS configuration.
 #[doc(hidden)]
 pub trait RequestExecutor: Send + Sync {
-    fn execute(&self, request: Request) -> BoxFuture<'_, Result<Response, reqwest::Error>>;
+    fn execute(
+        &self,
+        request: Request,
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>>;
 }
 
 /// Default executor that delegates to a `reqwest::Client`.
@@ -119,8 +122,16 @@ struct ReqwestExecutor {
 }
 
 impl RequestExecutor for ReqwestExecutor {
-    fn execute(&self, request: Request) -> BoxFuture<'_, Result<Response, reqwest::Error>> {
-        Box::pin(self.client.execute(request))
+    fn execute(
+        &self,
+        request: Request,
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
+        Box::pin(async move {
+            self.client
+                .execute(request)
+                .await
+                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
+        })
     }
 }
 
@@ -332,7 +343,7 @@ impl HttpClient {
         options: &Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         if let Some(executor) = &self.executor {
-            executor.execute(req).await.map_err(ApiError::Network)
+            executor.execute(req).await.map_err(ApiError::Executor)
         } else {
             let mut req = req;
             self.apply_auth_headers(&mut req, options).await?;
@@ -535,9 +546,14 @@ impl HttpClient {
         let status = response.status().as_u16();
         let text = response.text().await.map_err(ApiError::Network)?;
 
-        // Handle empty response bodies (e.g., 202 Accepted for deferred requests)
         if text.is_empty() {
-            return Err(ApiError::Http {
+            if status >= 400 {
+                return Err(ApiError::Http {
+                    status,
+                    message: String::new(),
+                });
+            }
+            return serde_json::from_value(serde_json::Value::Null).map_err(|_| ApiError::Http {
                 status,
                 message: String::new(),
             });
@@ -555,10 +571,15 @@ impl HttpClient {
         let text = response.text().await.map_err(ApiError::Network)?;
 
         if text.is_empty() {
-            return Err(ApiError::Http {
-                status: status_code,
-                message: String::new(),
-            });
+            if status_code >= 400 {
+                return Err(ApiError::Http {
+                    status: status_code,
+                    message: String::new(),
+                });
+            }
+            return serde_json::from_value(serde_json::Value::Null)
+                .map(|body| RawResponse { body, status_code, headers })
+                .map_err(|_| ApiError::Http { status: status_code, message: String::new() });
         }
 
         let body: T = serde_json::from_str(&text).map_err(ApiError::Serialization)?;

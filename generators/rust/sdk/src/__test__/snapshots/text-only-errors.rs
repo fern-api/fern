@@ -10,6 +10,8 @@ pub enum ApiError {
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
+    #[error("Request executor error: {0}")]
+    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]
@@ -52,7 +54,7 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::GenericError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        error_id: parsed.get("error_id").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        error_id: parsed.get("errorId").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }

@@ -90,7 +90,7 @@ use std::sync::Arc;
 
 use fern_cli_sdk::error::CliError;
 use fern_cli_sdk::openapi::AppContext;
-use fern_cli_sdk::sdk_executor::{CliExecutor, SdkRequestExecutor};
+use fern_cli_sdk::sdk_executor::{CliExecutor, SdkError, SdkRequestExecutor};
 
 // ---------------------------------------------------------------------------
 // Executor adapter: CliExecutor → SDK RequestExecutor
@@ -102,8 +102,18 @@ impl ${sdkCrateSnake}::RequestExecutor for CliExecutorAdapter {
     fn execute(
         &self,
         request: reqwest::Request,
-    ) -> Pin<Box<dyn Future<Output = Result<reqwest::Response, reqwest::Error>> + Send + '_>> {
-        SdkRequestExecutor::execute(&*self.0, request)
+    ) -> Pin<
+        Box<
+            dyn Future<Output = Result<reqwest::Response, Box<dyn std::error::Error + Send + Sync>>>
+                + Send
+                + '_,
+        >,
+    > {
+        Box::pin(async move {
+            SdkRequestExecutor::execute(&*self.0, request)
+                .await
+                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
+        })
     }
 }
 
@@ -157,6 +167,10 @@ fn convert_api_error(e: ${sdkCrateSnake}::ApiError) -> CliError {
         ${sdkCrateSnake}::ApiError::Network(err) => {
             CliError::Other(anyhow::anyhow!("SDK network error: {err}"))
         }
+        ${sdkCrateSnake}::ApiError::Executor(boxed) => match boxed.downcast::<SdkError>() {
+            Ok(sdk_error) => sdk_error.into_cli_error(),
+            Err(other) => CliError::Other(anyhow::anyhow!("SDK executor error: {other}")),
+        },
         other => CliError::Other(anyhow::anyhow!("SDK error: {other}")),
     }
 }
