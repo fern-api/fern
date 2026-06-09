@@ -945,8 +945,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     context.case.pascalSafe(referenceToRequestBody.requestBodyType.name)
                 );
                 properties.push(...typeProperties);
+                return properties;
             }
-            return properties;
         }
 
         const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
