@@ -32,7 +32,7 @@ Two protocols are supported, side-by-side:
 The crate also ships ~45 binary targets under `src/bin/<name>/` (autobins —
 no `[[bin]]` blocks in `Cargo.toml`; adding a CLI means creating
 `src/bin/<name>/` with no edit to any shared file): 32 user-facing demo CLIs
-(`box`, `linear`, `square`, `bigcommerce`, `close`, `devin`, `assemblyai`,
+(`box`, `linear`, `square`, `bigcommerce`, `close`, `devin-api`, `assemblyai`,
 `paid`, `xero`, `twilio`, `agentmail`, `mavenagi`, `coinflow`, `sarvam`,
 `icepanel`, `fifteenth`, `contentful`, `terra`, `truefoundry`, `lattice`,
 `unleash`, `videogen`, `finch`, `elevenlabs`, `fathom`, `athena`, `auth0`,
