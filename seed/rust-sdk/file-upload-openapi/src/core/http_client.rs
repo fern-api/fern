@@ -650,8 +650,15 @@ impl HttpClient {
                 });
             }
             return serde_json::from_value(serde_json::Value::Null)
-                .map(|body| RawResponse { body, status_code, headers })
-                .map_err(|_| ApiError::Http { status: status_code, message: String::new() });
+                .map(|body| RawResponse {
+                    body,
+                    status_code,
+                    headers,
+                })
+                .map_err(|_| ApiError::Http {
+                    status: status_code,
+                    message: String::new(),
+                });
         }
 
         let body: T = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
