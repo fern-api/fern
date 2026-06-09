@@ -8,4 +8,7 @@
     groups (2+ levels). The glue now recursively discovers sub-client
     structs from the generated SDK's resource tree and emits correct
     nested struct literals instead of assuming a flat client hierarchy.
+    Nested sub-clients are qualified through `api::resources::<group>`
+    (where the group modules actually live) rather than `api::<group>`,
+    which is not re-exported at the crate's `api` root.
   type: fix

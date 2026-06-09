@@ -123,7 +123,7 @@ async function discoverClientTree(
  *
  *     sdk::api::AgentsClient {
  *         http_client: http_client.clone(),
- *         drive: sdk::api::agents::DriveClient { http_client: http_client.clone() },
+ *         drive: sdk::api::resources::agents::DriveClient { http_client: http_client.clone() },
  *     }
  */
 function renderClientInit(sdkCrate: string, node: ClientNode, indent: string): string {
@@ -148,15 +148,19 @@ function renderClientInit(sdkCrate: string, node: ClientNode, indent: string): s
  * Build the qualified type path for a client node.
  *
  * Top-level sub-clients are re-exported at `sdk::api::TypeName`.
- * Nested sub-clients live at `sdk::api::<parent_modules>::TypeName`.
+ * Nested sub-clients are NOT re-exported at the `api` root — they live
+ * under their group module beneath `api::resources`, i.e.
+ * `sdk::api::resources::<parent_modules>::TypeName`. `modulePath` is
+ * relative to `api::resources`, so the `resources::` prefix is required.
  */
 function qualifyType(sdkCrate: string, node: ClientNode): string {
     if (node.modulePath.length <= 1) {
         return `${sdkCrate}::api::${node.typeName}`;
     }
-    // For nested clients, use the parent modules (all but last segment).
+    // For nested clients, use the parent modules (all but last segment),
+    // rooted at `api::resources` where the group modules actually live.
     const parentModules = node.modulePath.slice(0, -1).join("::");
-    return `${sdkCrate}::api::${parentModules}::${node.typeName}`;
+    return `${sdkCrate}::api::resources::${parentModules}::${node.typeName}`;
 }
 
 /**
