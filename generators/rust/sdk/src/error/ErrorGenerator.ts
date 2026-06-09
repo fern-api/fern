@@ -141,31 +141,31 @@ export class ErrorGenerator {
         return fields;
     }
 
-    private getStatusCodeFields(statusCode: number): Array<{ name: string; type: Type }> {
-        const fieldMap: Record<number, Array<{ name: string; type: Type }>> = {
+    private getStatusCodeFields(statusCode: number): Array<{ name: string; wireName: string; type: Type }> {
+        const fieldMap: Record<number, Array<{ name: string; wireName: string; type: Type }>> = {
             400: [
-                { name: "field", type: Type.option(Type.string()) },
-                { name: "details", type: Type.option(Type.string()) }
+                { name: "field", wireName: "field", type: Type.option(Type.string()) },
+                { name: "details", wireName: "details", type: Type.option(Type.string()) }
             ],
-            401: [{ name: "auth_type", type: Type.option(Type.string()) }],
+            401: [{ name: "auth_type", wireName: "authType", type: Type.option(Type.string()) }],
             403: [
-                { name: "resource", type: Type.option(Type.string()) },
-                { name: "required_permission", type: Type.option(Type.string()) }
+                { name: "resource", wireName: "resource", type: Type.option(Type.string()) },
+                { name: "required_permission", wireName: "requiredPermission", type: Type.option(Type.string()) }
             ],
             404: [
-                { name: "resource_id", type: Type.option(Type.string()) },
-                { name: "resource_type", type: Type.option(Type.string()) }
+                { name: "resource_id", wireName: "resourceId", type: Type.option(Type.string()) },
+                { name: "resource_type", wireName: "resourceType", type: Type.option(Type.string()) }
             ],
-            409: [{ name: "conflict_type", type: Type.option(Type.string()) }],
+            409: [{ name: "conflict_type", wireName: "conflictType", type: Type.option(Type.string()) }],
             422: [
-                { name: "field", type: Type.option(Type.string()) },
-                { name: "validation_error", type: Type.option(Type.string()) }
+                { name: "field", wireName: "field", type: Type.option(Type.string()) },
+                { name: "validation_error", wireName: "validationError", type: Type.option(Type.string()) }
             ],
             429: [
-                { name: "retry_after_seconds", type: Type.option(Type.primitive(PrimitiveType.U64)) },
-                { name: "limit_type", type: Type.option(Type.string()) }
+                { name: "retry_after_seconds", wireName: "retryAfterSeconds", type: Type.option(Type.primitive(PrimitiveType.U64)) },
+                { name: "limit_type", wireName: "limitType", type: Type.option(Type.string()) }
             ],
-            500: [{ name: "error_id", type: Type.option(Type.string()) }]
+            500: [{ name: "error_id", wireName: "errorId", type: Type.option(Type.string()) }]
         };
 
         return fieldMap[statusCode] || [];
@@ -281,12 +281,12 @@ export class ErrorGenerator {
 
     private buildSuccessConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
         const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
-        const fieldAssignments = statusFields.map(({ name }) => ({
+        const fieldAssignments = statusFields.map(({ name, wireName }) => ({
             name,
             value:
                 name === "retry_after_seconds"
-                    ? this.buildU64FieldExtraction(name)
-                    : this.buildStringFieldExtraction(name)
+                    ? this.buildU64FieldExtraction(wireName)
+                    : this.buildStringFieldExtraction(wireName)
         }));
 
         return Expression.structConstruction(`Self::${errorName}`, [
@@ -442,11 +442,11 @@ export class ErrorGenerator {
     private buildDynamicFieldAssignments(statusCode: number): Expression.FieldAssignment[] {
         const fields = this.getStatusCodeFields(statusCode);
 
-        return fields.map(({ name }) => {
+        return fields.map(({ name, wireName }) => {
             const fieldValue =
                 name === "retry_after_seconds"
-                    ? this.buildU64FieldExtraction(name)
-                    : this.buildStringFieldExtraction(name);
+                    ? this.buildU64FieldExtraction(wireName)
+                    : this.buildStringFieldExtraction(wireName);
 
             return { name, value: fieldValue };
         });
