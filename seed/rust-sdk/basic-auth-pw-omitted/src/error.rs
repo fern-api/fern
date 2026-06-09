@@ -2,9 +2,9 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("UnauthorizedRequest: Authentication failed - {{message}}")]
+    #[error("UnauthorizedRequest: Authentication failed - {message}")]
     UnauthorizedRequest { message: String },
-    #[error("BadRequest: Bad request - {{message}}")]
+    #[error("BadRequest: Bad request - {message}")]
     BadRequest {
         message: String,
         field: Option<String>,

@@ -2,15 +2,15 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("UnauthorizedError: Authentication failed - {{message}}")]
+    #[error("UnauthorizedError: Authentication failed - {message}")]
     UnauthorizedError { message: String, auth_type: Option<String> },
-    #[error("ForbiddenError: Access forbidden - {{message}}")]
+    #[error("ForbiddenError: Access forbidden - {message}")]
     ForbiddenError { message: String, resource: Option<String>, required_permission: Option<String> },
-    #[error("NotFoundError: Resource not found - {{message}}")]
+    #[error("NotFoundError: Resource not found - {message}")]
     NotFoundError { message: String, resource_id: Option<String>, resource_type: Option<String> },
-    #[error("ConflictError: Conflict - {{message}}")]
+    #[error("ConflictError: Conflict - {message}")]
     ConflictError { message: String, conflict_type: Option<String> },
-    #[error("ValidationError: Unprocessable entity - {{message}}")]
+    #[error("ValidationError: Unprocessable entity - {message}")]
     ValidationError { message: String, field: Option<String>, validation_error: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
