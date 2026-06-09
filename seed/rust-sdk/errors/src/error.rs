@@ -2,34 +2,16 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("NotFoundError: Resource not found - {{message}}")]
-    NotFoundError {
-        message: String,
-        resource_id: Option<String>,
-        resource_type: Option<String>,
-    },
-    #[error("BadRequestError: Bad request - {{message}}")]
-    BadRequestError {
-        message: String,
-        field: Option<String>,
-        details: Option<String>,
-    },
-    #[error("InternalServerError: Internal server error - {{message}}")]
-    InternalServerError {
-        message: String,
-        error_id: Option<String>,
-    },
-    #[error("FooTooMuch: Rate limit exceeded - {{message}}")]
-    FooTooMuch {
-        message: String,
-        retry_after_seconds: Option<u64>,
-        limit_type: Option<String>,
-    },
-    #[error("FooTooLittle: Internal server error - {{message}}")]
-    FooTooLittle {
-        message: String,
-        error_id: Option<String>,
-    },
+    #[error("NotFoundError: Resource not found - {message}")]
+    NotFoundError { message: String, code: Option<i64> },
+    #[error("BadRequestError: Bad request - {message}")]
+    BadRequestError { message: String, code: Option<i64> },
+    #[error("InternalServerError: Internal server error - {message}")]
+    InternalServerError { message: String, code: Option<i64> },
+    #[error("FooTooMuch: Rate limit exceeded - {message}")]
+    FooTooMuch { message: String, code: Option<i64> },
+    #[error("FooTooLittle: Internal server error - {message}")]
+    FooTooLittle { message: String, code: Option<i64> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
@@ -65,19 +47,15 @@ impl ApiError {
                                 .and_then(|v| v.as_str())
                                 .unwrap_or("Unknown error")
                                 .to_string(),
-                            resource_id: parsed
-                                .get("resource_id")
-                                .and_then(|v| v.as_str().map(|s| s.to_string())),
-                            resource_type: parsed
-                                .get("resource_type")
+                            code: parsed
+                                .get("code")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
                 return Self::NotFoundError {
                     message: body.unwrap_or("Unknown error").to_string(),
-                    resource_id: None,
-                    resource_type: None,
+                    code: None,
                 };
             }
             400 => {
@@ -90,19 +68,15 @@ impl ApiError {
                                 .and_then(|v| v.as_str())
                                 .unwrap_or("Unknown error")
                                 .to_string(),
-                            field: parsed
-                                .get("field")
-                                .and_then(|v| v.as_str().map(|s| s.to_string())),
-                            details: parsed
-                                .get("details")
+                            code: parsed
+                                .get("code")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
                 return Self::BadRequestError {
                     message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    details: None,
+                    code: None,
                 };
             }
             500 => {
@@ -117,32 +91,32 @@ impl ApiError {
                         return match error_type {
                             Some("InternalServerError") => Self::InternalServerError {
                                 message: message,
-                                error_id: parsed
-                                    .get("error_id")
+                                code: parsed
+                                    .get("code")
                                     .and_then(|v| v.as_str().map(|s| s.to_string())),
                             },
                             Some("FooTooLittle") => Self::FooTooLittle {
                                 message: message,
-                                error_id: parsed
-                                    .get("error_id")
+                                code: parsed
+                                    .get("code")
                                     .and_then(|v| v.as_str().map(|s| s.to_string())),
                             },
                             _ => Self::InternalServerError {
                                 message: message,
-                                error_id: parsed
-                                    .get("error_id")
+                                code: parsed
+                                    .get("code")
                                     .and_then(|v| v.as_str().map(|s| s.to_string())),
                             },
                         };
                     }
                     return Self::InternalServerError {
                         message: body.unwrap_or("Unknown error").to_string(),
-                        error_id: None,
+                        code: None,
                     };
                 }
                 return Self::InternalServerError {
                     message: "Unknown error".to_string(),
-                    error_id: None,
+                    code: None,
                 };
             }
             429 => {
@@ -155,19 +129,15 @@ impl ApiError {
                                 .and_then(|v| v.as_str())
                                 .unwrap_or("Unknown error")
                                 .to_string(),
-                            retry_after_seconds: parsed
-                                .get("retry_after_seconds")
-                                .and_then(|v| v.as_u64()),
-                            limit_type: parsed
-                                .get("limit_type")
+                            code: parsed
+                                .get("code")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
                 return Self::FooTooMuch {
                     message: body.unwrap_or("Unknown error").to_string(),
-                    retry_after_seconds: None,
-                    limit_type: None,
+                    code: None,
                 };
             }
             _ => Self::Http {

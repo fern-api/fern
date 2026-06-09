@@ -3141,6 +3141,13 @@ func (f *fileWriter) endpointFromIR(
 			signatureReturnValues = "(io.Reader, error)"
 			successfulReturnValues = "response, nil"
 			errorReturnValues = "nil, err"
+		case "bytes":
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "([]byte, error)"
+			successfulReturnValues = "response.Bytes(), nil"
+			errorReturnValues = "nil, err"
 		case "text":
 			responseType = "bytes.NewBuffer(nil)"
 			responseInitializerFormat = "response := %s"

@@ -300,7 +300,7 @@ export class EndpointMethodGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value: this.referencer.resolvesToAnEnumWithRawValues(
-                                                        swiftType.nonOptional()
+                                                        swiftType.nonOptional().nonNullable()
                                                     )
                                                         ? swift.Expression.memberAccess({
                                                               target: swift.Expression.reference("$0"),
@@ -326,7 +326,14 @@ export class EndpointMethodGenerator {
                                                   methodName: this.inferQueryParamCaseName(swiftType),
                                                   arguments_: [
                                                       swift.functionArgument({
-                                                          value: swift.Expression.reference("$0")
+                                                          value: this.referencer.resolvesToAnEnumWithRawValues(
+                                                              swiftType.nonNullable()
+                                                          )
+                                                              ? swift.Expression.memberAccess({
+                                                                    target: swift.Expression.reference("$0"),
+                                                                    memberName: "rawValue"
+                                                                })
+                                                              : swift.Expression.reference("$0")
                                                       })
                                                   ]
                                               })

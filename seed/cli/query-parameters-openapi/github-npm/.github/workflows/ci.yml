@@ -129,6 +129,10 @@ jobs:
             "name": "${PLATFORM_PKG}",
             "version": "${VERSION}",
             "description": "Platform-specific binary for query-parameters-api (${{ matrix.npm-platform-suffix }})",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
             "os": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f1)"],
             "cpu": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f2)"],
             "main": "${BINARY_NAME}",
@@ -199,6 +203,10 @@ jobs:
             "name": "@fern/query-parameters-openapi",
             "version": "${VERSION}",
             "description": "CLI for query-parameters-api",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
             "bin": {
               "query-parameters-api": "bin/cli.js"
             },
