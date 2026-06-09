@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `hasNextPage` for offset pagination so it no longer compares `items.length`
+    against the requested page-size. When the caller omitted the page-size parameter
+    the check fell back to a fabricated default and wrongly reported `hasNextPage` as
+    `false` on a short page (and a false positive on a full last page). The pager now
+    reports a next page whenever the current page returned any items, matching the
+    offset pagers in the other Fern SDK generators.
+  type: fix
