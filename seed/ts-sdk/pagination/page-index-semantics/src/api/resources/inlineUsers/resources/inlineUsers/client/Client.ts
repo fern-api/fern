@@ -607,7 +607,7 @@ export class InlineUsersClient {
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data.users ?? []).length >= Math.floor(request?.limit ?? 1),
+            hasNextPage: (response) => (response?.data.users ?? []).length > 0,
             getItems: (response) => response?.data.users ?? [],
             loadPage: (_response) => {
                 _offset += 1;
@@ -693,8 +693,7 @@ export class InlineUsersClient {
         >({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.hasNextPage ?? (response?.data.users ?? []).length >= Math.floor(request?.limit ?? 1),
+            hasNextPage: (response) => response?.hasNextPage ?? (response?.data.users ?? []).length > 0,
             getItems: (response) => response?.data.users ?? [],
             loadPage: (_response) => {
                 _offset += 1;

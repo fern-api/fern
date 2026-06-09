@@ -323,66 +323,26 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             noOptionalChaining: true
         });
 
-        // Use offset.step if available to ensure that page is full before returning true
-        const baseHasNextPage: ts.Expression =
-            offset.step != null
-                ? // If step is defined, check if items.length >= step (got full page)
-                  (() => {
-                      const stepPropertyAccess = context.type.generateGetterForRequestProperty({
-                          property: offset.step,
-                          variable: "request",
-                          isVariableOptional: true
-                      });
-                      return ts.factory.createBinaryExpression(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createParenthesizedExpression(
-                                  ts.factory.createBinaryExpression(
-                                      itemsPropertyAccess,
-                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                      ts.factory.createArrayLiteralExpression([], false)
-                                  )
-                              ),
-                              ts.factory.createIdentifier("length")
-                          ),
-                          ts.factory.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
-                          // access to stepPropertyAccess should be an integer so that it compares correctly to items.length
-                          ts.factory.createCallExpression(
-                              ts.factory.createPropertyAccessExpression(
-                                  ts.factory.createIdentifier("Math"),
-                                  ts.factory.createIdentifier("floor")
-                              ),
-                              undefined,
-                              [
-                                  ts.factory.createParenthesizedExpression(
-                                      ts.factory.createBinaryExpression(
-                                          stepPropertyAccess,
-                                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                          ts.factory.createNumericLiteral(
-                                              this.getDefaultPaginationValue({
-                                                  type: offset.step.property.valueType
-                                              })
-                                          )
-                                      )
-                                  )
-                              ]
-                          )
-                      );
-                  })()
-                : // Fallback: check if items.length > 0 (got something)
-                  ts.factory.createBinaryExpression(
-                      ts.factory.createPropertyAccessExpression(
-                          ts.factory.createParenthesizedExpression(
-                              ts.factory.createBinaryExpression(
-                                  itemsPropertyAccess,
-                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                  ts.factory.createArrayLiteralExpression([], false)
-                              )
-                          ),
-                          ts.factory.createIdentifier("length")
-                      ),
-                      ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
-                      ts.factory.createNumericLiteral("0")
-                  );
+        // Has-next is items-driven: there may be another page as long as this page returned items.
+        // This matches the offset pagers in the other Fern SDK generators (e.g. Python, Go). We
+        // intentionally do NOT compare items.length against the requested `step`/page-size: when the
+        // caller omits page-size that comparison falls back to a fabricated default and wrongly reports
+        // `false` on a short page (and false positives on a full last page). `offset.step` still drives
+        // the offset increment below; it just doesn't gate has-next.
+        const baseHasNextPage: ts.Expression = ts.factory.createBinaryExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createParenthesizedExpression(
+                    ts.factory.createBinaryExpression(
+                        itemsPropertyAccess,
+                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                        ts.factory.createArrayLiteralExpression([], false)
+                    )
+                ),
+                ts.factory.createIdentifier("length")
+            ),
+            ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
+            ts.factory.createNumericLiteral("0")
+        );
 
         // If explicit hasNextPage property exists, it takes priority (?? to fallback to base check)
         const hasNextPage: ts.Expression =
