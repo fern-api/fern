@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.40.4
+  changelogEntry:
+    - summary: |
+        Always wrap IR-derived error fields in `Option` to match constructor code
+        that assigns `None` for missing fields, preventing struct/constructor type
+        mismatches. Fix thiserror format strings: `{{message}}` → `{message}` so
+        field values are actually interpolated.
+      type: fix
+    - summary: |
+        Register synthesized request-envelope types for endpoints with a
+        referenced request body AND query parameters in the model generator's
+        `types/mod.rs`. Previously these types were generated but never
+        declared as modules, causing unresolved-type errors in the SDK crate.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 0.40.3
+  changelogEntry:
+    - summary: |
+        Fix error field parsing to use camelCase JSON wire names matching REST conventions
+        (e.g. `resourceId`, `authType`, `errorId`) and derive error fields from the IR type
+        definition when available. Fix empty-body response handling: `parse_response` and
+        `parse_response_raw` now return `Ok` for empty 2xx bodies (unit/HEAD/204 responses)
+        and `Err` for empty 4xx/5xx bodies, preventing auth failures from being silently
+        swallowed on the `with_executor` path.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 0.40.2
+  changelogEntry:
+    - summary: |
+        Change `RequestExecutor::execute` return type from `Result<Response, reqwest::Error>`
+        to `Result<Response, Box<dyn std::error::Error + Send + Sync>>` and add `ApiError::Executor`
+        variant. This allows downstream crates (e.g. CLI glue) to inject custom executor errors
+        without a backwards dependency on `reqwest`.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 0.40.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error where structs incorrectly derived `Default` when
+        containing fields whose types extend base objects that don't support
+        `Default` (e.g., objects with required enum fields). The
+        `namedTypeSupportsDefault` check now also verifies parent types via
+        `extends`, not just direct properties.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 66
 - version: 0.40.0
   changelogEntry:
     - summary: |

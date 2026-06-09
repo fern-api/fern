@@ -1005,6 +1005,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         this.context.goTypeMapper.convert({ reference: responseBody.value.responseBodyType })
                     );
                 });
+            case "bytes":
             case "fileDownload":
             case "text":
                 return go.codeblock((writer) => {
@@ -1013,7 +1014,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
             case "streaming":
             case "streamParameter":
-            case "bytes":
                 return undefined;
             default:
                 assertNever(responseBody);
@@ -1090,11 +1090,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         switch (responseBody.type) {
             case "json":
                 return this.getResponseBodyReferenceForJson({ jsonResponse: responseBody.value });
-            case "bytes":
             case "fileDownload":
             case "streaming":
             case "streamParameter":
                 return go.codeblock("response");
+            case "bytes":
+                return go.codeblock("response.Bytes()");
             case "text":
                 return go.codeblock("response.String()");
             default:

@@ -5,13 +5,15 @@ pub enum ApiError {
     #[error("UnprocessableEntityError: Unprocessable entity - {{message}}")]
     UnprocessableEntityError {
         message: String,
-        field: Option<String>,
-        validation_error: Option<String>,
+        id: Option<String>,
+        name: Option<String>,
     },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
+    #[error("Request executor error: {0}")]
+    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]
@@ -41,19 +43,19 @@ impl ApiError {
                                 .and_then(|v| v.as_str())
                                 .unwrap_or("Unknown error")
                                 .to_string(),
-                            field: parsed
-                                .get("field")
+                            id: parsed
+                                .get("id")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
-                            validation_error: parsed
-                                .get("validation_error")
+                            name: parsed
+                                .get("name")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
                 return Self::UnprocessableEntityError {
                     message: body.unwrap_or("Unknown error").to_string(),
-                    field: None,
-                    validation_error: None,
+                    id: None,
+                    name: None,
                 };
             }
             _ => Self::Http {

@@ -198,6 +198,91 @@ impl CliApp {
         self
     }
 
+    /// Register a top-level custom command with compile-time typed arguments.
+    ///
+    /// `A` is a [`clap::Args`] struct (typically `#[derive(clap::Args)]`)
+    /// whose fields become CLI flags. The handler receives the parsed `A`
+    /// and the binding context `C` (e.g. [`AppContext`]) directly — no
+    /// wrapper needed.
+    ///
+    /// ```rust,ignore
+    /// #[derive(clap::Args)]
+    /// struct AdoptArgs {
+    ///     name: String,
+    ///     #[arg(long)]
+    ///     tag: Option<String>,
+    /// }
+    ///
+    /// fn handle_adopt(args: AdoptArgs, ctx: &AppContext) -> Result<(), CliError> {
+    ///     println!("adopting {}", args.name);
+    ///     Ok(())
+    /// }
+    ///
+    /// CliApp::new("my-cli")
+    ///     .binding(OpenApiBinding::new().spec(include_str!("openapi.yaml")))
+    ///     .command_typed("adopt", "Adopt a pet", handle_adopt)
+    ///     .run()
+    /// ```
+    ///
+    /// For full [`clap::Command`] customization (long_about, aliases, etc.)
+    /// use [`command_typed_with`](Self::command_typed_with).
+    ///
+    /// **Note:** `transform_response` and `recover_error` hooks do not
+    /// apply to custom commands. Custom command handlers manage their
+    /// own output directly.
+    pub fn command_typed<A, C>(
+        self,
+        name: &str,
+        about: &str,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        self.command_typed_with(
+            clap::Command::new(name.to_string()).about(about.to_string()),
+            handler,
+        )
+    }
+
+    /// Like [`command_typed`](Self::command_typed) but accepts a full
+    /// [`clap::Command`] for advanced customization.
+    ///
+    /// ```rust,ignore
+    /// app.command_typed_with(
+    ///     clap::Command::new("adopt")
+    ///         .about("Adopt a pet")
+    ///         .long_about("Create and fetch back a pet record."),
+    ///     handle_adopt,
+    /// )
+    /// ```
+    pub fn command_typed_with<A, C>(
+        mut self,
+        cmd: clap::Command,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        let augmented = A::augment_args(cmd);
+        let erased: CliCommandHandler = Box::new(move |matches, ctx| {
+            let args = A::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler(args, ctx)
+        });
+        self.cli_commands.push(CliCommand {
+            path: Vec::new(),
+            cmd: augmented,
+            handler: erased,
+        });
+        self
+    }
+
     /// Register a custom command under an existing command path.
     ///
     /// ```rust,ignore
@@ -224,6 +309,64 @@ impl CliApp {
             path: path.iter().map(|s| s.to_string()).collect(),
             cmd,
             handler,
+        });
+        self
+    }
+
+    /// Register a typed custom command under an existing command path.
+    ///
+    /// Like [`command_typed`](Self::command_typed) but nests the command
+    /// under `path` in the command tree.
+    ///
+    /// ```rust,ignore
+    /// app.command_under_typed(&["pets"], "find", "Find pets by name", handle_find)
+    /// ```
+    ///
+    /// For full [`clap::Command`] customization use
+    /// [`command_under_typed_with`](Self::command_under_typed_with).
+    pub fn command_under_typed<A, C>(
+        self,
+        path: &[&str],
+        name: &str,
+        about: &str,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        self.command_under_typed_with(
+            path,
+            clap::Command::new(name.to_string()).about(about.to_string()),
+            handler,
+        )
+    }
+
+    /// Like [`command_under_typed`](Self::command_under_typed) but
+    /// accepts a full [`clap::Command`].
+    pub fn command_under_typed_with<A, C>(
+        mut self,
+        path: &[&str],
+        cmd: clap::Command,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        let augmented = A::augment_args(cmd);
+        let erased: CliCommandHandler = Box::new(move |matches, ctx| {
+            let args = A::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler(args, ctx)
+        });
+        self.cli_commands.push(CliCommand {
+            path: path.iter().map(|s| s.to_string()).collect(),
+            cmd: augmented,
+            handler: erased,
         });
         self
     }

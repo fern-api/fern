@@ -74,6 +74,34 @@ describe("emitReadme", () => {
         expect(readme).toContain("reference.md");
     });
 
+    // ── npm badge in header ─────────────────────────────────────────
+
+    it("includes npm version badge when npmPublishInfo is present", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "petstore-api",
+            apiDisplayName: "Petstore",
+            authBindings: [bearerBinding],
+            npmPublishInfo
+        });
+
+        expect(readme).toContain("[![npm shield](https://img.shields.io/npm/v/@petstore/cli)]");
+        expect(readme).toContain("(https://www.npmjs.com/package/@petstore/cli)");
+    });
+
+    it("omits npm badge when npmPublishInfo is absent", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo: undefined
+        });
+
+        expect(readme).not.toContain("npm shield");
+        expect(readme).not.toContain("img.shields.io");
+    });
+
     // ── Build from source when npmPublishInfo absent ────────────────
 
     it("shows build-from-source when npmPublishInfo is absent", async () => {
