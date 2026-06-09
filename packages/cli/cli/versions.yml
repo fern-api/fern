@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.45.4
+  changelogEntry:
+    - summary: |
+        Fix `fs.cp` resolving relative symlinks to absolute temp-directory paths
+        during local generation. Adds `verbatimSymlinks: true` so symlinks like
+        `.claude -> .agents` are preserved as-is when copying generator output.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
 - version: 5.45.3
   changelogEntry:
     - summary: |
