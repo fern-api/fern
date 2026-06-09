@@ -792,7 +792,7 @@ impl HttpClient {
                 "Cache-Control",
                 "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
             );
-            executor.execute(req).await.map_err(ApiError::Network)?
+            executor.execute(req).await.map_err(ApiError::Executor)?
         } else {
             self.apply_auth_headers(&mut req, &options).await?;
             self.apply_custom_headers(&mut req, &options)?;

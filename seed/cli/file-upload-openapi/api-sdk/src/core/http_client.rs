@@ -389,7 +389,7 @@ impl HttpClient {
         // even in the default path. With an injected executor, delegate
         // entirely to the executor.
         let response = if let Some(executor) = &self.executor {
-            executor.execute(req).await.map_err(ApiError::Network)?
+            executor.execute(req).await.map_err(ApiError::Executor)?
         } else {
             let mut req = req;
             self.apply_auth_headers(&mut req, &options).await?;
