@@ -146,8 +146,6 @@ allowedFailures:
   - multi-url-environment-reference
   - nullable:no-custom-config
   - nullable:nullable-as-optional
-  - nullable-optional:no-custom-config
-  - nullable-optional:nullable-as-optional
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
   - pagination:custom-pager
