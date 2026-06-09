@@ -848,11 +848,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
         return FernIr.HttpRequestBody._visit(requestBody, {
             inlinedRequestBody: () => false,
-            reference: () => {
+            reference: (ref) => {
                 if (!this.flattenRequestParameters) {
                     return true;
                 }
-                return false;
+                // Only named object types can have their properties inlined
+                // into the wrapper. Non-object reference types (lists, maps,
+                // primitives, etc.) need an explicit body property.
+                if (ref.requestBodyType.type === "named") {
+                    const typeDeclaration = this.getTypeDeclaration(ref.requestBodyType, context);
+                    if (typeDeclaration?.shape.type === "object") {
+                        return false;
+                    }
+                }
+                return true;
             },
             bytes: () => false,
             fileUpload: () => false,

@@ -967,7 +967,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference body with flattenRequestParameters=true", () => {
+        it("returns true for non-object reference body with flattenRequestParameters=true", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
@@ -982,7 +982,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             });
             const wrapper = new GeneratedRequestWrapperImpl(init);
             const { context } = createMockContext();
-            expect(wrapper.hasBodyProperty(context)).toBe(false);
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
         it("returns false for fileUpload body", () => {
@@ -2472,7 +2472,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference request body when flattened", () => {
+        it("returns true for non-object reference request body when flattened", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
@@ -2487,7 +2487,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             });
             const wrapper = new GeneratedRequestWrapperImpl(init);
             const { context } = createMockContext();
-            expect(wrapper.hasBodyProperty(context)).toBe(false);
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
         it("returns false when no request body", () => {
