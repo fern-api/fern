@@ -52,7 +52,7 @@ class BaseClientWrapper:
         if self.api_key is not None:
             headers["X-API-Key"] = self.api_key
         token = self._get_token()
-        if token is not None:
+        if token:
             headers["Authorization"] = f"Bearer {token}"
         if self._auth_headers is not None:
             headers.update(self._auth_headers())
@@ -173,7 +173,8 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers = self.get_headers()
         if self._async_token is not None:
             token = await self._async_token()
-            headers["Authorization"] = f"Bearer {token}"
+            if token:
+                headers["Authorization"] = f"Bearer {token}"
         if self._async_auth_headers is not None:
             headers.update(await self._async_auth_headers())
         return headers
