@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.40.3
+  changelogEntry:
+    - summary: |
+        Fix error field parsing to use camelCase JSON wire names matching REST conventions
+        (e.g. `resourceId`, `authType`, `errorId`) and derive error fields from the IR type
+        definition when available. Fix empty-body response handling: `parse_response` and
+        `parse_response_raw` now return `Ok` for empty 2xx bodies (unit/HEAD/204 responses)
+        and `Err` for empty 4xx/5xx bodies, preventing auth failures from being silently
+        swallowed on the `with_executor` path.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
 - version: 0.40.2
   changelogEntry:
     - summary: |
