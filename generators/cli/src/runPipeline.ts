@@ -161,7 +161,8 @@ export async function runPipeline(args: {
             await emitPublishWorkflow({
                 outputDir,
                 binaryName,
-                npmPublishInfo: outputConfig.npmPublishInfo
+                npmPublishInfo: outputConfig.npmPublishInfo,
+                repoUrl: outputConfig.repoUrl
             });
         } else {
             await emitCiWorkflow({ outputDir, binaryName });

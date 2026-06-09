@@ -58,6 +58,7 @@ describe("resolveOutputConfig", () => {
 
         expect(result.version).toBe("1.0.0");
         expect(result.isGithubOutput).toBe(true);
+        expect(result.repoUrl).toBe("https://github.com/acme/cli");
         expect(result.npmPublishInfo).toBeUndefined();
     });
 
