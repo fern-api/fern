@@ -39,6 +39,8 @@ jobs:
       - name: Set Options
         id: set-options
         shell: bash
+        env:
+          PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
         run: |
           echo "GitHub Event: ${{ github.event_name }}"
           echo "GitHub Event Action: ${{ github.event.action }}"
@@ -53,7 +55,6 @@ jobs:
           # Detect seed-labeled PRs to skip expensive matrix computation.
           # Seed PRs only contain snapshot output changes — no generators are affected.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            PR_LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
             if echo "$PR_LABELS" | jq -e 'index("seed")' > /dev/null 2>&1; then
               echo "is-seed-pr=true" >> $GITHUB_OUTPUT
               echo "Seed-labeled PR detected — will skip matrix computation."

@@ -40,11 +40,11 @@ jobs:
         id: check
         env:
           COMMIT_MSG: ${{ github.event.head_commit.message }}
+          PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
         run: |
           # Skip CI for PRs with the 'seed' label (automated seed snapshot updates).
           # Seed PRs only touch files under seed/ and cannot break the build.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            PR_LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
             if echo "$PR_LABELS" | jq -e 'index("seed")' > /dev/null 2>&1; then
               echo "should-skip=true" >> $GITHUB_OUTPUT
               echo "Seed-labeled PR detected — skipping CI."
