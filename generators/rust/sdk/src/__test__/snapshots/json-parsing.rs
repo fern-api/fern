@@ -2,9 +2,9 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("ValidationError: Unprocessable entity - {{message}}")]
+    #[error("ValidationError: Unprocessable entity - {message}")]
     ValidationError { message: String, field: Option<String>, validation_error: Option<String> },
-    #[error("ConflictError: Conflict - {{message}}")]
+    #[error("ConflictError: Conflict - {message}")]
     ConflictError { message: String, conflict_type: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },

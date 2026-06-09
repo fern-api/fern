@@ -2,13 +2,13 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("PlaylistIdNotFoundError: Resource not found - {{message}}")]
+    #[error("PlaylistIdNotFoundError: Resource not found - {message}")]
     PlaylistIdNotFoundError {
         message: String,
         resource_id: Option<String>,
         resource_type: Option<String>,
     },
-    #[error("UnauthorizedError: Authentication failed - {{message}}")]
+    #[error("UnauthorizedError: Authentication failed - {message}")]
     UnauthorizedError {
         message: String,
         auth_type: Option<String>,

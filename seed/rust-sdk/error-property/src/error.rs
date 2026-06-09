@@ -2,7 +2,7 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("PropertyBasedErrorTest: Bad request - {{message}}")]
+    #[error("PropertyBasedErrorTest: Bad request - {message}")]
     PropertyBasedErrorTest { message: String },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
