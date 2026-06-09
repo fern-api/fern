@@ -359,7 +359,6 @@ allowedFailures:
   # "not supported yet" or a nil-pointer panic). These need feature work.
   - streaming-parameter
   - pagination
-  - pagination-uri-path
 
   # Generated Go code does not compile. Each needs a generator fix.
   - enum # enum-union header value is not converted to a string
