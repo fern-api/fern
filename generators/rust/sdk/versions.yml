@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.40.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error where structs incorrectly derived `Default` when
+        containing fields whose types extend base objects that don't support
+        `Default` (e.g., objects with required enum fields). The
+        `namedTypeSupportsDefault` check now also verifies parent types via
+        `extends`, not just direct properties.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 66
 - version: 0.40.0
   changelogEntry:
     - summary: |
