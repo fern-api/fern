@@ -115,7 +115,9 @@ public final class BearerAuthProviderGenerator extends AbstractFileGenerator {
                 .addStatement("throw new $T(AUTH_CONFIG_ERROR_MESSAGE)", RuntimeException.class)
                 .endControlFlow()
                 .addStatement("$T<String, String> headers = new $T<>()", Map.class, HashMap.class)
+                .beginControlFlow("if (!token.isEmpty())")
                 .addStatement("headers.put($S, $S + token)", "Authorization", "Bearer ")
+                .endControlFlow()
                 .addStatement("return headers")
                 .build();
     }

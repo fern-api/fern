@@ -1306,7 +1306,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         new AuthProviderInfo("Bearer", "BearerAuthProvider", fieldName, null, envVarHint, false));
             } else if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
-                        .beginControlFlow("if (this.$L != null)", fieldName)
+                        .beginControlFlow("if (this.$L != null && !this.$L.isEmpty())", fieldName, fieldName)
                         .addStatement("builder.addHeader($S, $S + this.$L)", "Authorization", "Bearer ", fieldName)
                         .endControlFlow();
             }
