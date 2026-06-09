@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.44.4
+  changelogEntry:
+    - summary: |
+        Support endpoints that return a `bytes` response. The v1 generator no longer
+        aborts with "bytes requests are not supported yet", and the generated client
+        method now returns `[]byte` (reading the full response body).
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
 - version: 1.44.3
   changelogEntry:
     - summary: |

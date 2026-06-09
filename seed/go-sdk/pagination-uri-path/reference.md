@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.ListWithUriPagination() -> *fern.ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.Users.ListWithURIPagination() -> *fern.ListUsersURIPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Users.ListWithUriPagination(
+client.Users.ListWithURIPagination(
         context.TODO(),
     )
 }
