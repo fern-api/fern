@@ -510,7 +510,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
             requestOptionsTypeSpec.addField(requestOptionsField);
 
             getHeadersCodeBlock
-                    .beginControlFlow("if (this.$N != null && !this.$N.isEmpty())", requestOptionsField, requestOptionsField)
+                    .beginControlFlow(
+                            "if (this.$N != null && !this.$N.isEmpty())", requestOptionsField, requestOptionsField)
                     .addStatement(
                             "$N.put($S, $S + this.$L)",
                             HEADERS_FIELD,
