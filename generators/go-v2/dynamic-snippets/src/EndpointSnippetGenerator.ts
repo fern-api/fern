@@ -700,15 +700,23 @@ export class EndpointSnippetGenerator {
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): go.TypeInstantiation {
         const bytesValue = typeof value === "string" ? (value as string) : "";
-        return go.TypeInstantiation.reference(
-            go.invokeFunc({
-                func: go.typeReference({
-                    name: "NewReader",
-                    importPath: "bytes"
-                }),
-                arguments_: [go.TypeInstantiation.bytes(bytesValue)]
-            })
-        );
+        // The bytes request parameter is generated as an io.Reader unless
+        // useReaderForBytesRequest is explicitly disabled, in which case it is a
+        // plain []byte (see BytesRequest.getRequestParameterType). The default
+        // matches the SDK generator's default (defaultBaseGoCustomConfigSchema),
+        // and the snippet argument must match that type or it will not compile.
+        if (this.context.customConfig?.useReaderForBytesRequest ?? true) {
+            return go.TypeInstantiation.reference(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "NewReader",
+                        importPath: "bytes"
+                    }),
+                    arguments_: [go.TypeInstantiation.bytes(bytesValue)]
+                })
+            );
+        }
+        return go.TypeInstantiation.bytes(bytesValue);
     }
 
     private getMethodArgsForInlinedRequest({
@@ -898,7 +906,12 @@ export class EndpointSnippetGenerator {
     }): go.TypeInstantiation {
         switch (body.type) {
             case "bytes":
-                return this.getBytesBodyRequestArg({ value });
+                // A bytes body referenced as a property of a request wrapper is
+                // generated as a []byte struct field (the request wrapper type
+                // comes from v1, which does not apply useReaderForBytesRequest).
+                // The standalone bytes parameter, by contrast, may be an
+                // io.Reader; that case is handled by getBytesBodyRequestArg.
+                return go.TypeInstantiation.bytes(typeof value === "string" ? value : "");
             case "typeReference":
                 return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
             default:
