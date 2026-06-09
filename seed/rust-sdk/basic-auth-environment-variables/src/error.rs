@@ -3,10 +3,7 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum ApiError {
     #[error("UnauthorizedRequest: Authentication failed - {{message}}")]
-    UnauthorizedRequest {
-        message: String,
-        auth_type: Option<String>,
-    },
+    UnauthorizedRequest { message: String },
     #[error("BadRequest: Bad request - {{message}}")]
     BadRequest {
         message: String,
@@ -48,15 +45,11 @@ impl ApiError {
                                 .and_then(|v| v.as_str())
                                 .unwrap_or("Unknown error")
                                 .to_string(),
-                            auth_type: parsed
-                                .get("auth_type")
-                                .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
                 }
                 return Self::UnauthorizedRequest {
                     message: body.unwrap_or("Unknown error").to_string(),
-                    auth_type: None,
                 };
             }
             400 => {
