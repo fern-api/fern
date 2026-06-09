@@ -18,8 +18,12 @@ import path from "path";
  * No-op when the file doesn't exist (e.g. if a future change removes
  * the dist-workspace.toml from the SDK template entirely).
  */
-export async function patchDistWorkspaceToml(args: { outputDir: string; typesCrateName?: string }): Promise<void> {
-    const { outputDir, typesCrateName } = args;
+export async function patchDistWorkspaceToml(args: {
+    outputDir: string;
+    typesCrateName?: string;
+    sdkCrateName?: string;
+}): Promise<void> {
+    const { outputDir, typesCrateName, sdkCrateName } = args;
     const distTomlPath = path.join(outputDir, "dist-workspace.toml");
     let contents: string;
     try {
@@ -28,8 +32,14 @@ export async function patchDistWorkspaceToml(args: { outputDir: string; typesCra
         return;
     }
 
-    if (typesCrateName != null) {
-        const patched = addWorkspaceMember(contents, typesCrateName);
+    if (typesCrateName != null || sdkCrateName != null) {
+        let patched = contents;
+        if (typesCrateName != null) {
+            patched = addWorkspaceMember(patched, typesCrateName);
+        }
+        if (sdkCrateName != null) {
+            patched = addWorkspaceMember(patched, sdkCrateName);
+        }
         await writeFile(distTomlPath, patched);
         return;
     }

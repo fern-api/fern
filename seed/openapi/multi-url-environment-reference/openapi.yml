@@ -21,6 +21,7 @@ paths:
                   value: string
       servers:
         - url: https://api.example.com/2.0
+          description: Production
       security:
         - BearerAuth: []
   /oauth/token:
@@ -42,6 +43,7 @@ paths:
                     access_token: access_token
       servers:
         - url: https://auth.example.com/oauth2
+          description: Production
       requestBody:
         required: true
         content:
@@ -83,6 +85,7 @@ paths:
                   value: string
       servers:
         - url: https://upload.example.com/2.0
+          description: Production
       security:
         - BearerAuth: []
       requestBody:
@@ -124,3 +127,10 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
+servers:
+  - url: https://api.example.com/2.0
+    description: Production (Base)
+  - url: https://auth.example.com/oauth2
+    description: Production (Auth)
+  - url: https://upload.example.com/2.0
+    description: Production (Upload)

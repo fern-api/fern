@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.9.1
+  changelogEntry:
+    - summary: |
+        Fix inline types referenced only from endpoint responses (e.g., map value
+        types) not being generated as standalone files when `enable-inline-types`
+        is enabled.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
 - version: 4.9.0
   changelogEntry:
     - summary: |

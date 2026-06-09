@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.no_content_response_types]
-path = "no-content-response-types"
+[dependencies.no_content_response_sdk]
+path = "no-content-response-sdk"
 
 [profile.dist]
 inherits = "release"

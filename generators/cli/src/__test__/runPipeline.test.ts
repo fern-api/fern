@@ -107,11 +107,19 @@ describe("runPipeline", () => {
 
     const localFilesConfig: ResolvedOutputConfig = {
         version: "0.0.0",
+        isGithubOutput: false,
+        npmPublishInfo: undefined
+    };
+
+    const githubConfigNoNpm: ResolvedOutputConfig = {
+        version: "1.0.0",
+        isGithubOutput: true,
         npmPublishInfo: undefined
     };
 
     const githubConfig: ResolvedOutputConfig = {
         version: "1.5.0",
+        isGithubOutput: true,
         npmPublishInfo: {
             packageName: "@acme/cli",
             registryUrl: "https://registry.npmjs.org",
@@ -260,7 +268,11 @@ describe("runPipeline", () => {
         await stageSdkTemplate();
         await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
 
-        const versionedConfig: ResolvedOutputConfig = { version: "2.3.1", npmPublishInfo: undefined };
+        const versionedConfig: ResolvedOutputConfig = {
+            version: "2.3.1",
+            isGithubOutput: false,
+            npmPublishInfo: undefined
+        };
         await runPipeline({
             outputDir,
             customConfig: { binaryName: "acme" },
@@ -277,7 +289,7 @@ describe("runPipeline", () => {
         expect(lock).toContain('name = "fern-cli-sdk"\nversion = "2.3.1"');
     });
 
-    it("does NOT emit .github/ when output mode is local_files (no npmPublishInfo)", async () => {
+    it("does NOT emit .github/ when output mode is local_files (isGithubOutput: false)", async () => {
         await stageSdkTemplate();
         await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
 
@@ -291,6 +303,30 @@ describe("runPipeline", () => {
         });
 
         await expect(access(path.join(outputDir, ".github"))).rejects.toThrow();
+    });
+
+    it("emits build+test ci.yml for github output without npm publish info", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfigNoNpm,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        expect(ciYml).toContain("name: ci");
+        expect(ciYml).toContain("check:");
+        expect(ciYml).toContain("compile:");
+        expect(ciYml).toContain("test:");
+        expect(ciYml).not.toContain("publish:");
+        expect(ciYml).not.toContain("publish-launcher:");
+        expect(ciYml).not.toContain("NPM_TOKEN");
+        expect(ciYml).not.toContain("npm");
     });
 
     it("emits .github/workflows/ci.yml when github mode with npm publish info", async () => {

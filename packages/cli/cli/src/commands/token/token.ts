@@ -23,30 +23,28 @@ export async function generateToken({
         taskContext.logger.info(chalk.green(`Generated a FERN_TOKEN for ${orgId}: ${response.body.npm.token}`));
         return;
     }
-    response.error._visit({
-        organizationNotFoundError: () =>
-            taskContext.failAndThrow(
-                `Failed to create token because the organization ${orgId} was not found. Please reach out to support@buildwithfern.com`,
-                undefined,
-                { code: CliError.Code.AuthError }
-            ),
-        unauthorizedError: () =>
-            taskContext.failAndThrow(
-                `Failed to create token because you are not in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
-                undefined,
-                { code: CliError.Code.AuthError }
-            ),
-        missingOrgPermissionsError: () =>
-            taskContext.failAndThrow(
-                `Failed to create token because you do not have the required permissions in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
-                undefined,
-                { code: CliError.Code.AuthError }
-            ),
-        _other: () =>
-            taskContext.failAndThrow(
-                "Failed to create token. Please reach out to support@buildwithfern.com",
-                undefined,
-                { code: CliError.Code.AuthError }
-            )
-    });
+    const status = response.rawResponse.status;
+    if (status === 404) {
+        taskContext.failAndThrow(
+            `Failed to create token because the organization ${orgId} was not found. Please reach out to support@buildwithfern.com`,
+            undefined,
+            { code: CliError.Code.AuthError }
+        );
+    } else if (status === 401) {
+        taskContext.failAndThrow(
+            `Failed to create token because you are not in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
+            undefined,
+            { code: CliError.Code.AuthError }
+        );
+    } else if (status === 403) {
+        taskContext.failAndThrow(
+            `Failed to create token because you do not have the required permissions in the ${orgId} organization. Please reach out to support@buildwithfern.com`,
+            undefined,
+            { code: CliError.Code.AuthError }
+        );
+    } else {
+        taskContext.failAndThrow("Failed to create token. Please reach out to support@buildwithfern.com", undefined, {
+            code: CliError.Code.AuthError
+        });
+    }
 }

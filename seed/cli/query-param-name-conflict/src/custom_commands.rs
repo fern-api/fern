@@ -295,4 +295,106 @@ mod tests {
         let result = reg.dispatch(&matches, &DummyCtx);
         assert!(result.is_none());
     }
+
+    // ── Typed command tests ─────────────────────────────────────────
+
+    use clap::{Args, FromArgMatches};
+
+    #[derive(clap::Args, Debug, PartialEq)]
+    struct AdoptArgs {
+        #[arg(long)]
+        name: String,
+        #[arg(long)]
+        tag: Option<String>,
+    }
+
+    #[test]
+    fn typed_command_augments_args_onto_command() {
+        let base = clap::Command::new("adopt").about("Adopt a pet");
+        let augmented = AdoptArgs::augment_args(base);
+        // The augmented command should have --name and --tag arguments.
+        let args: Vec<_> = augmented.get_arguments().map(|a| a.get_id().as_str().to_string()).collect();
+        assert!(args.contains(&"name".to_string()), "missing --name: {args:?}");
+        assert!(args.contains(&"tag".to_string()), "missing --tag: {args:?}");
+    }
+
+    #[test]
+    fn typed_command_parses_args_from_matches() {
+        let cmd = AdoptArgs::augment_args(clap::Command::new("adopt"));
+        let matches = cmd.get_matches_from(vec!["adopt", "--name", "Fido", "--tag", "dog"]);
+        let parsed = AdoptArgs::from_arg_matches(&matches).unwrap();
+        assert_eq!(parsed, AdoptArgs { name: "Fido".into(), tag: Some("dog".into()) });
+    }
+
+    #[test]
+    fn typed_command_parses_optional_absent() {
+        let cmd = AdoptArgs::augment_args(clap::Command::new("adopt"));
+        let matches = cmd.get_matches_from(vec!["adopt", "--name", "Buddy"]);
+        let parsed = AdoptArgs::from_arg_matches(&matches).unwrap();
+        assert_eq!(parsed, AdoptArgs { name: "Buddy".into(), tag: None });
+    }
+
+    #[test]
+    fn typed_command_erased_dispatch_round_trip() {
+        use std::cell::Cell;
+        thread_local! {
+            static SEEN_NAME: Cell<Option<String>> = const { Cell::new(None) };
+        }
+
+        // Build the erased handler the same way CliApp::command_typed_with does:
+        // handler is fn(A, &C) and the closure does downcast + parse internally.
+        fn my_handler(args: AdoptArgs, _ctx: &DummyCtx) -> Result<(), CliError> {
+            SEEN_NAME.with(|c| c.set(Some(args.name)));
+            Ok(())
+        }
+
+        let handler_fn: fn(AdoptArgs, &DummyCtx) -> Result<(), CliError> = my_handler;
+        let erased: crate::app::CliCommandHandler = Box::new(move |matches, ctx| {
+            let args = AdoptArgs::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<DummyCtx>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler_fn(args, ctx)
+        });
+
+        let cmd = AdoptArgs::augment_args(clap::Command::new("adopt"));
+        let cli = graft_subcommand(clap::Command::new("root"), &[], cmd.clone());
+        let matches = cli.get_matches_from(vec!["root", "adopt", "--name", "Rex"]);
+        let target = walk_matches_to_custom(&matches, &[], "adopt").unwrap();
+
+        erased(target, &DummyCtx as &dyn std::any::Any).unwrap();
+        assert_eq!(SEEN_NAME.with(|c| c.take()), Some("Rex".to_string()));
+    }
+
+    #[test]
+    fn typed_command_context_mismatch_returns_error() {
+        fn my_handler(_args: AdoptArgs, _ctx: &DummyCtx) -> Result<(), CliError> {
+            Ok(())
+        }
+
+        let handler_fn: fn(AdoptArgs, &DummyCtx) -> Result<(), CliError> = my_handler;
+        let erased: crate::app::CliCommandHandler = Box::new(move |matches, ctx| {
+            let args = AdoptArgs::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<DummyCtx>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler_fn(args, ctx)
+        });
+
+        let cmd = AdoptArgs::augment_args(clap::Command::new("adopt"));
+        let cli = graft_subcommand(clap::Command::new("root"), &[], cmd.clone());
+        let matches = cli.get_matches_from(vec!["root", "adopt", "--name", "Rex"]);
+        let target = walk_matches_to_custom(&matches, &[], "adopt").unwrap();
+
+        // Pass wrong context type — should get a Validation error.
+        let result = erased(target, &42u32 as &dyn std::any::Any);
+        assert!(result.is_err());
+        let err = result.unwrap_err();
+        match err {
+            CliError::Validation(msg) => assert!(msg.contains("mismatch"), "unexpected: {msg}"),
+            other => panic!("expected Validation error, got: {other:?}"),
+        }
+    }
 }

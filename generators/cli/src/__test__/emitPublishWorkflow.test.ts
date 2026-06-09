@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, rm } from "fs/promises";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { emitPublishWorkflow } from "../emitPublishWorkflow.js";
+import { emitCiWorkflow, emitPublishWorkflow } from "../emitPublishWorkflow.js";
 import type { ResolvedNpmPublishInfo } from "../resolveOutputConfig.js";
 
 /**
@@ -174,5 +174,62 @@ describe("emitPublishWorkflow", () => {
         // Each step has 2 occurrences: the echo message + the publish call
         const backportMatches = yaml.match(/--tag backport/g);
         expect(backportMatches).toHaveLength(4);
+    });
+});
+
+/**
+ * Tests for `emitCiWorkflow` — the build+test-only workflow emitted
+ * when the output mode is `github` without npm publish info.
+ */
+describe("emitCiWorkflow", () => {
+    let tmpDir: string;
+    let outputDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "emitCiWorkflow-"));
+        outputDir = path.join(tmpDir, "out");
+        await mkdir(outputDir, { recursive: true });
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    async function emitAndRead(binaryName = "acme"): Promise<string> {
+        await emitCiWorkflow({ outputDir, binaryName });
+        return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+    }
+
+    it("emits check, compile, and test jobs", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).toContain("name: ci");
+        expect(yaml).toContain("check:");
+        expect(yaml).toContain("compile:");
+        expect(yaml).toContain("test:");
+    });
+
+    it("does not contain publish or npm references", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).not.toContain("publish:");
+        expect(yaml).not.toContain("publish-launcher:");
+        expect(yaml).not.toContain("NPM_TOKEN");
+        expect(yaml).not.toContain("NODE_AUTH_TOKEN");
+        expect(yaml).not.toContain("npm");
+        expect(yaml).not.toContain("setup-node");
+    });
+
+    it("triggers on push", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).toContain("on: [push]");
+    });
+
+    it("uses actions/checkout@v6 and actions-rust-lang/setup-rust-toolchain@v1", async () => {
+        const yaml = await emitAndRead();
+
+        expect(yaml).toContain("actions/checkout@v6");
+        expect(yaml).toContain("actions-rust-lang/setup-rust-toolchain@v1");
     });
 });

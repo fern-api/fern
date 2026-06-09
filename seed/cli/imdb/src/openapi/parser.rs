@@ -603,7 +603,7 @@ struct OpenApiEncoding {
 /// (`type: string`) and the 3.1 array form (`type: ["string", "null"]`).
 /// `null_in_array` records whether `"null"` was present so nullability
 /// can be reconstructed at access time.
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 struct TypeField {
     schema_type: Option<String>,
     null_in_array: bool,
@@ -703,7 +703,7 @@ impl<'de> Deserialize<'de> for ExclusiveBound {
     }
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 #[serde(rename_all = "camelCase")]
 struct OpenApiSchemaObject {
     #[serde(rename = "$ref")]
@@ -3060,6 +3060,177 @@ fn is_scalar_nullable(obj: &OpenApiSchemaObject) -> bool {
     )
 }
 
+/// Recognize the "nullable union" composition shape from ADR-0005:
+/// `oneOf` or `anyOf` with **exactly one** null-sentinel branch and **all
+/// other branches** reducing to the same scalar base type. Returns
+/// `Some(base_type)` on a match so the caller can promote the schema to a
+/// nullable scalar — same downstream path as ADR-0003's intrinsic
+/// nullability — or `None` when the composition is a true union, doesn't
+/// have a null branch, or mixes scalar types.
+///
+/// Non-null branches may be inline (`{type: scalar}`) or a `$ref` resolving
+/// through `component_schemas` to a scalar component. `allOf` is never
+/// promoted (intersection with null has no inhabitants).
+fn recognize_nullable_union(
+    obj: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'static str> {
+    // Pick the composition list. `oneOf` and `anyOf` are treated
+    // identically for nullable-union purposes — the JSON Schema distinction
+    // (exactly-one vs at-least-one branch matches) is irrelevant when the
+    // shape is `T | null`. See ADR-0005, "Negative" #3.
+    let branches: &[OpenApiSchemaObject] = if !obj.one_of.is_empty() {
+        &obj.one_of
+    } else if !obj.any_of.is_empty() {
+        &obj.any_of
+    } else {
+        return None;
+    };
+
+    if branches.len() < 2 {
+        return None;
+    }
+
+    let mut null_count: usize = 0;
+    let mut base_type: Option<&'static str> = None;
+
+    for branch in branches {
+        if is_null_sentinel(branch) {
+            null_count += 1;
+            continue;
+        }
+        let resolved = resolve_branch_scalar_type(branch, component_schemas)?;
+        match base_type {
+            None => base_type = Some(resolved),
+            Some(existing) if existing == resolved => {}
+            // Mixed scalar types — true union, not nullable. Bail.
+            Some(_) => return None,
+        }
+    }
+
+    // Exactly one null branch. Multiple nulls is a malformed spec; zero is
+    // not a nullable union at all.
+    if null_count != 1 {
+        return None;
+    }
+    base_type
+}
+
+/// True when this composition branch is the "null branch" of a nullable
+/// union: either `{type: 'null'}` / `{type: ['null']}` (3.1) or a bare
+/// `{nullable: true}` with no other type-bearing fields (3.0 idiom).
+fn is_null_sentinel(obj: &OpenApiSchemaObject) -> bool {
+    if obj.schema_ref.is_some() {
+        return false;
+    }
+    if obj.schema_type() == Some("null") {
+        return true;
+    }
+    // 3.0 idiom: a branch with just `nullable: true` and no concrete type.
+    obj.is_nullable() && obj.schema_type().is_none()
+}
+
+/// If `branch` resolves to one of the four scalar base types the null
+/// sentinel surface supports, return that type. `$ref` branches resolve
+/// one level through `component_schemas` — nested resolution (ref → ref →
+/// scalar) is not supported; that pattern is rare and adds graph-walking
+/// complexity to a recognizer that should fail-closed.
+fn resolve_branch_scalar_type(
+    branch: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'static str> {
+    let schema = if let Some(ref_path) = &branch.schema_ref {
+        let name = strip_ref_prefix(ref_path);
+        component_schemas.get(&name)?
+    } else {
+        branch
+    };
+    match schema.schema_type()? {
+        "string" => Some("string"),
+        "integer" => Some("integer"),
+        "number" => Some("number"),
+        "boolean" => Some("boolean"),
+        _ => None,
+    }
+}
+
+/// Maximum depth of consecutive `allOf` recursion. Cyclic `$ref` chains
+/// (`Foo: {allOf: [{$ref: Foo}, ...]}`) are degenerate but legal; this cap
+/// stops the walk before it explodes. Distinct from `MAX_BODY_DEPTH`,
+/// which counts *user-visible* nesting (dot-notation depth). `allOf` is
+/// transparent to the user, so it gets its own bound — see ADR-0004.
+///
+/// **Keep in sync with `MAX_ALL_OF_DEPTH_VALIDATOR` in
+/// `src/openapi/executor.rs`.** The two paths can't share the constant
+/// directly per AGENTS.md (parser and validator are deliberately
+/// independent module surfaces) but the value must match so a spec that
+/// the parser tolerates is also tolerable to the validator.
+const MAX_ALL_OF_DEPTH: u8 = 8;
+
+/// Walk `schema.allOf` recursively and return the merged property bag
+/// plus the union of every branch's `required:` array, including the
+/// schema's own `properties:` and `required:`. Each `allOf` branch
+/// contributes its own properties (recursively, resolving `$ref` through
+/// `component_schemas`); duplicate property names follow last-branch-wins
+/// with a `tracing::warn!` so silently-overlapping specs surface.
+///
+/// Returns `None` when `schema.all_of` is empty — the caller iterates
+/// `schema.properties` directly without paying for a HashMap clone of
+/// the existing property bag. Box's ~163 operations exercise this fast
+/// path on every operation whose body isn't an `allOf` composition.
+fn merge_all_of_properties(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<(HashMap<String, OpenApiSchemaObject>, std::collections::HashSet<String>)> {
+    if schema.all_of.is_empty() {
+        return None;
+    }
+    let mut props: HashMap<String, OpenApiSchemaObject> = HashMap::new();
+    let mut required: std::collections::HashSet<String> = std::collections::HashSet::new();
+    walk_all_of(&mut props, &mut required, schema, component_schemas, 0);
+    Some((props, required))
+}
+
+fn walk_all_of(
+    props: &mut HashMap<String, OpenApiSchemaObject>,
+    required: &mut std::collections::HashSet<String>,
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+    depth: u8,
+) {
+    if depth >= MAX_ALL_OF_DEPTH {
+        tracing::warn!(
+            "allOf recursion exceeded {MAX_ALL_OF_DEPTH} levels; truncating. Likely a cyclic $ref chain."
+        );
+        return;
+    }
+    // Branches first (in declaration order); the schema's own properties
+    // come last so they act as the final overlay, matching the
+    // last-branch-wins convention from ADR-0004.
+    for branch in &schema.all_of {
+        if let Some(ref_path) = &branch.schema_ref {
+            let name = strip_ref_prefix(ref_path);
+            match component_schemas.get(&name) {
+                Some(resolved) => walk_all_of(props, required, resolved, component_schemas, depth + 1),
+                None => tracing::warn!("allOf branch references unresolvable schema: {ref_path}"),
+            }
+        } else {
+            walk_all_of(props, required, branch, component_schemas, depth + 1);
+        }
+    }
+    for (name, prop) in &schema.properties {
+        if props.contains_key(name) {
+            tracing::warn!(
+                "allOf merge: property '{name}' declared by multiple branches; last-branch-wins"
+            );
+        }
+        props.insert(name.clone(), prop.clone());
+    }
+    for r in &schema.required {
+        required.insert(r.clone());
+    }
+}
+
 fn flatten_body_params_prefix(
     schema: &OpenApiSchemaObject,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,
@@ -3067,12 +3238,32 @@ fn flatten_body_params_prefix(
     prefix: &str,
 ) -> HashMap<String, MethodParameter> {
     let mut out = HashMap::new();
-    if depth >= MAX_BODY_DEPTH || schema.schema_type() != Some("object") {
+    // Entry condition: standard object body, or a root-level `allOf:`
+    // composition (no `type:` declared, but the branches contribute the
+    // property set). Without the `allOf` clause an `allOf`-bodied
+    // operation would silently produce zero flags. See ADR-0004 §
+    // "Root-level vs property-level".
+    let has_all_of = !schema.all_of.is_empty();
+    if depth >= MAX_BODY_DEPTH || (schema.schema_type() != Some("object") && !has_all_of) {
         return out;
     }
-    let required: std::collections::HashSet<&str> =
-        schema.required.iter().map(String::as_str).collect();
-    for (name, prop) in &schema.properties {
+
+    // `merge_all_of_properties` returns `None` when there's no `allOf`,
+    // so the non-composition path iterates `schema.properties` directly
+    // without paying for a HashMap clone. See ADR-0004.
+    let merged = merge_all_of_properties(schema, component_schemas);
+    let (properties, required): (
+        &HashMap<String, OpenApiSchemaObject>,
+        std::collections::HashSet<&str>,
+    ) = match &merged {
+        Some((p, r)) => (p, r.iter().map(String::as_str).collect()),
+        None => (
+            &schema.properties,
+            schema.required.iter().map(String::as_str).collect(),
+        ),
+    };
+
+    for (name, prop) in properties {
         if prop.read_only {
             continue;
         }
@@ -3086,14 +3277,33 @@ fn flatten_body_params_prefix(
         if let Some(ref_path) = &prop.schema_ref {
             let ref_name = strip_ref_prefix(ref_path);
             if let Some(resolved) = component_schemas.get(&ref_name) {
-                if resolved.schema_type() == Some("object") {
+                // Recurse for object-shaped *or* allOf-shaped resolved
+                // schemas — the latter is the inheritance pattern
+                // (`Mixin: {allOf: [Base, extras]}`) Box uses heavily.
+                if resolved.schema_type() == Some("object") || !resolved.all_of.is_empty() {
                     let nested = flatten_body_params_prefix(resolved, component_schemas, depth + 1, &full_key);
                     if !nested.is_empty() {
                         out.extend(nested);
+                        out.insert(
+                            full_key.clone(),
+                            MethodParameter {
+                                param_type: Some("object".to_string()),
+                                location: Some("body".to_string()),
+                                required: false,
+                                description: prop
+                                    .description
+                                    .clone()
+                                    .or_else(|| resolved.description.clone()),
+                                ..Default::default()
+                            },
+                        );
                         continue;
                     }
                 }
-                // Non-object ref or depth limit reached (empty recursion) — emit with resolved type.
+                // Non-object ref or empty recursion — emit with resolved type.
+                // Promote nullable-union compositions to a scalar flag
+                // routed through ADR-0003's sentinel; see ADR-0005.
+                let promoted_scalar = recognize_nullable_union(resolved, component_schemas);
                 let is_array = resolved.schema_type() == Some("array");
                 let const_default = const_default_value(resolved);
                 out.insert(
@@ -3101,6 +3311,8 @@ fn flatten_body_params_prefix(
                     MethodParameter {
                         param_type: if is_array {
                             Some("string".to_string())
+                        } else if let Some(t) = promoted_scalar {
+                            Some(t.to_string())
                         } else {
                             resolved.schema_type().map(str::to_string)
                         },
@@ -3115,7 +3327,7 @@ fn flatten_body_params_prefix(
                         enum_values: effective_enum_values(resolved),
                         default_value: const_default,
                         repeated: is_array,
-                        nullable: is_scalar_nullable(resolved),
+                        nullable: is_scalar_nullable(resolved) || promoted_scalar.is_some(),
                         ..Default::default()
                     },
                 );
@@ -3126,16 +3338,31 @@ fn flatten_body_params_prefix(
 
         let prop_type = prop.schema_type();
 
-        // Nested object: recurse to emit dot-notation flags. If nothing comes
-        // back (no sub-properties or depth limit hit), fall through to the default insert below.
-        if prop_type == Some("object") {
+        // Nested object *or* property-level allOf: recurse to emit
+        // dot-notation flags. If nothing comes back (no sub-properties
+        // or depth limit hit), fall through to the default insert below.
+        if prop_type == Some("object") || !prop.all_of.is_empty() {
             let nested = flatten_body_params_prefix(prop, component_schemas, depth + 1, &full_key);
             if !nested.is_empty() {
                 out.extend(nested);
+                out.insert(
+                    full_key.clone(),
+                    MethodParameter {
+                        param_type: Some("object".to_string()),
+                        location: Some("body".to_string()),
+                        required: false,
+                        description: prop.description.clone(),
+                        ..Default::default()
+                    },
+                );
                 continue;
             }
         }
 
+        // Promote nullable-union compositions (`anyOf: [scalar, null]`
+        // or the same shape with `oneOf`) to a nullable scalar flag.
+        // Returns None when the composition is a true union or absent.
+        let promoted_scalar = recognize_nullable_union(prop, component_schemas);
         let is_array = prop_type == Some("array");
         let const_default = const_default_value(prop);
         out.insert(
@@ -3143,6 +3370,8 @@ fn flatten_body_params_prefix(
             MethodParameter {
                 param_type: if is_array {
                     Some("string".to_string())
+                } else if let Some(t) = promoted_scalar {
+                    Some(t.to_string())
                 } else {
                     prop_type.map(str::to_string)
                 },
@@ -3153,7 +3382,7 @@ fn flatten_body_params_prefix(
                 enum_values: effective_enum_values(prop),
                 default_value: const_default,
                 repeated: is_array,
-                nullable: is_scalar_nullable(prop),
+                nullable: is_scalar_nullable(prop) || promoted_scalar.is_some(),
                 ..Default::default()
             },
         );
@@ -4728,8 +4957,125 @@ components:
         assert!(create.parameters.contains_key("address.city"), "'address.city' should be a flag after $ref resolution");
         assert!(create.parameters.contains_key("address.zip"), "'address.zip' should be a flag after $ref resolution");
 
-        // The $ref itself should NOT appear as a typeless flag.
-        assert!(!create.parameters.contains_key("address"), "'address' $ref should not appear as a bare typeless flag");
+        // The $ref itself should appear as an object-typed shorthand flag (not a typeless flag).
+        let addr = create.parameters.get("address").expect("'address' should appear as an object-typed shorthand flag");
+        assert_eq!(addr.param_type.as_deref(), Some("object"), "'address' must have param_type 'object', not be typeless");
+    }
+
+    #[test]
+    fn test_inline_object_body_param_emits_parent_object_flag() {
+        // For an inline object property, flatten_body_params_prefix should emit BOTH
+        // the parent key (param_type: "object", required: false) AND the dot-notation
+        // sub-flags (e.g. "name.first", "name.last").
+        let yaml = r#"
+openapi: "3.0.0"
+info:
+  title: API
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /users:
+    post:
+      x-fern-sdk-group-name: ["users"]
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: object
+                  description: Full name of the user
+                  properties:
+                    first:
+                      type: string
+                    last:
+                      type: string
+      responses:
+        "201":
+          description: created
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let create = &doc.resources["users"].methods["create"];
+
+        // Sub-flags must exist.
+        assert!(create.parameters.contains_key("name.first"), "name.first sub-flag must be present");
+        assert!(create.parameters.contains_key("name.last"), "name.last sub-flag must be present");
+
+        // Parent object-level flag must ALSO exist.
+        let parent = create.parameters.get("name")
+            .expect("parent 'name' object flag must be present");
+        assert_eq!(parent.param_type.as_deref(), Some("object"), "parent flag must have param_type 'object'");
+        assert_eq!(parent.location.as_deref(), Some("body"), "parent flag must have location 'body'");
+        // required is always false at CLI level for object shorthand flags.
+        assert!(!parent.required, "parent object flag must be required: false regardless of schema required");
+        assert_eq!(parent.description.as_deref(), Some("Full name of the user"), "parent flag should carry description");
+    }
+
+    #[test]
+    fn test_ref_object_body_param_emits_parent_object_flag() {
+        // For a $ref that resolves to an object, flatten_body_params_prefix should emit
+        // BOTH the parent key (param_type: "object", required: false) AND the dot-notation
+        // sub-flags.
+        let yaml = r#"
+openapi: "3.0.0"
+info:
+  title: API
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /orders:
+    post:
+      x-fern-sdk-group-name: ["orders"]
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  $ref: '#/components/schemas/Address'
+      responses:
+        "201":
+          description: Created order
+components:
+  schemas:
+    Address:
+      type: object
+      description: Shipping address
+      properties:
+        city:
+          type: string
+        zip:
+          type: string
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let create = &doc.resources["orders"].methods["create"];
+
+        // Sub-flags must still exist.
+        assert!(create.parameters.contains_key("address.city"), "'address.city' must be present");
+        assert!(create.parameters.contains_key("address.zip"), "'address.zip' must be present");
+
+        // Parent object-level flag must ALSO exist now.
+        let parent = create.parameters.get("address")
+            .expect("parent 'address' object flag must be present for $ref branch");
+        assert_eq!(parent.param_type.as_deref(), Some("object"), "parent flag must have param_type 'object'");
+        assert_eq!(parent.location.as_deref(), Some("body"), "parent flag must have location 'body'");
+        assert!(!parent.required, "parent object flag must be required: false");
+        // $ref properties typically carry no inline description; the parent
+        // flag must fall back to the resolved schema's description so --help
+        // is not blank.
+        assert_eq!(
+            parent.description.as_deref(),
+            Some("Shipping address"),
+            "parent $ref object flag should fall back to the resolved schema's description"
+        );
     }
 
     #[test]
@@ -8579,6 +8925,415 @@ paths:
         let prop = convert_schema_property(&obj);
         assert_eq!(prop.one_of.len(), 2);
         assert_eq!(prop.one_of[1].prop_type.as_deref(), Some("null"));
+    }
+
+    // -- ADR-0004: allOf flattening into per-field flags -----------------
+
+    #[test]
+    fn test_all_of_flattens_inline_branches_at_root() {
+        // Root-level allOf with two inline branches. The flattener must
+        // emit flags from both, not silently drop them.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            allOf:
+              - type: object
+                required: [id]
+                properties:
+                  id:
+                    type: string
+              - type: object
+                properties:
+                  extra:
+                    type: string
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        assert!(params.contains_key("id"), "id from first branch: {params:?}");
+        assert!(params.contains_key("extra"), "extra from second branch: {params:?}");
+        assert!(params["id"].required, "id was required in base branch");
+        assert!(!params["extra"].required, "extra was not in any required list");
+    }
+
+    #[test]
+    fn test_all_of_resolves_ref_branches() {
+        // The dominant Box pattern: `allOf: [{$ref: Base}, {inline overlay}]`.
+        // The flattener must resolve the ref through component_schemas and
+        // merge the resolved properties with the overlay's.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            allOf:
+              - $ref: "#/components/schemas/Base"
+              - type: object
+                properties:
+                  extra:
+                    type: integer
+            "##,
+        )
+        .unwrap();
+        let base: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            required: [id]
+            properties:
+              id:
+                type: string
+              created_at:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("Base".to_string(), base);
+        let params = flatten_body_params(&schema, &components, 0);
+        assert!(params.contains_key("id"));
+        assert!(params.contains_key("created_at"));
+        assert!(params.contains_key("extra"));
+        assert!(params["id"].required, "id required via base $ref");
+        assert!(!params["extra"].required);
+        assert_eq!(params["extra"].param_type.as_deref(), Some("integer"));
+    }
+
+    #[test]
+    fn test_all_of_last_branch_wins_on_duplicate_property() {
+        // When two branches declare the same property name, the latter
+        // wins — including type/enum constraints. This matches our
+        // last-branch-wins merge convention from ADR-0004.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            allOf:
+              - type: object
+                properties:
+                  status:
+                    type: string
+                    description: Base status (no enum).
+              - type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [draft, sent]
+                    description: Overlay status with enum.
+            "##,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let status = &params["status"];
+        assert_eq!(
+            status.enum_values.as_deref(),
+            Some(["draft".to_string(), "sent".to_string()].as_slice()),
+            "overlay's enum should win: {status:?}",
+        );
+    }
+
+    #[test]
+    fn test_all_of_unions_required_arrays_across_branches() {
+        // `required: [a]` in branch 1 plus `required: [b]` in branch 2
+        // means BOTH a and b are required overall.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            allOf:
+              - type: object
+                required: [a]
+                properties:
+                  a:
+                    type: string
+              - type: object
+                required: [b]
+                properties:
+                  b:
+                    type: string
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        assert!(params["a"].required, "a required from branch 1");
+        assert!(params["b"].required, "b required from branch 2");
+    }
+
+    #[test]
+    fn test_all_of_inside_object_property_flattens_dot_notation() {
+        // The "property-level allOf" case: `attachment: {type: object,
+        // allOf: [...]}` should produce `--attachment.url`, etc., not a
+        // single `--attachment` blob.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            type: object
+            properties:
+              attachment:
+                type: object
+                allOf:
+                  - $ref: "#/components/schemas/AttachmentBase"
+                  - type: object
+                    properties:
+                      checksum:
+                        type: string
+            "##,
+        )
+        .unwrap();
+        let base: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              url:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("AttachmentBase".to_string(), base);
+        let params = flatten_body_params(&schema, &components, 0);
+        assert!(params.contains_key("attachment.url"), "{params:?}");
+        assert!(params.contains_key("attachment.checksum"), "{params:?}");
+    }
+
+    #[test]
+    fn test_all_of_is_transparent_to_max_body_depth() {
+        // ADR-0004: `allOf` does NOT consume MAX_BODY_DEPTH. A spec that
+        // chains six allOf wrappers above the actual properties should
+        // still flatten the leaf fields. (MAX_BODY_DEPTH = 3, but
+        // crossing 6 allOf boundaries doesn't decrement it.)
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            allOf:
+              - allOf:
+                  - allOf:
+                      - allOf:
+                          - allOf:
+                              - allOf:
+                                  - type: object
+                                    required: [leaf]
+                                    properties:
+                                      leaf:
+                                        type: string
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        assert!(
+            params.contains_key("leaf"),
+            "deep allOf chain should still flatten: {params:?}",
+        );
+        assert!(params["leaf"].required);
+    }
+
+    #[test]
+    fn test_all_of_unresolvable_ref_skipped_silently() {
+        // A $ref pointing to a nonexistent component schema should not
+        // crash the flattener — log + skip is the policy.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            allOf:
+              - $ref: "#/components/schemas/NonExistent"
+              - type: object
+                properties:
+                  alive:
+                    type: string
+            "##,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        assert!(params.contains_key("alive"), "second branch still flattens");
+        assert_eq!(params.len(), 1, "no ghost property from unresolved ref");
+    }
+
+    // -- ADR-0005: nullable-union promotion ------------------------------
+
+    #[test]
+    fn test_recognize_nullable_union_inline_any_of() {
+        // Pydantic / Devin pattern: `anyOf: [{type: string}, {type: 'null'}]`.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            anyOf:
+              - type: string
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        assert_eq!(
+            recognize_nullable_union(&obj, &HashMap::new()),
+            Some("string"),
+        );
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_inline_one_of() {
+        // Same shape via `oneOf` — same semantics for the nullable case.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: integer
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        assert_eq!(
+            recognize_nullable_union(&obj, &HashMap::new()),
+            Some("integer"),
+        );
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_with_ref_to_scalar() {
+        // The non-null branch can be a `$ref` resolving to a scalar
+        // component schema. The recognizer follows the ref one level.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            oneOf:
+              - $ref: "#/components/schemas/ThreadIdString"
+              - type: "null"
+            "##,
+        )
+        .unwrap();
+        let base: OpenApiSchemaObject = serde_yaml::from_str("type: string\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("ThreadIdString".to_string(), base);
+        assert_eq!(
+            recognize_nullable_union(&obj, &components),
+            Some("string"),
+        );
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_30_idiom_with_nullable_branch() {
+        // OpenAPI 3.0 idiom: the "null branch" is a standalone
+        // `{nullable: true}` with no concrete type. The recognizer
+        // accepts this as equivalent to `{type: 'null'}`.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            anyOf:
+              - type: number
+              - nullable: true
+            "#,
+        )
+        .unwrap();
+        assert_eq!(
+            recognize_nullable_union(&obj, &HashMap::new()),
+            Some("number"),
+        );
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_mixed_scalar_types_is_not_promoted() {
+        // `[string, integer, null]` is a true union with a null branch —
+        // not a nullable scalar. The recognizer must reject this.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            anyOf:
+              - type: string
+              - type: integer
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_nullable_union(&obj, &HashMap::new()), None);
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_no_null_branch_is_not_promoted() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            anyOf:
+              - type: string
+              - type: integer
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_nullable_union(&obj, &HashMap::new()), None);
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_all_of_never_promoted() {
+        // `allOf: [scalar, null]` is intersection-with-null — empty.
+        // The recognizer must NOT promote `allOf` even when one branch
+        // is a null sentinel (it would be a degenerate spec anyway).
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            allOf:
+              - type: string
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_nullable_union(&obj, &HashMap::new()), None);
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_two_null_branches_not_promoted() {
+        // Two null branches is a malformed spec; recognizer fails closed.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            anyOf:
+              - type: "null"
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_nullable_union(&obj, &HashMap::new()), None);
+    }
+
+    #[test]
+    fn test_recognize_nullable_union_ref_to_non_scalar_not_promoted() {
+        // If the non-null branch's `$ref` resolves to an object/array,
+        // it doesn't reduce to a scalar — fail closed.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            anyOf:
+              - $ref: "#/components/schemas/Big"
+              - type: "null"
+            "##,
+        )
+        .unwrap();
+        let big: OpenApiSchemaObject = serde_yaml::from_str("type: object\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("Big".to_string(), big);
+        assert_eq!(recognize_nullable_union(&obj, &components), None);
+    }
+
+    #[test]
+    fn test_flatten_promotes_nullable_union_field() {
+        // End-to-end: a body property with `anyOf: [string, null]`
+        // becomes a `nullable: true` scalar MethodParameter, not a
+        // typeless `VALUE` flag.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              authorId:
+                anyOf:
+                  - type: string
+                  - type: "null"
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let author = &params["authorId"];
+        assert!(author.nullable, "should be promoted to nullable: {author:?}");
+        assert_eq!(author.param_type.as_deref(), Some("string"));
+    }
+
+    #[test]
+    fn test_flatten_promotes_nullable_union_via_ref_to_scalar() {
+        // Same as above, but the non-null branch is `{$ref: ThreadIdString}`
+        // where ThreadIdString resolves to `type: string`. Recognizer
+        // follows the ref.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            type: object
+            properties:
+              threadId:
+                oneOf:
+                  - $ref: "#/components/schemas/ThreadIdString"
+                  - type: "null"
+            "##,
+        )
+        .unwrap();
+        let thread_id: OpenApiSchemaObject = serde_yaml::from_str("type: string\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("ThreadIdString".to_string(), thread_id);
+        let params = flatten_body_params(&schema, &components, 0);
+        let thread = &params["threadId"];
+        assert!(thread.nullable, "should be promoted: {thread:?}");
+        assert_eq!(thread.param_type.as_deref(), Some("string"));
     }
 
     // -- OpenAPI 3.0/3.1 examples ----------------------------------------

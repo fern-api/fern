@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "server-url-templating-api-types"]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "server-url-templating-api-types", "server-url-templating-api-sdk"]
 
 # Config for 'dist'
 [dist]

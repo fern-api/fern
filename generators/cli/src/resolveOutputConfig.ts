@@ -16,9 +16,15 @@ import { assertNeverNoThrow } from "@fern-api/core-utils";
 export interface ResolvedOutputConfig {
     version: string;
     /**
+     * True when the output mode is `github` — the pipeline uses this
+     * to decide whether to emit `.github/workflows/ci.yml` at all
+     * (build+test jobs are always emitted for GitHub outputs).
+     */
+    isGithubOutput: boolean;
+    /**
      * Non-null only when output mode is `github` and the upstream
-     * config includes `publishInfo` of type `npm`. The pipeline
-     * emits `.github/workflows/ci.yml` only when this is set.
+     * config includes `publishInfo` of type `npm`. When set, the
+     * emitted `ci.yml` also includes publish + publish-launcher jobs.
      */
     npmPublishInfo: ResolvedNpmPublishInfo | undefined;
 }
@@ -52,17 +58,20 @@ export function resolveOutputConfig(output: GeneratorConfig["output"]): Resolved
         case "github": {
             return {
                 version: mode.version,
+                isGithubOutput: true,
                 npmPublishInfo: resolveNpmPublishInfo(mode.publishInfo)
             };
         }
         case "publish":
             return {
                 version: mode.version,
+                isGithubOutput: false,
                 npmPublishInfo: undefined
             };
         case "downloadFiles":
             return {
                 version: DEFAULT_VERSION,
+                isGithubOutput: false,
                 npmPublishInfo: undefined
             };
         default:
@@ -70,6 +79,7 @@ export function resolveOutputConfig(output: GeneratorConfig["output"]): Resolved
             assertNeverNoThrow(mode as never);
             return {
                 version: DEFAULT_VERSION,
+                isGithubOutput: false,
                 npmPublishInfo: undefined
             };
     }

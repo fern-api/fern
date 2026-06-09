@@ -328,11 +328,12 @@ export class UnionGenerator {
                 // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
                 // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
                 const dateTimeType = this.context.getDateTimeType();
+                const coreModulePath = this.context.getCoreModulePath();
                 const typeRef = isOptional ? getInnerTypeFromOptional(singleProperty.type) : singleProperty.type;
                 if (isDateTimeOnlyType(typeRef)) {
                     const modulePath = dateTimeType === "utc" 
-                        ? "crate::core::flexible_datetime::utc" 
-                        : "crate::core::flexible_datetime::offset";
+                        ? `${coreModulePath}::flexible_datetime::utc` 
+                        : `${coreModulePath}::flexible_datetime::offset`;
                     if (isOptional) {
                         // For optional datetime fields with custom deserializer, we need serde(default)
                         // to handle missing fields in JSON (otherwise serde expects the field to be present)
@@ -485,11 +486,12 @@ export class UnionGenerator {
             // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
             // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
             const dateTimeType = this.context.getDateTimeType();
+            const coreModulePath = this.context.getCoreModulePath();
             const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
             if (isDateTimeOnlyType(typeRef)) {
                 const modulePath = dateTimeType === "utc" 
-                    ? "crate::core::flexible_datetime::utc" 
-                    : "crate::core::flexible_datetime::offset";
+                    ? `${coreModulePath}::flexible_datetime::utc` 
+                    : `${coreModulePath}::flexible_datetime::offset`;
                 if (isOptional) {
                     // For optional datetime fields with custom deserializer, we need serde(default)
                     // to handle missing fields in JSON (otherwise serde expects the field to be present)
