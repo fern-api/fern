@@ -221,10 +221,17 @@ export class AutoVersionStep extends BaseStep {
 
         let analysis: FAIAnalysis | null;
         try {
-            analysis =
-                cappedChunks.length <= 1
-                    ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
-                    : await this.analyzeChunks(cappedChunks, language, previousVersion);
+            if (this.config.ai == null && this.config.fernToken != null) {
+                // No BAML provider config (the remote-generation / fiddle path) — call the
+                // FAI service with the fern token instead. FAI chunks internally, so send
+                // the full cleaned diff in one request.
+                analysis = await this.analyzeViaFaiService(cleanedDiff, language, previousVersion);
+            } else {
+                analysis =
+                    cappedChunks.length <= 1
+                        ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
+                        : await this.analyzeChunks(cappedChunks, language, previousVersion);
+            }
         } catch (error) {
             this.logger.warn(`AutoVersionStep: FAI analysis failed (${String(error)}); falling back to PATCH bump.`);
             analysis = { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
@@ -568,6 +575,52 @@ export class AutoVersionStep extends BaseStep {
     }
 
     /**
+     * Calls the hosted FAI service (`/sdks/analyze-commit-diff`) with the fern token.
+     * Used when no BAML `ai` config is supplied (remote generation via fiddle). FAI
+     * handles chunking, parallelism, and retries server-side. Returns null on
+     * NO_CHANGE; throws on transport/HTTP errors so the caller's PATCH fallback applies.
+     */
+    private async analyzeViaFaiService(
+        cleanedDiff: string,
+        language: string,
+        previousVersion: string
+    ): Promise<FAIAnalysis | null> {
+        const baseUrl = this.config.faiBaseUrl ?? "https://fai.buildwithfern.com";
+        const response = await fetch(`${baseUrl}/sdks/analyze-commit-diff`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${this.config.fernToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                diff: cleanedDiff,
+                language,
+                previous_version: previousVersion,
+                prior_changelog: this.config.priorChangelog ?? undefined,
+                spec_commit_message: this.config.specCommitMessage ?? undefined
+            })
+        });
+        if (!response.ok) {
+            const body = await response.text().catch(() => "");
+            throw new Error(`FAI analyze-commit-diff failed with status ${response.status}: ${body.slice(0, 500)}`);
+        }
+        const parsed: unknown = await response.json();
+        if (!isFaiAnalyzeResponse(parsed)) {
+            throw new Error("FAI analyze-commit-diff returned an unexpected response shape");
+        }
+        if (parsed.version_bump === "NO_CHANGE") {
+            return null;
+        }
+        return {
+            versionBump: parsed.version_bump,
+            message: this.brandMessage(parsed.message),
+            changelogEntry: nonEmpty(parsed.changelog_entry),
+            prDescription: nonEmpty(parsed.pr_description),
+            versionBumpReason: nonEmpty(parsed.version_bump_reason)
+        };
+    }
+
+    /**
      * Dynamically imports @fern-api/cli-ai only when autoversion actually needs to
      * call FAI. The package is ESM-only with extensionless internal imports, so
      * unbundled CJS consumers (like generator-cli's `bin/cli` used by the README /
@@ -619,4 +672,30 @@ interface FAIAnalysis {
     changelogEntry?: string;
     prDescription?: string;
     versionBumpReason?: string;
+}
+
+interface FaiAnalyzeResponse {
+    message: string;
+    version_bump: "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
+    changelog_entry?: string;
+    pr_description?: string;
+    version_bump_reason?: string;
+}
+
+const FAI_VERSION_BUMPS = ["MAJOR", "MINOR", "PATCH", "NO_CHANGE"];
+
+function isFaiAnalyzeResponse(value: unknown): value is FaiAnalyzeResponse {
+    if (typeof value !== "object" || value == null) {
+        return false;
+    }
+    const candidate = value as Record<string, unknown>;
+    return (
+        typeof candidate.message === "string" &&
+        typeof candidate.version_bump === "string" &&
+        FAI_VERSION_BUMPS.includes(candidate.version_bump)
+    );
+}
+
+function nonEmpty(value: string | undefined): string | undefined {
+    return value != null && value.trim().length > 0 ? value : undefined;
 }
