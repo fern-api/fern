@@ -1,4 +1,5 @@
-import { GeneratorError } from "@fern-api/base-generator";
+import { GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
@@ -85,6 +86,9 @@ export class ErrorGenerator {
             this.buildStandardVariant("Network", "Network error: {0}", undefined, [
                 Type.reference(new Reference({ name: "reqwest::Error" }))
             ]),
+            this.buildStandardVariant("Executor", "Request executor error: {0}", undefined, [
+                Type.reference(new Reference({ name: "Box<dyn std::error::Error + Send + Sync>" }))
+            ]),
             this.buildStandardVariant("Serialization", "Serialization error: {0}", undefined, [
                 Type.reference(new Reference({ name: "serde_json::Error" }))
             ]),
@@ -132,40 +136,76 @@ export class ErrorGenerator {
     }
 
     private buildErrorFields(errorDeclaration: FernIr.ErrorDeclaration): Array<{ name: string; type: Type }> {
-        const fields = [{ name: "message", type: Type.string() }];
-
-        // Add semantic fields based on status code
-        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
-        fields.push(...statusFields);
-
-        return fields;
+        return [{ name: "message", type: Type.string() }, ...this.resolveErrorFields(errorDeclaration)];
     }
 
-    private getStatusCodeFields(statusCode: number): Array<{ name: string; type: Type }> {
-        const fieldMap: Record<number, Array<{ name: string; type: Type }>> = {
+    /**
+     * Derives error fields from the IR type definition when available, falling back to
+     * hardcoded status-code fields otherwise. Returns fields with both the Rust field
+     * name (snake_case) and the JSON wire name (camelCase from the spec).
+     */
+    private resolveErrorFields(errorDeclaration: FernIr.ErrorDeclaration): Array<{
+        name: string;
+        wireName: string;
+        type: Type;
+        extractionKind: "string" | "u64";
+    }> {
+        if (errorDeclaration.type?.type === "named") {
+            const typeDecl = this.context.ir.types[errorDeclaration.type.typeId];
+            if (typeDecl?.shape.type === "object") {
+                return typeDecl.shape.properties
+                    .filter((p) => getWireValue(p.name) !== "message")
+                    .map((p) => ({
+                        name: this.context.case.snakeSafe(p.name),
+                        wireName: getWireValue(p.name),
+                        type: generateRustTypeForTypeReference(p.valueType, this.context),
+                        extractionKind: this.isU64TypeReference(p.valueType) ? ("u64" as const) : ("string" as const)
+                    }));
+            }
+        }
+        return this.getStatusCodeFields(errorDeclaration.statusCode).map(({ name, wireName, type }) => ({
+            name,
+            wireName,
+            type,
+            extractionKind: (name === "retry_after_seconds" ? "u64" : "string") as "string" | "u64"
+        }));
+    }
+
+    private isU64TypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "UINT_64";
+        }
+        if (typeRef.type === "container" && typeRef.container.type === "optional") {
+            return this.isU64TypeReference(typeRef.container.optional);
+        }
+        return false;
+    }
+
+    private getStatusCodeFields(statusCode: number): Array<{ name: string; wireName: string; type: Type }> {
+        const fieldMap: Record<number, Array<{ name: string; wireName: string; type: Type }>> = {
             400: [
-                { name: "field", type: Type.option(Type.string()) },
-                { name: "details", type: Type.option(Type.string()) }
+                { name: "field", wireName: "field", type: Type.option(Type.string()) },
+                { name: "details", wireName: "details", type: Type.option(Type.string()) }
             ],
-            401: [{ name: "auth_type", type: Type.option(Type.string()) }],
+            401: [{ name: "auth_type", wireName: "authType", type: Type.option(Type.string()) }],
             403: [
-                { name: "resource", type: Type.option(Type.string()) },
-                { name: "required_permission", type: Type.option(Type.string()) }
+                { name: "resource", wireName: "resource", type: Type.option(Type.string()) },
+                { name: "required_permission", wireName: "requiredPermission", type: Type.option(Type.string()) }
             ],
             404: [
-                { name: "resource_id", type: Type.option(Type.string()) },
-                { name: "resource_type", type: Type.option(Type.string()) }
+                { name: "resource_id", wireName: "resourceId", type: Type.option(Type.string()) },
+                { name: "resource_type", wireName: "resourceType", type: Type.option(Type.string()) }
             ],
-            409: [{ name: "conflict_type", type: Type.option(Type.string()) }],
+            409: [{ name: "conflict_type", wireName: "conflictType", type: Type.option(Type.string()) }],
             422: [
-                { name: "field", type: Type.option(Type.string()) },
-                { name: "validation_error", type: Type.option(Type.string()) }
+                { name: "field", wireName: "field", type: Type.option(Type.string()) },
+                { name: "validation_error", wireName: "validationError", type: Type.option(Type.string()) }
             ],
             429: [
-                { name: "retry_after_seconds", type: Type.option(Type.primitive(PrimitiveType.U64)) },
-                { name: "limit_type", type: Type.option(Type.string()) }
+                { name: "retry_after_seconds", wireName: "retryAfterSeconds", type: Type.option(Type.primitive(PrimitiveType.U64)) },
+                { name: "limit_type", wireName: "limitType", type: Type.option(Type.string()) }
             ],
-            500: [{ name: "error_id", type: Type.option(Type.string()) }]
+            500: [{ name: "error_id", wireName: "errorId", type: Type.option(Type.string()) }]
         };
 
         return fieldMap[statusCode] || [];
@@ -280,13 +320,12 @@ export class ErrorGenerator {
     }
 
     private buildSuccessConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
-        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
-        const fieldAssignments = statusFields.map(({ name }) => ({
+        const fields = this.resolveErrorFields(errorDeclaration);
+        const fieldAssignments = fields.map(({ name, wireName, extractionKind }) => ({
             name,
-            value:
-                name === "retry_after_seconds"
-                    ? this.buildU64FieldExtraction(name)
-                    : this.buildStringFieldExtraction(name)
+            value: extractionKind === "u64"
+                ? this.buildU64FieldExtraction(wireName)
+                : this.buildStringFieldExtraction(wireName)
         }));
 
         return Expression.structConstruction(`Self::${errorName}`, [
@@ -312,8 +351,7 @@ export class ErrorGenerator {
     }
 
     private buildFallbackConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
-        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
-        const defaultFields = statusFields.map(({ name }) => ({
+        const defaultFields = this.resolveErrorFields(errorDeclaration).map(({ name }) => ({
             name,
             value: Expression.reference("None")
         }));
@@ -360,20 +398,20 @@ export class ErrorGenerator {
                             Expression.toString(Expression.literal("Unknown error"))
                         )
                     }),
-                    // Extract error_type field if present
+                    // Extract error discriminant field if present
                     Statement.let({
                         name: "error_type",
                         value: Expression.andThen(
                             Expression.methodCall({
                                 target: Expression.variable("parsed"),
                                 method: "get",
-                                args: [Expression.literal("error_type")]
+                                args: [Expression.literal(this.getErrorDiscriminantWireName())]
                             }),
                             Expression.closure([{ name: "v" }], Expression.raw("v.as_str()"))
                         )
                     }),
                     // Build the match statement for error_type
-                    Statement.return(Expression.raw(this.buildErrorTypeMatchExpression(errors, statusCode)))
+                    Statement.return(Expression.raw(this.buildErrorTypeMatchExpression(errors)))
                 ]
             )
         );
@@ -393,7 +431,7 @@ export class ErrorGenerator {
             Statement.return(
                 Expression.structConstruction(`Self::${this.getErrorVariantName(firstError)}`, [
                     { name: "message", value: Expression.toString(Expression.literal("Unknown error")) },
-                    ...this.getStatusCodeFields(statusCode).map(({ name }) => ({
+                    ...this.resolveErrorFields(firstError).map(({ name }) => ({
                         name,
                         value: Expression.reference("None")
                     }))
@@ -404,8 +442,12 @@ export class ErrorGenerator {
         return MatchArm.withStatements(Pattern.literal(statusCode), parseBodyStatements);
     }
 
-    private buildErrorTypeMatchExpression(errors: FernIr.ErrorDeclaration[], statusCode: number): string {
-        const fields = this.buildDynamicFieldAssignments(statusCode);
+    private buildErrorTypeMatchExpression(errors: FernIr.ErrorDeclaration[]): string {
+        const [firstError] = errors;
+        if (!firstError) {
+            throw GeneratorError.internalError("Unexpected: errors array should not be empty");
+        }
+        const fields = this.buildDynamicFieldAssignments(firstError);
 
         // Create match arms for each error type
         const matchArms = errors.map((error) => {
@@ -420,10 +462,6 @@ export class ErrorGenerator {
         });
 
         // Add default fallback to first error type
-        const [firstError] = errors;
-        if (!firstError) {
-            throw GeneratorError.internalError("Unexpected: errors array should not be empty");
-        }
         const fallbackName = this.getErrorVariantName(firstError);
         matchArms.push(
             MatchArm.withExpression(
@@ -439,17 +477,13 @@ export class ErrorGenerator {
         return matchStatement.toString();
     }
 
-    private buildDynamicFieldAssignments(statusCode: number): Expression.FieldAssignment[] {
-        const fields = this.getStatusCodeFields(statusCode);
-
-        return fields.map(({ name }) => {
-            const fieldValue =
-                name === "retry_after_seconds"
-                    ? this.buildU64FieldExtraction(name)
-                    : this.buildStringFieldExtraction(name);
-
-            return { name, value: fieldValue };
-        });
+    private buildDynamicFieldAssignments(errorDeclaration: FernIr.ErrorDeclaration): Expression.FieldAssignment[] {
+        return this.resolveErrorFields(errorDeclaration).map(({ name, wireName, extractionKind }) => ({
+            name,
+            value: extractionKind === "u64"
+                ? this.buildU64FieldExtraction(wireName)
+                : this.buildStringFieldExtraction(wireName)
+        }));
     }
 
     private buildStringFieldExtraction(fieldName: string): Expression {
@@ -507,6 +541,14 @@ export class ErrorGenerator {
             name: "error",
             args: [`"${message}"`]
         });
+    }
+
+    private getErrorDiscriminantWireName(): string {
+        const strategy = this.context.ir.errorDiscriminationStrategy;
+        if (strategy.type === "property") {
+            return getWireValue(strategy.discriminant);
+        }
+        return "error_type";
     }
 
     // Helper methods

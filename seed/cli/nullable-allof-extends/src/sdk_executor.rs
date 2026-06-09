@@ -344,6 +344,20 @@ impl SdkError {
     }
 }
 
+impl std::fmt::Display for SdkError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Http { status, body } => write!(f, "HTTP error {status}: {body}"),
+            Self::Network(msg) => write!(f, "network error: {msg}"),
+            Self::Timeout(msg) => write!(f, "request timeout: {msg}"),
+            Self::Auth(msg) => write!(f, "authentication error: {msg}"),
+            Self::Other(msg) => write!(f, "SDK error: {msg}"),
+        }
+    }
+}
+
+impl std::error::Error for SdkError {}
+
 impl From<reqwest::Error> for SdkError {
     fn from(e: reqwest::Error) -> Self {
         if e.is_timeout() {
@@ -458,6 +472,39 @@ mod tests {
         let cli_err = err.into_cli_error();
         assert!(matches!(cli_err, CliError::Other(_)));
         assert!(cli_err.to_string().contains("timeout"));
+    }
+
+    #[test]
+    fn sdk_error_display_formats() {
+        assert_eq!(
+            SdkError::Http { status: 404, body: "not found".into() }.to_string(),
+            "HTTP error 404: not found"
+        );
+        assert_eq!(
+            SdkError::Network("connection refused".into()).to_string(),
+            "network error: connection refused"
+        );
+        assert_eq!(
+            SdkError::Timeout("after 30s".into()).to_string(),
+            "request timeout: after 30s"
+        );
+        assert_eq!(
+            SdkError::Auth("bad token".into()).to_string(),
+            "authentication error: bad token"
+        );
+        assert_eq!(
+            SdkError::Other("unknown".into()).to_string(),
+            "SDK error: unknown"
+        );
+    }
+
+    #[test]
+    fn sdk_error_implements_std_error() {
+        let err: Box<dyn std::error::Error + Send + Sync> =
+            Box::new(SdkError::Network("test".into()));
+        let downcast = err.downcast::<SdkError>();
+        assert!(downcast.is_ok());
+        assert!(matches!(*downcast.unwrap(), SdkError::Network(_)));
     }
 
     #[test]
