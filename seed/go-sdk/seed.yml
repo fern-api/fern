@@ -360,7 +360,6 @@ allowedFailures:
   - alias-extends # object/request body extends an alias; v1 assumes extends are objects
   - bytes-download
   - bytes-upload
-  - streaming-parameter
   - pagination
   - pagination-uri-path
 

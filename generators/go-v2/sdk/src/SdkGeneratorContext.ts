@@ -58,7 +58,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.CustomPagination);
         }
 
-        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+        if (this.hasStreamingEndpoints()) {
             files.push(AsIsFiles.Stream, AsIsFiles.StreamTest);
         }
 
@@ -83,7 +83,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Pager, AsIsFiles.PagerTest);
         }
 
-        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+        if (this.hasStreamingEndpoints()) {
             files.push(AsIsFiles.Streamer);
         }
 
@@ -869,6 +869,22 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
+    }
+
+    private hasStreamingEndpoints(): boolean {
+        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+            return true;
+        }
+        // `hasStreamingEndpoints` is only set for pure `streaming` responses, not
+        // for `streamParameter` endpoints, which also rely on the streamer helpers.
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (this.isStreamingEndpoint(endpoint)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private needsPaginationHelpers(): boolean {
