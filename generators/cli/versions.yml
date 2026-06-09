@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.16.4
+  changelogEntry:
+    - summary: |
+        Update generated `sdk_glue.rs` to box `SdkError` when bridging to the SDK's
+        `RequestExecutor` trait and downcast `ApiError::Executor` back to `SdkError`
+        for structured error recovery.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
 - version: 0.16.3
   changelogEntry:
     - summary: |
