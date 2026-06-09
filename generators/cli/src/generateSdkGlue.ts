@@ -10,62 +10,153 @@
  *   - `block_on(future)` — run an async SDK call from synchronous
  *     handler context (bridges `ApiError` → `CliError`).
  *
- * The generated code reads the SDK crate's `src/api/resources/mod.rs`
- * to discover the root client struct and its sub-client fields, so the
- * construction code is always in sync with the generated SDK.
+ * The generated code reads the SDK crate's `src/api/resources/` tree
+ * to discover client structs and their sub-client fields recursively,
+ * so the construction code is always in sync with the generated SDK —
+ * including specs with nested `x-fern-sdk-group-name` groups.
  */
 
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 
-/** A sub-client field parsed from the root client struct. */
+/** A sub-client field parsed from a client struct (possibly nested). */
 export interface SubClientField {
     fieldName: string;
     typeName: string;
 }
 
+/** Recursive tree of client fields discovered from the generated SDK. */
+interface ClientNode {
+    fieldName: string;
+    typeName: string;
+    /** Module path segments relative to `api::resources` (e.g. `["agents"]`). */
+    modulePath: string[];
+    children: ClientNode[];
+}
+
 /** Root client info parsed from the generated SDK. */
 export interface RootClientInfo {
     name: string;
-    subClients: SubClientField[];
+    subClients: ClientNode[];
 }
 
+// ---------------------------------------------------------------------------
+// Struct parsing
+// ---------------------------------------------------------------------------
+
+/** Fields that are not sub-clients — skip these when discovering sub-clients. */
+const SKIP_TYPES = new Set(["ClientConfig", "HttpClient"]);
+
 /**
- * Parse `src/api/resources/mod.rs` to extract the root client struct
- * definition and its sub-client fields.
+ * Parse a client struct from Rust source to extract its typed fields.
  *
- * Expected pattern:
- * ```rust
- * pub struct ApiClient {
- *     pub config: ClientConfig,
- *     pub pets: PetsClient,
- *     pub auth: AuthClient,
- * }
- * ```
+ * Returns the struct name and all `pub <field>: <Type>` entries,
+ * filtering out config/http_client infrastructure fields.
  */
-function parseRootClient(modRsContent: string): RootClientInfo {
-    const structMatch = modRsContent.match(/pub struct (\w+Client)\s*\{([^}]+)\}/);
+function parseClientStruct(source: string): { name: string; fields: SubClientField[] } | undefined {
+    const structMatch = source.match(/pub struct (\w+Client)\s*\{([^}]+)\}/);
     if (structMatch == null) {
-        throw new Error("Could not find root client struct in SDK's api/resources/mod.rs");
+        return undefined;
     }
 
     const name = structMatch[1] ?? "";
     const body = structMatch[2] ?? "";
-    const subClients: SubClientField[] = [];
+    const fields: SubClientField[] = [];
 
-    // Match each `pub <field>: <Type>,` line, skipping `config: ClientConfig`
     const fieldRegex = /pub\s+(\w+)\s*:\s*(\w+)\s*,?/g;
     let match;
     while ((match = fieldRegex.exec(body)) !== null) {
         const fieldName = match[1] ?? "";
         const typeName = match[2] ?? "";
-        if (typeName === "ClientConfig") {
-            continue; // skip the config field
+        if (SKIP_TYPES.has(typeName)) {
+            continue;
         }
-        subClients.push({ fieldName, typeName });
+        fields.push({ fieldName, typeName });
     }
 
-    return { name, subClients };
+    return { name, fields };
+}
+
+/**
+ * Recursively discover the client tree starting from `resources/mod.rs`.
+ *
+ * For each sub-client field, attempts to read
+ * `resources/<fieldName>/mod.rs` to discover nested sub-clients.
+ * Leaf clients (no sub-directory or no nested struct) have empty children.
+ */
+async function discoverClientTree(
+    resourcesDir: string,
+    fields: SubClientField[],
+    parentModulePath: string[]
+): Promise<ClientNode[]> {
+    const nodes: ClientNode[] = [];
+
+    for (const { fieldName, typeName } of fields) {
+        const modulePath = [...parentModulePath, fieldName];
+        let children: ClientNode[] = [];
+
+        // Try to read the sub-client's mod.rs for nested sub-clients.
+        const subModRsPath = path.join(resourcesDir, fieldName, "mod.rs");
+        try {
+            const subModRs = await readFile(subModRsPath, "utf-8");
+            const subStruct = parseClientStruct(subModRs);
+            if (subStruct != null && subStruct.fields.length > 0) {
+                children = await discoverClientTree(path.join(resourcesDir, fieldName), subStruct.fields, modulePath);
+            }
+        } catch (_e: unknown) {
+            // No sub-directory — leaf client.
+        }
+
+        nodes.push({ fieldName, typeName, modulePath, children });
+    }
+
+    return nodes;
+}
+
+// ---------------------------------------------------------------------------
+// Code generation
+// ---------------------------------------------------------------------------
+
+/**
+ * Render the Rust struct literal for a single client node, recursing into
+ * children.  Returns a multi-line string like:
+ *
+ *     sdk::api::AgentsClient {
+ *         http_client: http_client.clone(),
+ *         drive: sdk::api::agents::DriveClient { http_client: http_client.clone() },
+ *     }
+ */
+function renderClientInit(sdkCrate: string, node: ClientNode, indent: string): string {
+    const qualifiedType = qualifyType(sdkCrate, node);
+
+    if (node.children.length === 0) {
+        return `${qualifiedType} { http_client: http_client.clone() }`;
+    }
+
+    const lines: string[] = [];
+    lines.push(`${qualifiedType} {`);
+    lines.push(`${indent}    http_client: http_client.clone(),`);
+    for (const child of node.children) {
+        const childInit = renderClientInit(sdkCrate, child, indent + "    ");
+        lines.push(`${indent}    ${child.fieldName}: ${childInit},`);
+    }
+    lines.push(`${indent}}`);
+    return lines.join("\n");
+}
+
+/**
+ * Build the qualified type path for a client node.
+ *
+ * Top-level sub-clients are re-exported at `sdk::api::TypeName`.
+ * Nested sub-clients live at `sdk::api::<parent_modules>::TypeName`.
+ */
+function qualifyType(sdkCrate: string, node: ClientNode): string {
+    if (node.modulePath.length <= 1) {
+        return `${sdkCrate}::api::${node.typeName}`;
+    }
+    // For nested clients, use the parent modules (all but last segment).
+    const parentModules = node.modulePath.slice(0, -1).join("::");
+    return `${sdkCrate}::api::${parentModules}::${node.typeName}`;
 }
 
 /**
@@ -73,10 +164,10 @@ function parseRootClient(modRsContent: string): RootClientInfo {
  */
 function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): string {
     const subClientInits = rootClient.subClients
-        .map(
-            (sc) =>
-                `        ${sc.fieldName}: ${sdkCrateSnake}::api::${sc.typeName} { http_client: http_client.clone() },`
-        )
+        .map((node) => {
+            const init = renderClientInit(sdkCrateSnake, node, "        ");
+            return `        ${node.fieldName}: ${init},`;
+        })
         .join("\n");
 
     return `\
@@ -209,14 +300,33 @@ export async function generateSdkGlue(args: {
     const sdkCrateSnake = sdkCrateName.replace(/-/g, "_");
 
     // Read the SDK's root client definition.
-    const modRsPath = path.join(outputDir, sdkCrateName, "src", "api", "resources", "mod.rs");
+    const resourcesDir = path.join(outputDir, sdkCrateName, "src", "api", "resources");
+    const modRsPath = path.join(resourcesDir, "mod.rs");
     const modRsContent = await readFile(modRsPath, "utf-8");
-    const rootClient = parseRootClient(modRsContent);
+    const rootStruct = parseClientStruct(modRsContent);
+    if (rootStruct == null) {
+        throw new Error("Could not find root client struct in SDK's api/resources/mod.rs");
+    }
+
+    // Recursively discover nested sub-clients from the SDK's resource tree.
+    const subClients = await discoverClientTree(resourcesDir, rootStruct.fields, []);
+    const rootClient: RootClientInfo = { name: rootStruct.name, subClients };
 
     // Write the glue module.
     const binDir = path.join(outputDir, "cli", binaryName);
     const content = renderSdkGlue(sdkCrateSnake, rootClient);
     await writeFile(path.join(binDir, "sdk_glue.rs"), content);
 
-    return rootClient.subClients;
+    // Return flat sub-client list for agent skill generation.
+    return flattenSubClients(subClients);
+}
+
+/** Flatten the recursive tree into a flat list (preserves the public interface). */
+function flattenSubClients(nodes: ClientNode[]): SubClientField[] {
+    const result: SubClientField[] = [];
+    for (const node of nodes) {
+        result.push({ fieldName: node.fieldName, typeName: node.typeName });
+        result.push(...flattenSubClients(node.children));
+    }
+    return result;
 }
