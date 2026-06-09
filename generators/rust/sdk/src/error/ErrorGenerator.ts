@@ -398,14 +398,14 @@ export class ErrorGenerator {
                             Expression.toString(Expression.literal("Unknown error"))
                         )
                     }),
-                    // Extract error_type field if present
+                    // Extract error discriminant field if present
                     Statement.let({
                         name: "error_type",
                         value: Expression.andThen(
                             Expression.methodCall({
                                 target: Expression.variable("parsed"),
                                 method: "get",
-                                args: [Expression.literal("error_type")]
+                                args: [Expression.literal(this.getErrorDiscriminantWireName())]
                             }),
                             Expression.closure([{ name: "v" }], Expression.raw("v.as_str()"))
                         )
@@ -541,6 +541,14 @@ export class ErrorGenerator {
             name: "error",
             args: [`"${message}"`]
         });
+    }
+
+    private getErrorDiscriminantWireName(): string {
+        const strategy = this.context.ir.errorDiscriminationStrategy;
+        if (strategy.type === "property") {
+            return getWireValue(strategy.discriminant);
+        }
+        return "error_type";
     }
 
     // Helper methods
