@@ -152,12 +152,17 @@ export class ErrorGenerator {
             if (typeDecl?.shape.type === "object") {
                 return typeDecl.shape.properties
                     .filter((p) => getWireValue(p.name) !== "message")
-                    .map((p) => ({
-                        name: this.context.case.snakeSafe(p.name),
-                        wireName: getWireValue(p.name),
-                        type: generateRustTypeForTypeReference(p.valueType, this.context),
-                        extractionKind: this.isU64TypeReference(p.valueType) ? ("u64" as const) : ("string" as const)
-                    }));
+                    .map((p) => {
+                        const isAlreadyOptional =
+                            p.valueType.type === "container" && p.valueType.container.type === "optional";
+                        const rustType = generateRustTypeForTypeReference(p.valueType, this.context);
+                        return {
+                            name: this.context.case.snakeSafe(p.name),
+                            wireName: getWireValue(p.name),
+                            type: isAlreadyOptional ? rustType : Type.option(rustType),
+                            extractionKind: this.isU64TypeReference(p.valueType) ? ("u64" as const) : ("string" as const)
+                        };
+                    });
             }
         }
         return this.getStatusCodeFields(errorDeclaration.statusCode).map(({ name, wireName, type }) => ({
@@ -562,17 +567,17 @@ export class ErrorGenerator {
         const statusCode = errorDeclaration.statusCode;
 
         const messageTemplates: Record<number, string> = {
-            400: "Bad request - {{message}}",
-            401: "Authentication failed - {{message}}",
-            403: "Access forbidden - {{message}}",
-            404: "Resource not found - {{message}}",
-            409: "Conflict - {{message}}",
-            422: "Unprocessable entity - {{message}}",
-            429: "Rate limit exceeded - {{message}}",
-            500: "Internal server error - {{message}}"
+            400: "Bad request - {message}",
+            401: "Authentication failed - {message}",
+            403: "Access forbidden - {message}",
+            404: "Resource not found - {message}",
+            409: "Conflict - {message}",
+            422: "Unprocessable entity - {message}",
+            429: "Rate limit exceeded - {message}",
+            500: "Internal server error - {message}"
         };
 
-        const template = messageTemplates[statusCode] || "{{message}}";
+        const template = messageTemplates[statusCode] || "{message}";
         return `${errorName}: ${template}`;
     }
 }

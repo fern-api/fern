@@ -2,9 +2,9 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("RateLimitError: Rate limit exceeded - {{message}}")]
+    #[error("RateLimitError: Rate limit exceeded - {message}")]
     RateLimitError { message: String, retry_after_seconds: Option<u64>, limit_type: Option<String> },
-    #[error("MaintenanceError: {{message}}")]
+    #[error("MaintenanceError: {message}")]
     MaintenanceError { message: String },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },

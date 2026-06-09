@@ -2,9 +2,9 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("UnauthorizedError: Authentication failed - {{message}}")]
+    #[error("UnauthorizedError: Authentication failed - {message}")]
     UnauthorizedError { message: String, auth_type: Option<String> },
-    #[error("NotFoundError: Resource not found - {{message}}")]
+    #[error("NotFoundError: Resource not found - {message}")]
     NotFoundError { message: String, resource_id: Option<String>, resource_type: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
