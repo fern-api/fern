@@ -34,6 +34,7 @@ jobs:
     timeout-minutes: 2
     outputs:
       post-metrics: ${{ steps.set-options.outputs.post-metrics }}
+      is-seed-pr: ${{ steps.set-options.outputs.is-seed-pr }}
     steps:
       - name: Set Options
         id: set-options
@@ -47,6 +48,20 @@ jobs:
           else
             echo "post-metrics=false" >> $GITHUB_OUTPUT
             echo "Will not collect metrics on this run"
+          fi
+
+          # Detect seed-labeled PRs to skip expensive matrix computation.
+          # Seed PRs only contain snapshot output changes — no generators are affected.
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            PR_LABELS='${{ toJSON(github.event.pull_request.labels.*.name) }}'
+            if echo "$PR_LABELS" | jq -e 'index("seed")' > /dev/null 2>&1; then
+              echo "is-seed-pr=true" >> $GITHUB_OUTPUT
+              echo "Seed-labeled PR detected — will skip matrix computation."
+            else
+              echo "is-seed-pr=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "is-seed-pr=false" >> $GITHUB_OUTPUT
           fi
 
   check-orphaned-seed-folders:
@@ -91,6 +106,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [setup]
+    if: needs.setup.outputs.is-seed-pr != 'true'
     outputs:
       seed-infrastructure-changed: ${{ steps.detect-affected.outputs.seed-infrastructure-changed }}
       ruby-sdk-v2: ${{ steps.create-dynamic-matrix.outputs.ruby-sdk-v2-test-matrix }}
