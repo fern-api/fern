@@ -30,7 +30,7 @@ export async function emitReadme(args: {
     const { outputDir, binaryName, apiDisplayName, authBindings, npmPublishInfo } = args;
     const displayName = apiDisplayName ?? binaryName;
 
-    const header = generateHeader(displayName);
+    const header = generateHeader({ displayName, npmPublishInfo });
     const blocks = generateBlocks({ binaryName, displayName, authBindings, npmPublishInfo });
 
     const readmePath = path.join(outputDir, "README.md");
@@ -46,8 +46,25 @@ export async function emitReadme(args: {
 // Header
 // ---------------------------------------------------------------------------
 
-function generateHeader(displayName: string): string {
+function generateHeader(args: { displayName: string; npmPublishInfo: ResolvedNpmPublishInfo | undefined }): string {
+    const { displayName, npmPublishInfo } = args;
     const suffix = displayName.toUpperCase().endsWith("API") ? "" : " API";
+    const shieldLines: string[] = [];
+    if (npmPublishInfo != null) {
+        shieldLines.push(
+            `[![npm shield](https://img.shields.io/npm/v/${npmPublishInfo.packageName})](https://www.npmjs.com/package/${npmPublishInfo.packageName})`
+        );
+    }
+    if (shieldLines.length > 0) {
+        return lines(
+            `# ${displayName} CLI`,
+            "",
+            shieldLines.join("\n"),
+            "",
+            `Command-line interface for the ${displayName}${suffix}.`,
+            ""
+        );
+    }
     return lines(`# ${displayName} CLI`, "", `Command-line interface for the ${displayName}${suffix}.`, "");
 }
 

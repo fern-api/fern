@@ -16,14 +16,17 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./DocumentedUnknownType.js"), exports);
 __exportStar(require("./DoubleOptional.js"), exports);
+__exportStar(require("./ExtendedObjectWithInheritedEnum.js"), exports);
 __exportStar(require("./MapOfDocumentedUnknownType.js"), exports);
 __exportStar(require("./NestedObjectWithOptionalField.js"), exports);
 __exportStar(require("./NestedObjectWithRequiredField.js"), exports);
 __exportStar(require("./ObjectWithDatetimeLikeString.js"), exports);
 __exportStar(require("./ObjectWithDocumentedUnknownType.js"), exports);
+__exportStar(require("./ObjectWithInheritedRequiredEnum.js"), exports);
 __exportStar(require("./ObjectWithMapOfMap.js"), exports);
 __exportStar(require("./ObjectWithMixedRequiredAndOptionalFields.js"), exports);
 __exportStar(require("./ObjectWithOptionalField.js"), exports);
+__exportStar(require("./ObjectWithRequiredExtendedField.js"), exports);
 __exportStar(require("./ObjectWithRequiredField.js"), exports);
 __exportStar(require("./ObjectWithRequiredNestedObject.js"), exports);
 __exportStar(require("./ObjectWithUnknownField.js"), exports);

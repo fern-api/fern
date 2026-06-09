@@ -357,8 +357,6 @@ scripts:
 allowedFailures:
   # Unsupported features in the v1 Go generator (generation aborts with
   # "not supported yet" or a nil-pointer panic). These need feature work.
-  - bytes-download
-  - bytes-upload
   - streaming-parameter
   - pagination
   - pagination-uri-path
@@ -372,6 +370,3 @@ allowedFailures:
 
   # Dynamic snippet generation produces code that does not compile.
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-
-  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
-  - exhaustive:omit-empty-request-wrappers

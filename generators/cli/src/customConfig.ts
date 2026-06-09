@@ -15,30 +15,20 @@ export interface FernCliCustomConfig {
     binaryName?: string;
 
     /**
-     * When true (the default), the generator invokes `@fern-api/rust-model`
-     * to produce a `<binaryName>-types` library crate alongside the CLI
-     * crate. Custom command handlers can import typed serde structs from
-     * the types crate for serialization / deserialization while all HTTP
-     * execution stays on the native CLI executor (`ctx.invoke()`).
+     * When true (the default), the generator produces the full custom
+     * command infrastructure alongside the CLI binary:
+     *   - `<binaryName>-types` library crate (typed serde structs)
+     *   - `<binaryName>-sdk` library crate (HTTP client with `ctx.sdk_client()`)
+     *   - `sdk_glue.rs` (bridges CLI's AppContext to the SDK client)
+     *   - `custom.rs` scaffold (user-authored command handlers)
      *
-     * Set to `false` to disable types generation.
+     * Set to `false` to produce a spec-only CLI with no custom command
+     * support.
      */
-    embedTypes?: boolean;
-
-    /**
-     * When true (the default), the generator invokes `@fern-api/rust-sdk`
-     * in `cliEmbedded` mode to produce a `<binaryName>-sdk` library crate
-     * alongside the CLI. The SDK crate provides an HTTP client with the
-     * `RequestExecutor` trait, enabling `ctx.sdk_client()` in custom
-     * command handlers. Requires `embedTypes` to also be enabled (the SDK
-     * re-exports the types crate for single type identity).
-     *
-     * Set to `false` to disable SDK generation.
-     */
-    embedSdk?: boolean;
+    customCommands?: boolean;
 }
 
-const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { embedTypes: true, embedSdk: true };
+const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernCliCustomConfig {
     if (generatorConfig.customConfig == null) {
@@ -70,17 +60,13 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         }
         result.binaryName = obj.binaryName;
     }
-    if ("embedTypes" in obj && obj.embedTypes !== undefined) {
-        if (typeof obj.embedTypes !== "boolean") {
-            throw new Error(`Invalid customConfig.embedTypes: expected a boolean, got ${typeof obj.embedTypes}.`);
+    if ("customCommands" in obj && obj.customCommands !== undefined) {
+        if (typeof obj.customCommands !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.customCommands: expected a boolean, got ${typeof obj.customCommands}.`
+            );
         }
-        result.embedTypes = obj.embedTypes;
-    }
-    if ("embedSdk" in obj && obj.embedSdk !== undefined) {
-        if (typeof obj.embedSdk !== "boolean") {
-            throw new Error(`Invalid customConfig.embedSdk: expected a boolean, got ${typeof obj.embedSdk}.`);
-        }
-        result.embedSdk = obj.embedSdk;
+        result.customCommands = obj.customCommands;
     }
     return result;
 }

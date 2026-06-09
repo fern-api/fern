@@ -1,4 +1,134 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.17.2
+  changelogEntry:
+    - summary: |
+        Add `reqwest` dependency to the embedded types crate when file-upload
+        (multipart/form-data) request types are generated. Previously the types
+        crate referenced `reqwest::multipart::Form` without declaring the dep.
+      type: fix
+    - summary: |
+        Fix SDK glue generation for APIs with nested `x-fern-sdk-group-name`
+        groups (2+ levels). The glue now recursively discovers sub-client
+        structs from the generated SDK's resource tree and emits correct
+        nested struct literals instead of assuming a flat client hierarchy.
+        Nested sub-clients are qualified through `api::resources::<group>`
+        (where the group modules actually live) rather than `api::<group>`,
+        which is not re-exported at the crate's `api` root.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.17.1
+  changelogEntry:
+    - summary: |
+        Populate `repository.url` in generated npm `package.json` files from
+        the GitHub output mode's `repoUrl`. Fixes npm provenance verification
+        failures (E422) when publishing with `--provenance`.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.17.0
+  changelogEntry:
+    - summary: |
+        Add npm version badge to the generated CLI README header when npm
+        publish info is configured, matching the badge behavior of generated
+        TypeScript SDKs.
+      type: feat
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.4
+  changelogEntry:
+    - summary: |
+        Update generated `sdk_glue.rs` to box `SdkError` when bridging to the SDK's
+        `RequestExecutor` trait and downcast `ApiError::Executor` back to `SdkError`
+        for structured error recovery.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.3
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.2
+  changelogEntry:
+    - summary: |
+        Remove `--locked` from `cargo check`, `cargo build`, and `cargo test`
+        commands in generated CI workflows. The lockfile produced at generation
+        time can become stale when the cli-sdk runtime is updated or users add
+        custom code, causing `--locked` builds to reject the lockfile.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error in generated CLI embedded types where structs
+        incorrectly derived `Default` when containing fields whose types extend
+        base objects that don't support `Default`. Propagated from the underlying
+        Rust model generator fix.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.16.0
+  changelogEntry:
+    - summary: |
+        Replace `embedTypes` and `embedSdk` config options with a single
+        `customCommands` flag. When true (default), the generator produces
+        the full custom command infrastructure (types crate, SDK crate,
+        sdk_glue, and custom.rs scaffold). Set to false for a spec-only
+        CLI with no custom command support.
+      type: feat
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.15.0
+  changelogEntry:
+    - summary: |
+        Ship custom-command agent skills inside generated CLIs. A freshly
+        generated project now includes `.agents/skills/custom-commands/SKILL.md`
+        (symlinked into `.claude/`) with spec-aware guidance: real endpoint
+        names, typed SDK client fields, and crate names derived from the API
+        spec. Coding agents can follow the skill to author custom commands
+        without reverse-engineering the patterns.
+      type: feat
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.4
+  changelogEntry:
+    - summary: |
+        Fix local (native) seed test execution by correctly passing OpenAPI specs
+        and SDK template directory to the CLI generator via environment variables.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.3
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.2
+  changelogEntry:
+    - summary: |
+        Add `--locked` to cargo check/build/test commands in generated CI workflow
+        so dependency resolution matches the committed lockfile (consistent with the
+        publish job which already used `--locked`).
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.1
+  changelogEntry:
+    - summary: |
+        Remove `--locked` from `cargo build` commands in generated CI
+        publish workflows. The lockfile produced at generation time may
+        become stale when users add custom code or dev-dependencies,
+        causing `--locked` builds to reject the lockfile. CI now allows
+        Cargo to re-resolve dependencies at build time.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
 - version: 0.14.0
   changelogEntry:
     - summary: |
