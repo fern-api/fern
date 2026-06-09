@@ -344,6 +344,20 @@ impl SdkError {
     }
 }
 
+impl std::fmt::Display for SdkError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Http { status, body } => write!(f, "HTTP error {status}: {body}"),
+            Self::Network(msg) => write!(f, "network error: {msg}"),
+            Self::Timeout(msg) => write!(f, "request timeout: {msg}"),
+            Self::Auth(msg) => write!(f, "authentication error: {msg}"),
+            Self::Other(msg) => write!(f, "SDK error: {msg}"),
+        }
+    }
+}
+
+impl std::error::Error for SdkError {}
+
 impl From<reqwest::Error> for SdkError {
     fn from(e: reqwest::Error) -> Self {
         if e.is_timeout() {
