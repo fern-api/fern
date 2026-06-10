@@ -84,9 +84,11 @@ describe("detectAuthBindings", () => {
             auth: auth(header({ key: "ApiKey", headerEnvVar: "CLOSE_API_KEY" })),
             binaryName: "close"
         });
-        expect(bindings[0]?.rustCall).toBe('.auth(ApiKeyAuth::new("ApiKey").env("CLOSE_API_KEY"))');
+        expect(bindings[0]?.rustCall).toBe(
+            '.auth(ApiKeyAuth::new("ApiKey").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("CLOSE_API_KEY")])))'
+        );
         expect(bindings[0]?.placement).toBe("root");
-        expect(bindings[0]?.authTypeImport).toBe("ApiKeyAuth");
+        expect(bindings[0]?.authTypeImport).toBe("ApiKeyAuth, AuthCredentialSource");
     });
 
     it("header scheme without headerEnvVar falls back to <BIN>_API_KEY", () => {
@@ -94,7 +96,9 @@ describe("detectAuthBindings", () => {
             auth: auth(header({ key: "ApiKey" })),
             binaryName: "close"
         });
-        expect(bindings[0]?.rustCall).toBe('.auth(ApiKeyAuth::new("ApiKey").env("CLOSE_API_KEY"))');
+        expect(bindings[0]?.rustCall).toBe(
+            '.auth(ApiKeyAuth::new("ApiKey").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("CLOSE_API_KEY")])))'
+        );
     });
 
     it("basic auth: IR usernameEnvVar + passwordEnvVar drive both sources", () => {

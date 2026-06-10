@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.17.3
+  changelogEntry:
+    - summary: |
+        API-key (`header`) auth schemes now emit a `--api-key` CLI flag in
+        addition to the environment variable. The generated binding uses a
+        credential-source chain (`.source(AuthCredentialSource::any([cli,
+        env]))`) so the flag is tried first, falling back to the env var.
+        Previously the flag was env-only with no way to pass the key inline.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
 - version: 0.17.2
   changelogEntry:
     - summary: |

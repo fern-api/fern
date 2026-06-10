@@ -27,7 +27,8 @@ export interface DetectedAuthBinding {
  * for the variants the SDK supports:
  *
  *   - `bearer` → `.auth(BearerAuth::new("<key>").env("<env>"))`
- *   - `header` → `.auth(ApiKeyAuth::new("<key>").env("<env>"))`
+ *   - `header` → `.auth(ApiKeyAuth::new("<key>").source(...))` with a
+ *     `--api-key` flag tried first, falling back to the env var
  *   - `basic` (both halves bound) → `.auth_basic_scheme(...)`
  *   - `basic` with `passwordOmit: true` →
  *     `.auth_provider("<key>", BasicAuthProvider::username_only(...))`
@@ -73,11 +74,15 @@ function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): Detecte
         },
         header: (header) => {
             const env = header.headerEnvVar ?? `${envPrefix}_API_KEY`;
+            // Flag-then-env fallback: `--api-key` is tried first, falling
+            // back to the env var. `.cli()` and `.env()` on the builder
+            // overwrite each other, so the chain has to go through
+            // `.source(Chain([...]))` rather than `.cli().env()`.
             return {
                 schemeName: header.key,
-                rustCall: `.auth(ApiKeyAuth::new("${header.key}").env("${env}"))`,
+                rustCall: `.auth(ApiKeyAuth::new("${header.key}").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("${env}")])))`,
                 placement: "root",
-                authTypeImport: "ApiKeyAuth",
+                authTypeImport: "ApiKeyAuth, AuthCredentialSource",
                 envVars: [env],
                 kind: "header"
             };
