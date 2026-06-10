@@ -278,6 +278,54 @@ groups:
         expect(github.get("repository")).toBe("my-org/my-repo");
     });
 
+    it("should not downgrade when registry returns an older version", async () => {
+        const yamlContent = `groups:
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 5.12.12
+`;
+
+        const { getPathToGeneratorsConfiguration } = await import("@fern-api/configuration-loader");
+        vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+        vi.mocked(readFile).mockResolvedValue(yamlContent);
+
+        // Mock getLatestGeneratorVersion to return an OLDER version
+        // (simulates registry returning a lower version due to CLI IR constraint)
+        const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
+        vi.mocked(getLatestGeneratorVersion).mockResolvedValue("5.12.11");
+
+        const { loadAndRunMigrations } = await import("../migrations");
+        vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
+
+        const result = await loadAndUpdateGenerators({
+            absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+            context: mockContext,
+            generatorFilter: undefined,
+            groupFilter: undefined,
+            includeMajor: false,
+            skipAutoreleaseDisabled: false,
+            channel: undefined,
+            cliVersion: "5.37.9"
+        });
+
+        // Should NOT apply the downgrade
+        expect(result.appliedUpgrades).toHaveLength(0);
+        // Should report as already up to date
+        expect(result.alreadyUpToDate).toHaveLength(1);
+        expect(result.alreadyUpToDate[0]?.version).toBe("5.12.12");
+
+        // The YAML should be unchanged (no version downgrade)
+        if (result.updatedConfiguration != null) {
+            const parsedDoc = YAML.parseDocument(result.updatedConfiguration);
+            const groups = parsedDoc.get("groups") as YAML.YAMLMap;
+            const pythonSdk = groups.get("python-sdk") as YAML.YAMLMap;
+            const generators = pythonSdk.get("generators") as YAML.YAMLSeq;
+            const generator = generators.items[0] as YAML.YAMLMap;
+            expect(generator.get("version")).toBe("5.12.12");
+        }
+    });
+
     it("should maintain key order when updating fields", async () => {
         const yamlContent = `groups:
   production:

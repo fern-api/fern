@@ -230,11 +230,17 @@ export async function loadAndUpdateGenerators({
                 context
             });
 
-            // Use the latest version if available, otherwise use the current version
-            const versionToUse = latestVersion ?? currentGeneratorVersion;
+            // Use the latest version only if it's actually an upgrade, otherwise keep the current version
+            const isUpgrade = latestVersion != null && semver.gt(latestVersion, currentGeneratorVersion);
+            const versionToUse = isUpgrade ? latestVersion : currentGeneratorVersion;
 
             if (latestVersion != null) {
-                if (latestVersion !== currentGeneratorVersion) {
+                // Guard against downgrades: only apply the version if it's strictly
+                // greater than the current version.  The registry may return an older
+                // version when the current CLI's IR version constrains the result.
+                const isActualUpgrade = semver.gt(latestVersion, currentGeneratorVersion);
+
+                if (isActualUpgrade) {
                     context.logger.debug(
                         chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
                     );
@@ -293,10 +299,20 @@ export async function loadAndUpdateGenerators({
                         migrationVersions: migrationVersions.length > 0 ? migrationVersions : undefined
                     });
                 } else {
-                    // Generator is already on the latest version
-                    context.logger.debug(
-                        chalk.gray(`${generatorName} is already on the latest version: ${currentGeneratorVersion}`)
-                    );
+                    // Generator is already on the latest compatible version (or ahead of it)
+                    if (semver.lt(latestVersion, currentGeneratorVersion)) {
+                        context.logger.debug(
+                            chalk.gray(
+                                `${generatorName} is already ahead of the latest compatible version ` +
+                                    `(current: ${currentGeneratorVersion}, latest compatible: ${latestVersion}). ` +
+                                    `Skipping to avoid downgrade.`
+                            )
+                        );
+                    } else {
+                        context.logger.debug(
+                            chalk.gray(`${generatorName} is already on the latest version: ${currentGeneratorVersion}`)
+                        );
+                    }
                     alreadyUpToDate.push({
                         generatorName,
                         groupName,
