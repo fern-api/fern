@@ -550,9 +550,7 @@ export class WireMock {
             }
             case "enum":
                 // Enum shapes have a wireValue that is already a plain string
-                return typeof named.shape.value === "string"
-                    ? named.shape.value
-                    : named.shape.value?.wireValue;
+                return typeof named.shape.value === "string" ? named.shape.value : named.shape.value?.wireValue;
             case "undiscriminatedUnion":
                 return this.normalizeExampleDatetimes(named.shape.singleUnionType);
             default:
