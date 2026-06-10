@@ -4,10 +4,6 @@
     union type recognition in the OpenAPI parser.
   type: fix
 - summary: |
-    Normalize x-fern-sdk-method-name overlay values to kebab-case,
-    matching the existing normalization applied to group names.
-  type: fix
-- summary: |
     Stop percent-encoding '.' and '~' in URL path segments — both are
     unreserved characters per RFC 3986 §2.3.
   type: fix

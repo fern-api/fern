@@ -2488,7 +2488,7 @@ pub fn load_openapi_spec_from_value(
             // + `customersList` operation → method `list` rather than
             // `customers-list`. Mirrors Fern's OpenAPI importer.
             let method_name = match &operation.x_fern_sdk_method_name {
-                Some(m) => camel_to_kebab(m),
+                Some(m) => m.clone(),
                 None => match &operation.operation_id {
                     Some(id) => {
                         let stripped = if operation.x_fern_sdk_group_name.is_none() {
