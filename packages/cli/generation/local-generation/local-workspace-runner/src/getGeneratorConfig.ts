@@ -136,14 +136,19 @@ function getGithubPublishConfig(
                                 }
                               : undefined
                   }),
-              pypi: (value) =>
-                  FernGeneratorExec.GithubPublishInfo.pypi({
+              pypi: (value) => {
+                  const password = (value.credentials?.password ?? "").trim();
+                  const useOidc = password === "<USE_OIDC>" || password === "OIDC";
+                  const hasCredentials = value.credentials != null;
+                  return FernGeneratorExec.GithubPublishInfo.pypi({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
                       usernameEnvironmentVariable: EnvironmentVariable("PYPI_USERNAME"),
-                      passwordEnvironmentVariable: EnvironmentVariable("PYPI_PASSWORD"),
+                      passwordEnvironmentVariable: EnvironmentVariable(useOidc ? "OIDC" : "PYPI_PASSWORD"),
+                      shouldGeneratePublishWorkflow: useOidc || hasCredentials,
                       pypiMetadata: value.pypiMetadata
-                  }),
+                  });
+              },
               rubygems: (value) =>
                   FernGeneratorExec.GithubPublishInfo.rubygems({
                       registryUrl: value.registryUrl,
@@ -285,10 +290,11 @@ export function getGeneratorConfig({
             });
         }
     });
+    const publishConfig = getPublishConfigForGithubOidc(generatorInvocation, outputVersion);
     return {
         irFilepath: irPath,
         output,
-        publish: undefined,
+        publish: publishConfig,
         customConfig: customConfig,
         workspaceName,
         organization,
@@ -547,6 +553,52 @@ function getPublishTargetFromPublishModeV2(
             }),
         _other: () => undefined
     });
+}
+
+/**
+ * For GitHub output modes, extract OIDC publish config so the Python generator
+ * can detect `registriesV2.pypi.password == "OIDC"` and activate its OIDC workflow.
+ */
+function getPublishConfigForGithubOidc(
+    generatorInvocation: GeneratorInvocation,
+    version: string
+): FernGeneratorExec.GeneratorPublishConfig | undefined {
+    const publishInfo: FernFiddle.GithubPublishInfo | undefined =
+        generatorInvocation.outputMode._visit<FernFiddle.GithubPublishInfo | undefined>({
+            publish: () => undefined,
+            publishV2: () => undefined,
+            downloadFiles: () => undefined,
+            github: (value) => value.publishInfo,
+            githubV2: (value) =>
+                value._visit({
+                    push: (v) => v.publishInfo,
+                    commitAndRelease: (v) => v.publishInfo,
+                    pullRequest: (v) => v.publishInfo,
+                    _other: () => undefined
+                }),
+            _other: () => undefined
+        });
+    if (publishInfo == null || publishInfo.type !== "pypi") {
+        return undefined;
+    }
+    const password = (publishInfo.credentials?.password ?? "").trim();
+    if (password !== "OIDC" && password !== "<USE_OIDC>") {
+        return undefined;
+    }
+    const registriesV2 = structuredClone(emptyRegistriesConfigV2);
+    registriesV2.pypi = {
+        registryUrl: publishInfo.registryUrl,
+        username: "__token__",
+        password: "OIDC",
+        packageName: publishInfo.packageName,
+        pypiMetadata: publishInfo.pypiMetadata
+    };
+    return {
+        registries: structuredClone(emptyRegistriesConfig),
+        registriesV2,
+        publishTarget: undefined,
+        version
+    };
 }
 
 const emptyRegistriesConfig: FernGeneratorExec.GeneratorRegistriesConfig = {
