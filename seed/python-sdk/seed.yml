@@ -235,6 +235,8 @@ fixtures:
         extra_dependencies:
           boto3: 1.35.76
       outputFolder: deps_with_min_python_version
+      skipScripts:
+        - test-pydantic-v1
     - customConfig:
         extra_dev_dependencies:
           requests_mock: 1.12.1
@@ -499,7 +501,6 @@ scripts:
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
   - examples:legacy-wire-tests
-  - exhaustive:deps_with_min_python_version
   - oauth-client-credentials-custom
   - trace
   - unions:union-naming-v1-wire-tests
