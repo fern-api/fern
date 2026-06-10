@@ -602,15 +602,14 @@ class OAuthTokenProviderGenerator:
             ),
         ]
 
-        for param_name, member_name in self._get_additional_oauth_params(client_credentials):
-            kwargs.append(
-                (
-                    param_name,
-                    AST.Expression(f"self.{member_name}"),
-                )
-            )
-
         if client_credentials.refresh_endpoint is None:
+            for param_name, member_name in self._get_additional_oauth_params(client_credentials):
+                kwargs.append(
+                    (
+                        param_name,
+                        AST.Expression(f"self.{member_name}"),
+                    )
+                )
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
                 client_credentials.token_endpoint.endpoint_reference.endpoint_id
             )
