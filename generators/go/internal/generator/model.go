@@ -2441,16 +2441,12 @@ func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {
 
 // reserveValidIdentifierForLiteral reserves a valid identifier for the given literal,
 // ensuring that it does not conflict with any existing identifiers in the given scope.
+//
+// The literal value is run through goExportedFieldName so that values which are not
+// valid Go identifiers on their own (e.g. starting with a digit) still produce a
+// usable exported field name.
 func reserveValidIdentifierForLiteral(scope *gospec.Scope, literal *ir.Literal) string {
-	return capitalizeFirstLetter(scope.Add(literalToValue(literal)))
-}
-
-// capitalizeFirstLetter capitalizes the first letter of the given string.
-func capitalizeFirstLetter(s string) string {
-	if len(s) == 0 {
-		return s
-	}
-	return strings.ToUpper(s[:1]) + s[1:]
+	return goExportedFieldName(scope.Add(literalToValue(literal)))
 }
 
 // goReservedIdentifiers contains Go keywords and predeclared types that should be
