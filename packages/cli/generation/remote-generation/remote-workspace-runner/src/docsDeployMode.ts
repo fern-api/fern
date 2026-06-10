@@ -18,8 +18,10 @@ export function getDocsDeployMode(): DocsDeployMode {
     if (isValidMode(raw)) {
         return raw;
     }
-    // Fall back to legacy for unrecognized values, but warn at debug level
-    // (the caller can surface this via context.logger.debug).
+    // eslint-disable-next-line no-console
+    console.warn(
+        `[fern] Unrecognized FERN_DOCS_DEPLOY_MODE="${raw}" — falling back to "legacy". Valid values: legacy, dual, ledger.`
+    );
     return "legacy";
 }
 

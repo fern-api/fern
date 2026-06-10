@@ -725,7 +725,9 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    return canonicalizeUploadedFilesForResolver(uploadedFiles);
+                    return deployMode !== "legacy"
+                        ? canonicalizeUploadedFilesForResolver(uploadedFiles)
+                        : uploadedFiles;
                 } else {
                     let startDocsRegisterResponse;
                     try {
@@ -782,7 +784,9 @@ export async function publishDocs({
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    return canonicalizeUploadedFilesForResolver(uploadedFiles);
+                    return deployMode !== "legacy"
+                        ? canonicalizeUploadedFilesForResolver(uploadedFiles)
+                        : uploadedFiles;
                 }
             },
             registerApi: registerApiToFdr,
@@ -1159,6 +1163,12 @@ export async function publishDocs({
                                 navbarLinks: translatedNavbarLinks
                             }
                         };
+                        // In dual mode, canonicalization replaced fileIds with sanitizedPaths.
+                        // Remap back to legacy UUID FileIds before the V2 translations POST.
+                        const remappedTranslatedDefinition = mapDocsDefinitionToLegacyFileIds({
+                            docsDefinition: translatedDefinition,
+                            pathToFileId: legacyFilePathToId
+                        });
                         const pageCount = Object.keys(localePages).length;
                         context.logger.debug(
                             `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
@@ -1181,7 +1191,7 @@ export async function publishDocs({
                                 customDomains: preview ? [] : customDomains,
                                 orgId: organization,
                                 locale,
-                                docsDefinition: translatedDefinition
+                                docsDefinition: remappedTranslatedDefinition
                             })
                         });
                         if (!translationResponse.ok) {
