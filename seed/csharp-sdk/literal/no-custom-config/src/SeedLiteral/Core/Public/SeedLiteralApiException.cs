@@ -7,7 +7,8 @@ public class SeedLiteralApiException(
     string message,
     int statusCode,
     object body,
-    Exception? innerException = null
+    Exception? innerException = null,
+    SeedLiteral.RawResponse? rawResponse = null
 ) : SeedLiteralException(message, innerException)
 {
     /// <summary>
@@ -19,4 +20,9 @@ public class SeedLiteralApiException(
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
+
+    /// <summary>
+    /// The raw HTTP response (status code, URL, headers) that triggered the exception, if available.
+    /// </summary>
+    public SeedLiteral.RawResponse? RawResponse => rawResponse;
 }

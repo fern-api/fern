@@ -7,7 +7,8 @@ public class SeedPublicObjectApiException(
     string message,
     int statusCode,
     object body,
-    Exception? innerException = null
+    Exception? innerException = null,
+    SeedPublicObject.RawResponse? rawResponse = null
 ) : SeedPublicObjectException(message, innerException)
 {
     /// <summary>
@@ -19,4 +20,9 @@ public class SeedPublicObjectApiException(
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
+
+    /// <summary>
+    /// The raw HTTP response (status code, URL, headers) that triggered the exception, if available.
+    /// </summary>
+    public SeedPublicObject.RawResponse? RawResponse => rawResponse;
 }
