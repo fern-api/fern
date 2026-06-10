@@ -1,0 +1,4 @@
+- summary: |
+    Fix 12 openssl CVEs (CVSS 9.8) in container image by upgrading
+    Alpine openssl from 3.5.6 to 3.5.7.
+  type: chore

@@ -52,7 +52,10 @@ RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.55.0|' \
         /usr/local/go/src/cmd/go.mod /usr/local/go/src/cmd/vendor/modules.txt && \
     sed -i '/golang.org\/x\/sys v0.39.0/d' /usr/local/go/src/cmd/go.sum
 
-RUN apk update && apk upgrade --no-cache
+# Security update 2026-06-10: openssl 3.5.6 → 3.5.7 (12 CVEs including
+# CVE-2026-45447 heap use-after-free in PKCS7_verify, High severity).
+RUN apk update && apk upgrade --no-cache \
+    && apk add --no-cache --upgrade libssl3 libcrypto3
 RUN apk add --no-cache ca-certificates git libstdc++
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"

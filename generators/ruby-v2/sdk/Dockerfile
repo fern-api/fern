@@ -15,7 +15,10 @@ FROM ruby:3.3-alpine3.23
 # noise) is only required to compile native gem extensions during install.
 # It is added as a virtual `.build-deps` package and removed after gem install
 # completes so it does not contribute CVEs to the final runtime image.
+# Security update 2026-06-10: openssl 3.5.6 → 3.5.7 (12 CVEs including
+# CVE-2026-45447 heap use-after-free in PKCS7_verify, High severity).
 RUN apk --no-cache upgrade && \
+    apk add --no-cache --upgrade libssl3 libcrypto3 && \
     apk --no-cache add \
         bash \
         curl \

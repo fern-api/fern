@@ -17,7 +17,10 @@ ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 # `apk upgrade` pulls the latest Alpine 3.23 package fixes (e.g. nghttp2-libs
 # 1.69.0-r0 to address CVE-2026-27135) on top of what ships in the base image.
+# Security update 2026-06-10: openssl 3.5.6 → 3.5.7 (12 CVEs including
+# CVE-2026-45447 heap use-after-free in PKCS7_verify, High severity).
 RUN apk --no-cache upgrade && \
+    apk add --no-cache --upgrade libssl3 libcrypto3 && \
     apk --no-cache add bash curl git zip && \
     git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
