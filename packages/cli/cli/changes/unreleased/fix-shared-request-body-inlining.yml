@@ -1,0 +1,6 @@
+- summary: |
+    Fix duplicate type declarations when multiple endpoints share the same request body schema via $ref.
+    Previously, request-only schemas referenced by 2+ endpoints were inlined into each endpoint's request
+    wrapper, producing types with the same name and causing "already declared" errors in generated SDKs.
+    Shared request body schemas are now kept as references instead of being inlined.
+  type: fix

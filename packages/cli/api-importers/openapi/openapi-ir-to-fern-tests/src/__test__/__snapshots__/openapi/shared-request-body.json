@@ -1,0 +1,221 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "Chat": {
+              "auth": undefined,
+              "display-name": "Send a chat message",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "message": "message",
+                  },
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "text": "text",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/chat",
+              "request": "ChatRequest",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ChatResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ChatRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message": "string",
+              "model": "optional<string>",
+              "temperature": "optional<double>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ChatResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "string",
+              "text": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "PromptResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "prompt": "string",
+              "token_count": "optional<integer>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    Chat:
+      path: /chat
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Send a chat message
+      request: ChatRequest
+      response:
+        docs: Success
+        type: ChatResponse
+        status-code: 200
+      examples:
+        - request:
+            message: message
+          response:
+            body:
+              id: id
+              text: text
+  source:
+    openapi: ../openapi.yml
+types:
+  ChatRequest:
+    properties:
+      message: string
+      model: optional<string>
+      temperature: optional<double>
+    source:
+      openapi: ../openapi.yml
+  ChatResponse:
+    properties:
+      id: string
+      text: string
+    source:
+      openapi: ../openapi.yml
+  PromptResponse:
+    properties:
+      prompt: string
+      token_count: optional<integer>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "chat.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "prompt": {
+              "auth": undefined,
+              "display-name": "Get the prompt for a chat message",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "message": "message",
+                  },
+                  "response": {
+                    "body": {
+                      "prompt": "prompt",
+                      "token_count": 1,
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/chat/prompt",
+              "request": "root.ChatRequest",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "root.PromptResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    prompt:
+      path: /chat/prompt
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Get the prompt for a chat message
+      request: root.ChatRequest
+      response:
+        docs: Success
+        type: root.PromptResponse
+        status-code: 200
+      examples:
+        - request:
+            message: message
+          response:
+            body:
+              prompt: prompt
+              token_count: 1
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Shared Request Body Test",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Shared Request Body Test
+",
+  },
+}
