@@ -108,7 +108,7 @@ func TestEndpointsContentTypePostJSONPatchContentTypeWithWireMock(
 		),
 		Datetime: fern.Time(
 			fern.MustParseDateTime(
-				"2024-01-15T09:30:00Z",
+				"2024-01-15T09:30:00.000Z",
 			),
 		),
 		Date: fern.Time(
@@ -179,7 +179,7 @@ func TestEndpointsContentTypePostJSONPatchContentWithCharsetTypeWithWireMock(
 		),
 		Datetime: fern.Time(
 			fern.MustParseDateTime(
-				"2024-01-15T09:30:00Z",
+				"2024-01-15T09:30:00.000Z",
 			),
 		),
 		Date: fern.Time(

@@ -108,7 +108,7 @@ func TestEndpointsObjectGetAndReturnWithOptionalFieldWithWireMock(
 		),
 		Datetime: fern.Time(
 			fern.MustParseDateTime(
-				"2024-01-15T09:30:00Z",
+				"2024-01-15T09:30:00.000Z",
 			),
 		),
 		Date: fern.Time(
@@ -239,7 +239,7 @@ func TestEndpointsObjectGetAndReturnNestedWithOptionalFieldWithWireMock(
 			),
 			Datetime: fern.Time(
 				fern.MustParseDateTime(
-					"2024-01-15T09:30:00Z",
+					"2024-01-15T09:30:00.000Z",
 				),
 			),
 			Date: fern.Time(
@@ -313,7 +313,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldWithWireMock(
 			),
 			Datetime: fern.Time(
 				fern.MustParseDateTime(
-					"2024-01-15T09:30:00Z",
+					"2024-01-15T09:30:00.000Z",
 				),
 			),
 			Date: fern.Time(
@@ -389,7 +389,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 				),
 				Datetime: fern.Time(
 					fern.MustParseDateTime(
-						"2024-01-15T09:30:00Z",
+						"2024-01-15T09:30:00.000Z",
 					),
 				),
 				Date: fern.Time(
@@ -440,7 +440,7 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 				),
 				Datetime: fern.Time(
 					fern.MustParseDateTime(
-						"2024-01-15T09:30:00Z",
+						"2024-01-15T09:30:00.000Z",
 					),
 				),
 				Date: fern.Time(
@@ -642,7 +642,7 @@ func TestEndpointsObjectGetAndReturnWithMalformedDatetimeWithWireMock(
 	)
 	request := &types.ObjectWithMalformedDatetimeExample{
 		DatetimeField: fern.MustParseDateTime(
-			"2025-02-15 10:30:00+00:00",
+			"2025-02-15T10:30:00.000Z",
 		),
 		StringField: "normalString",
 	}
@@ -672,7 +672,7 @@ func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	request := &types.ObjectWithDatetimeLikeString{
 		DatetimeLikeString: "2023-08-31T14:15:22Z",
 		ActualDatetime: fern.MustParseDateTime(
-			"2023-08-31T14:15:22Z",
+			"2023-08-31T14:15:22.000Z",
 		),
 	}
 	_, invocationErr := client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(

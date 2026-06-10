@@ -20,7 +20,7 @@ func do() {
     )
     request := &types.ObjectWithMalformedDatetimeExample{
         DatetimeField: fern.MustParseDateTime(
-            "2025-02-15 10:30:00+00:00",
+            "2025-02-15T10:30:00.000Z",
         ),
         StringField: "normalString",
     }

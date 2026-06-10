@@ -21,7 +21,7 @@ func do() {
     request := &types.ObjectWithDatetimeLikeString{
         DatetimeLikeString: "2023-08-31T14:15:22Z",
         ActualDatetime: fern.MustParseDateTime(
-            "2023-08-31T14:15:22Z",
+            "2023-08-31T14:15:22.000Z",
         ),
     }
     client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(

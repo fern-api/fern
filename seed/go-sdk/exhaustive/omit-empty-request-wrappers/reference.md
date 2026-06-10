@@ -420,7 +420,7 @@ request := &types.ObjectWithOptionalField{
         ),
         Datetime: fern.Time(
             fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
+                "2024-01-15T09:30:00.000Z",
             ),
         ),
         Date: fern.Time(
@@ -512,7 +512,7 @@ request := &types.ObjectWithOptionalField{
         ),
         Datetime: fern.Time(
             fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
+                "2024-01-15T09:30:00.000Z",
             ),
         ),
         Date: fern.Time(
@@ -797,7 +797,7 @@ request := &types.ObjectWithOptionalField{
         ),
         Datetime: fern.Time(
             fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
+                "2024-01-15T09:30:00.000Z",
             ),
         ),
         Date: fern.Time(
@@ -943,7 +943,7 @@ request := &types.ObjectWithOptionalField{
         ),
         Datetime: fern.Time(
             fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
+                "2024-01-15T09:30:00.000Z",
             ),
         ),
         Date: fern.Time(
@@ -1137,7 +1137,7 @@ request := &types.NestedObjectWithOptionalField{
             ),
             Datetime: fern.Time(
                 fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
+                    "2024-01-15T09:30:00.000Z",
                 ),
             ),
             Date: fern.Time(
@@ -1232,7 +1232,7 @@ request := &types.NestedObjectWithRequiredField{
             ),
             Datetime: fern.Time(
                 fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
+                    "2024-01-15T09:30:00.000Z",
                 ),
             ),
             Date: fern.Time(
@@ -1337,7 +1337,7 @@ request := []*types.NestedObjectWithRequiredField{
                 ),
                 Datetime: fern.Time(
                     fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
+                        "2024-01-15T09:30:00.000Z",
                     ),
                 ),
                 Date: fern.Time(
@@ -1388,7 +1388,7 @@ request := []*types.NestedObjectWithRequiredField{
                 ),
                 Datetime: fern.Time(
                     fern.MustParseDateTime(
-                        "2024-01-15T09:30:00Z",
+                        "2024-01-15T09:30:00.000Z",
                     ),
                 ),
                 Date: fern.Time(
@@ -1764,7 +1764,7 @@ in wire test mock responses.
 ```go
 request := &types.ObjectWithMalformedDatetimeExample{
         DatetimeField: fern.MustParseDateTime(
-            "2025-02-15 10:30:00+00:00",
+            "2025-02-15T10:30:00.000Z",
         ),
         StringField: "normalString",
     }
@@ -1831,7 +1831,7 @@ without being converted to "2023-08-31T14:15:22.000Z".
 request := &types.ObjectWithDatetimeLikeString{
         DatetimeLikeString: "2023-08-31T14:15:22Z",
         ActualDatetime: fern.MustParseDateTime(
-            "2023-08-31T14:15:22Z",
+            "2023-08-31T14:15:22.000Z",
         ),
     }
 client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
@@ -3304,7 +3304,7 @@ request := &fern.PostWithObjectBody{
             ),
             Datetime: fern.Time(
                 fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
+                    "2024-01-15T09:30:00.000Z",
                 ),
             ),
             Date: fern.Time(
