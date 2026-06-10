@@ -2273,7 +2273,9 @@ func (f *fileWriter) getPaginationInfo(
 			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
 			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
 		}, nil
-	case "custom":
+	case "custom", "uri", "path":
+		// The v1 client is overwritten by v2, which generates these endpoints as
+		// regular (non-auto-paginated) methods, so there is nothing to do here.
 		return nil, nil
 	default:
 		return nil, fmt.Errorf("%s pagination is not supported yet", t)
@@ -3140,6 +3142,13 @@ func (f *fileWriter) endpointFromIR(
 			responseParameterName = "response"
 			signatureReturnValues = "(io.Reader, error)"
 			successfulReturnValues = "response, nil"
+			errorReturnValues = "nil, err"
+		case "bytes":
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "([]byte, error)"
+			successfulReturnValues = "response.Bytes(), nil"
 			errorReturnValues = "nil, err"
 		case "text":
 			responseType = "bytes.NewBuffer(nil)"

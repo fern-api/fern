@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.46.0
+  changelogEntry:
+    - summary: |
+        Add OIDC support for PyPI publishing in local generation. When
+        `token: OIDC` is configured for a PyPI output, the CLI now detects
+        the OIDC credential and propagates it through both the GitHub publish
+        info and the publish config so the Python generator can activate its
+        OIDC trusted-publisher workflow.
+      type: feat
+    - summary: |
+        Track which validation rules fired during `fern check` as part of the PostHog CLI telemetry event.
+        The event now includes `validationRules` (array of rule names that produced violations),
+        `numErrors`, `numWarnings`, and `passed` properties.
+      type: feat
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 5.45.5
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.36: AutoVersionStep now calls the hosted FAI
+        service with `fernToken` when no BAML `ai` config is supplied, restoring real
+        version bumps and changelog entries for replay-enabled remote generations.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 5.45.4
+  changelogEntry:
+    - summary: |
+        Fix `fs.cp` resolving relative symlinks to absolute temp-directory paths
+        during local generation. Adds `verbatimSymlinks: true` so symlinks like
+        `.claude -> .agents` are preserved as-is when copying generator output.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
 - version: 5.45.3
   changelogEntry:
     - summary: |

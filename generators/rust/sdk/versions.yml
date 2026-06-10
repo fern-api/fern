@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.40.5
+  changelogEntry:
+    - summary: |
+        Fix `error.rs` failing to compile when an error body has a property whose type is
+        a named (non-primitive) type or a non-string/non-u64 primitive (e.g. `i64`). Error
+        body fields are now deserialized with `serde_json::from_value` into their actual Rust
+        type (instead of always reading `as_str()`/`as_u64()`), and the crate prelude is
+        imported when a field references a generated type so it resolves in scope. Also fixes
+        a latent bug where errors sharing a status code all reused the first error's body
+        fields; each variant is now constructed with its own fields.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
 - version: 0.40.4
   changelogEntry:
     - summary: |

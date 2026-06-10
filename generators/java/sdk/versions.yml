@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.9.2
+  changelogEntry:
+    - summary: |
+        Update java-sdk-generator container to fix CVE-2026-7010 (perl-HTTP-Tiny
+        CRLF injection), CVE-2026-48864/CVE-2026-9149/CVE-2026-9150/CVE-2026-48863
+        (libsolv buffer overflows), and CVE-2026-8376 (perl heap buffer overflow).
+      type: chore
+  createdAt: "2026-06-10"
+  irVersion: 66
 - version: 4.9.1
   changelogEntry:
     - summary: |

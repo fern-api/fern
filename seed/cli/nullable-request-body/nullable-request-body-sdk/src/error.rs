@@ -2,7 +2,7 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("UnprocessableEntityError: Unprocessable entity - {{message}}")]
+    #[error("UnprocessableEntityError: Unprocessable entity - {message}")]
     UnprocessableEntityError {
         message: String,
         id: Option<String>,

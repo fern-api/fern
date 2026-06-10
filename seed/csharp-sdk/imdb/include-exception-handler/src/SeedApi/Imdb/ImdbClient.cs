@@ -60,7 +60,7 @@ public partial class ImdbClient : IImdbClient
                         return new WithRawResponse<string>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedApi.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -76,7 +76,15 @@ public partial class ImdbClient : IImdbClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedApi.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -87,7 +95,13 @@ public partial class ImdbClient : IImdbClient
                     throw new SeedApiApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedApi.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -135,7 +149,7 @@ public partial class ImdbClient : IImdbClient
                         return new WithRawResponse<Movie>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedApi.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -151,7 +165,15 @@ public partial class ImdbClient : IImdbClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedApi.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -165,7 +187,17 @@ public partial class ImdbClient : IImdbClient
                         {
                             case 404:
                                 throw new NotFoundError(
-                                    JsonUtils.Deserialize<string>(responseBody)
+                                    JsonUtils.Deserialize<string>(responseBody),
+                                    rawResponse: new SeedApi.RawResponse()
+                                    {
+                                        StatusCode = response.Raw.StatusCode,
+                                        Url =
+                                            response.Raw.RequestMessage?.RequestUri
+                                            ?? new Uri("about:blank"),
+                                        Headers = ResponseHeaders.FromHttpResponseMessage(
+                                            response.Raw
+                                        ),
+                                    }
                                 );
                         }
                     }
@@ -176,7 +208,13 @@ public partial class ImdbClient : IImdbClient
                     throw new SeedApiApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedApi.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })

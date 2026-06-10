@@ -42,6 +42,7 @@ import {
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
+import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -1359,28 +1360,50 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 }),
         async (argv) => {
-            // Docs validation may reference APIs outside `--api`; apply the filter
-            // only to API-level validation.
-            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: true
-            });
-
-            if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
-                cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
-                    code: CliError.Code.ConfigError
+            let project: Project | undefined;
+            try {
+                // Docs validation may reference APIs outside `--api`; apply the filter
+                // only to API-level validation.
+                project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: undefined,
+                    defaultToAllApiWorkspaces: true
                 });
-            }
 
-            await validateWorkspaces({
-                project,
-                cliContext,
-                logWarnings: argv.warnings,
-                brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi,
-                commandLineApiWorkspace: argv.api
-            });
+                if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                    cliContext.instrumentPostHogEvent({
+                        command: "fern check",
+                        properties: {
+                            passed: false,
+                            abortReason: `API does not exist: ${argv.api}`
+                        }
+                    });
+                    cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
+                        code: CliError.Code.ConfigError
+                    });
+                }
+
+                await validateWorkspaces({
+                    project,
+                    cliContext,
+                    logWarnings: argv.warnings,
+                    brokenLinks: argv.brokenLinks,
+                    errorOnBrokenLinks: argv.strictBrokenLinks,
+                    directFromOpenapi: argv.fromOpenapi,
+                    commandLineApiWorkspace: argv.api
+                });
+            } catch (error) {
+                if (project == null) {
+                    const reason = error instanceof Error ? error.message.slice(0, 100) : "project load failed";
+                    cliContext.instrumentPostHogEvent({
+                        command: "fern check",
+                        properties: {
+                            passed: false,
+                            abortReason: reason
+                        }
+                    });
+                }
+                throw error;
+            }
         }
     );
 }

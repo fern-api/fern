@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.67.0
+  changelogEntry:
+    - summary: |
+        `Page<T>` now exposes `Url` alongside `StatusCode` and `Headers`, matching the shape of the `RawResponse` exposed on `*ApiException` and on `WithRawResponse<T>`.
+      type: feat
+    - summary: |
+        `*ApiException` now exposes a `RawResponse` property carrying the failed HTTP response's status code, URL, and headers. Lets callers read `Retry-After` off a 429, pull `X-Request-Id` for support tickets, or inspect rate-limit headers off a thrown exception. Existing constructors still work — this is purely additive.
+      type: feat
+  createdAt: "2026-06-10"
+  irVersion: 66
 - version: 2.66.9
   changelogEntry:
     - summary: |

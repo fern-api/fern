@@ -53,7 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> schemaless_request_body_examples_api_sdk:
     );
     schemaless_request_body_examples_api_sdk::api::ApiClient {
         config,
-        http_client: schemaless_request_body_examples_api_sdk::api::HttpClient { http_client: http_client.clone() },
+
     }
 }
 

@@ -2,7 +2,7 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("NotFoundError: Resource not found - {{message}}")]
+    #[error("NotFoundError: Resource not found - {message}")]
     NotFoundError {
         message: String,
         resource_id: Option<String>,
