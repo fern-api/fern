@@ -525,13 +525,15 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 expect(info).toBeDefined();
                 // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("offset-step");
-                // hasNextPage must be items-driven (matching the Python/Go offset pagers) and must NOT
-                // compare items.length against the requested page-size, which breaks when page-size is
-                // omitted (FER-11160).
+                // When step is provided, compare items.length against the runtime step value — but
+                // gate the comparison on `step != null` so we never fall back to a fabricated default
+                // (FER-11160). Must NOT use Math.floor (regression guard for the pre-fix shape).
                 // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).not.toContain("Math.floor");
                 // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
-                expect(getTextOfTsNode(info!.hasNextPage)).toBe("(response?.items ?? []).length > 0");
+                expect(getTextOfTsNode(info!.hasNextPage)).toBe(
+                    "(response?.items ?? []).length > 0 && (request?.limit == null || (response?.items ?? []).length >= request?.limit)"
+                );
                 // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
             });

@@ -323,13 +323,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             noOptionalChaining: true
         });
 
-        // Has-next is items-driven: there may be another page as long as this page returned items.
-        // This matches the offset pagers in the other Fern SDK generators (e.g. Python, Go). We
-        // intentionally do NOT compare items.length against the requested `step`/page-size: when the
-        // caller omits page-size that comparison falls back to a fabricated default and wrongly reports
-        // `false` on a short page (and false positives on a full last page). `offset.step` still drives
-        // the offset increment below; it just doesn't gate has-next.
-        const baseHasNextPage: ts.Expression = ts.factory.createBinaryExpression(
+        // TS-only: when the caller supplies the page-size parameter, treat a short page as the last
+        // page (saves one round-trip at the tail). When the caller omits it, fall back to items-driven
+        // so we never compare against a fabricated default — that fabrication caused both false-negative
+        // termination on short pages and false-positive continuation on full last pages (FER-11160).
+        // Other Fern SDKs are uniformly items-driven; we accept the divergence to keep the optimization
+        // when the caller provides a page-size. `response.hasNextPage` from the API still takes priority
+        // via the `??` wrapper below.
+        const itemsLengthAccess = (): ts.Expression =>
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createParenthesizedExpression(
                     ts.factory.createBinaryExpression(
@@ -339,10 +340,44 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     )
                 ),
                 ts.factory.createIdentifier("length")
-            ),
+            );
+        const itemsLengthGtZero = ts.factory.createBinaryExpression(
+            itemsLengthAccess(),
             ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
             ts.factory.createNumericLiteral("0")
         );
+        const baseHasNextPage: ts.Expression =
+            offset.step != null
+                ? (() => {
+                      const stepPropertyAccess = context.type.generateGetterForRequestProperty({
+                          property: offset.step,
+                          variable: "request",
+                          isVariableOptional: true
+                      });
+                      const stepIsNull = ts.factory.createBinaryExpression(
+                          stepPropertyAccess,
+                          ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                          ts.factory.createNull()
+                      );
+                      const itemsLengthGteStep = ts.factory.createBinaryExpression(
+                          itemsLengthAccess(),
+                          ts.factory.createToken(ts.SyntaxKind.GreaterThanEqualsToken),
+                          stepPropertyAccess
+                      );
+                      const stepGate = ts.factory.createParenthesizedExpression(
+                          ts.factory.createBinaryExpression(
+                              stepIsNull,
+                              ts.factory.createToken(ts.SyntaxKind.BarBarToken),
+                              itemsLengthGteStep
+                          )
+                      );
+                      return ts.factory.createBinaryExpression(
+                          itemsLengthGtZero,
+                          ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+                          stepGate
+                      );
+                  })()
+                : itemsLengthGtZero;
 
         // If explicit hasNextPage property exists, it takes priority (?? to fallback to base check)
         const hasNextPage: ts.Expression =
