@@ -1100,6 +1100,9 @@ export class DynamicTypeLiteralMapper {
     }
 
     private normalizeDateTimeString(dateTime: string): string {
+        if (/^\d{4}-\d{2}-\d{2}T/.test(dateTime)) {
+            return dateTime;
+        }
         // Attempt to parse as a Date to normalize non-RFC3339 formats
         // (e.g. "2025-02-15 10:30:00+00:00" with space instead of "T").
         const parsed = new Date(dateTime);
