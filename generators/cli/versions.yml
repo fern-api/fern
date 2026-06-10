@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.17.3
+  changelogEntry:
+    - summary: |
+        Rebuild embedded SDK generation to pick up rust-sdk 0.40.5 error.rs
+        codegen fix — named/non-primitive error body fields now emit correct
+        imports and use serde_json::from_value() instead of as_str().
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
 - version: 0.17.2
   changelogEntry:
     - summary: |
