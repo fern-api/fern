@@ -17,6 +17,7 @@ import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.j
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidTranslationsConfigRule } from "./rules/valid-translations-config/index.js";
+import { ValidWellKnownSkillsRule } from "./rules/valid-well-known-skills/index.js";
 import { ValidateProductFileRule } from "./rules/validate-product-file/index.js";
 import { ValidateVersionFileRule } from "./rules/validate-version-file/index.js";
 
@@ -40,7 +41,8 @@ const allRules = [
     AllRolesMustBeDeclaredRule,
     ValidFrontmatter,
     TranslationDirectoriesExistRule,
-    ValidChangelogSlugRule
+    ValidChangelogSlugRule,
+    ValidWellKnownSkillsRule // Validate author-supplied Agent Skills bundles under .well-known/
     // ValidMarkdownFileReferences
 ];
 

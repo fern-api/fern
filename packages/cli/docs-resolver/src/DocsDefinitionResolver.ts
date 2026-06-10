@@ -68,6 +68,7 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
@@ -513,6 +514,16 @@ export class DocsDefinitionResolver {
         });
         const collectTime = performance.now() - collectStart;
         this.taskContext.logger.debug(`Collected ${filesToUploadSet.size} files in ${collectTime.toFixed(0)}ms`);
+
+        // upload author-supplied Agent Skills bundles so the docs site can serve them
+        // at /.well-known/skills/… and /.well-known/agent-skills/…
+        const wellKnownSkillsFiles = await collectWellKnownSkillsFiles({
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+        });
+        if (wellKnownSkillsFiles.length > 0) {
+            this.taskContext.logger.debug(`Collected ${wellKnownSkillsFiles.length} well-known agent skills files`);
+            wellKnownSkillsFiles.forEach((filepath) => filesToUploadSet.add(filepath));
+        }
 
         // preprocess markdown files to extract image paths
         this.taskContext.logger.debug("Parsing image paths from markdown files...");
