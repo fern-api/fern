@@ -1294,7 +1294,9 @@ export async function runAppPreviewServer({
 
         // Brief delay to let memory settle before restarting
         const delayMs = Math.min(1000 * restartCount, 5000);
-        context.logger.info(`Restarting docs preview server in ${delayMs / 1000}s (attempt ${restartCount}/${MAX_RESTARTS})...`);
+        context.logger.info(
+            `Restarting docs preview server in ${delayMs / 1000}s (attempt ${restartCount}/${MAX_RESTARTS})...`
+        );
         await new Promise((r) => setTimeout(r, delayMs));
 
         // Clean leftover processes on the port before restarting
