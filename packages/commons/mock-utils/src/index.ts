@@ -446,6 +446,10 @@ export class WireMock {
         switch (ref.shape.type) {
             case "primitive":
                 if (ref.shape.primitive.type === "datetime") {
+                    const raw = ref.jsonExample;
+                    if (typeof raw === "string" && /^\d{4}-\d{2}-\d{2}T/.test(raw)) {
+                        return raw;
+                    }
                     return ref.shape.primitive.datetime.toISOString();
                 }
                 return ref.jsonExample;
