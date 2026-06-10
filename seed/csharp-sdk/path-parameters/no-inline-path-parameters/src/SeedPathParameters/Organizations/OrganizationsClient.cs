@@ -98,7 +98,6 @@ public partial class OrganizationsClient : IOrganizationsClient
         string tenantId,
         string organizationId,
         string userId,
-        GetOrganizationUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -283,18 +282,12 @@ public partial class OrganizationsClient : IOrganizationsClient
     }
 
     /// <example><code>
-    /// await client.Organizations.GetOrganizationUserAsync(
-    ///     "tenant_id",
-    ///     "organization_id",
-    ///     "user_id",
-    ///     new GetOrganizationUserRequest()
-    /// );
+    /// await client.Organizations.GetOrganizationUserAsync("tenant_id", "organization_id", "user_id");
     /// </code></example>
     public WithRawResponseTask<User> GetOrganizationUserAsync(
         string tenantId,
         string organizationId,
         string userId,
-        GetOrganizationUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -304,7 +297,6 @@ public partial class OrganizationsClient : IOrganizationsClient
                 tenantId,
                 organizationId,
                 userId,
-                request,
                 options,
                 cancellationToken
             )

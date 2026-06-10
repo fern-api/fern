@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedPathParameters;
 using SeedPathParameters.Test.Unit.MockServer;
 using SeedPathParameters.Test.Utils;
 
@@ -36,11 +35,7 @@ public class GetUserTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.GetUserAsync(
-            "tenant_id",
-            "user_id",
-            new GetUsersRequest()
-        );
+        var response = await Client.User.GetUserAsync("tenant_id", "user_id");
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

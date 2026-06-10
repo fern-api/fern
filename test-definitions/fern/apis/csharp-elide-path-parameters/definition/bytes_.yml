@@ -1,0 +1,20 @@
+imports:
+  user: user.yml
+
+service:
+  base-path: /bytes
+  auth: false
+  endpoints:
+    uploadBytes:
+      docs: >
+        Endpoint with path parameter + bytes body.
+        The wrapper should NOT be unwrapped because bytes bodies
+        cannot be passed directly as a method parameter.
+      path: "/{upload_id}"
+      method: POST
+      request:
+        name: UploadBytesRequest
+        path-parameters:
+          upload_id: string
+        body: bytes
+      response: user.User

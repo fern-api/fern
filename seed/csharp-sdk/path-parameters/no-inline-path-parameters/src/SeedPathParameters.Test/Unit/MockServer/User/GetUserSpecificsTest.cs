@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedPathParameters;
 using SeedPathParameters.Test.Unit.MockServer;
 using SeedPathParameters.Test.Utils;
 
@@ -40,8 +39,7 @@ public class GetUserSpecificsTest : BaseMockServerTest
             "tenant_id",
             "user_id",
             1,
-            "thought",
-            new GetUserSpecificsRequest()
+            "thought"
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

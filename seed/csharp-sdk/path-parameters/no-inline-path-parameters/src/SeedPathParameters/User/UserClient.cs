@@ -15,7 +15,6 @@ public partial class UserClient : IUserClient
     private async Task<WithRawResponse<User>> GetUserAsyncCore(
         string tenantId,
         string userId,
-        GetUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -180,7 +179,7 @@ public partial class UserClient : IUserClient
     private async Task<WithRawResponse<User>> UpdateUserAsyncCore(
         string tenantId,
         string userId,
-        UpdateUserRequest request,
+        User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -201,7 +200,7 @@ public partial class UserClient : IUserClient
                         ValueConvert.ToPathParameterString(tenantId),
                         ValueConvert.ToPathParameterString(userId)
                     ),
-                    Body = request.Body,
+                    Body = request,
                     Headers = _headers,
                     Options = options,
                 },
@@ -353,7 +352,6 @@ public partial class UserClient : IUserClient
         string tenantId,
         string userId,
         int version,
-        GetUserMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -439,7 +437,6 @@ public partial class UserClient : IUserClient
         string userId,
         int version,
         string thought,
-        GetUserSpecificsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -522,18 +519,17 @@ public partial class UserClient : IUserClient
     }
 
     /// <example><code>
-    /// await client.User.GetUserAsync("tenant_id", "user_id", new GetUsersRequest());
+    /// await client.User.GetUserAsync("tenant_id", "user_id");
     /// </code></example>
     public WithRawResponseTask<User> GetUserAsync(
         string tenantId,
         string userId,
-        GetUsersRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<User>(
-            GetUserAsyncCore(tenantId, userId, request, options, cancellationToken)
+            GetUserAsyncCore(tenantId, userId, options, cancellationToken)
         );
     }
 
@@ -563,20 +559,17 @@ public partial class UserClient : IUserClient
     /// await client.User.UpdateUserAsync(
     ///     "tenant_id",
     ///     "user_id",
-    ///     new UpdateUserRequest
+    ///     new User
     ///     {
-    ///         Body = new User
-    ///         {
-    ///             Name = "name",
-    ///             Tags = new List&lt;string&gt;() { "tags", "tags" },
-    ///         },
+    ///         Name = "name",
+    ///         Tags = new List&lt;string&gt;() { "tags", "tags" },
     ///     }
     /// );
     /// </code></example>
     public WithRawResponseTask<User> UpdateUserAsync(
         string tenantId,
         string userId,
-        UpdateUserRequest request,
+        User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -606,19 +599,18 @@ public partial class UserClient : IUserClient
     /// Test endpoint with path parameter that has a text prefix (v{version})
     /// </summary>
     /// <example><code>
-    /// await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMetadataRequest());
+    /// await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1);
     /// </code></example>
     public WithRawResponseTask<User> GetUserMetadataAsync(
         string tenantId,
         string userId,
         int version,
-        GetUserMetadataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<User>(
-            GetUserMetadataAsyncCore(tenantId, userId, version, request, options, cancellationToken)
+            GetUserMetadataAsyncCore(tenantId, userId, version, options, cancellationToken)
         );
     }
 
@@ -626,20 +618,13 @@ public partial class UserClient : IUserClient
     /// Test endpoint with path parameters listed in different order than found in path
     /// </summary>
     /// <example><code>
-    /// await client.User.GetUserSpecificsAsync(
-    ///     "tenant_id",
-    ///     "user_id",
-    ///     1,
-    ///     "thought",
-    ///     new GetUserSpecificsRequest()
-    /// );
+    /// await client.User.GetUserSpecificsAsync("tenant_id", "user_id", 1, "thought");
     /// </code></example>
     public WithRawResponseTask<User> GetUserSpecificsAsync(
         string tenantId,
         string userId,
         int version,
         string thought,
-        GetUserSpecificsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -650,7 +635,6 @@ public partial class UserClient : IUserClient
                 userId,
                 version,
                 thought,
-                request,
                 options,
                 cancellationToken
             )

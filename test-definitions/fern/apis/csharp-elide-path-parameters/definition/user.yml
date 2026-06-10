@@ -1,0 +1,5 @@
+types:
+  User:
+    properties:
+      name: string
+      tags: list<string>

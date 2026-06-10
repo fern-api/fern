@@ -38,6 +38,7 @@ export const CsharpConfigSchema = z.object({
     "exported-client-class-name": z.string().optional(),
     "explicit-namespaces": z.boolean().optional(),
     "inline-path-parameters": z.boolean().optional(),
+    "elide-path-parameter-wrappers": z.boolean().optional(),
     "read-only-memory-types": z.optional(z.array(z.string())),
     "root-namespace-for-core-classes": z.boolean().optional(),
     "use-discriminated-unions": z.boolean().optional(),

@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedPathParameters;
 using SeedPathParameters.Test.Unit.MockServer;
 using SeedPathParameters.Test.Utils;
 
@@ -36,12 +35,7 @@ public class GetUserMetadataTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.User.GetUserMetadataAsync(
-            "tenant_id",
-            "user_id",
-            1,
-            new GetUserMetadataRequest()
-        );
+        var response = await Client.User.GetUserMetadataAsync("tenant_id", "user_id", 1);
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

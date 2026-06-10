@@ -1,0 +1,7 @@
+- summary: |
+    Add `elide-path-parameter-wrappers` config option. When set to `true` alongside
+    `inline-path-parameters: false`, the C# generator elides wrapper request classes that
+    would only contain path parameters, matching the behavior of the spec-level setting.
+    Wrappers that contained only a body reference alongside path parameters are also
+    unwrapped to pass the body type directly.
+  type: feat

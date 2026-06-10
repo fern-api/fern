@@ -329,13 +329,28 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         parseDatetimes: boolean
     ): ast.CodeBlock | ast.ClassInstantiation | undefined {
         switch (endpoint.sdkRequest?.shape.type) {
-            case "wrapper":
+            case "wrapper": {
+                const elide = this.context.shouldElideWrappedRequest({
+                    endpoint,
+                    wrapper: endpoint.sdkRequest.shape,
+                    serviceId
+                });
+                if (elide === "skip") {
+                    return undefined;
+                }
+                if (elide === "unwrap-body") {
+                    if (exampleEndpointCall.request == null) {
+                        return undefined;
+                    }
+                    return this.getJustRequestBodySnippet(exampleEndpointCall.request, parseDatetimes);
+                }
                 return new WrappedRequestGenerator({
                     wrapper: endpoint.sdkRequest.shape,
                     context: this.context,
                     serviceId,
                     endpoint
                 }).doGenerateSnippet({ example: exampleEndpointCall, parseDatetimes });
+            }
             case "justRequestBody": {
                 if (endpoint.requestBody?.type === "bytes") {
                     return this.System.IO.MemoryStream.new({

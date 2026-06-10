@@ -586,7 +586,20 @@ export class EndpointSnippetGenerator extends WithGeneration {
         ) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
-        // For now, the C# SDK always requires the inlined request parameter.
+
+        const elide = this.shouldElideInlinedRequest({ request });
+        if (elide === "skip") {
+            return args;
+        }
+        if (elide === "unwrap-body") {
+            this.context.errors.scope(Scope.RequestBody);
+            if (request.body != null && request.body.type === "referenced") {
+                args.push(this.getBodyRequestArg({ body: request.body.bodyType, value: snippet.requestBody }));
+            }
+            this.context.errors.unscope();
+            return args;
+        }
+
         args.push(
             this.getInlinedRequestArg({
                 request,
@@ -879,6 +892,38 @@ export class EndpointSnippetGenerator extends WithGeneration {
             });
         }
         return args;
+    }
+
+    private shouldElideInlinedRequest({
+        request
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+    }): "skip" | "unwrap-body" | false {
+        if (this.settings.shouldInlinePathParameters) {
+            return false;
+        }
+        if (!this.settings.shouldElidePathParameterWrappers) {
+            return false;
+        }
+        if (!(request.metadata?.includePathParameters ?? false)) {
+            return false;
+        }
+        if (request.metadata?.onlyPathParameters) {
+            if (request.headers != null && request.headers.length > 0) {
+                return false;
+            }
+            return "skip";
+        }
+        if (
+            (request.queryParameters == null || request.queryParameters.length === 0) &&
+            (request.headers == null || request.headers.length === 0) &&
+            request.body != null &&
+            request.body.type === "referenced" &&
+            request.body.bodyType.type === "typeReference"
+        ) {
+            return "unwrap-body";
+        }
+        return false;
     }
 
     private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {

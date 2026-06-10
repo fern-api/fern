@@ -12,8 +12,7 @@ public partial class Examples
         await client.User.GetUserMetadataAsync(
             "tenant_id",
             "user_id",
-            1,
-            new GetUserMetadataRequest()
+            1
         );
     }
 

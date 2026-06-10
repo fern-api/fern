@@ -221,6 +221,8 @@ export class Generation {
         generateErrorTypes: () => this.customConfig["generate-error-types"] ?? true,
         /** When true, inlines path parameters in method signatures instead of using a request object. Default: true. */
         shouldInlinePathParameters: () => this.customConfig["inline-path-parameters"] ?? true,
+        /** When true and inline-path-parameters is false, elides wrapper request classes that only contain path parameters. Default: false. */
+        shouldElidePathParameterWrappers: () => this.customConfig["elide-path-parameter-wrappers"] ?? false,
         /** When true, includes exception handler infrastructure for custom error handling. Default: false. */
         includeExceptionHandler: () => this.customConfig["include-exception-handler"] ?? false,
         /** Custom name for the exception interceptor class. Default: {PackageName}ExceptionInterceptor. */
