@@ -392,8 +392,8 @@ async function parseApiConfigurationV2Schema({
     apiSettings: generatorsYml.APIDefinitionSettings;
 }): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
-        "auth-schemes": rawConfiguration["auth-schemes"],
-        ...apiConfiguration
+        ...apiConfiguration,
+        "auth-schemes": apiConfiguration["auth-schemes"] ?? rawConfiguration["auth-schemes"]
     };
 
     if (generatorsYml.isConjureSchema(apiConfiguration.specs)) {

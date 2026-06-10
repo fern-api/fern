@@ -317,12 +317,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const documents = await this.loader.loadDocuments({ context, specs });
 
         let authOverrides: RawSchemas.WithAuthSchema | undefined =
-            this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
+            this.generatorsConfiguration?.api?.auth != null ||
+            this.generatorsConfiguration?.api?.["auth-schemes"] != null
+                ? { ...this.generatorsConfiguration?.api }
+                : undefined;
 
         // Fallback: read auth/auth-schemes from the spec's overrides file if not in generators.yml
         if (authOverrides == null) {
             authOverrides = await getAuthFromOverrideFiles(specs);
         }
+
         const environmentOverrides =
             this.generatorsConfiguration?.api?.environments != null
                 ? { ...this.generatorsConfiguration?.api }
@@ -567,19 +571,21 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
         }
 
-        // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files
+        // If auth is not in generators.yml and not in settings, try to read it from the spec's overrides files.
+        // When only auth-schemes is in generators.yml (no auth key), still check override files for auth.
         let effectiveSettings = settings;
         if (this.generatorsConfiguration?.api?.auth == null && settings?.auth == null) {
             const specs = await this.getOpenAPISpecsCached({ context });
             const authFromOverrides = await getAuthFromOverrideFiles(specs);
             if (authFromOverrides != null) {
+                const hasAuthSchemesInGenerators = this.generatorsConfiguration?.api?.["auth-schemes"] != null;
                 effectiveSettings = {
                     ...settings,
                     auth: authFromOverrides.auth as RawSchemas.ApiAuthSchema,
-                    authSchemes: authFromOverrides["auth-schemes"] as Record<
-                        string,
-                        RawSchemas.AuthSchemeDeclarationSchema
-                    >
+                    // Only use override file's auth-schemes if generators.yml doesn't already define them
+                    authSchemes: hasAuthSchemesInGenerators
+                        ? undefined
+                        : (authFromOverrides["auth-schemes"] as Record<string, RawSchemas.AuthSchemeDeclarationSchema>)
                 };
             }
         }
@@ -847,7 +853,7 @@ async function getAuthFromOverrideFiles(specs: Spec[]): Promise<RawSchemas.WithA
             try {
                 const contents = (await readFile(overridePath)).toString();
                 const parsed = yaml.load(contents) as Record<string, unknown> | null | undefined;
-                if (parsed != null && parsed["auth"] != null) {
+                if (parsed != null && (parsed["auth"] != null || parsed["auth-schemes"] != null)) {
                     return {
                         auth: parsed["auth"] as RawSchemas.WithAuthSchema["auth"],
                         ...(parsed["auth-schemes"] != null
