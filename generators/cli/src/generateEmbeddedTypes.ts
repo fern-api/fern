@@ -241,6 +241,63 @@ async function restructureTypesModule(srcDir: string): Promise<void> {
             }
         }
     }
+
+    // Reconcile mod.rs: ensure every .rs file in types/ has a
+    // corresponding `pub mod` + `pub use` declaration. The upstream
+    // rust-model generator may emit type files (e.g. request wrapper
+    // types for endpoints with both body and query params) without
+    // registering them in mod.rs.
+    await reconcileTypesMod(typesDir);
+}
+
+/**
+ * Scan the `types/` directory for `.rs` files that are not declared in
+ * `mod.rs` and append the missing `pub mod` + `pub use` declarations.
+ *
+ * This handles the case where the upstream rust-model generator creates
+ * type files (e.g. `create_request.rs`, `update_request.rs`) but does
+ * not add them to its emitted `mod.rs`.
+ */
+async function reconcileTypesMod(typesDir: string): Promise<void> {
+    const modRsPath = path.join(typesDir, "mod.rs");
+    let modContent: string;
+    try {
+        modContent = await readFile(modRsPath, "utf-8");
+    } catch (_e: unknown) {
+        // No mod.rs — nothing to reconcile.
+        return;
+    }
+
+    const entries = await readdir(typesDir, { withFileTypes: true });
+    const missingMods: string[] = [];
+
+    for (const entry of entries) {
+        if (!entry.isFile() || !entry.name.endsWith(".rs") || entry.name === "mod.rs") {
+            continue;
+        }
+        const modName = entry.name.replace(/\.rs$/, "");
+        // Check if this module is already declared (pub mod or mod).
+        const modDeclPattern = new RegExp(`^\\s*(?:pub\\s+)?mod\\s+${escapeRegExp(modName)}\\s*;`, "m");
+        if (!modDeclPattern.test(modContent)) {
+            missingMods.push(modName);
+        }
+    }
+
+    if (missingMods.length === 0) {
+        return;
+    }
+
+    // Sort for deterministic output.
+    missingMods.sort();
+
+    const newDeclarations = missingMods.map((m) => `pub mod ${m};\npub use ${m}::*;`).join("\n");
+    const appendBlock = `\n\n// --- reconciled by cli-generator (missing from upstream mod.rs) ---\n${newDeclarations}\n`;
+    await writeFile(modRsPath, modContent.trimEnd() + appendBlock);
+}
+
+/** Escape special regex characters in a string. */
+function escapeRegExp(s: string): string {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 /** The four core serde helper modules that the model generator references. */
