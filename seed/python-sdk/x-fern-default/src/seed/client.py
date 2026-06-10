@@ -8,6 +8,7 @@ from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.test_get_response import TestGetResponse
+from .types.test_get_via_overrides_response import TestGetViaOverridesResponse
 
 
 class SeedApi:
@@ -125,6 +126,43 @@ class SeedApi:
         )
         """
         _response = self._raw_client.test_get(region=region, limit=limit, request_options=request_options)
+        return _response.data
+
+    def test_get_via_overrides(
+        self,
+        *,
+        region: str = "us-east-1",
+        limit: typing.Optional[str] = "100",
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TestGetViaOverridesResponse:
+        """
+        Parameters
+        ----------
+        region : str
+
+        limit : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TestGetViaOverridesResponse
+            Success
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            "2024-02-08",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.test_get_via_overrides(
+            region="region",
+        )
+        """
+        _response = self._raw_client.test_get_via_overrides(region=region, limit=limit, request_options=request_options)
         return _response.data
 
 
@@ -267,4 +305,51 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         _response = await self._raw_client.test_get(region=region, limit=limit, request_options=request_options)
+        return _response.data
+
+    async def test_get_via_overrides(
+        self,
+        *,
+        region: str = "us-east-1",
+        limit: typing.Optional[str] = "100",
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TestGetViaOverridesResponse:
+        """
+        Parameters
+        ----------
+        region : str
+
+        limit : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TestGetViaOverridesResponse
+            Success
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            "2024-02-08",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.test_get_via_overrides(
+                region="region",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.test_get_via_overrides(
+            region=region, limit=limit, request_options=request_options
+        )
         return _response.data

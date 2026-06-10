@@ -11,7 +11,9 @@ import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.TestGetRequest;
+import com.seed.api.requests.TestGetViaOverridesRequest;
 import com.seed.api.types.TestGetResponse;
+import com.seed.api.types.TestGetViaOverridesResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -76,6 +78,73 @@ public class AsyncRawSeedApiClient {
                     if (response.isSuccessful()) {
                         future.complete(new SeedApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TestGetResponse.class),
+                                response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedApiApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<TestGetViaOverridesResponse>> testGetViaOverrides(String region) {
+        return testGetViaOverrides(region, TestGetViaOverridesRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<TestGetViaOverridesResponse>> testGetViaOverrides(
+            String region, RequestOptions requestOptions) {
+        return testGetViaOverrides(region, TestGetViaOverridesRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<TestGetViaOverridesResponse>> testGetViaOverrides(
+            String region, TestGetViaOverridesRequest request) {
+        return testGetViaOverrides(region, request, null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<TestGetViaOverridesResponse>> testGetViaOverrides(
+            String region, TestGetViaOverridesRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("test")
+                .addPathSegment(region)
+                .addPathSegments("resource-via-overrides");
+        QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse("100"), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedApiHttpResponse<TestGetViaOverridesResponse>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new SeedApiHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(
+                                        responseBodyString, TestGetViaOverridesResponse.class),
                                 response));
                         return;
                     }

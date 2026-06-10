@@ -6,7 +6,9 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.TestGetRequest;
+import com.seed.api.requests.TestGetViaOverridesRequest;
 import com.seed.api.types.TestGetResponse;
+import com.seed.api.types.TestGetViaOverridesResponse;
 
 public class SeedApiClient {
     protected final ClientOptions clientOptions;
@@ -39,6 +41,25 @@ public class SeedApiClient {
 
     public TestGetResponse testGet(String region, TestGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.testGet(region, request, requestOptions).body();
+    }
+
+    public TestGetViaOverridesResponse testGetViaOverrides(String region) {
+        return this.rawClient.testGetViaOverrides(region).body();
+    }
+
+    public TestGetViaOverridesResponse testGetViaOverrides(String region, RequestOptions requestOptions) {
+        return this.rawClient.testGetViaOverrides(region, requestOptions).body();
+    }
+
+    public TestGetViaOverridesResponse testGetViaOverrides(String region, TestGetViaOverridesRequest request) {
+        return this.rawClient.testGetViaOverrides(region, request).body();
+    }
+
+    public TestGetViaOverridesResponse testGetViaOverrides(
+            String region, TestGetViaOverridesRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .testGetViaOverrides(region, request, requestOptions)
+                .body();
     }
 
     public static SeedApiClientBuilder builder() {

@@ -377,6 +377,166 @@ describe("loadOpenAPI", () => {
         expect(listPetsOp?.description).toBe("Lists every pet in the store.");
     });
 
+    it("preserves x-fern-default on inline parameters added via override", async () => {
+        const specPath = join(tempDir, "openapi.yml");
+        await writeFile(
+            specPath,
+            yaml.dump({
+                openapi: "3.0.3",
+                info: { title: "Test", version: "1.0.0" },
+                paths: {
+                    "/test/{region}/resource": {
+                        get: {
+                            operationId: "test_get",
+                            parameters: [
+                                { name: "region", in: "path", required: true, schema: { type: "string" } },
+                                { name: "limit", in: "query", required: false, schema: { type: "string" } }
+                            ],
+                            responses: { "200": { description: "Success" } }
+                        }
+                    }
+                }
+            })
+        );
+
+        const overridePath = join(tempDir, "overrides.yml");
+        await writeFile(
+            overridePath,
+            yaml.dump({
+                paths: {
+                    "/test/{region}/resource": {
+                        get: {
+                            parameters: [
+                                { name: "region", "x-fern-default": "us-east-1" },
+                                { name: "limit", "x-fern-default": "100" }
+                            ]
+                        }
+                    }
+                }
+            })
+        );
+
+        const result = await loadOpenAPI({
+            context,
+            absolutePathToOpenAPI: AbsoluteFilePath.of(specPath),
+            absolutePathToOpenAPIOverrides: AbsoluteFilePath.of(overridePath),
+            absolutePathToOpenAPIOverlays: undefined
+        });
+
+        const params = (result.paths as Record<string, Record<string, Record<string, unknown[]>>>)[
+            "/test/{region}/resource"
+        ]?.get?.parameters as Array<Record<string, unknown>> | undefined;
+        expect(params).toBeDefined();
+        expect(params?.[0]?.["x-fern-default"]).toBe("us-east-1");
+        expect(params?.[1]?.["x-fern-default"]).toBe("100");
+    });
+
+    it("preserves x-fern-default on $ref parameters added via override", async () => {
+        const specPath = join(tempDir, "openapi.yml");
+        await writeFile(
+            specPath,
+            yaml.dump({
+                openapi: "3.0.3",
+                info: { title: "Test", version: "1.0.0" },
+                paths: {
+                    "/test": {
+                        get: {
+                            operationId: "test_get",
+                            parameters: [{ $ref: "#/components/parameters/Region" }],
+                            responses: { "200": { description: "Success" } }
+                        }
+                    }
+                },
+                components: {
+                    parameters: {
+                        Region: { name: "region", in: "query", required: false, schema: { type: "string" } }
+                    }
+                }
+            })
+        );
+
+        const overridePath = join(tempDir, "overrides.yml");
+        await writeFile(
+            overridePath,
+            yaml.dump({
+                paths: {
+                    "/test": {
+                        get: {
+                            parameters: [{ "x-fern-default": "us-east-1" }]
+                        }
+                    }
+                }
+            })
+        );
+
+        const result = await loadOpenAPI({
+            context,
+            absolutePathToOpenAPI: AbsoluteFilePath.of(specPath),
+            absolutePathToOpenAPIOverrides: AbsoluteFilePath.of(overridePath),
+            absolutePathToOpenAPIOverlays: undefined
+        });
+
+        const params = (result.paths as Record<string, Record<string, Record<string, unknown[]>>>)["/test"]?.get
+            ?.parameters as Array<Record<string, unknown>> | undefined;
+        expect(params).toBeDefined();
+        // After merge + bundle, the parameter should have x-fern-default
+        // either on the $ref object itself or on the resolved component
+        const param = params?.[0];
+        const hasDefault =
+            param?.["x-fern-default"] === "us-east-1" || (result as Record<string, unknown>).components != null;
+        expect(param?.["x-fern-default"]).toBe("us-east-1");
+    });
+
+    it("preserves x-fern-default on component parameters added via override", async () => {
+        const specPath = join(tempDir, "openapi.yml");
+        await writeFile(
+            specPath,
+            yaml.dump({
+                openapi: "3.0.3",
+                info: { title: "Test", version: "1.0.0" },
+                paths: {
+                    "/test": {
+                        get: {
+                            operationId: "test_get",
+                            parameters: [{ $ref: "#/components/parameters/Region" }],
+                            responses: { "200": { description: "Success" } }
+                        }
+                    }
+                },
+                components: {
+                    parameters: {
+                        Region: { name: "region", in: "query", required: false, schema: { type: "string" } }
+                    }
+                }
+            })
+        );
+
+        const overridePath = join(tempDir, "overrides.yml");
+        await writeFile(
+            overridePath,
+            yaml.dump({
+                components: {
+                    parameters: {
+                        Region: { "x-fern-default": "us-east-1" }
+                    }
+                }
+            })
+        );
+
+        const result = await loadOpenAPI({
+            context,
+            absolutePathToOpenAPI: AbsoluteFilePath.of(specPath),
+            absolutePathToOpenAPIOverrides: AbsoluteFilePath.of(overridePath),
+            absolutePathToOpenAPIOverlays: undefined
+        });
+
+        const components = (
+            result as unknown as Record<string, Record<string, Record<string, Record<string, unknown>>>>
+        ).components;
+        const regionParam = components?.parameters?.Region;
+        expect(regionParam?.["x-fern-default"]).toBe("us-east-1");
+    });
+
     it("inlines description $refs introduced by an override, relative to the override's directory", async () => {
         const specPath = join(tempDir, "openapi.yml");
         await writeFile(specPath, yaml.dump(BASE_SPEC));

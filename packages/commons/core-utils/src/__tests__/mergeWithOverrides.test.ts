@@ -100,6 +100,95 @@ describe("mergeWithOverrides", () => {
         });
     });
 
+    it("should merge named arrays by name identity instead of by index", () => {
+        const data = {
+            paths: {
+                "/test": {
+                    get: {
+                        parameters: [
+                            { name: "region", in: "path", required: true, schema: { type: "string" } },
+                            { name: "version", in: "header", schema: { type: "string" } },
+                            { name: "limit", in: "query", schema: { type: "integer" } }
+                        ]
+                    }
+                }
+            }
+        };
+
+        const overrides = {
+            paths: {
+                "/test": {
+                    get: {
+                        parameters: [
+                            { name: "limit", "x-fern-default": "100" },
+                            { name: "region", "x-fern-default": "us-east-1" }
+                        ]
+                    }
+                }
+            }
+        };
+
+        const result = mergeWithOverrides({ data, overrides });
+
+        const params = (result as typeof data).paths["/test"].get.parameters;
+        expect(params).toHaveLength(3);
+        expect(params[0]).toEqual({
+            name: "region",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+            "x-fern-default": "us-east-1"
+        });
+        expect(params[1]).toEqual({
+            name: "version",
+            in: "header",
+            schema: { type: "string" }
+        });
+        expect(params[2]).toEqual({
+            name: "limit",
+            in: "query",
+            schema: { type: "integer" },
+            "x-fern-default": "100"
+        });
+    });
+
+    it("should append override items when no name match exists in base array", () => {
+        const data = {
+            parameters: [{ name: "region", in: "path", schema: { type: "string" } }]
+        };
+
+        const overrides = {
+            parameters: [{ name: "newParam", in: "query", "x-fern-default": "test" }]
+        };
+
+        const result = mergeWithOverrides({ data, overrides });
+
+        const params = (result as typeof data).parameters;
+        expect(params).toHaveLength(2);
+        expect(params[0]).toEqual({ name: "region", in: "path", schema: { type: "string" } });
+        expect(params[1]).toEqual({ name: "newParam", in: "query", "x-fern-default": "test" });
+    });
+
+    it("should fall back to index-based merging for arrays without name properties", () => {
+        const data = {
+            items: [
+                { id: 1, value: "a" },
+                { id: 2, value: "b" }
+            ]
+        };
+
+        const overrides = {
+            items: [{ id: 1, extra: true }]
+        };
+
+        const result = mergeWithOverrides({ data, overrides });
+
+        expect((result as typeof data).items).toEqual([
+            { id: 1, value: "a", extra: true },
+            { id: 2, value: "b" }
+        ]);
+    });
+
     it("should handle nested object merging", () => {
         const data = {
             config: {

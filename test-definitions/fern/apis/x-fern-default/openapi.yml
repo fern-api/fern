@@ -40,3 +40,32 @@ paths:
                 properties:
                   message:
                     type: string
+  /test/{region}/resource-via-overrides:
+    get:
+      operationId: test_get_via_overrides
+      parameters:
+        - name: region
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: X-API-Version
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string

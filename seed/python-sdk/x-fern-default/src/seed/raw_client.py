@@ -11,6 +11,7 @@ from .core.parse_error import ParsingError
 from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
 from .types.test_get_response import TestGetResponse
+from .types.test_get_via_overrides_response import TestGetViaOverridesResponse
 from pydantic import ValidationError
 
 
@@ -67,6 +68,55 @@ class RawSeedApi:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def test_get_via_overrides(
+        self,
+        *,
+        region: str = "us-east-1",
+        limit: typing.Optional[str] = "100",
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[TestGetViaOverridesResponse]:
+        """
+        Parameters
+        ----------
+        region : str
+
+        limit : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[TestGetViaOverridesResponse]
+            Success
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"test/{encode_path_param(region)}/resource-via-overrides",
+            method="GET",
+            params={
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TestGetViaOverridesResponse,
+                    parse_obj_as(
+                        type_=TestGetViaOverridesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawSeedApi:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -108,6 +158,55 @@ class AsyncRawSeedApi:
                     TestGetResponse,
                     parse_obj_as(
                         type_=TestGetResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def test_get_via_overrides(
+        self,
+        *,
+        region: str = "us-east-1",
+        limit: typing.Optional[str] = "100",
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[TestGetViaOverridesResponse]:
+        """
+        Parameters
+        ----------
+        region : str
+
+        limit : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[TestGetViaOverridesResponse]
+            Success
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"test/{encode_path_param(region)}/resource-via-overrides",
+            method="GET",
+            params={
+                "limit": limit,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    TestGetViaOverridesResponse,
+                    parse_obj_as(
+                        type_=TestGetViaOverridesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
