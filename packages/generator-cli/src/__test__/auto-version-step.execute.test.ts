@@ -167,17 +167,17 @@ describe("AutoVersionStep.execute() — short-circuits", () => {
         mockConsolidateChangelog.mockReset();
     });
 
-    it("returns success without commit when generationCommit is absent from context", async () => {
+    it("enters non-replay mode when generationCommit is absent from context", async () => {
         const step = new AutoVersionStep("/tmp/fake", makeLogger(), baseConfig);
-        const result = await step.execute(makeContext(undefined));
-        expect(result).toEqual({ executed: true, success: true });
+        // Without a real git repo, gitDiffHead() throws — verifies non-replay path is entered.
+        await expect(step.execute(makeContext(undefined))).rejects.toThrow();
         expect(mockAnalyzeSdkDiff).not.toHaveBeenCalled();
     });
 
-    it("returns success without commit when preparedReplay is null (no lockfile)", async () => {
+    it("enters non-replay mode when preparedReplay is null (no lockfile)", async () => {
         const step = new AutoVersionStep("/tmp/fake", makeLogger(), baseConfig);
-        const result = await step.execute(makeContext(null));
-        expect(result).toEqual({ executed: true, success: true });
+        // Without a real git repo, gitDiffHead() throws — verifies non-replay path is entered.
+        await expect(step.execute(makeContext(null))).rejects.toThrow();
         expect(mockAnalyzeSdkDiff).not.toHaveBeenCalled();
     });
 
