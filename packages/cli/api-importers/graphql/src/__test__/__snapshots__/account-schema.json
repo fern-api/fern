@@ -732,56 +732,6 @@
       },
       "description": "Account details."
     },
-    "AccountMutations": {
-      "name": "AccountMutations",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "addUserToAccount",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "AddUserToAccountResult"
-              }
-            },
-            "description": "Adds a user to an account.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "AddUserToAccountInput"
-                }
-              }
-            ]
-          },
-          {
-            "key": "removeUserFromAccount",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "RemoveUserFromAccountResult"
-              }
-            },
-            "description": "Removes a user from an account and all associated entities.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "RemoveUserFromAccountInput"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Account mutations."
-    },
     "AddUserToAccountInput": {
       "name": "AddUserToAccountInput",
       "shape": {
@@ -1008,56 +958,6 @@
         ]
       },
       "description": "An application."
-    },
-    "AppMutations": {
-      "name": "AppMutations",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "createEventSource",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "CreateEventSourceResult"
-              }
-            },
-            "description": "Creates an Amazon EventSource.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "CreateEventSourceInput"
-                }
-              }
-            ]
-          },
-          {
-            "key": "deleteEventSource",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "DeleteEventSourceResult"
-              }
-            },
-            "description": "Deletes an Amazon EventSource.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "DeleteEventSourceInput"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "description": "App mutations."
     },
     "AppsConnection": {
       "name": "AppsConnection",
@@ -2039,36 +1939,6 @@
         ]
       },
       "description": "The current status of the Checkout Item."
-    },
-    "CheckoutMutations": {
-      "name": "CheckoutMutations",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "createCheckout",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "CreateCheckoutResult"
-              }
-            },
-            "description": "Creates a Checkout for a Merchant.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "CreateCheckoutInput"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Checkout mutations."
     },
     "CheckoutStatus": {
       "name": "CheckoutStatus",
@@ -4354,36 +4224,6 @@
         ]
       }
     },
-    "SubscriptionMutations": {
-      "name": "SubscriptionMutations",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "cancelSubscription",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "CancelSubscriptionResult"
-              }
-            },
-            "description": "Cancels a Subscription for a Merchant.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "CancelSubscriptionInput"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Subscription mutations."
-    },
     "SubscriptionProduct": {
       "name": "SubscriptionProduct",
       "shape": {
@@ -5186,56 +5026,6 @@
       },
       "description": "An edge in a connection."
     },
-    "UserGroupMutations": {
-      "name": "UserGroupMutations",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "addUsersToUserGroups",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "AddUsersToUserGroupsResult"
-              }
-            },
-            "description": "Adds users to user groups.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "AddUsersToUserGroupsInput"
-                }
-              }
-            ]
-          },
-          {
-            "key": "removeUsersFromUserGroup",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "RemoveUsersFromUserGroupResult"
-              }
-            },
-            "description": "Removes users from a user group.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "RemoveUsersFromUserGroupInput"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "description": "User Group mutations."
-    },
     "UserIdentifierInput": {
       "name": "UserIdentifierInput",
       "shape": {
@@ -5271,96 +5061,6 @@
         ]
       },
       "description": "The user to add to the store."
-    },
-    "UserMutations": {
-      "name": "UserMutations",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "createUserWithPassword",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "CreateUserWithPasswordResult"
-              }
-            },
-            "description": "Creates a user with password.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "CreateUserWithPasswordInput"
-                }
-              }
-            ]
-          },
-          {
-            "key": "createUser",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "CreateUserResult"
-              }
-            },
-            "description": "Creates a user.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "CreateUserInput"
-                }
-              }
-            ]
-          },
-          {
-            "key": "addUserToStore",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "AddUserToStoreResult"
-              }
-            },
-            "description": "Adds a user to a store.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "AddUserToStoreInput"
-                }
-              }
-            ]
-          },
-          {
-            "key": "removeUserFromStore",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "RemoveUserFromStoreResult"
-              }
-            },
-            "description": "Removes user from a store.",
-            "arguments": [
-              {
-                "name": "input",
-                "type": {
-                  "type": "id",
-                  "value": "RemoveUserFromStoreInput"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "description": "User mutations."
     }
   }
 }

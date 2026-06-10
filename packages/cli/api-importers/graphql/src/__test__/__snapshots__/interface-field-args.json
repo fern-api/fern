@@ -1,0 +1,155 @@
+{
+  "graphqlOperations": {
+    "query_imageSource": {
+      "id": "query_imageSource",
+      "operationType": "QUERY",
+      "name": "imageSource",
+      "description": "Get an image source by ID.",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "ImageSource"
+        }
+      }
+    }
+  },
+  "types": {
+    "ImageFormat": {
+      "name": "ImageFormat",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "WEBP"
+          },
+          {
+            "value": "JPEG"
+          },
+          {
+            "value": "PNG"
+          }
+        ]
+      },
+      "description": "Supported image formats."
+    },
+    "ImageSource": {
+      "name": "ImageSource",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "url",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "URL of the image, optionally resized.",
+            "arguments": [
+              {
+                "name": "width",
+                "description": "Width in pixels.",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "height",
+                "description": "Height in pixels.",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "lossy",
+                "description": "Use lossy compression.",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "key": "altText",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Alt text for the image. No arguments."
+          },
+          {
+            "key": "thumbnail",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Thumbnail URL with format options.",
+            "arguments": [
+              {
+                "name": "format",
+                "description": "Image format.",
+                "type": {
+                  "type": "id",
+                  "value": "ImageFormat"
+                }
+              },
+              {
+                "name": "quality",
+                "description": "Quality percentage (1-100).",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "An image source interface with no implementing types.\nSome fields have arguments to exercise argument capture on orphaned interfaces."
+    }
+  }
+}
