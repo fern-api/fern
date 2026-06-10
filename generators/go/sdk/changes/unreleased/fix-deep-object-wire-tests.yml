@@ -1,0 +1,7 @@
+- summary: |
+    Fix wire test generation for deep object query parameters. Previously, object-typed
+    query parameter values (e.g., `style: deepObject, explode: true`) were serialized as
+    `[object Object]` in the VerifyRequestCount assertion, causing test failures. Now they
+    are correctly flattened into `paramName[subKey]` entries matching the Go SDK's query
+    serialization format.
+  type: fix

@@ -868,11 +868,17 @@ export class WireTestGenerator {
         const queryParamEntries: string[] = [];
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
-                const key = JSON.stringify(paramName);
                 if (Array.isArray(paramValue) && paramValue.length > 1) {
+                    const key = JSON.stringify(paramName);
                     const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
                     queryParamEntries.push(`${key}: []string{${items.join(", ")}}`);
+                } else if (typeof paramValue === "object" && !Array.isArray(paramValue)) {
+                    // Deep object query parameter (style: deepObject, explode: true).
+                    // The Go SDK serializes these as paramName[subKey]=value, so we
+                    // flatten them into individual entries for WireMock verification.
+                    this.flattenDeepObjectParam(paramName, paramValue as Record<string, unknown>, queryParamEntries);
                 } else {
+                    const key = JSON.stringify(paramName);
                     let stringValue = String(paramValue);
                     // Normalize datetime values to always include milliseconds, matching the
                     // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
@@ -893,6 +899,34 @@ export class WireTestGenerator {
         }
 
         return `map[string]interface{}{${queryParamEntries.join(", ")}}`;
+    }
+
+    /**
+     * Flattens a deep object query parameter into individual `key[subKey]` entries,
+     * matching the Go SDK's query serialization for nested structs/maps.
+     * Recursively handles nested objects (e.g., `key[a][b]=value`).
+     */
+    private flattenDeepObjectParam(prefix: string, obj: Record<string, unknown>, entries: string[]): void {
+        for (const [subKey, subValue] of Object.entries(obj)) {
+            if (subValue == null) {
+                continue;
+            }
+            const flatKey = `${prefix}[${subKey}]`;
+            if (typeof subValue === "object" && !Array.isArray(subValue)) {
+                this.flattenDeepObjectParam(flatKey, subValue as Record<string, unknown>, entries);
+            } else {
+                let stringValue = String(subValue);
+                // Normalize datetime-looking values to include milliseconds,
+                // matching the Go SDK's RFC3339Milli format.
+                const date = new Date(stringValue);
+                if (!isNaN(date.getTime()) && /^\d{4}-\d{2}-\d{2}T/.test(stringValue)) {
+                    stringValue = date.toISOString();
+                }
+                const key = JSON.stringify(flatKey);
+                const value = JSON.stringify(stringValue);
+                entries.push(`${key}: ${value}`);
+            }
+        }
     }
 
     private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
