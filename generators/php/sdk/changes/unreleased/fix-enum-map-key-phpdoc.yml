@@ -1,0 +1,4 @@
+- summary: |
+    Fix PHPDoc type for enum-keyed maps to use `value-of<Enum>` syntax instead of
+    the raw enum class reference, which PHPStan cannot resolve as an array key type.
+  type: fix
