@@ -1,3 +1,4 @@
+use crate::api::ObjectWithOptionalField;
 use thiserror::Error;
 
 #[derive(Error, Debug)]

@@ -1,0 +1,6 @@
+- summary: |
+    Fix error.rs emission for object-typed and non-string error body fields:
+    add missing `use crate::api::{...}` imports for named types referenced in
+    error variants, and use `serde_json::from_value` instead of `as_str()` for
+    non-string fields so that structured error details deserialize correctly.
+  type: fix

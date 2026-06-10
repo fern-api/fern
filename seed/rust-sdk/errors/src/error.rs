@@ -49,7 +49,7 @@ impl ApiError {
                                 .to_string(),
                             code: parsed
                                 .get("code")
-                                .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                .and_then(|v| serde_json::from_value(v.clone()).ok()),
                         };
                     }
                 }
@@ -70,7 +70,7 @@ impl ApiError {
                                 .to_string(),
                             code: parsed
                                 .get("code")
-                                .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                .and_then(|v| serde_json::from_value(v.clone()).ok()),
                         };
                     }
                 }
@@ -93,19 +93,19 @@ impl ApiError {
                                 message: message,
                                 code: parsed
                                     .get("code")
-                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    .and_then(|v| serde_json::from_value(v.clone()).ok()),
                             },
                             Some("FooTooLittle") => Self::FooTooLittle {
                                 message: message,
                                 code: parsed
                                     .get("code")
-                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    .and_then(|v| serde_json::from_value(v.clone()).ok()),
                             },
                             _ => Self::InternalServerError {
                                 message: message,
                                 code: parsed
                                     .get("code")
-                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    .and_then(|v| serde_json::from_value(v.clone()).ok()),
                             },
                         };
                     }
@@ -131,7 +131,7 @@ impl ApiError {
                                 .to_string(),
                             code: parsed
                                 .get("code")
-                                .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                .and_then(|v| serde_json::from_value(v.clone()).ok()),
                         };
                     }
                 }

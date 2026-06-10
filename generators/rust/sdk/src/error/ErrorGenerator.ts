@@ -26,18 +26,65 @@ export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     public generateErrorRs(): string {
-        const errorModule = new Module({
-            useStatements: [
+        const useStatements: UseStatement[] = [
+            new UseStatement({
+                path: "thiserror",
+                items: ["Error"]
+            })
+        ];
+
+        // Collect named types referenced by error fields so we can import them.
+        const namedTypeImports = this.collectNamedTypeImports();
+        if (namedTypeImports.length > 0) {
+            useStatements.push(
                 new UseStatement({
-                    path: "thiserror",
-                    items: ["Error"]
+                    path: "crate::api",
+                    items: namedTypeImports
                 })
-            ],
+            );
+        }
+
+        const errorModule = new Module({
+            useStatements,
             enums: [this.buildErrorEnum()],
             implBlocks: [this.buildErrorImpl()]
         });
 
         return errorModule.toString() + "\n" + BUILD_ERROR_RS;
+    }
+
+    /**
+     * Collect all named (non-primitive) type names referenced by error variant
+     * fields so they can be imported with `use crate::api::{...};`.
+     */
+    private collectNamedTypeImports(): string[] {
+        const names = new Set<string>();
+        for (const errorDecl of Object.values(this.context.ir.errors)) {
+            if (errorDecl.type?.type === "named") {
+                const typeDecl = this.context.ir.types[errorDecl.type.typeId];
+                if (typeDecl?.shape.type === "object") {
+                    for (const prop of typeDecl.shape.properties) {
+                        this.collectNamedTypesFromRef(prop.valueType, names);
+                    }
+                }
+            }
+        }
+        return Array.from(names).sort();
+    }
+
+    private collectNamedTypesFromRef(typeRef: FernIr.TypeReference, out: Set<string>): void {
+        if (typeRef.type === "named") {
+            out.add(this.context.getUniqueTypeNameForReference(typeRef));
+        } else if (typeRef.type === "container") {
+            const c = typeRef.container;
+            if (c.type === "optional") {
+                this.collectNamedTypesFromRef(c.optional, out);
+            } else if (c.type === "nullable") {
+                this.collectNamedTypesFromRef(c.nullable, out);
+            } else if (c.type === "list") {
+                this.collectNamedTypesFromRef(c.list, out);
+            }
+        }
     }
 
     private buildErrorEnum(): Enum {
@@ -148,7 +195,7 @@ export class ErrorGenerator {
         name: string;
         wireName: string;
         type: Type;
-        extractionKind: "string" | "u64";
+        extractionKind: "string" | "u64" | "deserialize";
     }> {
         if (errorDeclaration.type?.type === "named") {
             const typeDecl = this.context.ir.types[errorDeclaration.type.typeId];
@@ -164,7 +211,7 @@ export class ErrorGenerator {
                             name: this.context.case.snakeSafe(p.name),
                             wireName: getWireValue(p.name),
                             type: isAlreadyOptional ? rustType : Type.option(rustType),
-                            extractionKind: this.isU64TypeReference(p.valueType) ? ("u64" as const) : ("string" as const)
+                            extractionKind: this.getExtractionKind(p.valueType)
                         };
                     });
             }
@@ -175,6 +222,38 @@ export class ErrorGenerator {
             type,
             extractionKind: (name === "retry_after_seconds" ? "u64" : "string") as "string" | "u64"
         }));
+    }
+
+    /**
+     * Determine the extraction strategy for a field's type reference:
+     *  - "u64"         → `v.as_u64()`
+     *  - "string"      → `v.as_str().map(|s| s.to_string())`
+     *  - "deserialize" → `serde_json::from_value(v.clone()).ok()`
+     */
+    private getExtractionKind(typeRef: FernIr.TypeReference): "string" | "u64" | "deserialize" {
+        if (this.isU64TypeReference(typeRef)) {
+            return "u64";
+        }
+        if (this.isStringTypeReference(typeRef)) {
+            return "string";
+        }
+        return "deserialize";
+    }
+
+    private isStringTypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "STRING";
+        }
+        if (typeRef.type === "container") {
+            const c = typeRef.container;
+            if (c.type === "optional") {
+                return this.isStringTypeReference(c.optional);
+            }
+            if (c.type === "nullable") {
+                return this.isStringTypeReference(c.nullable);
+            }
+        }
+        return false;
     }
 
     private isU64TypeReference(typeRef: FernIr.TypeReference): boolean {
@@ -329,9 +408,7 @@ export class ErrorGenerator {
         const fields = this.resolveErrorFields(errorDeclaration);
         const fieldAssignments = fields.map(({ name, wireName, extractionKind }) => ({
             name,
-            value: extractionKind === "u64"
-                ? this.buildU64FieldExtraction(wireName)
-                : this.buildStringFieldExtraction(wireName)
+            value: this.buildFieldExtraction(wireName, extractionKind)
         }));
 
         return Expression.structConstruction(`Self::${errorName}`, [
@@ -486,10 +563,19 @@ export class ErrorGenerator {
     private buildDynamicFieldAssignments(errorDeclaration: FernIr.ErrorDeclaration): Expression.FieldAssignment[] {
         return this.resolveErrorFields(errorDeclaration).map(({ name, wireName, extractionKind }) => ({
             name,
-            value: extractionKind === "u64"
-                ? this.buildU64FieldExtraction(wireName)
-                : this.buildStringFieldExtraction(wireName)
+            value: this.buildFieldExtraction(wireName, extractionKind)
         }));
+    }
+
+    private buildFieldExtraction(wireName: string, kind: "string" | "u64" | "deserialize"): Expression {
+        switch (kind) {
+            case "u64":
+                return this.buildU64FieldExtraction(wireName);
+            case "deserialize":
+                return this.buildDeserializeFieldExtraction(wireName);
+            case "string":
+                return this.buildStringFieldExtraction(wireName);
+        }
     }
 
     private buildStringFieldExtraction(fieldName: string): Expression {
@@ -505,6 +591,20 @@ export class ErrorGenerator {
                     Expression.raw("v.as_str()"),
                     Expression.closure([{ name: "s" }], Expression.toString(Expression.variable("s")))
                 )
+            )
+        );
+    }
+
+    private buildDeserializeFieldExtraction(fieldName: string): Expression {
+        return Expression.andThen(
+            Expression.methodCall({
+                target: Expression.variable("parsed"),
+                method: "get",
+                args: [Expression.literal(fieldName)]
+            }),
+            Expression.closure(
+                [{ name: "v" }],
+                Expression.raw("serde_json::from_value(v.clone()).ok()")
             )
         );
     }

@@ -151,6 +151,9 @@ fixtures:
     - customConfig:
         enableWebsockets: true
       outputFolder: .
+  rust-error-objects:
+    - customConfig: null
+      outputFolder: .
   license:
     - customConfig: null
       outputFolder: basic

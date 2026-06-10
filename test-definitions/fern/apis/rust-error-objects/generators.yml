@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  rust-sdk:
+    generators:
+      - name: fernapi/fern-rust-sdk
+        version: latest
+        ir-version: v61

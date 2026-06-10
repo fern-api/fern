@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: rust-error-objects
+  version: "1.0"
+paths:
+  /check:
+    get:
+      operationId: check
+      tags:
+        - Service
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ForbiddenErrorBody"
+        "429":
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateLimitErrorBody"
+components:
+  schemas:
+    ForbiddenErrorBody:
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          $ref: "#/components/schemas/ErrorDetails"
+      required:
+        - message
+    RateLimitErrorBody:
+      type: object
+      properties:
+        message:
+          type: string
+        retry_after_seconds:
+          type: integer
+          format: int64
+        details:
+          type: string
+      required:
+        - message
+    ErrorDetails:
+      type: object
+      properties:
+        request_id:
+          type: string
+        code:
+          type: string
+      required:
+        - request_id
+        - code
+  securitySchemes: {}
