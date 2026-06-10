@@ -2488,7 +2488,7 @@ pub fn load_openapi_spec_from_value(
             // + `customersList` operation → method `list` rather than
             // `customers-list`. Mirrors Fern's OpenAPI importer.
             let method_name = match &operation.x_fern_sdk_method_name {
-                Some(m) => m.clone(),
+                Some(m) => camel_to_kebab(m),
                 None => match &operation.operation_id {
                     Some(id) => {
                         let stripped = if operation.x_fern_sdk_group_name.is_none() {
@@ -3154,6 +3154,88 @@ fn resolve_branch_scalar_type(
     }
 }
 
+/// Maximum depth of `$ref` chain resolution. Prevents infinite loops from
+/// cyclic `$ref` chains (e.g. `A: {$ref: B}`, `B: {$ref: A}`).
+const MAX_REF_CHAIN_DEPTH: u8 = 8;
+
+/// Follow a `$ref` chain through `component_schemas` until reaching a
+/// terminal schema (one without a `$ref`). Returns `None` if the chain
+/// is unresolvable or exceeds `MAX_REF_CHAIN_DEPTH`.
+fn resolve_ref_chain<'a>(
+    schema: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    let mut current = schema;
+    for _ in 0..MAX_REF_CHAIN_DEPTH {
+        match &current.schema_ref {
+            Some(ref_path) => {
+                let name = strip_ref_prefix(ref_path);
+                current = component_schemas.get(&name)?;
+            }
+            None => return Some(current),
+        }
+    }
+    tracing::warn!("$ref chain exceeded {MAX_REF_CHAIN_DEPTH} levels; likely cyclic");
+    None
+}
+
+/// Recognize a `oneOf` / `anyOf` union where one branch is `type: string`
+/// and another is `type: array` with `items.type: string`. This pattern
+/// (e.g. `Addresses: oneOf [string, array<string>]`) should surface as a
+/// repeated string flag so the CLI accepts both single values and JSON
+/// arrays. Returns `true` when the union matches this shape.
+fn is_string_or_string_array_union(
+    obj: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> bool {
+    let branches: &[OpenApiSchemaObject] = if !obj.one_of.is_empty() {
+        &obj.one_of
+    } else if !obj.any_of.is_empty() {
+        &obj.any_of
+    } else {
+        return false;
+    };
+
+    if branches.len() < 2 {
+        return false;
+    }
+
+    let mut has_string = false;
+    let mut has_string_array = false;
+
+    for branch in branches {
+        let resolved = if let Some(ref_path) = &branch.schema_ref {
+            let name = strip_ref_prefix(ref_path);
+            match component_schemas.get(&name) {
+                Some(s) => s,
+                None => continue,
+            }
+        } else {
+            branch
+        };
+
+        if is_null_sentinel(resolved) {
+            continue;
+        }
+
+        match resolved.schema_type() {
+            Some("string") => has_string = true,
+            Some("array") => {
+                let items_are_string = resolved
+                    .items
+                    .as_ref()
+                    .map_or(false, |it| it.schema_type() == Some("string"));
+                if items_are_string {
+                    has_string_array = true;
+                }
+            }
+            _ => {}
+        }
+    }
+
+    has_string && has_string_array
+}
+
 /// Maximum depth of consecutive `allOf` recursion. Cyclic `$ref` chains
 /// (`Foo: {allOf: [{$ref: Foo}, ...]}`) are degenerate but legal; this cap
 /// stops the walk before it explodes. Distinct from `MAX_BODY_DEPTH`,
@@ -3274,9 +3356,12 @@ fn flatten_body_params_prefix(
         };
 
         // $ref property: resolve from component_schemas before checking type.
+        // Follow ref chains (A → B → C) to reach the terminal schema.
         if let Some(ref_path) = &prop.schema_ref {
             let ref_name = strip_ref_prefix(ref_path);
-            if let Some(resolved) = component_schemas.get(&ref_name) {
+            let direct_resolved = component_schemas.get(&ref_name);
+            let resolved = direct_resolved.and_then(|s| resolve_ref_chain(s, component_schemas));
+            if let Some(resolved) = resolved {
                 // Recurse for object-shaped *or* allOf-shaped resolved
                 // schemas — the latter is the inheritance pattern
                 // (`Mixin: {allOf: [Base, extras]}`) Box uses heavily.
@@ -3299,6 +3384,27 @@ fn flatten_body_params_prefix(
                         );
                         continue;
                     }
+                }
+                // Recognize oneOf/anyOf [string, array<string>] unions and
+                // emit as a repeated string flag so the executor JSON-parses
+                // array inputs instead of passing them as literal strings.
+                if is_string_or_string_array_union(resolved, component_schemas) {
+                    let const_default = const_default_value(resolved);
+                    out.insert(
+                        full_key,
+                        MethodParameter {
+                            param_type: Some("string".to_string()),
+                            description: prop.description.clone().or_else(|| resolved.description.clone()),
+                            location: Some("body".to_string()),
+                            required: required.contains(name.as_str()) && const_default.is_none(),
+                            format: resolved.format.clone(),
+                            default_value: const_default,
+                            repeated: true,
+                            nullable: resolved.is_nullable(),
+                            ..Default::default()
+                        },
+                    );
+                    continue;
                 }
                 // Non-object ref or empty recursion — emit with resolved type.
                 // Promote nullable-union compositions to a scalar flag
@@ -3357,6 +3463,26 @@ fn flatten_body_params_prefix(
                 );
                 continue;
             }
+        }
+
+        // Recognize inline oneOf/anyOf [string, array<string>] unions.
+        if is_string_or_string_array_union(prop, component_schemas) {
+            let const_default = const_default_value(prop);
+            out.insert(
+                full_key,
+                MethodParameter {
+                    param_type: Some("string".to_string()),
+                    description: prop.description.clone(),
+                    location: Some("body".to_string()),
+                    required: required.contains(name.as_str()) && const_default.is_none(),
+                    format: prop.format.clone(),
+                    default_value: const_default,
+                    repeated: true,
+                    nullable: prop.is_nullable(),
+                    ..Default::default()
+                },
+            );
+            continue;
         }
 
         // Promote nullable-union compositions (`anyOf: [scalar, null]`
@@ -9226,6 +9352,166 @@ paths:
         )
         .unwrap();
         assert_eq!(recognize_nullable_union(&obj, &HashMap::new()), None);
+    }
+
+    #[test]
+    fn test_resolve_ref_chain_single_hop() {
+        let schema: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/Foo""##).unwrap();
+        let foo: OpenApiSchemaObject = serde_yaml::from_str("type: string\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("Foo".to_string(), foo);
+        let resolved = resolve_ref_chain(&schema, &components).unwrap();
+        assert_eq!(resolved.schema_type(), Some("string"));
+    }
+
+    #[test]
+    fn test_resolve_ref_chain_multi_hop() {
+        // A -> B -> C (terminal: type: array, items.type: string)
+        let a: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/B""##).unwrap();
+        let b: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/C""##).unwrap();
+        let c: OpenApiSchemaObject =
+            serde_yaml::from_str("type: array\nitems:\n  type: string\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("B".to_string(), b);
+        components.insert("C".to_string(), c);
+        let resolved = resolve_ref_chain(&a, &components).unwrap();
+        assert_eq!(resolved.schema_type(), Some("array"));
+    }
+
+    #[test]
+    fn test_resolve_ref_chain_already_terminal() {
+        let schema: OpenApiSchemaObject = serde_yaml::from_str("type: integer\n").unwrap();
+        let components = HashMap::new();
+        let resolved = resolve_ref_chain(&schema, &components).unwrap();
+        assert_eq!(resolved.schema_type(), Some("integer"));
+    }
+
+    #[test]
+    fn test_resolve_ref_chain_broken_ref() {
+        let schema: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/Missing""##).unwrap();
+        assert!(resolve_ref_chain(&schema, &HashMap::new()).is_none());
+    }
+
+    #[test]
+    fn test_is_string_or_string_array_union_one_of() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+            "#,
+        )
+        .unwrap();
+        assert!(is_string_or_string_array_union(&obj, &HashMap::new()));
+    }
+
+    #[test]
+    fn test_is_string_or_string_array_union_any_of() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            anyOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+            "#,
+        )
+        .unwrap();
+        assert!(is_string_or_string_array_union(&obj, &HashMap::new()));
+    }
+
+    #[test]
+    fn test_is_string_or_string_array_union_with_null() {
+        // oneOf [string, array<string>, null] should still match
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        assert!(is_string_or_string_array_union(&obj, &HashMap::new()));
+    }
+
+    #[test]
+    fn test_is_string_or_string_array_union_not_matching() {
+        // oneOf [string, integer] should NOT match
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: integer
+            "#,
+        )
+        .unwrap();
+        assert!(!is_string_or_string_array_union(&obj, &HashMap::new()));
+    }
+
+    #[test]
+    fn test_flatten_promotes_string_or_string_array_union() {
+        // End-to-end: a body property with `oneOf: [string, array<string>]`
+        // becomes a `repeated: true` string MethodParameter.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              to:
+                oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
+            "#,
+        )
+        .unwrap();
+        let params = flatten_body_params(&schema, &HashMap::new(), 0);
+        let to = &params["to"];
+        assert_eq!(to.param_type.as_deref(), Some("string"));
+        assert!(to.repeated, "should be repeated for array union: {to:?}");
+    }
+
+    #[test]
+    fn test_flatten_resolves_ref_chain_to_union() {
+        // Simulates: to -> $ref SendMessageTo -> $ref Addresses ->
+        // oneOf [string, array<string>]
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            type: object
+            properties:
+              to:
+                $ref: "#/components/schemas/SendMessageTo"
+            "##,
+        )
+        .unwrap();
+        let send_msg_to: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/Addresses""##).unwrap();
+        let addresses: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("SendMessageTo".to_string(), send_msg_to);
+        components.insert("Addresses".to_string(), addresses);
+        let params = flatten_body_params(&schema, &components, 0);
+        let to = &params["to"];
+        assert_eq!(to.param_type.as_deref(), Some("string"));
+        assert!(to.repeated, "ref-chain to union should produce repeated: {to:?}");
     }
 
     #[test]

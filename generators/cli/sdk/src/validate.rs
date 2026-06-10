@@ -251,22 +251,20 @@ fn normalize_non_existing(path: &Path) -> Result<PathBuf, CliError> {
     Ok(resolved)
 }
 
-/// Characters to encode in a single URL path segment. Keeps RFC 3986 §2.3
-/// unreserved characters that commonly appear in resource IDs (`-` and `_`)
-/// unencoded; encodes everything else including `.` (dots appear in email-style
-/// calendar IDs and should not carry path semantics).
+/// Characters to encode in a single URL path segment. All RFC 3986 §2.3
+/// unreserved characters (`A-Z a-z 0-9 - . _ ~`) are left unencoded;
+/// everything else is percent-encoded.
 use percent_encoding::{AsciiSet, CONTROLS};
 const PATH_SEGMENT: &AsciiSet = &CONTROLS
     .add(b' ').add(b'!').add(b'"').add(b'#').add(b'$').add(b'%')
     .add(b'&').add(b'\'').add(b'(').add(b')').add(b'*').add(b'+')
-    .add(b',').add(b'.').add(b'/').add(b':').add(b';').add(b'<')
+    .add(b',').add(b'/').add(b':').add(b';').add(b'<')
     .add(b'=').add(b'>').add(b'?').add(b'@').add(b'[').add(b'\\')
-    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}')
-    .add(b'~');
+    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}');
 
 /// Percent-encode a value for use as a single URL path segment (e.g., file ID,
-/// calendar ID, message ID). Hyphens and underscores are left unencoded since
-/// they are unreserved per RFC 3986 and ubiquitous in resource IDs.
+/// calendar ID, message ID). All RFC 3986 §2.3 unreserved characters
+/// (`A-Z a-z 0-9 - . _ ~`) are left unencoded.
 pub fn encode_path_segment(s: &str) -> String {
     use percent_encoding::utf8_percent_encode;
     utf8_percent_encode(s, PATH_SEGMENT).to_string()
@@ -515,10 +513,25 @@ mod tests {
 
     #[test]
     fn test_encode_path_segment_email() {
-        // Calendar IDs are often email addresses
+        // Calendar IDs are often email addresses. `@` is a reserved
+        // character and must be encoded; `.` is unreserved per RFC 3986
+        // §2.3 and must NOT be encoded.
         let encoded = encode_path_segment("user@gmail.com");
-        assert!(!encoded.contains('@'));
-        assert!(!encoded.contains('.'));
+        assert!(!encoded.contains('@'), "@ must be percent-encoded");
+        assert!(encoded.contains('.'), ". is unreserved and must not be encoded");
+        assert_eq!(encoded, "user%40gmail.com");
+    }
+
+    #[test]
+    fn test_encode_path_segment_dot_and_tilde_unreserved() {
+        // `.` and `~` are RFC 3986 §2.3 unreserved characters and must
+        // not be percent-encoded in path segments.
+        assert_eq!(encode_path_segment("file.txt"), "file.txt");
+        assert_eq!(encode_path_segment("user~archive"), "user~archive");
+        assert_eq!(
+            encode_path_segment("codex-test@agentmail.to"),
+            "codex-test%40agentmail.to"
+        );
     }
 
     #[test]
