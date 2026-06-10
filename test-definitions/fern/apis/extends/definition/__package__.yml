@@ -50,3 +50,21 @@ types:
         value:
           docs: Types extend this type to include a docs and json property.
           raw: '{"docs": true, "json": true}'
+
+  ExampleStatus:
+    enum:
+      - active
+      - inactive
+
+  BaseWithEnum:
+    properties:
+      status: ExampleStatus
+
+  ExtendedWithEnum:
+    extends: BaseWithEnum
+    properties:
+      description: string
+
+  WrapperWithExtendedEnum:
+    properties:
+      item: ExtendedWithEnum

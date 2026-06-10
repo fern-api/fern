@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "$ref": "#/definitions/ExampleStatus"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "description"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ExampleStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    }
+  }
+}

@@ -1,11 +1,19 @@
+pub mod base_with_enum;
 pub mod docs;
+pub mod example_status;
 pub mod example_type;
+pub mod extended_with_enum;
 pub mod inlined;
 pub mod json;
 pub mod nested_type;
+pub mod wrapper_with_extended_enum;
 
+pub use base_with_enum::BaseWithEnum;
 pub use docs::Docs;
+pub use example_status::ExampleStatus;
 pub use example_type::ExampleType;
+pub use extended_with_enum::ExtendedWithEnum;
 pub use inlined::Inlined;
 pub use json::Json;
 pub use nested_type::NestedType;
+pub use wrapper_with_extended_enum::WrapperWithExtendedEnum;
