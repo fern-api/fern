@@ -285,9 +285,7 @@ export class AutoVersionStep extends BaseStep {
         }
 
         if (rawDiff.trim().length === 0) {
-            this.logger.info(
-                `AutoVersionStep: empty diff (non-replay); rewriting placeholder to ${previousVersion}.`
-            );
+            this.logger.info(`AutoVersionStep: empty diff (non-replay); rewriting placeholder to ${previousVersion}.`);
             return await this.finalizeNoChangeNonReplay({
                 service,
                 language,
@@ -556,7 +554,9 @@ export class AutoVersionStep extends BaseStep {
         const { service, rawDiff, mappedMagicVersion, baseVersion } = params;
 
         if (baseVersion != null && isValidSemver(baseVersion)) {
-            this.logger.debug(`AutoVersionStep (non-replay): previous version from pipeline baseVersion: ${baseVersion}`);
+            this.logger.debug(
+                `AutoVersionStep (non-replay): previous version from pipeline baseVersion: ${baseVersion}`
+            );
             return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);
         }
 
