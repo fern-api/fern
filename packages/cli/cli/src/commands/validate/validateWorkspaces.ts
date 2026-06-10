@@ -172,8 +172,7 @@ export async function validateWorkspaces({
         }
     } catch (error) {
         if (abortReason == null) {
-            abortReason =
-                error instanceof Error ? error.message.slice(0, 100) : "unexpected error";
+            abortReason = error instanceof Error ? error.message.slice(0, 100) : "unexpected error";
         }
         throw error;
     } finally {
@@ -181,9 +180,7 @@ export async function validateWorkspaces({
         const firedRules = [
             ...new Set(allViolations.map((v) => v.name).filter((name): name is string => name != null))
         ];
-        const numErrors = allViolations.filter(
-            (v) => v.severity === "fatal" || v.severity === "error"
-        ).length;
+        const numErrors = allViolations.filter((v) => v.severity === "fatal" || v.severity === "error").length;
         const numWarnings = allViolations.filter((v) => v.severity === "warning").length;
         cliContext.instrumentPostHogEvent({
             command: "fern check",

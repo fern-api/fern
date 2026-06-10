@@ -42,6 +42,7 @@ import {
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
+import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -51,7 +52,6 @@ import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { CliContext } from "./cli-context/CliContext.js";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli.js";
-import { type Project } from "@fern-api/project-loader";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
@@ -1393,8 +1393,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 });
             } catch (error) {
                 if (project == null) {
-                    const reason =
-                        error instanceof Error ? error.message.slice(0, 100) : "project load failed";
+                    const reason = error instanceof Error ? error.message.slice(0, 100) : "project load failed";
                     cliContext.instrumentPostHogEvent({
                         command: "fern check",
                         properties: {
