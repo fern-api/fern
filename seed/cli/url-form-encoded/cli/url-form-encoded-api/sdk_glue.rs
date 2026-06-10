@@ -53,7 +53,6 @@ pub fn sdk_client(ctx: &AppContext) -> url_form_encoded_api_sdk::api::ApiClient 
     );
     url_form_encoded_api_sdk::api::ApiClient {
         config,
-        http_client,
 
     }
 }

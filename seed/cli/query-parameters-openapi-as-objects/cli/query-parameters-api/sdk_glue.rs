@@ -53,7 +53,6 @@ pub fn sdk_client(ctx: &AppContext) -> query_parameters_api_sdk::api::ApiClient 
     );
     query_parameters_api_sdk::api::ApiClient {
         config,
-        http_client,
 
     }
 }
