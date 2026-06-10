@@ -1,0 +1,6 @@
+- summary: |
+    Fix sdk_glue.rs generation for specs with de-conflicted client names
+    (e.g. `SimpleClient2`, `PoolsClient3`). The struct-parsing regex now
+    matches the numeric suffix the Rust SDK appends to avoid name
+    collisions, so nested sub-clients are correctly initialized.
+  type: fix
