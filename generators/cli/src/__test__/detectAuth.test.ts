@@ -101,6 +101,24 @@ describe("detectAuthBindings", () => {
         );
     });
 
+    it("multiple header schemes disambiguate the CLI flag from each key", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(
+                header({ key: "ApiKey", headerEnvVar: "CLOSE_API_KEY" }),
+                header({ key: "AdminToken", headerEnvVar: "CLOSE_ADMIN_TOKEN" })
+            ),
+            binaryName: "close"
+        });
+        // No shared `--api-key`: each scheme gets a key-derived flag so they
+        // don't collapse onto one clap arg.
+        expect(bindings[0]?.rustCall).toBe(
+            '.auth(ApiKeyAuth::new("ApiKey").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("CLOSE_API_KEY")])))'
+        );
+        expect(bindings[1]?.rustCall).toBe(
+            '.auth(ApiKeyAuth::new("AdminToken").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("admin-token"), AuthCredentialSource::from_env("CLOSE_ADMIN_TOKEN")])))'
+        );
+    });
+
     it("basic auth: IR usernameEnvVar + passwordEnvVar drive both sources", () => {
         const bindings = detectAuthBindings({
             auth: auth(basic({ key: "BasicAuth", usernameEnvVar: "CLOSE_USER", passwordEnvVar: "CLOSE_PASS" })),
