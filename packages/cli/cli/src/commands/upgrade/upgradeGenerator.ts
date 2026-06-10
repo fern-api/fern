@@ -3,7 +3,8 @@ import {
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration,
-    normalizeGeneratorName
+    normalizeGeneratorName,
+    removeDefaultDockerOrgIfPresent
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
@@ -29,6 +30,7 @@ interface AppliedUpgrade {
     groupName: string;
     previousVersion: string;
     newVersion: string;
+    renamedFrom?: string;
     migrationsApplied?: number;
     migrationVersions?: string[];
 }
@@ -219,6 +221,22 @@ export async function loadAndUpdateGenerators({
                 continue;
             }
 
+            // Rename legacy generator aliases to their canonical name so the
+            // resolved version matches a published Docker image.
+            const originalNameWithOrg = addDefaultDockerOrgIfNotPresent(generatorName);
+            const isLegacyAlias = originalNameWithOrg !== normalizedGeneratorName;
+            let effectiveGeneratorName = generatorName;
+            if (isLegacyAlias) {
+                const hasOrgPrefix = generatorName.includes("/");
+                effectiveGeneratorName = hasOrgPrefix
+                    ? normalizedGeneratorName
+                    : removeDefaultDockerOrgIfPresent(normalizedGeneratorName);
+                generator.set("name", effectiveGeneratorName);
+                context.logger.info(
+                    chalk.yellow(`Renamed ${generatorName} → ${effectiveGeneratorName} (legacy generator name)`)
+                );
+            }
+
             const currentGeneratorVersion = generator.get("version") as string;
 
             const latestVersion = await getLatestGeneratorVersion({
@@ -285,10 +303,11 @@ export async function loadAndUpdateGenerators({
                     }
 
                     appliedUpgrades.push({
-                        generatorName,
+                        generatorName: effectiveGeneratorName,
                         groupName,
                         previousVersion: currentGeneratorVersion,
                         newVersion: latestVersion,
+                        renamedFrom: isLegacyAlias ? generatorName : undefined,
                         migrationsApplied: migrationsApplied > 0 ? migrationsApplied : undefined,
                         migrationVersions: migrationVersions.length > 0 ? migrationVersions : undefined
                     });
@@ -298,7 +317,7 @@ export async function loadAndUpdateGenerators({
                         chalk.gray(`${generatorName} is already on the latest version: ${currentGeneratorVersion}`)
                     );
                     alreadyUpToDate.push({
-                        generatorName,
+                        generatorName: effectiveGeneratorName,
                         groupName,
                         version: currentGeneratorVersion
                     });
@@ -321,7 +340,7 @@ export async function loadAndUpdateGenerators({
 
                     if (currentParsed != null && latestParsed != null && latestParsed.major > currentParsed.major) {
                         skippedMajorUpgrades.push({
-                            generatorName,
+                            generatorName: effectiveGeneratorName,
                             currentVersion: versionToUse,
                             latestMajorVersion
                         });
@@ -450,6 +469,10 @@ export async function upgradeGenerator({
                             `  - ${upgrade.generatorName}: ${chalk.dim(upgrade.previousVersion)} → ${upgrade.newVersion}`
                         )
                     );
+                    // Show rename info if the generator was renamed from a legacy alias
+                    if (upgrade.renamedFrom != null) {
+                        cliContext.logger.info(chalk.dim(`    (renamed from ${upgrade.renamedFrom})`));
+                    }
                     // Show migration info if migrations were applied
                     if (upgrade.migrationsApplied != null && upgrade.migrationsApplied > 0) {
                         cliContext.logger.info(

@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern generator upgrade` writing versions that don't exist for legacy
+    generator names (e.g. `fern-typescript-node-sdk`). The upgrade now renames
+    legacy aliases to their canonical name (e.g. `fern-typescript-sdk`) so the
+    resolved version matches a published Docker image.
+  type: fix
