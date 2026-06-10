@@ -323,6 +323,32 @@ describe("EnvironmentGenerator", () => {
             await expect(result?.fileContents).toMatchFileSnapshot("snapshots/multi-url-many-services.rs");
         });
 
+        it("should import serde derive macros directly so the file compiles without the prelude", () => {
+            // The CLI generator (generators/cli) embeds this SDK and overwrites
+            // src/prelude.rs with a bare types-crate re-export, so environment.rs
+            // cannot rely on the prelude for the Serialize/Deserialize derive macros.
+            const baseUrls = [createEnvironmentBaseUrl("api", "api"), createEnvironmentBaseUrl("auth", "auth")];
+
+            const environments = [
+                createMultipleBaseUrlsEnvironment("Production", {
+                    api: "https://api.example.com",
+                    auth: "https://auth.example.com"
+                })
+            ];
+
+            const environmentsConfig = {
+                environments: createMultipleBaseUrlsEnvironmentsUnion(environments, baseUrls),
+                defaultEnvironment: "ProductionId"
+            } as FernIr.EnvironmentsConfig;
+
+            const ir = createMockIR(environmentsConfig);
+            const context = createMockContext(ir);
+            const generator = new EnvironmentGenerator({ context });
+
+            const result = generator.generate();
+            expect(result?.fileContents).toContain("use serde::{Deserialize, Serialize};");
+        });
+
         it("should generate multiple URLs environment with mixed protocols", async () => {
             const baseUrls = [
                 createEnvironmentBaseUrl("api", "api"),
