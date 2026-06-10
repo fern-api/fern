@@ -15,7 +15,7 @@ export function mergeWithOverrides<T extends object>({
     overrides: object;
     allowNullKeys?: string[];
 }): T {
-    const merged = mergeWith(data, overrides, (obj: unknown, src: unknown) => {
+    const arrayMergeCustomizer = (obj: unknown, src: unknown): unknown => {
         if (!Array.isArray(obj) || !Array.isArray(src)) {
             return undefined;
         }
@@ -38,7 +38,7 @@ export function mergeWithOverrides<T extends object>({
                         (srcItem.in == null || item.in === srcItem.in)
                 );
                 if (matchIndex !== -1) {
-                    result[matchIndex] = mergeWith({}, result[matchIndex], srcItem);
+                    result[matchIndex] = mergeWith({}, result[matchIndex], srcItem, arrayMergeCustomizer);
                 } else {
                     result.push(srcItem);
                 }
@@ -47,7 +47,8 @@ export function mergeWithOverrides<T extends object>({
         }
         // Default: merge arrays of objects by index (lodash default behavior)
         return undefined;
-    }) as T;
+    };
+    const merged = mergeWith(data, overrides, arrayMergeCustomizer) as T;
     // Remove any nullified values
     const filtered = omitDeepBy(merged, isNull, {
         ancestorKeys: allowNullKeys ?? [],
