@@ -188,8 +188,6 @@ export async function runLocalGenerationForWorkspace({
                     }
                 });
 
-                const venus = createVenusService({ token: token?.value });
-
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     token ??= await getAccessToken();
                     if (token == null) {
@@ -202,31 +200,41 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                const organization = await venus.organization.get(projectConfig.organization);
+                let orgBody: FernVenusApi.Organization | undefined;
+                if (token != null) {
+                    const venus = createVenusService({ token: token.value });
+                    const organization = await venus.organization.get({
+                        orgId: projectConfig.organization
+                    });
 
-                if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
-                    interactiveTaskContext.failWithoutThrowing(
-                        `Failed to load details for organization ${projectConfig.organization}.`,
-                        undefined,
-                        { code: CliError.Code.NetworkError }
-                    );
-                    return;
+                    if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
+                        interactiveTaskContext.failWithoutThrowing(
+                            `Failed to load details for organization ${projectConfig.organization}.`,
+                            undefined,
+                            { code: CliError.Code.NetworkError }
+                        );
+                        return;
+                    }
+
+                    if (organization.ok) {
+                        orgBody = organization.body;
+                    }
                 }
 
-                if (organization.ok) {
-                    if (organization.body.isWhitelabled) {
+                if (orgBody != null) {
+                    if (orgBody.isWhitelabled) {
                         if (intermediateRepresentation.readmeConfig == null) {
                             intermediateRepresentation.readmeConfig = emptyReadmeConfig;
                         }
                         intermediateRepresentation.readmeConfig.whiteLabel = true;
                     }
-                    intermediateRepresentation.selfHosted = organization.body.selfHostedSdKs;
+                    intermediateRepresentation.selfHosted = orgBody.selfHostedSdKs;
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
-                    org: organization.ok ? organization.body : undefined,
+                    org: orgBody,
                     version,
                     userProvidedVersion,
                     packageName,
@@ -382,13 +390,13 @@ export async function runLocalGenerationForWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
                     writeUnitTests: true,
-                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
-                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
+                    generateOauthClients: orgBody?.oauthClientEnabled ?? false,
+                    generatePaginatedClients: orgBody?.paginationEnabled ?? false,
                     includeOptionalRequestPropertyExamples: false,
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
-                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    whiteLabel: orgBody?.isWhitelabled ?? false,
                     publishToRegistry,
                     runner,
                     ai,

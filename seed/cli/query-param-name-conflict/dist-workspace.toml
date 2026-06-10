@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "query-param-name-conflict-api-types"]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "query-param-name-conflict-api-types", "query-param-name-conflict-api-sdk"]
 
 # Config for 'dist'
 [dist]

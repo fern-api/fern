@@ -57,6 +57,7 @@ describe("emitReadme", () => {
 
         expect(readme).toContain("# Petstore CLI");
         expect(readme).toContain("Command-line interface for the Petstore API.");
+        expect(readme).toContain("## Table of contents");
         expect(readme).toContain("npm install -g @petstore/cli");
         expect(readme).toContain("npx @petstore/cli --help");
         expect(readme).toContain("### Build from source");
@@ -70,6 +71,35 @@ describe("emitReadme", () => {
         expect(readme).toContain("PETSTORE_API_CA_BUNDLE");
         expect(readme).toContain("PETSTORE_API_TIMEOUT_SECS");
         expect(readme).toContain("petstore-api completion <bash|zsh|fish|powershell>");
+        expect(readme).toContain("reference.md");
+    });
+
+    // ── npm badge in header ─────────────────────────────────────────
+
+    it("includes npm version badge when npmPublishInfo is present", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "petstore-api",
+            apiDisplayName: "Petstore",
+            authBindings: [bearerBinding],
+            npmPublishInfo
+        });
+
+        expect(readme).toContain("[![npm shield](https://img.shields.io/npm/v/@petstore/cli)]");
+        expect(readme).toContain("(https://www.npmjs.com/package/@petstore/cli)");
+    });
+
+    it("omits npm badge when npmPublishInfo is absent", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo: undefined
+        });
+
+        expect(readme).not.toContain("npm shield");
+        expect(readme).not.toContain("img.shields.io");
     });
 
     // ── Build from source when npmPublishInfo absent ────────────────
@@ -207,9 +237,9 @@ describe("emitReadme", () => {
         expect(usageIdx).toBeGreaterThan(customIdx);
     });
 
-    // ── Section order ───────────────────────────────────────────────
+    // ── Section order (progressive disclosure) ──────────────────────
 
-    it("emits sections in the specified order", async () => {
+    it("emits sections in progressive disclosure order", async () => {
         const readme = await emitAndRead({
             outputDir,
             binaryName: "acme",
@@ -219,13 +249,13 @@ describe("emitReadme", () => {
         });
 
         const expectedOrder = [
+            "## Table of contents",
             "## Installation",
             "## Authentication",
+            "## Quick start",
             "## Usage",
-            "## Common flags",
-            "## Environment variables",
-            "## Output formats",
-            "## Shell completion"
+            "## Documentation",
+            "## Advanced"
         ];
 
         let lastIndex = -1;
@@ -236,9 +266,27 @@ describe("emitReadme", () => {
         }
     });
 
-    // ── Help output in Usage section ────────────────────────────────
+    // ── Advanced subsections ────────────────────────────────────────
 
-    it("renders a representative --help output in the Usage section", async () => {
+    it("nests Common flags, Environment variables, Output formats, Shell completion under Advanced", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo
+        });
+
+        const advancedSection = readme.split("## Advanced")[1] ?? "";
+        expect(advancedSection).toContain("### Common flags");
+        expect(advancedSection).toContain("### Environment variables");
+        expect(advancedSection).toContain("### Output formats");
+        expect(advancedSection).toContain("### Shell completion");
+    });
+
+    // ── Quick start section ─────────────────────────────────────────
+
+    it("renders a Quick start section with basic examples", async () => {
         const readme = await emitAndRead({
             outputDir,
             binaryName: "petstore-api",
@@ -247,14 +295,82 @@ describe("emitReadme", () => {
             npmPublishInfo
         });
 
-        const usageSection = readme.split("## Usage")[1]?.split("## Common flags")[0] ?? "";
-        expect(usageSection).toContain("Petstore");
-        expect(usageSection).toContain("Usage: petstore-api [OPTIONS] <COMMAND>");
-        expect(usageSection).toContain("generate-skills");
-        expect(usageSection).toContain("completion");
-        expect(usageSection).toContain("--dry-run");
-        expect(usageSection).toContain("PETSTORE_API_BASE_URL");
-        expect(usageSection).toContain("PETSTORE_API_TOKEN");
+        const quickStartSection = readme.split("## Quick start")[1]?.split("## Usage")[0] ?? "";
+        expect(quickStartSection).toContain("petstore-api --help");
+        expect(quickStartSection).toContain("petstore-api <resource> <method>");
+        expect(quickStartSection).toContain("petstore-api <resource> --help");
+    });
+
+    // ── Usage is trimmed (no --help dump) ───────────────────────────
+
+    it("renders trimmed Usage without --help dump", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "petstore-api",
+            apiDisplayName: "Petstore",
+            authBindings: [bearerBinding],
+            npmPublishInfo
+        });
+
+        const usageSection = readme.split("## Usage")[1]?.split("## Documentation")[0] ?? "";
+        expect(usageSection).toContain("petstore-api <resource> <method>");
+        expect(usageSection).toContain("--json");
+        // No --help dump
+        expect(usageSection).not.toContain("Commands:");
+        expect(usageSection).not.toContain("generate-skills");
+        expect(usageSection).not.toContain("Options:");
+    });
+
+    // ── Table of contents ───────────────────────────────────────────
+
+    it("generates a table of contents with Advanced subsections", async () => {
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo
+        });
+
+        const tocSection = readme.split("## Table of contents")[1]?.split("## Installation")[0] ?? "";
+        expect(tocSection).toContain("[Installation](#installation)");
+        expect(tocSection).toContain("[Authentication](#authentication)");
+        expect(tocSection).toContain("[Quick start](#quick-start)");
+        expect(tocSection).toContain("[Usage](#usage)");
+        expect(tocSection).toContain("[Documentation](#documentation)");
+        expect(tocSection).toContain("[Advanced](#advanced)");
+        expect(tocSection).toContain("[Common flags](#common-flags)");
+        expect(tocSection).toContain("[Shell completion](#shell-completion)");
+    });
+
+    // ── TOC includes customer-added sections ────────────────────────
+
+    it("includes customer-added sections in the table of contents", async () => {
+        const existingReadme = [
+            "# Old Header",
+            "",
+            "## Installation",
+            "",
+            "Old content",
+            "",
+            "## My Custom Section",
+            "",
+            "Custom content",
+            ""
+        ].join("\n");
+
+        await writeFile(path.join(outputDir, "README.md"), existingReadme);
+
+        const readme = await emitAndRead({
+            outputDir,
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [],
+            npmPublishInfo: undefined
+        });
+
+        const tocSection = readme.split("## Table of contents")[1]?.split("## Installation")[0] ?? "";
+        expect(tocSection).toContain("[My Custom Section](#my-custom-section)");
     });
 
     // ── .env support mentioned in Authentication ────────────────────

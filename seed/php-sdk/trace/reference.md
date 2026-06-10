@@ -94,7 +94,7 @@ $client->admin->sendTestSubmissionUpdate(
     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     new TestSubmissionUpdate([
         'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-        'updateInfo' => TestSubmissionUpdateInfo::running(),
+        'updateInfo' => TestSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission->value),
     ]),
 );
 ```
@@ -199,7 +199,7 @@ $client->admin->sendWorkspaceSubmissionUpdate(
     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     new WorkspaceSubmissionUpdate([
         'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-        'updateInfo' => WorkspaceSubmissionUpdateInfo::running(),
+        'updateInfo' => WorkspaceSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission->value),
     ]),
 );
 ```
@@ -255,8 +255,8 @@ $client->admin->storeTracedTestCase(
     new StoreTracedTestCaseRequest([
         'result' => new TestCaseResultWithStdout([
             'result' => new TestCaseResult([
-                'expectedResult' => VariableValue::integerValue(),
-                'actualResult' => ActualResult::value(),
+                'expectedResult' => VariableValue::integerValue(1),
+                'actualResult' => ActualResult::value(VariableValue::integerValue(1)),
                 'passed' => true,
             ]),
             'stdout' => 'stdout',
@@ -265,7 +265,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -278,12 +278,12 @@ $client->admin->storeTracedTestCase(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],
@@ -294,7 +294,7 @@ $client->admin->storeTracedTestCase(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -307,12 +307,12 @@ $client->admin->storeTracedTestCase(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],
@@ -397,7 +397,7 @@ $client->admin->storeTracedTestCaseV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => DebugVariableValue::integerValue(),
+            'returnValue' => DebugVariableValue::integerValue(1),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -410,12 +410,12 @@ $client->admin->storeTracedTestCaseV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                     ],
@@ -430,7 +430,7 @@ $client->admin->storeTracedTestCaseV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => DebugVariableValue::integerValue(),
+            'returnValue' => DebugVariableValue::integerValue(1),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -443,12 +443,12 @@ $client->admin->storeTracedTestCaseV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                     ],
@@ -533,7 +533,7 @@ $client->admin->storeTracedWorkspace(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -546,12 +546,12 @@ $client->admin->storeTracedWorkspace(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],
@@ -562,7 +562,7 @@ $client->admin->storeTracedWorkspace(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -575,12 +575,12 @@ $client->admin->storeTracedWorkspace(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],
@@ -656,7 +656,7 @@ $client->admin->storeTracedWorkspaceV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => DebugVariableValue::integerValue(),
+            'returnValue' => DebugVariableValue::integerValue(1),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -669,12 +669,12 @@ $client->admin->storeTracedWorkspaceV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                     ],
@@ -689,7 +689,7 @@ $client->admin->storeTracedWorkspaceV2(
                 'filename' => 'filename',
                 'directory' => 'directory',
             ]),
-            'returnValue' => DebugVariableValue::integerValue(),
+            'returnValue' => DebugVariableValue::integerValue(1),
             'expressionLocation' => new ExpressionLocation([
                 'start' => 1,
                 'offset' => 1,
@@ -702,12 +702,12 @@ $client->admin->storeTracedWorkspaceV2(
                     'scopes' => [
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                         new Scope([
                             'variables' => [
-                                'variables' => DebugVariableValue::integerValue(),
+                                'variables' => DebugVariableValue::integerValue(1),
                             ],
                         ]),
                     ],
@@ -1312,8 +1312,8 @@ $client->problem->createProblem(
         'problemName' => 'problemName',
         'problemDescription' => new ProblemDescription([
             'boards' => [
-                ProblemDescriptionBoard::html(),
-                ProblemDescriptionBoard::html(),
+                ProblemDescriptionBoard::html('boards'),
+                ProblemDescriptionBoard::html('boards'),
             ],
         ]),
         'files' => [
@@ -1350,21 +1350,21 @@ $client->problem->createProblem(
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        VariableValue::integerValue(),
-                        VariableValue::integerValue(),
+                        VariableValue::integerValue(1),
+                        VariableValue::integerValue(1),
                     ],
                 ]),
-                'expectedResult' => VariableValue::integerValue(),
+                'expectedResult' => VariableValue::integerValue(1),
             ]),
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        VariableValue::integerValue(),
-                        VariableValue::integerValue(),
+                        VariableValue::integerValue(1),
+                        VariableValue::integerValue(1),
                     ],
                 ]),
-                'expectedResult' => VariableValue::integerValue(),
+                'expectedResult' => VariableValue::integerValue(1),
             ]),
         ],
         'methodName' => 'methodName',
@@ -1429,8 +1429,8 @@ $client->problem->updateProblem(
         'problemName' => 'problemName',
         'problemDescription' => new ProblemDescription([
             'boards' => [
-                ProblemDescriptionBoard::html(),
-                ProblemDescriptionBoard::html(),
+                ProblemDescriptionBoard::html('boards'),
+                ProblemDescriptionBoard::html('boards'),
             ],
         ]),
         'files' => [
@@ -1467,21 +1467,21 @@ $client->problem->updateProblem(
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        VariableValue::integerValue(),
-                        VariableValue::integerValue(),
+                        VariableValue::integerValue(1),
+                        VariableValue::integerValue(1),
                     ],
                 ]),
-                'expectedResult' => VariableValue::integerValue(),
+                'expectedResult' => VariableValue::integerValue(1),
             ]),
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        VariableValue::integerValue(),
-                        VariableValue::integerValue(),
+                        VariableValue::integerValue(1),
+                        VariableValue::integerValue(1),
                     ],
                 ]),
-                'expectedResult' => VariableValue::integerValue(),
+                'expectedResult' => VariableValue::integerValue(1),
             ]),
         ],
         'methodName' => 'methodName',

@@ -2,6 +2,7 @@
 // Edit the SDK template / generator if you need to change the shape.
 
 mod custom;
+mod sdk_glue;
 
 use fern_cli_sdk::app::CliApp;
 use fern_cli_sdk::openapi::OpenApiBinding;

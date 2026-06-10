@@ -420,6 +420,58 @@ fn build_graphql_body(
 ) -> Result<Value, CliError> {
     let mut variables: Map<String, Value> = Map::new();
 
+    // JFL-1.2: enforce mutually exclusive input modes — `--json`, dot-notation
+    // leaf flags, and the object-shorthand flag for an input arg cannot be
+    // combined. Track raw provided keys (pre-`set_nested_value`) so we can
+    // detect both kinds of collision before assembling the body.
+    if body_json.is_some() {
+        if let Some(conflicting_flag) = params
+            .keys()
+            .find(|k| flag_targets_input(k, method_params, &gql.args))
+        {
+            return Err(CliError::Validation(format!(
+                "Cannot combine --json with per-field input flags (--{conflicting_flag}). Use one or the other."
+            )));
+        }
+    }
+    for object_key in params.keys() {
+        let mp = match method_params.get(object_key) {
+            Some(mp) => mp,
+            None => continue,
+        };
+        if mp.param_type.as_deref() != Some("object") {
+            continue;
+        }
+        // Nested-field object shorthand (e.g. `--date-range` + `--date-range.start`):
+        // detect by dotted prefix collision.
+        let prefix = format!("{object_key}.");
+        if let Some(leaf_key) = params.keys().find(|k| k.starts_with(&prefix)) {
+            return Err(CliError::Validation(format!(
+                "Cannot combine --{object_key} with --{leaf_key}. Use the JSON shorthand or individual flags, not both."
+            )));
+        }
+        // JFL-1.4: input-arg-level shorthand (e.g. `--filter '{...}'`) has an
+        // empty `graphql_field_path`. Its per-field flags do NOT share the
+        // arg-name prefix (they live at the top of the flag namespace), so
+        // the prefix check above misses them. Catch the conflict by matching
+        // on the same `graphql_input_arg`.
+        if mp.graphql_field_path.as_deref().unwrap_or("").is_empty() {
+            if let Some(input_arg) = mp.graphql_input_arg.as_deref() {
+                if let Some(conflicting) = params.keys().find(|k| {
+                    k.as_str() != object_key
+                        && method_params
+                            .get(*k)
+                            .and_then(|m| m.graphql_input_arg.as_deref())
+                            == Some(input_arg)
+                }) {
+                    return Err(CliError::Validation(format!(
+                        "Cannot combine --{object_key} with --{conflicting}. Use the JSON shorthand or individual flags, not both."
+                    )));
+                }
+            }
+        }
+    }
+
     // Parse --json once; it targets the first input arg only.
     let body_obj: Option<Map<String, Value>> = if let Some(json_str) = body_json {
         let json_val: Value = serde_json::from_str(json_str)
@@ -442,12 +494,22 @@ fn build_graphql_body(
             for (flag_key, value) in params {
                 if let Some(mp) = method_params.get(flag_key) {
                     if mp.graphql_input_arg.as_deref() == Some(arg_def.name.as_str()) {
-                        let coerced = coerce_graphql_value(value, Some(mp));
-                        if let Some(path) = mp.graphql_field_path.as_deref() {
-                            set_nested_value(&mut input_obj, path, coerced);
+                        let coerced = coerce_graphql_value(value, Some(mp))?;
+                        // Object-shorthand flag for the *whole* input arg
+                        // (graphql_field_path is empty): coerce_graphql_value
+                        // guarantees `coerced` is an object when param_type
+                        // is "object", so we can merge its fields into
+                        // input_obj at the top level. Non-object payloads are
+                        // rejected upstream as a validation error.
+                        let path = mp.graphql_field_path.as_deref().unwrap_or("");
+                        if path.is_empty() {
+                            if let Value::Object(map) = coerced {
+                                for (k, v) in map {
+                                    input_obj.insert(k, v);
+                                }
+                            }
                         } else {
-                            let camel = kebab_to_camel(flag_key);
-                            set_nested_value(&mut input_obj, &camel, coerced);
+                            set_nested_value(&mut input_obj, path, coerced);
                         }
                     }
                 }
@@ -479,7 +541,7 @@ fn build_graphql_body(
         } else {
             // Direct scalar/enum arg: look it up by its CLI flag key.
             if let Some(value) = params.get(&arg_def.flag_key) {
-                let coerced = coerce_graphql_value(value, method_params.get(&arg_def.flag_key));
+                let coerced = coerce_graphql_value(value, method_params.get(&arg_def.flag_key))?;
                 variables.insert(arg_def.name.clone(), coerced);
             }
         }
@@ -523,6 +585,25 @@ fn build_graphql_body(
     }))
 }
 
+/// True when the given CLI flag key corresponds to an input arg (either a
+/// flattened input field or a top-level input arg passed as object shorthand).
+/// Direct scalar/enum args are not "body" inputs — they map to dedicated GraphQL
+/// arguments and aren't subject to the `--json` exclusivity rule.
+fn flag_targets_input(
+    flag_key: &str,
+    method_params: &HashMap<String, MethodParameter>,
+    args: &[GraphQLArgDef],
+) -> bool {
+    if let Some(mp) = method_params.get(flag_key) {
+        if mp.graphql_input_arg.is_some() {
+            return true;
+        }
+    }
+    // Also catch object-shorthand for the input arg itself when the parser
+    // didn't tag it (defensive — current parser always tags it).
+    args.iter().any(|a| a.is_input && a.flag_key == flag_key)
+}
+
 /// Set a value at a dotted camelCase path within a JSON object, creating
 /// intermediate objects as needed. E.g., path `"dateRange.start"` sets
 /// `obj["dateRange"]["start"] = value`.
@@ -558,49 +639,68 @@ fn extract_graphql_cursor(response_body: &str) -> Option<String> {
 
 /// Coerce a JSON value to the correct type based on the parameter definition.
 /// CLI flags always come in as strings; this converts "3" → 3 for integers, etc.
-fn coerce_graphql_value(value: &Value, param_def: Option<&MethodParameter>) -> Value {
+///
+/// JFL-1.2: `param_type=="object"` (the input-shorthand flag) parses the
+/// string as JSON. An invalid payload is a hard validation error rather than
+/// a silent fallback to the raw string — a misuse should be loud, not become
+/// a confusing GraphQL "expected object, got string" later in the pipeline.
+fn coerce_graphql_value(
+    value: &Value,
+    param_def: Option<&MethodParameter>,
+) -> Result<Value, CliError> {
+    // Object-shorthand inputs may arrive as a raw String (CLI flag path) or
+    // pre-decoded (the `--params` JSON path inserts arbitrary Value shapes
+    // directly into the params map). Validate shape uniformly across both
+    // paths — otherwise a `--params '{"input": [1,2,3]}'` would slip past
+    // here and then silently drop in build_graphql_body's Value::Object
+    // guard, with the user's input vanishing without an error.
+    if param_def.and_then(|d| d.param_type.as_deref()) == Some("object") {
+        let parsed = if let Value::String(s) = value {
+            serde_json::from_str::<Value>(s).unwrap_or_else(|_| value.clone())
+        } else {
+            value.clone()
+        };
+        if !parsed.is_object() {
+            return Err(CliError::Validation(format!(
+                "Object-shorthand flag must be a JSON object, got {}",
+                match &parsed {
+                    Value::Null => "null",
+                    Value::Bool(_) => "boolean",
+                    Value::Number(_) => "number",
+                    Value::String(_) => "string",
+                    Value::Array(_) => "array",
+                    Value::Object(_) => unreachable!(),
+                }
+            )));
+        }
+        return Ok(parsed);
+    }
+
     if let Value::String(s) = value {
         if let Some(def) = param_def {
             match def.param_type.as_deref() {
                 Some("integer") => {
                     if let Ok(n) = s.parse::<i64>() {
-                        return Value::Number(n.into());
+                        return Ok(Value::Number(n.into()));
                     }
                 }
                 Some("number") => {
                     if let Ok(n) = s.parse::<f64>() {
                         if let Some(num) = serde_json::Number::from_f64(n) {
-                            return Value::Number(num);
+                            return Ok(Value::Number(num));
                         }
                     }
                 }
                 Some("boolean") => match s.as_str() {
-                    "true" => return Value::Bool(true),
-                    "false" => return Value::Bool(false),
+                    "true" => return Ok(Value::Bool(true)),
+                    "false" => return Ok(Value::Bool(false)),
                     _ => {}
                 },
                 _ => {}
             }
         }
     }
-    value.clone()
-}
-
-/// Convert kebab-case to camelCase.
-fn kebab_to_camel(s: &str) -> String {
-    let mut result = String::with_capacity(s.len());
-    let mut capitalize_next = false;
-    for ch in s.chars() {
-        if ch == '-' {
-            capitalize_next = true;
-        } else if capitalize_next {
-            result.push(ch.to_uppercase().next().unwrap());
-            capitalize_next = false;
-        } else {
-            result.push(ch);
-        }
-    }
-    result
+    Ok(value.clone())
 }
 
 #[cfg(test)]
@@ -970,5 +1070,200 @@ mod tests {
         let date_range = filter["dateRange"].as_object().unwrap();
         assert_eq!(date_range["start"], "2024-01-01");
         assert_eq!(date_range["end"], "2024-12-31");
+    }
+
+    // -----------------------------------------------------------------------
+    // JFL-1.2: object shorthand + mutually exclusive input modes
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn test_coerce_graphql_value_object_parses_json() {
+        // JFL-1.2: when a flag's param_type=="object" (an input-shorthand
+        // flag), the CLI string must be JSON-parsed so it lands in the
+        // GraphQL variables as an object, not a quoted string.
+        let mp = MethodParameter {
+            param_type: Some("object".to_string()),
+            ..Default::default()
+        };
+        let v = coerce_graphql_value(
+            &Value::String(r#"{"first":"Abe","last":"Lincoln"}"#.to_string()),
+            Some(&mp),
+        )
+        .unwrap();
+        assert_eq!(v, json!({ "first": "Abe", "last": "Lincoln" }));
+    }
+
+    #[test]
+    fn test_coerce_graphql_value_object_invalid_json_is_validation_error() {
+        // Malformed object-shorthand JSON must surface as a loud Validation
+        // error rather than a best-effort fallback to a string.
+        let mp = MethodParameter {
+            param_type: Some("object".to_string()),
+            ..Default::default()
+        };
+        let err = coerce_graphql_value(
+            &Value::String("not json".to_string()),
+            Some(&mp),
+        )
+        .unwrap_err();
+        match err {
+            CliError::Validation(_) => {}
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn test_coerce_graphql_value_object_non_object_json_is_validation_error() {
+        // Object-shorthand expects a JSON *object*. Valid JSON of any other
+        // shape (number, array, string, bool, null) must be rejected with a
+        // clear error so the user doesn't end up with a double-nested or
+        // type-mismatched GraphQL variable.
+        let mp = MethodParameter {
+            param_type: Some("object".to_string()),
+            ..Default::default()
+        };
+        for bad in [r#"42"#, r#"[1,2]"#, r#""hello""#, r#"true"#, r#"null"#] {
+            let err = coerce_graphql_value(&Value::String(bad.to_string()), Some(&mp))
+                .unwrap_err();
+            match err {
+                CliError::Validation(msg) => {
+                    assert!(
+                        msg.contains("must be a JSON object"),
+                        "expected 'must be a JSON object' in error for {bad}: {msg}"
+                    );
+                }
+                other => panic!("expected Validation error for {bad}, got {other:?}"),
+            }
+        }
+
+        // Pre-decoded non-String values (the `--params` JSON path inserts
+        // arbitrary Value shapes directly) must also be shape-validated so
+        // they don't silently drop in build_graphql_body's Value::Object guard.
+        for (pre_decoded, kind) in [
+            (json!([1, 2, 3]), "array"),
+            (json!(42), "number"),
+            (json!(true), "boolean"),
+            (Value::Null, "null"),
+        ] {
+            let err = coerce_graphql_value(&pre_decoded, Some(&mp)).unwrap_err();
+            match err {
+                CliError::Validation(msg) => assert!(
+                    msg.contains("must be a JSON object") && msg.contains(kind),
+                    "expected 'must be a JSON object, got {kind}' for pre-decoded {pre_decoded}: {msg}"
+                ),
+                other => panic!("expected Validation error for pre-decoded {pre_decoded}, got {other:?}"),
+            }
+        }
+    }
+
+    #[test]
+    fn test_graphql_json_plus_input_arg_validation_error() {
+        // JFL-1.2: passing `--json` alongside any input-arg flag is a
+        // validation error. Mirrors the OpenAPI rule.
+        let gql = GraphQLMethodInfo {
+            operation_type: "query".to_string(),
+            field_name: "filteredNodes".to_string(),
+            default_selection: "{ nodes { id } }".to_string(),
+            args: vec![GraphQLArgDef {
+                name: "filter".to_string(),
+                flag_key: "filter".to_string(),
+                gql_type: "NodeFilter".to_string(),
+                is_input: true,
+                is_list: false,
+            }],
+        };
+
+        let mut params = Map::new();
+        params.insert(
+            "name".to_string(),
+            Value::String("Abraham".to_string()),
+        );
+
+        let mut method_params: HashMap<String, MethodParameter> = HashMap::new();
+        method_params.insert(
+            "name".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                graphql_input_arg: Some("filter".to_string()),
+                graphql_field_path: Some("name".to_string()),
+                ..Default::default()
+            },
+        );
+
+        let err = build_graphql_body(
+            &gql,
+            &params,
+            Some(r#"{"name":"from-json"}"#),
+            &method_params,
+            None,
+        )
+        .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("--json"), "error must mention --json: {msg}");
+                assert!(msg.contains("--name"), "error must name the input flag: {msg}");
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn test_graphql_object_shorthand_plus_leaf_validation_error() {
+        // JFL-1.2: `--filter` (object shorthand) and `--filter.name` (leaf)
+        // must not be combined.
+        let gql = GraphQLMethodInfo {
+            operation_type: "query".to_string(),
+            field_name: "filteredNodes".to_string(),
+            default_selection: "{ nodes { id } }".to_string(),
+            args: vec![GraphQLArgDef {
+                name: "filter".to_string(),
+                flag_key: "filter".to_string(),
+                gql_type: "NodeFilter".to_string(),
+                is_input: true,
+                is_list: false,
+            }],
+        };
+
+        let mut params = Map::new();
+        params.insert(
+            "filter".to_string(),
+            Value::String(r#"{"other":"x"}"#.to_string()),
+        );
+        params.insert(
+            "filter.name".to_string(),
+            Value::String("Abraham".to_string()),
+        );
+
+        let mut method_params: HashMap<String, MethodParameter> = HashMap::new();
+        method_params.insert(
+            "filter".to_string(),
+            MethodParameter {
+                param_type: Some("object".to_string()),
+                graphql_input_arg: Some("filter".to_string()),
+                graphql_field_path: Some(String::new()),
+                ..Default::default()
+            },
+        );
+        method_params.insert(
+            "filter.name".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                graphql_input_arg: Some("filter".to_string()),
+                graphql_field_path: Some("name".to_string()),
+                ..Default::default()
+            },
+        );
+
+        let err = build_graphql_body(&gql, &params, None, &method_params, None).unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("--filter"), "error must mention --filter: {msg}");
+                assert!(
+                    msg.contains("--filter.name"),
+                    "error must mention --filter.name: {msg}"
+                );
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
     }
 }

@@ -11,6 +11,7 @@ export {
 export { type FernCliCustomConfig, getCustomConfig } from "./customConfig.js";
 export { type DetectedAuthBinding, detectAuthBindings } from "./detectAuth.js";
 export { emitPublishWorkflow } from "./emitPublishWorkflow.js";
+export { emitReference } from "./emitReference.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
 export { type IrSummary, readIrSummary } from "./ir.js";
 export { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "./patchCargoToml.js";

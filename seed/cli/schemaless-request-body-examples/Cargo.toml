@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.schemaless_request_body_examples_api_types]
-path = "schemaless-request-body-examples-api-types"
+[dependencies.schemaless_request_body_examples_api_sdk]
+path = "schemaless-request-body-examples-api-sdk"
 
 [profile.dist]
 inherits = "release"

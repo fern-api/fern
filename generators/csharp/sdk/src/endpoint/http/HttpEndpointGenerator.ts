@@ -393,28 +393,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("()");
                     writer.pushScope();
                     writer.writeLine("Data = responseData,");
-                    writer.write("RawResponse = new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "RawResponse",
-                            namespace: this.context.namespaces.root
-                        })
-                    );
-                    writer.writeLine("()");
-                    writer.pushScope();
-                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
-                    writer.writeLine(
-                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
-                    );
-                    writer.write("Headers = ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "ResponseHeaders",
-                            namespace: this.context.namespaces.core
-                        })
-                    );
-                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
-                    writer.popScope(); // Close RawResponse{}
+                    writer.write("RawResponse = ");
+                    this.writeRawResponseInit(writer);
                     writer.popScope(); // Close WithRawResponse{}
                     writer.writeTextStatement(";");
 
@@ -432,6 +412,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.write(`${this.names.variables.responseBody}, `);
                         writer.write("e");
                     }
+                    writer.write(", rawResponse: ");
+                    this.writeRawResponseInit(writer);
                     writer.writeTextStatement(")");
                     writer.popScope();
                 },
@@ -452,28 +434,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("()");
                     writer.pushScope();
                     writer.writeLine(`Data = ${this.names.variables.responseBody},`);
-                    writer.write("RawResponse = new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "RawResponse",
-                            namespace: this.context.namespaces.root
-                        })
-                    );
-                    writer.writeLine("()");
-                    writer.pushScope();
-                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
-                    writer.writeLine(
-                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
-                    );
-                    writer.write("Headers = ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "ResponseHeaders",
-                            namespace: this.context.namespaces.core
-                        })
-                    );
-                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
-                    writer.popScope(); // Close RawResponse{}
+                    writer.write("RawResponse = ");
+                    this.writeRawResponseInit(writer);
                     writer.popScope(); // Close WithRawResponse{}
                     writer.writeTextStatement(";");
                 },
@@ -494,28 +456,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("()");
                     writer.pushScope();
                     writer.writeLine("Data = stream,");
-                    writer.write("RawResponse = new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "RawResponse",
-                            namespace: this.context.namespaces.root
-                        })
-                    );
-                    writer.writeLine("()");
-                    writer.pushScope();
-                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
-                    writer.writeLine(
-                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
-                    );
-                    writer.write("Headers = ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "ResponseHeaders",
-                            namespace: this.context.namespaces.core
-                        })
-                    );
-                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
-                    writer.popScope(); // Close RawResponse{}
+                    writer.write("RawResponse = ");
+                    this.writeRawResponseInit(writer);
                     writer.popScope(); // Close WithRawResponse{}
                     writer.writeTextStatement(";");
                 },
@@ -538,28 +480,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeLine("()");
             writer.pushScope();
             writer.writeLine(`Data = ${this.names.variables.response}.Raw.Headers,`);
-            writer.write("RawResponse = new ");
-            writer.writeNode(
-                this.csharp.classReference({
-                    name: "RawResponse",
-                    namespace: this.context.namespaces.root
-                })
-            );
-            writer.writeLine("()");
-            writer.pushScope();
-            writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
-            writer.writeLine(
-                `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
-            );
-            writer.write("Headers = ");
-            writer.writeNode(
-                this.csharp.classReference({
-                    name: "ResponseHeaders",
-                    namespace: this.context.namespaces.core
-                })
-            );
-            writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
-            writer.popScope(); // Close RawResponse{}
+            writer.write("RawResponse = ");
+            this.writeRawResponseInit(writer);
             writer.popScope(); // Close WithRawResponse{}
             writer.writeTextStatement(";");
         }
@@ -605,7 +527,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             this.Types.BaseApiException,
             `($"Error with status code {${this.names.variables.response}.StatusCode}", ${this.names.variables.response}.StatusCode, `
         );
-        writer.writeTextStatement(`${this.names.variables.responseBody})`);
+        writer.write(`${this.names.variables.responseBody}, rawResponse: `);
+        this.writeRawResponseInit(writer);
+        writer.writeTextStatement(")");
         writer.popScope();
     }
 
@@ -660,7 +584,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 this.Types.BaseApiException,
                 `($"Error with status code {${this.names.variables.response}.StatusCode}", ${this.names.variables.response}.StatusCode, `
             );
-            writer.writeTextStatement(`${this.names.variables.responseBody})`);
+            writer.write(`${this.names.variables.responseBody}, rawResponse: `);
+            this.writeRawResponseInit(writer);
+            writer.writeTextStatement(")");
             writer.popScope();
         });
     }
@@ -682,7 +608,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
                 : this.Primitive.object
         );
-        writer.writeTextStatement(`>(${this.names.variables.responseBody}))`);
+        writer.write(`>(${this.names.variables.responseBody}), rawResponse: `);
+        this.writeRawResponseInit(writer);
+        writer.writeTextStatement(")");
     }
 
     private getEndpointSuccessResponseStatements({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock | undefined {
@@ -902,28 +830,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("()");
                     writer.pushScope();
                     writer.writeLine("Data = stream,");
-                    writer.write("RawResponse = new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "RawResponse",
-                            namespace: this.context.namespaces.root
-                        })
-                    );
-                    writer.writeLine("()");
-                    writer.pushScope();
-                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
-                    writer.writeLine(
-                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
-                    );
-                    writer.write("Headers = ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "ResponseHeaders",
-                            namespace: this.context.namespaces.core
-                        })
-                    );
-                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
-                    writer.popScope(); // Close RawResponse{}
+                    writer.write("RawResponse = ");
+                    this.writeRawResponseInit(writer);
                     writer.popScope(); // Close WithRawResponse{}
                     writer.writeLine("));");
                     writer.popScope();
@@ -972,28 +880,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("()");
                     writer.pushScope();
                     writer.writeLine("Data = responseData,");
-                    writer.write("RawResponse = new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "RawResponse",
-                            namespace: this.context.namespaces.root
-                        })
-                    );
-                    writer.writeLine("()");
-                    writer.pushScope();
-                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
-                    writer.writeLine(
-                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
-                    );
-                    writer.write("Headers = ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "ResponseHeaders",
-                            namespace: this.context.namespaces.core
-                        })
-                    );
-                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
-                    writer.popScope(); // Close RawResponse{}
+                    writer.write("RawResponse = ");
+                    this.writeRawResponseInit(writer);
                     writer.popScope(); // Close WithRawResponse{}
                     writer.writeLine("));");
                     writer.popScope();
@@ -1011,8 +899,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.write("null, ");
                         writer.write("e");
                     } else {
-                        writer.write(`${this.names.variables.responseBody}`);
+                        writer.write(`${this.names.variables.responseBody}, `);
+                        writer.write("e");
                     }
+                    writer.write(", rawResponse: ");
+                    this.writeRawResponseInit(writer);
                     writer.writeTextStatement(")");
                     writer.popScope();
 
@@ -1051,28 +942,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeLine("()");
                     writer.pushScope();
                     writer.writeLine(`Data = ${this.names.variables.responseBody},`);
-                    writer.write("RawResponse = new ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "RawResponse",
-                            namespace: this.context.namespaces.root
-                        })
-                    );
-                    writer.writeLine("()");
-                    writer.pushScope();
-                    writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
-                    writer.writeLine(
-                        `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
-                    );
-                    writer.write("Headers = ");
-                    writer.writeNode(
-                        this.csharp.classReference({
-                            name: "ResponseHeaders",
-                            namespace: this.context.namespaces.core
-                        })
-                    );
-                    writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
-                    writer.popScope(); // Close RawResponse{}
+                    writer.write("RawResponse = ");
+                    this.writeRawResponseInit(writer);
                     writer.popScope(); // Close WithRawResponse{}
                     writer.writeLine("));");
                     writer.popScope();
@@ -1829,5 +1700,37 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }),
             headerParameterBagReference: this.names.variables.headers
         };
+    }
+
+    /**
+     * Emits a `new RawResponse() { StatusCode = ..., Url = ..., Headers = ... }` expression
+     * populated from `this.names.variables.response`.Raw. The caller writes any prefix
+     * (e.g., `RawResponse = ` for object-initializer use, or `rawResponse: ` for named-arg use).
+     */
+    private writeRawResponseInit(writer: Writer): void {
+        writer.write("new ");
+        writer.writeNode(
+            this.csharp
+                .classReference({
+                    name: "RawResponse",
+                    namespace: this.context.namespaces.root
+                })
+                .asFullyQualified()
+        );
+        writer.writeLine("()");
+        writer.pushScope();
+        writer.writeLine(`StatusCode = ${this.names.variables.response}.Raw.StatusCode,`);
+        writer.writeLine(
+            `Url = ${this.names.variables.response}.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),`
+        );
+        writer.write("Headers = ");
+        writer.writeNode(
+            this.csharp.classReference({
+                name: "ResponseHeaders",
+                namespace: this.context.namespaces.core
+            })
+        );
+        writer.writeLine(`.FromHttpResponseMessage(${this.names.variables.response}.Raw)`);
+        writer.popScope(); // Close RawResponse{}
     }
 }

@@ -257,7 +257,9 @@ export async function writeFilesToDiskAndRunGenerator({
         const rawSpecsDir = join(workspaceTempDir.path, SPECS_DIRECTORY_NAME);
         await mkdir(rawSpecsDir, { recursive: true });
 
-        const containerSpecsDir = CONTAINER_SPECS_DIRECTORY;
+        // In native (non-container) mode, the manifest's specPath entries must reference
+        // the actual host paths since there is no Docker volume mount to remap them.
+        const containerSpecsDir = environment.usesContainerPaths ? CONTAINER_SPECS_DIRECTORY : rawSpecsDir;
 
         const manifest = await collectRawSpecs({
             specs: rawApiSpecs,

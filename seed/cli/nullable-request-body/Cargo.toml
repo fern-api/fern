@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.nullable_request_body_types]
-path = "nullable-request-body-types"
+[dependencies.nullable_request_body_sdk]
+path = "nullable-request-body-sdk"
 
 [profile.dist]
 inherits = "release"

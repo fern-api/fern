@@ -7,7 +7,8 @@ public class SeedClientSideParamsApiException(
     string message,
     int statusCode,
     object body,
-    Exception? innerException = null
+    Exception? innerException = null,
+    SeedClientSideParams.RawResponse? rawResponse = null
 ) : SeedClientSideParamsException(message, innerException)
 {
     /// <summary>
@@ -19,4 +20,9 @@ public class SeedClientSideParamsApiException(
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
+
+    /// <summary>
+    /// The raw HTTP response (status code, URL, headers) that triggered the exception, if available.
+    /// </summary>
+    public SeedClientSideParams.RawResponse? RawResponse => rawResponse;
 }

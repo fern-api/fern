@@ -16,7 +16,7 @@
           "enum": [
             "openai",
             "anthropic",
-            "bedrock"
+            "aws-bedrock"
           ]
         },
         "model": {

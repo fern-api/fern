@@ -45,14 +45,14 @@ Check for the credential's **presence** only — never read or print the value:
 { [ -n "${DEVIN_SERVICE_USER_KEY:-}" ] && [ -n "${DEVIN_ORG_ID:-}" ]; } && echo "cli" || echo "label"
 ```
 
-### Path 1 (preferred): the `devin` CLI
+### Path 1 (preferred): the `devin-api` CLI
 
-The bundled `devin` binary (see `src/bin/devin/README.md`) talks to the Devin API directly with the user's key.
+The bundled `devin-api` binary (see `src/bin/devin-api/README.md`) talks to the Devin API directly with the user's key.
 
 **Issue handoff** — create a session with the agent brief as the prompt:
 
 ```bash
-devin sessions create-session --json '{
+devin-api sessions create-session --json '{
   "prompt": "<the agent brief — issue body + acceptance criteria>",
   "title":  "FER-XXXX: <short summary>"
 }'
@@ -63,7 +63,7 @@ The response includes a `url` for the session. **Post that URL back to the Linea
 **PR review**:
 
 ```bash
-devin review trigger --json '{"pr_url": "https://github.com/owner/repo/pull/<N>"}'
+devin-api review trigger --json '{"pr_url": "https://github.com/owner/repo/pull/<N>"}'
 ```
 
 ### Path 2 (fallback): Linear macro labels

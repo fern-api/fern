@@ -19,7 +19,7 @@
 
 import { execFile } from "child_process";
 import { accessSync, constants } from "fs";
-import { mkdir, readdir, readFile, rename, rm, unlink, writeFile } from "fs/promises";
+import { copyFile, mkdir, readdir, readFile, rename, rm, unlink, writeFile } from "fs/promises";
 import { createRequire } from "module";
 import path from "path";
 import { promisify } from "util";
@@ -55,7 +55,7 @@ export async function generateEmbeddedTypes(args: {
             path: typesOutputDir,
             mode: { type: "downloadFiles" as const }
         },
-        customConfig: { crateName: typesCrateName.replace(/-/g, "_") },
+        customConfig: { crateName: typesCrateName.replace(/-/g, "_"), coreModulePath: "crate::core" },
         workspaceName: binaryName,
         organization: "",
         environment: { _type: "local" as const, type: "local" as const },
@@ -106,7 +106,23 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
     const { typesOutputDir, typesCrateName } = args;
     const crateName = typesCrateName.replace(/-/g, "_");
 
-    // 1. Cargo.toml — minimal lib crate with serde derives.
+    // Scan generated source files for reqwest::multipart usage (emitted
+    // by the model generator's FileUploadRequestGenerator).
+    const needsReqwest = await sourceFilesContain(path.join(typesOutputDir, "src"), "reqwest::multipart");
+
+    // 1. Cargo.toml — minimal lib crate with serde derives and
+    //    the extra deps required by the core serde helper modules.
+    const deps = [
+        'serde = { version = "1", features = ["derive"] }',
+        'serde_json = "1"',
+        'chrono = { version = "0.4", features = ["serde"] }',
+        'base64 = "0.22"',
+        'num-bigint = { version = "0.4", features = ["serde"] }',
+        'ordered-float = { version = "4.5", features = ["serde"] }'
+    ];
+    if (needsReqwest) {
+        deps.push('reqwest = { version = "0.12", features = ["multipart"], default-features = false }');
+    }
     const cargoToml = [
         "[package]",
         `name = "${crateName}"`,
@@ -117,8 +133,7 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         "doctest = false",
         "",
         "[dependencies]",
-        'serde = { version = "1", features = ["derive"] }',
-        'serde_json = "1"',
+        ...deps,
         ""
     ].join("\n");
     await writeFile(path.join(typesOutputDir, "Cargo.toml"), cargoToml);
@@ -129,7 +144,9 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         "pub use serde::{Deserialize, Serialize};",
         "pub use serde_json::{json, Value};",
         "pub use std::collections::{HashMap, HashSet};",
-        "pub use std::fmt;"
+        "pub use std::fmt;",
+        "pub use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, Utc};",
+        "pub use ordered_float::OrderedFloat;"
     ];
 
     // If the rust-model generator emitted an error.rs with BuildError,
@@ -150,25 +167,30 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
     preludeLines.push("");
     await writeFile(path.join(typesOutputDir, "src", "prelude.rs"), preludeLines.join("\n"));
 
-    // 3. Inject `pub mod prelude;` into lib.rs (right after the header
-    //    comment, before any other module declarations).
+    // 3. Copy core serde helper modules (flexible_datetime, base64_bytes,
+    //    bigint_string, number_serializers) into the types crate so
+    //    #[serde(with = "crate::core::...")] attributes resolve.
+    await copyCoreModules(typesOutputDir);
+
+    // 4. Inject `pub mod prelude;` and `pub mod core;` into lib.rs (right
+    //    after the header comment, before any other module declarations).
     const libPath = path.join(typesOutputDir, "src", "lib.rs");
     const libContent = await readFile(libPath, "utf-8");
     if (!libContent.includes("pub mod prelude;")) {
         const patched = libContent.replace(
             "//! Generated models by Fern\n",
-            "//! Generated models by Fern\n\npub mod prelude;\n"
+            "//! Generated models by Fern\n\npub mod core;\npub mod prelude;\n"
         );
         await writeFile(libPath, patched);
     }
 
-    // 4. Move generated type files into `src/types/` so `lib.rs`'s
+    // 5. Move generated type files into `src/types/` so `lib.rs`'s
     //    `pub mod types;` resolves to `src/types/mod.rs`. The rust-model
     //    generator emits `mod.rs` + per-type `.rs` files flat in `src/`;
     //    Rust expects either `src/types.rs` or `src/types/mod.rs`.
     await restructureTypesModule(path.join(typesOutputDir, "src"));
 
-    // 5. Remove the .fern/ metadata directory written by the base
+    // 6. Remove the .fern/ metadata directory written by the base
     //    generator framework — not needed inside a workspace member.
     await rm(path.join(typesOutputDir, ".fern"), { recursive: true, force: true });
 }
@@ -219,6 +241,95 @@ async function restructureTypesModule(srcDir: string): Promise<void> {
             }
         }
     }
+}
+
+/** The four core serde helper modules that the model generator references. */
+const CORE_SERDE_MODULES = ["flexible_datetime.rs", "base64_bytes.rs", "bigint_string.rs", "number_serializers.rs"];
+
+/**
+ * Copy the core serde helper modules into the types crate's `src/core/`
+ * directory and write a `mod.rs` that declares them.
+ */
+async function copyCoreModules(typesOutputDir: string): Promise<void> {
+    const coreDir = path.join(typesOutputDir, "src", "core");
+    await mkdir(coreDir, { recursive: true });
+
+    const asIsDir = resolveAsIsDir();
+    for (const filename of CORE_SERDE_MODULES) {
+        await copyFile(path.join(asIsDir, filename), path.join(coreDir, filename));
+    }
+
+    const modLines = CORE_SERDE_MODULES.map((f) => `pub mod ${f.replace(".rs", "")};`);
+    modLines.push("");
+    await writeFile(path.join(coreDir, "mod.rs"), modLines.join("\n"));
+}
+
+/**
+ * Resolve the directory containing the as-is Rust helper files
+ * (`flexible_datetime.rs`, `base64_bytes.rs`, etc.).
+ *
+ * Resolution order:
+ *   1. Docker / dist:cli — `dist/rust-model-dist/asIs/` (bundled).
+ *   2. Monorepo dev — `@fern-api/rust-base` package's `src/asIs/`.
+ */
+function resolveAsIsDir(): string {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const scriptDir: string = import.meta.dirname ?? (typeof __dirname !== "undefined" ? __dirname : ".");
+
+    // 1. Docker / dist:cli build — bundled alongside rust-model-dist.
+    const bundled = path.resolve(scriptDir, "rust-model-dist", "asIs");
+    try {
+        accessSync(path.join(bundled, "flexible_datetime.rs"), constants.R_OK);
+        return bundled;
+    } catch (_e: unknown) {
+        // Not found — fall through.
+    }
+
+    // 2. Monorepo dev — resolve via @fern-api/rust-base.
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        const base = import.meta.url || (typeof __filename !== "undefined" ? `file://${__filename}` : "file:///");
+        const require = createRequire(base);
+        const basePkg = require.resolve("@fern-api/rust-base/package.json");
+        const baseRoot = path.dirname(basePkg);
+        const devAsIs = path.join(baseRoot, "src", "asIs");
+        accessSync(path.join(devAsIs, "flexible_datetime.rs"), constants.R_OK);
+        return devAsIs;
+    } catch (_e: unknown) {
+        // fall through
+    }
+
+    throw new Error(
+        "Could not resolve Rust core as-is files. " +
+            "Ensure `pnpm turbo run dist:cli --filter @fern-api/rust-model` has been run, " +
+            "or that @fern-api/rust-base is installed in the workspace."
+    );
+}
+
+/**
+ * Recursively check whether any `.rs` file under `dir` contains `needle`.
+ */
+async function sourceFilesContain(dir: string, needle: string): Promise<boolean> {
+    let entries;
+    try {
+        entries = await readdir(dir, { withFileTypes: true });
+    } catch (_e: unknown) {
+        return false;
+    }
+    for (const entry of entries) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+            if (await sourceFilesContain(full, needle)) {
+                return true;
+            }
+        } else if (entry.name.endsWith(".rs")) {
+            const content = await readFile(full, "utf-8");
+            if (content.includes(needle)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 /**

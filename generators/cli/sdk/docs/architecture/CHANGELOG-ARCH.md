@@ -22,6 +22,94 @@ rather than user-facing changes.
 
 ## [Unreleased]
 
+### 2026-06-03 → 2026-06-08
+
+**6 merged PRs** in window · **3 with architectural impact** · **2 new implicit decisions** surfaced (D-Y, D-Z) · **2 new formal ADRs** (ADR-0004, ADR-0005) · **0 reversals** · **2 out-of-band signals**
+
+> [source: Slack] #project-cli-generator — digests from prior runs, CLI reference.md/naming thread ([FER-11016](https://linear.app/buildwithfern/issue/FER-11016), [FER-11039](https://linear.app/buildwithfern/issue/FER-11039)) · [source: Notion] [PRD: CLI Generator](https://app.notion.com/p/320b23082e4c80bd8d35f56cbb467d90) · [source: Linear] FER-11027 (Done), FER-11015 (Done), FER-11008 (In Progress — parent epic), FER-11028 (Done — fern repo)
+
+#### Shape changes
+
+- **`allOf` flattening + nullable-union composition lowering (PR #124,
+  ADR-0004, ADR-0005).** `merge_all_of_properties` walks `allOf` branches
+  recursively with last-branch-wins semantics and a `MAX_ALL_OF_DEPTH = 8`
+  safety cap. Nullable unions (`oneOf: [T, null]`) are promoted to the
+  existing null sentinel pattern (ADR-0003). Parser `+641 LOC`,
+  executor `+716 LOC`. Feature-matrix suite gains composition area:
+  74 active cells (was 72), 2 gaps (was 8).
+  Touches `src/openapi/parser.rs`, `src/openapi/executor.rs`,
+  `tests/feature_matrix_wire.rs`.
+  Sources: [PR #124](https://github.com/fern-api/cli-sdk/pull/124),
+  [ADR-0004](../adr/0004-all-of-flattening-into-per-field-flags.md),
+  [ADR-0005](../adr/0005-nullable-union-promotion-via-composition.md).
+
+- **`CliExecutor` runtime bridge for SDK execution (D-Y, FER-11027,
+  PR #168).** New `src/sdk_executor.rs` implements the generated SDK’s
+  `RequestExecutor` trait, routing SDK-originated HTTP through the CLI’s
+  transport stack with Level-2 behavioral parity (same
+  `HttpConfig::build_client()`, `DynAuthProvider::apply()`,
+  `decide_retry()`, global headers, base-URL override). ADR-0001
+  compliant. Also exposes `block_on()` sync→async helper and
+  `SdkError → CliError` bridge. Public accessors added to `AppContext`.
+  Touches `src/sdk_executor.rs`, `src/lib.rs`, `src/openapi/app.rs`.
+  Sources: [FER-11027](https://linear.app/buildwithfern/issue/FER-11027),
+  [PR #168](https://github.com/fern-api/cli-sdk/pull/168).
+
+- **Auth fail-closed security hardening in `CliExecutor` (PR #171).**
+  `build_request` changed to return `Result` — auth errors now propagate
+  instead of silently sending unauthenticated requests. Adds `Auth`
+  variant to `SdkError` preserving exit code and error category.
+  Touches `src/sdk_executor.rs`.
+  Sources: [PR #171](https://github.com/fern-api/cli-sdk/pull/171).
+
+#### Cross-cutting concept changes
+
+- **Source-owned sync manifest (D-Z, FER-11015, PR #165).**
+  `sync-manifest.toml` classifies every tracked file as
+  `ship` / `dev-only` / `templatized` / `not-synced` for the fern vendor
+  sync. CI check (`scripts/check-sync-manifest.py`) fails on any
+  unclassified file, preventing layout drift. Inverts ownership: cli-sdk
+  declares file classification, fern consumes it.
+  Follow-up [PR #170](https://github.com/fern-api/cli-sdk/pull/170)
+  reclassified `build.rs` as `not-synced`.
+  Sources: [FER-11015](https://linear.app/buildwithfern/issue/FER-11015),
+  [PR #165](https://github.com/fern-api/cli-sdk/pull/165),
+  [PR #170](https://github.com/fern-api/cli-sdk/pull/170).
+
+- **Feature-matrix suite at 74 active cells, 2 gaps (was 72 + 8).**
+  PR #124 added composition cells (allOf, nullable-union, const-default)
+  and closed 6 previously-ignored gaps via the composition lowering.
+  Sources: [PR #124](https://github.com/fern-api/cli-sdk/pull/124).
+
+#### Out-of-band signals
+
+- **SDK co-generation pipeline landed in fern repo (FER-11025, FER-11026,
+  FER-11028).** Transport seam ([FER-11025](https://linear.app/buildwithfern/issue/FER-11025)),
+  co-vendor SDK crate in CLI generation pipeline
+  ([FER-11026](https://linear.app/buildwithfern/issue/FER-11026)),
+  and generated `sdk_client()` glue + verification suite
+  ([FER-11028](https://linear.app/buildwithfern/issue/FER-11028))
+  all completed. These are counterparts to PR #168’s `CliExecutor` —
+  together they deliver the typed, execution-sharing SDK client for
+  custom commands (parent epic [FER-11008](https://linear.app/buildwithfern/issue/FER-11008)).
+  Sources: [FER-11025](https://linear.app/buildwithfern/issue/FER-11025),
+  [FER-11026](https://linear.app/buildwithfern/issue/FER-11026),
+  [FER-11028](https://linear.app/buildwithfern/issue/FER-11028).
+
+- **CLI naming and reference docs (Slack, 2026-06-04–05).**
+  Team discussed CLI binary naming conventions (`{org}` vs `{org}-api`,
+  tracked as [FER-11039](https://linear.app/buildwithfern/issue/FER-11039)),
+  generating `reference.md`
+  ([FER-11016](https://linear.app/buildwithfern/issue/FER-11016)),
+  CI-on-generation ([FER-11017](https://linear.app/buildwithfern/issue/FER-11017)),
+  progressive-disclosure README
+  ([FER-11018](https://linear.app/buildwithfern/issue/FER-11018), already landed),
+  and CLI snippets in API explorer
+  ([FER-11019](https://linear.app/buildwithfern/issue/FER-11019)).
+  No code change in cli-sdk, but the naming decision (FER-11039) may
+  eventually affect the binary-name generation logic.
+  Sources: [Slack thread](https://buildwithfern.slack.com/archives/C0B2EM4Q3TN/p1780538086515969).
+
 ### 2026-06-02 → 2026-06-03
 
 **8 merged PRs** in window · **3 with architectural impact** · **1 new implicit decision** surfaced (D-X) · **0 reversals** · **1 out-of-band signal**
@@ -527,6 +615,6 @@ see [`automation/README.md`](./automation/README.md) for activation
 steps. Manual invocation works today via the `devin run` command in
 that file.
 
-<!-- last-run: 2026-06-03T01:00:00Z -->
+<!-- last-run: 2026-06-08T01:01:00Z -->
 <!-- The marker above is consumed by the automation playbook to compute
      the next run's window. Each successful run updates it. -->

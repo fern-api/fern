@@ -86,9 +86,10 @@ RUN ruff --version
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
 
-# Upgrade pip to 26.1+ to address CVE-2025-8869, CVE-2026-3219, CVE-2026-6357,
-# and CVE-2026-1703 (self-update flaw running after wheel install).
-RUN pip3 install --upgrade pip==26.1
+# Upgrade pip to 26.1.2+ to address CVE-2025-8869, CVE-2026-3219, CVE-2026-6357,
+# CVE-2026-1703 (self-update flaw running after wheel install), and
+# CVE-2026-8643 (directory traversal via malicious wheel entry-point names).
+RUN pip3 install --upgrade pip==26.1.2
 # Keep in sync with the poetry-core version in pyproject.toml.
 RUN pip3 install poetry==2.4.1
 RUN poetry config virtualenvs.create false

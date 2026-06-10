@@ -358,24 +358,13 @@ allowedFailures:
   # Unsupported features in the v1 Go generator (generation aborts with
   # "not supported yet" or a nil-pointer panic). These need feature work.
   - alias-extends # object/request body extends an alias; v1 assumes extends are objects
-  - bytes-download
-  - bytes-upload
-  - streaming-parameter
   - pagination
-  - pagination-uri-path
 
   # Generated Go code does not compile. Each needs a generator fix.
   - literal
-  - mixed-case:no-custom-config # user property `extraProperties` collides with the generated accessor
-  - mixed-case:default-values
   - property-access # union member name `Normal` is declared twice
   - trace # generated v2/ subpackage references undefined test types
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline
 
   # Dynamic snippet generation produces code that does not compile.
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-
-  # Wire tests fail at runtime.
-  - oauth-client-credentials:.
-  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
-  - exhaustive:omit-empty-request-wrappers

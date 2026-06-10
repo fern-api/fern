@@ -79,7 +79,17 @@ public partial class CompletionsClient : ICompletionsClient
                 switch (response.StatusCode)
                 {
                     case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<string>(responseBody));
+                        throw new BadRequestError(
+                            JsonUtils.Deserialize<string>(responseBody),
+                            rawResponse: new SeedServerSentEvents.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -89,7 +99,13 @@ public partial class CompletionsClient : ICompletionsClient
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedServerSentEvents.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -160,7 +176,17 @@ public partial class CompletionsClient : ICompletionsClient
                 switch (response.StatusCode)
                 {
                     case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<string>(responseBody));
+                        throw new BadRequestError(
+                            JsonUtils.Deserialize<string>(responseBody),
+                            rawResponse: new SeedServerSentEvents.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -170,7 +196,13 @@ public partial class CompletionsClient : ICompletionsClient
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedServerSentEvents.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -239,7 +271,17 @@ public partial class CompletionsClient : ICompletionsClient
                 switch (response.StatusCode)
                 {
                     case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<string>(responseBody));
+                        throw new BadRequestError(
+                            JsonUtils.Deserialize<string>(responseBody),
+                            rawResponse: new SeedServerSentEvents.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -249,7 +291,13 @@ public partial class CompletionsClient : ICompletionsClient
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedServerSentEvents.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -322,7 +370,17 @@ public partial class CompletionsClient : ICompletionsClient
                 switch (response.StatusCode)
                 {
                     case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<string>(responseBody));
+                        throw new BadRequestError(
+                            JsonUtils.Deserialize<string>(responseBody),
+                            rawResponse: new SeedServerSentEvents.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -332,7 +390,13 @@ public partial class CompletionsClient : ICompletionsClient
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedServerSentEvents.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

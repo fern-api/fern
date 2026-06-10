@@ -51,7 +51,17 @@ public partial class ServiceClient : IServiceClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<object>(responseBody));
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<object>(responseBody),
+                            rawResponse: new SeedAccept.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -61,7 +71,13 @@ public partial class ServiceClient : IServiceClient
             throw new SeedAcceptApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedAccept.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
