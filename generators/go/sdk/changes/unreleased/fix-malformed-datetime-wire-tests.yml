@@ -1,0 +1,5 @@
+- summary: |
+    Normalize malformed date-time examples (e.g. space instead of "T" separator)
+    to valid RFC3339 in generated wire test code, preventing MustParseDateTime
+    panics.
+  type: fix

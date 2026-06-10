@@ -1042,7 +1042,7 @@ export class DynamicTypeLiteralMapper {
                 if (dateTime == null) {
                     return java.TypeLiteral.nop();
                 }
-                return java.TypeLiteral.dateTime(dateTime);
+                return java.TypeLiteral.dateTime(this.normalizeDateTimeString(dateTime));
             }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
@@ -1097,5 +1097,15 @@ export class DynamicTypeLiteralMapper {
                       : value
                 : value;
         return this.context.getValueAsBoolean({ value: bool });
+    }
+
+    private normalizeDateTimeString(dateTime: string): string {
+        // Attempt to parse as a Date to normalize non-RFC3339 formats
+        // (e.g. "2025-02-15 10:30:00+00:00" with space instead of "T").
+        const parsed = new Date(dateTime);
+        if (!isNaN(parsed.getTime())) {
+            return parsed.toISOString();
+        }
+        return dateTime;
     }
 }

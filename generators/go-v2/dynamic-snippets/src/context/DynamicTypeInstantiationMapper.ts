@@ -856,6 +856,12 @@ export class DynamicTypeInstantiationMapper {
         if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(dateTime)) {
             return `${dateTime}Z`;
         }
+        // Attempt to parse as a Date to normalize non-RFC3339 formats
+        // (e.g. "2025-02-15 10:30:00+00:00" with space instead of "T").
+        const parsed = new Date(dateTime);
+        if (!isNaN(parsed.getTime())) {
+            return parsed.toISOString();
+        }
         return dateTime;
     }
 }
