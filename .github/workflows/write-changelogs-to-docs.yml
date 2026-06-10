@@ -102,8 +102,11 @@ jobs:
           repository: fern-api/docs
           merge-method: squash
 
-      - name: Approve PR
+      - name: Trigger approval workflow in docs repo
         if: steps.cpr.outputs.pull-request-number
         env:
           GH_TOKEN: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
-        run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve
+        run: |
+          gh api repos/fern-api/docs/dispatches \
+            -f event_type=approve-changelog-pr \
+            -f "client_payload[pull_number]=${{ steps.cpr.outputs.pull-request-number }}"
