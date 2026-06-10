@@ -213,11 +213,17 @@ export async function runRemoteGenerationForGenerator({
 
     const apiDefinition = convertIrToFdrApi({
         ir,
-        snippetsConfig: buildSnippetsConfigForSdk({
-            language: generatorInvocation.language,
-            packageName,
-            version: resolvedVersion
-        }),
+        snippetsConfig: {
+            typescriptSdk: undefined,
+            pythonSdk: undefined,
+            javaSdk: undefined,
+            rubySdk: undefined,
+            goSdk: undefined,
+            csharpSdk: undefined,
+            phpSdk: undefined,
+            swiftSdk: undefined,
+            rustSdk: undefined
+        },
         context: interactiveTaskContext
     });
     try {
