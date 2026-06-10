@@ -65,7 +65,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 return new WithRawResponse<UnionResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -79,7 +79,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -90,7 +96,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -130,7 +142,7 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                 return new WithRawResponse<UnionListResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -144,7 +156,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -155,7 +173,13 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             throw new SeedUndiscriminatedUnionWithResponsePropertyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedUndiscriminatedUnionWithResponseProperty.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
