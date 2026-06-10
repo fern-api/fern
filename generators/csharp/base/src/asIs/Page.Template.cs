@@ -23,12 +23,13 @@ public class Page<TItem> : IEnumerable<TItem>
     /// <summary>
     /// Creates a new <see cref="Page{TItem}"/> with the specified items and response metadata.
     /// </summary>
-    public Page(IReadOnlyList<TItem> items, object? response, HttpStatusCode statusCode, ResponseHeaders? headers)
+    public Page(IReadOnlyList<TItem> items, object? response, HttpStatusCode statusCode, ResponseHeaders? headers, Uri? url)
     {
         Items = items;
         Response = response;
         StatusCode = statusCode;
         Headers = headers;
+        Url = url;
     }
 
     /// <summary>
@@ -51,6 +52,11 @@ public class Page<TItem> : IEnumerable<TItem>
     /// The HTTP response headers from the response that produced this page.
     /// </summary>
     public ResponseHeaders? Headers { get; }
+
+    /// <summary>
+    /// The request URL that produced this page.
+    /// </summary>
+    public Uri? Url { get; }
 
     /// <summary>
     /// Enumerate the items in this <see cref="Page{TItem}"/>.
