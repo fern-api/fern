@@ -209,16 +209,6 @@ export class AutoVersionStep extends BaseStep {
             });
         }
 
-        const chunks = service.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
-        const cappedChunks = chunks.slice(0, MAX_CHUNKS);
-        const skippedChunks = chunks.length - cappedChunks.length;
-        if (chunks.length > 1) {
-            this.logger.info(
-                `AutoVersionStep: split diff into ${chunks.length} chunks` +
-                    (skippedChunks > 0 ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks})` : "")
-            );
-        }
-
         let analysis: FAIAnalysis | null;
         try {
             if (this.config.ai == null && this.config.fernToken != null) {
@@ -227,6 +217,15 @@ export class AutoVersionStep extends BaseStep {
                 // the full cleaned diff in one request.
                 analysis = await this.analyzeViaFaiService(cleanedDiff, language, previousVersion);
             } else {
+                const chunks = service.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+                const cappedChunks = chunks.slice(0, MAX_CHUNKS);
+                const skippedChunks = chunks.length - cappedChunks.length;
+                if (chunks.length > 1) {
+                    this.logger.info(
+                        `AutoVersionStep: split diff into ${chunks.length} chunks` +
+                            (skippedChunks > 0 ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks})` : "")
+                    );
+                }
                 analysis =
                     cappedChunks.length <= 1
                         ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
@@ -692,8 +691,15 @@ function isFaiAnalyzeResponse(value: unknown): value is FaiAnalyzeResponse {
     return (
         typeof candidate.message === "string" &&
         typeof candidate.version_bump === "string" &&
-        FAI_VERSION_BUMPS.includes(candidate.version_bump)
+        FAI_VERSION_BUMPS.includes(candidate.version_bump) &&
+        isStringOrAbsent(candidate.changelog_entry) &&
+        isStringOrAbsent(candidate.pr_description) &&
+        isStringOrAbsent(candidate.version_bump_reason)
     );
+}
+
+function isStringOrAbsent(value: unknown): value is string | undefined {
+    return value == null || typeof value === "string";
 }
 
 function nonEmpty(value: string | undefined): string | undefined {

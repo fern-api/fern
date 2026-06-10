@@ -859,4 +859,24 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         expect(result.commitMessage).toContain("SDK regeneration");
         expect(result.changelogEntry).toBeUndefined();
     });
+
+    it("falls back to PATCH when FAI returns malformed optional fields", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                message: "feat: add newFeature helper",
+                version_bump: "MINOR",
+                changelog_entry: 123
+            })
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.0.1");
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.commitMessage).toContain("SDK regeneration");
+        expect(result.changelogEntry).toBeUndefined();
+    });
 });
