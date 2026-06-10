@@ -37,4 +37,23 @@ impl ApiClient {
             )
             .await
     }
+
+    pub async fn test_get_via_overrides(
+        &self,
+        region: &str,
+        request: &TestGetViaOverridesQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<TestGetViaOverridesResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                &format!("test/{}/resource-via-overrides", region),
+                None,
+                QueryBuilder::new()
+                    .string("limit", request.limit.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
 }

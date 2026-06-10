@@ -20,6 +20,16 @@ Full command reference for `x-fern-default-test`.
 | `--x-api-version` | `string` | No |  |
 | `--limit` | `string` | No |  |
 
+#### `x-fern-default-test test test-get-via-overrides`
+
+`GET /test/{region}/resource-via-overrides`
+
+| Flag | Type | Required | Description |
+|------|------|----------|-------------|
+| `--region` | `string` | Yes |  |
+| `--x-api-version` | `string` | No |  |
+| `--limit` | `string` | No |  |
+
 ---
 
 ## Global flags
