@@ -23,7 +23,7 @@ public class Page<TItem> : IEnumerable<TItem>
     /// <summary>
     /// Creates a new <see cref="Page{TItem}"/> with the specified items and response metadata.
     /// </summary>
-    public Page(IReadOnlyList<TItem> items, object? response, HttpStatusCode statusCode, ResponseHeaders? headers, Uri? url)
+    public Page(IReadOnlyList<TItem> items, object? response, HttpStatusCode statusCode, ResponseHeaders? headers, Uri? url = null)
     {
         Items = items;
         Response = response;

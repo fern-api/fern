@@ -28,7 +28,7 @@ public class Page<TItem> : IEnumerable<TItem>
         object? response,
         HttpStatusCode statusCode,
         ResponseHeaders? headers,
-        Uri? url
+        Uri? url = null
     )
     {
         Items = items;
