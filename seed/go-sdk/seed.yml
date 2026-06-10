@@ -362,7 +362,6 @@ allowedFailures:
 
   # Generated Go code does not compile. Each needs a generator fix.
   - enum # enum-union header value is not converted to a string
-  - literal
   - trace # generated v2/ subpackage references undefined test types
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline
 
