@@ -12,10 +12,7 @@ public partial class BClient : IBClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.A.B.FooAsync();
-    /// </code></example>
-    public async Task FooAsync(
+    private async Task<RawResponse> FooAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -40,7 +37,12 @@ public partial class BClient : IBClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -52,5 +54,16 @@ public partial class BClient : IBClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.A.B.FooAsync();
+    /// </code></example>
+    public WithRawResponseTask FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(FooAsyncCore(options, cancellationToken));
     }
 }

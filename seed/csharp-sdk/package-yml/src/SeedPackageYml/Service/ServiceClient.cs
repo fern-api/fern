@@ -11,10 +11,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
-    /// </code></example>
-    public async Task NopAsync(
+    private async Task<RawResponse> NopAsyncCore(
         string id,
         string nestedId,
         RequestOptions? options = null,
@@ -45,7 +42,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -57,5 +59,18 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
+    /// </code></example>
+    public WithRawResponseTask NopAsync(
+        string id,
+        string nestedId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(NopAsyncCore(id, nestedId, options, cancellationToken));
     }
 }

@@ -28,12 +28,7 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.ExtendedInlineRequestBodyAsync(
-    ///     new InlinedChildRequest { Child = "child", Parent = "parent" }
-    /// );
-    /// </code></example>
-    public async Task ExtendedInlineRequestBodyAsync(
+    private async Task<RawResponse> ExtendedInlineRequestBodyAsyncCore(
         InlinedChildRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -60,7 +55,12 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -72,5 +72,21 @@ public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new InlinedChildRequest { Child = "child", Parent = "parent" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask ExtendedInlineRequestBodyAsync(
+        InlinedChildRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            ExtendedInlineRequestBodyAsyncCore(request, options, cancellationToken)
+        );
     }
 }

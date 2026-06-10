@@ -1,4 +1,5 @@
 using global::System.Net.ServerSentEvents;
+using global::System.Runtime.CompilerServices;
 using global::System.Text.Json;
 using SeedApi.Core;
 
@@ -28,6 +29,636 @@ public partial class SeedApiClient : ISeedApiClient
             }
         }
         _client = new RawClient(clientOptions);
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamProtocolNoCollisionResponse>>
+    > StreamProtocolNoCollisionAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/protocol-no-collision",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<StreamProtocolNoCollisionResponse>>()
+            {
+                Data = StreamProtocolNoCollisionAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<StreamProtocolNoCollisionResponse> StreamProtocolNoCollisionAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamProtocolNoCollisionResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamProtocolNoCollisionResponse>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamProtocolCollisionResponse>>
+    > StreamProtocolCollisionAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/protocol-collision",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<StreamProtocolCollisionResponse>>()
+            {
+                Data = StreamProtocolCollisionAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<StreamProtocolCollisionResponse> StreamProtocolCollisionAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamProtocolCollisionResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamProtocolCollisionResponse>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamDataContextResponse>>
+    > StreamDataContextAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/data-context",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<StreamDataContextResponse>>()
+            {
+                Data = StreamDataContextAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<StreamDataContextResponse> StreamDataContextAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamDataContextResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamDataContextResponse>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamNoContextResponse>>
+    > StreamNoContextAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/no-context",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<StreamNoContextResponse>>()
+            {
+                Data = StreamNoContextAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<StreamNoContextResponse> StreamNoContextAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamNoContextResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamNoContextResponse>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamProtocolWithFlatSchemaResponse>>
+    > StreamProtocolWithFlatSchemaAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/protocol-with-flat-schema",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<StreamProtocolWithFlatSchemaResponse>>()
+            {
+                Data = StreamProtocolWithFlatSchemaAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<StreamProtocolWithFlatSchemaResponse> StreamProtocolWithFlatSchemaAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamProtocolWithFlatSchemaResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamProtocolWithFlatSchemaResponse>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamDataContextWithEnvelopeSchemaResponse>>
+    > StreamDataContextWithEnvelopeSchemaAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/data-context-with-envelope-schema",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<
+                IAsyncEnumerable<StreamDataContextWithEnvelopeSchemaResponse>
+            >()
+            {
+                Data = StreamDataContextWithEnvelopeSchemaAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<StreamDataContextWithEnvelopeSchemaResponse> StreamDataContextWithEnvelopeSchemaAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamDataContextWithEnvelopeSchemaResponse? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamDataContextWithEnvelopeSchemaResponse>(
+                        item.Data
+                    );
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<WithRawResponse<IAsyncEnumerable<Event>>> StreamOasSpecNativeAsyncCore(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/oas-spec-native",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<Event>>()
+            {
+                Data = StreamOasSpecNativeAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<Event> StreamOasSpecNativeAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                Event? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<Event>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>
+    > StreamXFernStreamingConditionStreamAsyncCore(
+        StreamXFernStreamingConditionStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/x-fern-streaming-condition",
+                    Body = request,
+                    Headers = _headers,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>()
+            {
+                Data = StreamXFernStreamingConditionStreamAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingConditionStreamAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        string? line;
+        using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
+        while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
+        {
+            CompletionStreamChunk? result;
+            try
+            {
+                result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
+            }
+            catch (JsonException)
+            {
+                throw new SeedApiException($"Unable to deserialize JSON response 'line'");
+            }
+            yield return result!;
+        }
     }
 
     private async Task<
@@ -96,6 +727,81 @@ public partial class SeedApiClient : ISeedApiClient
                 response.StatusCode,
                 responseBody
             );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>
+    > StreamXFernStreamingSharedSchemaStreamAsyncCore(
+        StreamXFernStreamingSharedSchemaStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/x-fern-streaming-shared-schema",
+                    Body = request,
+                    Headers = _headers,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>()
+            {
+                Data = StreamXFernStreamingSharedSchemaStreamAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingSharedSchemaStreamAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        string? line;
+        using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
+        while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
+        {
+            CompletionStreamChunk? result;
+            try
+            {
+                result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
+            }
+            catch (JsonException)
+            {
+                throw new SeedApiException($"Unable to deserialize JSON response 'line'");
+            }
+            yield return result!;
         }
     }
 
@@ -235,6 +941,81 @@ public partial class SeedApiClient : ISeedApiClient
         }
     }
 
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>
+    > StreamXFernStreamingUnionStreamAsyncCore(
+        StreamXFernStreamingUnionStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/x-fern-streaming-union",
+                    Body = request,
+                    Headers = _headers,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>()
+            {
+                Data = StreamXFernStreamingUnionStreamAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingUnionStreamAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        string? line;
+        using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
+        while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
+        {
+            CompletionStreamChunk? result;
+            try
+            {
+                result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
+            }
+            catch (JsonException)
+            {
+                throw new SeedApiException($"Unable to deserialize JSON response 'line'");
+            }
+            yield return result!;
+        }
+    }
+
     private async Task<WithRawResponse<CompletionFullResponse>> StreamXFernStreamingUnionAsyncCore(
         StreamXFernStreamingUnionRequest request,
         RequestOptions? options = null,
@@ -371,6 +1152,84 @@ public partial class SeedApiClient : ISeedApiClient
     }
 
     private async Task<
+        WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>
+    > StreamXFernStreamingNullableConditionStreamAsyncCore(
+        StreamXFernStreamingNullableConditionStreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream/x-fern-streaming-nullable-condition",
+                    Body = request,
+                    Headers = _headers,
+                    ContentType = "application/json",
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>()
+            {
+                Data = StreamXFernStreamingNullableConditionStreamAsyncBody(
+                    response,
+                    cancellationToken
+                ),
+                RawResponse = new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingNullableConditionStreamAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        string? line;
+        using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
+        while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
+        {
+            CompletionStreamChunk? result;
+            try
+            {
+                result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
+            }
+            catch (JsonException)
+            {
+                throw new SeedApiException($"Unable to deserialize JSON response 'line'");
+            }
+            yield return result!;
+        }
+    }
+
+    private async Task<
         WithRawResponse<CompletionFullResponse>
     > StreamXFernStreamingNullableConditionAsyncCore(
         StreamXFernStreamingNullableConditionRequest request,
@@ -439,13 +1298,9 @@ public partial class SeedApiClient : ISeedApiClient
         }
     }
 
-    /// <summary>
-    /// Uses discriminator with mapping, x-fern-discriminator-context set to protocol. Because the discriminant is at the protocol level, the data field can be any type or absent entirely. Demonstrates heartbeat (no data), string literal, number literal, and object data payloads.
-    /// </summary>
-    /// <example><code>
-    /// client.StreamProtocolNoCollisionAsync(new StreamRequest());
-    /// </code></example>
-    public async IAsyncEnumerable<StreamProtocolNoCollisionResponse> StreamProtocolNoCollisionAsync(
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<string>>
+    > StreamXFernStreamingSseOnlyAsyncCore(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -462,7 +1317,7 @@ public partial class SeedApiClient : ISeedApiClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "stream/protocol-no-collision",
+                    Path = "stream/x-fern-streaming-sse-only",
                     Body = request,
                     Headers = _headers,
                     Options = options,
@@ -472,30 +1327,16 @@ public partial class SeedApiClient : ISeedApiClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
+            return new WithRawResponse<IAsyncEnumerable<string>>()
             {
-                if (!string.IsNullOrEmpty(item.Data))
+                Data = StreamXFernStreamingSseOnlyAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
                 {
-                    StreamProtocolNoCollisionResponse? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamProtocolNoCollisionResponse>(
-                            item.Data
-                        );
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
         }
         {
             var responseBody = await response
@@ -507,6 +1348,51 @@ public partial class SeedApiClient : ISeedApiClient
                 responseBody
             );
         }
+    }
+
+    private async IAsyncEnumerable<string> StreamXFernStreamingSseOnlyAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                string? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<string>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedApiException($"Unable to deserialize JSON response 'item.Data'");
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Uses discriminator with mapping, x-fern-discriminator-context set to protocol. Because the discriminant is at the protocol level, the data field can be any type or absent entirely. Demonstrates heartbeat (no data), string literal, number literal, and object data payloads.
+    /// </summary>
+    /// <example><code>
+    /// client.StreamProtocolNoCollisionAsync(new StreamRequest());
+    /// </code></example>
+    public WithRawResponseStream<StreamProtocolNoCollisionResponse> StreamProtocolNoCollisionAsync(
+        StreamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseStream<StreamProtocolNoCollisionResponse>(
+            StreamProtocolNoCollisionAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -515,66 +1401,16 @@ public partial class SeedApiClient : ISeedApiClient
     /// <example><code>
     /// client.StreamProtocolCollisionAsync(new StreamRequest());
     /// </code></example>
-    public async IAsyncEnumerable<StreamProtocolCollisionResponse> StreamProtocolCollisionAsync(
+    public WithRawResponseStream<StreamProtocolCollisionResponse> StreamProtocolCollisionAsync(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/protocol-collision",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
-            {
-                if (!string.IsNullOrEmpty(item.Data))
-                {
-                    StreamProtocolCollisionResponse? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamProtocolCollisionResponse>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<StreamProtocolCollisionResponse>(
+            StreamProtocolCollisionAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -583,66 +1419,16 @@ public partial class SeedApiClient : ISeedApiClient
     /// <example><code>
     /// client.StreamDataContextAsync(new StreamRequest());
     /// </code></example>
-    public async IAsyncEnumerable<StreamDataContextResponse> StreamDataContextAsync(
+    public WithRawResponseStream<StreamDataContextResponse> StreamDataContextAsync(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/data-context",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
-            {
-                if (!string.IsNullOrEmpty(item.Data))
-                {
-                    StreamDataContextResponse? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamDataContextResponse>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<StreamDataContextResponse>(
+            StreamDataContextAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -651,66 +1437,16 @@ public partial class SeedApiClient : ISeedApiClient
     /// <example><code>
     /// client.StreamNoContextAsync(new StreamRequest());
     /// </code></example>
-    public async IAsyncEnumerable<StreamNoContextResponse> StreamNoContextAsync(
+    public WithRawResponseStream<StreamNoContextResponse> StreamNoContextAsync(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/no-context",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
-            {
-                if (!string.IsNullOrEmpty(item.Data))
-                {
-                    StreamNoContextResponse? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamNoContextResponse>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<StreamNoContextResponse>(
+            StreamNoContextAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -719,68 +1455,16 @@ public partial class SeedApiClient : ISeedApiClient
     /// <example><code>
     /// client.StreamProtocolWithFlatSchemaAsync(new StreamRequest());
     /// </code></example>
-    public async IAsyncEnumerable<StreamProtocolWithFlatSchemaResponse> StreamProtocolWithFlatSchemaAsync(
+    public WithRawResponseStream<StreamProtocolWithFlatSchemaResponse> StreamProtocolWithFlatSchemaAsync(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/protocol-with-flat-schema",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
-            {
-                if (!string.IsNullOrEmpty(item.Data))
-                {
-                    StreamProtocolWithFlatSchemaResponse? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamProtocolWithFlatSchemaResponse>(
-                            item.Data
-                        );
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<StreamProtocolWithFlatSchemaResponse>(
+            StreamProtocolWithFlatSchemaAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -789,68 +1473,16 @@ public partial class SeedApiClient : ISeedApiClient
     /// <example><code>
     /// client.StreamDataContextWithEnvelopeSchemaAsync(new StreamRequest());
     /// </code></example>
-    public async IAsyncEnumerable<StreamDataContextWithEnvelopeSchemaResponse> StreamDataContextWithEnvelopeSchemaAsync(
+    public WithRawResponseStream<StreamDataContextWithEnvelopeSchemaResponse> StreamDataContextWithEnvelopeSchemaAsync(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/data-context-with-envelope-schema",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
-            {
-                if (!string.IsNullOrEmpty(item.Data))
-                {
-                    StreamDataContextWithEnvelopeSchemaResponse? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamDataContextWithEnvelopeSchemaResponse>(
-                            item.Data
-                        );
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<StreamDataContextWithEnvelopeSchemaResponse>(
+            StreamDataContextWithEnvelopeSchemaAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -859,66 +1491,16 @@ public partial class SeedApiClient : ISeedApiClient
     /// <example><code>
     /// client.StreamOasSpecNativeAsync(new StreamRequest());
     /// </code></example>
-    public async IAsyncEnumerable<Event> StreamOasSpecNativeAsync(
+    public WithRawResponseStream<Event> StreamOasSpecNativeAsync(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/oas-spec-native",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
-            {
-                if (!string.IsNullOrEmpty(item.Data))
-                {
-                    Event? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<Event>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<Event>(
+            StreamOasSpecNativeAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -929,60 +1511,16 @@ public partial class SeedApiClient : ISeedApiClient
     ///     new StreamXFernStreamingConditionStreamRequest { Query = "query", Stream = true }
     /// );
     /// </code></example>
-    public async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingConditionStreamAsync(
+    public WithRawResponseStream<CompletionStreamChunk> StreamXFernStreamingConditionStreamAsync(
         StreamXFernStreamingConditionStreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/x-fern-streaming-condition",
-                    Body = request,
-                    Headers = _headers,
-                    ContentType = "application/json",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            string? line;
-            using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
-            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
-            {
-                CompletionStreamChunk? result;
-                try
-                {
-                    result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
-                }
-                catch (JsonException)
-                {
-                    throw new SeedApiException($"Unable to deserialize JSON response 'line'");
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<CompletionStreamChunk>(
+            StreamXFernStreamingConditionStreamAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -1017,60 +1555,16 @@ public partial class SeedApiClient : ISeedApiClient
     ///     }
     /// );
     /// </code></example>
-    public async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingSharedSchemaStreamAsync(
+    public WithRawResponseStream<CompletionStreamChunk> StreamXFernStreamingSharedSchemaStreamAsync(
         StreamXFernStreamingSharedSchemaStreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/x-fern-streaming-shared-schema",
-                    Body = request,
-                    Headers = _headers,
-                    ContentType = "application/json",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            string? line;
-            using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
-            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
-            {
-                CompletionStreamChunk? result;
-                try
-                {
-                    result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
-                }
-                catch (JsonException)
-                {
-                    throw new SeedApiException($"Unable to deserialize JSON response 'line'");
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<CompletionStreamChunk>(
+            StreamXFernStreamingSharedSchemaStreamAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -1133,60 +1627,16 @@ public partial class SeedApiClient : ISeedApiClient
     ///     )
     /// );
     /// </code></example>
-    public async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingUnionStreamAsync(
+    public WithRawResponseStream<CompletionStreamChunk> StreamXFernStreamingUnionStreamAsync(
         StreamXFernStreamingUnionStreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/x-fern-streaming-union",
-                    Body = request,
-                    Headers = _headers,
-                    ContentType = "application/json",
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            string? line;
-            using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
-            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
-            {
-                CompletionStreamChunk? result;
-                try
-                {
-                    result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
-                }
-                catch (JsonException)
-                {
-                    throw new SeedApiException($"Unable to deserialize JSON response 'line'");
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<CompletionStreamChunk>(
+            StreamXFernStreamingUnionStreamAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -1242,60 +1692,20 @@ public partial class SeedApiClient : ISeedApiClient
     ///     new StreamXFernStreamingNullableConditionStreamRequest { Query = "query", Stream = true }
     /// );
     /// </code></example>
-    public async IAsyncEnumerable<CompletionStreamChunk> StreamXFernStreamingNullableConditionStreamAsync(
+    public WithRawResponseStream<CompletionStreamChunk> StreamXFernStreamingNullableConditionStreamAsync(
         StreamXFernStreamingNullableConditionStreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/x-fern-streaming-nullable-condition",
-                    Body = request,
-                    Headers = _headers,
-                    ContentType = "application/json",
-                    Options = options,
-                },
+        return new WithRawResponseStream<CompletionStreamChunk>(
+            StreamXFernStreamingNullableConditionStreamAsyncCore(
+                request,
+                options,
                 cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            string? line;
-            using var reader = new StreamReader(await response.Raw.Content.ReadAsStreamAsync());
-            while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))
-            {
-                CompletionStreamChunk? result;
-                try
-                {
-                    result = JsonUtils.Deserialize<CompletionStreamChunk>(line);
-                }
-                catch (JsonException)
-                {
-                    throw new SeedApiException($"Unable to deserialize JSON response 'line'");
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+            ),
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -1323,65 +1733,15 @@ public partial class SeedApiClient : ISeedApiClient
     /// <example><code>
     /// client.StreamXFernStreamingSseOnlyAsync(new StreamRequest());
     /// </code></example>
-    public async IAsyncEnumerable<string> StreamXFernStreamingSseOnlyAsync(
+    public WithRawResponseStream<string> StreamXFernStreamingSseOnlyAsync(
         StreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "stream/x-fern-streaming-sse-only",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
-            {
-                if (!string.IsNullOrEmpty(item.Data))
-                {
-                    string? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<string>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedApiException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseStream<string>(
+            StreamXFernStreamingSseOnlyAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 }

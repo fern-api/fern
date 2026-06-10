@@ -11,10 +11,7 @@ public partial class TasktestClient : ITasktestClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Tasktest.HelloAsync();
-    /// </code></example>
-    public async global::System.Threading.Tasks.Task HelloAsync(
+    private async global::System.Threading.Tasks.Task<RawResponse> HelloAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -39,7 +36,12 @@ public partial class TasktestClient : ITasktestClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -51,5 +53,16 @@ public partial class TasktestClient : ITasktestClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Tasktest.HelloAsync();
+    /// </code></example>
+    public WithRawResponseTask HelloAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(HelloAsyncCore(options, cancellationToken));
     }
 }

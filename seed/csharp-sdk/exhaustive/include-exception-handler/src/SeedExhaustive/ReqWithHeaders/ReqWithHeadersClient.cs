@@ -19,23 +19,13 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
         }
     }
 
-    /// <example><code>
-    /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-    ///     new ReqWithHeaders
-    ///     {
-    ///         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
-    ///         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
-    ///         Body = "string",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task GetWithCustomHeaderAsync(
+    private async Task<RawResponse> GetWithCustomHeaderAsyncCore(
         ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        await _client
+        return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
@@ -61,7 +51,12 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    return;
+                    return new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    };
                 }
                 {
                     var responseBody = await response
@@ -75,5 +70,26 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+    ///     new ReqWithHeaders
+    ///     {
+    ///         XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+    ///         XTestServiceHeader = "X-TEST-SERVICE-HEADER",
+    ///         Body = "string",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask GetWithCustomHeaderAsync(
+        ReqWithHeaders request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            GetWithCustomHeaderAsyncCore(request, options, cancellationToken)
+        );
     }
 }

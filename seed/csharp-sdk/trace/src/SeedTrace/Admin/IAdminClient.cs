@@ -2,35 +2,35 @@ namespace SeedTrace;
 
 public partial interface IAdminClient
 {
-    Task UpdateTestSubmissionStatusAsync(
+    WithRawResponseTask UpdateTestSubmissionStatusAsync(
         string submissionId,
         TestSubmissionStatus request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task SendTestSubmissionUpdateAsync(
+    WithRawResponseTask SendTestSubmissionUpdateAsync(
         string submissionId,
         TestSubmissionUpdate request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task UpdateWorkspaceSubmissionStatusAsync(
+    WithRawResponseTask UpdateWorkspaceSubmissionStatusAsync(
         string submissionId,
         WorkspaceSubmissionStatus request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task SendWorkspaceSubmissionUpdateAsync(
+    WithRawResponseTask SendWorkspaceSubmissionUpdateAsync(
         string submissionId,
         WorkspaceSubmissionUpdate request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task StoreTracedTestCaseAsync(
+    WithRawResponseTask StoreTracedTestCaseAsync(
         string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request,
@@ -38,7 +38,7 @@ public partial interface IAdminClient
         CancellationToken cancellationToken = default
     );
 
-    Task StoreTracedTestCaseV2Async(
+    WithRawResponseTask StoreTracedTestCaseV2Async(
         string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request,
@@ -46,14 +46,14 @@ public partial interface IAdminClient
         CancellationToken cancellationToken = default
     );
 
-    Task StoreTracedWorkspaceAsync(
+    WithRawResponseTask StoreTracedWorkspaceAsync(
         string submissionId,
         StoreTracedWorkspaceRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task StoreTracedWorkspaceV2Async(
+    WithRawResponseTask StoreTracedWorkspaceV2Async(
         string submissionId,
         IEnumerable<TraceResponseV2> request,
         RequestOptions? options = null,

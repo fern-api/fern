@@ -12,10 +12,7 @@ public partial class PathParamClient : IPathParamClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
-    /// </code></example>
-    public async Task SendAsync(
+    private async Task<RawResponse> SendAsyncCore(
         Operand operand,
         OneOf<Color, Operand> operandOrColor,
         RequestOptions? options = null,
@@ -46,7 +43,12 @@ public partial class PathParamClient : IPathParamClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -58,5 +60,20 @@ public partial class PathParamClient : IPathParamClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
+    /// </code></example>
+    public WithRawResponseTask SendAsync(
+        Operand operand,
+        OneOf<Color, Operand> operandOrColor,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            SendAsyncCore(operand, operandOrColor, options, cancellationToken)
+        );
     }
 }

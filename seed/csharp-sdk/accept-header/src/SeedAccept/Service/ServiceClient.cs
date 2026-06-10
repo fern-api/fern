@@ -12,10 +12,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.EndpointAsync();
-    /// </code></example>
-    public async Task EndpointAsync(
+    private async Task<RawResponse> EndpointAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -40,7 +37,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -64,5 +66,16 @@ public partial class ServiceClient : IServiceClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.EndpointAsync();
+    /// </code></example>
+    public WithRawResponseTask EndpointAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(EndpointAsyncCore(options, cancellationToken));
     }
 }

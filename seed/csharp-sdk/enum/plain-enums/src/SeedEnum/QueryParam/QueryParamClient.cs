@@ -11,12 +11,7 @@ public partial class QueryParamClient : IQueryParamClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.QueryParam.SendAsync(
-    ///     new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
-    /// );
-    /// </code></example>
-    public async Task SendAsync(
+    private async Task<RawResponse> SendAsyncCore(
         SendEnumAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -50,7 +45,12 @@ public partial class QueryParamClient : IQueryParamClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -64,18 +64,7 @@ public partial class QueryParamClient : IQueryParamClient
         }
     }
 
-    /// <example><code>
-    /// await client.QueryParam.SendListAsync(
-    ///     new SendEnumListAsQueryParamRequest
-    ///     {
-    ///         Operand = [Operand.GreaterThan],
-    ///         MaybeOperand = [Operand.GreaterThan],
-    ///         OperandOrColor = [Color.Red],
-    ///         MaybeOperandOrColor = [Color.Red],
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task SendListAsync(
+    private async Task<RawResponse> SendListAsyncCore(
         SendEnumListAsQueryParamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -109,7 +98,12 @@ public partial class QueryParamClient : IQueryParamClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -121,5 +115,39 @@ public partial class QueryParamClient : IQueryParamClient
                 responseBody
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.QueryParam.SendAsync(
+    ///     new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask SendAsync(
+        SendEnumAsQueryParamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(SendAsyncCore(request, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.QueryParam.SendListAsync(
+    ///     new SendEnumListAsQueryParamRequest
+    ///     {
+    ///         Operand = [Operand.GreaterThan],
+    ///         MaybeOperand = [Operand.GreaterThan],
+    ///         OperandOrColor = [Color.Red],
+    ///         MaybeOperandOrColor = [Color.Red],
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask SendListAsync(
+        SendEnumListAsQueryParamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(SendListAsyncCore(request, options, cancellationToken));
     }
 }

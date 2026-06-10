@@ -1,4 +1,5 @@
 using global::System.Net.ServerSentEvents;
+using global::System.Runtime.CompilerServices;
 using global::System.Text.Json;
 using SeedServerSentEvents.Core;
 
@@ -13,10 +14,7 @@ public partial class CompletionsClient : ICompletionsClient
         _client = client;
     }
 
-    /// <example><code>
-    /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
-    /// </code></example>
-    public async IAsyncEnumerable<StreamedCompletion> StreamAsync(
+    private async Task<WithRawResponse<IAsyncEnumerable<StreamedCompletion>>> StreamAsyncCore(
         StreamCompletionRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -43,32 +41,16 @@ public partial class CompletionsClient : ICompletionsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
+            return new WithRawResponse<IAsyncEnumerable<StreamedCompletion>>()
             {
-                if (!string.IsNullOrEmpty(item.Data))
+                Data = StreamAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
                 {
-                    if (item.Data == "[[DONE]]")
-                    {
-                        break;
-                    }
-                    StreamedCompletion? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedServerSentEventsException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
         }
         {
             var responseBody = await response
@@ -94,10 +76,40 @@ public partial class CompletionsClient : ICompletionsClient
         }
     }
 
-    /// <example><code>
-    /// client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" });
-    /// </code></example>
-    public async IAsyncEnumerable<StreamEvent> StreamEventsAsync(
+    private async IAsyncEnumerable<StreamedCompletion> StreamAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                if (item.Data == "[[DONE]]")
+                {
+                    break;
+                }
+                StreamedCompletion? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedServerSentEventsException(
+                        $"Unable to deserialize JSON response 'item.Data'"
+                    );
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<WithRawResponse<IAsyncEnumerable<StreamEvent>>> StreamEventsAsyncCore(
         StreamEventsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -124,32 +136,16 @@ public partial class CompletionsClient : ICompletionsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
+            return new WithRawResponse<IAsyncEnumerable<StreamEvent>>()
             {
-                if (!string.IsNullOrEmpty(item.Data))
+                Data = StreamEventsAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
                 {
-                    if (item.Data == "[DONE]")
-                    {
-                        break;
-                    }
-                    StreamEvent? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamEvent>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedServerSentEventsException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
         }
         {
             var responseBody = await response
@@ -175,12 +171,42 @@ public partial class CompletionsClient : ICompletionsClient
         }
     }
 
-    /// <example><code>
-    /// client.Completions.StreamEventsDiscriminantInDataAsync(
-    ///     new StreamEventsDiscriminantInDataRequest { Query = "query" }
-    /// );
-    /// </code></example>
-    public async IAsyncEnumerable<StreamEventDiscriminantInData> StreamEventsDiscriminantInDataAsync(
+    private async IAsyncEnumerable<StreamEvent> StreamEventsAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                if (item.Data == "[DONE]")
+                {
+                    break;
+                }
+                StreamEvent? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamEvent>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedServerSentEventsException(
+                        $"Unable to deserialize JSON response 'item.Data'"
+                    );
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamEventDiscriminantInData>>
+    > StreamEventsDiscriminantInDataAsyncCore(
         StreamEventsDiscriminantInDataRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -207,28 +233,16 @@ public partial class CompletionsClient : ICompletionsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
+            return new WithRawResponse<IAsyncEnumerable<StreamEventDiscriminantInData>>()
             {
-                if (!string.IsNullOrEmpty(item.Data))
+                Data = StreamEventsDiscriminantInDataAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
                 {
-                    StreamEventDiscriminantInData? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamEventDiscriminantInData>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedServerSentEventsException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
         }
         {
             var responseBody = await response
@@ -254,12 +268,38 @@ public partial class CompletionsClient : ICompletionsClient
         }
     }
 
-    /// <example><code>
-    /// client.Completions.StreamEventsContextProtocolAsync(
-    ///     new StreamEventsContextProtocolRequest { Query = "query" }
-    /// );
-    /// </code></example>
-    public async IAsyncEnumerable<StreamEventContextProtocol> StreamEventsContextProtocolAsync(
+    private async IAsyncEnumerable<StreamEventDiscriminantInData> StreamEventsDiscriminantInDataAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                StreamEventDiscriminantInData? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamEventDiscriminantInData>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedServerSentEventsException(
+                        $"Unable to deserialize JSON response 'item.Data'"
+                    );
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    private async Task<
+        WithRawResponse<IAsyncEnumerable<StreamEventContextProtocol>>
+    > StreamEventsContextProtocolAsyncCore(
         StreamEventsContextProtocolRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -286,32 +326,16 @@ public partial class CompletionsClient : ICompletionsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            await foreach (
-                var item in SseParser
-                    .Create(await response.Raw.Content.ReadAsStreamAsync())
-                    .EnumerateAsync(cancellationToken)
-            )
+            return new WithRawResponse<IAsyncEnumerable<StreamEventContextProtocol>>()
             {
-                if (!string.IsNullOrEmpty(item.Data))
+                Data = StreamEventsContextProtocolAsyncBody(response, cancellationToken),
+                RawResponse = new RawResponse()
                 {
-                    if (item.Data == "[DONE]")
-                    {
-                        break;
-                    }
-                    StreamEventContextProtocol? result;
-                    try
-                    {
-                        result = JsonUtils.Deserialize<StreamEventContextProtocol>(item.Data);
-                    }
-                    catch (JsonException)
-                    {
-                        throw new SeedServerSentEventsException(
-                            $"Unable to deserialize JSON response 'item.Data'"
-                        );
-                    }
-                }
-            }
-            yield break;
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                },
+            };
         }
         {
             var responseBody = await response
@@ -335,5 +359,102 @@ public partial class CompletionsClient : ICompletionsClient
                 responseBody
             );
         }
+    }
+
+    private async IAsyncEnumerable<StreamEventContextProtocol> StreamEventsContextProtocolAsyncBody(
+        ApiResponse response,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default
+    )
+    {
+        await foreach (
+            var item in SseParser
+                .Create(await response.Raw.Content.ReadAsStreamAsync())
+                .EnumerateAsync(cancellationToken)
+        )
+        {
+            if (!string.IsNullOrEmpty(item.Data))
+            {
+                if (item.Data == "[DONE]")
+                {
+                    break;
+                }
+                StreamEventContextProtocol? result;
+                try
+                {
+                    result = JsonUtils.Deserialize<StreamEventContextProtocol>(item.Data);
+                }
+                catch (JsonException)
+                {
+                    throw new SeedServerSentEventsException(
+                        $"Unable to deserialize JSON response 'item.Data'"
+                    );
+                }
+                yield return result!;
+            }
+        }
+    }
+
+    /// <example><code>
+    /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
+    /// </code></example>
+    public WithRawResponseStream<StreamedCompletion> StreamAsync(
+        StreamCompletionRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseStream<StreamedCompletion>(
+            StreamAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
+    }
+
+    /// <example><code>
+    /// client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" });
+    /// </code></example>
+    public WithRawResponseStream<StreamEvent> StreamEventsAsync(
+        StreamEventsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseStream<StreamEvent>(
+            StreamEventsAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
+    }
+
+    /// <example><code>
+    /// client.Completions.StreamEventsDiscriminantInDataAsync(
+    ///     new StreamEventsDiscriminantInDataRequest { Query = "query" }
+    /// );
+    /// </code></example>
+    public WithRawResponseStream<StreamEventDiscriminantInData> StreamEventsDiscriminantInDataAsync(
+        StreamEventsDiscriminantInDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseStream<StreamEventDiscriminantInData>(
+            StreamEventsDiscriminantInDataAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
+    }
+
+    /// <example><code>
+    /// client.Completions.StreamEventsContextProtocolAsync(
+    ///     new StreamEventsContextProtocolRequest { Query = "query" }
+    /// );
+    /// </code></example>
+    public WithRawResponseStream<StreamEventContextProtocol> StreamEventsContextProtocolAsync(
+        StreamEventsContextProtocolRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseStream<StreamEventContextProtocol>(
+            StreamEventsContextProtocolAsyncCore(request, options, cancellationToken),
+            cancellationToken
+        );
     }
 }

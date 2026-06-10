@@ -12,6 +12,56 @@ public partial class SyspropClient : ISyspropClient
         _client = client;
     }
 
+    private async Task<RawResponse> SetNumWarmInstancesAsyncCore(
+        Language language,
+        int numWarmInstances,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Put,
+                    Path = string.Format(
+                        "/sysprop/num-warm-instances/{0}/{1}",
+                        ValueConvert.ToPathParameterString(language),
+                        ValueConvert.ToPathParameterString(numWarmInstances)
+                    ),
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     private async Task<WithRawResponse<Dictionary<Language, int>>> GetNumWarmInstancesAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -79,49 +129,16 @@ public partial class SyspropClient : ISyspropClient
     /// <example><code>
     /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
     /// </code></example>
-    public async Task SetNumWarmInstancesAsync(
+    public WithRawResponseTask SetNumWarmInstancesAsync(
         Language language,
         int numWarmInstances,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Put,
-                    Path = string.Format(
-                        "/sysprop/num-warm-instances/{0}/{1}",
-                        ValueConvert.ToPathParameterString(language),
-                        ValueConvert.ToPathParameterString(numWarmInstances)
-                    ),
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask(
+            SetNumWarmInstancesAsyncCore(language, numWarmInstances, options, cancellationToken)
+        );
     }
 
     /// <example><code>

@@ -2,43 +2,43 @@ namespace SeedFileUpload;
 
 public partial interface IServiceClient
 {
-    Task PostAsync(
+    WithRawResponseTask PostAsync(
         MyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task JustFileAsync(
+    WithRawResponseTask JustFileAsync(
         JustFileRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task JustFileWithQueryParamsAsync(
+    WithRawResponseTask JustFileWithQueryParamsAsync(
         JustFileWithQueryParamsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task JustFileWithOptionalQueryParamsAsync(
+    WithRawResponseTask JustFileWithOptionalQueryParamsAsync(
         JustFileWithOptionalQueryParamsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task WithContentTypeAsync(
+    WithRawResponseTask WithContentTypeAsync(
         WithContentTypeRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task WithFormEncodingAsync(
+    WithRawResponseTask WithFormEncodingAsync(
         WithFormEncodingRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task WithFormEncodedContainersAsync(
+    WithRawResponseTask WithFormEncodedContainersAsync(
         MyOtherRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -68,7 +68,10 @@ public partial interface IServiceClient
         CancellationToken cancellationToken = default
     );
 
-    Task SimpleAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
+    WithRawResponseTask SimpleAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 
     WithRawResponseTask<string> WithLiteralAndEnumTypesAsync(
         LiteralEnumRequest request,
