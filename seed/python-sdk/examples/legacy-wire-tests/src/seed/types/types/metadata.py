@@ -15,7 +15,11 @@ class Base(UniversalBaseModel):
     --------
     from seed.types import Metadata_Html
 
-    Metadata_Html(value="<head>...</head>")
+    Metadata_Html(
+        value="<head>...</head>",
+        extra={"version": "0.0.1", "tenancy": "test"},
+        tags={"development", "public"},
+    )
     """
 
     extra: typing.Dict[str, str]
@@ -60,7 +64,11 @@ class Metadata_Markdown(Base):
 """
 from seed.types import Metadata_Html
 
-Metadata_Html(value="<head>...</head>")
+Metadata_Html(
+    value="<head>...</head>",
+    extra={"version": "0.0.1", "tenancy": "test"},
+    tags={"development", "public"},
+)
 """
 Metadata = typing_extensions.Annotated[
     typing.Union[Metadata_Html, Metadata_Markdown], pydantic.Field(discriminator="type")

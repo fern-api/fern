@@ -121,6 +121,9 @@ class SnippetTestFactory:
             kwargs=[(env, os_get) for env in generated_environment.args],
         )
 
+    # Parameters that are not string-typed and cannot be wrapped with os.getenv(...)
+    _NON_ENVVAR_PARAMS = {"base_url", "environment", "_token_getter_override", "headers"}
+
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
         non_url_params = [
             self._write_envvar_parameter(
@@ -129,9 +132,7 @@ class SnippetTestFactory:
                 param.constructor_parameter_name,
             )
             for param in client.parameters
-            if param.constructor_parameter_name != "base_url"
-            and param.constructor_parameter_name != "environment"
-            and param.constructor_parameter_name != "_token_getter_override"
+            if param.constructor_parameter_name not in self._NON_ENVVAR_PARAMS
         ]
 
         _kwargs = []

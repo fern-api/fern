@@ -18,6 +18,7 @@ from fern_python.generators.pydantic_model.type_declaration_handler.discriminate
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
+from fern_python.utils import get_name_from_wire_value, resolve_name
 from ordered_set import OrderedSet
 
 import fern.ir.resources as ir_types
@@ -286,6 +287,8 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
         else:
             args.append(example)
 
+        args.extend(self._get_base_property_snippets())
+
         union_class_reference = self._get_union_class_reference(
             name=name,
             wire_discriminant_value=wire_discriminant_value,
@@ -297,6 +300,27 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
                 args=args,
             ),
         )
+
+    def _get_base_property_snippets(self) -> List[AST.Expression]:
+        """Generate snippets for base properties of the union (if any)."""
+        base_props: List[AST.Expression] = []
+        if self.example is not None and self.example.base_properties is not None:
+            for prop in self.example.base_properties:
+                value = self.snippet_writer.get_snippet_for_example_type_reference(
+                    example_type_reference=prop.value,
+                    use_typeddict_request=self.use_typeddict_request,
+                    as_request=self.as_request,
+                    in_typeddict=False,
+                )
+                if value is not None:
+                    param_name = resolve_name(get_name_from_wire_value(prop.name)).snake_case.safe_name
+                    base_props.append(
+                        self.snippet_writer.get_snippet_for_named_parameter(
+                            parameter_name=param_name,
+                            value=value,
+                        ),
+                    )
+        return base_props
 
     def _get_snippet_for_union_with_single_property(
         self,
@@ -319,6 +343,7 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
             if isinstance(example, ir_types.ExampleTypeReference)
             else example
         )
+        base_property_snippets = self._get_base_property_snippets()
 
         def write_union(writer: AST.NodeWriter) -> None:
             if union_value is not None:
@@ -326,6 +351,9 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
                 writer.write("(")
                 writer.write("value=")
                 writer.write_node(union_value)
+                for bp_snippet in base_property_snippets:
+                    writer.write(", ")
+                    writer.write_node(bp_snippet)
                 writer.write(")")
             else:
                 writer.write_node(AST.Expression(union_class_reference))
@@ -343,9 +371,15 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
         union_class_reference = self.snippet_writer.get_class_reference_for_declared_type_name(
             name=name, as_request=False
         )
+        base_property_snippets = self._get_base_property_snippets()
 
         def write_union(writer: AST.NodeWriter) -> None:
             writer.write_node(AST.Expression(union_class_reference))
-            writer.write("()")
+            writer.write("(")
+            for i, bp_snippet in enumerate(base_property_snippets):
+                if i > 0:
+                    writer.write(", ")
+                writer.write_node(bp_snippet)
+            writer.write(")")
 
         return AST.Expression(AST.CodeWriter(write_union))

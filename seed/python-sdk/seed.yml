@@ -498,7 +498,6 @@ scripts:
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
-  - examples:legacy-wire-tests
   - exhaustive:deps_with_min_python_version
   - oauth-client-credentials-custom
   - streaming-parameter
