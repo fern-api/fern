@@ -64,7 +64,10 @@ internal partial class RawClient(ClientOptions clientOptions)
         return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
     }
 
-    private static async global::System.Threading.Tasks.Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage request)
+    private static async global::System.Threading.Tasks.Task<HttpRequestMessage> CloneRequestAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken = default
+    )
     {
         var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
         clonedRequest.Version = request.Version;
@@ -88,7 +91,11 @@ internal partial class RawClient(ClientOptions clientOptions)
                     foreach (var content in oldMultipartFormContent)
                     {
                         var ms = new MemoryStream();
+#if NET5_0_OR_GREATER
+                        await content.CopyToAsync(ms, cancellationToken).ConfigureAwait(false);
+#else
                         await content.CopyToAsync(ms).ConfigureAwait(false);
+#endif
                         ms.Position = 0;
                         var newPart = new StreamContent(ms);
                         foreach (var header in content.Headers)
@@ -103,7 +110,11 @@ internal partial class RawClient(ClientOptions clientOptions)
                     break;
                 default:
                     var bodyStream = new MemoryStream();
+#if NET5_0_OR_GREATER
+                    await request.Content.CopyToAsync(bodyStream, cancellationToken).ConfigureAwait(false);
+#else
                     await request.Content.CopyToAsync(bodyStream).ConfigureAwait(false);
+#endif
                     bodyStream.Position = 0;
                     var clonedContent = new StreamContent(bodyStream);
                     foreach (var header in request.Content.Headers)
@@ -135,31 +146,47 @@ internal partial class RawClient(ClientOptions clientOptions)
     )
     {
         var httpClient = options?.HttpClient ?? Options.HttpClient;
-        var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+        var maxRetries = Math.Max(0, options?.MaxRetries ?? Options.MaxRetries);
         var isRetryableContent = IsRetryableContent(request);
 
-        if (!isRetryableContent)
+        if (!isRetryableContent || maxRetries == 0)
         {
+            // Fast path — send the original request directly with no cloning when either:
+            //   - the content is not retryable (e.g. unbuffered streams cannot be re-sent), or
+            //   - the caller opted out of retries entirely with MaxRetries == 0 (no second send
+            //     can happen, so the clone-to-protect-against-disposal logic below is not needed).
+            var response = await httpClient
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
             return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
         }
 
-        for (var i = 0; i < maxRetries; i++)
+        // Retryable content with at least one retry budgeted: always send a clone, never the original.
+        // HttpClient (under HTTP/2 and some other configurations) disposes the Content of every request
+        // it sends, so sending the original would leave its Content disposed and cause
+        // ObjectDisposedException the next time we try to clone it. Cloning each attempt keeps the
+        // original Content alive across the entire retry loop.
+        HttpResponseMessage? response = null;
+        for (var attempt = 0; attempt <= maxRetries; attempt++)
         {
+            if (attempt > 0)
+            {
+                var delayMs = GetRetryDelayFromHeaders(response!, attempt - 1);
+                await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+            }
+
+            using var attemptRequest = await CloneRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            response = await httpClient
+                .SendAsync(attemptRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
+
             if (!ShouldRetry(response))
             {
                 break;
             }
-
-            var delayMs = GetRetryDelayFromHeaders(response, i);
-            await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
-            using var retryRequest = await CloneRequestAsync(request).ConfigureAwait(false);
-            response = await httpClient
-                .SendAsync(retryRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                .ConfigureAwait(false);
         }
 
-        return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response!.StatusCode, Raw = response };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)

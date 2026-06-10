@@ -401,10 +401,147 @@ public class RetriesTests
         }
     }
 
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRetry_WhenHandlerDisposesRequestContent()
+    {
+        // Production HttpClient (especially HTTP/2 via SocketsHttpHandler) disposes request.Content
+        // after sending. WireMock loopback HTTP/1.1 does not, so we MUST simulate the disposal in
+        // the handler chain — setting request.Version = HttpVersion20 against WireMock won't work
+        // because the server itself only speaks HTTP/1.1. ContentDisposingHandler reproduces the
+        // production condition reliably and guards against regressing the retry loop into sending
+        // the original request instead of a clone.
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentRetry")
+            .WillSetStateTo("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentRetry")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        using var disposingClient = new HttpClient(
+            new ContentDisposingHandler(new HttpClientHandler())
+        );
+        var rawClient = new RawClient(
+            new ClientOptions { HttpClient = disposingClient, MaxRetries = MaxRetries<%= clientOptionsRequiredDefaults %> }
+        )
+        {
+            BaseRetryDelay = 0,
+        };
+
+        var request = new JsonRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+            Body = new { key = "value" },
+        };
+
+        var response = await rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+
+            var retriedEntry = _server.LogEntries.ElementAt(1);
+            using var actualJson = JsonDocument.Parse(retriedEntry.RequestMessage.Body!);
+            Assert.That(actualJson.RootElement.GetProperty("key").GetString(), Is.EqualTo("value"));
+        }
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRetry_WhenHandlerDisposesRequestContent_AcrossMultipleRetries()
+    {
+        // Multi-retry variant: three consecutive 5xx responses before the success, exercising the
+        // 2nd and 3rd clones of the same original content. The single-retry test above can pass
+        // even if a regression breaks the second or third clone in the sequence (e.g., a content
+        // type whose CopyToAsync is not idempotent across reads).
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WillSetStateTo("Second")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WhenStateIs("Second")
+            .WillSetStateTo("Third")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WhenStateIs("Third")
+            .WillSetStateTo("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        using var disposingClient = new HttpClient(
+            new ContentDisposingHandler(new HttpClientHandler())
+        );
+        var rawClient = new RawClient(
+            new ClientOptions { HttpClient = disposingClient, MaxRetries = MaxRetries<%= clientOptionsRequiredDefaults %> }
+        )
+        {
+            BaseRetryDelay = 0,
+        };
+
+        var request = new JsonRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+            Body = new { key = "value" },
+        };
+
+        var response = await rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        using (Assert.EnterMultipleScope())
+        {
+            // Initial attempt + 3 retries == 4 requests reaching the server.
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(MaxRetries + 1));
+
+            // Every retried request must have preserved the original body.
+            foreach (var entry in _server.LogEntries)
+            {
+                using var actualJson = JsonDocument.Parse(entry.RequestMessage.Body!);
+                Assert.That(actualJson.RootElement.GetProperty("key").GetString(), Is.EqualTo("value"));
+            }
+        }
+    }
+
     [TearDown]
     public void TearDown()
     {
         _server.Dispose();
         _httpClient.Dispose();
+    }
+
+    private sealed class ContentDisposingHandler : DelegatingHandler
+    {
+        public ContentDisposingHandler(HttpMessageHandler inner) : base(inner) { }
+
+        protected override async global::System.Threading.Tasks.Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            request.Content?.Dispose();
+            return response;
+        }
     }
 }
