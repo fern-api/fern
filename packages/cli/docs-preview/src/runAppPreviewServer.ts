@@ -1166,6 +1166,13 @@ export async function runAppPreviewServer({
     let serverProcess: ReturnType<typeof runExeca> | null = null;
     let actualPort: number = port;
 
+    // Auto-restart state: tracks consecutive crashes to prevent infinite restart loops
+    const MAX_RESTARTS = 5;
+    const RESTART_WINDOW_MS = 60_000; // reset counter after 60s of stability
+    let restartCount = 0;
+    let lastRestartTime = 0;
+    let intentionalShutdown = false;
+
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
         return new Promise((resolve, reject) => {
@@ -1217,24 +1224,39 @@ export async function runAppPreviewServer({
 
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             serverProcess.on("exit", (code, signal) => {
-                if (code != null && code !== 0) {
-                    context.logger.error(`Server process exited with code: ${code}`);
-                    if (!settled) {
-                        settled = true;
-                        if (fallbackTimer != null) {
-                            clearTimeout(fallbackTimer);
-                        }
+                if (!settled) {
+                    settled = true;
+                    if (fallbackTimer != null) {
+                        clearTimeout(fallbackTimer);
+                    }
+                    if (code != null && code !== 0) {
+                        context.logger.error(`Server process exited with code: ${code}`);
                         reject(
                             new Error(
                                 `Server process exited with code ${code}. Check the debug logs above for details.`
                             )
                         );
+                    } else {
+                        reject(new Error("Server process exited before becoming ready."));
                     }
-                } else if (signal) {
-                    context.logger.debug(`Server process killed with signal: ${signal}`);
-                } else {
-                    context.logger.debug("Server process exited");
+                    return;
                 }
+
+                // Server exited AFTER initial startup — attempt auto-restart
+                if (intentionalShutdown) {
+                    context.logger.debug("Server process shut down intentionally.");
+                    return;
+                }
+
+                const reason =
+                    signal != null
+                        ? `killed by signal ${signal}`
+                        : code != null && code !== 0
+                          ? `exited with code ${code}`
+                          : "exited unexpectedly";
+                context.logger.error(`Docs preview server ${reason}. Attempting to restart...`);
+
+                void attemptRestart();
             });
 
             // Fallback timeout in case we miss the ready message
@@ -1245,6 +1267,46 @@ export async function runAppPreviewServer({
                 }
             }, 10000);
         });
+    };
+
+    /**
+     * Attempts to restart the Next.js server after an unexpected crash.
+     * Respects a maximum restart count within a rolling time window.
+     */
+    const attemptRestart = async (): Promise<void> => {
+        const now = Date.now();
+
+        // Reset counter if the server was stable for a while
+        if (now - lastRestartTime > RESTART_WINDOW_MS) {
+            restartCount = 0;
+        }
+
+        restartCount++;
+        lastRestartTime = now;
+
+        if (restartCount > MAX_RESTARTS) {
+            context.logger.error(
+                `Docs preview server has crashed ${MAX_RESTARTS} times within ${RESTART_WINDOW_MS / 1000}s. ` +
+                    `Not restarting. Please restart manually with 'fern docs dev'.`
+            );
+            return;
+        }
+
+        // Brief delay to let memory settle before restarting
+        const delayMs = Math.min(1000 * restartCount, 5000);
+        context.logger.info(`Restarting docs preview server in ${delayMs / 1000}s (attempt ${restartCount}/${MAX_RESTARTS})...`);
+        await new Promise((r) => setTimeout(r, delayMs));
+
+        // Clean leftover processes on the port before restarting
+        killProcessesOnPort(actualPort, context);
+
+        try {
+            await startNextJsServer();
+            context.logger.info(`Docs preview server restarted on http://localhost:${actualPort}`);
+        } catch (err) {
+            context.logger.error(`Failed to restart docs preview server: ${extractErrorMessage(err)}`);
+            void attemptRestart();
+        }
     };
 
     // Start the initial server
@@ -1354,6 +1416,7 @@ export async function runAppPreviewServer({
             return;
         }
         cleanedUp = true;
+        intentionalShutdown = true;
 
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
