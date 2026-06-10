@@ -2,9 +2,9 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("SimpleError: Bad request - {{message}}")]
+    #[error("SimpleError: Bad request - {message}")]
     SimpleError { message: String, field: Option<String>, details: Option<String> },
-    #[error("GenericError: Internal server error - {{message}}")]
+    #[error("GenericError: Internal server error - {message}")]
     GenericError { message: String, error_id: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },

@@ -2,15 +2,15 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("BadRequestBody: Bad request - {{message}}")]
+    #[error("BadRequestBody: Bad request - {message}")]
     BadRequestBody { message: String },
-    #[error("ErrorWithEnumBody: Bad request - {{message}}")]
+    #[error("ErrorWithEnumBody: Bad request - {message}")]
     ErrorWithEnumBody {
         message: String,
         field: Option<String>,
         details: Option<String>,
     },
-    #[error("ObjectWithOptionalFieldError: Bad request - {{message}}")]
+    #[error("ObjectWithOptionalFieldError: Bad request - {message}")]
     ObjectWithOptionalFieldError {
         message: String,
         string: Option<String>,
@@ -27,21 +27,24 @@ pub enum ApiError {
         map: Option<HashMap<i64, String>>,
         bigint: Option<num_bigint::BigInt>,
     },
-    #[error("ObjectWithRequiredFieldError: Bad request - {{message}}")]
-    ObjectWithRequiredFieldError { message: String, string: String },
-    #[error("NestedObjectWithOptionalFieldError: Bad request - {{message}}")]
+    #[error("ObjectWithRequiredFieldError: Bad request - {message}")]
+    ObjectWithRequiredFieldError {
+        message: String,
+        string: Option<String>,
+    },
+    #[error("NestedObjectWithOptionalFieldError: Bad request - {message}")]
     NestedObjectWithOptionalFieldError {
         message: String,
         string: Option<String>,
         nested_object: Option<ObjectWithOptionalField>,
     },
-    #[error("NestedObjectWithRequiredFieldError: Bad request - {{message}}")]
+    #[error("NestedObjectWithRequiredFieldError: Bad request - {message}")]
     NestedObjectWithRequiredFieldError {
         message: String,
-        string: String,
-        nested_object: ObjectWithOptionalField,
+        string: Option<String>,
+        nested_object: Option<ObjectWithOptionalField>,
     },
-    #[error("ErrorWithUnionBody: Bad request - {{message}}")]
+    #[error("ErrorWithUnionBody: Bad request - {message}")]
     ErrorWithUnionBody {
         message: String,
         field: Option<String>,

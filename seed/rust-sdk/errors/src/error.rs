@@ -2,16 +2,16 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("NotFoundError: Resource not found - {{message}}")]
-    NotFoundError { message: String, code: i64 },
-    #[error("BadRequestError: Bad request - {{message}}")]
-    BadRequestError { message: String, code: i64 },
-    #[error("InternalServerError: Internal server error - {{message}}")]
-    InternalServerError { message: String, code: i64 },
-    #[error("FooTooMuch: Rate limit exceeded - {{message}}")]
-    FooTooMuch { message: String, code: i64 },
-    #[error("FooTooLittle: Internal server error - {{message}}")]
-    FooTooLittle { message: String, code: i64 },
+    #[error("NotFoundError: Resource not found - {message}")]
+    NotFoundError { message: String, code: Option<i64> },
+    #[error("BadRequestError: Bad request - {message}")]
+    BadRequestError { message: String, code: Option<i64> },
+    #[error("InternalServerError: Internal server error - {message}")]
+    InternalServerError { message: String, code: Option<i64> },
+    #[error("FooTooMuch: Rate limit exceeded - {message}")]
+    FooTooMuch { message: String, code: Option<i64> },
+    #[error("FooTooLittle: Internal server error - {message}")]
+    FooTooLittle { message: String, code: Option<i64> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
