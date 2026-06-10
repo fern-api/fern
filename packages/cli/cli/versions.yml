@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.45.5
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.36: AutoVersionStep now calls the hosted FAI
+        service with `fernToken` when no BAML `ai` config is supplied, restoring real
+        version bumps and changelog entries for replay-enabled remote generations.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
 - version: 5.45.4
   changelogEntry:
     - summary: |
