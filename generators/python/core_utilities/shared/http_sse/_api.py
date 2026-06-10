@@ -8,6 +8,12 @@ from ._decoders import SSEDecoder
 from ._exceptions import SSEError
 from ._models import ServerSentEvent
 
+# Maximum number of characters allowed in a single SSE line before a newline
+# is encountered. Prevents unbounded memory growth from a malicious or
+# misbehaving upstream that streams non-newline-terminated bytes indefinitely.
+# See: GHSA-7w2x-r9r4-7v8r
+MAX_LINE_SIZE: int = 1_048_576  # 1 MiB
+
 
 class EventSource:
     def __init__(self, response: httpx.Response) -> None:
@@ -73,9 +79,19 @@ class EventSource:
                 if sse is not None:
                     yield sse
 
+            if len(buf) > MAX_LINE_SIZE:
+                raise SSEError(
+                    f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
+                )
+
         # Flush any remaining bytes from the incremental decoder
         buf += text_decoder.decode(b"", final=True)
         buf = buf.replace("\r\n", "\n").replace("\r", "\n")
+
+        if len(buf) > MAX_LINE_SIZE:
+            raise SSEError(
+                f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
+            )
 
         while "\n" in buf:
             line, buf = buf.split("\n", 1)
@@ -105,9 +121,19 @@ class EventSource:
                 if sse is not None:
                     yield sse
 
+            if len(buf) > MAX_LINE_SIZE:
+                raise SSEError(
+                    f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
+                )
+
         # Flush any remaining bytes from the incremental decoder
         buf += text_decoder.decode(b"", final=True)
         buf = buf.replace("\r\n", "\n").replace("\r", "\n")
+
+        if len(buf) > MAX_LINE_SIZE:
+            raise SSEError(
+                f"SSE line exceeded maximum size of {MAX_LINE_SIZE} characters without encountering a newline"
+            )
 
         while "\n" in buf:
             line, buf = buf.split("\n", 1)
