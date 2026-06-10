@@ -1,8 +1,10 @@
 # Stage 1: Rebuild oxlint-tsgolint from source under go1.26.4 so the embedded
 # go/stdlib clears vulnerability scanners. The published binaries are still
 # compiled with an older upstream Go toolchain.
-FROM golang:1.26.4-trixie AS tsgolint-rebuild
+FROM --platform=$BUILDPLATFORM golang:1.26.4-trixie AS tsgolint-rebuild
 ARG TSGOLINT_VERSION=0.22.1
+ARG TARGETOS
+ARG TARGETARCH
 ENV GOTOOLCHAIN=go1.26.4
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "build@example.com" && \
@@ -21,7 +23,7 @@ RUN git config --global user.email "build@example.com" && \
     cd .. && \
     mkdir -p internal/collections && \
     find ./typescript-go/internal/collections -type f ! -name '*_test.go' -exec cp {} internal/collections/ \; && \
-    CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
+    CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
     ls -la /out/tsgolint
 
 FROM node:24.16-trixie-slim
