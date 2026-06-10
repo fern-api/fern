@@ -53,7 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> x_fern_default_test_sdk::api::ApiClient {
     );
     x_fern_default_test_sdk::api::ApiClient {
         config,
-
+        http_client,
     }
 }
 

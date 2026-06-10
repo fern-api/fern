@@ -53,6 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> allof_composition_sdk::api::ApiClient {
     );
     allof_composition_sdk::api::ApiClient {
         config,
+        http_client,
 
     }
 }

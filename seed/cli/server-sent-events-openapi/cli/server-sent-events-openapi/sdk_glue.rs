@@ -53,6 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> server_sent_events_openapi_sdk::api::ApiC
     );
     server_sent_events_openapi_sdk::api::ApiClient {
         config,
+        http_client,
 
     }
 }

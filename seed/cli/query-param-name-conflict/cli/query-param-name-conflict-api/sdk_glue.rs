@@ -53,6 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> query_param_name_conflict_api_sdk::api::A
     );
     query_param_name_conflict_api_sdk::api::ApiClient {
         config,
+        http_client,
 
     }
 }
