@@ -501,6 +501,5 @@ allowedFailures:
   - examples:legacy-wire-tests
   - exhaustive:deps_with_min_python_version
   - oauth-client-credentials-custom
-  - trace
   - unions:union-naming-v1-wire-tests
 
