@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "datetimeField": {
+      "type": "string",
+      "format": "date-time",
+      "description": "A datetime field whose example uses a non-RFC3339 format"
+    },
+    "stringField": {
+      "type": "string",
+      "description": "A plain string field to confirm non-datetime values are untouched"
+    }
+  },
+  "required": [
+    "datetimeField",
+    "stringField"
+  ],
+  "additionalProperties": false,
+  "description": "Tests that malformed date-time examples (e.g. space instead of \"T\" separator)\nare normalized to valid ISO 8601 before being emitted into wire test mock\nresponses, so strict SDK parsers (Go, Java) do not fail at deserialization.",
+  "definitions": {}
+}
