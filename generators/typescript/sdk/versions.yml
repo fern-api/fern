@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.7
+  changelogEntry:
+    - summary: |
+        Upgrade oxc tooling: oxlint 1.63.0 → 1.69.0, oxfmt 0.48.0 → 0.54.0,
+        oxlint-tsgolint 0.22.1 → 0.23.0. tsgolint 0.23.0 ships with go1.26.3
+        (clearing go/stdlib CVEs), so the rebuild-from-source Docker stage is
+        removed entirely.
+      type: chore
+  createdAt: "2026-06-10"
+  irVersion: 67
 - version: 3.71.6
   changelogEntry:
     - summary: |
