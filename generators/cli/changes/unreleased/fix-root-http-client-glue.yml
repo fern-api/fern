@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated sdk_glue.rs to include `http_client` field in root
+    ApiClient struct literal for flat APIs (no sub-resources). Previously,
+    the SKIP_TYPES filter prevented it from appearing in the struct
+    initializer, causing "missing field http_client" compile errors.
+  type: fix
