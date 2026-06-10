@@ -1,0 +1,4 @@
+- summary: |
+    Fix PR release generation reusing old branches and force-pushing to existing
+    PRs instead of creating new date-stamped branches and new PRs each time.
+  type: fix

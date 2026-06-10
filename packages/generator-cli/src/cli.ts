@@ -232,8 +232,7 @@ void yargs(hideBin(process.argv))
                         if (result.steps.github != null) {
                             const githubResult = result.steps.github;
                             if (githubResult.prUrl != null) {
-                                const action = githubResult.updatedExistingPr ? "Updated" : "Created";
-                                process.stderr.write(`GitHub: ${action} PR: ${githubResult.prUrl}\n`);
+                                process.stderr.write(`GitHub: Created PR: ${githubResult.prUrl}\n`);
                             } else if (githubResult.branchUrl != null) {
                                 process.stderr.write(`GitHub: Pushed to ${githubResult.branchUrl}\n`);
                             }
