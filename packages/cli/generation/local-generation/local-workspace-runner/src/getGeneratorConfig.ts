@@ -563,21 +563,22 @@ function getPublishConfigForGithubOidc(
     generatorInvocation: GeneratorInvocation,
     version: string
 ): FernGeneratorExec.GeneratorPublishConfig | undefined {
-    const publishInfo: FernFiddle.GithubPublishInfo | undefined =
-        generatorInvocation.outputMode._visit<FernFiddle.GithubPublishInfo | undefined>({
-            publish: () => undefined,
-            publishV2: () => undefined,
-            downloadFiles: () => undefined,
-            github: (value) => value.publishInfo,
-            githubV2: (value) =>
-                value._visit({
-                    push: (v) => v.publishInfo,
-                    commitAndRelease: (v) => v.publishInfo,
-                    pullRequest: (v) => v.publishInfo,
-                    _other: () => undefined
-                }),
-            _other: () => undefined
-        });
+    const publishInfo: FernFiddle.GithubPublishInfo | undefined = generatorInvocation.outputMode._visit<
+        FernFiddle.GithubPublishInfo | undefined
+    >({
+        publish: () => undefined,
+        publishV2: () => undefined,
+        downloadFiles: () => undefined,
+        github: (value) => value.publishInfo,
+        githubV2: (value) =>
+            value._visit({
+                push: (v) => v.publishInfo,
+                commitAndRelease: (v) => v.publishInfo,
+                pullRequest: (v) => v.publishInfo,
+                _other: () => undefined
+            }),
+        _other: () => undefined
+    });
     if (publishInfo == null || publishInfo.type !== "pypi") {
         return undefined;
     }
