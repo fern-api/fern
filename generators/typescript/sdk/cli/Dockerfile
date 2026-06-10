@@ -62,9 +62,9 @@ RUN npm install -g pnpm@10.33.3 --force
 RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.9.3 \
   prettier@3.8.1 \
-  oxfmt@0.48.0 \
+  oxfmt@0.54.0 \
   @biomejs/biome@2.4.10 \
-  oxlint@1.63.0 \
+  oxlint@1.69.0 \
   oxlint-tsgolint@0.23.0 \
   @types/node@^20.0.0 \
   ts-loader@^9.5.4 \
