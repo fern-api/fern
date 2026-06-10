@@ -108,7 +108,10 @@ impl Stream for ByteStream {
 /// auth, retries, and TLS configuration.
 #[doc(hidden)]
 pub trait RequestExecutor: Send + Sync {
-    fn execute(&self, request: Request) -> BoxFuture<'_, Result<Response, reqwest::Error>>;
+    fn execute(
+        &self,
+        request: Request,
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>>;
 }
 
 /// Default executor that delegates to a `reqwest::Client`.
@@ -117,8 +120,16 @@ struct ReqwestExecutor {
 }
 
 impl RequestExecutor for ReqwestExecutor {
-    fn execute(&self, request: Request) -> BoxFuture<'_, Result<Response, reqwest::Error>> {
-        Box::pin(self.client.execute(request))
+    fn execute(
+        &self,
+        request: Request,
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
+        Box::pin(async move {
+            self.client
+                .execute(request)
+                .await
+                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
+        })
     }
 }
 
@@ -330,7 +341,7 @@ impl HttpClient {
         options: &Option<RequestOptions>,
     ) -> Result<Response, ApiError> {
         if let Some(executor) = &self.executor {
-            executor.execute(req).await.map_err(ApiError::Network)
+            executor.execute(req).await.map_err(ApiError::Executor)
         } else {
             let mut req = req;
             self.apply_auth_headers(&mut req, options).await?;
@@ -533,9 +544,14 @@ impl HttpClient {
         let status = response.status().as_u16();
         let text = response.text().await.map_err(ApiError::Network)?;
 
-        // Handle empty response bodies (e.g., 202 Accepted for deferred requests)
         if text.is_empty() {
-            return Err(ApiError::Http {
+            if status >= 400 {
+                return Err(ApiError::Http {
+                    status,
+                    message: String::new(),
+                });
+            }
+            return serde_json::from_value(serde_json::Value::Null).map_err(|_| ApiError::Http {
                 status,
                 message: String::new(),
             });
@@ -553,10 +569,22 @@ impl HttpClient {
         let text = response.text().await.map_err(ApiError::Network)?;
 
         if text.is_empty() {
-            return Err(ApiError::Http {
-                status: status_code,
-                message: String::new(),
-            });
+            if status_code >= 400 {
+                return Err(ApiError::Http {
+                    status: status_code,
+                    message: String::new(),
+                });
+            }
+            return serde_json::from_value(serde_json::Value::Null)
+                .map(|body| RawResponse {
+                    body,
+                    status_code,
+                    headers,
+                })
+                .map_err(|_| ApiError::Http {
+                    status: status_code,
+                    message: String::new(),
+                });
         }
 
         let body: T = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
@@ -700,8 +728,8 @@ impl HttpClient {
     ///
     /// # SSE-Specific Headers
     ///
-    /// This method automatically sets the following headers **after** applying custom headers,
-    /// which means these headers will override any user-supplied values:
+    /// In the default path, these headers are applied **after** custom headers,
+    /// which means they will override any user-supplied values:
     /// - `Accept: text/event-stream` - Required for SSE protocol
     /// - `Cache-Control: no-store` - Prevents caching of streaming responses
     ///
@@ -762,18 +790,6 @@ impl HttpClient {
         // Build the request
         let mut req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // SSE-specific headers (applied before both paths)
-        req.headers_mut().insert(
-            "Accept",
-            "text/event-stream"
-                .parse()
-                .map_err(|_| ApiError::InvalidHeader)?,
-        );
-        req.headers_mut().insert(
-            "Cache-Control",
-            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
-        );
-
         // Determine per-event timeout: request-level overrides client-level
         let timeout = options
             .as_ref()
@@ -782,10 +798,33 @@ impl HttpClient {
             .unwrap_or(self.config.timeout);
 
         let response = if let Some(executor) = &self.executor {
-            executor.execute(req).await.map_err(ApiError::Network)?
+            // SSE-specific headers for the executor path
+            req.headers_mut().insert(
+                "Accept",
+                "text/event-stream"
+                    .parse()
+                    .map_err(|_| ApiError::InvalidHeader)?,
+            );
+            req.headers_mut().insert(
+                "Cache-Control",
+                "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
+            executor.execute(req).await.map_err(ApiError::Executor)?
         } else {
             self.apply_auth_headers(&mut req, &options).await?;
             self.apply_custom_headers(&mut req, &options)?;
+            // SSE-specific headers applied after custom headers to ensure
+            // proper SSE behavior even if custom headers are provided
+            req.headers_mut().insert(
+                "Accept",
+                "text/event-stream"
+                    .parse()
+                    .map_err(|_| ApiError::InvalidHeader)?,
+            );
+            req.headers_mut().insert(
+                "Cache-Control",
+                "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
             self.execute_with_retries(req, &options).await?
         };
 

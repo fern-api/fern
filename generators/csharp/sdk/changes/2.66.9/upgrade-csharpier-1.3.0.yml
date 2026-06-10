@@ -1,0 +1,3 @@
+- type: chore
+  summary: |
+    Upgrade CSharpier formatter to 1.3.0.

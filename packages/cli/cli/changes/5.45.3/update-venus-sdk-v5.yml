@@ -1,0 +1,3 @@
+- summary: |
+    Upgrade Venus API SDK from v0.22.34 to v5.0.0 with HTTPBearer root-level authentication.
+  type: chore

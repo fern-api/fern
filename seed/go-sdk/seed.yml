@@ -358,11 +358,7 @@ allowedFailures:
   # Unsupported features in the v1 Go generator (generation aborts with
   # "not supported yet" or a nil-pointer panic). These need feature work.
   - alias-extends # object/request body extends an alias; v1 assumes extends are objects
-  - bytes-download
-  - bytes-upload
-  - streaming-parameter
   - pagination
-  - pagination-uri-path
 
   # Generated Go code does not compile. Each needs a generator fix.
   - enum # enum-union header value is not converted to a string
@@ -372,8 +368,3 @@ allowedFailures:
 
   # Dynamic snippet generation produces code that does not compile.
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-
-  # Wire tests fail at runtime.
-  - oauth-client-credentials:.
-  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
-  - exhaustive:omit-empty-request-wrappers

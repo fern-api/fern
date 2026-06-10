@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "requiredExtended": {
+      "$ref": "#/definitions/types.object.ExtendedObjectWithInheritedEnum"
+    }
+  },
+  "required": [
+    "requiredExtended"
+  ],
+  "additionalProperties": false,
+  "description": "Tests that a struct with a required field whose type extends a non-Default\nbase type does NOT incorrectly derive Default in Rust. Reproduces the bug\nwhere namedTypeSupportsDefault only checked properties but not extends.",
+  "definitions": {
+    "types.enum.WeatherReport": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    },
+    "types.object.ExtendedObjectWithInheritedEnum": {
+      "type": "object",
+      "properties": {
+        "requiredEnum": {
+          "$ref": "#/definitions/types.enum.WeatherReport"
+        },
+        "requiredString": {
+          "type": "string"
+        },
+        "optionalDescription": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "requiredEnum",
+        "requiredString"
+      ],
+      "additionalProperties": false,
+      "description": "Extends ObjectWithInheritedRequiredEnum, inheriting the required enum field.\nThis type should NOT derive Default in Rust because the parent type\nhas a required enum field."
+    }
+  }
+}

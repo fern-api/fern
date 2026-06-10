@@ -58,3 +58,18 @@ try {
     // Non-fatal: the rust-model dist may not exist during a plain
     // `pnpm compile`. It's only required for `dist:cli` / Docker.
 }
+
+// Copy the pre-built rust-sdk generator CLI into dist/ so the Docker
+// image can invoke it as a child process for embedded SDK generation.
+// Same pattern as the rust-model copy above.
+try {
+    const { readlink: readlinkSdk } = await import("fs/promises");
+    const sdkSymlink = path.resolve(dirname, "node_modules", "@fern-api", "rust-sdk");
+    const sdkTarget = await readlinkSdk(sdkSymlink);
+    const rustSdkPkg = path.resolve(path.dirname(sdkSymlink), sdkTarget);
+    const rustSdkDistDir = path.join(rustSdkPkg, "dist");
+    await cp(rustSdkDistDir, path.join(dirname, "dist", "rust-sdk-dist"), { recursive: true });
+} catch (_e) {
+    // Non-fatal: the rust-sdk dist may not exist during a plain
+    // `pnpm compile`. It's only required for `dist:cli` / Docker.
+}

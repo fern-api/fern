@@ -98,10 +98,10 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.rust-target }}" == *-linux-musl ]]; then
-            cargo build --release --locked --target ${{ matrix.rust-target }} \
+            cargo build --release --target ${{ matrix.rust-target }} \
               --no-default-features --features rustls
           else
-            cargo build --release --locked --target ${{ matrix.rust-target }}
+            cargo build --release --target ${{ matrix.rust-target }}
           fi
 
       - name: Package and publish npm platform package
@@ -129,6 +129,10 @@ jobs:
             "name": "${PLATFORM_PKG}",
             "version": "${VERSION}",
             "description": "Platform-specific binary for query-parameters-api (${{ matrix.npm-platform-suffix }})",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
             "os": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f1)"],
             "cpu": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f2)"],
             "main": "${BINARY_NAME}",
@@ -199,6 +203,10 @@ jobs:
             "name": "@fern/query-parameters-openapi",
             "version": "${VERSION}",
             "description": "CLI for query-parameters-api",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
             "bin": {
               "query-parameters-api": "bin/cli.js"
             },

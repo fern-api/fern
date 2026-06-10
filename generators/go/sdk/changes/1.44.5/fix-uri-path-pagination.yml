@@ -1,0 +1,5 @@
+- summary: |
+    Support endpoints that use URI- or path-based pagination (`next_uri` / `next_path`).
+    The v1 generator no longer aborts with "uri pagination is not supported yet"; these
+    endpoints are generated as regular methods that return the full response.
+  type: fix

@@ -27,13 +27,15 @@ public class Page<TItem> : IEnumerable<TItem>
         IReadOnlyList<TItem> items,
         object? response,
         HttpStatusCode statusCode,
-        ResponseHeaders? headers
+        ResponseHeaders? headers,
+        Uri? url = null
     )
     {
         Items = items;
         Response = response;
         StatusCode = statusCode;
         Headers = headers;
+        Url = url;
     }
 
     /// <summary>
@@ -56,6 +58,11 @@ public class Page<TItem> : IEnumerable<TItem>
     /// The HTTP response headers from the response that produced this page.
     /// </summary>
     public ResponseHeaders? Headers { get; }
+
+    /// <summary>
+    /// The request URL that produced this page.
+    /// </summary>
+    public Uri? Url { get; }
 
     /// <summary>
     /// Enumerate the items in this <see cref="Page{TItem}"/>.

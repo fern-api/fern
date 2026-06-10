@@ -296,6 +296,7 @@ impl OpenApiBinding {
             f(matches, ctx)
         })
     }
+
 }
 
 impl Binding for OpenApiBinding {
@@ -513,20 +514,28 @@ impl Binding for OpenApiBinding {
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let base_url_override = base_url_override_owned.as_deref();
 
-            // Read --output flag for binary response file writing.
-            // validate_safe_file_path rejects traversal, symlink escapes,
-            // and control characters per AGENTS.md.
+            // Read --output flag for binary response file writing. The literal
+            // `-` is a stdout sentinel (curl/wget convention) and bypasses
+            // path validation — handle_binary_response branches on it to
+            // stream raw bytes to stdout instead of touching the filesystem.
+            // Every other value flows through validate_safe_file_path, which
+            // rejects traversal, symlink escapes, and control characters
+            // per AGENTS.md.
             let output_path_owned = matched_args
                 .try_get_one::<String>("output")
                 .ok()
                 .flatten()
                 .cloned();
-            let output_path_buf = if let Some(ref p) = output_path_owned {
-                Some(crate::validate::validate_safe_file_path(p, "--output")?)
-            } else {
-                None
+            let output_path_buf = match output_path_owned.as_deref() {
+                Some("-") => None,
+                Some(p) => Some(crate::validate::validate_safe_file_path(p, "--output")?),
+                None => None,
             };
-            let output_path = output_path_buf.as_deref().and_then(|p| p.to_str());
+            let output_path = if output_path_owned.as_deref() == Some("-") {
+                Some("-")
+            } else {
+                output_path_buf.as_deref().and_then(|p| p.to_str())
+            };
 
             // Collect multipart/form-data parts from CLI flags for operations
             // that declare a `multipart/form-data` body. `None` for all others.
