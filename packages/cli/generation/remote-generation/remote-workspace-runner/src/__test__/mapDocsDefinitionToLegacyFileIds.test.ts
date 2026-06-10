@@ -79,7 +79,7 @@ describe("mapDocsDefinitionToLegacyFileIds", () => {
             pages: {
                 page: {
                     markdown:
-                        '![fern](file:docs/assets/logo.png)\n![spaced](<file:image (1).png>)\n![quotes](file:file with \'quotes\'.svg)',
+                        "![fern](file:docs/assets/logo.png)\n![spaced](<file:image (1).png>)\n![quotes](file:file with 'quotes'.svg)",
                     rawMarkdown: "![spaced](file:image (1).png)"
                 }
             },
