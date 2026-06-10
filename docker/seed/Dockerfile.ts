@@ -40,9 +40,7 @@ RUN apt-get update \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/*
 
-# Update perl-base and libssl3t64 from sid to pick up security patches.
-# Security update 2026-06-10: add libssl3t64 for openssl 3.5.6 → 3.6.2
-# (12 CVEs including CVE-2026-45447, High severity).
+# Update perl-base from sid to pick up security patches.
 RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && echo "URIs: http://deb.debian.org/debian" >> /etc/apt/sources.list.d/sid.sources \
     && echo "Suites: sid" >> /etc/apt/sources.list.d/sid.sources \
@@ -51,7 +49,6 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && echo 'Package: *\nPin: release n=sid\nPin-Priority: 100' > /etc/apt/preferences.d/sid-low \
     && apt-get update \
     && apt-get install -y --no-install-recommends -t sid \
-       libssl3t64 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*

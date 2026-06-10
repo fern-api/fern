@@ -1,4 +1,0 @@
-- summary: |
-    Fix 12 openssl CVEs (CVSS 9.8) in container image by pulling
-    libssl3t64 from Debian sid (openssl 3.5.6 → 3.6.2).
-  type: chore

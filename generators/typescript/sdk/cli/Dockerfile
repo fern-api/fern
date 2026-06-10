@@ -35,8 +35,6 @@ FROM node:24.16-trixie-slim
 # clears the AWS Inspector findings.
 # Some trixie packages still lag behind on fixes; pin sid as a
 # low-priority source and pull the patched packages from there.
-# Security update 2026-06-10: add libssl3t64 from sid for openssl
-# 3.5.6 → 3.6.2 (12 CVEs including CVE-2026-45447, High severity).
 RUN apt-get update \
     && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y --no-install-recommends ca-certificates git zip \
@@ -53,7 +51,6 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
        curl libcurl4t64 libgnutls30t64 \
        libexpat1 \
-       libssl3t64 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
