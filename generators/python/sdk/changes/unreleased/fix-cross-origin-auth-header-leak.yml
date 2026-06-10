@@ -1,0 +1,8 @@
+- summary: |
+    Fix HIGH-severity security issue (GHSA-q65x-gcw2-fmc3): strip custom auth
+    headers on cross-origin HTTP redirects. Previously, SDK-configured auth
+    headers (e.g. `xi-api-key`) were forwarded to redirect targets on different
+    origins because httpx only strips `Authorization`/`Cookie` automatically.
+    The SDK now handles redirects manually and removes all sensitive headers
+    when the redirect target differs in scheme, host, or port.
+  type: fix

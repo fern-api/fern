@@ -5,6 +5,7 @@ import email.utils
 import re
 import time
 import typing
+import urllib.parse
 from contextlib import asynccontextmanager, contextmanager
 from random import random
 
@@ -21,6 +22,8 @@ from httpx._types import RequestFiles
 INITIAL_RETRY_DELAY_SECONDS = 1.0
 MAX_RETRY_DELAY_SECONDS = 60.0
 JITTER_FACTOR = 0.2  # 20% random jitter
+MAX_REDIRECTS = 20
+_REDIRECT_STATUS_CODES = frozenset({301, 302, 303, 307, 308})
 
 
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
@@ -125,7 +128,7 @@ def _retry_timeout_from_retries(retries: int) -> float:
 
 
 def _should_retry(response: httpx.Response) -> bool:
-    return response.status_code >= 500 or response.status_code in [429, 408, 409]
+    return response.status_code >= 500 or response.status_code in [429, 408, 409]  # {{RETRY_STATUS_CHECK}}
 
 
 _SENSITIVE_HEADERS = frozenset(
@@ -152,6 +155,34 @@ _SENSITIVE_HEADERS = frozenset(
 
 def _redact_headers(headers: typing.Dict[str, str]) -> typing.Dict[str, str]:
     return {k: ("[REDACTED]" if k.lower() in _SENSITIVE_HEADERS else v) for k, v in headers.items()}
+
+
+def _url_origin(url: str) -> typing.Tuple[str, str, int]:
+    """Extract (scheme, host, port) from a URL for same-origin comparison."""
+    parsed = urllib.parse.urlparse(url)
+    scheme = parsed.scheme.lower()
+    host = (parsed.hostname or "").lower()
+    port = parsed.port
+    if port is None:
+        port = 443 if scheme == "https" else 80
+    return (scheme, host, port)
+
+
+def _is_same_origin(url_a: str, url_b: str) -> bool:
+    return _url_origin(url_a) == _url_origin(url_b)
+
+
+def _resolve_redirect_url(request_url: str, location: str) -> str:
+    """Resolve a possibly-relative Location header against the request URL."""
+    return urllib.parse.urljoin(request_url, location)
+
+
+def _strip_sensitive_headers_for_redirect(
+    headers: typing.Dict[str, str],
+    sensitive_header_names: typing.FrozenSet[str],
+) -> typing.Dict[str, str]:
+    """Remove sensitive headers before following a cross-origin redirect."""
+    return {k: v for k, v in headers.items() if k.lower() not in sensitive_header_names}
 
 
 def _build_url(base_url: str, path: typing.Optional[str]) -> str:
@@ -377,37 +408,84 @@ class HttpClient:
             else self.base_max_retries
         )
 
-        try:
-            response = self.httpx_client.request(
-                method=method,
-                url=_request_url,
-                headers=_request_headers,
-                params=_encoded_params if _encoded_params else None,
-                json=json_body,
-                data=data_body,
-                content=content,
-                files=request_files,
-                timeout=timeout,
-            )
-        except (httpx.ConnectError, httpx.RemoteProtocolError):
-            if retries < max_retries:
-                time.sleep(_retry_timeout_from_retries(retries=retries))
-                return self.request(
-                    path=path,
-                    method=method,
-                    base_url=base_url,
-                    params=params,
-                    json=json,
-                    data=data,
-                    content=content,
-                    files=files,
-                    headers=headers,
-                    request_options=request_options,
-                    retries=retries + 1,
-                    omit=omit,
-                    force_multipart=force_multipart,
+        # Compute the set of header names to strip on cross-origin redirects:
+        # all known sensitive patterns plus any SDK-configured auth headers.
+        _base_header_names = frozenset(k.lower() for k in self.base_headers())
+        _headers_to_strip = _SENSITIVE_HEADERS | _base_header_names
+
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        _current_params = _encoded_params if _encoded_params else None
+
+        for _redirect_count in range(MAX_REDIRECTS + 1):
+            try:
+                response = self.httpx_client.request(
+                    method=_current_method,
+                    url=_current_url,
+                    headers=_current_headers,
+                    params=_current_params,
+                    json=_current_json,
+                    data=_current_data,
+                    content=_current_content,
+                    files=_current_files,
+                    timeout=timeout,
+                    follow_redirects=False,
                 )
-            raise
+            except (httpx.ConnectError, httpx.RemoteProtocolError):
+                if retries < max_retries:
+                    time.sleep(_retry_timeout_from_retries(retries=retries))
+                    return self.request(
+                        path=path,
+                        method=method,
+                        base_url=base_url,
+                        params=params,
+                        json=json,
+                        data=data,
+                        content=content,
+                        files=files,
+                        headers=headers,
+                        request_options=request_options,
+                        retries=retries + 1,
+                        omit=omit,
+                        force_multipart=force_multipart,
+                    )
+                raise
+
+            if response.status_code not in _REDIRECT_STATUS_CODES:
+                break
+
+            location = response.headers.get("location")
+            if location is None:
+                break
+
+            _redirect_url = _resolve_redirect_url(_current_url, location)
+
+            # 301, 302, 303 change method to GET and drop body
+            if response.status_code in (301, 302, 303):
+                _current_method = "GET"
+                _current_json = None
+                _current_data = None
+                _current_content = None
+                _current_files = None
+
+            # Strip sensitive headers on cross-origin redirects
+            if not _is_same_origin(_current_url, _redirect_url):
+                _current_headers = _strip_sensitive_headers_for_redirect(
+                    _current_headers, _headers_to_strip
+                )
+
+            _current_url = _redirect_url
+            _current_params = None  # params are encoded in the redirect URL
+        else:
+            raise httpx.TooManyRedirects(
+                "Exceeded maximum number of redirects.",
+                request=httpx.Request(method=_current_method, url=_current_url),
+            )
 
         if _should_retry(response=response):
             if retries < max_retries:
@@ -530,18 +608,62 @@ class HttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
-        with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        # Resolve redirects before streaming, stripping auth headers on cross-origin hops
+        _base_header_names = frozenset(k.lower() for k in self.base_headers())
+        _headers_to_strip = _SENSITIVE_HEADERS | _base_header_names
+
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        _current_params = _encoded_params if _encoded_params else None
+
+        for _redirect_count in range(MAX_REDIRECTS + 1):
+            with self.httpx_client.stream(
+                method=_current_method,
+                url=_current_url,
+                headers=_current_headers,
+                params=_current_params,
+                json=_current_json,
+                data=_current_data,
+                content=_current_content,
+                files=_current_files,
+                timeout=timeout,
+                follow_redirects=False,
+            ) as stream:
+                if stream.status_code not in _REDIRECT_STATUS_CODES:
+                    yield stream
+                    return
+
+                location = stream.headers.get("location")
+                if location is None:
+                    yield stream
+                    return
+
+                _redirect_url = _resolve_redirect_url(_current_url, location)
+
+                if stream.status_code in (301, 302, 303):
+                    _current_method = "GET"
+                    _current_json = None
+                    _current_data = None
+                    _current_content = None
+                    _current_files = None
+
+                if not _is_same_origin(_current_url, _redirect_url):
+                    _current_headers = _strip_sensitive_headers_for_redirect(
+                        _current_headers, _headers_to_strip
+                    )
+
+                _current_url = _redirect_url
+                _current_params = None
+        else:
+            raise httpx.TooManyRedirects(
+                "Exceeded maximum number of redirects.",
+                request=httpx.Request(method=_current_method, url=_current_url),
+            )
 
 
 class AsyncHttpClient:
@@ -669,37 +791,81 @@ class AsyncHttpClient:
             else self.base_max_retries
         )
 
-        try:
-            response = await self.httpx_client.request(
-                method=method,
-                url=_request_url,
-                headers=_request_headers,
-                params=_encoded_params if _encoded_params else None,
-                json=json_body,
-                data=data_body,
-                content=content,
-                files=request_files,
-                timeout=timeout,
-            )
-        except (httpx.ConnectError, httpx.RemoteProtocolError):
-            if retries < max_retries:
-                await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
-                return await self.request(
-                    path=path,
-                    method=method,
-                    base_url=base_url,
-                    params=params,
-                    json=json,
-                    data=data,
-                    content=content,
-                    files=files,
-                    headers=headers,
-                    request_options=request_options,
-                    retries=retries + 1,
-                    omit=omit,
-                    force_multipart=force_multipart,
+        # Compute the set of header names to strip on cross-origin redirects
+        _base_header_names = frozenset(k.lower() for k in (await self._get_headers()))
+        _headers_to_strip = _SENSITIVE_HEADERS | _base_header_names
+
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        _current_params = _encoded_params if _encoded_params else None
+
+        for _redirect_count in range(MAX_REDIRECTS + 1):
+            try:
+                response = await self.httpx_client.request(
+                    method=_current_method,
+                    url=_current_url,
+                    headers=_current_headers,
+                    params=_current_params,
+                    json=_current_json,
+                    data=_current_data,
+                    content=_current_content,
+                    files=_current_files,
+                    timeout=timeout,
+                    follow_redirects=False,
                 )
-            raise
+            except (httpx.ConnectError, httpx.RemoteProtocolError):
+                if retries < max_retries:
+                    await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
+                    return await self.request(
+                        path=path,
+                        method=method,
+                        base_url=base_url,
+                        params=params,
+                        json=json,
+                        data=data,
+                        content=content,
+                        files=files,
+                        headers=headers,
+                        request_options=request_options,
+                        retries=retries + 1,
+                        omit=omit,
+                        force_multipart=force_multipart,
+                    )
+                raise
+
+            if response.status_code not in _REDIRECT_STATUS_CODES:
+                break
+
+            location = response.headers.get("location")
+            if location is None:
+                break
+
+            _redirect_url = _resolve_redirect_url(_current_url, location)
+
+            if response.status_code in (301, 302, 303):
+                _current_method = "GET"
+                _current_json = None
+                _current_data = None
+                _current_content = None
+                _current_files = None
+
+            if not _is_same_origin(_current_url, _redirect_url):
+                _current_headers = _strip_sensitive_headers_for_redirect(
+                    _current_headers, _headers_to_strip
+                )
+
+            _current_url = _redirect_url
+            _current_params = None
+        else:
+            raise httpx.TooManyRedirects(
+                "Exceeded maximum number of redirects.",
+                request=httpx.Request(method=_current_method, url=_current_url),
+            )
 
         if _should_retry(response=response):
             if retries < max_retries:
@@ -825,15 +991,59 @@ class AsyncHttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
-        async with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
-        ) as stream:
-            yield stream
+        # Resolve redirects before streaming, stripping auth headers on cross-origin hops
+        _base_header_names = frozenset(k.lower() for k in _headers)
+        _headers_to_strip = _SENSITIVE_HEADERS | _base_header_names
+
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        _current_params = _encoded_params if _encoded_params else None
+
+        for _redirect_count in range(MAX_REDIRECTS + 1):
+            async with self.httpx_client.stream(
+                method=_current_method,
+                url=_current_url,
+                headers=_current_headers,
+                params=_current_params,
+                json=_current_json,
+                data=_current_data,
+                content=_current_content,
+                files=_current_files,
+                timeout=timeout,
+                follow_redirects=False,
+            ) as stream:
+                if stream.status_code not in _REDIRECT_STATUS_CODES:
+                    yield stream
+                    return
+
+                location = stream.headers.get("location")
+                if location is None:
+                    yield stream
+                    return
+
+                _redirect_url = _resolve_redirect_url(_current_url, location)
+
+                if stream.status_code in (301, 302, 303):
+                    _current_method = "GET"
+                    _current_json = None
+                    _current_data = None
+                    _current_content = None
+                    _current_files = None
+
+                if not _is_same_origin(_current_url, _redirect_url):
+                    _current_headers = _strip_sensitive_headers_for_redirect(
+                        _current_headers, _headers_to_strip
+                    )
+
+                _current_url = _redirect_url
+                _current_params = None
+        else:
+            raise httpx.TooManyRedirects(
+                "Exceeded maximum number of redirects.",
+                request=httpx.Request(method=_current_method, url=_current_url),
+            )

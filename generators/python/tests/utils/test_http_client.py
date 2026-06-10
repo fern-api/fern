@@ -8,7 +8,10 @@ from core_utilities.shared.http_client import (
     AsyncHttpClient,
     HttpClient,
     _build_url,
+    _is_same_origin,
     _should_retry,
+    _strip_sensitive_headers_for_redirect,
+    _SENSITIVE_HEADERS,
     get_request_body,
     remove_none_from_dict,
 )
@@ -689,4 +692,175 @@ def test_should_not_retry_non_retryable_status_codes(status_code: int) -> None:
 
 def test_should_retry_599_upper_boundary() -> None:
     """Legacy mode retries on >= 500, which includes 599."""
+
+
+# ---------------------------------------------------------------------------
+# Cross-origin redirect header stripping tests
+# ---------------------------------------------------------------------------
+
+
+def test_is_same_origin_same() -> None:
+    assert _is_same_origin("https://api.example.com/v1", "https://api.example.com/v2") is True
+
+
+def test_is_same_origin_different_host() -> None:
+    assert _is_same_origin("https://api.example.com/v1", "https://evil.com/steal") is False
+
+
+def test_is_same_origin_different_scheme() -> None:
+    assert _is_same_origin("https://api.example.com", "http://api.example.com") is False
+
+
+def test_is_same_origin_different_port() -> None:
+    assert _is_same_origin("https://api.example.com:443/v1", "https://api.example.com:8443/v1") is False
+
+
+def test_is_same_origin_default_ports() -> None:
+    # https default port is 443
+    assert _is_same_origin("https://api.example.com/v1", "https://api.example.com:443/v1") is True
+    # http default port is 80
+    assert _is_same_origin("http://api.example.com/v1", "http://api.example.com:80/v1") is True
+
+
+def test_strip_sensitive_headers_for_redirect() -> None:
+    headers = {
+        "x-api-key": "secret123",
+        "Authorization": "Bearer tok",
+        "Content-Type": "application/json",
+        "xi-api-key": "elevenlabs-secret",
+    }
+    # xi-api-key is a custom header, include it in the sensitive set for this test
+    sensitive = _SENSITIVE_HEADERS | frozenset({"xi-api-key"})
+    result = _strip_sensitive_headers_for_redirect(headers, sensitive)
+    assert result == {"Content-Type": "application/json"}
+
+
+def test_sync_client_strips_auth_on_cross_origin_redirect() -> None:
+    """Sync HttpClient strips auth headers when redirected cross-origin."""
+    redirect_response = httpx.Response(
+        status_code=302,
+        headers={"location": "https://evil.com/steal"},
+        request=httpx.Request("GET", "https://api.example.com/resource"),
+    )
+    final_response = httpx.Response(
+        status_code=200,
+        request=httpx.Request("GET", "https://evil.com/steal"),
+    )
+
+    mock_client = MagicMock()
+    mock_client.request = MagicMock(side_effect=[redirect_response, final_response])
+
+    http_client = HttpClient(
+        httpx_client=mock_client,
+        base_timeout=lambda: 60,
+        base_headers=lambda: {"xi-api-key": "secret123", "User-Agent": "test-sdk/1.0"},
+        base_url=lambda: "https://api.example.com",
+    )
+
+    response = http_client.request(path="/resource", method="GET")
+    assert response.status_code == 200
+
+    # The second call (to evil.com) should NOT have the auth header
+    second_call_kwargs = mock_client.request.call_args_list[1]
+    redirected_headers = second_call_kwargs.kwargs["headers"]
+    assert "xi-api-key" not in redirected_headers
+    assert "User-Agent" not in redirected_headers
+
+
+def test_sync_client_preserves_auth_on_same_origin_redirect() -> None:
+    """Sync HttpClient preserves auth headers when redirected same-origin."""
+    redirect_response = httpx.Response(
+        status_code=302,
+        headers={"location": "https://api.example.com/v2/resource"},
+        request=httpx.Request("GET", "https://api.example.com/resource"),
+    )
+    final_response = httpx.Response(
+        status_code=200,
+        request=httpx.Request("GET", "https://api.example.com/v2/resource"),
+    )
+
+    mock_client = MagicMock()
+    mock_client.request = MagicMock(side_effect=[redirect_response, final_response])
+
+    http_client = HttpClient(
+        httpx_client=mock_client,
+        base_timeout=lambda: 60,
+        base_headers=lambda: {"xi-api-key": "secret123", "User-Agent": "test-sdk/1.0"},
+        base_url=lambda: "https://api.example.com",
+    )
+
+    response = http_client.request(path="/resource", method="GET")
+    assert response.status_code == 200
+
+    # Same-origin: headers should be preserved
+    second_call_kwargs = mock_client.request.call_args_list[1]
+    redirected_headers = second_call_kwargs.kwargs["headers"]
+    assert redirected_headers["xi-api-key"] == "secret123"
+    assert redirected_headers["User-Agent"] == "test-sdk/1.0"
+
+
+@pytest.mark.asyncio
+async def test_async_client_strips_auth_on_cross_origin_redirect() -> None:
+    """Async HttpClient strips auth headers when redirected cross-origin."""
+    redirect_response = httpx.Response(
+        status_code=302,
+        headers={"location": "https://evil.com/steal"},
+        request=httpx.Request("GET", "https://api.example.com/resource"),
+    )
+    final_response = httpx.Response(
+        status_code=200,
+        request=httpx.Request("GET", "https://evil.com/steal"),
+    )
+
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(side_effect=[redirect_response, final_response])
+
+    http_client = AsyncHttpClient(
+        httpx_client=mock_client,
+        base_timeout=lambda: 60,
+        base_headers=lambda: {"xi-api-key": "secret123", "User-Agent": "test-sdk/1.0"},
+        base_url=lambda: "https://api.example.com",
+    )
+
+    response = await http_client.request(path="/resource", method="GET")
+    assert response.status_code == 200
+
+    # The second call (to evil.com) should NOT have the auth header
+    second_call_kwargs = mock_client.request.call_args_list[1]
+    redirected_headers = second_call_kwargs.kwargs["headers"]
+    assert "xi-api-key" not in redirected_headers
+    assert "User-Agent" not in redirected_headers
+
+
+@pytest.mark.asyncio
+async def test_async_client_preserves_auth_on_same_origin_redirect() -> None:
+    """Async HttpClient preserves auth headers when redirected same-origin."""
+    redirect_response = httpx.Response(
+        status_code=302,
+        headers={"location": "https://api.example.com/v2/resource"},
+        request=httpx.Request("GET", "https://api.example.com/resource"),
+    )
+    final_response = httpx.Response(
+        status_code=200,
+        request=httpx.Request("GET", "https://api.example.com/v2/resource"),
+    )
+
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(side_effect=[redirect_response, final_response])
+
+    http_client = AsyncHttpClient(
+        httpx_client=mock_client,
+        base_timeout=lambda: 60,
+        base_headers=lambda: {"xi-api-key": "secret123", "User-Agent": "test-sdk/1.0"},
+        base_url=lambda: "https://api.example.com",
+    )
+
+    response = await http_client.request(path="/resource", method="GET")
+    assert response.status_code == 200
+
+    # Same-origin: headers should be preserved
+    second_call_kwargs = mock_client.request.call_args_list[1]
+    redirected_headers = second_call_kwargs.kwargs["headers"]
+    assert redirected_headers["xi-api-key"] == "secret123"
+    assert redirected_headers["User-Agent"] == "test-sdk/1.0"
     assert _should_retry(_make_response(599)) is True
