@@ -38,11 +38,7 @@ describe("reconcileTypesMod logic", () => {
         await mkdir(typesDir, { recursive: true });
 
         // mod.rs only declares one module
-        const modContent = [
-            "pub mod existing_type;",
-            "pub use existing_type::*;",
-            ""
-        ].join("\n");
+        const modContent = ["pub mod existing_type;", "pub use existing_type::*;", ""].join("\n");
         await writeFile(path.join(typesDir, "mod.rs"), modContent);
 
         // But there are additional .rs files the generator created
