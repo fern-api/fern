@@ -12,7 +12,7 @@ export function mockInferredAuthScheme(server: MockServer): void {
     };
     const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .post("/token")
         .header("X-Api-Key", "X-Api-Key")
         .jsonBody(rawRequestBody)

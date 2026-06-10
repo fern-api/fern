@@ -4,5 +4,5 @@ import type { MockServer } from "../mock-server/MockServer";
 
 export function mockOAuthScheme(server: MockServer): void {
     const rawResponseBody = { access_token: "access_token", expires_in: 3600 };
-    server.mockEndpoint().post("/token").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+    server.mockEndpoint({ once: false }).post("/token").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 }

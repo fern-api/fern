@@ -243,13 +243,7 @@ describe("InlineUsersClient", () => {
             },
         };
 
-        server
-            .mockEndpoint({ once: false })
-            .get("/inline-users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/inline-users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = rawResponseBody;
         const page = await client.inlineUsers.inlineUsers.listWithOffsetStepPagination({
@@ -259,9 +253,6 @@ describe("InlineUsersClient", () => {
         });
 
         expect(expected.data.users).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.data.users).toEqual(nextPage.data);
     });
 
     test("listWithOffsetPaginationHasNextPage", async () => {

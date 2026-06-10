@@ -6,7 +6,7 @@ export function mockCustomAuth(server: MockServer): void {
     const rawRequestBody = { username: "username", password: "password" };
     const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .post("/identity/token")
         .jsonBody(rawRequestBody)
         .respondWith()

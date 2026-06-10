@@ -11,7 +11,7 @@ export function mockOAuth(server: MockServer): void {
     };
     const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .post("/token")
         .jsonBody(rawRequestBody)
         .respondWith()
@@ -29,7 +29,7 @@ export function mockInferredAuth(server: MockServer): void {
     };
     const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
     server
-        .mockEndpoint()
+        .mockEndpoint({ once: false })
         .post("/token")
         .jsonBody(rawRequestBody)
         .respondWith()
