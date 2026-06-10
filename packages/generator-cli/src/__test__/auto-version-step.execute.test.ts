@@ -757,3 +757,126 @@ describe("AutoVersionStep.execute() — Go v2+ module suffix", () => {
         expect(goMod).toMatch(/module github.com\/example\/sdk\/v2/);
     });
 });
+
+describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai config)", () => {
+    let repo: TwoGenerations;
+    const mockFetch = vi.fn();
+
+    const faiConfig: AutoVersionStepConfig = {
+        enabled: true,
+        language: "typescript",
+        fernToken: "fern-token-123"
+    };
+
+    beforeEach(async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockFetch.mockReset();
+        vi.stubGlobal("fetch", mockFetch);
+        repo = await setupTwoGenerations({
+            previousVersion: "1.0.0",
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        vi.unstubAllGlobals();
+        await repo.cleanup();
+    });
+
+    function makeStepAndContext() {
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), faiConfig);
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        return { step, context: makeContext(prepared) };
+    }
+
+    it("calls the FAI service with the fern token and applies the returned analysis", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                message: "feat: add newFeature helper",
+                version_bump: "MINOR",
+                changelog_entry: "### Added\n- `newFeature()` helper.",
+                version_bump_reason: "New public API surface added."
+            })
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.1.0");
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.changelogEntry).toContain("newFeature");
+        expect(result.versionBumpReason).toBe("New public API surface added.");
+        expect(result.commitMessage).toContain("feat: add newFeature helper");
+        expect(result.commitMessage).toContain("🌿 Generated with Fern");
+
+        expect(mockAnalyzeSdkDiff).not.toHaveBeenCalled();
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit];
+        expect(url).toBe("https://fai.buildwithfern.com/sdks/analyze-commit-diff");
+        expect((init.headers as Record<string, string>).Authorization).toBe("Bearer fern-token-123");
+        const body = JSON.parse(init.body as string) as Record<string, unknown>;
+        expect(typeof body.diff).toBe("string");
+        expect(body.language).toBe("typescript");
+        expect(body.previous_version).toBe("1.0.0");
+    });
+
+    it("treats NO_CHANGE from FAI as a no-bump rewrite to previousVersion", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({ message: "", version_bump: "NO_CHANGE" })
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.versionBump).toBe("NO_CHANGE");
+        expect(result.version).toBe("1.0.0");
+    });
+
+    it("falls back to PATCH when the FAI service returns an error status", async () => {
+        mockFetch.mockResolvedValue({
+            ok: false,
+            status: 500,
+            text: async () => "internal error"
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.0.1");
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.commitMessage).toContain("SDK regeneration");
+        expect(result.changelogEntry).toBeUndefined();
+    });
+
+    it("falls back to PATCH when FAI returns malformed optional fields", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                message: "feat: add newFeature helper",
+                version_bump: "MINOR",
+                changelog_entry: 123
+            })
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe("1.0.1");
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.commitMessage).toContain("SDK regeneration");
+        expect(result.changelogEntry).toBeUndefined();
+    });
+});

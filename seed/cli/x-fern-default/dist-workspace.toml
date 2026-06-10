@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "x-fern-default-test-types"]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "x-fern-default-test-types", "x-fern-default-test-sdk"]
 
 # Config for 'dist'
 [dist]

@@ -50,10 +50,10 @@ category = "templatized"
 globs = ["dist-workspace.toml", "LICENSE"]
 category = "ship"
 
-# --- Dev-only files vendored for reference but stripped from Docker ---
+# --- Build script (generates smoke-test constants from customer specs; not needed in vendor) ---
 [[rules]]
 globs = ["build.rs"]
-category = "dev-only"
+category = "not-synced"
 
 [[rules]]
 globs = [".gitignore"]

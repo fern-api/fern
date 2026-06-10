@@ -1,0 +1,7 @@
+- summary: |
+    Generate `sdk_glue.rs` module providing `sdk_client()` and `block_on()`
+    helpers that bridge the CLI's AppContext to the co-generated SDK client.
+    Custom command handlers can now use typed SDK calls without manual
+    Cargo.toml edits — the SDK crate is the sole direct dependency and
+    re-exports all types.
+  type: feat

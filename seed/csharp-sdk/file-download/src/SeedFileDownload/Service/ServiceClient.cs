@@ -36,7 +36,7 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return new RawResponse()
+            return new SeedFileDownload.RawResponse()
             {
                 StatusCode = response.Raw.StatusCode,
                 Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -50,7 +50,13 @@ public partial class ServiceClient : IServiceClient
             throw new SeedFileDownloadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedFileDownload.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -84,7 +90,7 @@ public partial class ServiceClient : IServiceClient
             return new WithRawResponse<global::System.IO.Stream>()
             {
                 Data = stream,
-                RawResponse = new RawResponse()
+                RawResponse = new SeedFileDownload.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -99,7 +105,13 @@ public partial class ServiceClient : IServiceClient
             throw new SeedFileDownloadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedFileDownload.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

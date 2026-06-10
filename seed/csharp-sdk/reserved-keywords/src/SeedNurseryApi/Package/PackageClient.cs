@@ -42,7 +42,7 @@ public partial class PackageClient : IPackageClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return new RawResponse()
+            return new SeedNurseryApi.RawResponse()
             {
                 StatusCode = response.Raw.StatusCode,
                 Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -56,7 +56,13 @@ public partial class PackageClient : IPackageClient
             throw new SeedNurseryApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedNurseryApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

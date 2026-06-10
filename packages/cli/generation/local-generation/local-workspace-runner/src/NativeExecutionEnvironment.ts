@@ -1,7 +1,8 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError } from "@fern-api/task-context";
 import { copyFile, rm } from "fs/promises";
-import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { CONTAINER_SPECS_DIRECTORY } from "./constants.js";
+import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 
 const LICENSE_MOUNT_PATH = "/tmp/LICENSE";
 
@@ -35,6 +36,7 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         snippetPath,
         snippetTemplatePath,
         licenseFilePath,
+        sourceMounts,
         context,
         inspect
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
@@ -55,6 +57,12 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                 );
             }
         }
+
+        // Resolve source-mount env vars for native execution. In container mode these
+        // become Docker volume mounts; natively we expose them as environment variables
+        // so generators can locate mounted directories (e.g. FERN_SPECS_DIR).
+        const specsMount = sourceMounts?.find((m: SourceMount) => m.containerPath === CONTAINER_SPECS_DIRECTORY);
+        const specsEnv = specsMount != null ? { FERN_SPECS_DIR: specsMount.hostPath } : {};
 
         try {
             for (const command of this.commands) {
@@ -79,6 +87,7 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                     env: {
                         ...process.env,
                         ...this.env,
+                        ...specsEnv,
                         IR_PATH: irPath,
                         CONFIG_PATH: configPath,
                         OUTPUT_PATH: outputPath,

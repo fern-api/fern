@@ -3,6 +3,6 @@
 export const ModelProvider = {
     Openai: "openai",
     Anthropic: "anthropic",
-    Bedrock: "bedrock",
+    AwsBedrock: "aws-bedrock",
 } as const;
 export type ModelProvider = (typeof ModelProvider)[keyof typeof ModelProvider];

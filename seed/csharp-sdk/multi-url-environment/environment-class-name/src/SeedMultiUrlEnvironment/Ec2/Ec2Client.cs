@@ -39,7 +39,7 @@ public partial class Ec2Client : IEc2Client
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return new RawResponse()
+            return new SeedMultiUrlEnvironment.RawResponse()
             {
                 StatusCode = response.Raw.StatusCode,
                 Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -53,7 +53,13 @@ public partial class Ec2Client : IEc2Client
             throw new SeedMultiUrlEnvironmentApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedMultiUrlEnvironment.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

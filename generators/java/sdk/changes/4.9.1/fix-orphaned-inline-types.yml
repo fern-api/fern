@@ -1,0 +1,5 @@
+- summary: |
+    Fix inline types referenced only from endpoint responses (e.g., map value
+    types) not being generated as standalone files when `enable-inline-types`
+    is enabled.
+  type: fix

@@ -63,7 +63,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<StreamProtocolNoCollisionResponse>>()
             {
                 Data = StreamProtocolNoCollisionAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -78,7 +78,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -142,7 +148,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<StreamProtocolCollisionResponse>>()
             {
                 Data = StreamProtocolCollisionAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -157,7 +163,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -221,7 +233,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<StreamDataContextResponse>>()
             {
                 Data = StreamDataContextAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -236,7 +248,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -300,7 +318,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<StreamNoContextResponse>>()
             {
                 Data = StreamNoContextAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -315,7 +333,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -379,7 +403,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<StreamProtocolWithFlatSchemaResponse>>()
             {
                 Data = StreamProtocolWithFlatSchemaAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -394,7 +418,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -460,7 +490,7 @@ public partial class SeedApiClient : ISeedApiClient
             >()
             {
                 Data = StreamDataContextWithEnvelopeSchemaAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -475,7 +505,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -539,7 +575,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<Event>>()
             {
                 Data = StreamOasSpecNativeAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -554,7 +590,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -619,7 +661,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>()
             {
                 Data = StreamXFernStreamingConditionStreamAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -634,7 +676,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -700,7 +748,7 @@ public partial class SeedApiClient : ISeedApiClient
                 return new WithRawResponse<CompletionFullResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -714,7 +762,13 @@ public partial class SeedApiClient : ISeedApiClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -725,7 +779,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -763,7 +823,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>()
             {
                 Data = StreamXFernStreamingSharedSchemaStreamAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -778,7 +838,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -844,7 +910,7 @@ public partial class SeedApiClient : ISeedApiClient
                 return new WithRawResponse<CompletionFullResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -858,7 +924,13 @@ public partial class SeedApiClient : ISeedApiClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -869,7 +941,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -911,7 +989,7 @@ public partial class SeedApiClient : ISeedApiClient
                 return new WithRawResponse<CompletionFullResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -925,7 +1003,13 @@ public partial class SeedApiClient : ISeedApiClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -936,7 +1020,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -974,7 +1064,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<CompletionStreamChunk>>()
             {
                 Data = StreamXFernStreamingUnionStreamAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -989,7 +1079,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -1053,7 +1149,7 @@ public partial class SeedApiClient : ISeedApiClient
                 return new WithRawResponse<CompletionFullResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -1067,7 +1163,13 @@ public partial class SeedApiClient : ISeedApiClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -1078,7 +1180,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -1121,7 +1229,7 @@ public partial class SeedApiClient : ISeedApiClient
                 return new WithRawResponse<ValidateUnionRequestResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -1135,7 +1243,13 @@ public partial class SeedApiClient : ISeedApiClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -1146,7 +1260,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -1187,7 +1307,7 @@ public partial class SeedApiClient : ISeedApiClient
                     response,
                     cancellationToken
                 ),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -1202,7 +1322,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -1268,7 +1394,7 @@ public partial class SeedApiClient : ISeedApiClient
                 return new WithRawResponse<CompletionFullResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -1282,7 +1408,13 @@ public partial class SeedApiClient : ISeedApiClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -1293,7 +1425,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -1330,7 +1468,7 @@ public partial class SeedApiClient : ISeedApiClient
             return new WithRawResponse<IAsyncEnumerable<string>>()
             {
                 Data = StreamXFernStreamingSseOnlyAsyncBody(response, cancellationToken),
-                RawResponse = new RawResponse()
+                RawResponse = new SeedApi.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -1345,7 +1483,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

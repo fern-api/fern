@@ -45,7 +45,7 @@ public partial class QueryParamClient : IQueryParamClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return new RawResponse()
+            return new SeedEnum.RawResponse()
             {
                 StatusCode = response.Raw.StatusCode,
                 Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -59,7 +59,13 @@ public partial class QueryParamClient : IQueryParamClient
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedEnum.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -98,7 +104,7 @@ public partial class QueryParamClient : IQueryParamClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return new RawResponse()
+            return new SeedEnum.RawResponse()
             {
                 StatusCode = response.Raw.StatusCode,
                 Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -112,7 +118,13 @@ public partial class QueryParamClient : IQueryParamClient
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedEnum.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

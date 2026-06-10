@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.44.5
+  changelogEntry:
+    - summary: |
+        Support endpoints that use URI- or path-based pagination (`next_uri` / `next_path`).
+        The v1 generator no longer aborts with "uri pagination is not supported yet"; these
+        endpoints are generated as regular methods that return the full response.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 1.44.4
+  changelogEntry:
+    - summary: |
+        Support endpoints that return a `bytes` response. The v1 generator no longer
+        aborts with "bytes requests are not supported yet", and the generated client
+        method now returns `[]byte` (reading the full response body).
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 1.44.3
+  changelogEntry:
+    - summary: |
+        Fixed the generated dynamic code snippets for endpoints with a bytes request
+        body so that they compile. A bytes body referenced as a property of a request
+        wrapper is now instantiated as a `[]byte`, matching the generated struct
+        field, and a standalone bytes parameter now defaults to `io.Reader` (matching
+        the SDK's `useReaderForBytesRequest` default) instead of being keyed off an
+        unset config value. Previously the snippet wrapped the wrapped-request body in
+        `bytes.NewReader`, producing code that did not match the `[]byte` field type.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 66
+- version: 1.44.2
+  changelogEntry:
+    - summary: |
+        Reserve the `ExtraProperties` field name so a user-defined property named
+        `EXTRA_PROPERTIES` (or any casing of it) no longer collides with the built-in
+        `GetExtraProperties()` accessor. The user property is now generated as
+        `FieldExtraProperties` (its JSON wire name is unchanged), so the generated Go
+        compiles.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
 - version: 1.44.1
   changelogEntry:
     - summary: |
