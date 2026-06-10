@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.44.6
+  changelogEntry:
+    - summary: |
+        Fix generated Go failing to compile for APIs that use literals. Undiscriminated
+        union members whose literal value is not a valid Go identifier (e.g. starting with
+        a digit) now produce a valid exported field name, literal query parameters are no
+        longer double-quoted, and literal path parameters are now passed as their concrete
+        value in dynamic snippets instead of `nil`.
+      type: fix
+    - summary: |
+        Support endpoints with a `stream-condition` (stream-parameter) response. The
+        v1 generator now handles the non-streaming variant instead of aborting, and the
+        v2 generator includes the streamer helper files when an endpoint exposes a
+        stream-parameter response.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 66
 - version: 1.44.5
   changelogEntry:
     - summary: |
