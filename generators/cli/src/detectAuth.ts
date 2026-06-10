@@ -27,7 +27,8 @@ export interface DetectedAuthBinding {
  * for the variants the SDK supports:
  *
  *   - `bearer` → `.auth(BearerAuth::new("<key>").env("<env>"))`
- *   - `header` → `.auth(ApiKeyAuth::new("<key>").env("<env>"))`
+ *   - `header` → `.auth(ApiKeyAuth::new("<key>").source(...))` with a
+ *     `--api-key` flag tried first, falling back to the env var
  *   - `basic` (both halves bound) → `.auth_basic_scheme(...)`
  *   - `basic` with `passwordOmit: true` →
  *     `.auth_provider("<key>", BasicAuthProvider::username_only(...))`
@@ -48,9 +49,16 @@ export function detectAuthBindings(args: {
     const { auth, binaryName } = args;
     const envPrefix = toEnvVarPrefix(binaryName);
 
+    // When the spec declares more than one `header` API-key scheme, a shared
+    // `--api-key` flag would collide (clap dedupes the arg, so both schemes
+    // would resolve from the same value). Disambiguate by deriving the flag
+    // from each scheme's key in that case; keep the conventional `--api-key`
+    // for the overwhelmingly common single-scheme case.
+    const multipleHeaderSchemes = auth.schemes.filter((scheme) => scheme.type === "header").length > 1;
+
     const bindings: DetectedAuthBinding[] = [];
     for (const scheme of auth.schemes) {
-        const binding = bindingForScheme(scheme, envPrefix);
+        const binding = bindingForScheme(scheme, envPrefix, multipleHeaderSchemes);
         if (binding != null) {
             bindings.push(binding);
         }
@@ -58,7 +66,11 @@ export function detectAuthBindings(args: {
     return bindings;
 }
 
-function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): DetectedAuthBinding | null {
+function bindingForScheme(
+    scheme: FernIr.AuthScheme,
+    envPrefix: string,
+    multipleHeaderSchemes: boolean
+): DetectedAuthBinding | null {
     return scheme._visit<DetectedAuthBinding | null>({
         bearer: (bearer) => {
             const env = bearer.tokenEnvVar ?? `${envPrefix}_TOKEN`;
@@ -73,11 +85,21 @@ function bindingForScheme(scheme: FernIr.AuthScheme, envPrefix: string): Detecte
         },
         header: (header) => {
             const env = header.headerEnvVar ?? `${envPrefix}_API_KEY`;
+            // `toEnvVarPrefix` is camelCase/Pascal/acronym-aware (unlike
+            // `toKebabCase`, which lowercases before splitting), so "ApiKey"
+            // becomes "api-key" rather than "apikey".
+            const flag = multipleHeaderSchemes
+                ? toEnvVarPrefix(header.key).toLowerCase().replace(/_/g, "-")
+                : "api-key";
+            // Flag-then-env fallback: the flag is tried first, falling back to
+            // the env var. `.cli()` and `.env()` on the builder overwrite each
+            // other, so the chain has to go through `.source(Chain([...]))`
+            // rather than `.cli().env()`.
             return {
                 schemeName: header.key,
-                rustCall: `.auth(ApiKeyAuth::new("${header.key}").env("${env}"))`,
+                rustCall: `.auth(ApiKeyAuth::new("${header.key}").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("${flag}"), AuthCredentialSource::from_env("${env}")])))`,
                 placement: "root",
-                authTypeImport: "ApiKeyAuth",
+                authTypeImport: "ApiKeyAuth, AuthCredentialSource",
                 envVars: [env],
                 kind: "header"
             };
