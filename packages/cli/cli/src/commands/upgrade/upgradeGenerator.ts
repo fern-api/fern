@@ -197,9 +197,12 @@ export async function loadAndUpdateGenerators({
                 continue;
             }
 
-            // Normalize the generator filter to add default Docker org prefix if not present
+            // Normalize the generator filter through alias resolution so
+            // legacy names (e.g. fern-typescript-node-sdk) match their canonical form.
             const normalizedGeneratorFilter =
-                generatorFilter != null ? addDefaultDockerOrgIfNotPresent(generatorFilter) : undefined;
+                generatorFilter != null
+                    ? (normalizeGeneratorName(generatorFilter) ?? addDefaultDockerOrgIfNotPresent(generatorFilter))
+                    : undefined;
             // Compare normalized names so both shorthand and full names work
             if (normalizedGeneratorFilter != null && normalizedGeneratorName !== normalizedGeneratorFilter) {
                 context.logger.debug(
