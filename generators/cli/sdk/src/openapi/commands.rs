@@ -9,8 +9,8 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 
 use crate::openapi::discovery::{
-    Availability, FernEnumValue, MethodParameter, MultipartField, RestDescription, RestResource,
-    SdkGroupInfo,
+    Availability, FernEnumValue, GlobalParamLocation, GlobalParameter, MethodParameter,
+    MultipartField, RestDescription, RestResource, SdkGroupInfo,
 };
 use crate::text::{sanitize_flag_name, to_kebab_flag};
 
@@ -169,7 +169,9 @@ pub fn build_cli(doc: &RestDescription) -> Command {
     resource_names.sort();
     for name in resource_names {
         let resource = &doc.resources[name];
-        if let Some(cmd) = build_resource_command(name, resource, &doc.groups) {
+        if let Some(cmd) =
+            build_resource_command(name, resource, &doc.groups, &doc.global_parameters)
+        {
             root = root.subcommand(cmd);
         }
     }
@@ -259,6 +261,7 @@ fn build_resource_command(
     name: &str,
     resource: &RestResource,
     groups: &HashMap<String, SdkGroupInfo>,
+    global_parameters: &[GlobalParameter],
 ) -> Option<Command> {
     let mut cmd = Command::new(name.to_string())
         .about(group_about_text(name, groups))
@@ -543,6 +546,15 @@ fn build_resource_command(
             method_cmd = method_cmd.arg(arg);
         }
 
+        // Register spec-root `x-fern-global-parameters` as per-operation
+        // flags (FER-11190). A global parameter is added only when this
+        // operation declares its target field (relevance), and only when
+        // its `--<flag>` long is not already taken on this command — the
+        // per-op flag wins on a collision, and skipping sidesteps clap's
+        // duplicate-`long` debug_assert panic (FER-11145). Resolution and
+        // injection happen in the executor; here we just surface the flag.
+        method_cmd = add_global_parameter_flags(method_cmd, method, global_parameters);
+
         cmd = cmd.subcommand(method_cmd);
     }
 
@@ -551,7 +563,9 @@ fn build_resource_command(
     sub_names.sort();
     for sub_name in sub_names {
         let sub_resource = &resource.resources[sub_name];
-        if let Some(sub_cmd) = build_resource_command(sub_name, sub_resource, groups) {
+        if let Some(sub_cmd) =
+            build_resource_command(sub_name, sub_resource, groups, global_parameters)
+        {
             has_children = true;
             cmd = cmd.subcommand(sub_cmd);
         }
@@ -562,6 +576,81 @@ fn build_resource_command(
     } else {
         None
     }
+}
+
+/// Register `x-fern-global-parameters` flags on a single operation
+/// command. See the call site for the relevance + collision rules; this
+/// helper owns the clap-arg construction (flag name, env, default, help)
+/// and the per-command duplicate-`long` guard.
+fn add_global_parameter_flags(
+    mut method_cmd: Command,
+    method: &crate::openapi::discovery::RestMethod,
+    global_parameters: &[GlobalParameter],
+) -> Command {
+    if global_parameters.is_empty() {
+        return method_cmd;
+    }
+
+    // Longs already claimed on this command (builtins, pagination, per-op
+    // params, binary/multipart flags). A global-parameter flag that would
+    // duplicate one is skipped — the per-op flag wins, and clap would
+    // otherwise `debug_assert`-panic on the duplicate `long`.
+    let mut taken_longs: std::collections::HashSet<String> = method_cmd
+        .get_arguments()
+        .filter_map(|a| a.get_long().map(str::to_string))
+        .collect();
+
+    for gp in global_parameters {
+        if !crate::openapi::app::operation_declares_global_param_target(method, gp) {
+            continue;
+        }
+        let long = crate::openapi::app::global_param_flag_name(gp);
+        if taken_longs.contains(&long) {
+            tracing::warn!(
+                param = %gp.name,
+                flag = %long,
+                "global parameter flag collides with an existing flag on this operation; \
+                 skipping (per-op flag wins)",
+            );
+            continue;
+        }
+        taken_longs.insert(long.clone());
+
+        let location_word = match gp.location {
+            GlobalParamLocation::Body => "request body",
+            GlobalParamLocation::Query => "query string",
+            GlobalParamLocation::Header => "request headers",
+        };
+        let mut help_lines = vec![format!(
+            "Default for `{}` (injected into the {location_word}).",
+            gp.target
+        )];
+        if let Some(env) = &gp.env {
+            help_lines.push(format!("Env: {env}."));
+        }
+        if let Some(def) = &gp.default {
+            help_lines.push(format!("Default: {def}."));
+        } else if !gp.optional {
+            help_lines.push("Required.".to_string());
+        }
+        let help_text = help_lines.join(" ");
+
+        let value_name = crate::text::to_screaming_snake(&long);
+        let arg_id = crate::openapi::app::global_param_arg_id(gp);
+        let mut arg = Arg::new(arg_id)
+            .long(long)
+            .value_name(value_name)
+            .help(help_text);
+        if let Some(env) = &gp.env {
+            arg = arg.env(env.clone());
+        }
+        if let Some(def) = &gp.default {
+            arg = arg.default_value(def.clone());
+        }
+        method_cmd = method_cmd.arg(arg);
+    }
+
+    method_cmd
 }
 
 /// Compute the clap arg ID for a parameter given its wire name.
@@ -2241,6 +2330,225 @@ paths:
         assert!(
             output_count <= 1,
             "multipart 'output' should be skipped to avoid duplicate; found {output_count} in {arg_ids:?}",
+        );
+    }
+
+    // ------------------------------------------------------------------
+    // x-fern-global-parameters flag registration (FER-11190).
+    // ------------------------------------------------------------------
+
+    /// Build a doc with a `products` resource whose `search` op declares a
+    /// body `config.currency` (relevant, no collision) and whose
+    /// `retrieve` op declares BOTH a body `config.country` (relevant) and a
+    /// top-level `country` query param (whose `--country` flag collides
+    /// with the global). Plus a global `currency`→`config.currency` and a
+    /// global `country`→`config.country`.
+    fn doc_with_global_params() -> RestDescription {
+        let body_param = || MethodParameter {
+            location: Some("body".into()),
+            param_type: Some("string".into()),
+            ..Default::default()
+        };
+
+        let mut search_params = HashMap::new();
+        search_params.insert("query".to_string(), body_param());
+        search_params.insert("config.currency".to_string(), body_param());
+
+        let mut retrieve_params = HashMap::new();
+        retrieve_params.insert("config.country".to_string(), body_param());
+        // A real per-op `country` flag (query) that the global would clash with.
+        retrieve_params.insert(
+            "country".to_string(),
+            MethodParameter {
+                location: Some("query".into()),
+                param_type: Some("string".into()),
+                ..Default::default()
+            },
+        );
+
+        let mut methods = HashMap::new();
+        methods.insert(
+            "search".to_string(),
+            RestMethod {
+                http_method: "POST".into(),
+                path: "v1/search".into(),
+                parameters: search_params,
+                ..Default::default()
+            },
+        );
+        methods.insert(
+            "retrieve".to_string(),
+            RestMethod {
+                http_method: "POST".into(),
+                path: "v1/retrieve".into(),
+                parameters: retrieve_params,
+                ..Default::default()
+            },
+        );
+
+        let mut resources = HashMap::new();
+        resources.insert(
+            "products".to_string(),
+            RestResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+
+        let gp = |name: &str, target: &str, env: &str| GlobalParameter {
+            name: name.into(),
+            location: GlobalParamLocation::Body,
+            target: target.into(),
+            optional: true,
+            env: Some(env.into()),
+            default: None,
+        };
+
+        RestDescription {
+            name: "channel3".into(),
+            resources,
+            global_parameters: vec![
+                gp("currency", "config.currency", "CHANNEL3_CURRENCY"),
+                gp("country", "config.country", "CHANNEL3_COUNTRY"),
+            ],
+            ..Default::default()
+        }
+    }
+
+    fn op_arg_longs(cli: &Command, resource: &str, op: &str) -> Vec<String> {
+        cli.find_subcommand(resource)
+            .unwrap()
+            .find_subcommand(op)
+            .unwrap()
+            .get_arguments()
+            .filter_map(|a| a.get_long().map(str::to_string))
+            .collect()
+    }
+
+    /// The global `--currency` flag is registered on the relevant `search`
+    /// op (which declares `config.currency`).
+    #[test]
+    fn test_global_param_flag_registered_on_relevant_op() {
+        let cli = build_cli(&doc_with_global_params());
+        let longs = op_arg_longs(&cli, "products", "search");
+        assert!(
+            longs.iter().any(|l| l == "currency"),
+            "search should expose --currency; got {longs:?}",
+        );
+    }
+
+    /// Acceptance #4: a global flag whose `long` collides with a same-named
+    /// per-op flag is skipped — `build_cli` must NOT panic, the per-op flag
+    /// survives, and the global is not double-registered. `retrieve` has its
+    /// own `--country` (query) that collides with the global `country`.
+    #[test]
+    fn test_global_param_flag_collision_skipped_no_panic() {
+        // build_cli would clap-debug_assert-panic if the colliding global
+        // were registered alongside the per-op flag.
+        let cli = build_cli(&doc_with_global_params());
+        let longs = op_arg_longs(&cli, "products", "retrieve");
+        let country_count = longs.iter().filter(|l| *l == "country").count();
+        assert_eq!(
+            country_count, 1,
+            "exactly one --country flag (the per-op one) should remain; got {longs:?}",
+        );
+        // The per-op query param keeps its plain arg id; the global's
+        // namespaced arg id must be absent.
+        let arg_ids: Vec<String> = cli
+            .find_subcommand("products")
+            .unwrap()
+            .find_subcommand("retrieve")
+            .unwrap()
+            .get_arguments()
+            .map(|a| a.get_id().to_string())
+            .collect();
+        assert!(
+            arg_ids.iter().any(|id| id == "country"),
+            "per-op country arg should survive; got {arg_ids:?}",
+        );
+        assert!(
+            !arg_ids.iter().any(|id| id == "__global_param::country"),
+            "colliding global country flag must be skipped; got {arg_ids:?}",
+        );
+    }
+
+    /// A global parameter is NOT registered on operations that don't
+    /// declare its target field. `search` declares `config.currency` but
+    /// not `config.country`, so `--country` must be absent there.
+    #[test]
+    fn test_global_param_flag_absent_on_irrelevant_op() {
+        let cli = build_cli(&doc_with_global_params());
+        let longs = op_arg_longs(&cli, "products", "search");
+        assert!(
+            !longs.iter().any(|l| l == "country"),
+            "search does not declare config.country; --country must be absent; got {longs:?}",
+        );
+    }
+
+    /// End-to-end resolution through the real clap tree: a `--currency`
+    /// value typed on the `products search` command flows through
+    /// `build_global_param_overrides` keyed by the parameter name.
+    #[test]
+    fn test_global_param_resolves_from_flag_through_build_cli() {
+        let doc = doc_with_global_params();
+        let cli = build_cli(&doc);
+        let matches = cli
+            .try_get_matches_from([
+                "channel3", "products", "search", "--query", "shoes", "--currency", "USD",
+            ])
+            .expect("parse should succeed");
+        let leaf = matches
+            .subcommand_matches("products")
+            .unwrap()
+            .subcommand_matches("search")
+            .unwrap();
+
+        let resolved = crate::openapi::app::build_global_param_overrides(leaf, &doc);
+        assert_eq!(
+            resolved,
+            vec![("currency".to_string(), "USD".to_string())],
+            "only the relevant, resolved currency override should appear",
+        );
+    }
+
+    /// Env-var fallback wiring: with no `--currency` flag, the value comes
+    /// from the configured env var (clap `.env()` binding on the per-op
+    /// flag). Uses a test-private env var so it can't race other tests.
+    #[test]
+    fn test_global_param_resolves_from_env_through_build_cli() {
+        let doc = RestDescription {
+            name: "channel3".into(),
+            resources: doc_with_global_params().resources,
+            global_parameters: vec![GlobalParameter {
+                name: "currency".into(),
+                location: GlobalParamLocation::Body,
+                target: "config.currency".into(),
+                optional: true,
+                env: Some("FER11190_CURRENCY_ENV".into()),
+                default: None,
+            }],
+            ..Default::default()
+        };
+
+        // SAFETY: single-threaded within this test; var name is unique so
+        // no parallel test reads it.
+        std::env::set_var("FER11190_CURRENCY_ENV", "GBP");
+        let cli = build_cli(&doc);
+        let matches = cli
+            .try_get_matches_from(["channel3", "products", "search", "--query", "shoes"])
+            .expect("parse should succeed");
+        let leaf = matches
+            .subcommand_matches("products")
+            .unwrap()
+            .subcommand_matches("search")
+            .unwrap();
+        let resolved = crate::openapi::app::build_global_param_overrides(leaf, &doc);
+        std::env::remove_var("FER11190_CURRENCY_ENV");
+
+        assert_eq!(
+            resolved,
+            vec![("currency".to_string(), "GBP".to_string())],
+            "currency should resolve from the env var fallback",
         );
     }
 }

@@ -9,10 +9,10 @@ use serde::{Deserialize, Deserializer};
 
 use crate::text::to_kebab_flag;
 use crate::openapi::discovery::{
-    Availability, BinaryRequestBody, BodyEncoding, GlobalHeader, IdempotencyHeader, JsonSchema,
-    JsonSchemaProperty, MethodParameter, MultipartField, PaginationConfig, RestDescription,
-    RestMethod, RestResource, RetriesConfig, SchemaRef, SdkGroupInfo, SdkVariable,
-    SecurityScheme, StreamingConfig,
+    Availability, BinaryRequestBody, BodyEncoding, GlobalHeader, GlobalParamLocation,
+    GlobalParameter, IdempotencyHeader, JsonSchema, JsonSchemaProperty, MethodParameter,
+    MultipartField, PaginationConfig, RestDescription, RestMethod, RestResource, RetriesConfig,
+    SchemaRef, SdkGroupInfo, SdkVariable, SecurityScheme, StreamingConfig,
 };
 use crate::error::CliError;
 
@@ -202,6 +202,11 @@ struct OpenApiSpec {
     /// extension. List of headers stamped on every outgoing request.
     #[serde(default, rename = "x-fern-global-headers")]
     x_fern_global_headers: Option<Vec<RawGlobalHeader>>,
+    /// Spec-root `x-fern-global-parameters` extension. List of request
+    /// properties (body/query/header) hydrated from a top-level flag +
+    /// env on every operation that declares the target field.
+    #[serde(default, rename = "x-fern-global-parameters")]
+    x_fern_global_parameters: Option<Vec<RawGlobalParameter>>,
     /// Spec-root [`x-fern-groups`](https://buildwithfern.com/learn/api-definitions/openapi/extensions/groups)
     /// extension. Mirrors the upstream Fern OpenAPI importer's
     /// `getFernGroups.ts`: a record mapping group identifiers to
@@ -259,6 +264,45 @@ struct RawGlobalHeader {
     /// Alternate baked-in default. Wins over `default` when both are
     /// present (mirrors `x-fern-default` precedence elsewhere in the
     /// Fern OpenAPI importer).
+    #[serde(rename = "x-fern-default", default)]
+    x_fern_default: Option<serde_yaml::Value>,
+}
+
+/// Raw deserialized form of a single entry in `x-fern-global-parameters`.
+/// The body/query counterpart of [`RawGlobalHeader`]: `name` is the only
+/// strictly required field; `target` defaults to `name` and `in` defaults
+/// to `body`.
+///
+/// Both `default` and `x-fern-default` are accepted for the baked-in
+/// fallback value, with `x-fern-default` winning when both are present —
+/// matching [`RawGlobalHeader`].
+#[derive(Debug, Deserialize, Clone)]
+struct RawGlobalParameter {
+    /// SDK/CLI parameter name. Drives the kebab-cased flag (`currency` →
+    /// `--currency`) and the env-var basis. Required.
+    name: String,
+    /// Where the value lands on the wire: `body` (default), `query`, or
+    /// `header`. Unknown values fall back to `body` (see
+    /// [`lower_global_param_location`]).
+    #[serde(default, rename = "in")]
+    r#in: Option<String>,
+    /// The wire target — body dotted path, query-param name, or header
+    /// name depending on `in`. Defaults to `name` when omitted.
+    #[serde(default)]
+    target: Option<String>,
+    /// When `true`, the value is omitted when nothing resolves. Defaults
+    /// to `false` (required on every operation declaring the target).
+    #[serde(default)]
+    optional: Option<bool>,
+    /// Optional environment variable name supplying a fallback value.
+    #[serde(default)]
+    env: Option<String>,
+    /// Optional baked-in default value. Surfaced in `--help` and sent on
+    /// the wire when neither the flag nor the env var is supplied.
+    #[serde(default)]
+    default: Option<serde_yaml::Value>,
+    /// Alternate baked-in default. Wins over `default` when both are
+    /// present.
     #[serde(rename = "x-fern-default", default)]
     x_fern_default: Option<serde_yaml::Value>,
 }
@@ -1973,6 +2017,52 @@ fn lower_global_headers(raws: &[RawGlobalHeader]) -> Vec<GlobalHeader> {
 }
 
 // ---------------------------------------------------------------------------
+// x-fern-global-parameters
+// ---------------------------------------------------------------------------
+
+/// Lower the `in:` discriminator of an `x-fern-global-parameters` entry.
+/// Case-insensitive; anything unrecognized (or omitted) falls back to
+/// [`GlobalParamLocation::Body`] — the common case and the reason the
+/// extension exists. An unknown value is treated as a spec typo rather
+/// than a hard error so the rest of the spec still loads.
+fn lower_global_param_location(raw: Option<&str>) -> GlobalParamLocation {
+    match raw.map(str::trim).map(str::to_ascii_lowercase).as_deref() {
+        Some("query") => GlobalParamLocation::Query,
+        Some("header") => GlobalParamLocation::Header,
+        // "body", None, or anything unrecognized.
+        _ => GlobalParamLocation::Body,
+    }
+}
+
+/// Lower the spec-root `x-fern-global-parameters` block into the
+/// canonical [`GlobalParameter`] discovery types. `name` is required
+/// (serde rejects entries without it); `target` defaults to `name`,
+/// `in` defaults to `body`, and `optional` defaults to `false`.
+///
+/// `x-fern-default` wins over `default` when both are present, reusing
+/// [`lower_global_header_default`] for the scalar→string coercion since
+/// the accepted shapes are identical.
+fn lower_global_parameters(raws: &[RawGlobalParameter]) -> Vec<GlobalParameter> {
+    raws.iter()
+        .map(|raw| {
+            let default_yaml = raw.x_fern_default.as_ref().or(raw.default.as_ref());
+            GlobalParameter {
+                name: raw.name.clone(),
+                location: lower_global_param_location(raw.r#in.as_deref()),
+                target: raw
+                    .target
+                    .clone()
+                    .filter(|t| !t.trim().is_empty())
+                    .unwrap_or_else(|| raw.name.clone()),
+                optional: raw.optional.unwrap_or(false),
+                env: raw.env.clone(),
+                default: default_yaml.and_then(lower_global_header_default),
+            }
+        })
+        .collect()
+}
+
+// ---------------------------------------------------------------------------
 // x-fern-groups
 // ---------------------------------------------------------------------------
 
@@ -2440,6 +2530,17 @@ pub fn load_openapi_spec_from_value(
         .map(|raws| lower_global_headers(raws))
         .unwrap_or_default();
 
+    // Lower the spec-root `x-fern-global-parameters` block once. Unlike
+    // global headers, these surface as per-operation flags (registered in
+    // `commands::build_resource_command` only on operations that declare
+    // the target field) and are injected into the request body/query by
+    // the executor; a per-call flag for the same target path still wins.
+    let global_parameters: Vec<GlobalParameter> = spec
+        .x_fern_global_parameters
+        .as_ref()
+        .map(|raws| lower_global_parameters(raws))
+        .unwrap_or_default();
+
     // Lower the document-root `x-fern-groups` extension. Keys are
     // kebab-cased so they match the resource-tree keys built from
     // `x-fern-sdk-group-name` further down. Mirrors fern's
@@ -2467,6 +2568,7 @@ pub fn load_openapi_spec_from_value(
         sdk_variables,
         retries: spec_root_retries.clone(),
         global_headers,
+        global_parameters,
         groups,
         ..Default::default()
     };
@@ -5699,6 +5801,191 @@ paths:
         let headers: Vec<&str> =
             doc.global_headers.iter().map(|h| h.header.as_str()).collect();
         assert_eq!(headers, vec!["First", "Second", "Third"]);
+    }
+
+    // ------------------------------------------------------------------
+    // x-fern-global-parameters (FER-11190) — body/query analogue of
+    // x-fern-global-headers. Parsing-level coverage; the registration +
+    // injection behavior is exercised in app.rs / executor.rs tests.
+    // ------------------------------------------------------------------
+
+    /// Absent extension → empty vec (never `None`-panics downstream).
+    #[test]
+    fn test_global_parameters_absent_yields_empty_vec() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: T
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert!(doc.global_parameters.is_empty());
+    }
+
+    /// Full body entry round-trips every field, including the dotted
+    /// `target` path that the executor injects into.
+    #[test]
+    fn test_global_parameters_full_body_entry_round_trips() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: T
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+x-fern-global-parameters:
+  - name: currency
+    in: body
+    target: config.currency
+    optional: true
+    env: CHANNEL3_CURRENCY
+    default: USD
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert_eq!(doc.global_parameters.len(), 1);
+        let p = &doc.global_parameters[0];
+        assert_eq!(p.name, "currency");
+        assert_eq!(p.location, GlobalParamLocation::Body);
+        assert_eq!(p.target, "config.currency");
+        assert!(p.optional);
+        assert_eq!(p.env.as_deref(), Some("CHANNEL3_CURRENCY"));
+        assert_eq!(p.default.as_deref(), Some("USD"));
+    }
+
+    /// `in` and `target` omitted → location defaults to Body and target
+    /// falls back to `name`; `optional` defaults to false (required).
+    #[test]
+    fn test_global_parameters_minimal_entry_uses_defaults() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: T
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+x-fern-global-parameters:
+  - name: currency
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        let p = &doc.global_parameters[0];
+        assert_eq!(p.name, "currency");
+        assert_eq!(p.location, GlobalParamLocation::Body, "in defaults to body");
+        assert_eq!(p.target, "currency", "target defaults to name");
+        assert!(!p.optional, "optional defaults to false (required)");
+        assert!(p.env.is_none());
+        assert!(p.default.is_none());
+    }
+
+    /// `in: query` and `in: header` lower to their respective locations;
+    /// an unrecognized `in` value falls back to Body rather than erroring.
+    #[test]
+    fn test_global_parameters_location_variants_and_unknown_fallback() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: T
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+x-fern-global-parameters:
+  - name: pageSize
+    in: query
+  - name: tenant
+    in: header
+    target: X-Tenant
+  - name: locale
+    in: bogus
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert_eq!(doc.global_parameters[0].location, GlobalParamLocation::Query);
+        assert_eq!(doc.global_parameters[1].location, GlobalParamLocation::Header);
+        assert_eq!(doc.global_parameters[1].target, "X-Tenant");
+        assert_eq!(
+            doc.global_parameters[2].location,
+            GlobalParamLocation::Body,
+            "unknown `in` falls back to body"
+        );
+        assert_eq!(doc.global_parameters[2].target, "locale");
+    }
+
+    /// `x-fern-default` wins over `default`, and non-string scalars
+    /// (numbers/bools) coerce to their string form — reusing the same
+    /// lowering as global headers.
+    #[test]
+    fn test_global_parameters_default_precedence_and_scalar_coercion() {
+        let yaml = r#"
+openapi: 3.0.2
+info:
+  title: T
+  version: "1.0"
+servers:
+  - url: https://api.example.com
+x-fern-global-parameters:
+  - name: currency
+    default: EUR
+    x-fern-default: USD
+  - name: pageSize
+    in: query
+    default: 25
+paths:
+  /things:
+    get:
+      x-fern-sdk-group-name: [things]
+      x-fern-sdk-method-name: list
+      operationId: things_list
+      responses:
+        "200":
+          description: ok
+"#;
+        let doc = load_openapi_spec(yaml, "test").unwrap();
+        assert_eq!(
+            doc.global_parameters[0].default.as_deref(),
+            Some("USD"),
+            "x-fern-default wins over default"
+        );
+        assert_eq!(
+            doc.global_parameters[1].default.as_deref(),
+            Some("25"),
+            "numeric default coerces to string"
+        );
     }
 
     // ------------------------------------------------------------------

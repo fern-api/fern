@@ -263,11 +263,22 @@ impl OpenApiBinding {
                 Some((h.header.clone(), val))
             })
             .collect();
+        // Custom-command handlers reach the API through `AppContext`, which
+        // has no per-operation clap flags — resolve global parameters from
+        // env + default here (the executor handles per-call-wins).
+        let global_parameters: super::app::GlobalParamValues = doc
+            .global_parameters
+            .iter()
+            .filter_map(|gp| {
+                super::app::resolve_global_param_value_envless(gp).map(|v| (gp.name.clone(), v))
+            })
+            .collect();
         Ok(super::app::BindingEntry {
             doc: doc.clone(),
             auth_provider,
             http_config: prepared.http_config.clone(),
             global_headers,
+            global_parameters,
         })
     }
 
@@ -509,6 +520,13 @@ impl Binding for OpenApiBinding {
                 &params,
             )?;
 
+            // Resolve `x-fern-global-parameters` values (flag → env →
+            // default via clap) for this invocation. Relevance, per-call
+            // precedence, and the required-check are applied in the
+            // executor against the fully-assembled body/query/headers.
+            let global_param_overrides =
+                super::app::build_global_param_overrides(matched_args, doc);
+
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
             let base_url_override_owned =
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
@@ -563,6 +581,7 @@ impl Binding for OpenApiBinding {
                 no_retry,
                 no_stream,
                 &global_header_overrides,
+                &global_param_overrides,
             )
             .await?;
 
