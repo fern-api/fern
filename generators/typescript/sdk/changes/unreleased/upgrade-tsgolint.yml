@@ -1,0 +1,6 @@
+- summary: |
+    Upgrade oxlint-tsgolint from 0.22.1 to 0.23.0 and use the prebuilt
+    binary directly (built with go1.26.3, clearing go/stdlib CVEs).
+    Removes the rebuild-from-source stage, cutting Docker build time by
+    ~5 minutes.
+  type: chore
