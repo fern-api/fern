@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+# These scope secrets.GITHUB_TOKEN
+permissions:
+  pull-requests: write
+  contents: write
+
 # Cancel previous workflows on previous push
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
@@ -63,6 +68,13 @@ jobs:
           GH_TOKEN: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
         run: |
           gh workflow run "CI" --ref automated-lint-fixes
+
+      # Give the dispatched workflow time to register check runs on the PR
+      # before the auto-approve action starts polling.
+      - name: Wait for CI checks to register
+        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
+        shell: bash
+        run: sleep 60
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
