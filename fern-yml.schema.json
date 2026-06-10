@@ -2869,6 +2869,18 @@
           },
           "additionalProperties": false
         },
+        "feedback": {
+          "type": "object",
+          "properties": {
+            "hide-feedback": {
+              "type": "boolean"
+            },
+            "require-email": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
         "settings": {
           "type": "object",
           "properties": {

@@ -45,6 +45,7 @@ export * from "./ExperimentalConfig.js";
 export * from "./ExternalProduct.js";
 export * from "./FeatureFlag.js";
 export * from "./FeatureFlagConfiguration.js";
+export * from "./FeedbackConfig.js";
 export * from "./FolderConfiguration.js";
 export * from "./FontConfig.js";
 export * from "./FontConfigPath.js";

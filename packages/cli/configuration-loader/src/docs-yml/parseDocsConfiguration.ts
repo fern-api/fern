@@ -73,6 +73,7 @@ export async function parseDocsConfiguration({
         colors,
         typography: rawTypography,
         layout,
+        feedback,
         /* integrations */
         integrations,
 
@@ -258,6 +259,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
+        feedback: convertFeedbackConfig(feedback),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
         context7File,
         llmsTxtFile,
@@ -638,6 +640,19 @@ function convertLayoutConfig(
         mobileToc: layout.mobileToc ?? false,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
+}
+
+function convertFeedbackConfig(
+    feedback: docsYml.RawSchemas.FeedbackConfig | undefined
+): docsYml.ParsedDocsConfiguration["feedback"] {
+    if (feedback == null) {
+        return undefined;
+    }
+
+    return {
+        hideFeedback: feedback.hideFeedback ?? false,
+        requireEmail: feedback.requireEmail ?? false
+    };
 }
 
 function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {

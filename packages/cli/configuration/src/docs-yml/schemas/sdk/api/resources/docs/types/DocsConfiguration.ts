@@ -102,6 +102,7 @@ export interface DocsConfiguration {
     colors?: FernDocsConfig.ColorsConfiguration;
     typography?: FernDocsConfig.DocsTypographyConfig;
     layout?: FernDocsConfig.LayoutConfig;
+    feedback?: FernDocsConfig.FeedbackConfig;
     settings?: FernDocsConfig.DocsSettingsConfig;
     theme?: FernDocsConfig.ThemeConfig;
     integrations?: FernDocsConfig.IntegrationsConfig;

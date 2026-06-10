@@ -200,6 +200,7 @@ export async function visitDocsConfigFileYamlAst({
         },
         landingPage: noop,
         layout: noop,
+        feedback: noop,
         agents: async (agents) => {
             if (agents?.llmsTxt != null) {
                 await visitFilepath({

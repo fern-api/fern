@@ -16,6 +16,7 @@ import { DocsInstance } from "./DocsInstance.js";
 import { DocsSettingsConfig } from "./DocsSettingsConfig.js";
 import { DocsTypographyConfig } from "./DocsTypographyConfig.js";
 import { ExperimentalConfig } from "./ExperimentalConfig.js";
+import { FeedbackConfig } from "./FeedbackConfig.js";
 import { FooterLinksConfig } from "./FooterLinksConfig.js";
 import { IntegrationsConfig } from "./IntegrationsConfig.js";
 import { JsConfig } from "./JsConfig.js";
@@ -74,6 +75,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     colors: ColorsConfiguration.optional(),
     typography: DocsTypographyConfig.optional(),
     layout: LayoutConfig.optional(),
+    feedback: FeedbackConfig.optional(),
     settings: DocsSettingsConfig.optional(),
     theme: ThemeConfig.optional(),
     integrations: IntegrationsConfig.optional(),
@@ -117,6 +119,7 @@ export declare namespace DocsConfiguration {
         colors?: ColorsConfiguration.Raw | null;
         typography?: DocsTypographyConfig.Raw | null;
         layout?: LayoutConfig.Raw | null;
+        feedback?: FeedbackConfig.Raw | null;
         settings?: DocsSettingsConfig.Raw | null;
         theme?: ThemeConfig.Raw | null;
         integrations?: IntegrationsConfig.Raw | null;

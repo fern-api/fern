@@ -60,9 +60,15 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations field.
+// DocsV1Write.DocsConfig includes the translations and feedback fields.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
+    feedback:
+        | {
+              hideFeedback: boolean;
+              requireEmail: boolean;
+          }
+        | undefined;
 }
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
@@ -965,6 +971,13 @@ export class DocsDefinitionResolver {
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
             layout: this.parsedDocsConfig.layout,
+            feedback:
+                this.parsedDocsConfig.feedback != null
+                    ? {
+                          hideFeedback: this.parsedDocsConfig.feedback.hideFeedback,
+                          requireEmail: this.parsedDocsConfig.feedback.requireEmail
+                      }
+                    : undefined,
             settings: this.parsedDocsConfig.settings,
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
