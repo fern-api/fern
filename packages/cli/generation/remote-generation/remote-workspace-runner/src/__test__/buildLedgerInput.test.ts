@@ -410,5 +410,4 @@ describe("buildLedgerInput", () => {
         expect(localeEntry.git).toEqual(git);
         expect(localeEntry.git?.commitSha).toBeUndefined();
     });
-
 });
