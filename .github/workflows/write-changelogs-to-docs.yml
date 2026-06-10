@@ -51,6 +51,7 @@ jobs:
           repository: fern-api/docs
           ref: main
           path: docs
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
 
       - name: update csharp-sdk changelog
         run: rsync -av --delete "changelogs/csharp-sdk/" "docs/fern/products/sdks/generators/csharp/changelog"
@@ -86,7 +87,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "update changelogs"
           title: "Update changelogs from fern repo"
           branch: update-changelogs
@@ -102,11 +103,8 @@ jobs:
           repository: fern-api/docs
           merge-method: squash
 
-      - name: Trigger approval workflow in docs repo
+      - name: Approve PR
         if: steps.cpr.outputs.pull-request-number
         env:
           GH_TOKEN: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
-        run: |
-          gh api repos/fern-api/docs/dispatches \
-            -f event_type=approve-changelog-pr \
-            -f "client_payload[pull_number]=${{ steps.cpr.outputs.pull-request-number }}"
+        run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve
