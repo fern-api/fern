@@ -132,6 +132,25 @@ service:
                 string: "nested"
                 NestedObject: {}
 
+    getAndReturnWithMalformedDatetime:
+      docs: |
+        Tests that response bodies containing malformed datetime examples
+        (space instead of "T" separator) are normalized to valid ISO 8601
+        in wire test mock responses.
+      path: /get-and-return-with-malformed-datetime
+      method: POST
+      request: objects.ObjectWithMalformedDatetimeExample
+      response: objects.ObjectWithMalformedDatetimeExample
+      examples:
+        - name: MalformedDatetimeExample
+          request:
+            datetimeField: "2025-02-15 10:30:00+00:00"
+            stringField: "normalString"
+          response:
+            body:
+              datetimeField: "2025-02-15 10:30:00+00:00"
+              stringField: "normalString"
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.

@@ -18,13 +18,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithDatetimeLikeString{
-        DatetimeLikeString: "2023-08-31T14:15:22Z",
-        ActualDatetime: fern.MustParseDateTime(
-            "2023-08-31T14:15:22Z",
+    request := &types.ObjectWithMalformedDatetimeExample{
+        DatetimeField: fern.MustParseDateTime(
+            "2025-02-15 10:30:00+00:00",
         ),
+        StringField: "normalString",
     }
-    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+    client.Endpoints.Object.GetAndReturnWithMalformedDatetime(
         context.TODO(),
         request,
     )

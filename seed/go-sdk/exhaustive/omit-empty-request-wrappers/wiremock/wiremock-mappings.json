@@ -863,6 +863,37 @@
       }
     },
     {
+      "id": "ea0192b5-6edb-4f49-9e2b-aa97102697d7",
+      "name": "getAndReturnWithMalformedDatetime - MalformedDatetimeExample",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-malformed-datetime",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"datetimeField\": \"2025-02-15 10:30:00+00:00\",\n  \"stringField\": \"normalString\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "ea0192b5-6edb-4f49-9e2b-aa97102697d7",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "15cf06f4-31a9-4147-a8d4-88d5ad543d35",
       "name": "getAndReturnWithDatetimeLikeString - DatetimeLikeStringExample",
       "request": {
@@ -1933,6 +1964,6 @@
     }
   ],
   "meta": {
-    "total": 59
+    "total": 60
   }
 }

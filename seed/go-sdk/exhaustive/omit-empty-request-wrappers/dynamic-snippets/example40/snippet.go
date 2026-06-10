@@ -17,11 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ModifyResourceAtInlinedPath{
+    request := &endpoints.GetWithInlinePathAndQuery{
         Param: "param",
-        Body: "string",
+        Query: "query",
     }
-    client.Endpoints.Params.ModifyWithInlinePath(
+    client.Endpoints.Params.GetWithInlinePathAndQuery(
         context.TODO(),
         request,
     )

@@ -57,6 +57,19 @@ types:
         type: datetime
         docs: An actual datetime field for comparison
 
+  ObjectWithMalformedDatetimeExample:
+    docs: |
+      Tests that malformed date-time examples (e.g. space instead of "T" separator)
+      are normalized to valid ISO 8601 before being emitted into wire test mock
+      responses, so strict SDK parsers (Go, Java) do not fail at deserialization.
+    properties:
+      datetimeField:
+        type: datetime
+        docs: A datetime field whose example uses a non-RFC3339 format
+      stringField:
+        type: string
+        docs: A plain string field to confirm non-datetime values are untouched
+
   ObjectWithUnknownField:
     docs: |
       Tests that unknown/any values containing backslashes in map keys

@@ -6,7 +6,6 @@ import (
     fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -18,13 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithDatetimeLikeString{
-        DatetimeLikeString: "datetimeLikeString",
-        ActualDatetime: fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
-        ),
+    request := &fern.ReqWithHeaders{
+        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
+        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        Body: "string",
     }
-    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+    client.ReqWithHeaders.GetWithCustomHeader(
         context.TODO(),
         request,
     )

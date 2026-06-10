@@ -1733,6 +1733,72 @@ client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithMalformedDatetime(request) -> *types.ObjectWithMalformedDatetimeExample</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that response bodies containing malformed datetime examples
+(space instead of "T" separator) are normalized to valid ISO 8601
+in wire test mock responses.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithMalformedDatetimeExample{
+        DatetimeField: fern.MustParseDateTime(
+            "2025-02-15 10:30:00+00:00",
+        ),
+        StringField: "normalString",
+    }
+client.Endpoints.Object.GetAndReturnWithMalformedDatetime(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithMalformedDatetimeExample` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

@@ -930,6 +930,139 @@ func TestSettersMarkExplicitObjectWithInheritedRequiredEnum(t *testing.T) {
 
 }
 
+func TestSettersObjectWithMalformedDatetimeExample(t *testing.T) {
+	t.Run("SetDatetimeField", func(t *testing.T) {
+		obj := &ObjectWithMalformedDatetimeExample{}
+		var fernTestValueDatetimeField time.Time
+		obj.SetDatetimeField(fernTestValueDatetimeField)
+		assert.Equal(t, fernTestValueDatetimeField, obj.DatetimeField)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetStringField", func(t *testing.T) {
+		obj := &ObjectWithMalformedDatetimeExample{}
+		var fernTestValueStringField string
+		obj.SetStringField(fernTestValueStringField)
+		assert.Equal(t, fernTestValueStringField, obj.StringField)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersObjectWithMalformedDatetimeExample(t *testing.T) {
+	t.Run("GetDatetimeField", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMalformedDatetimeExample{}
+		var expected time.Time
+		obj.DatetimeField = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDatetimeField(), "getter should return the property value")
+	})
+
+	t.Run("GetDatetimeField_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMalformedDatetimeExample
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDatetimeField() // Should return zero value
+	})
+
+	t.Run("GetStringField", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMalformedDatetimeExample{}
+		var expected string
+		obj.StringField = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStringField(), "getter should return the property value")
+	})
+
+	t.Run("GetStringField_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMalformedDatetimeExample
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStringField() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitObjectWithMalformedDatetimeExample(t *testing.T) {
+	t.Run("SetDatetimeField_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMalformedDatetimeExample{}
+		var fernTestValueDatetimeField time.Time
+
+		// Act
+		obj.SetDatetimeField(fernTestValueDatetimeField)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetStringField_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMalformedDatetimeExample{}
+		var fernTestValueStringField string
+
+		// Act
+		obj.SetStringField(fernTestValueStringField)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersObjectWithMapOfMap(t *testing.T) {
 	t.Run("SetMap", func(t *testing.T) {
 		obj := &ObjectWithMapOfMap{}
@@ -2820,6 +2953,39 @@ func TestJSONMarshalingObjectWithInheritedRequiredEnum(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingObjectWithMalformedDatetimeExample(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ObjectWithMalformedDatetimeExample{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ObjectWithMalformedDatetimeExample
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithMalformedDatetimeExample
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ObjectWithMalformedDatetimeExample
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingObjectWithMapOfMap(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -3163,6 +3329,22 @@ func TestStringObjectWithInheritedRequiredEnum(t *testing.T) {
 	})
 }
 
+func TestStringObjectWithMalformedDatetimeExample(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithMalformedDatetimeExample{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMalformedDatetimeExample
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringObjectWithMapOfMap(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -3431,6 +3613,29 @@ func TestExtraPropertiesObjectWithInheritedRequiredEnum(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ObjectWithInheritedRequiredEnum
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesObjectWithMalformedDatetimeExample(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ObjectWithMalformedDatetimeExample{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ObjectWithMalformedDatetimeExample
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -720,6 +720,119 @@ func (o *ObjectWithInheritedRequiredEnum) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Tests that malformed date-time examples (e.g. space instead of "T" separator)
+// are normalized to valid ISO 8601 before being emitted into wire test mock
+// responses, so strict SDK parsers (Go, Java) do not fail at deserialization.
+var (
+	objectWithMalformedDatetimeExampleFieldDatetimeField = big.NewInt(1 << 0)
+	objectWithMalformedDatetimeExampleFieldStringField   = big.NewInt(1 << 1)
+)
+
+type ObjectWithMalformedDatetimeExample struct {
+	// A datetime field whose example uses a non-RFC3339 format
+	DatetimeField time.Time `json:"datetimeField" url:"datetimeField"`
+	// A plain string field to confirm non-datetime values are untouched
+	StringField string `json:"stringField" url:"stringField"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithMalformedDatetimeExample) GetDatetimeField() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.DatetimeField
+}
+
+func (o *ObjectWithMalformedDatetimeExample) GetStringField() string {
+	if o == nil {
+		return ""
+	}
+	return o.StringField
+}
+
+func (o *ObjectWithMalformedDatetimeExample) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithMalformedDatetimeExample) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetDatetimeField sets the DatetimeField field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithMalformedDatetimeExample) SetDatetimeField(datetimeField time.Time) {
+	o.DatetimeField = datetimeField
+	o.require(objectWithMalformedDatetimeExampleFieldDatetimeField)
+}
+
+// SetStringField sets the StringField field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithMalformedDatetimeExample) SetStringField(stringField string) {
+	o.StringField = stringField
+	o.require(objectWithMalformedDatetimeExampleFieldStringField)
+}
+
+func (o *ObjectWithMalformedDatetimeExample) UnmarshalJSON(data []byte) error {
+	type embed ObjectWithMalformedDatetimeExample
+	var unmarshaler = struct {
+		embed
+		DatetimeField *internal.DateTime `json:"datetimeField"`
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*o = ObjectWithMalformedDatetimeExample(unmarshaler.embed)
+	o.DatetimeField = unmarshaler.DatetimeField.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithMalformedDatetimeExample) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithMalformedDatetimeExample
+	var marshaler = struct {
+		embed
+		DatetimeField *internal.DateTime `json:"datetimeField"`
+	}{
+		embed:         embed(*o),
+		DatetimeField: internal.NewDateTime(o.DatetimeField),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithMalformedDatetimeExample) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
 var (
 	objectWithMapOfMapFieldMap = big.NewInt(1 << 0)
 )

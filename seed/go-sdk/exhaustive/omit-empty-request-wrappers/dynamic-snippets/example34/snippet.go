@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     endpoints "github.com/exhaustive/fern/endpoints"
     option "github.com/exhaustive/fern/option"
@@ -17,10 +18,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithInlinePath{
-        Param: "param",
+    request := &endpoints.ListItemsRequest{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.Endpoints.Params.GetWithInlinePath(
+    client.Endpoints.Pagination.ListItems(
         context.TODO(),
         request,
     )

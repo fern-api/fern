@@ -629,6 +629,35 @@ func TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithRequiredNestedObjectWithWireMock", "POST", "/object/get-and-return-with-required-nested-object", nil, 1)
 }
 
+func TestEndpointsObjectGetAndReturnWithMalformedDatetimeWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &types.ObjectWithMalformedDatetimeExample{
+		DatetimeField: fern.MustParseDateTime(
+			"2025-02-15 10:30:00+00:00",
+		),
+		StringField: "normalString",
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnWithMalformedDatetime(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithMalformedDatetimeWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithMalformedDatetimeWithWireMock", "POST", "/object/get-and-return-with-malformed-datetime", nil, 1)
+}
+
 func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	t *testing.T,
 ) {
