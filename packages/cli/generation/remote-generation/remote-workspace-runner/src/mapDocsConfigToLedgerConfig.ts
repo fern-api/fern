@@ -225,6 +225,18 @@ function mapAgents(agents: DocsConfig["agents"]): LedgerConfig["agents"] {
     };
 }
 
+function mapIntegrations(integrations: DocsConfig["integrations"]): LedgerConfig["integrations"] {
+    if (integrations == null) {
+        return undefined;
+    }
+    // Only intercom is mapped. context7 is a well-known file artifact
+    // resolved on demand via resolveFiles (same convention as llms.txt,
+    // robots.txt, favicon — see LedgerConfigSchema doc comment).
+    return {
+        intercom: integrations.intercom
+    };
+}
+
 /**
  * Map a classic DocsConfig (FileId-based) into the ledger-native LedgerConfig
  * (path-based) shape.
@@ -247,9 +259,10 @@ function mapAgents(agents: DocsConfig["agents"]): LedgerConfig["agents"] {
  * intentionally omitted: LedgerConfig either exposes them by convention
  * (llms*) or has dropped them (legacy v1/v2 variants).
  *
- * TODO(post-SDK-publish): Add `favicon` (resolveFileIdToPath) and
- * `integrations` (mapIntegrations) once LedgerConfig in fdr-sdk includes
- * those fields.
+ * The favicon IS carried: it's a config-referenced file (like the logo/OG
+ * images) whose fullPath is resolved here and retained in the ledger
+ * manifest's `files` map so the read side can resolve it from S3 at its
+ * real extension (.svg/.png/.ico).
  */
 export function mapDocsConfigToLedgerConfig({
     docsConfig,
@@ -270,6 +283,7 @@ export function mapDocsConfigToLedgerConfig({
         logoHeight: docsConfig.logoHeight,
         logoHref: docsConfig.logoHref,
         logoRightText: docsConfig.logoRightText,
+        favicon: resolveFileIdToPath(docsConfig.favicon, fileIdToPath),
         agents: mapAgents(docsConfig.agents),
         metadata: mapMetadata(docsConfig.metadata, fileIdToPath),
         redirects: docsConfig.redirects,
@@ -284,6 +298,7 @@ export function mapDocsConfigToLedgerConfig({
         aiChatConfig: docsConfig.aiChatConfig,
         pageActions: docsConfig.pageActions,
         editThisPageLaunch: docsConfig.editThisPageLaunch,
+        integrations: mapIntegrations(docsConfig.integrations),
         header: docsConfig.header,
         footer: docsConfig.footer
     };
