@@ -973,7 +973,7 @@ where
 /// a mapping (object).  Real-world specs — e.g. ElevenLabs 3.1 — sometimes
 /// emit `"property": [{"x-fern-type-name": "…"}]` which is not a valid
 /// JSON Schema property but must not prevent the rest of the spec from
-/// loading.  Entries with non-object values are silently dropped.
+/// loading.  Entries with non-object values are logged as warnings and dropped.
 fn deserialize_tolerant_properties<'de, D>(
     deserializer: D,
 ) -> Result<HashMap<String, OpenApiSchemaObject>, D::Error>
@@ -1003,12 +1003,28 @@ where
                         if val.is_mapping() {
                             match OpenApiSchemaObject::deserialize(val) {
                                 Ok(schema) => { out.insert(key, schema); }
-                                Err(_) => { /* skip malformed schema */ }
+                                Err(e) => {
+                                    tracing::warn!(
+                                        key = %key,
+                                        error = %e,
+                                        "skipping property with malformed schema object",
+                                    );
+                                }
                             }
+                        } else {
+                            tracing::warn!(
+                                key = %key,
+                                "skipping property whose value is not an object",
+                            );
                         }
-                        // else: sequence, scalar, null → silently dropped
                     }
-                    Err(_) => { /* skip unparseable value */ }
+                    Err(e) => {
+                        tracing::warn!(
+                            key = %key,
+                            error = %e,
+                            "skipping unparseable property value",
+                        );
+                    }
                 }
             }
             Ok(out)
