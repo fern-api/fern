@@ -151,6 +151,21 @@ export async function validateWorkspaces({
         });
     });
 
+    // Emit telemetry with which validation rules produced violations
+    const allViolations = [...apiResults.flatMap((r) => r.violations), ...(docsResult?.violations ?? [])];
+    const firedRules = [...new Set(allViolations.map((v) => v.name).filter((name): name is string => name != null))];
+    const numErrors = allViolations.filter((v) => v.severity === "fatal" || v.severity === "error").length;
+    const numWarnings = allViolations.filter((v) => v.severity === "warning").length;
+    cliContext.instrumentPostHogEvent({
+        command: "fern check",
+        properties: {
+            validationRules: firedRules,
+            numErrors,
+            numWarnings,
+            passed: !hasErrors && !hasAnyErrors
+        }
+    });
+
     if (cliContext.isJsonMode) {
         const showApiNames = apiResults.length > 1;
         cliContext.writeJsonToStdout(

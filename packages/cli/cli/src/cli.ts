@@ -1359,6 +1359,10 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 }),
         async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern check"
+            });
+
             // Docs validation may reference APIs outside `--api`; apply the filter
             // only to API-level validation.
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
