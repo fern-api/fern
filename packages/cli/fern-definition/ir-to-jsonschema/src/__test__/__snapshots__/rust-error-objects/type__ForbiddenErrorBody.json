@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "error": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ErrorDetails"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "message"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ErrorDetails": {
+      "type": "object",
+      "properties": {
+        "request_id": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "request_id",
+        "code"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "code"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
