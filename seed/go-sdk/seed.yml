@@ -357,7 +357,6 @@ scripts:
 allowedFailures:
   # Unsupported features in the v1 Go generator (generation aborts with
   # "not supported yet" or a nil-pointer panic). These need feature work.
-  - streaming-parameter
   - pagination
 
   # Generated Go code does not compile. Each needs a generator fix.

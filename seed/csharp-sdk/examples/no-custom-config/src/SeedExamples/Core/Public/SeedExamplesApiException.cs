@@ -7,7 +7,8 @@ public class SeedExamplesApiException(
     string message,
     int statusCode,
     object body,
-    global::System.Exception? innerException = null
+    global::System.Exception? innerException = null,
+    SeedExamples.RawResponse? rawResponse = null
 ) : SeedExamplesException(message, innerException)
 {
     /// <summary>
@@ -19,4 +20,9 @@ public class SeedExamplesApiException(
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
+
+    /// <summary>
+    /// The raw HTTP response (status code, URL, headers) that triggered the exception, if available.
+    /// </summary>
+    public SeedExamples.RawResponse? RawResponse => rawResponse;
 }
