@@ -50,7 +50,7 @@ class OAuthTokenProviderGenerator:
     def _create_client_credentials_class_declaration(
         self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
     ) -> AST.ClassDeclaration:
-        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+        constructor_parameters = self._get_constructor_parameters(client_credentials, is_async=is_async)
 
         named_parameters = [
             AST.NamedFunctionParameter(
@@ -98,7 +98,9 @@ class OAuthTokenProviderGenerator:
 
         return class_declaration
 
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(
+        self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
+    ) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
 
         parameters.append(
@@ -116,6 +118,15 @@ class OAuthTokenProviderGenerator:
                 type_hint=AST.TypeHint.str_(),
             )
         )
+
+        for param_name, member_name in self._get_additional_oauth_params(client_credentials):
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=param_name,
+                    private_member_name=member_name,
+                    type_hint=AST.TypeHint.str_(),
+                )
+            )
 
         parameters.append(
             ConstructorParameter(
@@ -529,6 +540,49 @@ class OAuthTokenProviderGenerator:
             return ""
         return ".".join([resolve_name(name).snake_case.safe_name for name in property_path]) + "."
 
+    def _is_literal_type(self, type_reference: ir_types.TypeReference) -> bool:
+        type_union = type_reference.get_as_union()
+        if type_union.type == "container":
+            container_union = type_union.container.get_as_union()
+            return container_union.type == "literal"
+        return False
+
+    def _is_optional_type(self, type_reference: ir_types.TypeReference) -> bool:
+        type_union = type_reference.get_as_union()
+        if type_union.type == "container":
+            container_union = type_union.container.get_as_union()
+            return container_union.type == "optional" or container_union.type == "nullable"
+        return False
+
+    def _get_additional_oauth_params(
+        self, client_credentials: ir_types.OAuthClientCredentials
+    ) -> List[Tuple[str, str]]:
+        """
+        Returns (param_name, member_name) pairs for additional token endpoint parameters
+        beyond client_id/client_secret: the scopes property and any required non-literal
+        custom properties.
+        """
+        result: List[Tuple[str, str]] = []
+        token_request_properties = client_credentials.token_endpoint.request_properties
+
+        if token_request_properties.scopes is not None:
+            param_name = self._get_request_property_parameter_name(token_request_properties.scopes)
+            result.append((param_name, f"_{param_name}"))
+
+        if token_request_properties.custom_properties is not None:
+            for custom_prop in token_request_properties.custom_properties:
+                prop_value = custom_prop.property
+                prop_type = prop_value.visit(
+                    query=lambda q: q.value_type,
+                    body=lambda b: b.value_type,
+                )
+                if self._is_literal_type(prop_type) or self._is_optional_type(prop_type):
+                    continue
+                param_name = self._get_request_property_parameter_name(custom_prop)
+                result.append((param_name, f"_{param_name}"))
+
+        return result
+
     def _get_refresh_function_invocation(
         self, client_credentials: ir_types.OAuthClientCredentials
     ) -> AST.FunctionInvocation:
@@ -547,7 +601,15 @@ class OAuthTokenProviderGenerator:
                 AST.Expression(f"self.{self._get_client_secret_member_name()}"),
             ),
         ]
+
         if client_credentials.refresh_endpoint is None:
+            for param_name, member_name in self._get_additional_oauth_params(client_credentials):
+                kwargs.append(
+                    (
+                        param_name,
+                        AST.Expression(f"self.{member_name}"),
+                    )
+                )
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
                 client_credentials.token_endpoint.endpoint_reference.endpoint_id
             )
