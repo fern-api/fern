@@ -79,9 +79,8 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # krb5-libs (CVE-2026-40356 integer underflow OOB read, CVE-2026-40355
 # NULL pointer dereference in gss_accept_sec_context; fixed in
 # 1.21.3-7.amzn2023.0.1)
-# Security update 2026-06-10: add perl-interpreter/perl-libs (CVE-2026-8376),
-# perl-HTTP-Tiny (CVE-2026-7010), libsolv (CVE-2026-48863, CVE-2026-48864,
-# CVE-2026-9149, CVE-2026-9150)
+# Security update 2026-06-10: add perl-* (CVE-2026-8376, CVE-2026-7010),
+# libsolv (CVE-2026-48863, CVE-2026-48864, CVE-2026-9149, CVE-2026-9150)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -107,9 +106,7 @@ RUN dnf --releasever=latest update -y \
     glibc-minimal-langpack \
     libgcrypt \
     krb5-libs \
-    perl-interpreter \
-    perl-libs \
-    perl-HTTP-Tiny \
+    'perl-*' \
     libsolv && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
