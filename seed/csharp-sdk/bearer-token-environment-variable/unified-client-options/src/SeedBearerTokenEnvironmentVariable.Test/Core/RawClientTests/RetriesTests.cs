@@ -405,12 +405,8 @@ public class RetriesTests
     [Test]
     public async SystemTask SendRequestAsync_ShouldRetry_WhenHandlerDisposesRequestContent()
     {
-        // Production HttpClient (especially HTTP/2 via SocketsHttpHandler) disposes request.Content
-        // after sending. WireMock loopback HTTP/1.1 does not, so we MUST simulate the disposal in
-        // the handler chain — setting request.Version = HttpVersion20 against WireMock won't work
-        // because the server itself only speaks HTTP/1.1. ContentDisposingHandler reproduces the
-        // production condition reliably and guards against regressing the retry loop into sending
-        // the original request instead of a clone.
+        // ContentDisposingHandler simulates HTTP/2's disposal of request.Content after send;
+        // WireMock's loopback HTTP/1.1 path does not exhibit that on its own.
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
             .InScenario("DisposeContentRetry")
@@ -464,10 +460,7 @@ public class RetriesTests
     [Test]
     public async SystemTask SendRequestAsync_ShouldRetry_WhenHandlerDisposesRequestContent_AcrossMultipleRetries()
     {
-        // Multi-retry variant: three consecutive 5xx responses before the success, exercising the
-        // 2nd and 3rd clones of the same original content. The single-retry test above can pass
-        // even if a regression breaks the second or third clone in the sequence (e.g., a content
-        // type whose CopyToAsync is not idempotent across reads).
+        // Exercises 2nd and 3rd clones — the single-retry variant can pass if those break.
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
             .InScenario("DisposeContentMultiRetry")

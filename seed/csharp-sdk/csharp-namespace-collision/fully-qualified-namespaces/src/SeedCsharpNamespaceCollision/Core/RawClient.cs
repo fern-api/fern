@@ -147,21 +147,14 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         if (!isRetryableContent || maxRetries == 0)
         {
-            // Fast path — send the original request directly with no cloning when either:
-            //   - the content is not retryable (e.g. unbuffered streams cannot be re-sent), or
-            //   - the caller opted out of retries entirely with MaxRetries == 0 (no second send
-            //     can happen, so the clone-to-protect-against-disposal logic below is not needed).
             var response = await httpClient
                 .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                 .ConfigureAwait(false);
             return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
         }
 
-        // Retryable content with at least one retry budgeted: always send a clone, never the original.
-        // HttpClient (under HTTP/2 and some other configurations) disposes the Content of every request
-        // it sends, so sending the original would leave its Content disposed and cause
-        // ObjectDisposedException the next time we try to clone it. Cloning each attempt keeps the
-        // original Content alive across the entire retry loop.
+        // Always send a clone, never the original: HttpClient (e.g. under HTTP/2) disposes
+        // request.Content after sending, which would break the next attempt's clone.
         HttpResponseMessage? retryResponse = null;
         for (var attempt = 0; attempt <= maxRetries; attempt++)
         {
