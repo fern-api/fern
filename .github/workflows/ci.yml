@@ -29,19 +29,32 @@ env:
   TURBO_DAEMON: "false"
 
 jobs:
-  # Detect whether this push only touched seed snapshot files.
+  # Detect whether this push/PR only touched seed snapshot files.
   # If so, skip all CI jobs — seed changes cannot break the build.
   changes-filter:
     runs-on: ubuntu-latest
     outputs:
       should-skip-ci: ${{ steps.check.outputs.should-skip }}
     steps:
-      - name: Check if push only touches seed files
+      - name: Check if change only touches seed files
         id: check
         env:
           COMMIT_MSG: ${{ github.event.head_commit.message }}
+          PR_LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
         run: |
-          # Only consider skipping for pushes to main. PRs and dispatches always run CI.
+          # Skip CI for PRs with the 'seed' label (automated seed snapshot updates).
+          # Seed PRs only touch files under seed/ and cannot break the build.
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            if echo "$PR_LABELS" | jq -e 'index("seed")' > /dev/null 2>&1; then
+              echo "should-skip=true" >> $GITHUB_OUTPUT
+              echo "Seed-labeled PR detected — skipping CI."
+              exit 0
+            fi
+            echo "should-skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Skip CI for pushes to main with seed commit messages.
           if [[ "${{ github.event_name }}" != "push" || "${{ github.ref }}" != "refs/heads/main" ]]; then
             echo "should-skip=false" >> $GITHUB_OUTPUT
             exit 0
