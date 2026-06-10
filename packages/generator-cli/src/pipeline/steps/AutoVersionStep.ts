@@ -573,7 +573,7 @@ export class AutoVersionStep extends BaseStep {
             this.logger.info("AutoVersionStep (non-replay): magic version not in diff; trying metadata + git tags.");
         }
 
-        const metadataVersion = await this.readVersionFromMetadataAtHead();
+        const metadataVersion = this.readVersionFromMetadataAtHead();
         if (metadataVersion != null) {
             return this.normalizeVersionPrefix(metadataVersion, mappedMagicVersion);
         }
@@ -660,7 +660,7 @@ export class AutoVersionStep extends BaseStep {
      * Used by the non-replay path where no generation commit exists yet,
      * so HEAD is the unmodified SDK repository.
      */
-    private async readVersionFromMetadataAtHead(): Promise<string | undefined> {
+    private readVersionFromMetadataAtHead(): string | undefined {
         try {
             const output = execFileSync("git", ["show", "HEAD:.fern/metadata.json"], {
                 cwd: this.outputDir,
@@ -669,7 +669,8 @@ export class AutoVersionStep extends BaseStep {
             });
             const parsed = JSON.parse(output) as { sdkVersion?: string };
             return parsed.sdkVersion ?? undefined;
-        } catch {
+        } catch (error) {
+            this.logger.debug(`AutoVersionStep: failed to read HEAD:.fern/metadata.json (${String(error)})`);
             return undefined;
         }
     }
