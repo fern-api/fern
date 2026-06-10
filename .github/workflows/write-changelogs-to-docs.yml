@@ -105,5 +105,5 @@ jobs:
       - name: Approve PR
         if: steps.cpr.outputs.pull-request-number
         env:
-          GH_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
         run: gh pr review ${{ steps.cpr.outputs.pull-request-number }} --repo fern-api/docs --approve
