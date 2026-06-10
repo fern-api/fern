@@ -6,6 +6,9 @@ const formatLabel = (label: string): string => label.padEnd(LABEL_WIDTH, " ");
 /**
  * Renders real-time progress for link checking in the terminal.
  * Uses cli-progress bars matching the style of `fern docs dev` bundle download.
+ *
+ * Tracks high-water marks to prevent regression when batched SSE events
+ * arrive out of order across multiple HTTP requests.
  */
 export class ProgressRenderer {
     private readonly stream: NodeJS.WriteStream;
@@ -14,6 +17,12 @@ export class ProgressRenderer {
     private checkBar: cliProgress.SingleBar | undefined;
     private phase: "idle" | "scraping" | "checking" = "idle";
     private finished = false;
+    private maxPagesScraped = 0;
+    private scrapeTotalPages = 0;
+    private maxLinksChecked = 0;
+    private checkTotalLinks = 0;
+    private scrapeMessagePrinted = false;
+    private checkMessagePrinted = false;
 
     constructor(stream: NodeJS.WriteStream) {
         this.stream = stream;
@@ -22,6 +31,7 @@ export class ProgressRenderer {
 
     public onSitemapFetched(totalPages: number): void {
         this.stream.write("\n");
+        this.scrapeTotalPages = totalPages;
         if (this.isTTY) {
             this.scrapeBar = new cliProgress.SingleBar(
                 {
@@ -39,17 +49,27 @@ export class ProgressRenderer {
     }
 
     public onPageScraped(pagesScraped: number, totalPages: number): void {
+        this.scrapeTotalPages = Math.max(this.scrapeTotalPages, totalPages);
+        this.maxPagesScraped = Math.max(this.maxPagesScraped, pagesScraped);
+        const clamped = Math.min(this.maxPagesScraped, this.scrapeTotalPages);
+
         if (this.scrapeBar != null) {
-            this.scrapeBar.setTotal(totalPages);
-            this.scrapeBar.update(Math.min(pagesScraped, totalPages));
-        } else if (!this.isTTY && pagesScraped >= totalPages) {
-            this.stream.write(`  Scraped ${totalPages} pages\n`);
+            this.scrapeBar.setTotal(this.scrapeTotalPages);
+            this.scrapeBar.update(clamped);
+        } else if (!this.isTTY && clamped >= this.scrapeTotalPages && !this.scrapeMessagePrinted) {
+            this.scrapeMessagePrinted = true;
+            this.stream.write(`  Scraped ${this.scrapeTotalPages} pages\n`);
         }
     }
 
     public onLinkChecked(linksChecked: number, totalLinks: number): void {
+        this.checkTotalLinks = Math.max(this.checkTotalLinks, totalLinks);
+        this.maxLinksChecked = Math.max(this.maxLinksChecked, linksChecked);
+
         if (this.phase === "scraping") {
             if (this.scrapeBar != null) {
+                this.scrapeBar.setTotal(this.scrapeTotalPages);
+                this.scrapeBar.update(this.scrapeTotalPages);
                 this.scrapeBar.stop();
                 this.scrapeBar = undefined;
             }
@@ -67,15 +87,23 @@ export class ProgressRenderer {
                     },
                     cliProgress.Presets.shades_classic
                 );
-                this.checkBar.start(totalLinks, linksChecked);
+                this.checkBar.start(this.checkTotalLinks, this.maxLinksChecked);
             }
         }
 
+        const clampedLinks = Math.min(this.maxLinksChecked, this.checkTotalLinks);
+
         if (this.checkBar != null) {
-            this.checkBar.setTotal(totalLinks);
-            this.checkBar.update(linksChecked);
-        } else if (!this.isTTY && linksChecked >= totalLinks && totalLinks > 0) {
-            this.stream.write(`  Checked ${totalLinks} links\n`);
+            this.checkBar.setTotal(this.checkTotalLinks);
+            this.checkBar.update(clampedLinks);
+        } else if (
+            !this.isTTY &&
+            clampedLinks >= this.checkTotalLinks &&
+            this.checkTotalLinks > 0 &&
+            !this.checkMessagePrinted
+        ) {
+            this.checkMessagePrinted = true;
+            this.stream.write(`  Checked ${this.checkTotalLinks} links\n`);
         }
     }
 

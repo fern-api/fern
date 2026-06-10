@@ -109,8 +109,15 @@ export class LinkCheckClient {
                             checkJobId = event.data.jobId;
                             totalPages = event.data.totalPages;
                             totalLinks = event.data.totalLinks;
+                            pagesScrapedSoFar = event.data.totalPages;
                             scrapeComplete = true;
                             batchAdvanced = true;
+                            callbacks.onPageScraped?.({
+                                pageUrl: "",
+                                linksFound: 0,
+                                pageIndex: event.data.totalPages,
+                                totalPages: event.data.totalPages
+                            });
                         }
                         break;
                     }
@@ -195,6 +202,11 @@ export class LinkCheckClient {
                             totalPages = event.data.totalPages;
                             totalLinks = event.data.totalLinks;
                             workingLinks = event.data.workingLinks;
+                            linksCheckedSoFar = event.data.totalLinks;
+                            callbacks.onLinkChecked?.({
+                                linksChecked: event.data.totalLinks,
+                                totalLinks: event.data.totalLinks
+                            });
                         }
                         break;
                     }
