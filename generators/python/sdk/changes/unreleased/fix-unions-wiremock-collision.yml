@@ -1,0 +1,5 @@
+- summary: |
+    Fix WireMock stub collision in unions:union-naming-v1-wire-tests by changing
+    bigunion service base-path from `/` to `/bigunion` to disambiguate from the
+    union service which also exposes `GET /{id}` on root base-path.
+  type: fix

@@ -149,7 +149,7 @@ $client->bigunion->updateMany(
 <dd>
 
 ```php
-$client->bigunion->get(
+$client->union->get(
     'id',
 );
 ```

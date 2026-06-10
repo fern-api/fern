@@ -190,7 +190,7 @@ client.Bigunion.UpdateMany(
 <dd>
 
 ```go
-client.Bigunion.Get(
+client.Union.Get(
         context.TODO(),
         "id",
     )
