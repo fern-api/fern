@@ -517,7 +517,9 @@ export class AutoVersionStep extends BaseStep {
         const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
-        this.logger.info(`AutoVersionStep (non-replay): ${analysis.versionBump} bump: ${previousVersion} → ${newVersion}`);
+        this.logger.info(
+            `AutoVersionStep (non-replay): ${analysis.versionBump} bump: ${previousVersion} → ${newVersion}`
+        );
 
         await service.replaceMagicVersion(this.outputDir, mappedMagicVersion, newVersion);
         if (language === "go") {
