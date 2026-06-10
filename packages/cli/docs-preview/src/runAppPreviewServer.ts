@@ -1177,6 +1177,7 @@ export async function runAppPreviewServer({
     const startNextJsServer = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             let settled = false;
+            let handledByError = false;
             let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
 
             serverProcess = runExeca(context.logger, "node", [serverPath], {
@@ -1215,6 +1216,7 @@ export async function runAppPreviewServer({
                 context.logger.error(`Server process error: ${err.message}`);
                 if (!settled) {
                     settled = true;
+                    handledByError = true;
                     if (fallbackTimer != null) {
                         clearTimeout(fallbackTimer);
                     }
@@ -1242,9 +1244,13 @@ export async function runAppPreviewServer({
                     return;
                 }
 
-                // Server exited AFTER initial startup — attempt auto-restart
-                if (intentionalShutdown) {
-                    context.logger.debug("Server process shut down intentionally.");
+                // Server exited AFTER initial startup — attempt auto-restart.
+                // Skip if shutdown is intentional or if the error handler already
+                // rejected (in which case attemptRestart's catch block handles it).
+                if (intentionalShutdown || handledByError) {
+                    if (intentionalShutdown) {
+                        context.logger.debug("Server process shut down intentionally.");
+                    }
                     return;
                 }
 
@@ -1274,6 +1280,10 @@ export async function runAppPreviewServer({
      * Respects a maximum restart count within a rolling time window.
      */
     const attemptRestart = async (): Promise<void> => {
+        if (intentionalShutdown) {
+            return;
+        }
+
         const now = Date.now();
 
         // Reset counter if the server was stable for a while
@@ -1298,6 +1308,11 @@ export async function runAppPreviewServer({
             `Restarting docs preview server in ${delayMs / 1000}s (attempt ${restartCount}/${MAX_RESTARTS})...`
         );
         await new Promise((r) => setTimeout(r, delayMs));
+
+        // Re-check after async delay in case shutdown happened while waiting
+        if (intentionalShutdown) {
+            return;
+        }
 
         // Clean leftover processes on the port before restarting
         killProcessesOnPort(actualPort, context);
