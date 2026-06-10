@@ -262,12 +262,26 @@ const PATH_SEGMENT: &AsciiSet = &CONTROLS
     .add(b'=').add(b'>').add(b'?').add(b'@').add(b'[').add(b'\\')
     .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}');
 
+/// Extended encode set for OpenAPI label-style path parameter values.
+/// Adds `.` on top of `PATH_SEGMENT` so that literal dots in values are
+/// distinguished from the `.` structural separator used by label-style
+/// (RFC 6570) serialization.
+const LABEL_PATH_SEGMENT: &AsciiSet = &PATH_SEGMENT.add(b'.');
+
 /// Percent-encode a value for use as a single URL path segment (e.g., file ID,
 /// calendar ID, message ID). All RFC 3986 §2.3 unreserved characters
 /// (`A-Z a-z 0-9 - . _ ~`) are left unencoded.
 pub fn encode_path_segment(s: &str) -> String {
     use percent_encoding::utf8_percent_encode;
     utf8_percent_encode(s, PATH_SEGMENT).to_string()
+}
+
+/// Percent-encode a value for use in OpenAPI label-style path parameters.
+/// Same as [`encode_path_segment`] but also encodes `.` so it cannot be
+/// confused with the `.` separator used by label-style serialization.
+pub fn encode_label_path_segment(s: &str) -> String {
+    use percent_encoding::utf8_percent_encode;
+    utf8_percent_encode(s, LABEL_PATH_SEGMENT).to_string()
 }
 
 /// Percent-encode a value for use in URI path templates where `/` should stay
@@ -550,10 +564,11 @@ mod tests {
 
     #[test]
     fn test_encode_path_segment_path_traversal() {
-        // Encoding makes traversal segments harmless
+        // Encoding `/` makes traversal harmless — the path cannot escape
+        // the segment even though `.` is left unencoded (unreserved).
         let encoded = encode_path_segment("../../etc/passwd");
-        assert!(!encoded.contains('/'));
-        assert!(!encoded.contains(".."));
+        assert!(!encoded.contains('/'), "slashes must be encoded");
+        assert_eq!(encoded, "..%2F..%2Fetc%2Fpasswd");
     }
 
     #[test]
@@ -595,6 +610,25 @@ mod tests {
         let encoded = encode_path_preserving_slashes("タイムライン 1/列 A");
         assert!(!encoded.contains(' '));
         assert!(encoded.contains('/'));
+    }
+
+    // -- label path segment encoding ------------------------------------------
+
+    #[test]
+    fn test_encode_label_path_segment_encodes_dot() {
+        // Label-style serialization uses `.` as a separator, so dots in
+        // values must be encoded to avoid ambiguity.
+        assert_eq!(encode_label_path_segment("1.0"), "1%2E0");
+        assert_eq!(
+            encode_label_path_segment("codex-test@agentmail.to"),
+            "codex-test%40agentmail%2Eto"
+        );
+    }
+
+    #[test]
+    fn test_encode_label_path_segment_preserves_tilde() {
+        // `~` is unreserved and not a label separator — no need to encode.
+        assert_eq!(encode_label_path_segment("user~archive"), "user~archive");
     }
 
     // -- validate_resource_name -----------------------------------------------

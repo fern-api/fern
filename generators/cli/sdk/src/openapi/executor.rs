@@ -2522,13 +2522,17 @@ fn serialize_path_param(
     let explode = param_def.and_then(|p| p.explode).unwrap_or(false);
 
     let enc = |v: &Value| crate::validate::encode_path_segment(&value_to_path_string(v));
+    let label_enc =
+        |v: &Value| crate::validate::encode_label_path_segment(&value_to_path_string(v));
 
     match style {
         "label" => match value {
             Value::Array(arr) => {
                 // RFC 6570: explode=true -> dot-separated; explode=false -> comma-separated.
+                // Use label_enc so `.` in values is encoded and won't be
+                // confused with the `.` structural separator.
                 let joiner = if explode { "." } else { "," };
-                let body = arr.iter().map(&enc).collect::<Vec<_>>().join(joiner);
+                let body = arr.iter().map(&label_enc).collect::<Vec<_>>().join(joiner);
                 format!(".{body}")
             }
             Value::Object(map) => {
@@ -2537,7 +2541,11 @@ fn serialize_path_param(
                     let body = map
                         .iter()
                         .map(|(k, v)| {
-                            format!("{}={}", crate::validate::encode_path_segment(k), enc(v))
+                            format!(
+                                "{}={}",
+                                crate::validate::encode_label_path_segment(k),
+                                label_enc(v)
+                            )
                         })
                         .collect::<Vec<_>>()
                         .join(".");
@@ -2547,14 +2555,14 @@ fn serialize_path_param(
                     let body = map
                         .iter()
                         .flat_map(|(k, v)| {
-                            [crate::validate::encode_path_segment(k), enc(v)]
+                            [crate::validate::encode_label_path_segment(k), label_enc(v)]
                         })
                         .collect::<Vec<_>>()
                         .join(",");
                     format!(".{body}")
                 }
             }
-            _ => format!(".{}", enc(value)),
+            _ => format!(".{}", label_enc(value)),
         },
         "matrix" => match value {
             Value::Array(arr) if explode => arr
