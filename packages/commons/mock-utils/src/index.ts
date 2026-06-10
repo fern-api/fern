@@ -232,8 +232,15 @@ export class WireMock {
                 // Use the endpoint's defined status code, or default to 200
                 status = endpoint.response?.statusCode ?? 200;
                 if (example.response.value?.type === "body" && example.response.value.value) {
-                    // For response bodies, use jsonExample directly to support both primitives and objects
-                    bodyObj = example.response.value.value.jsonExample ?? "";
+                    // Normalize datetime values in the response body so that malformed
+                    // date-time examples (e.g. space instead of "T") become valid ISO 8601
+                    // strings that strict SDK parsers (Go, Java) can deserialize.
+                    bodyObj =
+                        (this.normalizeExampleDatetimes(example.response.value.value) as
+                            | string
+                            | number
+                            | boolean
+                            | object) ?? "";
                 } else if (example.response.value?.type === "sse") {
                     // Handle SSE responses
                     isSseResponse = true;
@@ -428,6 +435,129 @@ export class WireMock {
             return value.jsonExample.toString();
         }
         return undefined;
+    }
+
+    /**
+     * Recursively walk an ExampleTypeReference and return a JSON-compatible value
+     * where every datetime primitive has been replaced with its ISO 8601 representation.
+     * Non-datetime leaves are returned as their original jsonExample.
+     */
+    private normalizeExampleDatetimes(ref: FernIr.ExampleTypeReference): unknown {
+        switch (ref.shape.type) {
+            case "primitive":
+                if (ref.shape.primitive.type === "datetime") {
+                    return ref.shape.primitive.datetime.toISOString();
+                }
+                return ref.jsonExample;
+            case "container":
+                return this.normalizeContainerDatetimes(ref.shape.container, ref.jsonExample);
+            case "named":
+                return this.normalizeNamedDatetimes(ref.shape);
+            case "unknown":
+                return ref.jsonExample;
+            default:
+                return ref.jsonExample;
+        }
+    }
+
+    private normalizeContainerDatetimes(container: FernIr.ExampleContainer, fallback: unknown): unknown {
+        switch (container.type) {
+            case "list":
+                return container.list.map((item) => this.normalizeExampleDatetimes(item));
+            case "set":
+                return container.set.map((item) => this.normalizeExampleDatetimes(item));
+            case "optional":
+                return container.optional == null ? undefined : this.normalizeExampleDatetimes(container.optional);
+            case "nullable":
+                return container.nullable == null ? null : this.normalizeExampleDatetimes(container.nullable);
+            case "map":
+                return Object.fromEntries(
+                    container.map.map((kv) => [
+                        typeof kv.key.jsonExample === "string" ? kv.key.jsonExample : String(kv.key.jsonExample),
+                        this.normalizeExampleDatetimes(kv.value)
+                    ])
+                );
+            case "literal":
+                return fallback;
+            default:
+                return fallback;
+        }
+    }
+
+    private normalizeNamedDatetimes(named: FernIr.ExampleTypeReferenceShape.Named): unknown {
+        switch (named.shape.type) {
+            case "alias":
+                return this.normalizeExampleDatetimes(named.shape.value);
+            case "object": {
+                const obj: Record<string, unknown> = {};
+                for (const prop of named.shape.properties) {
+                    const wireKey = typeof prop.name === "string" ? prop.name : prop.name?.wireValue;
+                    if (wireKey != null) {
+                        obj[wireKey] = this.normalizeExampleDatetimes(prop.value);
+                    }
+                }
+                if (named.shape.extraProperties) {
+                    for (const extra of named.shape.extraProperties) {
+                        const wireKey = typeof extra.name === "string" ? extra.name : extra.name?.wireValue;
+                        if (wireKey != null) {
+                            obj[wireKey] = this.normalizeExampleDatetimes(extra.value);
+                        }
+                    }
+                }
+                return obj;
+            }
+            case "union": {
+                const obj: Record<string, unknown> = {};
+                const discWire =
+                    typeof named.shape.discriminant === "string"
+                        ? named.shape.discriminant
+                        : named.shape.discriminant?.wireValue;
+                const memberWire =
+                    typeof named.shape.singleUnionType.wireDiscriminantValue === "string"
+                        ? named.shape.singleUnionType.wireDiscriminantValue
+                        : named.shape.singleUnionType.wireDiscriminantValue?.wireValue;
+                if (discWire != null && memberWire != null) {
+                    obj[discWire] = memberWire;
+                }
+                if (named.shape.baseProperties) {
+                    for (const bp of named.shape.baseProperties) {
+                        const wireKey = typeof bp.name === "string" ? bp.name : bp.name?.wireValue;
+                        if (wireKey != null) {
+                            obj[wireKey] = this.normalizeExampleDatetimes(bp.value);
+                        }
+                    }
+                }
+                if (named.shape.extendProperties) {
+                    for (const ep of named.shape.extendProperties) {
+                        const wireKey = typeof ep.name === "string" ? ep.name : ep.name?.wireValue;
+                        if (wireKey != null) {
+                            obj[wireKey] = this.normalizeExampleDatetimes(ep.value);
+                        }
+                    }
+                }
+                const unionShape = named.shape.singleUnionType.shape;
+                if (unionShape.type === "singleProperty") {
+                    obj["body"] = this.normalizeExampleDatetimes(unionShape);
+                } else if (unionShape.type === "samePropertiesAsObject") {
+                    for (const prop of unionShape.object.properties) {
+                        const wireKey = typeof prop.name === "string" ? prop.name : prop.name?.wireValue;
+                        if (wireKey != null) {
+                            obj[wireKey] = this.normalizeExampleDatetimes(prop.value);
+                        }
+                    }
+                }
+                return obj;
+            }
+            case "enum":
+                // Enum shapes have a wireValue that is already a plain string
+                return typeof named.shape.value === "string"
+                    ? named.shape.value
+                    : named.shape.value?.wireValue;
+            case "undiscriminatedUnion":
+                return this.normalizeExampleDatetimes(named.shape.singleUnionType);
+            default:
+                return undefined;
+        }
     }
 
     private getDateTime(exampleTypeReference: FernIr.ExampleTypeReference): Date | undefined {
