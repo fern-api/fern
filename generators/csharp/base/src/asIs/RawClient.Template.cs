@@ -166,27 +166,27 @@ internal partial class RawClient(ClientOptions clientOptions)
         // it sends, so sending the original would leave its Content disposed and cause
         // ObjectDisposedException the next time we try to clone it. Cloning each attempt keeps the
         // original Content alive across the entire retry loop.
-        HttpResponseMessage? response = null;
+        HttpResponseMessage? retryResponse = null;
         for (var attempt = 0; attempt <= maxRetries; attempt++)
         {
             if (attempt > 0)
             {
-                var delayMs = GetRetryDelayFromHeaders(response!, attempt - 1);
+                var delayMs = GetRetryDelayFromHeaders(retryResponse!, attempt - 1);
                 await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             }
 
             using var attemptRequest = await CloneRequestAsync(request, cancellationToken).ConfigureAwait(false);
-            response = await httpClient
+            retryResponse = await httpClient
                 .SendAsync(attemptRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (!ShouldRetry(response))
+            if (!ShouldRetry(retryResponse))
             {
                 break;
             }
         }
 
-        return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response!.StatusCode, Raw = response };
+        return new global::<%= namespace%>.ApiResponse { StatusCode = (int)retryResponse!.StatusCode, Raw = retryResponse };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
