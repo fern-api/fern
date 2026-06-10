@@ -18,7 +18,7 @@ export function getDocsDeployMode(): DocsDeployMode {
     if (isValidMode(raw)) {
         return raw;
     }
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: intentional user-facing warning for invalid env var
     console.warn(
         `[fern] Unrecognized FERN_DOCS_DEPLOY_MODE="${raw}" — falling back to "legacy". Valid values: legacy, dual, ledger.`
     );
