@@ -3185,6 +3185,16 @@
               "type": "null"
             }
           ]
+        },
+        "request-body-unwrap": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

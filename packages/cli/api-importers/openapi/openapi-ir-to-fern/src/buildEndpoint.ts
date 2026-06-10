@@ -128,6 +128,10 @@ export function buildEndpoint({
         source: endpoint.source != null ? convertToSourceSchema(endpoint.source) : undefined
     };
 
+    if (endpoint.requestBodyUnwrapPath != null && endpoint.requestBodyUnwrapPath.length > 0) {
+        convertedEndpoint["request-body-unwrap"] = endpoint.requestBodyUnwrapPath.join(".");
+    }
+
     if (
         !endpointRequestSupportsInlinedPathParameters({ context, request: endpoint.request }) &&
         Object.keys(pathParameters).length > 0

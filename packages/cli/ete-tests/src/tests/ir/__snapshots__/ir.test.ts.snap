@@ -31275,6 +31275,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": null

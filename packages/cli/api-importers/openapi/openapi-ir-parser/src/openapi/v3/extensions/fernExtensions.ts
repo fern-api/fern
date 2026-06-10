@@ -582,7 +582,38 @@ export const FernOpenAPIExtension = {
      *         type: string
      *       x-fern-default: "2024-02-08"
      */
-    FERN_DEFAULT: "x-fern-default"
+    FERN_DEFAULT: "x-fern-default",
+
+    /**
+     * Tells generators to flatten the properties of a nested request body
+     * object into the SDK method signature, while still serializing to the
+     * full nested wire format.
+     *
+     * The value is a dot-separated path into the request body schema.
+     *
+     * Example usage:
+     *   paths:
+     *     /payments:
+     *       post:
+     *         x-fern-request-body-unwrap: data.attributes
+     *         requestBody:
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 properties:
+     *                   data:
+     *                     type: object
+     *                     properties:
+     *                       attributes:
+     *                         type: object
+     *                         properties:
+     *                           amount:
+     *                             type: integer
+     *
+     * This turns `client.payments.create(data={"attributes": {"amount": 100}})`
+     * into `client.payments.create(amount=100)`.
+     */
+    REQUEST_BODY_UNWRAP: "x-fern-request-body-unwrap"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

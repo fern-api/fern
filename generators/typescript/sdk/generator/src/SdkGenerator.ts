@@ -83,6 +83,28 @@ interface WebhookVerificationEntry {
     webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
 }
 
+/**
+ * Extended type for InlinedRequestBody with unwrapPath (IR 67.4.0+).
+ * The published @fern-fern/ir-sdk may not yet include this field,
+ * but it is present at runtime when produced by the current CLI.
+ */
+interface InlinedRequestBodyWithUnwrap extends FernIr.InlinedRequestBody {
+    unwrapPath?: string[];
+}
+
+/**
+ * An unwrapped request body has its wire shape built inline by the client (see
+ * GeneratedDefaultEndpointRequest), so the serde-layer request-body serializer is never
+ * referenced. Because the request wrapper type is also flattened for unwrapped bodies,
+ * emitting that serializer produces a Schema typed against a shape it cannot satisfy
+ * (TS2322). Detect unwrapped bodies so the orphaned serializer can be skipped, matching
+ * the no-serde-layer behavior (which emits nothing).
+ */
+function isUnwrappedInlinedRequestBody(requestBody: FernIr.HttpRequestBody.InlinedRequestBody): boolean {
+    const unwrapPath = (requestBody as InlinedRequestBodyWithUnwrap).unwrapPath;
+    return unwrapPath != null && unwrapPath.length > 0;
+}
+
 export interface ResolvedNaming {
     namespace: string;
     client: string;
@@ -1018,8 +1040,13 @@ export class SdkGenerator {
                     }
                 });
 
-                // Generate inlined request body schemas (was generateInlinedRequestBodySchemas)
-                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                // Generate inlined request body schemas (was generateInlinedRequestBodySchemas).
+                // Skip unwrapped bodies: the client builds their wire shape inline, so this
+                // serializer is orphaned and would not type-check against the flattened wrapper.
+                if (
+                    endpoint.requestBody?.type === "inlinedRequestBody" &&
+                    !isUnwrappedInlinedRequestBody(endpoint.requestBody)
+                ) {
                     this.withSourceFile({
                         filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
                             packageId,

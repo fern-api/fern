@@ -43,6 +43,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             generatedRequestName: core.serialization.string(),
             requestNameOverride: core.serialization.string().optional(),
             request: Request.optional(),
+            requestBodyUnwrapPath: core.serialization.list(core.serialization.string()).optional(),
             response: Response.optional(),
             errors: core.serialization.record(StatusCode, HttpError),
             servers: core.serialization.list(HttpEndpointServer),
@@ -74,6 +75,7 @@ export declare namespace Endpoint {
         generatedRequestName: string;
         requestNameOverride?: string | null;
         request?: Request.Raw | null;
+        requestBodyUnwrapPath?: string[] | null;
         response?: Response.Raw | null;
         errors: Record<StatusCode.Raw, HttpError.Raw>;
         servers: HttpEndpointServer.Raw[];

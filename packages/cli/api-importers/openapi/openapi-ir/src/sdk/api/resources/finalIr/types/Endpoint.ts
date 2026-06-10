@@ -36,6 +36,12 @@ export interface Endpoint
     /** Populated by `x-request-name` on a path object. */
     requestNameOverride: string | undefined;
     request: FernOpenapiIr.Request | undefined;
+    /**
+     * When set, generators flatten the nested request body object at this
+     * path into the SDK method signature. Populated from the
+     * `x-fern-request-body-unwrap` OpenAPI extension.
+     */
+    requestBodyUnwrapPath: string[] | undefined;
     response: FernOpenapiIr.Response | undefined;
     /**
      * Expected error status codes for this endpoint, and their corresponding schema and examples.

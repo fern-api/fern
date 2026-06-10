@@ -323,6 +323,16 @@ export function convertHttpOperation({
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
+    const rawUnwrapPath = getExtension<string>(operation, FernOpenAPIExtension.REQUEST_BODY_UNWRAP);
+    if (rawUnwrapPath != null && typeof rawUnwrapPath !== "string") {
+        context.logger.warn(
+            `Expected a dot-separated string for x-fern-request-body-unwrap (e.g. "data.attributes"), got ${typeof rawUnwrapPath}. Ignoring.`
+        );
+    }
+    const requestBodyUnwrapPath =
+        rawUnwrapPath != null && typeof rawUnwrapPath === "string"
+            ? rawUnwrapPath.split(".").filter((segment) => segment.length > 0)
+            : undefined;
     return convertedRequests.map((request) => ({
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -347,6 +357,7 @@ export function convertHttpOperation({
             context
         }),
         request,
+        requestBodyUnwrapPath,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
         servers:

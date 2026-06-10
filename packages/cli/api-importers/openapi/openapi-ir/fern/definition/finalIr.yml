@@ -341,6 +341,12 @@ types:
         docs: |
           Populated by `x-request-name` on a path object.
       request: optional<Request>
+      requestBodyUnwrapPath:
+        type: optional<list<string>>
+        docs: |
+          When set, generators flatten the nested request body object at this
+          path into the SDK method signature. Populated from the
+          `x-fern-request-body-unwrap` OpenAPI extension.
       response: optional<Response>
       errors:
         type: map<commons.StatusCode, HttpError>

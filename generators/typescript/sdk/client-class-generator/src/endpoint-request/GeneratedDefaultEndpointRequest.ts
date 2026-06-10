@@ -1,6 +1,16 @@
 import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+
+/**
+ * Extended type for InlinedRequestBody with unwrapPath (IR 67.4.0+).
+ * The published @fern-fern/ir-sdk may not yet include this field,
+ * but it is present at runtime when produced by the current CLI.
+ */
+interface InlinedRequestBodyWithUnwrap extends FernIr.InlinedRequestBody {
+    unwrapPath?: string[];
+}
+
 import {
     Fetcher,
     GetReferenceOpts,
@@ -278,6 +288,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     ): ts.Expression {
         switch (requestBody.type) {
             case "inlinedRequestBody": {
+                const bodyWithUnwrap = requestBody as InlinedRequestBodyWithUnwrap;
+                if (bodyWithUnwrap.unwrapPath != null && bodyWithUnwrap.unwrapPath.length > 0) {
+                    return this.buildUnwrappedRequestBodyExpression(bodyWithUnwrap, referenceToRequestBody, context);
+                }
                 const serializeExpression = context.sdkInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context);
@@ -348,6 +362,323 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 });
             }
         }
+        return result;
+    }
+
+    private buildUnwrappedRequestBodyExpression(
+        inlinedRequestBody: InlinedRequestBodyWithUnwrap,
+        referenceToRequestBody: ts.Expression,
+        context: FileContext
+    ): ts.Expression {
+        const unwrapPath = inlinedRequestBody.unwrapPath ?? [];
+        const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
+
+        // Collect the chain of type declarations along the unwrap path
+        interface PathLevelInfo {
+            properties: FernIr.ObjectProperty[];
+            pathSegment: string;
+        }
+        const levels: PathLevelInfo[] = [];
+
+        // First level starts from the inlined request body properties (also search extends)
+        let firstPathProp: FernIr.InlinedRequestBodyProperty | FernIr.ObjectProperty | undefined =
+            inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
+        if (firstPathProp == null) {
+            for (const extension of inlinedRequestBody.extends) {
+                const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+                if (extProps != null) {
+                    const found = extProps.find((p) => getWireValue(p.name) === unwrapPath[0]);
+                    if (found != null) {
+                        firstPathProp = found;
+                        break;
+                    }
+                }
+            }
+        }
+        if (firstPathProp == null) {
+            return referenceToRequestBody;
+        }
+
+        const firstSegment = unwrapPath[0];
+        if (firstSegment == null) {
+            return referenceToRequestBody;
+        }
+
+        let firstLevelProps = this.resolveAllObjectProperties(firstPathProp.valueType, context);
+        if (firstLevelProps == null) {
+            return referenceToRequestBody;
+        }
+        levels.push({ properties: firstLevelProps, pathSegment: firstSegment });
+
+        let currentLevelProps = firstLevelProps;
+        for (let i = 1; i < unwrapPath.length; i++) {
+            const segment = unwrapPath[i];
+            if (segment == null) {
+                return referenceToRequestBody;
+            }
+            const pathProp = currentLevelProps.find((p) => getWireValue(p.name) === segment);
+            if (pathProp == null) {
+                return referenceToRequestBody;
+            }
+            const nextProps = this.resolveAllObjectProperties(pathProp.valueType, context);
+            if (nextProps == null) {
+                return referenceToRequestBody;
+            }
+            currentLevelProps = nextProps;
+            levels.push({ properties: currentLevelProps, pathSegment: segment });
+        }
+
+        // Build set of top-level wire names to skip collisions in leaf loop
+        const topLevelWireNames = new Set<string>();
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            if (this.getAutoFillExpression(prop, context) != null) {
+                continue;
+            }
+            topLevelWireNames.add(getWireValue(prop.name));
+        }
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    if (this.getAutoFillExpression(prop, context) != null) {
+                        continue;
+                    }
+                    topLevelWireNames.add(getWireValue(prop.name));
+                }
+            }
+        }
+
+        // Build leaf object: map flat request properties to wire-format keys
+        const leafProps = currentLevelProps;
+        const leafAssignments: ts.ObjectLiteralElementLike[] = [];
+        for (const prop of leafProps) {
+            if (topLevelWireNames.has(getWireValue(prop.name))) {
+                continue;
+            }
+            const autoFillExpr = this.getAutoFillExpression(prop, context);
+            if (autoFillExpr != null) {
+                leafAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        autoFillExpr
+                    )
+                );
+            } else {
+                const sdkName = requestWrapper.getPropertyNameOfTypeDeclarationProperty(prop).propertyName;
+                leafAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        ts.factory.createPropertyAccessExpression(referenceToRequestBody, sdkName)
+                    )
+                );
+            }
+        }
+        let currentExpr: ts.Expression = ts.factory.createObjectLiteralExpression(leafAssignments, true);
+
+        // Wrap with intermediate levels (from leaf-1 up to level 0)
+        for (let i = levels.length - 2; i >= 0; i--) {
+            const level = levels[i];
+            const nextLevel = levels[i + 1];
+            if (level == null || nextLevel == null) {
+                continue;
+            }
+            const nextPathSegment = nextLevel.pathSegment;
+            const assignments: ts.ObjectLiteralElementLike[] = [];
+
+            // Include auto-fillable properties (literals, single-value enums)
+            // at intermediate levels — they are not exposed in the SDK interface.
+            for (const prop of level.properties) {
+                if (getWireValue(prop.name) === nextPathSegment) {
+                    continue;
+                }
+                const autoFillExpr = this.getAutoFillExpression(prop, context);
+                if (autoFillExpr != null) {
+                    assignments.push(
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createStringLiteral(getWireValue(prop.name)),
+                            autoFillExpr
+                        )
+                    );
+                }
+            }
+
+            // Add the nested path property pointing to the inner level
+            assignments.push(
+                ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(nextPathSegment), currentExpr)
+            );
+
+            currentExpr = ts.factory.createObjectLiteralExpression(assignments, true);
+        }
+
+        // Build top-level object with the path property and non-path top-level properties
+        const topLevelAssignments: ts.ObjectLiteralElementLike[] = [];
+
+        // Add non-path top-level properties (auto-fill literals/single-value enums, reference the rest)
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            const autoFillExpr = this.getAutoFillExpression(prop, context);
+            if (autoFillExpr != null) {
+                topLevelAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        autoFillExpr
+                    )
+                );
+            } else {
+                const sdkName = requestWrapper.getInlinedRequestBodyPropertyKey(prop).propertyName;
+                topLevelAssignments.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createStringLiteral(getWireValue(prop.name)),
+                        ts.factory.createPropertyAccessExpression(referenceToRequestBody, sdkName)
+                    )
+                );
+            }
+        }
+
+        // Also include inherited (extends) top-level properties
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    const autoFillExpr = this.getAutoFillExpression(prop, context);
+                    if (autoFillExpr != null) {
+                        topLevelAssignments.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createStringLiteral(getWireValue(prop.name)),
+                                autoFillExpr
+                            )
+                        );
+                    } else {
+                        const sdkName = requestWrapper.getPropertyNameOfTypeDeclarationProperty(prop).propertyName;
+                        topLevelAssignments.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createStringLiteral(getWireValue(prop.name)),
+                                ts.factory.createPropertyAccessExpression(referenceToRequestBody, sdkName)
+                            )
+                        );
+                    }
+                }
+            }
+        }
+
+        // Add the path property (first segment of unwrapPath)
+        topLevelAssignments.push(
+            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(firstSegment), currentExpr)
+        );
+
+        return ts.factory.createObjectLiteralExpression(topLevelAssignments, true);
+    }
+
+    private createLiteralExpression(literal: FernIr.Literal): ts.Expression {
+        return literal._visit<ts.Expression>({
+            string: (val: string) => ts.factory.createStringLiteral(val),
+            boolean: (val: boolean) => (val ? ts.factory.createTrue() : ts.factory.createFalse()),
+            _other: () => {
+                throw new Error("Encountered non-boolean, non-string literal");
+            }
+        });
+    }
+
+    /**
+     * Returns a constant expression if the property can be auto-filled:
+     * either a container.literal or a single-value enum.
+     */
+    private getAutoFillExpression(
+        prop: Pick<FernIr.ObjectProperty, "valueType">,
+        context: FileContext
+    ): ts.Expression | undefined {
+        const resolvedType = context.type.resolveTypeReference(prop.valueType);
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return this.createLiteralExpression(resolvedType.container.literal);
+        }
+        if (prop.valueType.type === "named") {
+            const typeDecl = context.type.getTypeDeclaration({
+                typeId: prop.valueType.typeId,
+                fernFilepath: prop.valueType.fernFilepath,
+                name: prop.valueType.name,
+                displayName: prop.valueType.displayName
+            });
+            if (typeDecl?.shape.type === "enum" && typeDecl.shape.values.length === 1) {
+                const singleValue = typeDecl.shape.values[0];
+                if (singleValue != null) {
+                    const wireValue =
+                        typeof singleValue.name === "string" ? singleValue.name : getWireValue(singleValue.name);
+                    return ts.factory.createStringLiteral(wireValue);
+                }
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Resolves a type reference to its object properties, following aliases and walking extends.
+     */
+    private resolveAllObjectProperties(
+        valueType: FernIr.TypeReference,
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        // Unwrap Container.Optional and Container.Nullable to extract the inner reference.
+        if (valueType.type === "container") {
+            if (valueType.container.type === "optional") {
+                return this.resolveAllObjectProperties(valueType.container.optional, context);
+            }
+            if (valueType.container.type === "nullable") {
+                return this.resolveAllObjectProperties(valueType.container.nullable, context);
+            }
+            return undefined;
+        }
+        if (valueType.type !== "named") {
+            return undefined;
+        }
+        return this.resolveObjectPropertiesFromNamedType(
+            {
+                typeId: valueType.typeId,
+                fernFilepath: valueType.fernFilepath,
+                name: valueType.name,
+                displayName: valueType.displayName
+            },
+            context
+        );
+    }
+
+    private resolveObjectPropertiesFromNamedType(
+        namedType: {
+            typeId: string;
+            fernFilepath: FernIr.FernFilepath;
+            name: FernIr.NameOrString;
+            displayName: string | undefined;
+        },
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        let typeDecl = context.type.getTypeDeclaration(namedType);
+        if (typeDecl == null) {
+            return undefined;
+        }
+        // Follow alias chain
+        while (typeDecl?.shape.type === "alias" && typeDecl.shape.aliasOf.type === "named") {
+            typeDecl = context.type.getTypeDeclaration({
+                typeId: typeDecl.shape.aliasOf.typeId,
+                fernFilepath: typeDecl.shape.aliasOf.fernFilepath,
+                name: typeDecl.shape.aliasOf.name,
+                displayName: typeDecl.shape.aliasOf.displayName
+            });
+        }
+        if (typeDecl?.shape.type !== "object") {
+            return undefined;
+        }
+        const result: FernIr.ObjectProperty[] = [];
+        for (const ext of typeDecl.shape.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(ext, context);
+            if (extProps != null) {
+                result.push(...extProps);
+            }
+        }
+        result.push(...typeDecl.shape.properties);
         return result;
     }
 

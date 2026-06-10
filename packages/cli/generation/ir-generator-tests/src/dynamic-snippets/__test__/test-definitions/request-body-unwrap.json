@@ -1,0 +1,1617 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_payment:CreatePaymentRequestDataType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "CreatePaymentRequestDataType",
+                    "camelCase": {
+                        "unsafeName": "createPaymentRequestDataType",
+                        "safeName": "createPaymentRequestDataType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_payment_request_data_type",
+                        "safeName": "create_payment_request_data_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_PAYMENT_REQUEST_DATA_TYPE",
+                        "safeName": "CREATE_PAYMENT_REQUEST_DATA_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreatePaymentRequestDataType",
+                        "safeName": "CreatePaymentRequestDataType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "payment",
+                    "name": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_payment:CreatePaymentRequestDataAttributes": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CreatePaymentRequestDataAttributes",
+                    "camelCase": {
+                        "unsafeName": "createPaymentRequestDataAttributes",
+                        "safeName": "createPaymentRequestDataAttributes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_payment_request_data_attributes",
+                        "safeName": "create_payment_request_data_attributes"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_PAYMENT_REQUEST_DATA_ATTRIBUTES",
+                        "safeName": "CREATE_PAYMENT_REQUEST_DATA_ATTRIBUTES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreatePaymentRequestDataAttributes",
+                        "safeName": "CreatePaymentRequestDataAttributes"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "amount",
+                        "name": {
+                            "originalName": "amount",
+                            "camelCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AMOUNT",
+                                "safeName": "AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Amount",
+                                "safeName": "Amount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "currency",
+                        "name": {
+                            "originalName": "currency",
+                            "camelCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CURRENCY",
+                                "safeName": "CURRENCY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Currency",
+                                "safeName": "Currency"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_payment:CreatePaymentRequestData": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CreatePaymentRequestData",
+                    "camelCase": {
+                        "unsafeName": "createPaymentRequestData",
+                        "safeName": "createPaymentRequestData"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_payment_request_data",
+                        "safeName": "create_payment_request_data"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_PAYMENT_REQUEST_DATA",
+                        "safeName": "CREATE_PAYMENT_REQUEST_DATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreatePaymentRequestData",
+                        "safeName": "CreatePaymentRequestData"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "type",
+                        "name": {
+                            "originalName": "type",
+                            "camelCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "type",
+                                "safeName": "type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPE",
+                                "safeName": "TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Type",
+                                "safeName": "Type"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_payment:CreatePaymentRequestDataType"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "attributes",
+                        "name": {
+                            "originalName": "attributes",
+                            "camelCase": {
+                                "unsafeName": "attributes",
+                                "safeName": "attributes"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "attributes",
+                                "safeName": "attributes"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ATTRIBUTES",
+                                "safeName": "ATTRIBUTES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Attributes",
+                                "safeName": "Attributes"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_payment:CreatePaymentRequestDataAttributes"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_transfer:CreateTransferRequestAttributes": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "CreateTransferRequestAttributes",
+                    "camelCase": {
+                        "unsafeName": "createTransferRequestAttributes",
+                        "safeName": "createTransferRequestAttributes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_transfer_request_attributes",
+                        "safeName": "create_transfer_request_attributes"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_TRANSFER_REQUEST_ATTRIBUTES",
+                        "safeName": "CREATE_TRANSFER_REQUEST_ATTRIBUTES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateTransferRequestAttributes",
+                        "safeName": "CreateTransferRequestAttributes"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "transfer",
+                            "camelCase": {
+                                "unsafeName": "transfer",
+                                "safeName": "transfer"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "transfer",
+                                "safeName": "transfer"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TRANSFER",
+                                "safeName": "TRANSFER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Transfer",
+                                "safeName": "Transfer"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "transfer",
+                        "camelCase": {
+                            "unsafeName": "transfer",
+                            "safeName": "transfer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "transfer",
+                            "safeName": "transfer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TRANSFER",
+                            "safeName": "TRANSFER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Transfer",
+                            "safeName": "Transfer"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "amount",
+                        "name": {
+                            "originalName": "amount",
+                            "camelCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AMOUNT",
+                                "safeName": "AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Amount",
+                                "safeName": "Amount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "source_account_id",
+                        "name": {
+                            "originalName": "source_account_id",
+                            "camelCase": {
+                                "unsafeName": "sourceAccountID",
+                                "safeName": "sourceAccountID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "source_account_id",
+                                "safeName": "source_account_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SOURCE_ACCOUNT_ID",
+                                "safeName": "SOURCE_ACCOUNT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SourceAccountID",
+                                "safeName": "SourceAccountID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "destination_account_id",
+                        "name": {
+                            "originalName": "destination_account_id",
+                            "camelCase": {
+                                "unsafeName": "destinationAccountID",
+                                "safeName": "destinationAccountID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "destination_account_id",
+                                "safeName": "destination_account_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESTINATION_ACCOUNT_ID",
+                                "safeName": "DESTINATION_ACCOUNT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DestinationAccountID",
+                                "safeName": "DestinationAccountID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:PaymentStatus": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "PaymentStatus",
+                    "camelCase": {
+                        "unsafeName": "paymentStatus",
+                        "safeName": "paymentStatus"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "payment_status",
+                        "safeName": "payment_status"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAYMENT_STATUS",
+                        "safeName": "PAYMENT_STATUS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PaymentStatus",
+                        "safeName": "PaymentStatus"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "pending",
+                    "name": {
+                        "originalName": "pending",
+                        "camelCase": {
+                            "unsafeName": "pending",
+                            "safeName": "pending"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "pending",
+                            "safeName": "pending"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PENDING",
+                            "safeName": "PENDING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Pending",
+                            "safeName": "Pending"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "completed",
+                    "name": {
+                        "originalName": "completed",
+                        "camelCase": {
+                            "unsafeName": "completed",
+                            "safeName": "completed"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completed",
+                            "safeName": "completed"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETED",
+                            "safeName": "COMPLETED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completed",
+                            "safeName": "Completed"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "failed",
+                    "name": {
+                        "originalName": "failed",
+                        "camelCase": {
+                            "unsafeName": "failed",
+                            "safeName": "failed"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "failed",
+                            "safeName": "failed"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FAILED",
+                            "safeName": "FAILED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Failed",
+                            "safeName": "Failed"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:Payment": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Payment",
+                    "camelCase": {
+                        "unsafeName": "payment",
+                        "safeName": "payment"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "payment",
+                        "safeName": "payment"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAYMENT",
+                        "safeName": "PAYMENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Payment",
+                        "safeName": "Payment"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "amount",
+                        "name": {
+                            "originalName": "amount",
+                            "camelCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AMOUNT",
+                                "safeName": "AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Amount",
+                                "safeName": "Amount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "currency",
+                        "name": {
+                            "originalName": "currency",
+                            "camelCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "currency",
+                                "safeName": "currency"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CURRENCY",
+                                "safeName": "CURRENCY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Currency",
+                                "safeName": "Currency"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "description",
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "status",
+                        "name": {
+                            "originalName": "status",
+                            "camelCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status",
+                                "safeName": "status"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS",
+                                "safeName": "STATUS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Status",
+                                "safeName": "Status"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:PaymentStatus"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:Transfer": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Transfer",
+                    "camelCase": {
+                        "unsafeName": "transfer",
+                        "safeName": "transfer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "transfer",
+                        "safeName": "transfer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TRANSFER",
+                        "safeName": "TRANSFER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Transfer",
+                        "safeName": "Transfer"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "amount",
+                        "name": {
+                            "originalName": "amount",
+                            "camelCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "amount",
+                                "safeName": "amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AMOUNT",
+                                "safeName": "AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Amount",
+                                "safeName": "Amount"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "source_account_id",
+                        "name": {
+                            "originalName": "source_account_id",
+                            "camelCase": {
+                                "unsafeName": "sourceAccountID",
+                                "safeName": "sourceAccountID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "source_account_id",
+                                "safeName": "source_account_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SOURCE_ACCOUNT_ID",
+                                "safeName": "SOURCE_ACCOUNT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SourceAccountID",
+                                "safeName": "SourceAccountID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "destination_account_id",
+                        "name": {
+                            "originalName": "destination_account_id",
+                            "camelCase": {
+                                "unsafeName": "destinationAccountID",
+                                "safeName": "destinationAccountID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "destination_account_id",
+                                "safeName": "destination_account_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESTINATION_ACCOUNT_ID",
+                                "safeName": "DESTINATION_ACCOUNT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DestinationAccountID",
+                                "safeName": "DestinationAccountID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_payment.createPayment": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createPayment",
+                    "camelCase": {
+                        "unsafeName": "createPayment",
+                        "safeName": "createPayment"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_payment",
+                        "safeName": "create_payment"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_PAYMENT",
+                        "safeName": "CREATE_PAYMENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreatePayment",
+                        "safeName": "CreatePayment"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/payments"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreatePaymentRequest",
+                        "camelCase": {
+                            "unsafeName": "createPaymentRequest",
+                            "safeName": "createPaymentRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_payment_request",
+                            "safeName": "create_payment_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_PAYMENT_REQUEST",
+                            "safeName": "CREATE_PAYMENT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreatePaymentRequest",
+                            "safeName": "CreatePaymentRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "payment",
+                                "camelCase": {
+                                    "unsafeName": "payment",
+                                    "safeName": "payment"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "payment",
+                                    "safeName": "payment"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAYMENT",
+                                    "safeName": "PAYMENT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Payment",
+                                    "safeName": "Payment"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "data",
+                                "name": {
+                                    "originalName": "data",
+                                    "camelCase": {
+                                        "unsafeName": "data",
+                                        "safeName": "data"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "data",
+                                        "safeName": "data"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "DATA",
+                                        "safeName": "DATA"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Data",
+                                        "safeName": "Data"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_payment:CreatePaymentRequestData"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_payment.getPayment": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getPayment",
+                    "camelCase": {
+                        "unsafeName": "getPayment",
+                        "safeName": "getPayment"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_payment",
+                        "safeName": "get_payment"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_PAYMENT",
+                        "safeName": "GET_PAYMENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetPayment",
+                        "safeName": "GetPayment"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/payments/{payment_id}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "GetPaymentRequest",
+                        "camelCase": {
+                            "unsafeName": "getPaymentRequest",
+                            "safeName": "getPaymentRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_payment_request",
+                            "safeName": "get_payment_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_PAYMENT_REQUEST",
+                            "safeName": "GET_PAYMENT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetPaymentRequest",
+                            "safeName": "GetPaymentRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "payment",
+                                "camelCase": {
+                                    "unsafeName": "payment",
+                                    "safeName": "payment"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "payment",
+                                    "safeName": "payment"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAYMENT",
+                                    "safeName": "PAYMENT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Payment",
+                                    "safeName": "Payment"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "payment_id",
+                                "camelCase": {
+                                    "unsafeName": "paymentID",
+                                    "safeName": "paymentID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "payment_id",
+                                    "safeName": "payment_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAYMENT_ID",
+                                    "safeName": "PAYMENT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PaymentID",
+                                    "safeName": "PaymentID"
+                                }
+                            },
+                            "wireValue": "payment_id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_transfer.createTransfer": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createTransfer",
+                    "camelCase": {
+                        "unsafeName": "createTransfer",
+                        "safeName": "createTransfer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_transfer",
+                        "safeName": "create_transfer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_TRANSFER",
+                        "safeName": "CREATE_TRANSFER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateTransfer",
+                        "safeName": "CreateTransfer"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "transfer",
+                            "camelCase": {
+                                "unsafeName": "transfer",
+                                "safeName": "transfer"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "transfer",
+                                "safeName": "transfer"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TRANSFER",
+                                "safeName": "TRANSFER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Transfer",
+                                "safeName": "Transfer"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "transfer",
+                        "camelCase": {
+                            "unsafeName": "transfer",
+                            "safeName": "transfer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "transfer",
+                            "safeName": "transfer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TRANSFER",
+                            "safeName": "TRANSFER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Transfer",
+                            "safeName": "Transfer"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/transfers"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "CreateTransferRequest",
+                        "camelCase": {
+                            "unsafeName": "createTransferRequest",
+                            "safeName": "createTransferRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_transfer_request",
+                            "safeName": "create_transfer_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_TRANSFER_REQUEST",
+                            "safeName": "CREATE_TRANSFER_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreateTransferRequest",
+                            "safeName": "CreateTransferRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "transfer",
+                                "camelCase": {
+                                    "unsafeName": "transfer",
+                                    "safeName": "transfer"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "transfer",
+                                    "safeName": "transfer"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TRANSFER",
+                                    "safeName": "TRANSFER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Transfer",
+                                    "safeName": "Transfer"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "transfer",
+                            "camelCase": {
+                                "unsafeName": "transfer",
+                                "safeName": "transfer"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "transfer",
+                                "safeName": "transfer"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TRANSFER",
+                                "safeName": "TRANSFER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Transfer",
+                                "safeName": "Transfer"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "attributes",
+                                "name": {
+                                    "originalName": "attributes",
+                                    "camelCase": {
+                                        "unsafeName": "attributes",
+                                        "safeName": "attributes"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "attributes",
+                                        "safeName": "attributes"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ATTRIBUTES",
+                                        "safeName": "ATTRIBUTES"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Attributes",
+                                        "safeName": "Attributes"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "named",
+                                "value": "type_transfer:CreateTransferRequestAttributes"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "metadata",
+                                "name": {
+                                    "originalName": "metadata",
+                                    "camelCase": {
+                                        "unsafeName": "metadata",
+                                        "safeName": "metadata"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "metadata",
+                                        "safeName": "metadata"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "METADATA",
+                                        "safeName": "METADATA"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Metadata",
+                                        "safeName": "Metadata"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "map",
+                                    "key": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    },
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

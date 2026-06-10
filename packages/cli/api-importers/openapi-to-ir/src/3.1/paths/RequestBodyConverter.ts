@@ -178,6 +178,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     extends: requestBodyTypeShape.extends,
                     properties: requestBodyTypeShape.properties,
                     extraProperties: requestBodyTypeShape.extraProperties,
+                    unwrapPath: undefined,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         exampleGenerationStrategy: "request"
@@ -508,6 +509,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     extends: requestBodyTypeShape.extends,
                     properties: requestBodyTypeShape.properties,
                     extraProperties: requestBodyTypeShape.extraProperties,
+                    unwrapPath: undefined,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject: modifiedMediaTypeObject,
                         exampleGenerationStrategy: "request"

@@ -2,6 +2,16 @@ import { CaseConverter, getOriginalName, getWireValue } from "@fern-api/base-gen
 import { noop, SetRequired } from "@fern-api/core-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
+
+/**
+ * Extended type for InlinedRequestBody with unwrapPath (IR 67.4.0+).
+ * The published @fern-fern/ir-sdk may not yet include this field,
+ * but it is present at runtime when produced by the current CLI.
+ */
+interface InlinedRequestBodyWithUnwrap extends FernIr.InlinedRequestBody {
+    unwrapPath?: string[];
+}
+
 import {
     deduplicateExamples,
     generateInlinePropertiesModule,
@@ -246,7 +256,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (requestBody != null) {
             FernIr.HttpRequestBody._visit(requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    if (this.flattenRequestParameters) {
+                    const bodyWithUnwrap = inlinedRequestBody as InlinedRequestBodyWithUnwrap;
+                    if (bodyWithUnwrap.unwrapPath != null && bodyWithUnwrap.unwrapPath.length > 0) {
+                        const unwrappedProperties = this.getUnwrappedProperties(bodyWithUnwrap, context);
+                        properties.push(...unwrappedProperties);
+                    } else if (this.flattenRequestParameters) {
                         const inlinedProperties = this.getFlattenedInlinedRequestBodyProperties(
                             inlinedRequestBody,
                             context
@@ -904,6 +918,230 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ?.useDefaultRequestParameterValues;
 
         return hasDefaultValue && Boolean(useDefaultValues);
+    }
+
+    private getUnwrappedProperties(
+        inlinedRequestBody: InlinedRequestBodyWithUnwrap,
+        context: FileContext
+    ): GeneratedRequestWrapper.Property[] {
+        const properties: GeneratedRequestWrapper.Property[] = [];
+        const unwrapPath = inlinedRequestBody.unwrapPath ?? [];
+
+        // Add non-path, non-auto-fillable top-level properties
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            if (this.isAutoFillableProperty(prop.valueType, context)) {
+                continue;
+            }
+            const requestProperty = this.getInlineProperty(inlinedRequestBody, prop, context);
+            properties.push(requestProperty);
+        }
+
+        // Also include non-path, non-auto-fillable properties from extends
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    if (getWireValue(prop.name) === unwrapPath[0]) {
+                        continue;
+                    }
+                    if (this.isAutoFillableProperty(prop.valueType, context)) {
+                        continue;
+                    }
+                    const type = context.type.getReferenceToType(prop.valueType);
+                    const propName = this.getPropertyNameOfTypeDeclarationProperty(prop);
+                    properties.push({
+                        name: getPropertyKey(propName.propertyName),
+                        safeName: getPropertyKey(propName.safeName),
+                        type: type.typeNodeWithoutUndefined,
+                        isOptional: type.isOptional,
+                        docs: prop.docs ? [prop.docs] : undefined
+                    });
+                }
+            }
+        }
+
+        // Walk the unwrap path to find properties at each level
+        let currentProps: FernIr.ObjectProperty[] | undefined;
+        let firstPathProp: FernIr.InlinedRequestBodyProperty | FernIr.ObjectProperty | undefined =
+            inlinedRequestBody.properties.find((p) => getWireValue(p.name) === unwrapPath[0]);
+        // Also search extends for the pathRoot
+        if (firstPathProp == null) {
+            for (const extension of inlinedRequestBody.extends) {
+                const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+                if (extProps != null) {
+                    const found = extProps.find((p) => getWireValue(p.name) === unwrapPath[0]);
+                    if (found != null) {
+                        firstPathProp = found;
+                        break;
+                    }
+                }
+            }
+        }
+        if (firstPathProp == null) {
+            return properties;
+        }
+
+        currentProps = this.resolveObjectPropertiesFromTypeRef(firstPathProp.valueType, context);
+        if (currentProps == null) {
+            return properties;
+        }
+
+        for (let i = 1; i < unwrapPath.length; i++) {
+            const segment = unwrapPath[i];
+            const pathProp = currentProps?.find((p) => getWireValue(p.name) === segment);
+            if (pathProp == null) {
+                return properties;
+            }
+            currentProps = this.resolveObjectPropertiesFromTypeRef(pathProp.valueType, context);
+            if (currentProps == null) {
+                return properties;
+            }
+        }
+
+        // Track wire names already seen from top-level non-auto-fillable properties to avoid duplicates
+        const seenWireNames = new Set<string>();
+        for (const prop of inlinedRequestBody.properties) {
+            if (getWireValue(prop.name) === unwrapPath[0]) {
+                continue;
+            }
+            if (this.isAutoFillableProperty(prop.valueType, context)) {
+                continue;
+            }
+            seenWireNames.add(getWireValue(prop.name));
+        }
+        for (const extension of inlinedRequestBody.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(extension, context);
+            if (extProps != null) {
+                for (const prop of extProps) {
+                    if (getWireValue(prop.name) === unwrapPath[0]) {
+                        continue;
+                    }
+                    if (this.isAutoFillableProperty(prop.valueType, context)) {
+                        continue;
+                    }
+                    seenWireNames.add(getWireValue(prop.name));
+                }
+            }
+        }
+
+        // At the leaf level, add all non-auto-fillable properties (skip wire-name collisions)
+        if (currentProps != null) {
+            for (const prop of currentProps) {
+                if (this.isAutoFillableProperty(prop.valueType, context)) {
+                    continue;
+                }
+                const wireValue = getWireValue(prop.name);
+                if (seenWireNames.has(wireValue)) {
+                    continue;
+                }
+                seenWireNames.add(wireValue);
+                const type = context.type.getReferenceToType(prop.valueType);
+                const propName = this.getPropertyNameOfTypeDeclarationProperty(prop);
+                properties.push({
+                    name: getPropertyKey(propName.propertyName),
+                    safeName: getPropertyKey(propName.safeName),
+                    type: type.typeNodeWithoutUndefined,
+                    isOptional: type.isOptional,
+                    docs: prop.docs ? [prop.docs] : undefined
+                });
+            }
+        }
+
+        return properties;
+    }
+
+    /**
+     * Returns true if the property type is auto-fillable (literal or single-value enum).
+     * Such properties are not exposed to the SDK user — they are auto-filled during serialization.
+     */
+    private isAutoFillableProperty(valueType: FernIr.TypeReference, context: FileContext): boolean {
+        const resolvedType = context.type.resolveTypeReference(valueType);
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            return true;
+        }
+        if (valueType.type === "named") {
+            const typeDecl = context.type.getTypeDeclaration({
+                typeId: valueType.typeId,
+                fernFilepath: valueType.fernFilepath,
+                name: valueType.name,
+                displayName: valueType.displayName
+            });
+            if (typeDecl?.shape.type === "enum" && typeDecl.shape.values.length === 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Resolves a type reference to its object properties, following aliases and walking extends.
+     * Returns all properties including those from extended types.
+     */
+    private resolveObjectPropertiesFromTypeRef(
+        valueType: FernIr.TypeReference,
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        // Unwrap Container.Optional and Container.Nullable to extract the inner reference.
+        if (valueType.type === "container") {
+            if (valueType.container.type === "optional") {
+                return this.resolveObjectPropertiesFromTypeRef(valueType.container.optional, context);
+            }
+            if (valueType.container.type === "nullable") {
+                return this.resolveObjectPropertiesFromTypeRef(valueType.container.nullable, context);
+            }
+            return undefined;
+        }
+        if (valueType.type !== "named") {
+            return undefined;
+        }
+        return this.resolveObjectPropertiesFromNamedType(
+            {
+                typeId: valueType.typeId,
+                fernFilepath: valueType.fernFilepath,
+                name: valueType.name,
+                displayName: valueType.displayName
+            },
+            context
+        );
+    }
+
+    private resolveObjectPropertiesFromNamedType(
+        namedType: {
+            typeId: string;
+            fernFilepath: FernIr.FernFilepath;
+            name: FernIr.NameOrString;
+            displayName: string | undefined;
+        },
+        context: FileContext
+    ): FernIr.ObjectProperty[] | undefined {
+        let typeDecl = context.type.getTypeDeclaration(namedType);
+        if (typeDecl == null) {
+            return undefined;
+        }
+        // Follow alias chain
+        while (typeDecl?.shape.type === "alias" && typeDecl.shape.aliasOf.type === "named") {
+            typeDecl = context.type.getTypeDeclaration({
+                typeId: typeDecl.shape.aliasOf.typeId,
+                fernFilepath: typeDecl.shape.aliasOf.fernFilepath,
+                name: typeDecl.shape.aliasOf.name,
+                displayName: typeDecl.shape.aliasOf.displayName
+            });
+        }
+        if (typeDecl?.shape.type !== "object") {
+            return undefined;
+        }
+        const result: FernIr.ObjectProperty[] = [];
+        for (const ext of typeDecl.shape.extends) {
+            const extProps = this.resolveObjectPropertiesFromNamedType(ext, context);
+            if (extProps != null) {
+                result.push(...extProps);
+            }
+        }
+        result.push(...typeDecl.shape.properties);
+        return result;
     }
 
     private getFlattenedInlinedRequestBodyProperties(

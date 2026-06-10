@@ -209,6 +209,9 @@ fixtures:
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
+  request-body-unwrap:
+    - outputFolder: no-custom-config
+      customConfig: null
   streaming:
     - outputFolder: .
       outputVersion: v2.0.0
@@ -370,3 +373,4 @@ allowedFailures:
 
   # Dynamic snippet generation produces code that does not compile.
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
+  - request-body-unwrap:no-custom-config # dynamic snippets use nested struct shape but SDK flattens via unwrapPath

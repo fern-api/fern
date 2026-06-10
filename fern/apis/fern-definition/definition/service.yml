@@ -55,6 +55,7 @@ types:
       transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
       retries: optional<RetriesConfiguration>
+      request-body-unwrap: optional<string>
 
   HttpEndpointAuth:
     discriminated: false

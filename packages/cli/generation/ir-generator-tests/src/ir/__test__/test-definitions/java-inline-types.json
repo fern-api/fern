@@ -4691,6 +4691,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": "application/json"
@@ -6055,6 +6056,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": "application/json"
@@ -6500,6 +6502,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": "application/json"

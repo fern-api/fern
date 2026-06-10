@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: Request Body Unwrap
+  version: 1.0.0
+  description: |
+    Tests the x-fern-request-body-unwrap extension, which tells generators to
+    flatten the properties of a nested request body object into the SDK method
+    signature while still serializing to the full nested wire format.
+paths:
+  /payments:
+    post:
+      operationId: createPayment
+      tags:
+        - Payment
+      summary: Create a payment
+      x-fern-request-body-unwrap: "data.attributes"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Client-generated idempotency key
+                    type:
+                      type: string
+                      enum:
+                        - payment
+                    attributes:
+                      type: object
+                      properties:
+                        amount:
+                          type: integer
+                          description: Amount in cents
+                        currency:
+                          type: string
+                          description: ISO 4217 currency code
+                        description:
+                          type: string
+                      required:
+                        - amount
+                        - currency
+                  required:
+                    - type
+                    - attributes
+              required:
+                - data
+      responses:
+        "200":
+          description: Payment created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+  /payments/{payment_id}:
+    get:
+      operationId: getPayment
+      tags:
+        - Payment
+      summary: Get a payment
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+  /transfers:
+    post:
+      operationId: createTransfer
+      tags:
+        - Transfer
+      summary: Create a transfer (single-level unwrap)
+      x-fern-request-body-unwrap: "attributes"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    source_account_id:
+                      type: string
+                    destination_account_id:
+                      type: string
+                  required:
+                    - amount
+                    - source_account_id
+                    - destination_account_id
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+              required:
+                - attributes
+      responses:
+        "200":
+          description: Transfer created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transfer"
+
+components:
+  schemas:
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+        currency:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - pending
+            - completed
+            - failed
+      required:
+        - id
+        - amount
+        - currency
+        - status
+
+    Transfer:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+        source_account_id:
+          type: string
+        destination_account_id:
+          type: string
+      required:
+        - id
+        - amount
+        - source_account_id
+        - destination_account_id

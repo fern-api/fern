@@ -39,6 +39,7 @@ export interface GeneratedRequestWrapper extends GeneratedFile<FileContext> {
     getPropertyNameOfPathParameterFromName: (name: FernIr.NameOrString) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeader: (header: FernIr.HttpHeader) => RequestWrapperNonBodyProperty;
     getPropertyNameOfNonLiteralHeaderFromName: (name: FernIr.NameAndWireValueOrString) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfTypeDeclarationProperty: (property: FernIr.ObjectProperty) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {
         queryParameter: FernIr.QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;

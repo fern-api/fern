@@ -151,6 +151,7 @@
                         ],
                         "extra-properties": false,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": "This is a test description",
                         "v2Examples": null,
                         "contentType": null

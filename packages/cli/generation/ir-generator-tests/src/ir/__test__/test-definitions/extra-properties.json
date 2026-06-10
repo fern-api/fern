@@ -311,6 +311,7 @@
                         ],
                         "extra-properties": true,
                         "extendedProperties": [],
+                        "unwrapPath": null,
                         "docs": null,
                         "v2Examples": null,
                         "contentType": null

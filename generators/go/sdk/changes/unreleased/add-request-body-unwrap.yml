@@ -1,0 +1,5 @@
+- summary: |
+    Add support for `x-fern-request-body-unwrap` extension. When set on an endpoint,
+    the SDK flattens nested request body properties into the method signature while
+    still serializing to the full nested wire format.
+  type: feat

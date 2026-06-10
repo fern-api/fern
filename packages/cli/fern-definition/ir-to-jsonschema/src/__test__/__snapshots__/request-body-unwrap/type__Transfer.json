@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "integer"
+    },
+    "source_account_id": {
+      "type": "string"
+    },
+    "destination_account_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "amount",
+    "source_account_id",
+    "destination_account_id"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
