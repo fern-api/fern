@@ -1,0 +1,5 @@
+- summary: |
+    Fix request body serialization for non-object reference types (e.g., bare arrays)
+    when `flattenRequestParameters` is enabled. Previously, array request bodies were
+    incorrectly wrapped in an object during serialization, causing wire test mismatches.
+  type: fix

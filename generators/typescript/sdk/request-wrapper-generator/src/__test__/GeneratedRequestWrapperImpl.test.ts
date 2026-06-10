@@ -967,7 +967,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference body with flattenRequestParameters=true", () => {
+        it("returns true for non-object reference body with flattenRequestParameters=true", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
@@ -982,7 +982,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             });
             const wrapper = new GeneratedRequestWrapperImpl(init);
             const { context } = createMockContext();
-            expect(wrapper.hasBodyProperty(context)).toBe(false);
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
         it("returns false for fileUpload body", () => {
@@ -2305,7 +2305,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(properties[0]?.docs).toEqual(["The raw body"]);
         });
 
-        it("returns empty for non-object type declaration when flattened", () => {
+        it("returns body property for non-object type declaration when flattened", () => {
             const namedBodyRef = createNamedTypeReference("AliasPayload");
             const init = createDefaultInit({
                 flattenRequestParameters: true,
@@ -2343,8 +2343,9 @@ describe("GeneratedRequestWrapperImpl", () => {
                 getTypeDeclarationFn: () => aliasTypeDeclaration
             });
             const properties = wrapper.getRequestProperties(context);
-            // Alias type can't be flattened into properties
-            expect(properties).toHaveLength(0);
+            // Non-object named types get an explicit body property
+            expect(properties).toHaveLength(1);
+            expect(properties[0]?.name).toBe("body");
         });
 
         it("uses enableInlineTypes createNamespacedPropertyType when flattening named reference body", () => {
@@ -2472,7 +2473,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference request body when flattened", () => {
+        it("returns true for non-object reference request body when flattened", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
@@ -2487,7 +2488,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             });
             const wrapper = new GeneratedRequestWrapperImpl(init);
             const { context } = createMockContext();
-            expect(wrapper.hasBodyProperty(context)).toBe(false);
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
         it("returns false when no request body", () => {
