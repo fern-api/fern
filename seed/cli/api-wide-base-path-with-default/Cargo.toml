@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.api_wide_base_path_with_default_types]
-path = "api-wide-base-path-with-default-types"
+[dependencies.api_wide_base_path_with_default_sdk]
+path = "api-wide-base-path-with-default-sdk"
 
 [profile.dist]
 inherits = "release"

@@ -7,7 +7,8 @@ public class SeedValidationApiException(
     string message,
     int statusCode,
     object body,
-    Exception? innerException = null
+    Exception? innerException = null,
+    SeedValidation.RawResponse? rawResponse = null
 ) : SeedValidationException(message, innerException)
 {
     /// <summary>
@@ -19,4 +20,9 @@ public class SeedValidationApiException(
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
+
+    /// <summary>
+    /// The raw HTTP response (status code, URL, headers) that triggered the exception, if available.
+    /// </summary>
+    public SeedValidation.RawResponse? RawResponse => rawResponse;
 }

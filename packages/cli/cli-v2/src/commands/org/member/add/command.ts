@@ -28,19 +28,15 @@ export class InviteMemberCommand {
 
         const venus = createVenusService({ token: token.value, headers: context.headers });
 
-        const orgLookup = await venus.organization.get(args.org);
+        const orgLookup = await venus.organization.get({ orgId: args.org });
         if (!orgLookup.ok) {
-            orgLookup.error._visit({
-                unauthorizedError: () => {
-                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw new CliError({ code: CliError.Code.AuthError });
-                },
-                _other: () => {
-                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
-                    throw CliError.notFound();
-                }
-            });
-            return;
+            const status = orgLookup.rawResponse.status;
+            if (status === 401 || status === 403) {
+                context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                throw new CliError({ code: CliError.Code.AuthError });
+            }
+            context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+            throw CliError.notFound();
         }
         const auth0OrgId = orgLookup.body.auth0Id;
 
@@ -62,25 +58,21 @@ export class InviteMemberCommand {
             return;
         }
 
-        response.error._visit({
-            unauthorizedError: () => {
-                context.stderr.error(
-                    `${Icons.error} You do not have permission to invite members to organization "${args.org}".`
-                );
-                throw new CliError({ code: CliError.Code.AuthError });
-            },
-            userIdDoesNotExistError: () => {
-                context.stderr.error(`${Icons.error} No user found with email "${args.email}".`);
-                throw CliError.notFound();
-            },
-            _other: () => {
-                context.stderr.error(
-                    `${Icons.error} Failed to invite member.\n` +
-                        `\n  Please contact support@buildwithfern.com for assistance.`
-                );
-                throw CliError.internalError();
-            }
-        });
+        const status = response.rawResponse.status;
+        if (status === 401 || status === 403) {
+            context.stderr.error(
+                `${Icons.error} You do not have permission to invite members to organization "${args.org}".`
+            );
+            throw new CliError({ code: CliError.Code.AuthError });
+        }
+        if (status === 404) {
+            context.stderr.error(`${Icons.error} No user found with email "${args.email}".`);
+            throw CliError.notFound();
+        }
+        context.stderr.error(
+            `${Icons.error} Failed to invite member.\n` + `\n  Please contact support@buildwithfern.com for assistance.`
+        );
+        throw CliError.internalError();
     }
 }
 

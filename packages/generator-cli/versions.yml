@@ -1,6 +1,29 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        AutoVersionStep no longer requires Replay to be enabled. When Replay is
+        not available, the step falls back to diffing HEAD vs the working tree
+        (`git diff HEAD`) and still rewrites magic version placeholders
+        (`0.0.0-fern-placeholder`, `0.0.0.dev0`, etc.) with a real computed
+        semver. This fixes autorelease producing SDKs with placeholder versions
+        for orgs that have not opted into Replay.
+      type: fix
+  createdAt: "2026-06-10"
+  version: 0.9.37
+
+- changelogEntry:
+    - summary: |
+        AutoVersionStep now calls the hosted FAI service (`/sdks/analyze-commit-diff`) using
+        `fernToken` when no BAML `ai` config is supplied — the remote-generation (fiddle)
+        path. Previously the step required `ai` and always fell back to a blind PATCH bump
+        with no changelog entry, PR description, or version-bump reason on replay-enabled
+        remote generations.
+      type: fix
+  createdAt: "2026-06-09"
+  version: 0.9.36
+
+- changelogEntry:
+    - summary: |
         Disable minimatch negation on `.fernignore` patterns so a stray `!pattern` doesn't silently invert the match and discard generator output.
       type: fix
   createdAt: "2026-05-21"

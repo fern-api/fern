@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.nullable_allof_extends_test_types]
-path = "nullable-allof-extends-test-types"
+[dependencies.nullable_allof_extends_test_sdk]
+path = "nullable-allof-extends-test-sdk"
 
 [profile.dist]
 inherits = "release"

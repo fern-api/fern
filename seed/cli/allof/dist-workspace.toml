@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:crates/pipeline-fixture", "allof-composition-types"]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "allof-composition-types", "allof-composition-sdk"]
 
 # Config for 'dist'
 [dist]

@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.x_fern_default_test_types]
-path = "x-fern-default-test-types"
+[dependencies.x_fern_default_test_sdk]
+path = "x-fern-default-test-sdk"
 
 [profile.dist]
 inherits = "release"

@@ -71,8 +71,8 @@ form_urlencoded = "1"
 dist = true
 
 # The profile that 'cargo dist' will build with
-[dependencies.oauth_client_credentials_openapi_types]
-path = "oauth-client-credentials-openapi-types"
+[dependencies.oauth_client_credentials_openapi_sdk]
+path = "oauth-client-credentials-openapi-sdk"
 
 [profile.dist]
 inherits = "release"

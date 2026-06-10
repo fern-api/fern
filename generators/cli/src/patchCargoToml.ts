@@ -39,13 +39,22 @@ export async function patchCargoToml(args: {
     binaryName: string;
     version?: string;
     typesCrateName?: string;
+    sdkCrateName?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, version, typesCrateName } = args;
+    const { outputDir, binaryName, version, typesCrateName, sdkCrateName } = args;
     const cargoTomlPath = path.join(outputDir, "Cargo.toml");
     const contents = await readFile(cargoTomlPath, "utf-8");
 
-    if (typesCrateName != null) {
-        const patched = addTypesDependency(contents, typesCrateName);
+    if (typesCrateName != null || sdkCrateName != null) {
+        let patched = contents;
+        if (sdkCrateName != null) {
+            // The SDK crate re-exports all types via its prelude, so it
+            // is the single entry point for custom commands — no need
+            // for a separate types dependency on the CLI binary.
+            patched = addCrateDependency(patched, sdkCrateName);
+        } else if (typesCrateName != null) {
+            patched = addCrateDependency(patched, typesCrateName);
+        }
         await writeFile(cargoTomlPath, patched);
         return;
     }
@@ -95,18 +104,24 @@ export function applyCargoTomlPatch(cargoToml: string, binaryName: string, versi
 }
 
 /**
- * Append a `[dependencies.<typesCrateName>]` path dependency to the
- * Cargo.toml, linking the CLI crate to the generated types crate.
+ * Append a `[dependencies.<crateName>]` path dependency to the
+ * Cargo.toml, linking the CLI crate to a generated workspace member.
+ * Used for both the types crate and the SDK crate.
  */
-export function addTypesDependency(cargoToml: string, typesCrateName: string): string {
-    const snakeName = typesCrateName.replace(/-/g, "_");
-    const depBlock = `\n[dependencies.${snakeName}]\npath = "${typesCrateName}"\n`;
+export function addCrateDependency(cargoToml: string, crateName: string): string {
+    const snakeName = crateName.replace(/-/g, "_");
+    const depBlock = `\n[dependencies.${snakeName}]\npath = "${crateName}"\n`;
     // Append before [profile] sections if present, else at the end.
     const profileIdx = cargoToml.indexOf("\n[profile.");
     if (profileIdx !== -1) {
         return cargoToml.slice(0, profileIdx) + depBlock + cargoToml.slice(profileIdx);
     }
     return cargoToml + depBlock;
+}
+
+/** @deprecated Use {@link addCrateDependency} instead. */
+export function addTypesDependency(cargoToml: string, typesCrateName: string): string {
+    return addCrateDependency(cargoToml, typesCrateName);
 }
 
 /**
@@ -154,18 +169,24 @@ export function patchCargoLockVersion(cargoLock: string, version: string): strin
  *   1. Append a `[[package]]` entry for the types crate itself.
  *   2. Add the types crate to `fern-cli-sdk`'s dependency list.
  */
-export async function patchCargoLockForTypes(args: { outputDir: string; typesCrateName: string }): Promise<void> {
-    const { outputDir, typesCrateName } = args;
+export async function patchCargoLockForTypes(args: {
+    outputDir: string;
+    typesCrateName: string;
+    /** When true, skip adding the types crate to fern-cli-sdk's dep list
+     *  (e.g. when the SDK crate is the direct dep instead). */
+    skipCliDep?: boolean;
+}): Promise<void> {
+    const { outputDir, typesCrateName, skipCliDep } = args;
     const lockPath = path.join(outputDir, "Cargo.lock");
     const contents = await readFile(lockPath, "utf-8");
-    const patched = addTypesCrateToLock(contents, typesCrateName);
+    const patched = addTypesCrateToLock(contents, typesCrateName, skipCliDep);
     await writeFile(lockPath, patched);
 }
 
 /**
  * Pure transformation for unit-test access.
  */
-export function addTypesCrateToLock(cargoLock: string, typesCrateName: string): string {
+export function addTypesCrateToLock(cargoLock: string, typesCrateName: string, skipCliDep?: boolean): string {
     const snakeName = typesCrateName.replace(/-/g, "_");
 
     // 1. Append [[package]] entry for the types crate (sorted insertion
@@ -189,17 +210,83 @@ export function addTypesCrateToLock(cargoLock: string, typesCrateName: string): 
 
     let patched = cargoLock.trimEnd() + "\n" + packageEntry;
 
-    // 2. Add the types crate to fern-cli-sdk's dependency list.
-    //    The dependency list is alphabetically sorted; insert after the
-    //    last entry that sorts before our crate name.
+    // 2. Add the types crate to fern-cli-sdk's dependency list
+    //    (skipped when the SDK crate is the direct dep instead).
+    if (skipCliDep !== true) {
+        const sdkDepsPattern = /(name = "fern-cli-sdk"\nversion = "[^"]*"\ndependencies = \[)([\s\S]*?)(\])/;
+        const match = patched.match(sdkDepsPattern);
+        if (match != null) {
+            const fullMatch = match[0];
+            const prefix = match[1] ?? "";
+            const depsBody = match[2] ?? "";
+            const depLine = ` "${snakeName}",`;
+            // Parse existing deps and insert in sorted order.
+            const lines = depsBody.split("\n").filter((l) => l.trim().length > 0);
+            lines.push(depLine);
+            lines.sort((a, b) => a.trim().localeCompare(b.trim()));
+            const newDepsBody = "\n" + lines.join("\n") + "\n";
+            patched = patched.replace(fullMatch, prefix + newDepsBody + match[3]);
+        }
+    }
+
+    return patched;
+}
+
+/**
+ * Patch Cargo.lock to include the generated SDK crate as a workspace
+ * member. Same pattern as `patchCargoLockForTypes`, but the SDK crate's
+ * dependency list is different: it depends on the types crate plus
+ * reqwest, serde, serde_json, tokio, and futures (all already resolved
+ * in the lock file from the CLI SDK's own dep tree).
+ */
+export async function patchCargoLockForSdk(args: {
+    outputDir: string;
+    sdkCrateName: string;
+    typesCrateName: string;
+}): Promise<void> {
+    const { outputDir, sdkCrateName, typesCrateName } = args;
+    const lockPath = path.join(outputDir, "Cargo.lock");
+    const contents = await readFile(lockPath, "utf-8");
+    const patched = addSdkCrateToLock(contents, sdkCrateName, typesCrateName);
+    await writeFile(lockPath, patched);
+}
+
+/**
+ * Pure transformation for unit-test access.
+ */
+export function addSdkCrateToLock(cargoLock: string, sdkCrateName: string, typesCrateName: string): string {
+    const sdkSnakeName = sdkCrateName.replace(/-/g, "_");
+    const typesSnakeName = typesCrateName.replace(/-/g, "_");
+
+    // 1. Append [[package]] entry for the SDK crate. Its dependencies
+    //    include the types crate plus the HTTP client stack that the
+    //    rust-sdk generator pulls in (all already in the lockfile).
+    const packageEntry = [
+        "",
+        "[[package]]",
+        `name = "${sdkSnakeName}"`,
+        'version = "0.0.0"',
+        "dependencies = [",
+        ` "${typesSnakeName}",`,
+        ' "futures",',
+        ' "reqwest",',
+        ' "serde",',
+        ' "serde_json",',
+        ' "tokio",',
+        "]",
+        ""
+    ].join("\n");
+
+    let patched = cargoLock.trimEnd() + "\n" + packageEntry;
+
+    // 2. Add the SDK crate to fern-cli-sdk's dependency list.
     const sdkDepsPattern = /(name = "fern-cli-sdk"\nversion = "[^"]*"\ndependencies = \[)([\s\S]*?)(\])/;
     const match = patched.match(sdkDepsPattern);
     if (match != null) {
         const fullMatch = match[0];
         const prefix = match[1] ?? "";
         const depsBody = match[2] ?? "";
-        const depLine = ` "${snakeName}",`;
-        // Parse existing deps and insert in sorted order.
+        const depLine = ` "${sdkSnakeName}",`;
         const lines = depsBody.split("\n").filter((l) => l.trim().length > 0);
         lines.push(depLine);
         lines.sort((a, b) => a.trim().localeCompare(b.trim()));

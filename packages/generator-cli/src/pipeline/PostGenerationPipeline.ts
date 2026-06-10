@@ -39,13 +39,11 @@ export class PostGenerationPipeline {
             replayEnabled = false;
         }
 
-        // Autoversion travels with replay — it needs the two [fern-generated] SHAs
-        // that the replay prepare phase produces. Non-replay orgs keep fiddle-side
-        // autoversioning per the epic's non-goals (FER-9978).
-        if (autoVersionEnabled && !replayEnabled) {
-            this.logger.warn("AutoVersion requires Replay to be enabled. Disabling AutoVersion for this run.");
-            autoVersionEnabled = false;
-        }
+        // Autoversion can run in two modes:
+        //   1. Replay mode: diffs the two [fern-generated] SHAs from GenerationCommitStep.
+        //   2. Non-replay mode: diffs HEAD vs the working tree (git diff HEAD).
+        // Non-replay mode allows autoversioning for orgs that haven't opted into replay,
+        // ensuring magic version placeholders are always replaced before GitHub delivery.
 
         // Split order:
         //   GenerationCommitStep — replay prepare phase: commits [fern-generated],

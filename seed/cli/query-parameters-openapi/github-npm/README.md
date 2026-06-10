@@ -1,5 +1,7 @@
 # Query Parameters API CLI
 
+[![npm shield](https://img.shields.io/npm/v/@fern/query-parameters-openapi)](https://www.npmjs.com/package/@fern/query-parameters-openapi)
+
 Command-line interface for the Query Parameters API.
 
 ## Table of contents

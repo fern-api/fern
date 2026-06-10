@@ -118,7 +118,7 @@ fn render_shared_skill(
     );
     let _ = writeln!(
         out,
-        "| `-o, --output <PATH>` | Write binary responses to a file | |"
+        "| `-o, --output <PATH>` | Write binary responses to a file; use `-` to stream to stdout for piping into other commands (e.g. `ffplay -`, `aplay -`). | |"
     );
     let _ = writeln!(
         out,
