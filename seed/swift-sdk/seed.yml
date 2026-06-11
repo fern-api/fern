@@ -133,7 +133,6 @@ allowedFailures:
   - examples:no-custom-config
   - examples:readme-config
   - exhaustive
-  - extra-properties
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
