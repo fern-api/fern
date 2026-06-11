@@ -4,7 +4,7 @@
     generated factory signature.
   type: fix
 - summary: |
-    Use the backing value type (value-of<Enum>) for enum map keys in PHPDoc so PHPStan can
-    resolve the type. PHP array keys must be int|string, so the native enum type produced an
+    Use the backing value type (`value-of<Enum>`) for enum map keys in PHPDoc so PHPStan can
+    resolve the type. PHP array keys must be `int|string`, so the native enum type produced an
     unresolvable type.
   type: fix
