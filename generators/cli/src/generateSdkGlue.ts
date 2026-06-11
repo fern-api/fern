@@ -182,12 +182,9 @@ function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): strin
         })
         .join("\n");
 
-    // When the root struct owns http_client directly (flat APIs with no
-    // sub-client groups), we must populate it in the initializer.
-    const httpClientInit =
-        rootClient.subClients.length === 0 && rootClient.hasHttpClient
-            ? "\n        http_client: http_client.clone(),"
-            : "";
+    // Include http_client when the root struct declares it (flat APIs or
+    // APIs with both root-level endpoints and sub-client groups).
+    const httpClientInit = rootClient.hasHttpClient ? "\n        http_client: http_client.clone()," : "";
 
     return `\
 //! Generated SDK client glue — bridges AppContext to the co-generated SDK.
