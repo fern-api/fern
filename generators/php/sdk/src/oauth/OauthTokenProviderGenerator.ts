@@ -100,6 +100,16 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             })
         );
 
+        for (const prop of this.getNonLiteralCustomProperties()) {
+            class_.addField(
+                php.field({
+                    name: `$${prop.fieldName}`,
+                    access: "private",
+                    type: php.Type.string()
+                })
+            );
+        }
+
         class_.addField(
             php.field({
                 name: "$authClient",
@@ -139,19 +149,34 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 name: "clientSecret",
                 type: php.Type.string(),
                 docs: "The client secret for OAuth authentication."
-            }),
+            })
+        ];
+
+        for (const prop of this.getNonLiteralCustomProperties()) {
+            parameters.push(
+                php.parameter({
+                    name: prop.fieldName,
+                    type: php.Type.string()
+                })
+            );
+        }
+
+        parameters.push(
             php.parameter({
                 name: "authClient",
                 type: php.Type.reference(this.getAuthClientClassReference()),
                 docs: "The client used to retrieve the OAuth token."
             })
-        ];
+        );
 
         return {
             parameters,
             body: php.codeblock((writer) => {
                 writer.writeLine("$this->clientId = $clientId;");
                 writer.writeLine("$this->clientSecret = $clientSecret;");
+                for (const prop of this.getNonLiteralCustomProperties()) {
+                    writer.writeLine(`$this->${prop.fieldName} = $${prop.fieldName};`);
+                }
                 writer.writeLine("$this->authClient = $authClient;");
                 writer.writeLine("$this->accessToken = null;");
 
@@ -226,6 +251,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                     const literal = this.context.maybeLiteral(customProperty.property.valueType);
                     if (literal != null) {
                         writer.writeLine(`'${propName}' => ${this.context.getLiteralAsString(literal)},`);
+                    } else {
+                        const fieldName = this.case.camelUnsafe(customProperty.property.name);
+                        writer.writeLine(`'${propName}' => $this->${fieldName},`);
                     }
                 }
 
@@ -234,6 +262,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                     const scopesLiteral = this.context.maybeLiteral(requestProperties.scopes.property.valueType);
                     if (scopesLiteral != null) {
                         writer.writeLine(`'${scopesPropName}' => ${this.context.getLiteralAsString(scopesLiteral)},`);
+                    } else {
+                        const scopesFieldName = this.case.camelUnsafe(requestProperties.scopes.property.name);
+                        writer.writeLine(`'${scopesPropName}' => $this->${scopesFieldName},`);
                     }
                 }
 
@@ -294,7 +325,42 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
         }
+        if (sdkRequest.shape.type === "justRequestBody") {
+            const value = sdkRequest.shape.value;
+            if (value.type === "typeReference" && value.requestBodyType.type === "named") {
+                return php.classReference({
+                    name: this.context.getClassName(value.requestBodyType.name),
+                    namespace: this.context.getLocationForTypeId(value.requestBodyType.typeId).namespace
+                });
+            }
+        }
         return undefined;
+    }
+
+    private getNonLiteralCustomProperties(): Array<{ fieldName: string; propName: string }> {
+        const requestProperties = this.scheme.configuration.tokenEndpoint.requestProperties;
+        const results: Array<{ fieldName: string; propName: string }> = [];
+
+        if (requestProperties.scopes != null) {
+            const scopesLiteral = this.context.maybeLiteral(requestProperties.scopes.property.valueType);
+            if (scopesLiteral == null) {
+                results.push({
+                    fieldName: this.case.camelUnsafe(requestProperties.scopes.property.name),
+                    propName: this.getRequestPropertyName(requestProperties.scopes)
+                });
+            }
+        }
+
+        for (const customProperty of requestProperties.customProperties ?? []) {
+            const literal = this.context.maybeLiteral(customProperty.property.valueType);
+            if (literal == null) {
+                results.push({
+                    fieldName: this.case.camelUnsafe(customProperty.property.name),
+                    propName: this.getRequestPropertyName(customProperty)
+                });
+            }
+        }
+        return results;
     }
 
     private getRequestPropertyName(requestProperty: FernIr.RequestProperty): string {

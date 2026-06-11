@@ -320,8 +320,19 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
 
         // Add request body properties
         this.tokenEndpoint.requestBody?._visit({
-            reference: () => {
-                // For referenced request bodies, we don't have individual properties
+            reference: (ref) => {
+                if (ref.requestBodyType.type === "named") {
+                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(ref.requestBodyType.typeId);
+                    if (typeDeclaration.shape.type === "object") {
+                        for (const property of typeDeclaration.shape.properties) {
+                            properties.push({
+                                camelName: this.case.camelUnsafe(property.name),
+                                isOptional: this.context.isOptional(property.valueType),
+                                literal: this.context.maybeLiteral(property.valueType)
+                            });
+                        }
+                    }
+                }
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
@@ -391,6 +402,15 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 name: this.case.pascalSafe(sdkRequest.shape.wrapperName),
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
+        }
+        if (sdkRequest.shape.type === "justRequestBody") {
+            const value = sdkRequest.shape.value;
+            if (value.type === "typeReference" && value.requestBodyType.type === "named") {
+                return php.classReference({
+                    name: this.context.getClassName(value.requestBodyType.name),
+                    namespace: this.context.getLocationForTypeId(value.requestBodyType.typeId).namespace
+                });
+            }
         }
         return undefined;
     }

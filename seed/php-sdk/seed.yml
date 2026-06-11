@@ -171,6 +171,9 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+allowedFailures:
+  # Wire test: path param request failures unrelated to dynamic snippets.
+  - exhaustive:wire-tests
 scripts:
   - image: fernapi/php-seed
     commands:

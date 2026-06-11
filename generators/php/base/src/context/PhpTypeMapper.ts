@@ -81,7 +81,9 @@ export class PhpTypeMapper {
             case "list":
                 return php.Type.array(this.convert({ reference: container.list, preserveEnums }));
             case "map": {
-                const key = this.convert({ reference: container.keyType, preserveEnums });
+                // Map keys must always use value-of<Enum> syntax (not the enum class name)
+                // because PHP array keys can only be int or string.
+                const key = this.convert({ reference: container.keyType, preserveEnums: false });
                 const value = this.convert({ reference: container.valueType, preserveEnums });
                 return php.Type.map(key, value);
             }

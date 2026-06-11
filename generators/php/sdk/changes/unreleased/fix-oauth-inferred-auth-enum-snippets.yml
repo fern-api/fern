@@ -1,0 +1,6 @@
+- summary: |
+    Fix OAuth/InferredAuth token providers to pass through custom non-literal
+    properties and handle reference request body types correctly. Fix dynamic
+    snippet enum values to use ->value for string-typed parameters while
+    preserving raw enum instances for union factory methods.
+  type: fix

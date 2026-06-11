@@ -14,7 +14,10 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = "key";
+    //
+    // "key" - value is used as a map key (requires ->value for enum)
+    // "enum" - value is used where the raw enum instance is expected (suppresses ->value)
+    type ConvertedAs = "key" | "enum";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -156,7 +159,7 @@ export class DynamicTypeLiteralMapper {
                     value
                 });
             case "enum":
-                return this.convertEnum({ enum_: named, value });
+                return this.convertEnum({ enum_: named, value, as });
             case "object":
                 return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
@@ -245,7 +248,8 @@ export class DynamicTypeLiteralMapper {
                                 name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                                 value: this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: discriminatedUnionTypeInstance.value
+                                    value: discriminatedUnionTypeInstance.value,
+                                    as: "enum"
                                 })
                             }
                         ];
@@ -257,7 +261,8 @@ export class DynamicTypeLiteralMapper {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
-                                value: singlePropertyValue
+                                value: singlePropertyValue,
+                                as: "enum"
                             })
                         }
                     ];
@@ -524,7 +529,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): php.TypeLiteral {
+    private convertEnum({
+        enum_,
+        value,
+        as
+    }: {
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): php.TypeLiteral {
         const name = this.getEnumValueName({ enum_, value });
         if (name == null) {
             return php.TypeLiteral.nop();
@@ -539,7 +552,9 @@ export class DynamicTypeLiteralMapper {
                 );
                 writer.write("::");
                 writer.write(name);
-                writer.write("->value");
+                if (as !== "enum") {
+                    writer.write("->value");
+                }
             })
         );
     }
