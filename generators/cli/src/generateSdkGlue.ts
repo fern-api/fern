@@ -167,12 +167,18 @@ function qualifyType(sdkCrate: string, node: ClientNode): string {
  * Generate the `sdk_glue.rs` module content.
  */
 function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): string {
-    const subClientInits = rootClient.subClients
-        .map((node) => {
-            const init = renderClientInit(sdkCrateSnake, node, "        ");
-            return `        ${node.fieldName}: ${init},`;
-        })
-        .join("\n");
+    // When the root client has sub-clients, each sub-client carries its own
+    // http_client field.  When there are NO sub-clients the root struct itself
+    // owns the http_client directly — we must populate it.
+    const subClientInits =
+        rootClient.subClients.length > 0
+            ? rootClient.subClients
+                  .map((node) => {
+                      const init = renderClientInit(sdkCrateSnake, node, "        ");
+                      return `        ${node.fieldName}: ${init},`;
+                  })
+                  .join("\n")
+            : "        http_client: http_client.clone(),";
 
     return `\
 //! Generated SDK client glue — bridges AppContext to the co-generated SDK.
