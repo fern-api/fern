@@ -11,10 +11,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")));
-    /// </code></example>
-    public async Task UploadAsync(
+    private async Task<RawResponse> UploadAsyncCore(
         Stream request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -42,7 +39,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedBytesUpload.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -62,12 +64,7 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
-    /// <example><code>
-    /// await client.Service.UploadWithQueryParamsAsync(
-    ///     new UploadWithQueryParamsRequest { Model = "nova-2" }
-    /// );
-    /// </code></example>
-    public async Task UploadWithQueryParamsAsync(
+    private async Task<RawResponse> UploadWithQueryParamsAsyncCore(
         UploadWithQueryParamsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -101,7 +98,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedBytesUpload.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -119,5 +121,33 @@ public partial class ServiceClient : IServiceClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes]")));
+    /// </code></example>
+    public WithRawResponseTask UploadAsync(
+        Stream request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(UploadAsyncCore(request, options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Service.UploadWithQueryParamsAsync(
+    ///     new UploadWithQueryParamsRequest { Model = "nova-2" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask UploadWithQueryParamsAsync(
+        UploadWithQueryParamsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            UploadWithQueryParamsAsyncCore(request, options, cancellationToken)
+        );
     }
 }

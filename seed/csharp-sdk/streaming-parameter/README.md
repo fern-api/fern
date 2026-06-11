@@ -42,7 +42,12 @@ Instantiate and use the client with the following:
 using SeedStreaming;
 
 var client = new SeedStreamingClient();
-client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
+var items = client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
+
+await foreach (var item in items)
+{
+    // do something with item
+}
 ```
 
 ## Exception Handling
