@@ -12,6 +12,7 @@ pub struct CoinsClient {
         const result = parseClientStruct(source);
         expect(result).toEqual({
             name: "CoinsClient",
+            hasHttpClient: true,
             fields: [
                 { fieldName: "markets", typeName: "MarketsClient" },
                 { fieldName: "tickers", typeName: "TickersClient" }
@@ -28,6 +29,7 @@ pub struct ContractClient2 {
         const result = parseClientStruct(source);
         expect(result).toEqual({
             name: "ContractClient2",
+            hasHttpClient: true,
             fields: [{ fieldName: "market_chart", typeName: "MarketChartClient4" }]
         });
     });
@@ -42,6 +44,7 @@ pub struct PoolsClient3 {
         const result = parseClientStruct(source);
         expect(result).toEqual({
             name: "PoolsClient3",
+            hasHttpClient: true,
             fields: [
                 { fieldName: "megafilter", typeName: "MegafilterClient" },
                 { fieldName: "trending_search", typeName: "TrendingSearchClient" }
@@ -59,6 +62,7 @@ pub struct SimpleClient2 {
         const result = parseClientStruct(source);
         expect(result).toEqual({
             name: "SimpleClient2",
+            hasHttpClient: true,
             fields: [{ fieldName: "price", typeName: "PriceClient" }]
         });
     });
