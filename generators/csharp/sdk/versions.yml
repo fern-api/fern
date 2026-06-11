@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.0
+  changelogEntry:
+    - summary: |
+        Generate raw-response wrappers for streaming and void endpoints. Streaming endpoints now return a new `WithRawResponseStream<T>` struct that implements `IAsyncEnumerable<T>` (so `await foreach` still works) and exposes `.WithRawResponse()` for HTTP metadata. Void endpoints now return a non-generic `WithRawResponseTask` with the same `.WithRawResponse()` accessor. Also fixes a pre-existing bug where JSON streaming endpoints never yielded their deserialized results.
+      type: feat
+  createdAt: "2026-06-11"
+  irVersion: 66
 - version: 2.67.0
   changelogEntry:
     - summary: |
