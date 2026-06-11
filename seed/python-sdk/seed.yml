@@ -502,5 +502,3 @@ scripts:
 allowedFailures:
   - examples:legacy-wire-tests
   - oauth-client-credentials-custom
-
-
