@@ -106,6 +106,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
                 const tokenResponse = await this.authClient.getTokenWithClientCredentials({
                     client_id: clientId,
                     client_secret: clientSecret,
+                    scope: this.options.scope,
                 });
 
                 this.accessToken = tokenResponse.access_token;
@@ -163,6 +164,7 @@ export namespace OAuthAuthProvider {
     export type ClientCredentials = {
         [CLIENT_ID_PARAM]?: core.Supplier<string> | undefined;
         [CLIENT_SECRET_PARAM]?: core.Supplier<string> | undefined;
+        scope?: string | undefined;
     };
     export type TokenOverride = {
         [TOKEN_PARAM]: core.Supplier<string>;

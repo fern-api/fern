@@ -125,7 +125,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
               ])
             : clientSecretSupplier;
 
-        return [
+        const properties: OptionalKind<PropertySignatureStructure>[] = [
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(CLIENT_ID_VAR_NAME),
@@ -139,6 +139,20 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 type: getTextOfTsNode(clientSecretPropertyType)
             }
         ];
+
+        const nonLiteralProps = this.getNonLiteralRequestProperties(requestProperties, context);
+        for (const { property, isOptional } of nonLiteralProps) {
+            const propName = this.getName(property.property.name, context);
+            const propTypeNode = context.type.getReferenceToType(property.property.valueType).typeNode;
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(propName),
+                hasQuestionToken: isOptional,
+                type: getTextOfTsNode(propTypeNode)
+            });
+        }
+
+        return properties;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -864,35 +878,73 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }
     }
 
+    /**
+     * Returns non-literal request properties that need to be supplied by the caller,
+     * including scopes and non-literal custom properties.
+     */
+    private getNonLiteralRequestProperties(
+        requestProperties: FernIr.OAuthAccessTokenRequestProperties,
+        context: FileContext
+    ): Array<{ property: FernIr.RequestProperty; isOptional: boolean }> {
+        const result: Array<{ property: FernIr.RequestProperty; isOptional: boolean }> = [];
+
+        if (requestProperties.scopes != null) {
+            const resolvedType = context.type.resolveTypeReference(requestProperties.scopes.property.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            if (!isLiteral) {
+                const isOptional = context.type.isOptional(requestProperties.scopes.property.valueType);
+                result.push({ property: requestProperties.scopes, isOptional });
+            }
+        }
+
+        for (const customProperty of requestProperties.customProperties ?? []) {
+            const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            if (!isLiteral) {
+                const isOptional = context.type.isOptional(customProperty.property.valueType);
+                result.push({ property: customProperty, isOptional });
+            }
+        }
+
+        return result;
+    }
+
     private getCustomPropertyAssignments(
         requestProperties: FernIr.OAuthAccessTokenRequestProperties,
         endpoint: FernIr.HttpEndpoint,
         context: FileContext
     ): string {
-        // When the request body is inlined, the generated client method already
-        // injects literal properties into the body (via getLiteralProperties in
-        // GeneratedDefaultEndpointRequest). Including them again here would
-        // cause TypeScript excess-property errors because the generated request
-        // type excludes those literals. We only need to emit them when the
-        // request type keeps them as required fields (i.e. non-inlined bodies).
-        if (endpoint.requestBody?.type === "inlinedRequestBody") {
-            return "";
-        }
         const assignments: string[] = [];
-        for (const customProperty of requestProperties.customProperties ?? []) {
-            const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
-            if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
-                const propertyName = this.getName(customProperty.property.name, context);
-                const literalValue = resolvedType.container.literal._visit<string>({
-                    string: (val: string) => JSON.stringify(val),
-                    boolean: (val: boolean) => `${val}`,
-                    _other: () => {
-                        throw new Error("Encountered non-boolean, non-string literal");
-                    }
-                });
-                assignments.push(`\n                    ${propertyName}: ${literalValue},`);
+        const isInlined = endpoint.requestBody?.type === "inlinedRequestBody";
+
+        // Non-literal custom properties and scopes must always be forwarded
+        // from the options object, regardless of whether the body is inlined.
+        const nonLiteralProps = this.getNonLiteralRequestProperties(requestProperties, context);
+        for (const { property } of nonLiteralProps) {
+            const propertyName = this.getName(property.property.name, context);
+            assignments.push(`\n                    ${propertyName}: this.${OPTIONS_FIELD_NAME}.${propertyName},`);
+        }
+
+        // Literal properties are only emitted for non-inlined bodies. For inlined
+        // bodies, the generated client method already injects them via
+        // getLiteralProperties in GeneratedDefaultEndpointRequest.
+        if (!isInlined) {
+            for (const customProperty of requestProperties.customProperties ?? []) {
+                const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
+                if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                    const propertyName = this.getName(customProperty.property.name, context);
+                    const literalValue = resolvedType.container.literal._visit<string>({
+                        string: (val: string) => JSON.stringify(val),
+                        boolean: (val: boolean) => `${val}`,
+                        _other: () => {
+                            throw new Error("Encountered non-boolean, non-string literal");
+                        }
+                    });
+                    assignments.push(`\n                    ${propertyName}: ${literalValue},`);
+                }
             }
         }
+
         return assignments.join("");
     }
 
@@ -936,12 +988,24 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientIdQuestion = clientIdIsOptional ? "?" : "";
         const clientSecretQuestion = clientSecretIsOptional ? "?" : "";
 
+        // Build extra property declarations for non-literal custom properties
+        const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
+        const nonLiteralProps = this.getNonLiteralRequestProperties(requestProperties, context);
+        let extraPropsString = "";
+        for (const { property, isOptional } of nonLiteralProps) {
+            const propName = this.getName(property.property.name, context);
+            const propTypeNode = context.type.getReferenceToType(property.property.valueType).typeNode;
+            const propType = getTextOfTsNode(propTypeNode);
+            const question = isOptional ? "?" : "";
+            extraPropsString += ` ${propName}${question}: ${propType};`;
+        }
+
         const wrappedClientCredsProps = this.keepIfWrapper(
-            `[WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType} };`
+            `[WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType};${extraPropsString} };`
         );
         const inlinedClientCredsProps =
             wrappedClientCredsProps ||
-            `[CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType}`;
+            `[CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType};${extraPropsString}`;
         const clientCredsType = `{\n        ${inlinedClientCredsProps}\n    }`;
 
         // Token override is always required (no env var support for token override)

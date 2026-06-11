@@ -567,8 +567,6 @@ scripts:
 allowedFailures:
   - cross-package-type-names:serde-layer
   - exhaustive:never-throw-errors
-  - exhaustive:multiple-exports
-  - oauth-client-credentials-custom
   - inferred-auth-implicit-reference
   - unions:serde-layer
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
