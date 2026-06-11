@@ -387,9 +387,66 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	return nil
 }
 
+// unionDiscriminantFieldName returns the exported Go field name used for a
+// discriminated union's discriminant. The union is generated as a flat struct
+// with one field for the discriminant plus one field per member (named after
+// the member's discriminant value), along with any extended and base
+// properties. When the discriminant's own name collides with one of those
+// field names — e.g. a discriminant "event" alongside a member also keyed
+// "event" — emitting both would produce duplicate identifiers that do not
+// compile, so the discriminant field is given a unique, collision-free name.
+// The member fields keep their names so the public accessors and constructors
+// are unaffected.
+func (t *typeVisitor) unionDiscriminantFieldName(union *ir.UnionTypeDeclaration) string {
+	base := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	taken := make(map[string]struct{}, len(union.Types)+len(union.BaseProperties))
+	for _, unionType := range union.Types {
+		taken[goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)] = struct{}{}
+	}
+	for _, property := range union.BaseProperties {
+		taken[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+	}
+	// Properties inherited via extends are also emitted as struct fields, so they
+	// must be considered when checking for a collision with the discriminant.
+	seen := make(map[common.TypeId]struct{})
+	var collectExtends func(extends []*ir.DeclaredTypeName)
+	collectExtends = func(extends []*ir.DeclaredTypeName) {
+		for _, extend := range extends {
+			if _, ok := seen[extend.TypeId]; ok {
+				continue
+			}
+			seen[extend.TypeId] = struct{}{}
+			typeDeclaration, ok := t.writer.types[extend.TypeId]
+			if !ok || typeDeclaration == nil || typeDeclaration.Shape.Object == nil {
+				continue
+			}
+			object := typeDeclaration.Shape.Object
+			for _, property := range object.Properties {
+				taken[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+			}
+			collectExtends(object.Extends)
+		}
+	}
+	collectExtends(union.Extends)
+	if _, collides := taken[base]; !collides {
+		return base
+	}
+	// Avoid underscores in the disambiguated name so the result stays idiomatic
+	// Go (and lint-clean). "Type" reads naturally for a discriminant selector.
+	for suffix := 0; ; suffix++ {
+		candidate := base + "Type"
+		if suffix > 0 {
+			candidate += fmt.Sprintf("%d", suffix+1)
+		}
+		if _, collides := taken[candidate]; !collides {
+			return candidate
+		}
+	}
+}
+
 func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
-	discriminantName := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	discriminantName := t.unionDiscriminantFieldName(union)
 	// Base properties that share a name with an extended property would otherwise
 	// be emitted twice, producing duplicate struct fields and getters that fail to
 	// compile. Skip those base properties; the extended property already covers them.
@@ -1541,7 +1598,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	fields = append(
 		fields,
 		&typeField{
-			Name:             goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName),
+			Name:             t.unionDiscriminantFieldName(union),
 			GoType:           "string",
 			ZeroValue:        `""`,
 			Optional:         false,

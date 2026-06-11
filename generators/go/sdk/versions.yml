@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.44.8
+  changelogEntry:
+    - summary: |
+        Fixed a nil-pointer panic when an object or inlined request body extends an
+        alias. The generator now resolves the extended type through alias
+        indirection to its underlying object, so its properties are inherited
+        correctly instead of crashing generation.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
 - version: 1.44.7
   changelogEntry:
     - summary: |
