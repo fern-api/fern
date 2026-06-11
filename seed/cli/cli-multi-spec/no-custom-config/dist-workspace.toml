@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "acme-cli-types", "acme-cli-sdk"]
 
 # Config for 'dist'
 [dist]

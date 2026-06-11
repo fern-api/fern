@@ -60,6 +60,30 @@
                 "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetOrganizationAsync();\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlant"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreatePlantAsync(\n    new PlantPost\n    {\n        Species = \"species\",\n        Family = \"family\",\n        Genus = \"genus\",\n        SunExposure = PlantPostSunExposure.Full,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/trees",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTree"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreateTreeAsync(new TreeRecord { Id = \"id\" });\n"
+            }
         }
     ]
 }

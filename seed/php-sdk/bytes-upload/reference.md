@@ -13,9 +13,7 @@
 <dd>
 
 ```php
-$client->service->upload(
-    ,
-);
+$client->service->upload();
 ```
 </dd>
 </dl>

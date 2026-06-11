@@ -24,7 +24,7 @@ public partial interface IProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    Task DeleteProblemAsync(
+    WithRawResponseTask DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

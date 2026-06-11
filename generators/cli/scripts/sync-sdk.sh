@@ -5,9 +5,10 @@
 #   generators/cli/scripts/sync-sdk.sh <path-to-cli-sdk-checkout>
 #
 # The script expects a local checkout of cli-sdk (at the desired ref) as its
-# sole argument. It projects the cli-sdk workspace Cargo.toml into the
-# single-package vendored Cargo.toml, rsyncs source files, regenerates
-# Cargo.lock, and writes a provenance marker.
+# sole argument. It reads cli-sdk's sync-manifest.toml to determine which
+# files to vendor, projects the workspace Cargo.toml into a single-package
+# vendored Cargo.toml, regenerates Cargo.lock, and writes a provenance
+# marker.
 #
 # Called by .github/workflows/sync-cli-sdk.yml (daily) and can be run
 # manually for ad-hoc syncs.
@@ -21,9 +22,15 @@ fi
 CLI_SDK_DIR="$(cd "$1" && pwd)"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SDK_DIR="$(cd "$SCRIPT_DIR/../sdk" && pwd)"
+MANIFEST="$CLI_SDK_DIR/sync-manifest.toml"
 
 if [[ ! -f "$CLI_SDK_DIR/Cargo.toml" ]]; then
   echo "Error: $CLI_SDK_DIR/Cargo.toml not found" >&2
+  exit 1
+fi
+
+if [[ ! -f "$MANIFEST" ]]; then
+  echo "Error: $MANIFEST not found — cli-sdk must have a sync-manifest.toml" >&2
   exit 1
 fi
 
@@ -34,24 +41,119 @@ SYNC_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 echo "==> Syncing cli-sdk@${CLI_SDK_SHORT} (${CLI_SDK_SHA}) into generators/cli/sdk/"
 
 # ---------------------------------------------------------------------------
-# 1. Rsync source files + openapi-fixture dev binary
+# 0. Read the sync manifest
 # ---------------------------------------------------------------------------
-echo "--- Syncing src/, cli/openapi-fixture/ ..."
+echo "--- Reading sync-manifest.toml ..."
+MANIFEST_JSON="$(python3 "$SCRIPT_DIR/read-manifest.py" "$MANIFEST")"
 
+# Validate that a manifest-supplied relative path stays within a given root.
+# Rejects empty, absolute, or traversal paths.
+safe_relative_path() {
+  local root="$1" rel="$2" label="$3"
+  if [[ -z "$rel" || "$rel" == /* || "$rel" == *..* ]]; then
+    echo "Error: unsafe $label path from manifest: '$rel'" >&2
+    exit 1
+  fi
+  local resolved
+  resolved="$(realpath -m --no-symlinks "$root/$rel")"
+  case "$resolved" in
+    "$root"/*) ;; # good — stays under root
+    *) echo "Error: $label path '$rel' escapes root '$root'" >&2; exit 1 ;;
+  esac
+}
+
+# ---------------------------------------------------------------------------
+# 1. Manifest-driven file sync
+# ---------------------------------------------------------------------------
+# The manifest classifies cli-sdk files as ship/dev-only/templatized/not-synced.
+# We sync everything classified as ship or dev-only. Templatized files
+# (Cargo.toml, Cargo.lock) get special projection handling in step 2.
+
+echo "--- Syncing files per manifest ..."
+
+# 1a. src/ — the core library (ship) + strip_schema.rs (dev-only, a file in
+# src/bin/ that survives the directory filter). All src/bin/*/ directories
+# are not-synced except openapi-fixture which has a dest override.
 rsync -a --delete \
   --exclude='.DS_Store' \
+  --filter='- bin/*/' \
   "$CLI_SDK_DIR/src/" "$SDK_DIR/src/"
 
-# Tests are NOT synced. cli-sdk's own CI validates test compilation;
-# the vendored SDK only needs the library + openapi-fixture binary to
-# compile. Many test files reference non-synced CLI binaries/specs
-# (smoke tests, parser.rs #[cfg(test)] include_str! calls) and would
-# fail to compile in the projected single-package layout.
+# 1b. Sync entries with dest overrides (e.g. openapi-fixture).
+# Parse manifest for dev-only entries with a dest field.
+echo "$MANIFEST_JSON" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for entry in data.get('dev_only', []):
+    dest = entry.get('dest', '')
+    if dest:
+        for g in entry.get('globs', []):
+            # Convert glob to source directory: src/bin/openapi-fixture/** -> src/bin/openapi-fixture/
+            src = g.rstrip('*').rstrip('/')
+            print(f'{src}|{dest}')
+" | while IFS='|' read -r src dest; do
+  safe_relative_path "$CLI_SDK_DIR" "$src" "source"
+  safe_relative_path "$SDK_DIR" "$dest" "dest"
+  echo "    rsync $src/ → $dest/"
+  mkdir -p "$SDK_DIR/$dest"
+  rsync -a --delete \
+    "$CLI_SDK_DIR/$src/" "$SDK_DIR/$dest/"
+done
 
-# Sync cli/openapi-fixture/ (the dev fixture used by seed)
-mkdir -p "$SDK_DIR/cli/openapi-fixture"
-rsync -a --delete \
-  "$CLI_SDK_DIR/cli/openapi-fixture/" "$SDK_DIR/cli/openapi-fixture/"
+# 1c. Sync individual ship files (non-src, non-templatized).
+echo "$MANIFEST_JSON" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for entry in data.get('ship', []):
+    for g in entry.get('globs', []):
+        # Skip directory globs (src/**) — handled by rsync above
+        if g.startswith('src/') or '**' in g:
+            continue
+        print(g)
+" | while read -r filepath; do
+  safe_relative_path "$CLI_SDK_DIR" "$filepath" "ship file"
+  safe_relative_path "$SDK_DIR" "$filepath" "ship file dest"
+  if [[ -f "$CLI_SDK_DIR/$filepath" ]]; then
+    echo "    copy $filepath"
+    cp "$CLI_SDK_DIR/$filepath" "$SDK_DIR/$filepath"
+  fi
+done
+
+# 1d. Sync dev-only files and directories (no dest override).
+echo "$MANIFEST_JSON" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for entry in data.get('dev_only', []):
+    if entry.get('dest'):
+        continue  # handled in 1b
+    for g in entry.get('globs', []):
+        # Skip things inside src/ — handled by 1a rsync
+        if g.startswith('src/'):
+            continue
+        print(g)
+" | while read -r glob; do
+  if [[ "$glob" == *"/**" ]]; then
+    # Directory glob: rsync the directory
+    dir="${glob%/**}"
+    safe_relative_path "$CLI_SDK_DIR" "$dir" "dev-only dir"
+    safe_relative_path "$SDK_DIR" "$dir" "dev-only dir dest"
+    if [[ -d "$CLI_SDK_DIR/$dir" ]]; then
+      echo "    rsync $dir/"
+      mkdir -p "$SDK_DIR/$dir"
+      rsync -a --delete "$CLI_SDK_DIR/$dir/" "$SDK_DIR/$dir/"
+    fi
+  else
+    # Single file
+    safe_relative_path "$CLI_SDK_DIR" "$glob" "dev-only file"
+    safe_relative_path "$SDK_DIR" "$glob" "dev-only file dest"
+    if [[ -f "$CLI_SDK_DIR/$glob" ]]; then
+      echo "    copy $glob"
+      dir="$(dirname "$glob")"
+      [[ "$dir" != "." ]] && mkdir -p "$SDK_DIR/$dir"
+      cp "$CLI_SDK_DIR/$glob" "$SDK_DIR/$glob"
+    fi
+  fi
+done
 
 # Remove stale tests/ directory if present from a prior sync revision
 if [[ -d "$SDK_DIR/tests" ]]; then
@@ -60,17 +162,23 @@ if [[ -d "$SDK_DIR/tests" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# 1b. Strip fixture-dependent inline tests from src/
+# 1e. Strip fixture-dependent inline tests from src/
 # ---------------------------------------------------------------------------
 # cli-sdk's #[cfg(test)] modules reference fixture specs via
-# include_str!("../../cli/<dir>/...") that are NOT synced. Removing them
-# keeps `cargo test` clean in both the vendored SDK and generated CLIs.
+# include_str!("../bin/<dir>/...") (or the legacy "../../cli/<dir>/...")
+# that are NOT synced. Removing them keeps `cargo test` clean in both
+# the vendored SDK and generated CLIs.
 echo "--- Stripping fixture-dependent inline tests from src/ ..."
 python3 "$SCRIPT_DIR/strip-fixture-tests.py" "$SDK_DIR/src/"
 
 # ---------------------------------------------------------------------------
 # 2. Project Cargo.toml (not a naive copy — workspace → single-package)
 # ---------------------------------------------------------------------------
+# This projection is part of Fern's generator contract: the vendored SDK
+# must be a single-package crate with specific [[bin]] entries and comment
+# anchors that patchCargoToml.ts depends on. cli-sdk does NOT need to know
+# about this projection — the manifest just classifies Cargo.toml as
+# "templatized".
 echo "--- Projecting Cargo.toml ..."
 
 # Helper: extract all lines between a TOML [section] header and the next header.
@@ -167,13 +275,22 @@ $DEV_DEPS_BODY
 EOF
 
 # ---------------------------------------------------------------------------
-# 3. Provenance marker
+# 3. Provenance marker + manifest-derived artifacts
 # ---------------------------------------------------------------------------
 echo "--- Writing provenance marker ..."
 
 cat > "$SDK_DIR/.synced-from" << EOF
 cli-sdk@${CLI_SDK_SHA}
 EOF
+
+# Copy the manifest itself into the vendored tree for reference.
+cp "$MANIFEST" "$SDK_DIR/sync-manifest.toml"
+
+# Generate .sdk-ignore.json — the dev-only globs rewritten for the vendored
+# tree layout (dest overrides applied). build.mjs reads this to derive
+# SDK_IGNORE without needing a TOML parser.
+echo "--- Generating .sdk-ignore.json ..."
+python3 "$SCRIPT_DIR/read-manifest.py" "$MANIFEST" --sdk-ignore > "$SDK_DIR/.sdk-ignore.json"
 
 # ---------------------------------------------------------------------------
 # 4. Regenerate Cargo.lock

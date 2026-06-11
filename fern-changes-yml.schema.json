@@ -22,6 +22,11 @@
                 "pre-release": {
                     "$ref": "#/definitions/PreReleaseTag",
                     "description": "Optional pre-release tag. When set, the release version includes this suffix (e.g., 1.2.0-rc.0)."
+                },
+                "irVersion": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Optional IR major version override. When set, the released version entry uses this irVersion instead of inheriting from the previous entry. Use this when bumping the IR major version."
                 }
             },
             "required": [

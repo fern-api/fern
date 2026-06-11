@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameAsync</a>(CreateUsernameRequest { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameAsync</a>(CreateUsernameRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ await client.User.CreateUsernameAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameWithReferencedTypeAsync</a>(CreateUsernameReferencedRequest { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameWithReferencedTypeAsync</a>(CreateUsernameReferencedRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -99,7 +99,7 @@ await client.User.CreateUsernameWithReferencedTypeAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameOptionalAsync</a>(CreateUsernameBodyOptionalProperties? { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedRequestParameters/User/UserClient.cs">CreateUsernameOptionalAsync</a>(CreateUsernameBodyOptionalProperties? { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

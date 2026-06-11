@@ -108,3 +108,37 @@ func (c *Client) GetOrganization(
 	}
 	return response.Body, nil
 }
+
+// Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+func (c *Client) CreatePlant(
+	ctx context.Context,
+	request *fern.PlantPost,
+	opts ...option.RequestOption,
+) (*fern.PlantStrict, error) {
+	response, err := c.WithRawResponse.CreatePlant(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+func (c *Client) CreateTree(
+	ctx context.Context,
+	request *fern.TreeRecord,
+	opts ...option.RequestOption,
+) (*fern.TreeRecord, error) {
+	response, err := c.WithRawResponse.CreateTree(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

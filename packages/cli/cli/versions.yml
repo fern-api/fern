@@ -1,4 +1,237 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.47.1
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer producing empty discriminated unions when
+        `discriminator.propertyName` is present but `discriminator.mapping` is absent.
+        The importer now infers the mapping from `oneOf`/`anyOf` `$ref` schemas,
+        using `const`/single-element `enum` values on the discriminant property
+        (falling back to the schema name from the `$ref` path). This restores the
+        "Show N variants" UI in docs for specs like Cohere's chat `messages` field.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.47.0
+  changelogEntry:
+    - summary: |
+        Add `page-actions.options.skills` to docs.yml to enable and configure the "Install skills"
+        page action on docs sites. Presence of the key enables the action (an empty object enables it
+        with all defaults); `title`, `description`, `learn-more-url`, `repository`, and
+        `install-command` (string or list, rendered one command per line) customize the modal, and
+        `skills` lists the available skills. If the site also serves a `/.well-known` skills manifest,
+        the served manifest replaces the hand-listed skills.
+      type: feat
+    - summary: |
+        Upload Agent Skills bundles placed under `.well-known/skills/` or `.well-known/agent-skills/`
+        in the docs folder when publishing docs, so Fern-hosted docs sites serve them and
+        `npx skills add https://<docs-domain>` installs them. `fern check` now validates skill
+        bundles: the `index.json` discovery manifest must exist and parse, and each skill's
+        `SKILL.md` frontmatter needs a kebab-case `name` (max 64 characters) matching its parent
+        directory and a non-empty `description` (max 1024 characters).
+      type: feat
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.46.1
+  changelogEntry:
+    - summary: |
+        Bump bundled `@fern-api/replay` (via generator-cli 0.9.38) to 0.18.0: replay
+        detection filters `.fernignore`-protected files before materializing patches,
+        handles trailing-slash patterns like `docs/`, and no longer crashes with an
+        unhandled `write EPIPE` during patch application.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.46.0
+  changelogEntry:
+    - summary: |
+        Add OIDC support for PyPI publishing in local generation. When
+        `token: OIDC` is configured for a PyPI output, the CLI now detects
+        the OIDC credential and propagates it through both the GitHub publish
+        info and the publish config so the Python generator can activate its
+        OIDC trusted-publisher workflow.
+      type: feat
+    - summary: |
+        Track which validation rules fired during `fern check` as part of the PostHog CLI telemetry event.
+        The event now includes `validationRules` (array of rule names that produced violations),
+        `numErrors`, `numWarnings`, and `passed` properties.
+      type: feat
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 5.45.5
+  changelogEntry:
+    - summary: |
+        Bump @fern-api/generator-cli to 0.9.36: AutoVersionStep now calls the hosted FAI
+        service with `fernToken` when no BAML `ai` config is supplied, restoring real
+        version bumps and changelog entries for replay-enabled remote generations.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 5.45.4
+  changelogEntry:
+    - summary: |
+        Fix `fs.cp` resolving relative symlinks to absolute temp-directory paths
+        during local generation. Adds `verbatimSymlinks: true` so symlinks like
+        `.claude -> .agents` are preserved as-is when copying generator output.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 5.45.3
+  changelogEntry:
+    - summary: |
+        Upgrade Venus API SDK from v0.22.34 to v5.0.0 with HTTPBearer root-level authentication.
+      type: chore
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 5.45.2
+  changelogEntry:
+    - summary: |
+        Fix native generator execution to correctly pass raw API specs directory
+        via FERN_SPECS_DIR environment variable, enabling local seed tests for
+        generators that consume OpenAPI specs (e.g. CLI generator).
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 5.45.1
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer to check `x-fern-server-name` extension in `getEndpointBaseUrls()`,
+        preventing path-level server descriptions from being misinterpreted as base URL IDs when the
+        extension is present.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 5.45.0
+  changelogEntry:
+    - summary: |
+        The `ai.provider` field in `generators.yml` now uses BAML provider
+        identifiers directly. `bedrock` has been renamed to `aws-bedrock`.
+        Update your config: `provider: bedrock` → `provider: aws-bedrock`.
+      type: feat
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.14
+  changelogEntry:
+    - summary: |
+        Fix `fern export` to emit top-level `servers` array for multi-URL environments
+        (`multipleBaseUrls`). Previously only single-URL environments produced servers.
+        Each environment × base-URL combination is now listed with a description like
+        `"Production (api)"`. Endpoint-level servers also now include the environment
+        name in their description.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.13
+  changelogEntry:
+    - summary: |
+        Fix `fern check` parameter-name collision validator to honor `x-fern-parameter-name`.
+        Previously, parameters with distinct `x-fern-parameter-name` overrides were still
+        flagged as collisions based on their raw OpenAPI `name` field.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.12
+  changelogEntry:
+    - summary: |
+        Fix SPM auto-compiling dynamic snippet files as 650+ separate executables by
+        moving snippets into Tests/Snippets/ and wrapping them as library code (compiled
+        as part of the test target instead of standalone executables).
+      type: fix
+    - summary: |
+        Combine build and test into single `swift test -c release` invocation to avoid
+        redundant recompilation in seed scripts.
+      type: chore
+  createdAt: "2026-06-05"
+  irVersion: 67
+- version: 5.44.11
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement to backfill missing required fields from the auto-generated
+        example. When the AI Lambda produces a partial example (e.g., missing fields from nested
+        allOf chains), the missing fields are now merged from the correct auto-generated example,
+        ensuring all required fields are present in published documentation.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.10
+  changelogEntry:
+    - summary: |
+        Fix false positive warnings in the `missing-redirects` check for changelog
+        entries and embedded content pages. FDR stores an empty slug for pages that
+        don't resolve to a standalone navigation node; these are no longer reported as
+        removed pages whose previously published URL was "/", even when the site's home
+        page lives under a non-root slug or basepath.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.9
+  changelogEntry:
+    - summary: |
+        Fix `fern check` validators (`valid-local-references`, `no-non-component-refs`) incorrectly reporting `$ref` values found inside YAML comments.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.8
+  changelogEntry:
+    - summary: |
+        Fix example generation for nested allOf $ref chains. When a schema uses
+        multi-level allOf (e.g. UserPost → UserBase → UserStrict), properties from
+        grandparent schemas were missing from generated code snippets because
+        mergeAllOfProperties only resolved one level of allOf. Now recursively
+        resolves the full chain so all required fields appear in examples.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
+- version: 5.44.7
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v2 enum collision where multiple channels with identically
+        named query parameters (or headers/path params) that have different enum
+        values would overwrite each other. The v2 channel converter now passes
+        `parameterNamePrefix` (the channel path) to the ParameterConverter,
+        matching the v3 converter behavior.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.6
+  changelogEntry:
+    - summary: |
+        Update CLI irVersion metadata from 66 to 67 so that FDR correctly
+        reports IR 67-compatible generator versions (e.g. CLI generator ≥ 0.2.0)
+        when resolving `fern generator upgrade`.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 67
+- version: 5.44.5
+  changelogEntry:
+    - summary: |
+        Rename the CLI generator Docker image from `fernapi/fern-cli` to
+        `fernapi/fern-cli-generator`.
+      type: chore
+  createdAt: "2026-06-03"
+  irVersion: 66
+- version: 5.44.4
+  changelogEntry:
+    - summary: |
+        Fix docs rendering dropping parent properties when an allOf parent schema
+        itself uses allOf with $ref elements. The v3 OpenAPI parser now recursively
+        resolves nested $ref objects during allOf flattening instead of silently
+        filtering them out.
+      type: fix
+    - summary: |
+        Fix OpenAPI parser emitting redundant or wrongly-required base properties for
+        discriminated unions when `infer-discriminated-union-base-properties: true`.
+        The inference now (1) skips properties every variant already inherits via a
+        shared `allOf $ref` parent — the parent schema is the single source of truth —
+        and (2) lifts an inferred property as `optional` if any variant declares it as
+        not-required. Together these prevent generated TypeScript SDKs from synthesizing
+        a `_Base` interface that collides with the real parent on either presence or
+        optionality (`TS2320`).
+      type: fix
+    - summary: |
+        Fix localized docs builds so translated OpenAPI specs are used for API reference content and navigation titles.
+      type: fix
+  createdAt: "2026-06-02"
+  irVersion: 66
 - version: 5.44.3
   changelogEntry:
     - summary: |
@@ -251,7 +484,7 @@
         and `GraphQLSpec.namespace`). Enables generators that opt into
         `generatorWantsSpecs` to route multi-spec workspaces by their
         workspace-declared namespace instead of inferring one from the
-        runner-assigned filename. The new `fernapi/fern-cli-generator` generator
+        runner-assigned filename. The new `fernapi/fern-cli` generator
         uses this to emit `.spec_under("<ns>", ...)` in the generated
         `main.rs` when the user namespaces their specs.
       type: feat
@@ -715,7 +948,7 @@
 - version: 5.25.0
   changelogEntry:
     - summary: |
-        Register the new `fernapi/fern-cli-generator` generator in the CLI configuration.
+        Register the new `fernapi/fern-cli` generator in the CLI configuration.
       type: feat
   createdAt: "2026-05-14"
   irVersion: 66

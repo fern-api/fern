@@ -113,7 +113,7 @@ export class CsharpFormatter extends AbstractFormatter {
 
         const { stdout } = execa.sync(
             this.csharpierPath,
-            ["format", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            ["format", "--no-msbuild-check", "--skip-validation", "--syntax-errors-as-warnings"],
             {
                 input: content,
                 encoding: "utf-8",

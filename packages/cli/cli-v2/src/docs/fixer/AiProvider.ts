@@ -53,7 +53,7 @@ export async function resolveAiProvider({
             }
             return { ok: true, provider, client: new OpenAiClient(key) };
         }
-        case "bedrock":
+        case "aws-bedrock":
             return { ok: true, provider, client: new BedrockClient() };
     }
 }
@@ -158,7 +158,7 @@ class OpenAiClient implements AiProviderClient {
 const BEDROCK_MODEL = "anthropic.claude-3-5-haiku-20241022-v1:0";
 
 class BedrockClient implements AiProviderClient {
-    public readonly name = "bedrock" as const;
+    public readonly name = "aws-bedrock" as const;
     public readonly model = BEDROCK_MODEL;
 
     public async complete(prompt: string): Promise<string> {

@@ -7,7 +7,7 @@
     and `GraphQLSpec.namespace`). Enables generators that opt into
     `generatorWantsSpecs` to route multi-spec workspaces by their
     workspace-declared namespace instead of inferring one from the
-    runner-assigned filename. The new `fernapi/fern-cli-generator` generator
+    runner-assigned filename. The new `fernapi/fern-cli` generator
     uses this to emit `.spec_under("<ns>", ...)` in the generated
     `main.rs` when the user namespaces their specs.
   type: feat

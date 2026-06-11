@@ -485,11 +485,12 @@ type UserOrAdminDiscriminated struct {
 	Normal string
 	Read   string
 	Write  string
-	Normal string
 	Foo    *Foo
 	User   *User
 	Admin  *Admin
 	Empty  interface{}
+
+	rawJSON json.RawMessage
 }
 
 func (u *UserOrAdminDiscriminated) GetType() string {
@@ -518,13 +519,6 @@ func (u *UserOrAdminDiscriminated) GetWrite() string {
 		return ""
 	}
 	return u.Write
-}
-
-func (u *UserOrAdminDiscriminated) GetNormal() string {
-	if u == nil {
-		return ""
-	}
-	return u.Normal
 }
 
 func (u *UserOrAdminDiscriminated) GetFoo() *Foo {
@@ -561,7 +555,6 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 		Normal string `json:"normal" url:"normal"`
 		Read   string `json:"read" url:"read"`
 		Write  string `json:"write" url:"write"`
-		Normal string `json:"normal"`
 		Foo    *Foo   `json:"foo"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
@@ -571,7 +564,6 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 	u.Normal = unmarshaler.Normal
 	u.Read = unmarshaler.Read
 	u.Write = unmarshaler.Write
-	u.Normal = unmarshaler.Normal
 	u.Foo = unmarshaler.Foo
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", u)
@@ -598,6 +590,7 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 		}
 		u.Empty = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -614,7 +607,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal string `json:"normal" url:"normal"`
 			Read   string `json:"read" url:"read"`
 			Write  string `json:"write" url:"write"`
-			Normal string `json:"normal"`
 			Foo    *Foo   `json:"foo"`
 			Admin  *Admin `json:"admin"`
 		}{
@@ -622,7 +614,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal: u.Normal,
 			Read:   u.Read,
 			Write:  u.Write,
-			Normal: u.Normal,
 			Foo:    u.Foo,
 			Admin:  u.Admin,
 		}
@@ -634,7 +625,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal string      `json:"normal" url:"normal"`
 			Read   string      `json:"read" url:"read"`
 			Write  string      `json:"write" url:"write"`
-			Normal string      `json:"normal"`
 			Foo    *Foo        `json:"foo"`
 			Empty  interface{} `json:"empty,omitempty"`
 		}{
@@ -642,11 +632,13 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal: u.Normal,
 			Read:   u.Read,
 			Write:  u.Write,
-			Normal: u.Normal,
 			Foo:    u.Foo,
 			Empty:  u.Empty,
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -686,6 +678,9 @@ func (u *UserOrAdminDiscriminated) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)

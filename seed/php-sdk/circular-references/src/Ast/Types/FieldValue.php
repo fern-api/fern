@@ -19,7 +19,7 @@ class FieldValue extends JsonSerializableType
 
     /**
      * @var (
-     *    value-of<PrimitiveValue>
+     *    PrimitiveValue
      *   |ObjectValue
      *   |ContainerValue
      *   |mixed
@@ -36,7 +36,7 @@ class FieldValue extends JsonSerializableType
      *   |'_unknown'
      * ),
      *   value: (
-     *    value-of<PrimitiveValue>
+     *    PrimitiveValue
      *   |ObjectValue
      *   |ContainerValue
      *   |mixed
@@ -51,10 +51,10 @@ class FieldValue extends JsonSerializableType
     }
 
     /**
-     * @param value-of<PrimitiveValue> $primitiveValue
+     * @param PrimitiveValue $primitiveValue
      * @return FieldValue
      */
-    public static function primitiveValue(string $primitiveValue): FieldValue
+    public static function primitiveValue(PrimitiveValue $primitiveValue): FieldValue
     {
         return new FieldValue([
             'type' => 'primitive_value',
@@ -95,9 +95,9 @@ class FieldValue extends JsonSerializableType
     }
 
     /**
-     * @return value-of<PrimitiveValue>
+     * @return PrimitiveValue
      */
-    public function asPrimitiveValue(): string
+    public function asPrimitiveValue(): PrimitiveValue
     {
         if (!($this->value instanceof PrimitiveValue && $this->type === 'primitive_value')) {
             throw new Exception(
@@ -173,7 +173,7 @@ class FieldValue extends JsonSerializableType
 
         switch ($this->type) {
             case 'primitive_value':
-                $value = $this->value;
+                $value = $this->asPrimitiveValue()->value;
                 $result['primitive_value'] = $value;
                 break;
             case 'object_value':
@@ -227,7 +227,12 @@ class FieldValue extends JsonSerializableType
                     );
                 }
 
-                $args['value'] = $data['primitive_value'];
+                if (!(is_string($data['primitive_value']))) {
+                    throw new Exception(
+                        "Expected property 'primitiveValue' in JSON data to be string, instead received " . get_debug_type($data['primitive_value']),
+                    );
+                }
+                $args['value'] = PrimitiveValue::from($data['primitive_value']);
                 break;
             case 'object_value':
                 $args['value'] = ObjectValue::jsonDeserialize($data);

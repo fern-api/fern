@@ -1,0 +1,279 @@
+name: ci
+
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RUSTFLAGS: "-A warnings"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check
+        run: cargo check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Compile
+        run: cargo build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Test
+        run: cargo test
+
+  publish:
+    needs: [check, compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      # Don't cancel sibling matrix jobs on first failure — a transient
+      # failure on one platform would otherwise leave npm in a partial
+      # state (some platform packages published, others not, launcher
+      # never published), with no clean re-run since the already-
+      # published versions reject re-publish.
+      fail-fast: false
+      matrix:
+        include:
+          - rust-target: x86_64-unknown-linux-musl
+            runner: ubuntu-latest
+            npm-platform-suffix: linux-x64
+          - rust-target: aarch64-unknown-linux-musl
+            runner: ubuntu-24.04-arm
+            npm-platform-suffix: linux-arm64
+          - rust-target: x86_64-apple-darwin
+            runner: macos-latest
+            npm-platform-suffix: darwin-x64
+          - rust-target: aarch64-apple-darwin
+            runner: macos-latest
+            npm-platform-suffix: darwin-arm64
+          - rust-target: x86_64-pc-windows-msvc
+            runner: windows-latest
+            npm-platform-suffix: win32-x64
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          target: ${{ matrix.rust-target }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install musl build tools
+        if: contains(matrix.rust-target, '-linux-musl')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
+
+      - name: Build release binary
+        shell: bash
+        run: |
+          if [[ "${{ matrix.rust-target }}" == *-linux-musl ]]; then
+            cargo build --release --target ${{ matrix.rust-target }} \
+              --no-default-features --features rustls
+          else
+            cargo build --release --target ${{ matrix.rust-target }}
+          fi
+
+      - name: Package and publish npm platform package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="${GITHUB_REF_NAME#v}"
+          PLATFORM_PKG="@fern/query-parameters-openapi-${{ matrix.npm-platform-suffix }}"
+          PKG_DIR="npm-pkg/${PLATFORM_PKG}"
+          mkdir -p "${PKG_DIR}"
+
+          # Locate the compiled binary
+          BINARY_NAME="query-parameters-api"
+          if [[ "${{ matrix.rust-target }}" == *"windows"* ]]; then
+            BINARY_NAME="query-parameters-api.exe"
+          fi
+          cp "target/${{ matrix.rust-target }}/release/${BINARY_NAME}" "${PKG_DIR}/"
+
+          # Write platform package.json
+          cat > "${PKG_DIR}/package.json" <<PKGJSON
+          {
+            "name": "${PLATFORM_PKG}",
+            "version": "${VERSION}",
+            "description": "Platform-specific binary for query-parameters-api (${{ matrix.npm-platform-suffix }})",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
+            "os": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f1)"],
+            "cpu": ["$(echo ${{ matrix.npm-platform-suffix }} | cut -d- -f2)"],
+            "main": "${BINARY_NAME}",
+            "files": ["${BINARY_NAME}"]
+          }
+          PKGJSON
+
+          cd "${PKG_DIR}"
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "$@"
+          }
+          # Pre-release detection — require the semver "-" separator so a
+          # release tag like v1.0.0 for a package whose version string
+          # happens to contain "alpha"/"beta" as a substring isn't
+          # mis-tagged on npm.
+          if [[ "${VERSION}" == *-alpha* ]]; then
+            publish --access public --tag alpha
+          elif [[ "${VERSION}" == *-beta* ]]; then
+            publish --access public --tag beta
+          else
+            PKG_NAME=$(node -p "require('./package.json').name")
+            PKG_VERSION=$(node -p "require('./package.json').version")
+            CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
+              publish --access public --tag backport
+            else
+              publish --access public
+            fi
+          fi
+
+  publish-launcher:
+    needs: [publish]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Publish launcher package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VERSION="${GITHUB_REF_NAME#v}"
+          PKG_DIR="npm-pkg/launcher"
+          mkdir -p "${PKG_DIR}"
+
+          BINARY_NAME="query-parameters-api"
+
+          # Build optionalDependencies map
+          OPTIONAL_DEPS=""
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-linux-x64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-linux-arm64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-darwin-x64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-darwin-arm64\": \"${VERSION}\","
+          OPTIONAL_DEPS="${OPTIONAL_DEPS}\"@fern/query-parameters-openapi-win32-x64\": \"${VERSION}\""
+
+          cat > "${PKG_DIR}/package.json" <<PKGJSON
+          {
+            "name": "@fern/query-parameters-openapi",
+            "version": "${VERSION}",
+            "description": "CLI for query-parameters-api",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/query-parameters-openapi/fern"
+            },
+            "bin": {
+              "query-parameters-api": "bin/cli.js"
+            },
+            "optionalDependencies": {
+              ${OPTIONAL_DEPS}
+            },
+            "files": ["bin/"]
+          }
+          PKGJSON
+
+          # Write launcher script
+          mkdir -p "${PKG_DIR}/bin"
+          cat > "${PKG_DIR}/bin/cli.js" <<'LAUNCHER'
+          #!/usr/bin/env node
+          "use strict";
+          const { execFileSync } = require("child_process");
+          const path = require("path");
+          const os = require("os");
+
+          const PLATFORMS = {
+            "linux-x64": "@fern/query-parameters-openapi-linux-x64",
+            "linux-arm64": "@fern/query-parameters-openapi-linux-arm64",
+            "darwin-x64": "@fern/query-parameters-openapi-darwin-x64",
+            "darwin-arm64": "@fern/query-parameters-openapi-darwin-arm64",
+            "win32-x64": "@fern/query-parameters-openapi-win32-x64",
+          };
+
+          const platformKey = os.platform() + "-" + os.arch();
+          const pkg = PLATFORMS[platformKey];
+          if (!pkg) {
+            console.error("Unsupported platform: " + platformKey);
+            process.exit(1);
+          }
+
+          const binName = os.platform() === "win32" ? "query-parameters-api.exe" : "query-parameters-api";
+          const binPath = path.join(require.resolve(pkg + "/package.json"), "..", binName);
+
+          try {
+            execFileSync(binPath, process.argv.slice(2), { stdio: "inherit" });
+          } catch (e) {
+            if (e && typeof e === "object" && "status" in e) {
+              process.exit(e.status);
+            }
+            throw e;
+          }
+          LAUNCHER
+
+          cd "${PKG_DIR}"
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "$@"
+          }
+          # Pre-release detection — require the semver "-" separator so a
+          # release tag like v1.0.0 for a package whose version string
+          # happens to contain "alpha"/"beta" as a substring isn't
+          # mis-tagged on npm.
+          if [[ "${VERSION}" == *-alpha* ]]; then
+            publish --access public --tag alpha
+          elif [[ "${VERSION}" == *-beta* ]]; then
+            publish --access public --tag beta
+          else
+            PKG_NAME=$(node -p "require('./package.json').name")
+            PKG_VERSION=$(node -p "require('./package.json').version")
+            CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver@7.8.1 "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
+              publish --access public --tag backport
+            else
+              publish --access public
+            fi
+          fi

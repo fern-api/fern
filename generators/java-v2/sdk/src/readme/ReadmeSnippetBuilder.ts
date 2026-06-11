@@ -181,7 +181,7 @@ UpdateRequest request = UpdateRequest.builder()
     }
 
     private getOAuthTokenOverrideDocumentation(): string {
-        const clientClassName = this.context.getRootClientClassName();
+        const clientClassName = this.context.getRootClientClassNameForSnippets();
         return `This SDK supports two authentication methods:
 
 ### Option 1: Direct Bearer Token

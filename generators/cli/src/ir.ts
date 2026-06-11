@@ -51,9 +51,8 @@ export async function readIrSummary(irFilepath: string): Promise<IrSummary> {
         throw new Error(`Failed to parse IR from ${irFilepath}: ${JSON.stringify(parsed.errors, null, 4)}`);
     }
 
-    const ir = parsed.value;
     return {
-        apiDisplayName: ir.apiDisplayName,
-        auth: { schemes: ir.auth.schemes }
+        apiDisplayName: parsed.value.apiDisplayName,
+        auth: { schemes: parsed.value.auth.schemes }
     };
 }

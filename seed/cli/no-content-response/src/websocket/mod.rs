@@ -3,10 +3,10 @@
 //! WebSocket bidirectional client.
 //!
 //! Used by custom commands that need to graft a long-lived bidirectional
-//! connection onto the CLI (realtime streaming, conversational APIs,
-//! etc.). The recv loop emits each inbound JSON frame through
-//! [`crate::formatter::OutputPipeline`] so format / color / future
-//! jq/fields/template flags compose for free.
+//! connection onto the CLI (ElevenLabs convai/TTS, Deepgram realtime,
+//! AssemblyAI realtime, OpenAI Realtime). The recv loop emits each inbound
+//! JSON frame through [`crate::formatter::OutputPipeline`] so format /
+//! color / future jq/fields/template flags compose for free.
 //!
 //! # Composition with [`AppContext`](crate::openapi::AppContext)
 //!
@@ -44,5 +44,7 @@ mod client;
 mod error;
 
 pub use auth::WsAuth;
-pub use client::{AutoResponder, WebSocketClient, WsConfig};
+pub use client::{
+    elevenlabs_convai_ping_pong, AutoResponder, WebSocketClient, WsConfig,
+};
 pub use error::map_handshake_error;

@@ -1,4 +1,58 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.8
+  changelogEntry:
+    - summary: |
+        Rebuild oxlint-tsgolint 0.23.0 from source with Go 1.26.4 to fix
+        CVE-2026-42507 (net/textproto log injection) and CVE-2026-27145
+        (crypto/x509 quadratic hostname verification) in the
+        typescript-sdk-generator container.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 3.71.7
+  changelogEntry:
+    - summary: |
+        Upgrade oxc tooling: oxlint 1.63.0 → 1.69.0, oxfmt 0.48.0 → 0.54.0,
+        oxlint-tsgolint 0.22.1 → 0.23.0. tsgolint 0.23.0 ships with go1.26.3
+        (clearing go/stdlib CVEs), so the rebuild-from-source Docker stage is
+        removed entirely.
+      type: chore
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 3.71.6
+  changelogEntry:
+    - summary: |
+        Fix `hasNextPage` for offset pagination so it no longer compares `items.length`
+        against a fabricated default when the caller omits the page-size parameter
+        (FER-11160). The previous logic substituted a generator-chosen default (often
+        `1`), which produced false-positive continuation on short pages and false-negative
+        termination when the default was non-trivial. The pager now gates the size
+        comparison on whether the caller actually provided a page-size: when supplied,
+        a short page still short-circuits (saves one round-trip at the tail); when
+        omitted, it falls back to an items-driven check. Explicit `response.hasNextPage`
+        from the API continues to take priority.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 3.71.5
+  changelogEntry:
+    - summary: |
+        Fix race condition in anySignal() where abort events could be silently
+        dropped when a source signal aborts between the aborted check and
+        addEventListener registration.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 3.71.4
+  changelogEntry:
+    - summary: |
+        Fix request URLs containing duplicate slashes (e.g. `/{id}//{nestedId}`) when a
+        base-path, service base-path, and endpoint path are joined together. Consecutive
+        slashes in the generated URL are now collapsed into a single slash, matching the
+        URL used in generated wire tests.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 67
 - version: 3.71.3
   changelogEntry:
     - summary: |

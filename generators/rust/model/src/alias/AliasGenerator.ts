@@ -98,10 +98,11 @@ export class AliasGenerator {
         // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
         // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
         const dateTimeType = this.context.getDateTimeType();
+        const coreModulePath = this.context.getCoreModulePath();
         const aliasType = this.aliasTypeDeclaration.aliasOf;
         const modulePath = dateTimeType === "utc" 
-            ? "crate::core::flexible_datetime::utc" 
-            : "crate::core::flexible_datetime::offset";
+            ? `${coreModulePath}::flexible_datetime::utc` 
+            : `${coreModulePath}::flexible_datetime::offset`;
 
         if (isDateTimeOnlyType(aliasType)) {
             // Direct datetime type

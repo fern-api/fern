@@ -64,8 +64,10 @@ export async function copySpecs(args: {
     binaryName: string;
     authBindings: DetectedAuthBinding[];
     specsDir?: string;
+    /** When true, emit `mod custom;` + `mod sdk_glue;` + `custom::register(app)` in main.rs. */
+    customCommands?: boolean;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir } = args;
+    const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -86,7 +88,20 @@ export async function copySpecs(args: {
         entries.push({ destFilename, namespace: spec.namespace });
     }
 
-    await writeFile(path.join(binDir, "main.rs"), renderMainRs({ binaryName, entries, authBindings }));
+    await writeFile(
+        path.join(binDir, "main.rs"),
+        renderMainRs({
+            binaryName,
+            entries,
+            authBindings,
+            customCommands: customCommands ?? false
+        })
+    );
+
+    // Scaffold custom.rs for user-authored command handlers.
+    if (customCommands === true) {
+        await scaffoldCustomRs(binDir, binaryName);
+    }
 }
 
 interface SpecEntry {
@@ -94,8 +109,79 @@ interface SpecEntry {
     namespace: string | undefined;
 }
 
-function renderMainRs(args: { binaryName: string; entries: SpecEntry[]; authBindings: DetectedAuthBinding[] }): string {
-    const { binaryName, entries, authBindings } = args;
+/**
+ * Scaffold `custom.rs` — the file customers edit to register their
+ * own async command handlers. Listed in `.fernignore` so `fern generate`
+ * never overwrites user changes.
+ */
+async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<void> {
+    const customRsPath = path.join(binDir, "custom.rs");
+    // Only create if it doesn't already exist (respects .fernignore).
+    try {
+        await readFile(customRsPath);
+        return; // already exists — user owns it
+    } catch (_e: unknown) {
+        // does not exist — scaffold it below
+    }
+    const sdkCrate = `${binaryName.replace(/-/g, "_")}_sdk`;
+    await writeFile(customRsPath, renderCustomRsWithSdk(sdkCrate));
+}
+
+/** Scaffold when the SDK crate is available (default). */
+function renderCustomRsWithSdk(sdkCrate: string): string {
+    return [
+        "//! Custom command handlers.",
+        "//!",
+        "//! This file is yours to edit — add it to `.fernignore` so",
+        "//! `fern generate` will never overwrite your changes.",
+        "//!",
+        "//! The generated `main.rs` calls `custom::register(app)` at",
+        "//! startup, composing your commands into the CLI at compile time.",
+        "//!",
+        "//! Each handler receives an `AppContext`. Use `sdk_glue::sdk_client(ctx)`",
+        "//! to get a fully-wired SDK client that inherits the CLI's auth,",
+        "//! retries, TLS, and global headers. Use `sdk_glue::block_on(future)`",
+        "//! to run async SDK calls from synchronous handler context.",
+        `//! Types are available via \`${sdkCrate}::api::*\`.`,
+        "",
+        "use fern_cli_sdk::app::CliApp;",
+        "",
+        "/// Register custom commands on the CLI app builder.",
+        "///",
+        "/// Called from `main.rs` during startup. Uncomment the example",
+        "/// below and adapt it to your API to get started.",
+        "pub fn register(app: CliApp) -> CliApp {",
+        "    // Example: typed SDK client usage with the co-generated SDK.",
+        "    //",
+        `    // use ${sdkCrate}::api::*;`,
+        "    //",
+        "    // let app = app.command(",
+        '    //     clap::Command::new("get-plant")',
+        '    //         .about("Fetch a plant by its ID")',
+        '    //         .arg(clap::Arg::new("plant-id").required(true)),',
+        "    //     |matches, ctx| {",
+        '    //         let plant_id = matches.get_one::<String>("plant-id").unwrap();',
+        "    //         let client = super::sdk_glue::sdk_client(ctx);",
+        "    //         let plant = super::sdk_glue::block_on(",
+        "    //             client.plants.get_plant(plant_id, None),",
+        "    //         )?;",
+        '    //         println!("{}", serde_json::to_string_pretty(&plant).unwrap());',
+        "    //         Ok(())",
+        "    //     },",
+        "    // );",
+        "    app",
+        "}",
+        ""
+    ].join("\n");
+}
+
+function renderMainRs(args: {
+    binaryName: string;
+    entries: SpecEntry[];
+    authBindings: DetectedAuthBinding[];
+    customCommands: boolean;
+}): string {
+    const { binaryName, entries, authBindings, customCommands } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -118,12 +204,16 @@ function renderMainRs(args: { binaryName: string; entries: SpecEntry[]; authBind
     const lines: string[] = [
         "// Auto-generated by @fern-api/cli-generator's copySpecs step.",
         "// Edit the SDK template / generator if you need to change the shape.",
-        "",
-        ...imports,
-        "",
-        "fn main() {",
-        `    CliApp::new("${binaryName}")`
+        ""
     ];
+
+    if (customCommands) {
+        lines.push("mod custom;");
+        lines.push("mod sdk_glue;");
+        lines.push("");
+    }
+
+    lines.push(...imports, "", "fn main() {", `    let app = CliApp::new("${binaryName}")`);
 
     // Root-level auth bindings (typed builders)
     for (const binding of rootAuthBindings) {
@@ -144,10 +234,16 @@ function renderMainRs(args: { binaryName: string; entries: SpecEntry[]; authBind
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
     }
-    // Close the binding — use trailing comma for clean formatting
-    lines.push("        )");
+    // Close the binding
+    lines.push("        );");
 
-    lines.push("        .run()");
+    if (customCommands) {
+        lines.push("");
+        lines.push("    let app = custom::register(app);");
+    }
+
+    lines.push("");
+    lines.push("    app.run()");
     lines.push("}");
     lines.push("");
     return lines.join("\n");

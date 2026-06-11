@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "species": {
+      "type": "string",
+      "description": "The botanical species name."
+    },
+    "family": {
+      "type": "string",
+      "description": "The botanical family."
+    },
+    "genus": {
+      "type": "string",
+      "description": "The botanical genus."
+    }
+  },
+  "required": [
+    "species",
+    "family",
+    "genus"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
