@@ -35,10 +35,10 @@ import Api
         )
         let response = try await client.catalog.createCatalogImage(
             request: .init(
-                imageFile: .init(data: Data("".utf8)),
                 request: CreateCatalogImageRequest(
                     catalogObjectId: "catalog_object_id"
-                )
+                ),
+                imageFile: .init(data: Data("".utf8))
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
