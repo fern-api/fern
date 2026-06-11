@@ -502,7 +502,8 @@ interface BuiltTranslation {
  */
 function toReadApiDefinition(
     definition: APIV1Write.ApiDefinition,
-    apiDefinitionId: string
+    apiDefinitionId: string,
+    context: TaskContext
 ): APIV1Read.ApiDefinition | undefined {
     try {
         const dbApiDefinition = convertAPIDefinitionToDb(
@@ -517,7 +518,10 @@ function toReadApiDefinition(
             })
         );
         return convertDbAPIDefinitionToRead(dbApiDefinition);
-    } catch {
+    } catch (error) {
+        context.logger.debug(
+            `[ledger] Failed to convert API definition "${apiDefinitionId}" to read form: ${String(error)}`
+        );
         return undefined;
     }
 }
@@ -536,6 +540,7 @@ function buildLocaleApiDefinitions({
     translatedSpecs: Map<string, TranslatedApiSpec>;
     context: TaskContext;
 }): Map<string, APIV1Write.ApiDefinition> {
+    // Shallow clone — replaced entries are new objects from convertIrToFdrApi.
     const localeApiDefs = new Map(baseApiDefinitions);
     for (const [baseApiId, spec] of translatedSpecs) {
         try {
@@ -604,6 +609,18 @@ async function buildAllTranslationInputs({
     // buildTranslatedApiDefinitions=true.
     const translatedApiSpecsByLocale = resolver.getTranslatedApiSpecs();
 
+    // Pre-compute base API read definitions once (expensive Write→Db→Read
+    // pipeline). Reused across all locales for nav title patching.
+    const baseReadApis: Record<string, APIV1Read.ApiDefinition> = {};
+    if (translatedApiSpecsByLocale.size > 0) {
+        for (const [apiId, def] of apiDefinitions) {
+            const readDef = toReadApiDefinition(def, apiId, context);
+            if (readDef != null) {
+                baseReadApis[apiId] = readDef;
+            }
+        }
+    }
+
     const localeEntries = Object.entries(translationPages);
     context.logger.info(`[ledger] Building ${localeEntries.length} translation locale(s)...`);
     const { buildTranslatedDocsDefinition } = await import("./buildTranslatedDocsDefinition.js");
@@ -634,19 +651,11 @@ async function buildAllTranslationInputs({
                 // Patch sidebar titles in the nav tree so endpoint/subpackage
                 // names reflect the translated API content.
                 if (translatedDefinition.config.root != null) {
-                    const baseApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
                     const translatedApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
                     for (const [baseApiId] of localeTranslatedSpecs) {
-                        const baseDef = apiDefinitions.get(baseApiId);
                         const translatedDef = localeApiDefinitions.get(baseApiId);
-                        if (baseDef != null) {
-                            const baseRead = toReadApiDefinition(baseDef, baseApiId);
-                            if (baseRead != null) {
-                                baseApisForTitles[baseApiId] = baseRead;
-                            }
-                        }
                         if (translatedDef != null) {
-                            const translatedRead = toReadApiDefinition(translatedDef, baseApiId);
+                            const translatedRead = toReadApiDefinition(translatedDef, baseApiId, context);
                             if (translatedRead != null) {
                                 translatedApisForTitles[baseApiId] = translatedRead;
                             }
@@ -655,7 +664,7 @@ async function buildAllTranslationInputs({
                     if (Object.keys(translatedApisForTitles).length > 0) {
                         translatedDefinition.config.root = applyTranslatedApiTitlesToNavTree(
                             translatedDefinition.config.root,
-                            baseApisForTitles,
+                            baseReadApis,
                             translatedApisForTitles
                         );
                     }
