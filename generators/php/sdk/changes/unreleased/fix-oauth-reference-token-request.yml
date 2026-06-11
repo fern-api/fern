@@ -1,0 +1,6 @@
+- summary: |
+    Fix the generated OAuth and inferred-auth token providers to construct the typed token request
+    object when the token endpoint uses a referenced (non-inlined) request body. Previously the
+    provider passed an associative array to the token endpoint method, which expects the typed
+    request, causing PHPStan failures.
+  type: fix
