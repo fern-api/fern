@@ -53,7 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> webhook_audience_test_sdk::api::ApiClient
     );
     webhook_audience_test_sdk::api::ApiClient {
         config,
-        http_client: http_client.clone(),
+
     }
 }
 

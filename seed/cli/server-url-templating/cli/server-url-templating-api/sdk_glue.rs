@@ -54,6 +54,7 @@ pub fn sdk_client(ctx: &AppContext) -> server_url_templating_api_sdk::api::ApiCl
     server_url_templating_api_sdk::api::ApiClient {
         config,
         http_client: http_client.clone(),
+
     }
 }
 

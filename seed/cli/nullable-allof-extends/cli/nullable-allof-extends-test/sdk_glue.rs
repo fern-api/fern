@@ -54,6 +54,7 @@ pub fn sdk_client(ctx: &AppContext) -> nullable_allof_extends_test_sdk::api::Api
     nullable_allof_extends_test_sdk::api::ApiClient {
         config,
         http_client: http_client.clone(),
+
     }
 }
 

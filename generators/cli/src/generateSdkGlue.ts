@@ -38,6 +38,7 @@ interface ClientNode {
 export interface RootClientInfo {
     name: string;
     subClients: ClientNode[];
+    hasHttpClient: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -53,7 +54,7 @@ const SKIP_TYPES = new Set(["ClientConfig", "HttpClient"]);
  * Returns the struct name and all `pub <field>: <Type>` entries,
  * filtering out config/http_client infrastructure fields.
  */
-function parseClientStruct(source: string): { name: string; fields: SubClientField[] } | undefined {
+function parseClientStruct(source: string): { name: string; fields: SubClientField[]; hasHttpClient: boolean } | undefined {
     const structMatch = source.match(/pub struct (\w+Client)\s*\{([^}]+)\}/);
     if (structMatch == null) {
         return undefined;
@@ -62,19 +63,24 @@ function parseClientStruct(source: string): { name: string; fields: SubClientFie
     const name = structMatch[1] ?? "";
     const body = structMatch[2] ?? "";
     const fields: SubClientField[] = [];
+    let hasHttpClient = false;
 
     const fieldRegex = /pub\s+(\w+)\s*:\s*(\w+)\s*,?/g;
     let match;
     while ((match = fieldRegex.exec(body)) !== null) {
         const fieldName = match[1] ?? "";
         const typeName = match[2] ?? "";
+        if (typeName === "HttpClient") {
+            hasHttpClient = true;
+            continue;
+        }
         if (SKIP_TYPES.has(typeName)) {
             continue;
         }
         fields.push({ fieldName, typeName });
     }
 
-    return { name, fields };
+    return { name, fields, hasHttpClient };
 }
 
 /**
@@ -167,18 +173,19 @@ function qualifyType(sdkCrate: string, node: ClientNode): string {
  * Generate the `sdk_glue.rs` module content.
  */
 function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): string {
-    // When the root client has sub-clients, each sub-client carries its own
-    // http_client field.  When there are NO sub-clients the root struct itself
-    // owns the http_client directly — we must populate it.
-    const subClientInits =
-        rootClient.subClients.length > 0
-            ? rootClient.subClients
-                  .map((node) => {
-                      const init = renderClientInit(sdkCrateSnake, node, "        ");
-                      return `        ${node.fieldName}: ${init},`;
-                  })
-                  .join("\n")
-            : "        http_client: http_client.clone(),";
+    const subClientInits = rootClient.subClients
+        .map((node) => {
+            const init = renderClientInit(sdkCrateSnake, node, "        ");
+            return `        ${node.fieldName}: ${init},`;
+        })
+        .join("\n");
+
+    // When the root struct owns http_client directly (flat APIs with no
+    // sub-client groups), we must populate it in the initializer.
+    const httpClientInit =
+        rootClient.subClients.length === 0 && rootClient.hasHttpClient
+            ? "\n        http_client: http_client.clone(),"
+            : "";
 
     return `\
 //! Generated SDK client glue — bridges AppContext to the co-generated SDK.
@@ -235,7 +242,7 @@ pub fn sdk_client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name}
         config.clone(),
     );
     ${sdkCrateSnake}::api::${rootClient.name} {
-        config,
+        config,${httpClientInit}
 ${subClientInits}
     }
 }
@@ -320,7 +327,7 @@ export async function generateSdkGlue(args: {
 
     // Recursively discover nested sub-clients from the SDK's resource tree.
     const subClients = await discoverClientTree(resourcesDir, rootStruct.fields, []);
-    const rootClient: RootClientInfo = { name: rootStruct.name, subClients };
+    const rootClient: RootClientInfo = { name: rootStruct.name, subClients, hasHttpClient: rootStruct.hasHttpClient };
 
     // Write the glue module.
     const binDir = path.join(outputDir, "cli", binaryName);
