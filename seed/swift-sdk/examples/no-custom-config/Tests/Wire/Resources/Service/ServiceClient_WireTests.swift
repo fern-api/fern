@@ -230,6 +230,7 @@ import Examples
         )
         let expectedResponse = MetadataType.html("<head>...</head>")
         let response = try await client.service.getMetadata(
+            xApiVersion: "0.0.1",
             shallow: false,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -261,6 +262,7 @@ import Examples
         )
         let expectedResponse = MetadataType.html("string")
         let response = try await client.service.getMetadata(
+            xApiVersion: "X-API-Version",
             shallow: true,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

@@ -4036,7 +4036,11 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.reqWithHeaders.getWithCustomHeader(request: "string")
+    _ = try await client.reqWithHeaders.getWithCustomHeader(
+        xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+        xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        request: "string"
+    )
 }
 
 try await main()
