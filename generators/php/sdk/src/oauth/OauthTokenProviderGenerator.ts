@@ -6,6 +6,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getOAuthTokenRequestProperties, OAuthTokenRequestProperty } from "./oauthTokenRequestProperties.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -23,6 +24,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
     private tokenEndpointHttpService: FernIr.HttpService;
     private tokenEndpointReference: FernIr.EndpointReference;
     private tokenEndpoint: FernIr.HttpEndpoint;
+    private extraRequestProperties: OAuthTokenRequestProperty[];
 
     constructor({ context, scheme }: OauthTokenProviderGenerator.Args) {
         super(context);
@@ -43,6 +45,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             throw GeneratorError.referenceError(`Endpoint with id ${this.tokenEndpointReference.endpointId} not found`);
         }
         this.tokenEndpoint = endpoint;
+        this.extraRequestProperties = getOAuthTokenRequestProperties(
+            this.context,
+            this.scheme.configuration.tokenEndpoint.requestProperties
+        );
     }
 
     public doGenerate(): PhpFile {
@@ -100,6 +106,16 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             })
         );
 
+        for (const property of this.extraRequestProperties) {
+            class_.addField(
+                php.field({
+                    name: `$${property.parameterName}`,
+                    access: "private",
+                    type: this.context.phpTypeMapper.convert({ reference: property.valueType })
+                })
+            );
+        }
+
         class_.addField(
             php.field({
                 name: "$authClient",
@@ -140,6 +156,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 type: php.Type.string(),
                 docs: "The client secret for OAuth authentication."
             }),
+            ...this.extraRequestProperties.map((property) =>
+                php.parameter({
+                    name: property.parameterName,
+                    type: this.context.phpTypeMapper.convert({ reference: property.valueType }),
+                    docs: "A property required by the OAuth token endpoint."
+                })
+            ),
             php.parameter({
                 name: "authClient",
                 type: php.Type.reference(this.getAuthClientClassReference()),
@@ -152,6 +175,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             body: php.codeblock((writer) => {
                 writer.writeLine("$this->clientId = $clientId;");
                 writer.writeLine("$this->clientSecret = $clientSecret;");
+                for (const property of this.extraRequestProperties) {
+                    writer.writeLine(`$this->${property.parameterName} = $${property.parameterName};`);
+                }
                 writer.writeLine("$this->authClient = $authClient;");
                 writer.writeLine("$this->accessToken = null;");
 
@@ -235,6 +261,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                     if (scopesLiteral != null) {
                         writer.writeLine(`'${scopesPropName}' => ${this.context.getLiteralAsString(scopesLiteral)},`);
                     }
+                }
+
+                for (const property of this.extraRequestProperties) {
+                    writer.writeLine(`'${property.parameterName}' => $this->${property.parameterName},`);
                 }
 
                 writer.dedent();

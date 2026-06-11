@@ -1,0 +1,7 @@
+- summary: |
+    Fix the generated OAuth token provider to forward required non-literal token request
+    properties (custom scopes and other required body properties such as an entity id) to the
+    token endpoint. Previously these properties were silently dropped, so the generated
+    typed token request was missing required keys and failed PHPStan. They are now collected
+    as client constructor parameters and threaded through to the token request.
+  type: fix
