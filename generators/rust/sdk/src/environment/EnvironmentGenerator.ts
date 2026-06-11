@@ -103,9 +103,12 @@ export class EnvironmentGenerator {
 
     private generateMultiUrlEnvironment(config: FernIr.MultipleBaseUrlsEnvironments): RustFile {
         const useStatements = [
+            // Import serde directly rather than relying on the prelude re-export:
+            // the CLI generator embeds this SDK and replaces src/prelude.rs with a
+            // bare types-crate re-export that does not include the serde macros.
             new UseStatement({
-                path: "crate::prelude",
-                items: ["*"]
+                path: "serde",
+                items: ["Deserialize", "Serialize"]
             })
         ];
 

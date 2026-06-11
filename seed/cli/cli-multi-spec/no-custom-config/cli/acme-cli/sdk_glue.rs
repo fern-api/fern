@@ -53,6 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> acme_cli_sdk::api::ApiClient {
     );
     acme_cli_sdk::api::ApiClient {
         config,
+        http_client: http_client.clone(),
 
     }
 }

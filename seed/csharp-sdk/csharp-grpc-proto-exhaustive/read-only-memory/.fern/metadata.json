@@ -1,15 +1,14 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-csharp-sdk",
-  "generatorVersion": "local",
+  "generatorVersion": "latest",
   "generatorConfig": {
     "read-only-memory-types": [
       "float"
     ]
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
+  "invokedBy": "manual",
   "requestedVersion": "0.0.1",
-  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

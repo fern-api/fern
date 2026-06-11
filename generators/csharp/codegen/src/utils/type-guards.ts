@@ -120,9 +120,19 @@ export const is: {
     ClassReference: (value: unknown): value is ClassReference => value instanceof ClassReference,
     Optional: (value: Type): value is Optional => value instanceof Optional,
     OptionalWrapper: (value: Type): value is OptionalWrapper => value instanceof OptionalWrapper,
-    AsyncEnumerable: (value: Type | undefined): value is Type =>
-        value != null &&
-        value.asNonOptional().fullyQualifiedName.startsWith("System.Collections.Generic.IAsyncEnumerable"),
+    AsyncEnumerable: (value: Type | undefined): value is Type => {
+        if (value == null) {
+            return false;
+        }
+        const fqn = value.asNonOptional().fullyQualifiedName;
+        return (
+            fqn.startsWith("System.Collections.Generic.IAsyncEnumerable") ||
+            // WithRawResponseStream<T> implements IAsyncEnumerable<T>, so callers that emit
+            // `await foreach` over the return value must treat it as async-iterable too.
+            fqn.endsWith("WithRawResponseStream") ||
+            fqn.includes("WithRawResponseStream<")
+        );
+    },
     Record: {
         empty: (value: unknown): value is Record<string, unknown> =>
             value == null || Object.keys(value || {}).length === 0,

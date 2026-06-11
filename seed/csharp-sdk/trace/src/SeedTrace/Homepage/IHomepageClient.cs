@@ -7,7 +7,7 @@ public partial interface IHomepageClient
         CancellationToken cancellationToken = default
     );
 
-    Task SetHomepageProblemsAsync(
+    WithRawResponseTask SetHomepageProblemsAsync(
         IEnumerable<string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

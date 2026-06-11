@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.46.1
+  changelogEntry:
+    - summary: |
+        Bump bundled `@fern-api/replay` (via generator-cli 0.9.38) to 0.18.0: replay
+        detection filters `.fernignore`-protected files before materializing patches,
+        handles trailing-slash patterns like `docs/`, and no longer crashes with an
+        unhandled `write EPIPE` during patch application.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
 - version: 5.46.0
   changelogEntry:
     - summary: |
