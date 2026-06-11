@@ -2606,7 +2606,8 @@ export class DocsDefinitionResolver {
                     url: customAction.url,
                     icon: this.resolveIconFileId(customAction.icon),
                     default: customAction.default
-                }))
+                })),
+                skills: this.parsedDocsConfig.pageActions.options.skills
             }
         };
     }

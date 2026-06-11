@@ -13,6 +13,7 @@ export * from "./valid-frontmatter/index.js";
 export * from "./valid-markdown/index.js";
 export * from "./valid-markdown-file-reference/index.js";
 export * from "./valid-markdown-link/index.js";
+export * from "./valid-skills-page-action/index.js";
 export * from "./valid-translations-config/index.js";
 export * from "./valid-well-known-skills/index.js";
 export * from "./validate-product-file/index.js";
