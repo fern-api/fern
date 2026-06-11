@@ -4202,6 +4202,132 @@
       "additionalProperties": false,
       "description": "A custom page action that can be configured by the user."
     },
+    "docs.SkillsInstallCommand": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "A single install command, or a list of commands rendered one per line."
+    },
+    "docs.SkillEntry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The skill identifier."
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Short description of what the skill does."
+        },
+        "url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional link to the skill's source."
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "A single agent skill surfaced in the \"Install skills\" modal. `name` is the skill identifier\n(e.g. `fern-docs`); `url` optionally links to its source (a path in the repo, a docs page, etc.)."
+    },
+    "docs.SkillsPageActionConfig": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Overrides the modal title."
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Overrides the modal description/blurb."
+        },
+        "learn-more-url": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional \"Learn more\" link shown alongside the description."
+        },
+        "repository": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Source repository (e.g. GitHub or GitLab) shown as a \"View source\" button."
+        },
+        "install-command": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SkillsInstallCommand"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Command(s) used to install the skills, rendered verbatim as a copyable block. Providing a\ncustom command disables the modal's per-skill selection. When omitted, the docs site\ngenerates `npx skills add https://<domain>` and per-skill selection appends\n`--skill <name>` flags. A list is rendered as one command per line (multi-step installs)."
+        },
+        "skills": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.SkillEntry"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Skills displayed in the modal."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Configures the \"Install skills\" page action and its modal. Sites that ship agent skills\npoint at where those skills live and how to install them. If the docs site also serves a\n`/.well-known` skills manifest, the modal replaces the hand-listed `skills` array with the\nserved manifest; `title`, `description`, `learn-more-url`, `repository`, and\n`install-command` always come from this config."
+    },
     "docs.PageActionOptions": {
       "type": "object",
       "properties": {
@@ -4306,6 +4432,17 @@
             }
           ],
           "description": "When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.\nThe value of this property should be the name of the custom IDE.\nExample: `cursor`"
+        },
+        "skills": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SkillsPageActionConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enables the \"Install skills\" page action and configures its modal. Presence of this key\nenables the action; omit it and the action is hidden. An empty object (`skills: {}`) is\nvalid and enables the action with all defaults — the right minimal config for sites that\nserve a `/.well-known` skills manifest, where the docs site generates the\n`npx skills add https://<domain>` command and fetches the live skill list itself."
         }
       },
       "additionalProperties": false

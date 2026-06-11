@@ -42,7 +42,12 @@ Instantiate and use the client with the following:
 using SeedStreaming;
 
 var client = new SeedStreamingClient();
-client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
+var items = client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
+
+await foreach (var item in items)
+{
+    // do something with item
+}
 ```
 
 ## Exception Handling
@@ -58,6 +63,17 @@ try {
 } catch (SeedStreamingApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 ```
 
@@ -133,6 +149,9 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 
 // For the default behavior, simply await without .WithRawResponse()
 var data = await client.Dummy.GenerateAsync(...);
+
+// .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
+// and on endpoints with no response body (returns RawResponse only).
 ```
 
 ### Additional Headers

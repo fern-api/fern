@@ -55,8 +55,8 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.extends.SeedExtendsClient;
-import com.seed.extends.requests.Inlined;
+import com.seed._extends.SeedExtendsClient;
+import com.seed._extends.requests.Inlined;
 
 public class Example {
     public static void main(String[] args) {
@@ -81,7 +81,7 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.extends.SeedExtendsClient;
+import com.seed._extends.SeedExtendsClient;
 
 SeedExtendsClient client = SeedExtendsClient
     .builder()
@@ -94,7 +94,7 @@ SeedExtendsClient client = SeedExtendsClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.extends.core.SeedExtendsApiException;
+import com.seed._extends.core.SeedExtendsApiException;
 
 try{
     client.extendedInlineRequestBody(...);
@@ -111,7 +111,7 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.extends.SeedExtendsClient;
+import com.seed._extends.SeedExtendsClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
@@ -147,7 +147,7 @@ Which status codes are retried depends on the `retry-status-codes` generator con
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.extends.SeedExtendsClient;
+import com.seed._extends.SeedExtendsClient;
 
 SeedExtendsClient client = SeedExtendsClient
     .builder()
@@ -159,8 +159,8 @@ SeedExtendsClient client = SeedExtendsClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.extends.SeedExtendsClient;
-import com.seed.extends.core.RequestOptions;
+import com.seed._extends.SeedExtendsClient;
+import com.seed._extends.core.RequestOptions;
 
 // Client level
 SeedExtendsClient client = SeedExtendsClient
@@ -183,8 +183,8 @@ client.extendedInlineRequestBody(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.extends.SeedExtendsClient;
-import com.seed.extends.core.RequestOptions;
+import com.seed._extends.SeedExtendsClient;
+import com.seed._extends.core.RequestOptions;
 
 // Client level
 SeedExtendsClient client = SeedExtendsClient

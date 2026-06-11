@@ -11,10 +11,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
-    /// </code></example>
-    public async Task PostAsync(
+    private async Task<RawResponse> PostAsyncCore(
         string pathParam,
         string serviceParam,
         int endpointParam,
@@ -49,7 +46,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedApiWideBasePath.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -67,5 +69,29 @@ public partial class ServiceClient : IServiceClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
+    /// </code></example>
+    public WithRawResponseTask PostAsync(
+        string pathParam,
+        string serviceParam,
+        int endpointParam,
+        string resourceParam,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            PostAsyncCore(
+                pathParam,
+                serviceParam,
+                endpointParam,
+                resourceParam,
+                options,
+                cancellationToken
+            )
+        );
     }
 }

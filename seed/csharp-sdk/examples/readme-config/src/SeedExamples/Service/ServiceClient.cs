@@ -329,6 +329,58 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
+    private async Task<RawResponse> RefreshTokenAsyncCore(
+        RefreshTokenRequest? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/refresh-token",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new SeedExamples.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedExamples.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
     /// <example><code>
     /// await client.Service.GetMovieAsync("movie-c06a4ad7");
     /// </code></example>
@@ -635,50 +687,12 @@ public partial class ServiceClient : IServiceClient
     /// <example><code>
     /// await client.Service.RefreshTokenAsync(null);
     /// </code></example>
-    public async Task RefreshTokenAsync(
+    public WithRawResponseTask RefreshTokenAsync(
         RefreshTokenRequest? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "/refresh-token",
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedExamplesApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody,
-                rawResponse: new SeedExamples.RawResponse()
-                {
-                    StatusCode = response.Raw.StatusCode,
-                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
-                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
-                }
-            );
-        }
+        return new WithRawResponseTask(RefreshTokenAsyncCore(request, options, cancellationToken));
     }
 }

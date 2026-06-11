@@ -187,7 +187,7 @@ await client.File.Service.GetFileAsync(
 </details>
 
 ## Health Service
-<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">CheckAsync</a>(id)</code></summary>
+<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">CheckAsync</a>(id) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -688,7 +688,7 @@ await client.Service.CreateBigEntityAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest? { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest? { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

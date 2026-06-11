@@ -1,0 +1,3 @@
+- summary: |
+    Document the new `RawResponse` property on thrown API exceptions in the generated README's Exception Handling section, and note that `.WithRawResponse()` also works on streaming and void endpoints in the Raw Response section.
+  type: chore
