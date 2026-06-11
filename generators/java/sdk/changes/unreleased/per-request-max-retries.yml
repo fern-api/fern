@@ -1,0 +1,7 @@
+- summary: |
+    Add per-request `maxRetries` override on `RequestOptions`. A non-null
+    per-request value overrides the client-wide `ClientOptions.maxRetries`;
+    when unset, behavior is unchanged. Mirrors the existing per-request
+    `timeout` override pattern and matches the behavior of the TypeScript,
+    Python, Go, C#, PHP, Rust, and Swift SDKs.
+  type: feat
