@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.2
+  changelogEntry:
+    - summary: |
+        Document the new `RawResponse` property on thrown API exceptions in the generated README's Exception Handling section, and note that `.WithRawResponse()` also works on streaming and void endpoints in the Raw Response section.
+      type: chore
+  createdAt: "2026-06-11"
+  irVersion: 66
 - version: 2.68.1
   changelogEntry:
     - summary: |
