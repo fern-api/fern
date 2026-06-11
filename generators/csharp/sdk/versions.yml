@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.1
+  changelogEntry:
+    - summary: |
+        Fix `ObjectDisposedException` thrown from `RawClient.CloneRequestAsync` when retrying a request
+        with retryable content (JSON or buffered multipart). The retry loop previously sent the original
+        `HttpRequestMessage` for the initial attempt and only cloned for retries; under HTTP/2 (and some
+        other configurations) `HttpClient` disposes the Content of every request it sends, leaving the
+        original's Content disposed by the time the first retry tried to clone it. The loop now always
+        sends a clone — never the original — for retryable content with at least one retry budgeted.
+
+        Same fix also: clamps negative `MaxRetries` values to `0` (would have surfaced as
+        `NullReferenceException` under the new loop structure); short-circuits `MaxRetries == 0` and the
+        non-retryable content path through a fast lane that sends the original directly with no cloning
+        cost; and threads the caller's `CancellationToken` into `CloneRequestAsync`'s body-buffering so
+        cancellation requests during large-body clones are honoured promptly (.NET 5+).
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
 - version: 2.68.0
   changelogEntry:
     - summary: |
