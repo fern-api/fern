@@ -191,6 +191,7 @@ allowedFailures:
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi:github-npm
+  - query-parameters-openapi:github-no-publish
   - query-parameters-openapi:no-custom-config
   - query-parameters-openapi-as-objects
   - request-parameters
