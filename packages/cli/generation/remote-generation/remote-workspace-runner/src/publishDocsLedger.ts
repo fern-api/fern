@@ -531,7 +531,7 @@ function toReadApiDefinition(
  * with their translated equivalents (produced from translated OpenAPI specs
  * under `translations/<locale>/apis/<apiName>/`).
  */
-function buildLocaleApiDefinitions({
+export function buildLocaleApiDefinitions({
     baseApiDefinitions,
     translatedSpecs,
     context
