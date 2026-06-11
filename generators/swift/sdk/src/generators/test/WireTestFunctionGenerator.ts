@@ -338,24 +338,35 @@ export class WireTestFunctionGenerator {
                         );
                     },
                     object: (exampleObjectType) => {
+                        const propertyArgs: swift.FunctionArgument[] = this.orderExamplePropertiesByDeclaration(
+                            typeId,
+                            exampleObjectType.properties
+                        )
+                            .map((property) => {
+                                if (
+                                    property.value.shape.type === "container" &&
+                                    property.value.shape.container.type === "optional" &&
+                                    property.value.shape.container.optional == null
+                                ) {
+                                    return null;
+                                }
+                                const exampleResponse = this.generateExampleResponse(property.value, fromScope);
+                                return swift.functionArgument({
+                                    label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
+                                    value: exampleResponse
+                                });
+                            })
+                            .filter((arg): arg is swift.FunctionArgument => arg != null);
+                        const additionalPropertiesArg = this.buildAdditionalPropertiesArg({
+                            jsonExample: exampleTypeRef.jsonExample,
+                            declaredWireNames: new Set(exampleObjectType.properties.map((p) => getWireValue(p.name)))
+                        });
+                        if (additionalPropertiesArg != null) {
+                            propertyArgs.push(additionalPropertiesArg);
+                        }
                         return swift.Expression.structInitialization({
                             unsafeName: symbol.name,
-                            arguments_: this.orderExamplePropertiesByDeclaration(typeId, exampleObjectType.properties)
-                                .map((property) => {
-                                    if (
-                                        property.value.shape.type === "container" &&
-                                        property.value.shape.container.type === "optional" &&
-                                        property.value.shape.container.optional == null
-                                    ) {
-                                        return null;
-                                    }
-                                    const exampleResponse = this.generateExampleResponse(property.value, fromScope);
-                                    return swift.functionArgument({
-                                        label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
-                                        value: exampleResponse
-                                    });
-                                })
-                                .filter((arg) => arg != null),
+                            arguments_: propertyArgs,
                             multiline: true
                         });
                     },
@@ -370,18 +381,6 @@ export class WireTestFunctionGenerator {
                                     memberName: caseName
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) => {
-                                const declaredWireNames = new Set(
-                                    exampleObjectTypeWithId.object.properties.map((p) => getWireValue(p.name))
-                                );
-                                const jsonObj =
-                                    exampleTypeRef.jsonExample != null &&
-                                    typeof exampleTypeRef.jsonExample === "object" &&
-                                    !Array.isArray(exampleTypeRef.jsonExample)
-                                        ? (exampleTypeRef.jsonExample as Record<string, unknown>)
-                                        : {};
-                                const extraEntries = Object.entries(jsonObj).filter(
-                                    ([key]) => !declaredWireNames.has(key)
-                                );
                                 const propertyArgs: swift.FunctionArgument[] = this.orderExamplePropertiesByDeclaration(
                                     exampleObjectTypeWithId.typeId,
                                     exampleObjectTypeWithId.object.properties
@@ -401,19 +400,14 @@ export class WireTestFunctionGenerator {
                                         });
                                     })
                                     .filter((arg): arg is swift.FunctionArgument => arg != null);
-                                if (extraEntries.length > 0) {
-                                    propertyArgs.push(
-                                        swift.functionArgument({
-                                            label: "additionalProperties",
-                                            value: swift.Expression.dictionaryLiteral({
-                                                entries: extraEntries.map(([key, value]) => [
-                                                    swift.Expression.escapedStringLiteral(key),
-                                                    this.generateUnknownExampleResponse(value)
-                                                ]),
-                                                multiline: true
-                                            })
-                                        })
-                                    );
+                                const additionalPropertiesArg = this.buildAdditionalPropertiesArg({
+                                    jsonExample: exampleTypeRef.jsonExample,
+                                    declaredWireNames: new Set(
+                                        exampleObjectTypeWithId.object.properties.map((p) => getWireValue(p.name))
+                                    )
+                                });
+                                if (additionalPropertiesArg != null) {
+                                    propertyArgs.push(additionalPropertiesArg);
                                 }
                                 return swift.Expression.methodCall({
                                     target: swift.Expression.reference(symbol.name),
@@ -470,6 +464,41 @@ export class WireTestFunctionGenerator {
                 return this.generateUnknownExampleResponse(val);
             },
             _other: () => swift.Expression.nop()
+        });
+    }
+
+    /**
+     * Builds the `additionalProperties` argument for an object whose schema
+     * permits extra properties. The decoded response captures any JSON keys not
+     * declared on the type into `additionalProperties`, so the expected response
+     * must include them too or the equality assertion fails. Returns `null` when
+     * the example has no undeclared keys (so objects without extra properties are
+     * left untouched).
+     */
+    private buildAdditionalPropertiesArg({
+        jsonExample,
+        declaredWireNames
+    }: {
+        jsonExample: unknown;
+        declaredWireNames: Set<string>;
+    }): swift.FunctionArgument | null {
+        const jsonObj =
+            jsonExample != null && typeof jsonExample === "object" && !Array.isArray(jsonExample)
+                ? (jsonExample as Record<string, unknown>)
+                : {};
+        const extraEntries = Object.entries(jsonObj).filter(([key]) => !declaredWireNames.has(key));
+        if (extraEntries.length === 0) {
+            return null;
+        }
+        return swift.functionArgument({
+            label: "additionalProperties",
+            value: swift.Expression.dictionaryLiteral({
+                entries: extraEntries.map(([key, value]) => [
+                    swift.Expression.escapedStringLiteral(key),
+                    this.generateUnknownExampleResponse(value)
+                ]),
+                multiline: true
+            })
         });
     }
 
