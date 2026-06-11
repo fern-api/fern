@@ -56,7 +56,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ExamplesClient.swift">createType</a>(request: Type, requestOptions: RequestOptions?) -> Identifier</code></summary>
+<details><summary><code>client.<a href="/Sources/ExamplesClient.swift">createType</a>(request: `Type`, requestOptions: RequestOptions?) -> Identifier</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Type` 
+**request:** ``Type`` 
     
 </dd>
 </dl>

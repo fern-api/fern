@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FoundationTypeSymbolName, SwiftTypeSymbolName } from "../symbol/index.js";
+import { escapeReservedKeywordTypeReference } from "../syntax/index.js";
 import { AstNode, Writer } from "./core/index.js";
 
 type Symbol = {
@@ -72,7 +73,7 @@ export class TypeReference extends AstNode {
 
         switch (variant.type) {
             case "symbol":
-                writer.write(variant.symbol);
+                writer.write(escapeReservedKeywordTypeReference(variant.symbol));
                 break;
             case "generic": {
                 variant.reference.write(writer);

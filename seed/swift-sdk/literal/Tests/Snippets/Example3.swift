@@ -1,0 +1,23 @@
+import Foundation
+import Literal
+
+enum Example3 {
+    static func snippet() async throws {
+        let client = LiteralClient(baseURL: "https://api.fern.com")
+
+        _ = try await client.inlined.send(request: .init(
+            prompt: .youAreAHelpfulAssistant,
+            context: .youreSuperWise,
+            query: "query",
+            temperature: 1.1,
+            stream: false,
+            aliasedContext: .youreSuperWise,
+            maybeContext: .youreSuperWise,
+            objectWithLiteral: ATopLevelLiteral(
+                nestedLiteral: ANestedLiteral(
+                    myLiteral: .howSuperCool
+                )
+            )
+        ))
+    }
+}

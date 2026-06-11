@@ -3,14 +3,14 @@ import Foundation
 /// Tests that union members named 'Type' or 'Value' don't collide with internal properties
 public enum UnionWithReservedNames: Codable, Hashable, Sendable {
     case string(String)
-    case type(Type)
+    case type(`Type`)
     case value(Value)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(String.self) {
             self = .string(value)
-        } else if let value = try? container.decode(Type.self) {
+        } else if let value = try? container.decode(`Type`.self) {
             self = .type(value)
         } else if let value = try? container.decode(Value.self) {
             self = .value(value)
@@ -34,7 +34,7 @@ public enum UnionWithReservedNames: Codable, Hashable, Sendable {
         }
     }
 
-    public enum Type: String, Codable, Hashable, CaseIterable, Sendable {
+    public enum `Type`: String, Codable, Hashable, CaseIterable, Sendable {
         case type
     }
 

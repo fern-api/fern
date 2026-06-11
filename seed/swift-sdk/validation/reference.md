@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ValidationClient.swift">create</a>(request: Requests.CreateRequest, requestOptions: RequestOptions?) -> Type</code></summary>
+<details><summary><code>client.<a href="/Sources/ValidationClient.swift">create</a>(request: Requests.CreateRequest, requestOptions: RequestOptions?) -> `Type`</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/Sources/ValidationClient.swift">get</a>(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions?) -> Type</code></summary>
+<details><summary><code>client.<a href="/Sources/ValidationClient.swift">get</a>(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions?) -> `Type`</code></summary>
 <dl>
 <dd>
 

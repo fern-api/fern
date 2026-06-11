@@ -284,10 +284,13 @@ export abstract class AbstractSwiftGeneratorContext<
                         literal._visit({
                             boolean: () => referencer.referenceAsIsType("JSONValue"),
                             string: (literalValue) => {
-                                const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbolOrThrow(
+                                const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbol(
                                     fromSymbol,
                                     literalValue
                                 );
+                                if (symbol == null) {
+                                    return referencer.referenceAsIsType("JSONValue");
+                                }
                                 return referencer.referenceType(symbol);
                             },
                             _other: () => referencer.referenceAsIsType("JSONValue")
