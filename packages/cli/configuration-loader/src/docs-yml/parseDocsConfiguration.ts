@@ -1647,7 +1647,8 @@ function parseLibrariesConfiguration(
         result[name] = {
             input: {
                 git: config.input.git,
-                subpath: config.input.subpath
+                subpath: config.input.subpath,
+                branch: config.input.branch
             },
             output: {
                 path: config.output.path

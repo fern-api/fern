@@ -1,0 +1,5 @@
+- summary: |
+    Add `branch` field to the `git` library input in `docs.yml`, allowing users to
+    generate SDK reference documentation from a specific branch, tag, or commit SHA
+    instead of only the default branch.
+  type: feat

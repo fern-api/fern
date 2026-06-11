@@ -1533,6 +1533,12 @@ types:
         docs: |
           Optional path within the repository to the library source.
           Example: django/core
+      branch:
+        type: optional<string>
+        docs: |
+          Git branch, tag, or commit SHA to check out.
+          Defaults to the repository's default branch when omitted.
+          Example: feature/my-fix
 
   PathLibraryInputSchema:
     docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
