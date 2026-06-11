@@ -8,7 +8,7 @@ import Exhaustive
         stub.setResponse(
             body: Data(
                 #"""
-                SUNNY
+                "SUNNY"
                 """#.utf8
             )
         )

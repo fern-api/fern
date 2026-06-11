@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed wire-test stub response bodies so they are valid JSON for every
+    response type. The generated SDK reads `String`-typed response bodies as raw
+    UTF-8 but decodes every other type via `JSONDecoder`. Wire tests now mirror
+    that: `String`-decoded responses (string/bigInteger/base64 primitives) emit
+    the raw payload, while all other types (objects, enums, dates, UUIDs, numbers,
+    unions, etc.) are JSON-encoded. Previously bare scalars such as a UUID or enum
+    value were emitted unquoted, producing invalid JSON that failed to decode.
+  type: fix

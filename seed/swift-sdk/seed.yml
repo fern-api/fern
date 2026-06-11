@@ -135,7 +135,6 @@ allowedFailures:
   - exhaustive
   - extra-properties
   - file-upload-openapi
-  - idempotency-headers
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
