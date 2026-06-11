@@ -216,13 +216,6 @@ fixtures:
         packageName: stream
         module:
           path: github.com/fern-api/stream-go
-  server-sent-event-examples:
-    - outputFolder: with-wire-tests
-      customConfig:
-        enableWireTests: true
-        packageName: sse
-        module:
-          path: github.com/fern-api/sse-examples-go
   server-sent-events:
     - outputFolder: with-wire-tests
       customConfig:
@@ -364,6 +357,3 @@ allowedFailures:
   - enum # enum-union header value is not converted to a string
   - trace # generated v2/ subpackage references undefined test types
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline
-
-  # Dynamic snippet generation produces code that does not compile.
-  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
