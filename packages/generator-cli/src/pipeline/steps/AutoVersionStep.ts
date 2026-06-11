@@ -28,16 +28,21 @@ const FERN_TRAILER = "\n\n🌿 Generated with Fern";
 type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
 
 /**
- * Runs SDK autoversioning inside the replay pipeline, between the `[fern-generated]`
- * commit (produced by GenerationCommitStep) and replay detect/apply (ReplayStep).
- * Diffs prev vs new `[fern-generated]` SHAs — both pure generator output, no replay
- * customizations on either side — calls FAI to determine the semver bump and a
- * user-facing changelog entry, rewrites the placeholder version across the working
- * tree, prepends the entry to `changelog.md`, and commits `[fern-autoversion]` on top
- * of the generation commit.
+ * Runs SDK autoversioning in one of two modes:
+ *
+ * **Replay mode** (PreparedReplay available): Diffs prev vs new `[fern-generated]`
+ * SHAs — both pure generator output, no replay customizations on either side — calls
+ * FAI to determine the semver bump and a user-facing changelog entry, rewrites the
+ * placeholder version, prepends the entry to `changelog.md`, and commits
+ * `[fern-autoversion]` on top of the generation commit.
+ *
+ * **Non-replay mode** (no PreparedReplay): Diffs HEAD (committed SDK) vs the working
+ * tree (freshly generated files) using `git diff HEAD`. Calls FAI, rewrites the
+ * placeholder version, but does NOT commit — GithubStep will commit all changes
+ * (including the version rewrite) in a single generation commit. This mode ensures
+ * magic version placeholders are replaced even for orgs that haven't opted into replay.
  *
  * Short-circuits when:
- *  - GenerationCommitStep did not produce a PreparedReplay handle (replay uninitialized).
  *  - Replay's selected flow is `skip-application`.
  *  - The prev-vs-current diff is empty (no generator output changed).
  *  - FAI returns NO_CHANGE.
@@ -60,41 +65,42 @@ export class AutoVersionStep extends BaseStep {
     async execute(context: PipelineContext): Promise<AutoVersionStepResult> {
         const prepared = context.previousStepResults.generationCommit?.preparedReplay;
 
-        if (!prepared) {
-            this.logger.info(
-                "AutoVersionStep: no replay preparation available (replay uninitialized or prepare failed); skipping."
-            );
-            return { executed: true, success: true };
+        if (prepared) {
+            if (prepared.flow === "skip-application") {
+                this.logger.info("AutoVersionStep: replay flow is skip-application; skipping autoversion.");
+                return { executed: true, success: true };
+            }
+
+            const language = this.config.language;
+            const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, language);
+            const service = new AutoVersioningService({ logger: this.toTaskLogger() });
+
+            if (prepared.previousGenerationSha == null) {
+                return await this.handleFirstGeneration({ service, language, mappedMagicVersion, commit: true });
+            }
+
+            return await this.handleNormalFlow({
+                prepared,
+                service,
+                language,
+                mappedMagicVersion,
+                previousGenerationSha: prepared.previousGenerationSha
+            });
         }
 
-        if (prepared.flow === "skip-application") {
-            this.logger.info("AutoVersionStep: replay flow is skip-application; skipping autoversion.");
-            return { executed: true, success: true };
-        }
-
-        const language = this.config.language;
-        const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, language);
-        const service = new AutoVersioningService({ logger: this.toTaskLogger() });
-
-        if (prepared.previousGenerationSha == null) {
-            return await this.handleFirstGeneration({ service, language, mappedMagicVersion });
-        }
-
-        return await this.handleNormalFlow({
-            prepared,
-            service,
-            language,
-            mappedMagicVersion,
-            previousGenerationSha: prepared.previousGenerationSha
-        });
+        // Non-replay path: diff HEAD (committed SDK) vs working tree (new generation).
+        // GithubStep will commit, so we only rewrite the placeholder — no commit here.
+        this.logger.info("AutoVersionStep: running in non-replay mode (git diff HEAD).");
+        return await this.handleNonReplayFlow();
     }
 
     private async handleFirstGeneration(params: {
         service: AutoVersioningService;
         language: string;
         mappedMagicVersion: string;
+        commit: boolean;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion } = params;
+        const { service, language, mappedMagicVersion, commit } = params;
         const initialVersion = this.config.baseVersion ?? (mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1");
 
         // `initialVersion` flows into `AutoVersioningService.replaceMagicVersion`, which
@@ -124,7 +130,7 @@ export class AutoVersionStep extends BaseStep {
         }
 
         const commitMessage = this.brandMessage("Initial SDK generation");
-        const commitSha = this.commitAutoversion(commitMessage);
+        const commitSha = commit ? this.commitAutoversion(commitMessage) : undefined;
 
         return {
             executed: true,
@@ -153,7 +159,7 @@ export class AutoVersionStep extends BaseStep {
             baseVersion: this.config.baseVersion
         });
         if (previousVersion == null) {
-            return await this.handleFirstGeneration({ service, language, mappedMagicVersion });
+            return await this.handleFirstGeneration({ service, language, mappedMagicVersion, commit: true });
         }
 
         // Even when the two [fern-generated] trees are byte-identical, the
@@ -257,6 +263,121 @@ export class AutoVersionStep extends BaseStep {
     }
 
     /**
+     * Non-replay autoversion: diffs HEAD (committed SDK) vs the working tree
+     * (freshly generated files). Does NOT commit — GithubStep will commit all
+     * changes (including the rewritten placeholder) in a single generation commit.
+     */
+    private async handleNonReplayFlow(): Promise<AutoVersionStepResult> {
+        const language = this.config.language;
+        const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, language);
+        const service = new AutoVersioningService({ logger: this.toTaskLogger() });
+
+        const rawDiff = this.gitDiffHead();
+
+        const previousVersion = await this.resolvePreviousVersionNonReplay({
+            service,
+            rawDiff,
+            mappedMagicVersion,
+            baseVersion: this.config.baseVersion
+        });
+        if (previousVersion == null) {
+            return await this.handleFirstGeneration({ service, language, mappedMagicVersion, commit: false });
+        }
+
+        if (rawDiff.trim().length === 0) {
+            this.logger.info(`AutoVersionStep: empty diff (non-replay); rewriting placeholder to ${previousVersion}.`);
+            return await this.finalizeNoChangeNonReplay({
+                service,
+                language,
+                mappedMagicVersion,
+                previousVersion,
+                reason: "no diff between generations"
+            });
+        }
+
+        const cleanedDiff = service.cleanDiffForAI(rawDiff, mappedMagicVersion);
+        const rawBytes = Buffer.byteLength(rawDiff, "utf-8");
+        const cleanedBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+        this.logger.debug(
+            `AutoVersionStep (non-replay): raw=${formatSizeKB(rawBytes)}KB (${countFilesInDiff(rawDiff)} files), ` +
+                `cleaned=${formatSizeKB(cleanedBytes)}KB (${countFilesInDiff(cleanedDiff)} files)`
+        );
+
+        if (cleanedDiff.trim().length === 0) {
+            this.logger.info(
+                `AutoVersionStep: cleaned diff empty (non-replay); rewriting placeholder to ${previousVersion}.`
+            );
+            return await this.finalizeNoChangeNonReplay({
+                service,
+                language,
+                mappedMagicVersion,
+                previousVersion,
+                reason: "no semantic changes"
+            });
+        }
+
+        if (cleanedBytes > MAX_RAW_DIFF_BYTES) {
+            this.logger.warn(
+                `AutoVersionStep (non-replay): diff too large (${formatSizeKB(cleanedBytes)}KB). Falling back to PATCH.`
+            );
+            return await this.finalizeWithBumpNonReplay({
+                service,
+                language,
+                mappedMagicVersion,
+                previousVersion,
+                analysis: { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") }
+            });
+        }
+
+        let analysis: FAIAnalysis | null;
+        try {
+            if (this.config.ai == null && this.config.fernToken != null) {
+                analysis = await this.analyzeViaFaiService(cleanedDiff, language, previousVersion);
+            } else {
+                const chunks = service.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+                const cappedChunks = chunks.slice(0, MAX_CHUNKS);
+                const skippedChunks = chunks.length - cappedChunks.length;
+                if (chunks.length > 1) {
+                    this.logger.info(
+                        `AutoVersionStep (non-replay): split diff into ${chunks.length} chunks` +
+                            (skippedChunks > 0 ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks})` : "")
+                    );
+                }
+                analysis =
+                    cappedChunks.length <= 1
+                        ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
+                        : await this.analyzeChunks(cappedChunks, language, previousVersion);
+            }
+        } catch (error) {
+            this.logger.warn(
+                `AutoVersionStep (non-replay): FAI analysis failed (${String(error)}); falling back to PATCH bump.`
+            );
+            analysis = { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
+        }
+
+        if (analysis == null) {
+            this.logger.info(
+                `AutoVersionStep (non-replay): FAI returned NO_CHANGE; rewriting placeholder to ${previousVersion}.`
+            );
+            return await this.finalizeNoChangeNonReplay({
+                service,
+                language,
+                mappedMagicVersion,
+                previousVersion,
+                reason: "FAI returned NO_CHANGE"
+            });
+        }
+
+        return await this.finalizeWithBumpNonReplay({
+            service,
+            language,
+            mappedMagicVersion,
+            previousVersion,
+            analysis
+        });
+    }
+
+    /**
      * Terminal path for runs that determine no semver bump is needed. The
      * current working tree still contains `0.0.0-fern-placeholder` from this
      * run's generator output, so we must rewrite it to `previousVersion`
@@ -343,6 +464,132 @@ export class AutoVersionStep extends BaseStep {
         };
     }
 
+    /**
+     * Non-replay variant of finalizeNoChange. Rewrites the placeholder to
+     * `previousVersion` but does NOT commit — GithubStep handles the commit.
+     */
+    private async finalizeNoChangeNonReplay(params: {
+        service: AutoVersioningService;
+        language: string;
+        mappedMagicVersion: string;
+        previousVersion: string;
+        reason: string;
+    }): Promise<AutoVersionStepResult> {
+        const { service, language, mappedMagicVersion, previousVersion, reason } = params;
+
+        if (!isValidSemver(previousVersion)) {
+            const errorMessage =
+                `AutoVersionStep: resolved previousVersion ${JSON.stringify(previousVersion)} is not a ` +
+                `valid semver string. Refusing to rewrite placeholder to avoid shell injection.`;
+            this.logger.error(errorMessage);
+            return { executed: true, success: false, errorMessage };
+        }
+
+        await service.replaceMagicVersion(this.outputDir, mappedMagicVersion, previousVersion);
+        if (language === "go") {
+            await service.addGoMajorVersionSuffix(this.outputDir, previousVersion);
+        }
+
+        const commitMessage = this.brandMessage(`SDK regeneration (no semver change: ${reason})`);
+        return {
+            executed: true,
+            success: true,
+            version: previousVersion,
+            previousVersion,
+            versionBump: "NO_CHANGE",
+            commitMessage
+        };
+    }
+
+    /**
+     * Non-replay variant of finalizeWithBump. Rewrites the placeholder to
+     * the bumped version but does NOT commit — GithubStep handles the commit.
+     */
+    private async finalizeWithBumpNonReplay(params: {
+        service: AutoVersioningService;
+        language: string;
+        mappedMagicVersion: string;
+        previousVersion: string;
+        analysis: FAIAnalysis;
+    }): Promise<AutoVersionStepResult> {
+        const { service, language, mappedMagicVersion, previousVersion, analysis } = params;
+
+        const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
+        this.logger.info(
+            `AutoVersionStep (non-replay): ${analysis.versionBump} bump: ${previousVersion} → ${newVersion}`
+        );
+
+        await service.replaceMagicVersion(this.outputDir, mappedMagicVersion, newVersion);
+        if (language === "go") {
+            await service.addGoMajorVersionSuffix(this.outputDir, newVersion);
+        }
+
+        if (analysis.changelogEntry && analysis.changelogEntry.trim().length > 0) {
+            await this.prependChangelogEntry({ version: newVersion, entry: analysis.changelogEntry });
+        }
+
+        return {
+            executed: true,
+            success: true,
+            version: newVersion,
+            commitMessage: analysis.message,
+            changelogEntry: analysis.changelogEntry,
+            previousVersion,
+            versionBump: analysis.versionBump as VersionBumpLabel,
+            prDescription: analysis.prDescription,
+            versionBumpReason: analysis.versionBumpReason
+        };
+    }
+
+    /**
+     * Resolves the previous version for non-replay mode. Reads HEAD:.fern/metadata.json
+     * (not HEAD~1, since no generation commit exists yet) as the primary fallback.
+     */
+    private async resolvePreviousVersionNonReplay(params: {
+        service: AutoVersioningService;
+        rawDiff: string;
+        mappedMagicVersion: string;
+        baseVersion?: string;
+    }): Promise<string | null> {
+        const { service, rawDiff, mappedMagicVersion, baseVersion } = params;
+
+        if (baseVersion != null && isValidSemver(baseVersion)) {
+            this.logger.debug(
+                `AutoVersionStep (non-replay): previous version from pipeline baseVersion: ${baseVersion}`
+            );
+            return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);
+        }
+
+        try {
+            const extracted = service.extractPreviousVersion(rawDiff, mappedMagicVersion);
+            if (extracted != null) {
+                this.logger.debug(`AutoVersionStep (non-replay): previous version from diff: ${extracted}`);
+                return extracted;
+            }
+        } catch (error) {
+            if (!(error instanceof AutoVersioningException) || !error.magicVersionAbsent) {
+                throw error;
+            }
+            this.logger.info("AutoVersionStep (non-replay): magic version not in diff; trying metadata + git tags.");
+        }
+
+        const metadataVersion = this.readVersionFromMetadataAtHead();
+        if (metadataVersion != null) {
+            return this.normalizeVersionPrefix(metadataVersion, mappedMagicVersion);
+        }
+
+        try {
+            const tagVersion = await service.getLatestVersionFromGitTags(this.outputDir);
+            if (tagVersion != null) {
+                return this.normalizeVersionPrefix(tagVersion, mappedMagicVersion);
+            }
+        } catch (error) {
+            this.logger.debug(`AutoVersionStep (non-replay): git-tags fallback failed (${String(error)}); ignoring.`);
+        }
+
+        return null;
+    }
+
     private async resolvePreviousVersion(params: {
         service: AutoVersioningService;
         rawDiff: string;
@@ -406,6 +653,44 @@ export class AutoVersionStep extends BaseStep {
     private normalizeVersionPrefix(version: string, mappedMagicVersion: string): string {
         const stripped = version.startsWith("v") ? version.slice(1) : version;
         return mappedMagicVersion.startsWith("v") ? `v${stripped}` : stripped;
+    }
+
+    /**
+     * Reads the sdkVersion from the committed (HEAD) .fern/metadata.json.
+     * Used by the non-replay path where no generation commit exists yet,
+     * so HEAD is the unmodified SDK repository.
+     */
+    private readVersionFromMetadataAtHead(): string | undefined {
+        try {
+            const output = execFileSync("git", ["show", "HEAD:.fern/metadata.json"], {
+                cwd: this.outputDir,
+                encoding: "utf-8",
+                stdio: "pipe"
+            });
+            const parsed = JSON.parse(output) as { sdkVersion?: string };
+            return parsed.sdkVersion ?? undefined;
+        } catch (error) {
+            this.logger.debug(`AutoVersionStep: failed to read HEAD:.fern/metadata.json (${String(error)})`);
+            return undefined;
+        }
+    }
+
+    /**
+     * Computes a diff between HEAD (committed SDK) and the working tree (new
+     * generation). Marks untracked files as intent-to-add so they appear in
+     * the diff, matching LocalTaskHandler.generateDiffFile() behavior.
+     */
+    private gitDiffHead(): string {
+        execFileSync("git", ["add", "-N", "."], {
+            cwd: this.outputDir,
+            stdio: "pipe"
+        });
+        return execFileSync("git", ["diff", "HEAD", "--", ".", ":(exclude).fern/metadata.json"], {
+            cwd: this.outputDir,
+            encoding: "utf-8",
+            stdio: "pipe",
+            maxBuffer: 256 * 1024 * 1024
+        });
     }
 
     private gitDiff(from: string, to: string): string {

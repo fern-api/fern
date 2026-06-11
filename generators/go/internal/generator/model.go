@@ -383,6 +383,10 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
 	discriminantName := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	// Base properties that share a name with an extended property would otherwise
+	// be emitted twice, producing duplicate struct fields and getters that fail to
+	// compile. Skip those base properties; the extended property already covers them.
+	extendedPropertyNames := t.unionExtendedPropertyNames(union)
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
@@ -397,6 +401,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		literals = append(literals, extendedObjectProperties.literals...)
 	}
 	for _, property := range union.BaseProperties {
+		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
 			continue
@@ -495,6 +502,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		propertyNames = append(propertyNames, extendedObjectProperties.names...)
 	}
 	for _, property := range union.BaseProperties {
+		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
 		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 		if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
 			propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
@@ -654,6 +664,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			)
 		}
 		for _, property := range union.BaseProperties {
+			if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+				continue
+			}
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 				continue
 			}
@@ -1476,6 +1489,30 @@ func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) [
 	return fields
 }
 
+// unionExtendedPropertyNames returns the set of exported Go field names contributed
+// by the union's extended objects (transitively). Base properties whose exported name
+// collides with one of these are skipped during generation so the union doesn't emit
+// duplicate struct fields, getters, or marshaler entries.
+func (t *typeVisitor) unionExtendedPropertyNames(union *ir.UnionTypeDeclaration) map[string]struct{} {
+	names := make(map[string]struct{})
+	var collect func(obj *ir.ObjectTypeDeclaration)
+	collect = func(obj *ir.ObjectTypeDeclaration) {
+		if obj == nil {
+			return
+		}
+		for _, extend := range obj.Extends {
+			collect(t.writer.types[extend.TypeId].Shape.Object)
+		}
+		for _, property := range obj.Properties {
+			names[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+		}
+	}
+	for _, extend := range union.Extends {
+		collect(t.writer.types[extend.TypeId].Shape.Object)
+	}
+	return names
+}
+
 // getTypeFieldsForUnion retrieves the type fields for the given union.
 func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*typeField {
 	var fields []*typeField
@@ -1489,11 +1526,15 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 			NeedsDereference: false,
 		},
 	)
+	extendedPropertyNames := t.unionExtendedPropertyNames(union)
 	for _, extend := range union.Extends {
 		extended := t.writer.types[extend.TypeId].Shape.Object
 		fields = append(fields, t.getTypeFieldsForObject(extended)...)
 	}
 	for _, property := range union.BaseProperties {
+		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}

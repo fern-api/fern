@@ -361,7 +361,6 @@ allowedFailures:
   - pagination
 
   # Generated Go code does not compile. Each needs a generator fix.
-  - property-access # union member name `Normal` is declared twice
   - trace # generated v2/ subpackage references undefined test types
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline
 
