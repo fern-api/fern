@@ -828,97 +828,130 @@ export async function publishDocs({
             });
         }
 
-        // ── Legacy publish path ──────────────────────────────────────
-        if (deployMode !== "ledger" && docsRegistrationId != null) {
+        // ── Build ledger git provenance (shared by dual + ledger paths) ──
+        const ledgerGit: DocsPublishGitInput | undefined =
+            ciSource?.repo != null && ciSource?.branch != null
+                ? {
+                      repoUrl: normalizeRepoUrlToHttps(ciSource.repo, ciSource.type),
+                      branch: ciSource.branch,
+                      commitSha: ciSource.commitSha
+                  }
+                : undefined;
+
+        // ── Publish helpers ──────────────────────────────────────────
+        const runLegacyPublish = async (): Promise<void> => {
+            if (docsRegistrationId == null) {
+                return;
+            }
             context.logger.info("Publishing docs to FDR...");
             const publishStart = performance.now();
-            try {
-                const legacyDocsDefinition = mapDocsDefinitionToLegacyFileIds({
+            const legacyDocsDefinition = mapDocsDefinitionToLegacyFileIds({
+                docsDefinition,
+                pathToFileId: legacyFilePathToId
+            });
+            await fdr.docs.v2.write.finishDocsRegister({
+                docsRegistrationId,
+                docsDefinition: legacyDocsDefinition,
+                excludeApis,
+                ...(isBasepathAware && !preview && { basepathAware: true })
+            });
+            const publishTime = performance.now() - publishStart;
+            context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+        };
+
+        const runLedgerPublish = async (): Promise<void> => {
+            if (preview) {
+                const previewResult = await publishDocsViaLedgerPreview({
                     docsDefinition,
-                    pathToFileId: legacyFilePathToId
+                    organization,
+                    basePath,
+                    previewId: previewId != null ? sanitizePreviewId(previewId) : previewId,
+                    git: ledgerGit,
+                    token: token.value,
+                    fdrOrigin,
+                    headers,
+                    context,
+                    apiDefinitions: apiDefinitionCollector,
+                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                    filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
+                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    resolver
                 });
-                await fdr.docs.v2.write.finishDocsRegister({
-                    docsRegistrationId,
-                    docsDefinition: legacyDocsDefinition,
-                    excludeApis,
-                    ...(isBasepathAware && !preview && { basepathAware: true })
+                if (deployMode === "ledger") {
+                    urlToOutput = previewResult.previewUrl;
+                }
+                context.logger.info(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
+            } else {
+                const ledgerResult = await publishDocsViaLedger({
+                    docsDefinition,
+                    organization,
+                    domain,
+                    basepath: basePath,
+                    previewId,
+                    customDomains,
+                    git: ledgerGit,
+                    token: token.value,
+                    fdrOrigin,
+                    headers,
+                    context,
+                    apiDefinitions: apiDefinitionCollector,
+                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                    filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
+                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    resolver
                 });
+                context.logger.info(
+                    `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
+                );
+            }
+        };
+
+        // ── Execute publish paths ────────────────────────────────────
+        // In dual mode both paths run in parallel and a failure of either
+        // is fatal. The two writes are not atomic — which store serves the
+        // live site depends on rollout state — so a partial success must
+        // surface as a failed publish telling the user their docs may or
+        // may not have been updated. When only the ledger write fails, the
+        // failure is deferred so the legacy publish still completes fully
+        // (translations, AI chat) before the command exits non-zero.
+        let dualWriteLedgerError: unknown;
+        if (deployMode === "dual" && docsRegistrationId != null) {
+            const [legacyResult, ledgerResult] = await Promise.allSettled([runLegacyPublish(), runLedgerPublish()]);
+            if (legacyResult.status === "rejected" && ledgerResult.status === "rejected") {
+                return context.failAndThrow(
+                    `Failed to publish docs to ${domain}: both publish paths failed. Your docs were not updated.\nLedger error: ${String(ledgerResult.reason)}`,
+                    legacyResult.reason,
+                    { code: CliError.Code.NetworkError }
+                );
+            }
+            if (legacyResult.status === "rejected") {
+                return context.failAndThrow(
+                    `Failed to publish docs to ${domain}: one of two publish paths failed. Your docs may or may not have been updated.`,
+                    legacyResult.reason,
+                    { code: CliError.Code.NetworkError }
+                );
+            }
+            if (ledgerResult.status === "rejected") {
+                dualWriteLedgerError = ledgerResult.reason;
+                context.logger.warn(`[ledger] Dual-write failed: ${String(ledgerResult.reason)}`);
+            }
+        } else if (deployMode !== "ledger" && docsRegistrationId != null) {
+            // Legacy-only path.
+            try {
+                await runLegacyPublish();
             } catch (error) {
                 return context.failAndThrow("Failed to publish docs to " + domain, error, {
                     code: CliError.Code.NetworkError
                 });
             }
-            const publishTime = performance.now() - publishStart;
-            context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
-        }
-
-        // ── Ledger publish path (dual-write or ledger-only) ──────────
-        if (deployMode === "dual" || deployMode === "ledger") {
-            // Build structured git provenance from the CI environment (ADR 0011).
-            // The X-CI-Source header is still sent for other telemetry sinks; this
-            // puts the same data into the DocsPublishInput so the ledger persists it.
-            const ledgerGit: DocsPublishGitInput | undefined =
-                ciSource?.repo != null && ciSource?.branch != null
-                    ? {
-                          repoUrl: normalizeRepoUrlToHttps(ciSource.repo, ciSource.type),
-                          branch: ciSource.branch,
-                          commitSha: ciSource.commitSha
-                      }
-                    : undefined;
-
+        } else if (deployMode === "ledger") {
+            // Ledger-only path.
             try {
-                if (preview) {
-                    const previewResult = await publishDocsViaLedgerPreview({
-                        docsDefinition,
-                        organization,
-                        basePath,
-                        previewId: previewId != null ? sanitizePreviewId(previewId) : previewId,
-                        git: ledgerGit,
-                        token: token.value,
-                        fdrOrigin,
-                        headers,
-                        context,
-                        apiDefinitions: apiDefinitionCollector,
-                        fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                        filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
-                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
-                        resolver
-                    });
-                    if (deployMode === "ledger") {
-                        urlToOutput = previewResult.previewUrl;
-                    }
-                    context.logger.info(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
-                } else {
-                    const ledgerResult = await publishDocsViaLedger({
-                        docsDefinition,
-                        organization,
-                        domain,
-                        basepath: basePath,
-                        previewId,
-                        customDomains,
-                        git: ledgerGit,
-                        token: token.value,
-                        fdrOrigin,
-                        headers,
-                        context,
-                        apiDefinitions: apiDefinitionCollector,
-                        fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                        filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
-                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
-                        resolver
-                    });
-                    context.logger.info(
-                        `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
-                    );
-                }
+                await runLedgerPublish();
             } catch (error) {
-                if (deployMode === "ledger") {
-                    return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
-                        code: CliError.Code.NetworkError
-                    });
-                }
-                // In dual-write mode, ledger failure is non-fatal — legacy already succeeded.
-                context.logger.warn(`[ledger] Dual-write failed (non-fatal): ${String(error)}`);
+                return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
+                    code: CliError.Code.NetworkError
+                });
             }
         }
 
@@ -1212,6 +1245,14 @@ export async function publishDocs({
             isPreview: preview,
             context
         });
+
+        if (dualWriteLedgerError != null) {
+            return context.failAndThrow(
+                `Failed to publish docs to ${domain}: one of two publish paths failed. Your docs may or may not have been updated.`,
+                dualWriteLedgerError,
+                { code: CliError.Code.NetworkError }
+            );
+        }
 
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));

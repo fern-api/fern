@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.10
+  changelogEntry:
+    - summary: |
+        Fix the generated OAuth and inferred-auth token providers to construct the typed token request
+        object when the token endpoint uses a referenced (non-inlined) request body. Previously the
+        provider passed an associative array to the token endpoint method, which expects the typed
+        request, causing PHPStan failures.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
 - version: 2.10.9
   changelogEntry:
     - summary: |

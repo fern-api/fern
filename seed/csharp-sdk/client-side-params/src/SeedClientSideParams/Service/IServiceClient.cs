@@ -71,7 +71,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Delete a user
     /// </summary>
-    Task DeleteUserAsync(
+    WithRawResponseTask DeleteUserAsync(
         string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

@@ -100,7 +100,7 @@ await client.Auth.RefreshTokenAsync(
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.NestedNoAuth.Api.<a href="/src/SeedInferredAuthImplicit/NestedNoAuth/Api/ApiClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.NestedNoAuth.Api.<a href="/src/SeedInferredAuthImplicit/NestedNoAuth/Api/ApiClient.cs">GetSomethingAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -126,7 +126,7 @@ await client.NestedNoAuth.Api.GetSomethingAsync();
 </details>
 
 ## Nested Api
-<details><summary><code>client.Nested.Api.<a href="/src/SeedInferredAuthImplicit/Nested/Api/ApiClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Nested.Api.<a href="/src/SeedInferredAuthImplicit/Nested/Api/ApiClient.cs">GetSomethingAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -152,7 +152,7 @@ await client.Nested.Api.GetSomethingAsync();
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.<a href="/src/SeedInferredAuthImplicit/Simple/SimpleClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedInferredAuthImplicit/Simple/SimpleClient.cs">GetSomethingAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

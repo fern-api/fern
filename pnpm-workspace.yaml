@@ -14,7 +14,7 @@ packages:
 # Supply chain security settings
 # See: https://pnpm.io/settings
 allowBuilds:
-  '@scarf/scarf': false
+  "@scarf/scarf": false
   "@sentry/cli": true
   esbuild: true
   lefthook: set this to true or false
@@ -68,9 +68,9 @@ catalog:
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
-  "@fern-api/fdr-sdk": 1.2.16-b5078a0a01
+  "@fern-api/fdr-sdk": 1.2.32-f5a3d6f517
   "@fern-api/generator-cli": 0.9.35
-  "@fern-api/ui-core-utils": 1.1.18-e70a169b11
+  "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 5.0.0
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
@@ -267,11 +267,11 @@ overrides:
   ajv: 8.18.0
   cross-spawn: ^7.0.6
   node-fetch@2.x>whatwg-url: ^14.0.0
-  minimatch: '>=10.2.3'
+  minimatch: ">=10.2.3"
   qs: 6.15.2
   url-join: ^4.0.1
-  '@fern-api/fdr-sdk': 1.2.16-b5078a0a01
+  "@fern-api/fdr-sdk": 1.2.32-f5a3d6f517
   form-data: ^4.0.4
-  '@fern-api/ui-core-utils': 1.1.18-e70a169b11
+  "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.2
   yauzl: ^3.2.1
