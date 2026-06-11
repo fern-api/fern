@@ -12,7 +12,6 @@ $client = new SeedClient(
     ],
 );
 $client->user->updateUser(
-    'tenant_id',
     'user_id',
     new UpdateUserRequest([
         'body' => new User([
@@ -23,4 +22,5 @@ $client->user->updateUser(
             ],
         ]),
     ]),
+    'tenant_id',
 );
