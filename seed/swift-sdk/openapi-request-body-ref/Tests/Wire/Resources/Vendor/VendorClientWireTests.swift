@@ -152,6 +152,7 @@ import Api
             ))
         )
         let response = try await client.vendor.createVendor(
+            idempotencyKey: "idempotencyKey",
             request: .init(
                 name: "name",
                 address: "address"

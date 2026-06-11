@@ -21,6 +21,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -54,6 +55,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -87,6 +89,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -119,6 +122,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -150,6 +154,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -182,6 +187,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -214,6 +220,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -251,6 +258,7 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -298,6 +306,7 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -341,6 +350,7 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -395,6 +405,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -423,6 +434,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -455,6 +467,7 @@ import Testing
 
         do {
             _ = try await client.auth.getTokenWithClientCredentials(
+                xApiKey: "X-Api-Key",
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",

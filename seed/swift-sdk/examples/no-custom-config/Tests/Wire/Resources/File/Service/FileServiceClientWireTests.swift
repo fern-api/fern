@@ -26,6 +26,7 @@ import Examples
         )
         let response = try await client.file.service.getFile(
             filename: "filename",
+            xFileApiVersion: "X-File-API-Version",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
