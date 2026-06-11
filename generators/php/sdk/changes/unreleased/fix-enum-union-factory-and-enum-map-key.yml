@@ -1,0 +1,10 @@
+- summary: |
+    Emit the native PHP enum case (instead of its backing string value) when an enum is
+    passed to a discriminated-union factory argument in dynamic snippets, matching the
+    generated factory signature.
+  type: fix
+- summary: |
+    Use the backing value type (value-of<Enum>) for enum map keys in PHPDoc so PHPStan can
+    resolve the type. PHP array keys must be int|string, so the native enum type produced an
+    unresolvable type.
+  type: fix

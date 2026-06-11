@@ -190,8 +190,6 @@ allowedFailures:
   - variables
   - oauth-client-credentials-with-variables
 
-  # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).
-  - trace
   # OAuth custom properties need non-literal property passthrough to the token request.
   - oauth-client-credentials-custom
 

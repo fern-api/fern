@@ -14,7 +14,13 @@ export declare namespace DynamicTypeLiteralMapper {
 
     // Identifies what the type is being converted as, which sometimes influences how
     // the type is instantiated.
-    type ConvertedAs = "key";
+    //
+    // - "key": the value is used as a map key (enums are emitted as their backing
+    //   string value, since PHP array keys must be int|string).
+    // - "nativeEnum": the value is passed to a slot typed as the native PHP enum
+    //   (e.g. a discriminated-union factory argument), so an enum is emitted as the
+    //   enum case itself rather than its backing string value.
+    type ConvertedAs = "key" | "nativeEnum";
 }
 
 export class DynamicTypeLiteralMapper {
@@ -156,7 +162,7 @@ export class DynamicTypeLiteralMapper {
                     value
                 });
             case "enum":
-                return this.convertEnum({ enum_: named, value });
+                return this.convertEnum({ enum_: named, value, as });
             case "object":
                 return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
@@ -245,7 +251,8 @@ export class DynamicTypeLiteralMapper {
                                 name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                                 value: this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: discriminatedUnionTypeInstance.value
+                                    value: discriminatedUnionTypeInstance.value,
+                                    as: "nativeEnum"
                                 })
                             }
                         ];
@@ -257,7 +264,8 @@ export class DynamicTypeLiteralMapper {
                             name: this.context.getPropertyName(unionVariant.discriminantValue.name),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
-                                value: singlePropertyValue
+                                value: singlePropertyValue,
+                                as: "nativeEnum"
                             })
                         }
                     ];
@@ -524,7 +532,15 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): php.TypeLiteral {
+    private convertEnum({
+        enum_,
+        value,
+        as
+    }: {
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
+    }): php.TypeLiteral {
         const name = this.getEnumValueName({ enum_, value });
         if (name == null) {
             return php.TypeLiteral.nop();
@@ -539,7 +555,11 @@ export class DynamicTypeLiteralMapper {
                 );
                 writer.write("::");
                 writer.write(name);
-                writer.write("->value");
+                // A slot typed as the native PHP enum expects the enum case itself; every
+                // other slot (object property, map key, etc.) expects the backing value.
+                if (as !== "nativeEnum") {
+                    writer.write("->value");
+                }
             })
         );
     }
