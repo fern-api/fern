@@ -1,6 +1,18 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix commit signing on cloud-generated PRs. `pushSignedCommit` no longer sends
+        `author` by default: the Git Data API defaults `committer` to the provided
+        `author`, so sending `author` alone (the 0.9.32 behavior) still suppressed the
+        "Verified" signature. With both fields omitted, GitHub attributes the commit to
+        the authenticated App installation (`fern-api[bot]`, same noreply email) and
+        signs it. Callers that set `GithubStepConfig.author` still pin both identities.
+      type: fix
+  createdAt: "2026-06-11"
+  version: 0.9.40
+
+- changelogEntry:
+    - summary: |
         Re-release of 0.9.38 (whose publish failed due to a malformed versions.yml in git
         history). Carries the `@fern-api/replay` 0.18.0 bump: `.fernignore`-aware
         customization detection, trailing-slash pattern support, and the EPIPE crash fix.
