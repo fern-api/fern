@@ -2,4 +2,6 @@
     Include field-level arguments when converting GraphQL object types and interfaces
     to FDR format. Previously, arguments were only captured for top-level query/mutation
     fields but not for nested object type fields (e.g., Image.url(width, height, lossy)).
+    Namespace grouping types (object types whose fields are all promoted to top-level
+    operations) are no longer double-registered as plain type definitions.
   type: fix
