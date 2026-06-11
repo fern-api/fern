@@ -21,8 +21,8 @@ import Testing
         do {
             _ = try await client.fileUploadExample.uploadFile(
                 request: .init(
-                    file: .init(data: Data("".utf8)),
-                    name: "name"
+                    name: "name",
+                    file: .init(data: Data("".utf8))
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -57,8 +57,8 @@ import Testing
         do {
             _ = try await client.fileUploadExample.uploadFile(
                 request: .init(
-                    file: .init(data: Data("".utf8)),
-                    name: "name"
+                    name: "name",
+                    file: .init(data: Data("".utf8))
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -93,8 +93,8 @@ import Testing
         do {
             _ = try await client.fileUploadExample.uploadFile(
                 request: .init(
-                    file: .init(data: Data("".utf8)),
-                    name: "name"
+                    name: "name",
+                    file: .init(data: Data("".utf8))
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -131,8 +131,8 @@ import Testing
         do {
             _ = try await client.fileUploadExample.uploadFile(
                 request: .init(
-                    file: .init(data: Data("".utf8)),
-                    name: "name"
+                    name: "name",
+                    file: .init(data: Data("".utf8))
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -167,8 +167,8 @@ import Testing
         do {
             _ = try await client.fileUploadExample.uploadFile(
                 request: .init(
-                    file: .init(data: Data("".utf8)),
-                    name: "name"
+                    name: "name",
+                    file: .init(data: Data("".utf8))
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -205,8 +205,8 @@ import Testing
         do {
             _ = try await client.fileUploadExample.uploadFile(
                 request: .init(
-                    file: .init(data: Data("".utf8)),
-                    name: "name"
+                    name: "name",
+                    file: .init(data: Data("".utf8))
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -241,8 +241,8 @@ import Testing
         do {
             _ = try await client.fileUploadExample.uploadFile(
                 request: .init(
-                    file: .init(data: Data("".utf8)),
-                    name: "name"
+                    name: "name",
+                    file: .init(data: Data("".utf8))
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

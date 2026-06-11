@@ -340,7 +340,7 @@ export class WireTestFunctionGenerator {
                     object: (exampleObjectType) => {
                         return swift.Expression.structInitialization({
                             unsafeName: symbol.name,
-                            arguments_: exampleObjectType.properties
+                            arguments_: this.orderExamplePropertiesByDeclaration(typeId, exampleObjectType.properties)
                                 .map((property) => {
                                     if (
                                         property.value.shape.type === "container" &&
@@ -382,7 +382,10 @@ export class WireTestFunctionGenerator {
                                 const extraEntries = Object.entries(jsonObj).filter(
                                     ([key]) => !declaredWireNames.has(key)
                                 );
-                                const propertyArgs: swift.FunctionArgument[] = exampleObjectTypeWithId.object.properties
+                                const propertyArgs: swift.FunctionArgument[] = this.orderExamplePropertiesByDeclaration(
+                                    exampleObjectTypeWithId.typeId,
+                                    exampleObjectTypeWithId.object.properties
+                                )
                                     .map((property) => {
                                         if (
                                             property.value.shape.type === "container" &&
@@ -468,6 +471,34 @@ export class WireTestFunctionGenerator {
             },
             _other: () => swift.Expression.nop()
         });
+    }
+
+    /**
+     * Reorders example object properties to match the order the generated Swift
+     * struct declares them in its memberwise initializer, which is
+     * `[...extendedProperties, ...properties]`. Example properties are otherwise
+     * emitted in the example's authoring order, which can differ from the
+     * declaration order and produce arguments in the wrong positional order.
+     */
+    private orderExamplePropertiesByDeclaration(
+        typeId: FernIr.TypeId,
+        properties: FernIr.ExampleObjectProperty[]
+    ): FernIr.ExampleObjectProperty[] {
+        const typeDeclaration = this.sdkGeneratorContext.ir.types[typeId];
+        if (typeDeclaration == null || typeDeclaration.shape.type !== "object") {
+            return properties;
+        }
+        const declaredOrder = [
+            ...(typeDeclaration.shape.extendedProperties ?? []),
+            ...typeDeclaration.shape.properties
+        ].map((property) => getWireValue(property.name));
+        const declarationIndexOf = (wireName: string): number => {
+            const index = declaredOrder.indexOf(wireName);
+            return index === -1 ? declaredOrder.length : index;
+        };
+        return [...properties].sort(
+            (a, b) => declarationIndexOf(getWireValue(a.name)) - declarationIndexOf(getWireValue(b.name))
+        );
     }
 
     public getSwiftTypeReferenceForExampleTypeReferenceFromTestModuleScope(

@@ -26,13 +26,13 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = Playlist(
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
             name: "name",
             problems: [
                 "problems",
                 "problems"
-            ]
+            ],
+            playlistId: "playlist_id",
+            ownerId: "owner-id"
         )
         let response = try await client.playlist.createPlaylist(
             serviceParam: "1",
@@ -85,22 +85,22 @@ import Trace
         )
         let expectedResponse = [
             Playlist(
-                playlistId: "playlist_id",
-                ownerId: "owner-id",
                 name: "name",
                 problems: [
                     "problems",
                     "problems"
-                ]
+                ],
+                playlistId: "playlist_id",
+                ownerId: "owner-id"
             ),
             Playlist(
-                playlistId: "playlist_id",
-                ownerId: "owner-id",
                 name: "name",
                 problems: [
                     "problems",
                     "problems"
-                ]
+                ],
+                playlistId: "playlist_id",
+                ownerId: "owner-id"
             )
         ]
         let response = try await client.playlist.getPlaylists(
@@ -136,13 +136,13 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = Playlist(
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
             name: "name",
             problems: [
                 "problems",
                 "problems"
-            ]
+            ],
+            playlistId: "playlist_id",
+            ownerId: "owner-id"
         )
         let response = try await client.playlist.getPlaylist(
             serviceParam: "1",
@@ -175,13 +175,13 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = Optional(Playlist(
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
             name: "name",
             problems: [
                 "problems",
                 "problems"
-            ]
+            ],
+            playlistId: "playlist_id",
+            ownerId: "owner-id"
         ))
         let response = try await client.playlist.updatePlaylist(
             serviceParam: "1",

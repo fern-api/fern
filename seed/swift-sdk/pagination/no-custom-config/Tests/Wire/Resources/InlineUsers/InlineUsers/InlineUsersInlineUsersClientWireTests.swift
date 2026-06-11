@@ -590,7 +590,6 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersExtendedResponse(
-            totalCount: 1,
             data: UserListContainer(
                 users: [
                     User(
@@ -603,7 +602,8 @@ import Pagination
                     )
                 ]
             ),
-            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
+            totalCount: 1
         )
         let response = try await client.inlineUsers.inlineUsers.listWithExtendedResults(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
@@ -642,7 +642,6 @@ import Pagination
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersExtendedOptionalListResponse(
-            totalCount: 1,
             data: UserOptionalListContainer(
                 users: Optional([
                     User(
@@ -655,7 +654,8 @@ import Pagination
                     )
                 ])
             ),
-            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!),
+            totalCount: 1
         )
         let response = try await client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData(
             cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
