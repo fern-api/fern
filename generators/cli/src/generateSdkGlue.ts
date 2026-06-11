@@ -38,6 +38,7 @@ interface ClientNode {
 export interface RootClientInfo {
     name: string;
     subClients: ClientNode[];
+    hasHttpClient: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -53,7 +54,9 @@ const SKIP_TYPES = new Set(["ClientConfig", "HttpClient"]);
  * Returns the struct name and all `pub <field>: <Type>` entries,
  * filtering out config/http_client infrastructure fields.
  */
-function parseClientStruct(source: string): { name: string; fields: SubClientField[] } | undefined {
+function parseClientStruct(
+    source: string
+): { name: string; fields: SubClientField[]; hasHttpClient: boolean } | undefined {
     const structMatch = source.match(/pub struct (\w+Client)\s*\{([^}]+)\}/);
     if (structMatch == null) {
         return undefined;
@@ -62,19 +65,24 @@ function parseClientStruct(source: string): { name: string; fields: SubClientFie
     const name = structMatch[1] ?? "";
     const body = structMatch[2] ?? "";
     const fields: SubClientField[] = [];
+    let hasHttpClient = false;
 
     const fieldRegex = /pub\s+(\w+)\s*:\s*(\w+)\s*,?/g;
     let match;
     while ((match = fieldRegex.exec(body)) !== null) {
         const fieldName = match[1] ?? "";
         const typeName = match[2] ?? "";
+        if (typeName === "HttpClient") {
+            hasHttpClient = true;
+            continue;
+        }
         if (SKIP_TYPES.has(typeName)) {
             continue;
         }
         fields.push({ fieldName, typeName });
     }
 
-    return { name, fields };
+    return { name, fields, hasHttpClient };
 }
 
 /**
@@ -174,6 +182,10 @@ function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): strin
         })
         .join("\n");
 
+    // Include http_client when the root struct declares it (flat APIs or
+    // APIs with both root-level endpoints and sub-client groups).
+    const httpClientInit = rootClient.hasHttpClient ? "\n        http_client: http_client.clone()," : "";
+
     return `\
 //! Generated SDK client glue — bridges AppContext to the co-generated SDK.
 //!
@@ -229,7 +241,7 @@ pub fn sdk_client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name}
         config.clone(),
     );
     ${sdkCrateSnake}::api::${rootClient.name} {
-        config,
+        config,${httpClientInit}
 ${subClientInits}
     }
 }
@@ -314,7 +326,7 @@ export async function generateSdkGlue(args: {
 
     // Recursively discover nested sub-clients from the SDK's resource tree.
     const subClients = await discoverClientTree(resourcesDir, rootStruct.fields, []);
-    const rootClient: RootClientInfo = { name: rootStruct.name, subClients };
+    const rootClient: RootClientInfo = { name: rootStruct.name, subClients, hasHttpClient: rootStruct.hasHttpClient };
 
     // Write the glue module.
     const binDir = path.join(outputDir, "cli", binaryName);
