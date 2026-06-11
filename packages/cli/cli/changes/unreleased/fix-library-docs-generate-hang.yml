@@ -1,0 +1,5 @@
+- summary: |
+    Add per-request timeouts to `fern docs md generate` HTTP calls so the CLI
+    exits with a clear error instead of hanging indefinitely when the server is
+    slow or unreachable (30s per API request, 60s for IR download).
+  type: fix
