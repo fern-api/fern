@@ -1,5 +1,17 @@
-import { type DocsDefinitionResolver } from "@fern-api/docs-resolver";
-import type { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
+import {
+    applyTranslatedApiTitlesToNavTree,
+    type DocsDefinitionResolver,
+    type TranslatedApiSpec
+} from "@fern-api/docs-resolver";
+import {
+    APIV1Read,
+    APIV1Write,
+    type DocsV1Write,
+    FdrAPI as CjsFdrSdk,
+    convertAPIDefinitionToDb,
+    convertDbAPIDefinitionToRead,
+    SDKSnippetHolder
+} from "@fern-api/fdr-sdk";
 import {
     type DocsPublishGitInput,
     type DocsPublishInput,
@@ -7,6 +19,7 @@ import {
     type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { convertIrToFdrApi } from "@fern-api/register";
 import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
@@ -484,7 +497,75 @@ interface BuiltTranslation {
 }
 
 /**
+ * Convert an APIV1Write.ApiDefinition to its APIV1Read form for nav title
+ * patching. Mirrors the `captureReadApiDefinition` helper in publishDocs.ts.
+ */
+function toReadApiDefinition(
+    definition: APIV1Write.ApiDefinition,
+    apiDefinitionId: string
+): APIV1Read.ApiDefinition | undefined {
+    try {
+        const dbApiDefinition = convertAPIDefinitionToDb(
+            definition,
+            CjsFdrSdk.ApiDefinitionId(apiDefinitionId),
+            new SDKSnippetHolder({
+                snippetsConfigWithSdkId: {},
+                snippetsBySdkId: {},
+                snippetTemplatesByEndpoint: {},
+                snippetTemplatesByEndpointId: {},
+                snippetsBySdkIdAndEndpointId: {}
+            })
+        );
+        return convertDbAPIDefinitionToRead(dbApiDefinition);
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Build a locale-specific apiDefinitions map by replacing base API definitions
+ * with their translated equivalents (produced from translated OpenAPI specs
+ * under `translations/<locale>/apis/<apiName>/`).
+ */
+function buildLocaleApiDefinitions({
+    baseApiDefinitions,
+    translatedSpecs,
+    context
+}: {
+    baseApiDefinitions: Map<string, APIV1Write.ApiDefinition>;
+    translatedSpecs: Map<string, TranslatedApiSpec>;
+    context: TaskContext;
+}): Map<string, APIV1Write.ApiDefinition> {
+    const localeApiDefs = new Map(baseApiDefinitions);
+    for (const [baseApiId, spec] of translatedSpecs) {
+        try {
+            const translatedApiDef = convertIrToFdrApi({
+                ir: spec.ir,
+                snippetsConfig: spec.snippetsConfig,
+                playgroundConfig: spec.playgroundConfig,
+                graphqlOperations: spec.graphqlOperations,
+                graphqlTypes: spec.graphqlTypes,
+                context,
+                apiNameOverride: spec.apiName
+            });
+            localeApiDefs.set(baseApiId, translatedApiDef);
+        } catch (error) {
+            context.logger.warn(
+                `[ledger] Failed to convert translated API definition for API "${baseApiId}": ${String(error)}. ` +
+                    `Falling back to base (untranslated) API.`
+            );
+        }
+    }
+    return localeApiDefs;
+}
+
+/**
  * Build ledger inputs for every translation locale the resolver discovered.
+ *
+ * For each locale, if translated API specs exist under
+ * `translations/<locale>/apis/<apiName>/`, the locale receives its own
+ * apiManifest blob with translated descriptions/summaries and a nav tree
+ * with localized sidebar titles. Otherwise the base apiManifest is reused.
  *
  * Locales are built with bounded concurrency. If ANY locale fails, the
  * returned promise rejects — callers should let the error propagate to
@@ -518,6 +599,11 @@ async function buildAllTranslationInputs({
         return [];
     }
 
+    // Get translated API specs (per-locale, per-base-apiDefinitionId).
+    // These are already populated by DocsDefinitionResolver.resolve() when
+    // buildTranslatedApiDefinitions=true.
+    const translatedApiSpecsByLocale = resolver.getTranslatedApiSpecs();
+
     const localeEntries = Object.entries(translationPages);
     context.logger.info(`[ledger] Building ${localeEntries.length} translation locale(s)...`);
     const { buildTranslatedDocsDefinition } = await import("./buildTranslatedDocsDefinition.js");
@@ -535,10 +621,51 @@ async function buildAllTranslationInputs({
                 context
             });
 
+            // Build locale-specific API definitions from translated OpenAPI specs.
+            const localeTranslatedSpecs = translatedApiSpecsByLocale.get(locale);
+            let localeApiDefinitions = apiDefinitions;
+            if (localeTranslatedSpecs != null && localeTranslatedSpecs.size > 0) {
+                localeApiDefinitions = buildLocaleApiDefinitions({
+                    baseApiDefinitions: apiDefinitions,
+                    translatedSpecs: localeTranslatedSpecs,
+                    context
+                });
+
+                // Patch sidebar titles in the nav tree so endpoint/subpackage
+                // names reflect the translated API content.
+                if (translatedDefinition.config.root != null) {
+                    const baseApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
+                    const translatedApisForTitles: Record<string, APIV1Read.ApiDefinition> = {};
+                    for (const [baseApiId] of localeTranslatedSpecs) {
+                        const baseDef = apiDefinitions.get(baseApiId);
+                        const translatedDef = localeApiDefinitions.get(baseApiId);
+                        if (baseDef != null) {
+                            const baseRead = toReadApiDefinition(baseDef, baseApiId);
+                            if (baseRead != null) {
+                                baseApisForTitles[baseApiId] = baseRead;
+                            }
+                        }
+                        if (translatedDef != null) {
+                            const translatedRead = toReadApiDefinition(translatedDef, baseApiId);
+                            if (translatedRead != null) {
+                                translatedApisForTitles[baseApiId] = translatedRead;
+                            }
+                        }
+                    }
+                    if (Object.keys(translatedApisForTitles).length > 0) {
+                        translatedDefinition.config.root = applyTranslatedApiTitlesToNavTree(
+                            translatedDefinition.config.root,
+                            baseApisForTitles,
+                            translatedApisForTitles
+                        );
+                    }
+                }
+            }
+
             const { localeEntry, blobs } = buildLedgerInput({
                 docsDefinition: translatedDefinition,
                 git,
-                apiDefinitions,
+                apiDefinitions: localeApiDefinitions,
                 fileManifest,
                 fileIdToPath,
                 locale
