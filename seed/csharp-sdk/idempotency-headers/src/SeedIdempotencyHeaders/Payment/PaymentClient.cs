@@ -91,24 +91,7 @@ public partial class PaymentClient : IPaymentClient
         }
     }
 
-    /// <example><code>
-    /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
-    /// </code></example>
-    public WithRawResponseTask<string> CreateAsync(
-        CreatePaymentRequest request,
-        IdempotentRequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return new WithRawResponseTask<string>(
-            CreateAsyncCore(request, options, cancellationToken)
-        );
-    }
-
-    /// <example><code>
-    /// await client.Payment.DeleteAsync("paymentId");
-    /// </code></example>
-    public async Task DeleteAsync(
+    private async Task<RawResponse> DeleteAsyncCore(
         string paymentId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -137,7 +120,12 @@ public partial class PaymentClient : IPaymentClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedIdempotencyHeaders.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -155,5 +143,31 @@ public partial class PaymentClient : IPaymentClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
+    /// </code></example>
+    public WithRawResponseTask<string> CreateAsync(
+        CreatePaymentRequest request,
+        IdempotentRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            CreateAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Payment.DeleteAsync("paymentId");
+    /// </code></example>
+    public WithRawResponseTask DeleteAsync(
+        string paymentId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(DeleteAsyncCore(paymentId, options, cancellationToken));
     }
 }

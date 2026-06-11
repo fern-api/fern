@@ -46,7 +46,7 @@ public partial interface IPlaylistClient
     /// <summary>
     /// Deletes a playlist
     /// </summary>
-    Task DeletePlaylistAsync(
+    WithRawResponseTask DeletePlaylistAsync(
         int serviceParam,
         string playlistId,
         RequestOptions? options = null,

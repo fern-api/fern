@@ -2,7 +2,7 @@ namespace SeedEnum;
 
 public partial interface IHeadersClient
 {
-    Task SendAsync(
+    WithRawResponseTask SendAsync(
         SendEnumAsHeaderRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
