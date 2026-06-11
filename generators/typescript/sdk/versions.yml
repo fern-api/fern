@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.71.8
+  changelogEntry:
+    - summary: |
+        Rebuild oxlint-tsgolint 0.23.0 from source with Go 1.26.4 to fix
+        CVE-2026-42507 (net/textproto log injection) and CVE-2026-27145
+        (crypto/x509 quadratic hostname verification) in the
+        typescript-sdk-generator container.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
 - version: 3.71.7
   changelogEntry:
     - summary: |
