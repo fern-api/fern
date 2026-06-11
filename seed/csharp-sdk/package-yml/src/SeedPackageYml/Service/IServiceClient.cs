@@ -2,7 +2,7 @@ namespace SeedPackageYml;
 
 public partial interface IServiceClient
 {
-    Task NopAsync(
+    WithRawResponseTask NopAsync(
         string id,
         string nestedId,
         RequestOptions? options = null,

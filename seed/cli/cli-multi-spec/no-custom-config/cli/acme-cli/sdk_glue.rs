@@ -8,7 +8,7 @@ use std::sync::Arc;
 
 use fern_cli_sdk::error::CliError;
 use fern_cli_sdk::openapi::AppContext;
-use fern_cli_sdk::sdk_executor::{CliExecutor, SdkRequestExecutor};
+use fern_cli_sdk::sdk_executor::{CliExecutor, SdkError, SdkRequestExecutor};
 
 // ---------------------------------------------------------------------------
 // Executor adapter: CliExecutor → SDK RequestExecutor
@@ -20,8 +20,18 @@ impl acme_cli_sdk::RequestExecutor for CliExecutorAdapter {
     fn execute(
         &self,
         request: reqwest::Request,
-    ) -> Pin<Box<dyn Future<Output = Result<reqwest::Response, reqwest::Error>> + Send + '_>> {
-        SdkRequestExecutor::execute(&*self.0, request)
+    ) -> Pin<
+        Box<
+            dyn Future<Output = Result<reqwest::Response, Box<dyn std::error::Error + Send + Sync>>>
+                + Send
+                + '_,
+        >,
+    > {
+        Box::pin(async move {
+            SdkRequestExecutor::execute(&*self.0, request)
+                .await
+                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
+        })
     }
 }
 
@@ -43,7 +53,7 @@ pub fn sdk_client(ctx: &AppContext) -> acme_cli_sdk::api::ApiClient {
     );
     acme_cli_sdk::api::ApiClient {
         config,
-        http_client: acme_cli_sdk::api::HttpClient { http_client: http_client.clone() },
+
     }
 }
 
@@ -75,6 +85,10 @@ fn convert_api_error(e: acme_cli_sdk::ApiError) -> CliError {
         acme_cli_sdk::ApiError::Network(err) => {
             CliError::Other(anyhow::anyhow!("SDK network error: {err}"))
         }
+        acme_cli_sdk::ApiError::Executor(boxed) => match boxed.downcast::<SdkError>() {
+            Ok(sdk_error) => sdk_error.into_cli_error(),
+            Err(other) => CliError::Other(anyhow::anyhow!("SDK executor error: {other}")),
+        },
         other => CliError::Other(anyhow::anyhow!("SDK error: {other}")),
     }
 }

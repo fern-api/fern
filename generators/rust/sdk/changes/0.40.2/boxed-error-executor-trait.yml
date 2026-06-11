@@ -1,0 +1,6 @@
+- summary: |
+    Change `RequestExecutor::execute` return type from `Result<Response, reqwest::Error>`
+    to `Result<Response, Box<dyn std::error::Error + Send + Sync>>` and add `ApiError::Executor`
+    variant. This allows downstream crates (e.g. CLI glue) to inject custom executor errors
+    without a backwards dependency on `reqwest`.
+  type: fix

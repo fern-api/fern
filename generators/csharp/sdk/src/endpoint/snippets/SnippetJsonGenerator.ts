@@ -64,7 +64,7 @@ export class SnippetJsonGenerator extends WithGeneration {
                             fileDownload: () => false,
                             text: () => false,
                             bytes: () => false,
-                            streamParameter: () => false,
+                            streamParameter: () => true,
                             _other: () => false
                         }) ?? false;
                     const snippets = this.getSnippetsForEndpoint(httpEndpoint.id);

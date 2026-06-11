@@ -98,6 +98,125 @@ func (d *DoubleOptional) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+// Extends ObjectWithInheritedRequiredEnum, inheriting the required enum field.
+// This type should NOT derive Default in Rust because the parent type
+// has a required enum field.
+var (
+	extendedObjectWithInheritedEnumFieldRequiredEnum        = big.NewInt(1 << 0)
+	extendedObjectWithInheritedEnumFieldRequiredString      = big.NewInt(1 << 1)
+	extendedObjectWithInheritedEnumFieldOptionalDescription = big.NewInt(1 << 2)
+)
+
+type ExtendedObjectWithInheritedEnum struct {
+	RequiredEnum        WeatherReport `json:"requiredEnum" url:"requiredEnum"`
+	RequiredString      string        `json:"requiredString" url:"requiredString"`
+	OptionalDescription *string       `json:"optionalDescription,omitempty" url:"optionalDescription,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetRequiredEnum() WeatherReport {
+	if e == nil {
+		return ""
+	}
+	return e.RequiredEnum
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetRequiredString() string {
+	if e == nil {
+		return ""
+	}
+	return e.RequiredString
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetOptionalDescription() *string {
+	if e == nil {
+		return nil
+	}
+	return e.OptionalDescription
+}
+
+func (e *ExtendedObjectWithInheritedEnum) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ExtendedObjectWithInheritedEnum) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetRequiredEnum sets the RequiredEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExtendedObjectWithInheritedEnum) SetRequiredEnum(requiredEnum WeatherReport) {
+	e.RequiredEnum = requiredEnum
+	e.require(extendedObjectWithInheritedEnumFieldRequiredEnum)
+}
+
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExtendedObjectWithInheritedEnum) SetRequiredString(requiredString string) {
+	e.RequiredString = requiredString
+	e.require(extendedObjectWithInheritedEnumFieldRequiredString)
+}
+
+// SetOptionalDescription sets the OptionalDescription field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *ExtendedObjectWithInheritedEnum) SetOptionalDescription(optionalDescription *string) {
+	e.OptionalDescription = optionalDescription
+	e.require(extendedObjectWithInheritedEnumFieldOptionalDescription)
+}
+
+func (e *ExtendedObjectWithInheritedEnum) UnmarshalJSON(data []byte) error {
+	type unmarshaler ExtendedObjectWithInheritedEnum
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ExtendedObjectWithInheritedEnum(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ExtendedObjectWithInheritedEnum) MarshalJSON() ([]byte, error) {
+	type embed ExtendedObjectWithInheritedEnum
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *ExtendedObjectWithInheritedEnum) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
 // Tests that map value types with unknown types don't get spurious | undefined.
 type MapOfDocumentedUnknownType = map[string]DocumentedUnknownType
 
@@ -485,6 +604,108 @@ func (o *ObjectWithDocumentedUnknownType) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithDocumentedUnknownType) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// A base object that has a required enum field, preventing Default derive
+// in Rust because enums don't implement Default.
+var (
+	objectWithInheritedRequiredEnumFieldRequiredEnum   = big.NewInt(1 << 0)
+	objectWithInheritedRequiredEnumFieldRequiredString = big.NewInt(1 << 1)
+)
+
+type ObjectWithInheritedRequiredEnum struct {
+	RequiredEnum   WeatherReport `json:"requiredEnum" url:"requiredEnum"`
+	RequiredString string        `json:"requiredString" url:"requiredString"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithInheritedRequiredEnum) GetRequiredEnum() WeatherReport {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredEnum
+}
+
+func (o *ObjectWithInheritedRequiredEnum) GetRequiredString() string {
+	if o == nil {
+		return ""
+	}
+	return o.RequiredString
+}
+
+func (o *ObjectWithInheritedRequiredEnum) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithInheritedRequiredEnum) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetRequiredEnum sets the RequiredEnum field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithInheritedRequiredEnum) SetRequiredEnum(requiredEnum WeatherReport) {
+	o.RequiredEnum = requiredEnum
+	o.require(objectWithInheritedRequiredEnumFieldRequiredEnum)
+}
+
+// SetRequiredString sets the RequiredString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithInheritedRequiredEnum) SetRequiredString(requiredString string) {
+	o.RequiredString = requiredString
+	o.require(objectWithInheritedRequiredEnumFieldRequiredString)
+}
+
+func (o *ObjectWithInheritedRequiredEnum) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithInheritedRequiredEnum
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithInheritedRequiredEnum(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithInheritedRequiredEnum) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithInheritedRequiredEnum
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithInheritedRequiredEnum) String() string {
 	if o == nil {
 		return "<nil>"
 	}
@@ -993,6 +1214,93 @@ func (o *ObjectWithOptionalField) MarshalJSON() ([]byte, error) {
 }
 
 func (o *ObjectWithOptionalField) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that a struct with a required field whose type extends a non-Default
+// base type does NOT incorrectly derive Default in Rust. Reproduces the bug
+// where namedTypeSupportsDefault only checked properties but not extends.
+var (
+	objectWithRequiredExtendedFieldFieldRequiredExtended = big.NewInt(1 << 0)
+)
+
+type ObjectWithRequiredExtendedField struct {
+	RequiredExtended *ExtendedObjectWithInheritedEnum `json:"requiredExtended" url:"requiredExtended"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithRequiredExtendedField) GetRequiredExtended() *ExtendedObjectWithInheritedEnum {
+	if o == nil {
+		return nil
+	}
+	return o.RequiredExtended
+}
+
+func (o *ObjectWithRequiredExtendedField) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithRequiredExtendedField) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetRequiredExtended sets the RequiredExtended field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithRequiredExtendedField) SetRequiredExtended(requiredExtended *ExtendedObjectWithInheritedEnum) {
+	o.RequiredExtended = requiredExtended
+	o.require(objectWithRequiredExtendedFieldFieldRequiredExtended)
+}
+
+func (o *ObjectWithRequiredExtendedField) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithRequiredExtendedField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithRequiredExtendedField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithRequiredExtendedField) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithRequiredExtendedField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithRequiredExtendedField) String() string {
 	if o == nil {
 		return "<nil>"
 	}

@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.2
+  changelogEntry:
+    - summary: |
+        Document the new `RawResponse` property on thrown API exceptions in the generated README's Exception Handling section, and note that `.WithRawResponse()` also works on streaming and void endpoints in the Raw Response section.
+      type: chore
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 2.68.1
+  changelogEntry:
+    - summary: |
+        Fix `ObjectDisposedException` thrown from `RawClient.CloneRequestAsync` when retrying a request
+        with retryable content (JSON or buffered multipart). The retry loop previously sent the original
+        `HttpRequestMessage` for the initial attempt and only cloned for retries; under HTTP/2 (and some
+        other configurations) `HttpClient` disposes the Content of every request it sends, leaving the
+        original's Content disposed by the time the first retry tried to clone it. The loop now always
+        sends a clone — never the original — for retryable content with at least one retry budgeted.
+
+        Same fix also: clamps negative `MaxRetries` values to `0` (would have surfaced as
+        `NullReferenceException` under the new loop structure); short-circuits `MaxRetries == 0` and the
+        non-retryable content path through a fast lane that sends the original directly with no cloning
+        cost; and threads the caller's `CancellationToken` into `CloneRequestAsync`'s body-buffering so
+        cancellation requests during large-body clones are honoured promptly (.NET 5+).
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 2.68.0
+  changelogEntry:
+    - summary: |
+        Generate raw-response wrappers for streaming and void endpoints. Streaming endpoints now return a new `WithRawResponseStream<T>` struct that implements `IAsyncEnumerable<T>` (so `await foreach` still works) and exposes `.WithRawResponse()` for HTTP metadata. Void endpoints now return a non-generic `WithRawResponseTask` with the same `.WithRawResponse()` accessor. Also fixes a pre-existing bug where JSON streaming endpoints never yielded their deserialized results.
+      type: feat
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 2.67.0
+  changelogEntry:
+    - summary: |
+        `Page<T>` now exposes `Url` alongside `StatusCode` and `Headers`, matching the shape of the `RawResponse` exposed on `*ApiException` and on `WithRawResponse<T>`.
+      type: feat
+    - summary: |
+        `*ApiException` now exposes a `RawResponse` property carrying the failed HTTP response's status code, URL, and headers. Lets callers read `Retry-After` off a 429, pull `X-Request-Id` for support tickets, or inspect rate-limit headers off a thrown exception. Existing constructors still work — this is purely additive.
+      type: feat
+  createdAt: "2026-06-10"
+  irVersion: 66
 - version: 2.66.9
   changelogEntry:
     - summary: |

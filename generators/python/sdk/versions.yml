@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.13
+  changelogEntry:
+    - summary: |
+        Fix mypy errors in raw client for stream-condition endpoints by removing
+        `@contextmanager` decorator and correcting overload return types.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
 - version: 5.14.12
   changelogEntry:
     - summary: |

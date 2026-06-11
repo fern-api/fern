@@ -13,10 +13,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Folder.Service.EndpointAsync();
-    /// </code></example>
-    public async Task EndpointAsync(
+    private async Task<RawResponse> EndpointAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -41,7 +38,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedApi.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -50,17 +52,18 @@ public partial class ServiceClient : IServiceClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
 
-    /// <example><code>
-    /// await client.Folder.Service.UnknownRequestAsync(
-    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
-    /// );
-    /// </code></example>
-    public async Task UnknownRequestAsync(
+    private async Task<RawResponse> UnknownRequestAsyncCore(
         object request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -87,7 +90,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedApi.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -98,7 +106,17 @@ public partial class ServiceClient : IServiceClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<string>(responseBody),
+                            rawResponse: new SeedApi.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -108,8 +126,41 @@ public partial class ServiceClient : IServiceClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Folder.Service.EndpointAsync();
+    /// </code></example>
+    public WithRawResponseTask EndpointAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(EndpointAsyncCore(options, cancellationToken));
+    }
+
+    /// <example><code>
+    /// await client.Folder.Service.UnknownRequestAsync(
+    ///     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask UnknownRequestAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            UnknownRequestAsyncCore(request, options, cancellationToken)
+        );
     }
 }

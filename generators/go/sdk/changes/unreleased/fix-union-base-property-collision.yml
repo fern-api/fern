@@ -1,0 +1,6 @@
+- summary: |
+    Fix duplicate struct fields and getters generated for a discriminated union
+    when a base property shares a name with a property inherited via `extends`.
+    The base property is now skipped in favor of the extended property, so the
+    generated Go compiles.
+  type: fix
