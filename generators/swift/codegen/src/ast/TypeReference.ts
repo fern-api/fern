@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FoundationTypeSymbolName, SwiftTypeSymbolName } from "../symbol/index.js";
+import { FoundationTypeSymbolName, Symbol as SwiftSymbol, SwiftTypeSymbolName } from "../symbol/index.js";
 import { escapeReservedKeywordTypeReference } from "../syntax/index.js";
 import { AstNode, Writer } from "./core/index.js";
 
@@ -73,7 +73,13 @@ export class TypeReference extends AstNode {
 
         switch (variant.type) {
             case "symbol":
-                writer.write(escapeReservedKeywordTypeReference(variant.symbol));
+                // Built-in Swift/Foundation types (e.g. `Any`) collide with reserved keywords
+                // but must not be backtick-escaped, as that would change their meaning.
+                writer.write(
+                    SwiftSymbol.isSwiftSymbolName(variant.symbol) || SwiftSymbol.isFoundationSymbolName(variant.symbol)
+                        ? variant.symbol
+                        : escapeReservedKeywordTypeReference(variant.symbol)
+                );
                 break;
             case "generic": {
                 variant.reference.write(writer);
