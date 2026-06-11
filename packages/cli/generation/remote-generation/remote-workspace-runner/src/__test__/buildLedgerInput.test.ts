@@ -316,6 +316,58 @@ describe("buildLedgerInput", () => {
         expect(parsed).toEqual({ "api-def-1": minimalApiDefinition });
     });
 
+    it("produces different apiManifest blobs for different apiDefinitions maps (locale isolation)", () => {
+        const baseApiDefinition: ApiDefinition = {
+            types: {},
+            subpackages: {},
+            rootPackage: {
+                endpoints: [],
+                types: [],
+                subpackages: [],
+                websockets: [],
+                webhooks: []
+            },
+            auth: undefined,
+            snippetsConfiguration: {},
+            globalHeaders: [],
+            apiName: "plant-api"
+        };
+
+        const translatedApiDefinition: ApiDefinition = {
+            ...baseApiDefinition,
+            apiName: "plant-api-zh"
+        };
+
+        const baseMap = new Map<string, ApiDefinition>([["api-1", baseApiDefinition]]);
+        const translatedMap = new Map<string, ApiDefinition>([["api-1", translatedApiDefinition]]);
+        const docsDefinition = makeDocsDefinition();
+
+        const { localeEntry: baseEntry, blobs: baseBlobs } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: baseMap
+        });
+        const { localeEntry: translatedEntry, blobs: translatedBlobs } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: translatedMap,
+            locale: "zh"
+        });
+
+        // Both should have apiManifest blobs.
+        expect(baseEntry.apiManifest).not.toBeNull();
+        expect(translatedEntry.apiManifest).not.toBeNull();
+
+        // The hashes must differ because the API content differs.
+        expect(baseEntry.apiManifest?.hash).not.toBe(translatedEntry.apiManifest?.hash);
+
+        // Each blob should deserialize to its respective definition.
+        const baseParsed = JSON.parse(baseBlobs.get(baseEntry.apiManifest?.hash ?? "")?.toString("utf-8") ?? "");
+        const translatedParsed = JSON.parse(
+            translatedBlobs.get(translatedEntry.apiManifest?.hash ?? "")?.toString("utf-8") ?? ""
+        );
+        expect(baseParsed["api-1"].apiName).toBe("plant-api");
+        expect(translatedParsed["api-1"].apiName).toBe("plant-api-zh");
+    });
+
     it("forwards fileManifest unchanged (file blobs are loaded lazily, not included in blob map)", () => {
         // Image entry — exercises width/height fields.
         const imageBytes = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]); // PNG header
