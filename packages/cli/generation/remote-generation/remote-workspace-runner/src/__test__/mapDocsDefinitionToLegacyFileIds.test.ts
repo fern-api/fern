@@ -69,6 +69,33 @@ describe("mapDocsDefinitionToLegacyFileIds", () => {
         expect(docsDefinition.pages[pageId]?.markdown).toContain("file:docs/assets/diagram.svg");
     });
 
+    it("remaps filenames containing spaces, parens, and special characters", () => {
+        const pathToFileId = new Map([
+            ["image (1).png", "uuid-spaced"],
+            ["docs/assets/logo.png", "uuid-normal"],
+            ["file with 'quotes'.svg", "uuid-quotes"]
+        ]);
+        const docsDefinition = {
+            pages: {
+                page: {
+                    markdown:
+                        "![fern](file:docs/assets/logo.png)\n![spaced](<file:image (1).png>)\n![quotes](file:file with 'quotes'.svg)",
+                    rawMarkdown: "![spaced](file:image (1).png)"
+                }
+            },
+            config: {}
+        } as unknown as DocsDefinition;
+
+        const remapped = mapDocsDefinitionToLegacyFileIds({ docsDefinition, pathToFileId });
+        const pageId = "page" as keyof typeof remapped.pages;
+
+        expect(remapped.pages[pageId]?.markdown).toContain("file:uuid-normal");
+        expect(remapped.pages[pageId]?.markdown).toContain("file:uuid-spaced");
+        expect(remapped.pages[pageId]?.markdown).toContain("file:uuid-quotes");
+        expect(remapped.pages[pageId]?.markdown).not.toContain("file:image (1).png");
+        expect(remapped.pages[pageId]?.rawMarkdown).toBe("![spaced](file:uuid-spaced)");
+    });
+
     it("returns the original definition when no legacy mapping exists", () => {
         const docsDefinition = {
             pages: {},
