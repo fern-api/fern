@@ -1,0 +1,5 @@
+- summary: |
+    Bump the bundled @fern-api/generator-cli to 0.9.39, carrying @fern-api/replay 0.18.0
+    (fernignore-aware customization detection, trailing-slash pattern support, and a fix
+    for an unhandled EPIPE crash during patch application).
+  type: chore
