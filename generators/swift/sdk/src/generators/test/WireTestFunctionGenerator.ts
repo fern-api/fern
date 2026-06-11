@@ -654,12 +654,54 @@ export class WireTestFunctionGenerator {
 }
 
 function renderWireTestResponseBody(exampleTypeRef: FernIr.ExampleTypeReference): string {
-    if (typeof exampleTypeRef.jsonExample === "string") {
-        return exampleTypeRef.jsonExample;
-    }
     const value = buildJsonFromExampleTypeReference(exampleTypeRef);
-    if (typeof value === "string") {
-        return value;
+    // The generated SDK reads `String`-typed response bodies as the raw UTF-8
+    // payload (see HTTPClient: `responseType == String.self`), whereas every
+    // other type is parsed as JSON. Mirror that here: emit the raw string for
+    // String-decoded responses, and JSON-encode everything else so a bare
+    // scalar (e.g. a UUID or number) is still valid JSON the decoder accepts.
+    if (responseDecodesAsRawString(exampleTypeRef)) {
+        return typeof value === "string" ? value : String(value ?? "");
     }
     return JSON.stringify(value, null, 2);
+}
+
+/**
+ * Whether the SDK decodes the given response type as a raw Swift `String`
+ * (rather than parsing it as JSON). Mirrors the Swift type mapping in which
+ * `string`, `bigInteger`, and `base64` primitives resolve to `String`.
+ */
+function responseDecodesAsRawString(exampleTypeRef: FernIr.ExampleTypeReference): boolean {
+    return exampleTypeRef.shape._visit<boolean>({
+        primitive: (primitive) =>
+            primitive._visit<boolean>({
+                string: () => true,
+                bigInteger: () => true,
+                base64: () => true,
+                integer: () => false,
+                long: () => false,
+                uint: () => false,
+                uint64: () => false,
+                float: () => false,
+                double: () => false,
+                boolean: () => false,
+                date: () => false,
+                datetime: () => false,
+                datetimeRfc2822: () => false,
+                uuid: () => false,
+                _other: () => false
+            }),
+        named: (named) =>
+            named.shape._visit<boolean>({
+                alias: (alias) => responseDecodesAsRawString(alias.value),
+                enum: () => false,
+                object: () => false,
+                union: () => false,
+                undiscriminatedUnion: () => false,
+                _other: () => false
+            }),
+        container: () => false,
+        unknown: () => false,
+        _other: () => false
+    });
 }
