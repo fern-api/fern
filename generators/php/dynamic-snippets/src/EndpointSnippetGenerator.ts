@@ -828,9 +828,7 @@ export class EndpointSnippetGenerator {
         const requiredPathParams = [...endpointPathParameters, ...requiredIrPathParams];
         if (requiredPathParams.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: requiredPathParams, snippet }).map(
-                    (field) => field.value
-                )
+                ...this.getPathParameters({ namedParameters: requiredPathParams, snippet }).map((field) => field.value)
             );
         }
         this.context.errors.unscope();
