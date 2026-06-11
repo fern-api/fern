@@ -8,7 +8,7 @@ import UndiscriminatedUnions
         stub.setResponse(
             body: Data(
                 #"""
-                string
+                "string"
                 """#.utf8
             )
         )
@@ -201,7 +201,7 @@ import UndiscriminatedUnions
         stub.setResponse(
             body: Data(
                 #"""
-                string
+                "string"
                 """#.utf8
             )
         )
