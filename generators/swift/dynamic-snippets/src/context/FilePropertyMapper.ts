@@ -7,6 +7,12 @@ import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorConte
 export interface FilePropertyInfo {
     fileFields: swift.FunctionArgument[];
     bodyPropertyFields: swift.FunctionArgument[];
+    /**
+     * All file and body-property fields in their original schema declaration
+     * order. The generated request type declares its initializer parameters in
+     * this order, so snippets must emit arguments in the same order.
+     */
+    orderedFields: swift.FunctionArgument[];
 }
 
 export class FilePropertyMapper {
@@ -27,7 +33,8 @@ export class FilePropertyMapper {
     }): FilePropertyInfo {
         const result: FilePropertyInfo = {
             fileFields: [],
-            bodyPropertyFields: []
+            bodyPropertyFields: [],
+            orderedFields: []
         };
         const record = this.context.getRecord(value) ?? {};
         for (const property of body.properties) {
@@ -38,6 +45,7 @@ export class FilePropertyMapper {
                         value: this.getSingleFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
+                    result.orderedFields.push(arg);
                     break;
                 }
                 case "fileArray": {
@@ -46,6 +54,7 @@ export class FilePropertyMapper {
                         value: this.getArrayFileProperty({ property, record })
                     });
                     result.fileFields.push(arg);
+                    result.orderedFields.push(arg);
                     break;
                 }
                 case "bodyProperty": {
@@ -54,6 +63,7 @@ export class FilePropertyMapper {
                         value: this.getBodyProperty({ fromSymbol, property, record })
                     });
                     result.bodyPropertyFields.push(arg);
+                    result.orderedFields.push(arg);
                     break;
                 }
                 default:
