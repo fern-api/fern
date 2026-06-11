@@ -150,9 +150,16 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	// Collect property names and types from extended objects recursively
 	var collectProperties func(*ir.ObjectTypeDeclaration)
 	collectProperties = func(obj *ir.ObjectTypeDeclaration) {
-		// First collect from extended objects
+		if obj == nil {
+			return
+		}
+		// First collect from extended objects, resolving through any alias indirection.
 		for _, extend := range obj.Extends {
-			collectProperties(t.writer.types[extend.TypeId].Shape.Object)
+			extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+			if extended == nil {
+				continue
+			}
+			collectProperties(extended)
 		}
 		// Then collect from this object's properties
 		for _, property := range obj.Properties {
@@ -392,7 +399,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	var literals []*literal
 	for _, extend := range union.Extends {
 		extendedObjectProperties := t.visitObjectProperties(
-			t.writer.types[extend.TypeId].Shape.Object,
+			resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 			false, // includeJSONTags
 			false, // includeURLTags
 			false, // includeOptionals
@@ -493,7 +500,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	var propertyNames []string
 	for _, extend := range union.Extends {
 		extendedObjectProperties := t.visitObjectProperties(
-			t.writer.types[extend.TypeId].Shape.Object,
+			resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 			true,  // includeJSONTags
 			true,  // includeURLTags
 			false, // includeOptionals
@@ -656,7 +663,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
 			_ = t.visitObjectProperties(
-				t.writer.types[extend.TypeId].Shape.Object,
+				resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 				true,  // includeJSONTags
 				true,  // includeURLTags
 				false, // includeOptionals
@@ -1279,6 +1286,36 @@ type literal struct {
 	Value *ir.Literal
 }
 
+// resolveObjectTypeDeclaration resolves a type ID to its underlying object
+// declaration, following alias indirection. Fern permits an object or request
+// body to extend an alias whose target (transitively) resolves to an object.
+// Returns nil if the type cannot be resolved to an object.
+func resolveObjectTypeDeclaration(
+	typeId common.TypeId,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) *ir.ObjectTypeDeclaration {
+	seen := make(map[common.TypeId]struct{})
+	for {
+		if _, ok := seen[typeId]; ok {
+			return nil
+		}
+		seen[typeId] = struct{}{}
+		typeDeclaration, ok := types[typeId]
+		if !ok || typeDeclaration == nil {
+			return nil
+		}
+		if typeDeclaration.Shape.Object != nil {
+			return typeDeclaration.Shape.Object
+		}
+		if alias := typeDeclaration.Shape.Alias; alias != nil &&
+			alias.AliasOf != nil && alias.AliasOf.Named != nil {
+			typeId = alias.AliasOf.Named.TypeId
+			continue
+		}
+		return nil
+	}
+}
+
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with
 // the object's extended properties (if any). The 'includeJSONTags' parameter controls whether or not
 // to generate JSON struct tags, which is only relevant for object types (not unions).
@@ -1297,9 +1334,17 @@ func (t *typeVisitor) visitObjectProperties(
 		literals []*literal
 		dates    []*date
 	)
+	if object == nil {
+		return &objectProperties{}
+	}
 	for _, extend := range object.Extends {
-		// You can only extend other objects.
-		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeJSONTags, includeURLTags, includeOptionals, includeLiterals)
+		// An object may extend another object directly, or an alias that
+		// (transitively) resolves to an object, so resolve through aliases.
+		extendedObject := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extendedObject == nil {
+			continue
+		}
+		extendedObjectProperties := t.visitObjectProperties(extendedObject, includeJSONTags, includeURLTags, includeOptionals, includeLiterals)
 		names = append(names, extendedObjectProperties.names...)
 		literals = append(literals, extendedObjectProperties.literals...)
 		dates = append(dates, extendedObjectProperties.dates...)
@@ -1440,8 +1485,14 @@ func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[com
 // getTypeFieldsForObject retrieves the type fields for the given object.
 func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) []*typeField {
 	var fields []*typeField
+	if object == nil {
+		return fields
+	}
 	for _, extend := range object.Extends {
-		extended := t.writer.types[extend.TypeId].Shape.Object
+		extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extended == nil {
+			continue
+		}
 		fields = append(fields, t.getTypeFieldsForObject(extended)...)
 	}
 	for _, property := range object.Properties {
@@ -1499,7 +1550,10 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	)
 	extendedPropertyNames := t.unionExtendedPropertyNames(union)
 	for _, extend := range union.Extends {
-		extended := t.writer.types[extend.TypeId].Shape.Object
+		extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extended == nil {
+			continue
+		}
 		fields = append(fields, t.getTypeFieldsForObject(extended)...)
 	}
 	for _, property := range union.BaseProperties {
