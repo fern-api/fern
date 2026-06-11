@@ -332,7 +332,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
-                collapsed: undefined,
+                collapsed: this.apiSection.collapsed,
                 children: convertedItems,
                 title:
                     pkg.title ??
@@ -369,7 +369,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: this.#idgen.get(explicitOverviewPageId ?? `${this.apiDefinitionId}:${kebabCase(pkg.package)}`),
                 type: "apiPackage",
-                collapsed: undefined,
+                collapsed: this.apiSection.collapsed,
                 children: convertedItems,
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
@@ -503,7 +503,7 @@ export class ApiReferenceNodeConverter {
             return {
                 id: subpackageNodeId,
                 type: "apiPackage",
-                collapsed: undefined,
+                collapsed: this.apiSection.collapsed,
                 children: [],
                 title: isSubpackage(subpackage)
                     ? (subpackage.displayName ?? titleCase(subpackage.name))
@@ -1083,7 +1083,7 @@ export class ApiReferenceNodeConverter {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
                     type: "apiPackage",
-                    collapsed: undefined,
+                    collapsed: this.apiSection.collapsed,
                     children: subpackageChildren,
                     title: isSubpackage(subpackage)
                         ? (subpackage.displayName ?? titleCase(subpackage.name))
@@ -1213,7 +1213,7 @@ export class ApiReferenceNodeConverter {
                 const sectionNode = {
                     id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
                     type: "apiPackage",
-                    collapsed: undefined,
+                    collapsed: this.apiSection.collapsed,
                     children,
                     title: sectionTitle,
                     slug: sectionSlug.get(),
@@ -1240,7 +1240,7 @@ export class ApiReferenceNodeConverter {
             const namespaceNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:namespace:${namespace}`),
                 type: "apiPackage",
-                collapsed: undefined,
+                collapsed: this.apiSection.collapsed,
                 children: namespaceChildren,
                 title: titleCase(namespace),
                 slug: namespaceSlug.get(),
@@ -1298,7 +1298,7 @@ export class ApiReferenceNodeConverter {
             const sectionNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
                 type: "apiPackage",
-                collapsed: undefined,
+                collapsed: this.apiSection.collapsed,
                 children,
                 title: sectionTitle,
                 slug: sectionSlug.get(),
