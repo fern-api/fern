@@ -68,8 +68,8 @@ $client->echo_(
 
 ```php
 $client->service->nop(
-    'id-a2ijs82',
     'id-219xca8',
+    'id-a2ijs82',
 );
 ```
 </dd>

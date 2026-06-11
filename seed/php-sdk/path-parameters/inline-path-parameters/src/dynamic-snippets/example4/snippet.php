@@ -11,6 +11,7 @@ $client = new SeedClient(
     ],
 );
 $client->user->createUser(
+    'tenant_id',
     new User([
         'name' => 'name',
         'tags' => [
@@ -18,5 +19,4 @@ $client->user->createUser(
             'tags',
         ],
     ]),
-    'tenant_id',
 );

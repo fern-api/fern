@@ -10,6 +10,6 @@ $client = new SeedClient(
     ],
 );
 $client->service->nop(
-    'id',
     'nestedId',
+    'id',
 );

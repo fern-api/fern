@@ -126,10 +126,10 @@ $client->organizations->getOrganizationUser(
 ```php
 $client->organizations->searchOrganizations(
     'organization_id',
+    'tenant_id',
     new SearchOrganizationsRequest([
         'limit' => 1,
     ]),
-    'tenant_id',
 );
 ```
 </dd>
@@ -239,6 +239,7 @@ $client->user->getUser(
 
 ```php
 $client->user->createUser(
+    'tenant_id',
     new User([
         'name' => 'name',
         'tags' => [
@@ -246,7 +247,6 @@ $client->user->createUser(
             'tags',
         ],
     ]),
-    'tenant_id',
 );
 ```
 </dd>
@@ -297,6 +297,7 @@ $client->user->createUser(
 ```php
 $client->user->updateUser(
     'user_id',
+    'tenant_id',
     new UpdateUserRequest([
         'body' => new User([
             'name' => 'name',
@@ -306,7 +307,6 @@ $client->user->updateUser(
             ],
         ]),
     ]),
-    'tenant_id',
 );
 ```
 </dd>
@@ -365,10 +365,10 @@ $client->user->updateUser(
 ```php
 $client->user->searchUsers(
     'user_id',
+    'tenant_id',
     new SearchUsersRequest([
         'limit' => 1,
     ]),
-    'tenant_id',
 );
 ```
 </dd>

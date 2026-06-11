@@ -11,8 +11,8 @@ $client = new SeedClient(
     ],
 );
 $client->widgets->create(
+    'v1beta',
     new Widget([
         'name' => 'name',
     ]),
-    'v1beta',
 );
