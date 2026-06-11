@@ -502,6 +502,5 @@ scripts:
 allowedFailures:
   - examples:legacy-wire-tests
   - oauth-client-credentials-custom
-  - trace
   - unions:union-naming-v1-wire-tests
 
