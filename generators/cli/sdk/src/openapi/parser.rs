@@ -719,7 +719,7 @@ struct OpenApiSchemaObject {
     #[serde(default)]
     nullable: bool,
     description: Option<String>,
-    #[serde(default)]
+    #[serde(default, deserialize_with = "deserialize_tolerant_properties")]
     properties: HashMap<String, OpenApiSchemaObject>,
     items: Option<Box<OpenApiSchemaObject>>,
     #[serde(default)]
@@ -968,10 +968,76 @@ where
     deserializer.deserialize_any(AdditionalPropertiesVisitor)
 }
 
+/// Deserialize a `HashMap<String, OpenApiSchemaObject>` that tolerates
+/// malformed entries whose value is a YAML/JSON sequence (array) instead of
+/// a mapping (object).  Real-world specs — e.g. ElevenLabs 3.1 — sometimes
+/// emit `"property": [{"x-fern-type-name": "…"}]` which is not a valid
+/// JSON Schema property but must not prevent the rest of the spec from
+/// loading.  Entries with non-object values are logged as warnings and dropped.
+fn deserialize_tolerant_properties<'de, D>(
+    deserializer: D,
+) -> Result<HashMap<String, OpenApiSchemaObject>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    use serde::de;
+
+    struct TolerantPropertiesVisitor;
+
+    impl<'de> de::Visitor<'de> for TolerantPropertiesVisitor {
+        type Value = HashMap<String, OpenApiSchemaObject>;
+
+        fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            formatter.write_str("a map of schema objects (non-object values are skipped)")
+        }
+
+        fn visit_map<M: de::MapAccess<'de>>(self, mut map: M) -> Result<Self::Value, M::Error> {
+            let mut out = HashMap::new();
+            while let Some(key) = map.next_key::<String>()? {
+                // Try to deserialize the value. If the entry is a
+                // sequence or another unexpected type, `serde_yaml`
+                // will fail — catch the error and skip the entry
+                // rather than aborting the entire spec parse.
+                match map.next_value::<serde_yaml::Value>() {
+                    Ok(val) => {
+                        if val.is_mapping() {
+                            match OpenApiSchemaObject::deserialize(val) {
+                                Ok(schema) => { out.insert(key, schema); }
+                                Err(e) => {
+                                    tracing::warn!(
+                                        key = %key,
+                                        error = %e,
+                                        "skipping property with malformed schema object",
+                                    );
+                                }
+                            }
+                        } else {
+                            tracing::warn!(
+                                key = %key,
+                                "skipping property whose value is not an object",
+                            );
+                        }
+                    }
+                    Err(e) => {
+                        tracing::warn!(
+                            key = %key,
+                            error = %e,
+                            "skipping unparseable property value",
+                        );
+                    }
+                }
+            }
+            Ok(out)
+        }
+    }
+
+    deserializer.deserialize_map(TolerantPropertiesVisitor)
+}
+
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 struct OpenApiComponents {
-    #[serde(default)]
+    #[serde(default, deserialize_with = "deserialize_tolerant_properties")]
     schemas: HashMap<String, OpenApiSchemaObject>,
     #[serde(default)]
     parameters: HashMap<String, OpenApiParameter>,
@@ -9919,6 +9985,58 @@ components:
         assert_eq!(
             lowered_31.properties["email"].prop_type.as_deref(),
             Some("string"),
+        );
+    }
+
+    /// Regression: a spec whose `properties` map contains an entry whose
+    /// value is a YAML/JSON **array** (e.g. `[{"x-fern-type-name": "…"}]`)
+    /// must not abort the entire parse. The tolerant deserializer should
+    /// silently drop the offending entry and preserve valid siblings.
+    #[test]
+    fn test_properties_with_array_value_are_skipped() {
+        let yaml = r##"
+openapi: "3.1.0"
+info:
+  title: test
+  version: "1.0"
+paths:
+  /items:
+    get:
+      operationId: listItems
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        name:
+          type: string
+        state:
+          - x-fern-type-name: ItemState
+        count:
+          type: integer
+"##;
+        let desc = load_openapi_spec(yaml, "test-cli")
+            .expect("spec with array property value must not fail to parse");
+        let item_schema = desc.schemas.get("Item").expect("Item schema should exist");
+        // 'name' and 'count' are valid properties; 'state' (array) is dropped.
+        assert!(
+            item_schema.properties.contains_key("name"),
+            "valid property 'name' must be preserved",
+        );
+        assert!(
+            item_schema.properties.contains_key("count"),
+            "valid property 'count' must be preserved",
+        );
+        assert!(
+            !item_schema.properties.contains_key("state"),
+            "array property 'state' must be dropped",
         );
     }
 }

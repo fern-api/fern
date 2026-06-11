@@ -958,11 +958,17 @@ export class EndpointSnippetGenerator {
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
+            // Literal path parameters are still positional string arguments in the
+            // generated client, so the value must be materialized rather than skipped.
+            const value =
+                parameter.typeReference.type === "literal"
+                    ? this.context.dynamicTypeInstantiationMapper.convertLiteral(parameter.typeReference.value)
+                    : asPointer
+                      ? this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible(parameter)
+                      : this.context.dynamicTypeInstantiationMapper.convert(parameter);
             args.push({
                 name: this.context.getTypeName(parameter.name.name),
-                value: asPointer
-                    ? this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible(parameter)
-                    : this.context.dynamicTypeInstantiationMapper.convert(parameter)
+                value
             });
         }
 

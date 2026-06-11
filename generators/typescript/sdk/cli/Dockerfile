@@ -1,8 +1,8 @@
 # Stage 1: Rebuild oxlint-tsgolint from source under go1.26.4 so the embedded
-# go/stdlib clears vulnerability scanners. The published binaries are still
-# compiled with an older upstream Go toolchain.
+# go/stdlib clears CVE-2026-42507 and CVE-2026-27145 (fixed in 1.26.4).
+# The published 0.23.0 binaries are compiled with go1.26.3.
 FROM golang:1.26.4-trixie AS tsgolint-rebuild
-ARG TSGOLINT_VERSION=0.22.1
+ARG TSGOLINT_VERSION=0.23.0
 ENV GOTOOLCHAIN=go1.26.4
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "build@example.com" && \
@@ -10,11 +10,6 @@ RUN git config --global user.email "build@example.com" && \
     git clone --depth 1 --branch v${TSGOLINT_VERSION} \
         https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
     cd /src/tsgolint && \
-    # Equivalent of `just init`: init the typescript-go submodule
-    # (NOT recursively — typescript-go's own microsoft/TypeScript
-    # sub-submodule is huge and not needed for tsgolint's build),
-    # apply patches, copy internal/collections so internal/utils can
-    # import it (the file comment explains the duplication).
     git submodule update --init --depth 1 typescript-go && \
     cd typescript-go && \
     git am --3way --no-gpg-sign ../patches/*.patch && \
@@ -88,10 +83,10 @@ RUN npm install -g pnpm@10.33.3 --force
 RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.9.3 \
   prettier@3.8.1 \
-  oxfmt@0.48.0 \
+  oxfmt@0.54.0 \
   @biomejs/biome@2.4.10 \
-  oxlint@1.63.0 \
-  oxlint-tsgolint@0.22.1 \
+  oxlint@1.69.0 \
+  oxlint-tsgolint@0.23.0 \
   @types/node@^20.0.0 \
   ts-loader@^9.5.4 \
   webpack@^5.105.4 \

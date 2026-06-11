@@ -195,7 +195,7 @@ client.Inlined.Send(
 ```go
 client.Path.Send(
         context.TODO(),
-        nil,
+        "123",
     )
 }
 ```

@@ -1264,9 +1264,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private addQueryValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
+        // `value` is already a fully-formed Go string expression (e.g. the quoted
+        // output of getLiteralAsString), so it is written verbatim rather than
+        // being wrapped in another set of quotes.
         return go.codeblock((writer) => {
             writer.writeNewLineIfLastLineNot();
-            writer.write(`queryParams.Add("${wireValue}", "${value}")`);
+            writer.write(`queryParams.Add("${wireValue}", ${value})`);
         });
     }
 

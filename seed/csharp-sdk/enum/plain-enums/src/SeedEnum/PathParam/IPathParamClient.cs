@@ -4,7 +4,7 @@ namespace SeedEnum;
 
 public partial interface IPathParamClient
 {
-    Task SendAsync(
+    WithRawResponseTask SendAsync(
         Operand operand,
         OneOf<Color, Operand> operandOrColor,
         RequestOptions? options = null,

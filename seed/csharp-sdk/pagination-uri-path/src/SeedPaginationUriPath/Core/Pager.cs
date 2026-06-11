@@ -224,7 +224,8 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
                 items,
                 response,
                 wrappedResponse.RawResponse.StatusCode,
-                wrappedResponse.RawResponse.Headers
+                wrappedResponse.RawResponse.Headers,
+                wrappedResponse.RawResponse.Url
             )
             : Page<TItem>.Empty;
         var offset = getOffset(request);
@@ -468,7 +469,8 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
                     items,
                     response,
                     wrappedResponse.RawResponse.StatusCode,
-                    wrappedResponse.RawResponse.Headers
+                    wrappedResponse.RawResponse.Headers,
+                    wrappedResponse.RawResponse.Url
                 )
                 : Page<TItem>.Empty;
             var cursor = getNextCursor(response);
