@@ -844,9 +844,7 @@ export class EndpointSnippetGenerator {
         const irPathParameters = this.context.ir.pathParameters ?? [];
         if (irPathParameters.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: irPathParameters, snippet }).map(
-                    (field) => field.value
-                )
+                ...this.getPathParameters({ namedParameters: irPathParameters, snippet }).map((field) => field.value)
             );
         }
         this.context.errors.unscope();
@@ -903,9 +901,7 @@ export class EndpointSnippetGenerator {
         }
         const irPathParameterFields: php.ConstructorField[] = [];
         if (irPathParameters.length > 0) {
-            irPathParameterFields.push(
-                ...this.getPathParameters({ namedParameters: irPathParameters, snippet })
-            );
+            irPathParameterFields.push(...this.getPathParameters({ namedParameters: irPathParameters, snippet }));
         }
         const pathParameterFields = [...endpointPathParameterFields, ...irPathParameterFields];
         this.context.errors.unscope();

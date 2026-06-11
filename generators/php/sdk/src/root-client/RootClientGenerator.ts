@@ -902,9 +902,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
         const extraParams = this.getNonLiteralOAuthProperties(oauth.configuration);
         const extraParamArgs = extraParams.map((p) => `$${p.fieldName} ?? ''`).join(", ");
-        const allArgs = extraParamArgs.length > 0
-            ? `${clientIdFallback}, ${clientSecretFallback}, ${extraParamArgs}, $authClient`
-            : `${clientIdFallback}, ${clientSecretFallback}, $authClient`;
+        const allArgs =
+            extraParamArgs.length > 0
+                ? `${clientIdFallback}, ${clientSecretFallback}, ${extraParamArgs}, $authClient`
+                : `${clientIdFallback}, ${clientSecretFallback}, $authClient`;
         writer.writeLine(`(${allArgs});`);
         writer.writeLine();
     }
@@ -953,9 +954,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
             } else if (requestBody != null && requestBody.type === "reference") {
                 if (requestBody.requestBodyType.type === "named") {
-                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(
-                        requestBody.requestBodyType.typeId
-                    );
+                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(requestBody.requestBodyType.typeId);
                     if (typeDeclaration.shape.type === "object") {
                         for (const property of typeDeclaration.shape.properties) {
                             const literal = this.context.maybeLiteral(property.valueType);
@@ -1141,9 +1140,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         return { service, endpoint };
     }
 
-    private getNonLiteralOAuthProperties(
-        oauthConfig: FernIr.OAuthConfiguration
-    ): Array<{ fieldName: string }> {
+    private getNonLiteralOAuthProperties(oauthConfig: FernIr.OAuthConfiguration): Array<{ fieldName: string }> {
         if (oauthConfig.type !== "clientCredentials") {
             return [];
         }
