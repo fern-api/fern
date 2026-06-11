@@ -54,10 +54,10 @@ const SKIP_TYPES = new Set(["ClientConfig", "HttpClient"]);
  * Returns the struct name and all `pub <field>: <Type>` entries,
  * filtering out config/http_client infrastructure fields.
  */
-function parseClientStruct(
+export function parseClientStruct(
     source: string
 ): { name: string; fields: SubClientField[]; hasHttpClient: boolean } | undefined {
-    const structMatch = source.match(/pub struct (\w+Client)\s*\{([^}]+)\}/);
+    const structMatch = source.match(/pub struct (\w+Client\d*)\s*\{([^}]+)\}/);
     if (structMatch == null) {
         return undefined;
     }
