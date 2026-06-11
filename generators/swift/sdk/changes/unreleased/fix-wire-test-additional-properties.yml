@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed generated wire tests to include extra (additional) properties in the
+    expected response object for types whose schema permits them. The decoded
+    response captures any undeclared JSON keys into `additionalProperties`, but
+    the expected response object previously omitted them, so the equality
+    assertion failed. Plain object responses now populate `additionalProperties`
+    the same way undiscriminated-union responses already did.
+  type: fix

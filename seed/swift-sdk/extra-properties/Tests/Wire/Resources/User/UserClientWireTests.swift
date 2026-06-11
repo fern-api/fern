@@ -21,7 +21,11 @@ import ExtraProperties
             urlSession: stub.urlSession
         )
         let expectedResponse = User(
-            name: "Alice"
+            name: "Alice",
+            additionalProperties: [
+                "age": JSONValue.number(30), 
+                "location": JSONValue.string("Wonderland")
+            ]
         )
         let response = try await client.user.createUser(
             request: .init(
