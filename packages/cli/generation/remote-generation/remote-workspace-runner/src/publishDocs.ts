@@ -63,7 +63,6 @@ import { basename } from "path";
 import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
-import { mapDocsDefinitionToLegacyFileIds } from "./mapDocsDefinitionToLegacyFileIds.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
@@ -324,12 +323,9 @@ export async function publishDocs({
         // translate DocsConfig's FileId-based references (e.g. colorsV3.dark.logo)
         // into LedgerConfig path strings.
         //
-        // Populated by the uploadFiles callback below:
-        //   - ledger mode: identity map (fullPath → fullPath)
-        //   - dual/legacy: both the legacy UUID FileId and the canonical
-        //     sanitizedPath resolve to the ledger fullPath.
+        // Populated by the uploadFiles callback below in ledger mode as an
+        // identity map (fullPath → fullPath).
         const ledgerFileIdToPath = new Map<string, string>();
-        const legacyFilePathToId = new Map<string, string>();
 
         const readApiDefinitionsById = new Map<string, APIV1Read.ApiDefinition>();
         const captureReadApiDefinition = (definition: APIV1Write.ApiDefinition, apiDefinitionId: string): void => {
@@ -618,22 +614,6 @@ export async function publishDocs({
                 const hashNonImageTime = performance.now() - hashNonImageStart;
                 context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
-                const canonicalizeUploadedFilesForResolver = (uploadedFiles: UploadedFile[]): UploadedFile[] => {
-                    return uploadedFiles.map((uploaded) => {
-                        const sanitizedPath = filesMap.get(uploaded.absoluteFilePath)?.sanitizedPath;
-                        if (sanitizedPath == null) {
-                            return uploaded;
-                        }
-                        legacyFilePathToId.set(sanitizedPath, uploaded.fileId);
-                        ledgerFileIdToPath.set(uploaded.fileId, sanitizedPath);
-                        ledgerFileIdToPath.set(sanitizedPath, sanitizedPath);
-                        return {
-                            ...uploaded,
-                            fileId: sanitizedPath
-                        };
-                    });
-                };
-
                 // ── Ledger-only path ─────────────────────────────────────
                 // In ledger mode we do NOT call fdr.docs.v2.write.startDocsRegister
                 // / startDocsPreviewRegister. The legacy V2 register mints fresh
@@ -720,14 +700,11 @@ export async function publishDocs({
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
                         }
                     }
-                    const uploadedFiles = convertToFilePathPairs(
+                    return convertToFilePathPairs(
                         startDocsRegisterResponse.uploadUrls,
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    return deployMode !== "legacy"
-                        ? canonicalizeUploadedFilesForResolver(uploadedFiles)
-                        : uploadedFiles;
                 } else {
                     let startDocsRegisterResponse;
                     try {
@@ -779,14 +756,11 @@ export async function publishDocs({
                             context.logger.info("No files to upload (all up to date)");
                         }
                     }
-                    const uploadedFiles = convertToFilePathPairs(
+                    return convertToFilePathPairs(
                         startDocsRegisterResponse.uploadUrls,
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    return deployMode !== "legacy"
-                        ? canonicalizeUploadedFilesForResolver(uploadedFiles)
-                        : uploadedFiles;
                 }
             },
             registerApi: registerApiToFdr,
@@ -828,7 +802,7 @@ export async function publishDocs({
             });
         }
 
-        // ── Build ledger git provenance (shared by dual + ledger paths) ──
+        // ── Build ledger git provenance ──
         const ledgerGit: DocsPublishGitInput | undefined =
             ciSource?.repo != null && ciSource?.branch != null
                 ? {
@@ -845,13 +819,9 @@ export async function publishDocs({
             }
             context.logger.info("Publishing docs to FDR...");
             const publishStart = performance.now();
-            const legacyDocsDefinition = mapDocsDefinitionToLegacyFileIds({
-                docsDefinition,
-                pathToFileId: legacyFilePathToId
-            });
             await fdr.docs.v2.write.finishDocsRegister({
                 docsRegistrationId,
-                docsDefinition: legacyDocsDefinition,
+                docsDefinition,
                 excludeApis,
                 ...(isBasepathAware && !preview && { basepathAware: true })
             });
@@ -906,50 +876,23 @@ export async function publishDocs({
             }
         };
 
-        // ── Execute publish paths ────────────────────────────────────
-        // In dual mode both paths run in parallel and a failure of either
-        // is fatal. The two writes are not atomic — which store serves the
-        // live site depends on rollout state — so a partial success must
-        // surface as a failed publish telling the user their docs may or
-        // may not have been updated. When only the ledger write fails, the
-        // failure is deferred so the legacy publish still completes fully
-        // (translations, AI chat) before the command exits non-zero.
-        let dualWriteLedgerError: unknown;
-        if (deployMode === "dual" && docsRegistrationId != null) {
-            const [legacyResult, ledgerResult] = await Promise.allSettled([runLegacyPublish(), runLedgerPublish()]);
-            if (legacyResult.status === "rejected" && ledgerResult.status === "rejected") {
-                return context.failAndThrow(
-                    `Failed to publish docs to ${domain}: both publish paths failed. Your docs were not updated.\nLedger error: ${String(ledgerResult.reason)}`,
-                    legacyResult.reason,
-                    { code: CliError.Code.NetworkError }
-                );
-            }
-            if (legacyResult.status === "rejected") {
-                return context.failAndThrow(
-                    `Failed to publish docs to ${domain}: one of two publish paths failed. Your docs may or may not have been updated.`,
-                    legacyResult.reason,
-                    { code: CliError.Code.NetworkError }
-                );
-            }
-            if (ledgerResult.status === "rejected") {
-                dualWriteLedgerError = ledgerResult.reason;
-                context.logger.warn(`[ledger] Dual-write failed: ${String(ledgerResult.reason)}`);
-            }
-        } else if (deployMode !== "ledger" && docsRegistrationId != null) {
-            // Legacy-only path.
-            try {
-                await runLegacyPublish();
-            } catch (error) {
-                return context.failAndThrow("Failed to publish docs to " + domain, error, {
-                    code: CliError.Code.NetworkError
-                });
-            }
-        } else if (deployMode === "ledger") {
-            // Ledger-only path.
+        // ── Execute publish path ─────────────────────────────────────
+        // Each publish writes exactly one artifact — legacy or ledger — and
+        // the read path is determined by the artifact type itself. A failure
+        // of the selected path is a hard failure: the docs were not updated.
+        if (deployMode === "ledger") {
             try {
                 await runLedgerPublish();
             } catch (error) {
                 return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
+                    code: CliError.Code.NetworkError
+                });
+            }
+        } else if (docsRegistrationId != null) {
+            try {
+                await runLegacyPublish();
+            } catch (error) {
+                return context.failAndThrow("Failed to publish docs to " + domain, error, {
                     code: CliError.Code.NetworkError
                 });
             }
@@ -990,13 +933,8 @@ export async function publishDocs({
         }
 
         // Register translated page content for each configured locale via the V2 endpoint.
-        // In ledger-only mode, translations are handled by publishDocsViaLedger (above),
-        // so this block only runs for legacy and dual-write modes.
-        // In dual mode, translations are intentionally published through BOTH the V2
-        // endpoint (here) and the ledger finishTranslation endpoint (inside
-        // publishDocsViaLedger above). This ensures migration parity — both stores
-        // receive identical translated content until the ledger path is promoted to
-        // sole owner.
+        // In ledger mode, translations are handled by publishDocsViaLedger (above),
+        // so this block only runs for the legacy mode.
         // In preview mode, register translations against the preview URL (not the production domain)
         // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
@@ -1196,12 +1134,6 @@ export async function publishDocs({
                                 navbarLinks: translatedNavbarLinks
                             }
                         };
-                        // In dual mode, canonicalization replaced fileIds with sanitizedPaths.
-                        // Remap back to legacy UUID FileIds before the V2 translations POST.
-                        const remappedTranslatedDefinition = mapDocsDefinitionToLegacyFileIds({
-                            docsDefinition: translatedDefinition,
-                            pathToFileId: legacyFilePathToId
-                        });
                         const pageCount = Object.keys(localePages).length;
                         context.logger.debug(
                             `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
@@ -1224,7 +1156,7 @@ export async function publishDocs({
                                 customDomains: preview ? [] : customDomains,
                                 orgId: organization,
                                 locale,
-                                docsDefinition: remappedTranslatedDefinition
+                                docsDefinition: translatedDefinition
                             })
                         });
                         if (!translationResponse.ok) {
@@ -1245,14 +1177,6 @@ export async function publishDocs({
             isPreview: preview,
             context
         });
-
-        if (dualWriteLedgerError != null) {
-            return context.failAndThrow(
-                `Failed to publish docs to ${domain}: one of two publish paths failed. Your docs may or may not have been updated.`,
-                dualWriteLedgerError,
-                { code: CliError.Code.NetworkError }
-            );
-        }
 
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));

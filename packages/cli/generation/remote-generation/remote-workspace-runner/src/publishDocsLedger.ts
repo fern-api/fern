@@ -180,7 +180,7 @@ export function buildLedgerInput({
     // into markdown (`file:<fileId>` tokens emitted by replaceImagePathsAndUrls)
     // be stable. In `ledger` deploy mode the CLI emits path tokens
     // (`file:<sanitizedPath>`) and short-circuits the V2 register call; in
-    // `dual`/`legacy` modes the V2 register flow mints fresh UUID FileIds per
+    // `legacy` mode the V2 register flow mints fresh UUID FileIds per
     // request, so deployment-level dedup will not fire there.
     let apiManifestRef: BlobRef | null = null;
     if (apiDefinitions.size > 0) {
@@ -230,8 +230,8 @@ export interface LedgerPublishResult {
  * base locale, and then finishTranslation is called for each translation
  * locale (blobs are already uploaded from the combined pool).
  *
- * This is a self-contained function that can run alongside (dual-write)
- * or instead of (ledger-only) the legacy finishDocsRegister path.
+ * This is a self-contained function that runs instead of the legacy
+ * finishDocsRegister path.
  */
 export async function publishDocsViaLedger({
     docsDefinition,
