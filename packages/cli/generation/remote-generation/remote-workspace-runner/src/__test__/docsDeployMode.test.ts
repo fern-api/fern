@@ -22,19 +22,14 @@ describe("getDocsDeployMode", () => {
         expect(getDocsDeployMode()).toBe("legacy");
     });
 
-    it("returns dual", () => {
-        process.env.FERN_DOCS_DEPLOY_MODE = "dual";
-        expect(getDocsDeployMode()).toBe("dual");
-    });
-
     it("returns ledger", () => {
         process.env.FERN_DOCS_DEPLOY_MODE = "ledger";
         expect(getDocsDeployMode()).toBe("ledger");
     });
 
     it("is case-insensitive", () => {
-        process.env.FERN_DOCS_DEPLOY_MODE = "DUAL";
-        expect(getDocsDeployMode()).toBe("dual");
+        process.env.FERN_DOCS_DEPLOY_MODE = "LEDGER";
+        expect(getDocsDeployMode()).toBe("ledger");
     });
 
     it("trims whitespace", () => {

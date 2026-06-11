@@ -1,0 +1,5 @@
+- summary: |
+    Drop the `dual` docs deploy mode. `FERN_DOCS_DEPLOY_MODE` now accepts
+    only `legacy` (default) and `ledger`; each publish writes exactly one
+    artifact and either succeeds or fails with a non-zero exit code.
+  type: internal
