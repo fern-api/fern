@@ -907,18 +907,33 @@ export async function publishDocs({
         };
 
         // ── Execute publish paths ────────────────────────────────────
-        // In dual mode both paths run in parallel. Legacy failure is
-        // always fatal; ledger failure is non-fatal (warn + continue)
-        // so a ledger regression cannot break a customer publish.
+        // In dual mode both paths run in parallel and a failure of either
+        // is fatal. The two writes are not atomic — which store serves the
+        // live site depends on rollout state — so a partial success must
+        // surface as a failed publish telling the user their docs may or
+        // may not have been updated. When only the ledger write fails, the
+        // failure is deferred so the legacy publish still completes fully
+        // (translations, AI chat) before the command exits non-zero.
+        let dualWriteLedgerError: unknown;
         if (deployMode === "dual" && docsRegistrationId != null) {
             const [legacyResult, ledgerResult] = await Promise.allSettled([runLegacyPublish(), runLedgerPublish()]);
+            if (legacyResult.status === "rejected" && ledgerResult.status === "rejected") {
+                return context.failAndThrow(
+                    `Failed to publish docs to ${domain}: both publish paths failed. Your docs were not updated.\nLedger error: ${String(ledgerResult.reason)}`,
+                    legacyResult.reason,
+                    { code: CliError.Code.NetworkError }
+                );
+            }
             if (legacyResult.status === "rejected") {
-                return context.failAndThrow("Failed to publish docs to " + domain, legacyResult.reason, {
-                    code: CliError.Code.NetworkError
-                });
+                return context.failAndThrow(
+                    `Failed to publish docs to ${domain}: one of two publish paths failed. Your docs may or may not have been updated.`,
+                    legacyResult.reason,
+                    { code: CliError.Code.NetworkError }
+                );
             }
             if (ledgerResult.status === "rejected") {
-                context.logger.warn(`[ledger] Dual-write failed (non-fatal): ${String(ledgerResult.reason)}`);
+                dualWriteLedgerError = ledgerResult.reason;
+                context.logger.warn(`[ledger] Dual-write failed: ${String(ledgerResult.reason)}`);
             }
         } else if (deployMode !== "ledger" && docsRegistrationId != null) {
             // Legacy-only path.
@@ -1230,6 +1245,14 @@ export async function publishDocs({
             isPreview: preview,
             context
         });
+
+        if (dualWriteLedgerError != null) {
+            return context.failAndThrow(
+                `Failed to publish docs to ${domain}: one of two publish paths failed. Your docs may or may not have been updated.`,
+                dualWriteLedgerError,
+                { code: CliError.Code.NetworkError }
+            );
+        }
 
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));

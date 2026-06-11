@@ -6,5 +6,7 @@
     multi-locale translations, custom JS components, favicon resolution,
     git provenance metadata, multi-domain forwarding, stable file-path
     references in page markdown, MIME-type inference for uploads, and a
-    dedicated preview endpoint.
+    dedicated preview endpoint. In dual mode, a failure of either publish
+    path fails the publish with a non-zero exit code, since the docs may
+    or may not have been updated depending on rollout state.
   type: feat
