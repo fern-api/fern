@@ -1,0 +1,5 @@
+- summary: |
+    Add MAX_LINE_SIZE guard (1 MiB) to SSE iter_sse/aiter_sse to prevent
+    unbounded memory growth from non-newline-terminated streams
+    (GHSA-7w2x-r9r4-7v8r).
+  type: fix
