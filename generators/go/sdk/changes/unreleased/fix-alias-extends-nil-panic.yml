@@ -1,0 +1,6 @@
+- summary: |
+    Fixed a nil-pointer panic when an object or inlined request body extends an
+    alias. The generator now resolves the extended type through alias
+    indirection to its underlying object, so its properties are inherited
+    correctly instead of crashing generation.
+  type: fix

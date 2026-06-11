@@ -1,3 +1,24 @@
+# Stage 1: Rebuild oxlint-tsgolint from source under go1.26.4 so the embedded
+# go/stdlib clears CVE-2026-42507 and CVE-2026-27145 (fixed in 1.26.4).
+# The published 0.23.0 binaries are compiled with go1.26.3.
+FROM golang:1.26.4-trixie AS tsgolint-rebuild
+ARG TSGOLINT_VERSION=0.23.0
+ENV GOTOOLCHAIN=go1.26.4
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN git config --global user.email "build@example.com" && \
+    git config --global user.name "Build" && \
+    git clone --depth 1 --branch v${TSGOLINT_VERSION} \
+        https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
+    cd /src/tsgolint && \
+    git submodule update --init --depth 1 typescript-go && \
+    cd typescript-go && \
+    git am --3way --no-gpg-sign ../patches/*.patch && \
+    cd .. && \
+    mkdir -p internal/collections && \
+    find ./typescript-go/internal/collections -type f ! -name '*_test.go' -exec cp {} internal/collections/ \; && \
+    CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
+    ls -la /out/tsgolint
+
 FROM node:24.16-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
@@ -71,6 +92,24 @@ RUN pnpm add -g typescript@~5.9.3 \
   webpack@^5.105.4 \
   msw@2.12.14 \
   vitest@^4.1.1
+
+# Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
+# rebuilt one so it embeds the patched Go stdlib.
+COPY --from=tsgolint-rebuild /out/tsgolint /tmp/tsgolint-rebuilt
+RUN chmod +x /tmp/tsgolint-rebuilt && \
+    set -eux; \
+    found=0; \
+    for f in $(find / -type f -name tsgolint -path '*@oxlint-tsgolint*' 2>/dev/null); do \
+        cp /tmp/tsgolint-rebuilt "$f"; \
+        chmod +x "$f"; \
+        found=1; \
+        echo "Replaced tsgolint binary at $f"; \
+    done; \
+    if [ "$found" = "0" ]; then \
+        echo "::error::Could not find any tsgolint binary to replace"; \
+        exit 1; \
+    fi; \
+    rm /tmp/tsgolint-rebuilt
 
 COPY generators/typescript/sdk/cli/dist/ /
 

@@ -2,19 +2,19 @@ namespace SeedRequestParameters;
 
 public partial interface IUserClient
 {
-    Task CreateUsernameAsync(
+    WithRawResponseTask CreateUsernameAsync(
         CreateUsernameRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task CreateUsernameWithReferencedTypeAsync(
+    WithRawResponseTask CreateUsernameWithReferencedTypeAsync(
         CreateUsernameReferencedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task CreateUsernameOptionalAsync(
+    WithRawResponseTask CreateUsernameOptionalAsync(
         CreateUsernameBodyOptionalProperties? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

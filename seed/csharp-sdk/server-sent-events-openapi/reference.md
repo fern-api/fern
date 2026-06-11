@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamProtocolNoCollisionAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;StreamProtocolNoCollisionResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamProtocolNoCollisionAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;StreamProtocolNoCollisionResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.StreamProtocolNoCollisionAsync(new StreamRequest());
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamProtocolCollisionAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;StreamProtocolCollisionResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamProtocolCollisionAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;StreamProtocolCollisionResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +107,7 @@ client.StreamProtocolCollisionAsync(new StreamRequest());
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamDataContextAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;StreamDataContextResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamDataContextAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;StreamDataContextResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +161,7 @@ client.StreamDataContextAsync(new StreamRequest());
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamNoContextAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;StreamNoContextResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamNoContextAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;StreamNoContextResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -215,7 +215,7 @@ client.StreamNoContextAsync(new StreamRequest());
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamProtocolWithFlatSchemaAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;StreamProtocolWithFlatSchemaResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamProtocolWithFlatSchemaAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;StreamProtocolWithFlatSchemaResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -269,7 +269,7 @@ client.StreamProtocolWithFlatSchemaAsync(new StreamRequest());
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamDataContextWithEnvelopeSchemaAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;StreamDataContextWithEnvelopeSchemaResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamDataContextWithEnvelopeSchemaAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;StreamDataContextWithEnvelopeSchemaResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -323,7 +323,7 @@ client.StreamDataContextWithEnvelopeSchemaAsync(new StreamRequest());
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamOasSpecNativeAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;Event&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamOasSpecNativeAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;Event&gt;</code></summary>
 <dl>
 <dd>
 
@@ -377,7 +377,7 @@ client.StreamOasSpecNativeAsync(new StreamRequest());
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingConditionStreamAsync</a>(StreamXFernStreamingConditionStreamRequest { ... }) -> IAsyncEnumerable&lt;CompletionStreamChunk&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingConditionStreamAsync</a>(StreamXFernStreamingConditionStreamRequest { ... }) -> WithRawResponseStream&lt;CompletionStreamChunk&gt;</code></summary>
 <dl>
 <dd>
 
@@ -489,7 +489,7 @@ await client.StreamXFernStreamingConditionAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingSharedSchemaStreamAsync</a>(StreamXFernStreamingSharedSchemaStreamRequest { ... }) -> IAsyncEnumerable&lt;CompletionStreamChunk&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingSharedSchemaStreamAsync</a>(StreamXFernStreamingSharedSchemaStreamRequest { ... }) -> WithRawResponseStream&lt;CompletionStreamChunk&gt;</code></summary>
 <dl>
 <dd>
 
@@ -667,7 +667,7 @@ await client.ValidateCompletionAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingUnionStreamAsync</a>(StreamXFernStreamingUnionStreamRequest { ... }) -> IAsyncEnumerable&lt;CompletionStreamChunk&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingUnionStreamAsync</a>(StreamXFernStreamingUnionStreamRequest { ... }) -> WithRawResponseStream&lt;CompletionStreamChunk&gt;</code></summary>
 <dl>
 <dd>
 
@@ -851,7 +851,7 @@ await client.ValidateUnionRequestAsync(new UnionStreamRequestBase { Prompt = "pr
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingNullableConditionStreamAsync</a>(StreamXFernStreamingNullableConditionStreamRequest { ... }) -> IAsyncEnumerable&lt;CompletionStreamChunk&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingNullableConditionStreamAsync</a>(StreamXFernStreamingNullableConditionStreamRequest { ... }) -> WithRawResponseStream&lt;CompletionStreamChunk&gt;</code></summary>
 <dl>
 <dd>
 
@@ -963,7 +963,7 @@ await client.StreamXFernStreamingNullableConditionAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingSseOnlyAsync</a>(StreamRequest { ... }) -> IAsyncEnumerable&lt;string&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">StreamXFernStreamingSseOnlyAsync</a>(StreamRequest { ... }) -> WithRawResponseStream&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
