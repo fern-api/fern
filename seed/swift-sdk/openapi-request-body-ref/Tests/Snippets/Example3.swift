@@ -5,9 +5,12 @@ enum Example3 {
     static func snippet() async throws {
         let client = ApiClient(baseURL: "https://api.fern.com")
 
-        _ = try await client.vendor.createVendor(request: .init(
-            name: "name",
-            address: "address"
-        ))
+        _ = try await client.vendor.createVendor(
+            idempotencyKey: "idempotencyKey",
+            request: .init(
+                name: "name",
+                address: "address"
+            )
+        )
     }
 }

@@ -8,6 +8,6 @@ enum Example11 {
             token: "<token>"
         )
 
-        _ = try await client.migration.getAttemptedMigrations()
+        _ = try await client.migration.getAttemptedMigrations(adminKeyHeader: "admin-key-header")
     }
 }

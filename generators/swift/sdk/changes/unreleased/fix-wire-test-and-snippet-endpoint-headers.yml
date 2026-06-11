@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed generated wire tests and snippets so that they pass endpoint header
+    arguments to the endpoint method. The endpoint method call previously emitted
+    only path, query, and body arguments, omitting required header parameters
+    (e.g. `X-API-Version`), which produced calls missing required arguments that
+    failed to compile. Headers are now rendered between the path and query
+    arguments to match the generated method signature, filtered to the
+    String-typed headers the SDK surfaces as parameters.
+  type: fix
