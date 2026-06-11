@@ -4,6 +4,7 @@ namespace Seed\Core;
 
 use Seed\Auth\AuthClient;
 use DateTime;
+use Seed\Auth\Types\GetTokenRequest;
 use Seed\Exceptions\SeedException;
 
 /**
@@ -84,11 +85,18 @@ class InferredAuthProvider
      */
     private function refresh(): string
     {
-        /** @var array{} $values */
+        /** @var array{clientId: string, clientSecret: string, audience: 'https://api.example.com', grantType: 'client_credentials', scope?: string|null} $values */
         $values = [
+            'clientId' => $this->options['clientId'] ?? '',
+            'clientSecret' => $this->options['clientSecret'] ?? '',
+            'audience' => 'https://api.example.com',
+            'grantType' => 'client_credentials',
+            'scope' => $this->options['scope'] ?? null,
         ];
 
-        $tokenResponse = $this->authClient->getTokenWithClientCredentials($values);
+        $request = new GetTokenRequest($values);
+
+        $tokenResponse = $this->authClient->getTokenWithClientCredentials($request);
 
         if ($tokenResponse === null) {
             throw new SeedException(message: "Expected a token response, but received an empty response.");
