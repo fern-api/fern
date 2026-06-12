@@ -25,7 +25,6 @@
                     "file": "completions"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_completions:StreamedCompletion"
             },
             "shape": {
@@ -113,7 +112,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -214,7 +212,6 @@
                                         "file": "completions"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_completions:StreamedCompletion",
                                     "default": null,
                                     "inline": null
@@ -550,7 +547,6 @@
                                                                             "file": "completions"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
@@ -579,7 +575,6 @@
                                                                             "file": "completions"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
@@ -627,7 +622,6 @@
                                                                 "file": "completions"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_completions:StreamedCompletion"
                                                         }
                                                     },
@@ -742,7 +736,6 @@
                                         "file": "completions"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_completions:StreamedCompletion",
                                     "default": null,
                                     "inline": null
@@ -974,7 +967,6 @@
                                                                             "file": "completions"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
@@ -1003,7 +995,6 @@
                                                                             "file": "completions"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
@@ -1051,7 +1042,6 @@
                                                                 "file": "completions"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_completions:StreamedCompletion"
                                                         }
                                                     },
@@ -1633,7 +1623,6 @@
         "subpackage_completions": {
             "name": "completions",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "completions"

@@ -25,7 +25,6 @@
                     "file": "optional"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_optional:SendOptionalBodyRequest"
             },
             "shape": {
@@ -82,7 +81,6 @@
                     "file": "optional"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_optional:DeployParams"
             },
             "shape": {
@@ -144,7 +142,6 @@
                     "file": "optional"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_optional:DeployResponse"
             },
             "shape": {
@@ -203,7 +200,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -457,7 +453,6 @@
                                         "file": "optional"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_optional:SendOptionalBodyRequest",
                                     "default": null,
                                     "inline": null
@@ -489,7 +484,6 @@
                                                 "file": "optional"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_optional:SendOptionalBodyRequest",
                                             "default": null,
                                             "inline": null
@@ -561,7 +555,6 @@
                                                     "file": "optional"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_optional:SendOptionalBodyRequest",
                                                 "default": null,
                                                 "inline": null
@@ -759,7 +752,6 @@
                                                 "file": "optional"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_optional:DeployParams",
                                             "default": null,
                                             "inline": null
@@ -797,7 +789,6 @@
                                                         "file": "optional"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_optional:DeployParams",
                                                     "default": null,
                                                     "inline": null
@@ -830,7 +821,6 @@
                                         "file": "optional"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_optional:DeployResponse",
                                     "default": null,
                                     "inline": null
@@ -911,7 +901,6 @@
                                                             "file": "optional"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_optional:DeployParams",
                                                         "default": null,
                                                         "inline": null
@@ -943,7 +932,6 @@
                                                                     "file": "optional"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_optional:DeployResponse"
                                                             },
                                                             "value": {
@@ -971,7 +959,6 @@
                                                         "file": "optional"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_optional:DeployResponse"
                                                 }
                                             },
@@ -1692,7 +1679,6 @@
         "subpackage_optional": {
             "name": "optional",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "optional"

@@ -32,7 +32,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:UploadDocumentResponse"
             },
             "shape": {
@@ -98,7 +97,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:DocumentMetadata"
             },
             "shape": {
@@ -241,7 +239,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:DocumentUploadResult"
             },
             "shape": {
@@ -333,7 +330,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -504,7 +500,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:UploadDocumentResponse",
                                     "default": null,
                                     "inline": null
@@ -932,7 +927,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -977,7 +971,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -1024,7 +1017,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -1071,7 +1063,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -1155,7 +1146,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:DocumentMetadata"
                                                             }
                                                         },
@@ -1182,7 +1172,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:UploadDocumentResponse"
                                                 }
                                             },
@@ -1281,7 +1270,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:UploadDocumentResponse",
                                     "default": null,
                                     "inline": null

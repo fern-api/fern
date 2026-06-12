@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Isin"
             },
             "shape": {
@@ -78,7 +77,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:IsinWithDiscriminator"
             },
             "shape": {
@@ -154,7 +152,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Quantity"
             },
             "shape": {
@@ -230,7 +227,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TwoFields"
             },
             "shape": {
@@ -307,7 +303,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:OneRequiredOneOptional"
             },
             "shape": {
@@ -390,7 +385,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:MultipleDiscriminators"
             },
             "shape": {
@@ -487,7 +481,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Trader"
             },
             "shape": {
@@ -542,7 +535,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TakerParty"
             },
             "shape": {
@@ -560,7 +552,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Trader",
                             "default": null,
                             "inline": null
@@ -602,7 +593,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:BondSingleLeg"
             },
             "shape": {
@@ -620,7 +610,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Isin",
                             "default": null,
                             "inline": null
@@ -645,7 +634,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Quantity",
                             "default": null,
                             "inline": null
@@ -688,7 +676,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Identifier"
             },
             "shape": {
@@ -708,11 +695,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Isin"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -727,11 +712,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Cusip"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -764,7 +747,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Cusip"
             },
             "shape": {
@@ -822,7 +804,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -877,7 +858,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:BondSingleLeg",
                                     "default": null,
                                     "inline": null
@@ -902,7 +882,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:TakerParty",
                                     "default": null,
                                     "inline": null
@@ -1334,7 +1313,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:BondSingleLeg"
                                                                 },
                                                                 "value": {
@@ -1353,7 +1331,6 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:Isin"
                                                                                     },
                                                                                     "value": {
@@ -1381,7 +1358,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Isin"
                                                                         }
                                                                     },
@@ -1401,7 +1377,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:BondSingleLeg"
                                                                 },
                                                                 "value": {
@@ -1420,7 +1395,6 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:Quantity"
                                                                                     },
                                                                                     "value": {
@@ -1445,7 +1419,6 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:Quantity"
                                                                                     },
                                                                                     "value": {
@@ -1476,7 +1449,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Quantity"
                                                                         }
                                                                     },
@@ -1498,7 +1470,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:BondSingleLeg"
                                                     }
                                                 },
@@ -1532,7 +1503,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:TakerParty"
                                                                 },
                                                                 "value": {
@@ -1551,7 +1521,6 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:Trader"
                                                                                     },
                                                                                     "value": {
@@ -1577,7 +1546,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Trader"
                                                                         }
                                                                     },
@@ -1598,7 +1566,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:TakerParty"
                                                     }
                                                 },

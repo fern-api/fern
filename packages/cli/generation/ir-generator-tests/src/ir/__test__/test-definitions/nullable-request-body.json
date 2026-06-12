@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PlainObject"
             },
             "shape": {
@@ -126,7 +125,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PlainObject",
                 "default": null,
                 "inline": null
@@ -161,7 +159,6 @@
             ],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": "Validation Error"
         }
@@ -179,7 +176,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -294,7 +290,6 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
@@ -367,7 +362,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:PlainObject",
                                     "default": null,
                                     "inline": null
@@ -485,7 +479,6 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
@@ -560,7 +553,6 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
@@ -631,7 +623,6 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
@@ -657,7 +648,6 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_:PlainObject"
                                                         },
                                                         "value": {
@@ -692,7 +682,6 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_:PlainObject"
                                                         },
                                                         "value": {
@@ -728,7 +717,6 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_:PlainObject"
                                             }
                                         },
@@ -1194,7 +1182,6 @@
         "subpackage_testGroup": {
             "name": "testGroup",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "testGroup"

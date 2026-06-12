@@ -27,7 +27,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -155,7 +154,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -283,7 +281,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -757,7 +754,6 @@
         "subpackage_class": {
             "name": "class",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "class"
@@ -779,7 +775,6 @@
         "subpackage_automations": {
             "name": "automations",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "automations"
@@ -806,7 +801,6 @@
         "subpackage_automations/import": {
             "name": "import",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "automations",
@@ -831,7 +825,6 @@
         "subpackage_automations/export": {
             "name": "export",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "automations",

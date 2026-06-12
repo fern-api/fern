@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:User"
             },
             "shape": {
@@ -128,7 +127,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TokenResponse"
             },
             "shape": {
@@ -208,7 +206,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -268,7 +265,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:User",
                                             "default": null,
                                             "inline": null
@@ -442,7 +438,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:User",
                                                         "default": null,
                                                         "inline": null
@@ -503,7 +498,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -530,7 +524,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -557,7 +550,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -605,7 +597,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:User"
                                                                 }
                                                             },
@@ -631,7 +622,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -658,7 +648,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -685,7 +674,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -733,7 +721,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:User"
                                                                 }
                                                             },
@@ -753,7 +740,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:User",
                                                         "default": null,
                                                         "inline": null
@@ -899,7 +885,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -1127,7 +1112,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1154,7 +1138,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1181,7 +1164,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1229,7 +1211,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -1362,7 +1343,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:TokenResponse",
                                     "default": null,
                                     "inline": null
@@ -1591,7 +1571,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TokenResponse"
                                                             },
                                                             "value": {
@@ -1618,7 +1597,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TokenResponse"
                                                             },
                                                             "value": {
@@ -1644,7 +1622,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:TokenResponse"
                                                 }
                                             },

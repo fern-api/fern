@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ExampleResponseStatus"
             },
             "shape": {
@@ -65,7 +64,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ExampleResponse"
             },
             "shape": {
@@ -87,7 +85,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:ExampleResponseStatus",
                                     "default": null,
                                     "inline": null
@@ -204,7 +201,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:GrantTypeEnum"
             },
             "shape": {
@@ -255,7 +251,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -311,7 +306,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:ExampleResponse",
                                     "default": null,
                                     "inline": null
@@ -395,7 +389,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:ExampleResponseStatus",
                                                                             "default": null,
                                                                             "inline": null
@@ -628,7 +621,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:ExampleResponse"
                                                             },
                                                             "value": {
@@ -651,7 +643,6 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:ExampleResponseStatus"
                                                                                 }
                                                                             },
@@ -666,7 +657,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:ExampleResponseStatus",
                                                                             "default": null,
                                                                             "inline": null
@@ -687,7 +677,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:ExampleResponse"
                                                             },
                                                             "value": {
@@ -734,7 +723,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:ExampleResponse"
                                                             },
                                                             "value": {
@@ -850,7 +838,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:ExampleResponse"
                                                 }
                                             },

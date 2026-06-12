@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SearchRequestNeighbor"
             },
             "shape": {
@@ -117,7 +116,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SearchRequestNeighborRequired"
             },
             "shape": {
@@ -211,7 +209,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SearchResponse"
             },
             "shape": {
@@ -278,7 +275,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:User"
             },
             "shape": {
@@ -373,7 +369,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:NestedUser"
             },
             "shape": {
@@ -423,7 +418,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -470,7 +464,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -631,7 +624,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:User",
                                 "default": null,
                                 "inline": null
@@ -662,7 +654,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:User",
                                         "default": null,
                                         "inline": null
@@ -798,7 +789,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:NestedUser",
                                         "default": null,
                                         "inline": null
@@ -831,7 +821,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:User",
                                         "default": null,
                                         "inline": null
@@ -864,7 +853,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:User",
                                         "default": null,
                                         "inline": null
@@ -987,7 +975,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:SearchRequestNeighbor",
                                         "default": null,
                                         "inline": null
@@ -1016,7 +1003,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:SearchRequestNeighborRequired",
                                 "default": null,
                                 "inline": null
@@ -1061,7 +1047,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:SearchResponse",
                                     "default": null,
                                     "inline": null
@@ -1192,7 +1177,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1227,7 +1211,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1269,7 +1252,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -1303,7 +1285,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:User"
                                                                         },
                                                                         "value": {
@@ -1338,7 +1319,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:User"
                                                                         },
                                                                         "value": {
@@ -1380,7 +1360,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             }
                                                         },
@@ -1395,7 +1374,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:SearchRequestNeighborRequired"
                                                 }
                                             },
@@ -1427,7 +1405,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -1521,7 +1498,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:SearchResponse"
                                                 }
                                             },

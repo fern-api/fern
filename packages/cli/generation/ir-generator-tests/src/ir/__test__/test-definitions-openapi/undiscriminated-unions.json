@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Dog"
             },
             "shape": {
@@ -78,7 +77,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Cat"
             },
             "shape": {
@@ -133,7 +131,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PetOrPerson"
             },
             "shape": {
@@ -199,7 +196,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ResourceWithSiblingProperties"
             },
             "shape": {
@@ -319,7 +315,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -375,7 +370,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:PetOrPerson",
                                     "default": null,
                                     "inline": null
@@ -525,7 +519,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Dog"
                                                                         },
                                                                         "value": {
@@ -553,7 +546,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Dog"
                                                             }
                                                         },
@@ -570,7 +562,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:PetOrPerson"
                                                 }
                                             },
@@ -636,7 +627,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:ResourceWithSiblingProperties",
                                     "default": null,
                                     "inline": null
@@ -786,7 +776,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Dog"
                                                                         },
                                                                         "value": {
@@ -814,7 +803,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Dog"
                                                             }
                                                         },
@@ -831,7 +819,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:ResourceWithSiblingProperties"
                                                 }
                                             },

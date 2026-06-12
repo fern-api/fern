@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Foo"
             },
             "shape": {
@@ -171,7 +170,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -358,7 +356,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Foo",
                                     "default": null,
                                     "inline": null
@@ -749,7 +746,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -796,7 +792,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -869,7 +864,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -916,7 +910,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -944,7 +937,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Foo"
                                                 }
                                             },
@@ -1212,7 +1204,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Foo",
                                     "default": null,
                                     "inline": null
@@ -1383,7 +1374,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1430,7 +1420,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1503,7 +1492,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1550,7 +1538,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1578,7 +1565,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Foo"
                                                 }
                                             },

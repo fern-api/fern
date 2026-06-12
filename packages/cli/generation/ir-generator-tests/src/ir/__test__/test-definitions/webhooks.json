@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:UserCreatedPayload"
             },
             "shape": {
@@ -122,7 +121,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:OrderCompletedPayload"
             },
             "shape": {
@@ -221,7 +219,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PaymentNotificationPayload"
             },
             "shape": {
@@ -320,7 +317,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:RefundProcessedPayload"
             },
             "shape": {
@@ -456,7 +452,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:UserCreatedPayload",
                         "default": null,
                         "inline": null
@@ -616,7 +611,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:OrderCompletedPayload",
                         "default": null,
                         "inline": null
@@ -774,7 +768,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:PaymentNotificationPayload",
                         "default": null,
                         "inline": null
@@ -929,7 +922,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:RefundProcessedPayload",
                         "default": null,
                         "inline": null

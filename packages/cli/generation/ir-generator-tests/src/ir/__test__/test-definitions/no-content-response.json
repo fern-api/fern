@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Contact"
             },
             "shape": {
@@ -133,7 +132,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -264,7 +262,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Contact",
                                             "default": null,
                                             "inline": null
@@ -460,7 +457,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Contact",
                                                         "default": null,
                                                         "inline": null
@@ -566,7 +562,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Contact"
                                                                         },
                                                                         "value": {
@@ -593,7 +588,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Contact"
                                                                         },
                                                                         "value": {
@@ -620,7 +614,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Contact"
                                                                         },
                                                                         "value": {
@@ -668,7 +661,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Contact"
                                                             }
                                                         },
@@ -687,7 +679,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Contact",
                                                         "default": null,
                                                         "inline": null
@@ -826,7 +817,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Contact",
                                     "default": null,
                                     "inline": null
@@ -1054,7 +1044,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Contact"
                                                             },
                                                             "value": {
@@ -1081,7 +1070,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Contact"
                                                             },
                                                             "value": {
@@ -1108,7 +1096,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Contact"
                                                             },
                                                             "value": {
@@ -1156,7 +1143,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Contact"
                                                 }
                                             },
@@ -1758,7 +1744,6 @@
         "subpackage_contacts": {
             "name": "contacts",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "contacts"

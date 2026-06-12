@@ -25,7 +25,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:MovieId"
             },
             "shape": {
@@ -77,7 +76,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Movie"
             },
             "shape": {
@@ -97,7 +95,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:MovieId",
                             "default": null,
                             "inline": null
@@ -172,7 +169,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Cast",
                                     "default": null,
                                     "inline": null
@@ -220,7 +216,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:CreateMovieRequest"
             },
             "shape": {
@@ -299,7 +294,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Cast"
             },
             "shape": {
@@ -320,7 +314,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:Name",
                             "default": null,
                             "inline": null
@@ -342,7 +335,6 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -352,7 +344,6 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -386,7 +377,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Name"
             },
             "shape": {
@@ -438,7 +428,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:GenericApplication"
             },
             "shape": {
@@ -458,7 +447,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
                             "inline": null
@@ -485,7 +473,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:Movie",
                             "default": null,
                             "inline": null
@@ -533,7 +520,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Sample"
             },
             "shape": {
@@ -553,7 +539,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:Movie",
                             "default": null,
                             "inline": null
@@ -580,7 +565,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:Movie",
                             "default": null,
                             "inline": null
@@ -627,7 +611,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:VanillaAlias"
             },
             "shape": {
@@ -647,7 +630,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
                             "inline": null
@@ -674,7 +656,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:Movie",
                             "default": null,
                             "inline": null
@@ -722,7 +703,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:User"
             },
             "shape": {
@@ -829,7 +809,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:CreateUsersRequest"
             },
             "shape": {
@@ -853,7 +832,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Data<User>",
                                     "default": null,
                                     "inline": null
@@ -900,7 +878,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:NestedPairOfMovies"
             },
             "shape": {
@@ -920,7 +897,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:Pair<Movie, string>",
                             "default": null,
                             "inline": null
@@ -951,7 +927,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie",
                                     "default": null,
                                     "inline": null
@@ -1001,7 +976,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:WrappedMovie"
             },
             "shape": {
@@ -1025,7 +999,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie",
                                     "default": null,
                                     "inline": null
@@ -1058,7 +1031,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie",
                                     "default": null,
                                     "inline": null
@@ -2757,7 +2729,6 @@
         "subpackage_imdb": {
             "name": "imdb",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "imdb"

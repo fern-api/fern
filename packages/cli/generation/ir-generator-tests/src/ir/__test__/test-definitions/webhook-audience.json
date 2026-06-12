@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PublicPayload"
             },
             "shape": {
@@ -78,7 +77,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PrivatePayload"
             },
             "shape": {
@@ -133,7 +131,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:NoAudiencePayload"
             },
             "shape": {
@@ -204,7 +201,6 @@
             {
                 "id": "webhooks_webhooks.publicWebhook",
                 "displayName": null,
-                "subtitle": null,
                 "method": "POST",
                 "name": "publicWebhook",
                 "headers": [],
@@ -219,7 +215,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:PublicPayload",
                         "default": null,
                         "inline": null
@@ -292,7 +287,6 @@
             {
                 "id": "webhooks_webhooks.privateWebhook",
                 "displayName": null,
-                "subtitle": null,
                 "method": "POST",
                 "name": "privateWebhook",
                 "headers": [],
@@ -307,7 +301,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:PrivatePayload",
                         "default": null,
                         "inline": null
@@ -380,7 +373,6 @@
             {
                 "id": "webhooks_webhooks.noAudienceWebhook",
                 "displayName": null,
-                "subtitle": null,
                 "method": "POST",
                 "name": "noAudienceWebhook",
                 "headers": [],
@@ -395,7 +387,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:NoAudiencePayload",
                         "default": null,
                         "inline": null
@@ -683,7 +674,6 @@
         "subpackage_webhooks": {
             "name": "webhooks",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "webhooks"

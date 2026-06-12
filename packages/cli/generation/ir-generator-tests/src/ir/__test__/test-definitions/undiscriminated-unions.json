@@ -25,7 +25,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:Request"
             },
             "shape": {
@@ -49,7 +48,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:MetadataUnion",
                                     "default": null,
                                     "inline": null
@@ -97,7 +95,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:TypeWithOptionalUnion"
             },
             "shape": {
@@ -121,7 +118,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:MyUnion",
                                     "default": null,
                                     "inline": null
@@ -167,7 +163,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:MyUnion"
             },
             "shape": {
@@ -314,7 +309,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:NestedUnionL2"
             },
             "shape": {
@@ -400,7 +394,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:NestedUnionL1"
             },
             "shape": {
@@ -507,7 +500,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:NestedUnionRoot"
             },
             "shape": {
@@ -595,7 +587,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:UnionWithDuplicateTypes"
             },
             "shape": {
@@ -696,7 +687,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:MetadataUnion"
             },
             "shape": {
@@ -768,7 +758,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:NamedMetadata"
             },
             "shape": {
@@ -856,7 +845,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:OptionalMetadata"
             },
             "shape": {
@@ -938,7 +926,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:Metadata"
             },
             "shape": {
@@ -958,7 +945,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:Key",
                             "default": null,
                             "inline": null
@@ -991,7 +977,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:Key",
                             "default": null,
                             "inline": null
@@ -1209,7 +1194,6 @@
                                             "file": "union"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_union:Key",
                                         "default": null,
                                         "inline": null
@@ -1259,7 +1243,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:Key"
             },
             "shape": {
@@ -1325,7 +1308,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:KeyType"
             },
             "shape": {
@@ -1369,7 +1351,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:UnionWithBaseProperties"
             },
             "shape": {
@@ -1492,7 +1473,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:UnionWithIdenticalStrings"
             },
             "shape": {
@@ -1539,7 +1519,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:UnionWithIdenticalPrimitives"
             },
             "shape": {
@@ -1614,7 +1593,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:PaymentMethodUnion"
             },
             "shape": {
@@ -1686,7 +1664,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:TokenizeCard"
             },
             "shape": {
@@ -1765,7 +1742,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:ConvertToken"
             },
             "shape": {
@@ -1844,7 +1820,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:UnionWithReservedNames"
             },
             "shape": {
@@ -1917,7 +1892,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:UserId"
             },
             "shape": {
@@ -1969,7 +1943,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:Name"
             },
             "shape": {
@@ -2021,7 +1994,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:UnionWithTypeAliases"
             },
             "shape": {
@@ -2107,7 +2079,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:LeafTypeA"
             },
             "shape": {
@@ -2186,7 +2157,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:LeafTypeB"
             },
             "shape": {
@@ -2243,7 +2213,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:NestedObjectUnion"
             },
             "shape": {
@@ -2315,7 +2284,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:WrapperObject"
             },
             "shape": {
@@ -2335,7 +2303,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:NestedObjectUnion",
                             "default": null,
                             "inline": null
@@ -2403,7 +2370,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:OuterNestedUnion"
             },
             "shape": {
@@ -2473,7 +2439,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:AliasedLeafA"
             },
             "shape": {
@@ -2489,7 +2454,6 @@
                         "file": "union"
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "typeId": "type_union:LeafObjectA",
                     "default": null,
                     "inline": null
@@ -2506,7 +2470,6 @@
                             "file": "union"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_union:LeafObjectA"
                     },
                     "shape": "OBJECT"
@@ -2538,7 +2501,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:AliasedLeafB"
             },
             "shape": {
@@ -2554,7 +2516,6 @@
                         "file": "union"
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "typeId": "type_union:AliasToLeafB",
                     "default": null,
                     "inline": null
@@ -2571,7 +2532,6 @@
                             "file": "union"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_union:LeafObjectB"
                     },
                     "shape": "OBJECT"
@@ -2604,7 +2564,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:AliasToLeafB"
             },
             "shape": {
@@ -2620,7 +2579,6 @@
                         "file": "union"
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "typeId": "type_union:LeafObjectB",
                     "default": null,
                     "inline": null
@@ -2637,7 +2595,6 @@
                             "file": "union"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_union:LeafObjectB"
                     },
                     "shape": "OBJECT"
@@ -2669,7 +2626,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:LeafObjectA"
             },
             "shape": {
@@ -2748,7 +2704,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:LeafObjectB"
             },
             "shape": {
@@ -2805,7 +2760,6 @@
                     "file": "union"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_union:AliasedObjectUnion"
             },
             "shape": {
@@ -2883,7 +2837,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -2935,7 +2888,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:MyUnion",
                             "default": null,
                             "inline": null
@@ -2961,7 +2913,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:MyUnion",
                                     "default": null,
                                     "inline": null
@@ -2990,7 +2941,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:MyUnion",
                                     "default": null,
                                     "inline": null
@@ -3048,7 +2998,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:MyUnion"
                                         }
                                     },
@@ -3087,7 +3036,6 @@
                                                         "file": "union"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_union:MyUnion"
                                                 }
                                             },
@@ -3153,7 +3101,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:Metadata",
                                     "default": null,
                                     "inline": null
@@ -3387,7 +3334,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:Key",
                                                                     "default": null,
                                                                     "inline": null
@@ -3478,7 +3424,6 @@
                                                                                                     "file": "union"
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_union:KeyType"
                                                                                             }
                                                                                         },
@@ -3495,7 +3440,6 @@
                                                                                         "file": "union"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_union:Key"
                                                                                 }
                                                                             },
@@ -3526,7 +3470,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:Key",
                                                                     "default": null,
                                                                     "inline": null
@@ -3559,7 +3502,6 @@
                                                         "file": "union"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_union:Metadata"
                                                 }
                                             },
@@ -3621,7 +3563,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:MetadataUnion",
                             "default": null,
                             "inline": null
@@ -3647,7 +3588,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:MetadataUnion",
                                     "default": null,
                                     "inline": null
@@ -3921,7 +3861,6 @@
                                                             "file": "union"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_union:OptionalMetadata"
                                                     }
                                                 }
@@ -3937,7 +3876,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:MetadataUnion"
                                         }
                                     }
@@ -4010,7 +3948,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:Request",
                             "default": null,
                             "inline": null
@@ -4036,7 +3973,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:Request",
                                     "default": null,
                                     "inline": null
@@ -4261,7 +4197,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:MetadataUnion",
                                                                     "default": null,
                                                                     "inline": null
@@ -4352,7 +4287,6 @@
                                                             "file": "union"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_union:Request"
                                                     },
                                                     "value": {
@@ -4372,7 +4306,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:MetadataUnion",
                                                                     "default": null,
                                                                     "inline": null
@@ -4395,7 +4328,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:Request"
                                         }
                                     },
@@ -4469,7 +4401,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:UnionWithDuplicateTypes",
                             "default": null,
                             "inline": null
@@ -4495,7 +4426,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:UnionWithDuplicateTypes",
                                     "default": null,
                                     "inline": null
@@ -4524,7 +4454,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:UnionWithDuplicateTypes",
                                     "default": null,
                                     "inline": null
@@ -4582,7 +4511,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:UnionWithDuplicateTypes"
                                         }
                                     },
@@ -4621,7 +4549,6 @@
                                                         "file": "union"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_union:UnionWithDuplicateTypes"
                                                 }
                                             },
@@ -4681,7 +4608,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:NestedUnionRoot",
                             "default": null,
                             "inline": null
@@ -4707,7 +4633,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:NestedUnionRoot",
                                     "default": null,
                                     "inline": null
@@ -4789,7 +4714,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:NestedUnionRoot"
                                         }
                                     },
@@ -4865,7 +4789,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:OuterNestedUnion",
                             "default": null,
                             "inline": null
@@ -4891,7 +4814,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:OuterNestedUnion",
                                     "default": null,
                                     "inline": null
@@ -4973,7 +4895,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:OuterNestedUnion"
                                         }
                                     },
@@ -5049,7 +4970,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:AliasedObjectUnion",
                             "default": null,
                             "inline": null
@@ -5075,7 +4995,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:AliasedObjectUnion",
                                     "default": null,
                                     "inline": null
@@ -5157,7 +5076,6 @@
                                                                                     "file": "union"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_union:LeafObjectA"
                                                                             },
                                                                             "value": {
@@ -5186,7 +5104,6 @@
                                                                                     "file": "union"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_union:LeafObjectA"
                                                                             },
                                                                             "value": {
@@ -5214,7 +5131,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:LeafObjectA"
                                                                 }
                                                             },
@@ -5234,7 +5150,6 @@
                                                             "file": "union"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_union:AliasedLeafA"
                                                     }
                                                 },
@@ -5254,7 +5169,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:AliasedObjectUnion"
                                         }
                                     },
@@ -5333,7 +5247,6 @@
                                 "file": "union"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_union:UnionWithBaseProperties",
                             "default": null,
                             "inline": null
@@ -5359,7 +5272,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:UnionWithBaseProperties",
                                     "default": null,
                                     "inline": null
@@ -5388,7 +5300,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:UnionWithBaseProperties",
                                     "default": null,
                                     "inline": null
@@ -5441,7 +5352,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:NamedMetadata"
                                                                 },
                                                                 "value": {
@@ -5470,7 +5380,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:NamedMetadata"
                                                                 },
                                                                 "value": {
@@ -5542,7 +5451,6 @@
                                                             "file": "union"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_union:NamedMetadata"
                                                     }
                                                 },
@@ -5566,7 +5474,6 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_union:UnionWithBaseProperties"
                                         }
                                     },
@@ -5607,7 +5514,6 @@
                                                                                 "file": "union"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_union:NamedMetadata"
                                                                         },
                                                                         "value": {
@@ -5636,7 +5542,6 @@
                                                                                 "file": "union"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_union:NamedMetadata"
                                                                         },
                                                                         "value": {
@@ -5708,7 +5613,6 @@
                                                                     "file": "union"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_union:NamedMetadata"
                                                             }
                                                         },
@@ -5732,7 +5636,6 @@
                                                         "file": "union"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_union:UnionWithBaseProperties"
                                                 }
                                             },
@@ -5804,7 +5707,6 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_union:PaymentMethodUnion",
                                     "default": null,
                                     "inline": null
@@ -6064,7 +5966,6 @@
                                                                                     "file": "union"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_union:TokenizeCard"
                                                                             },
                                                                             "value": {
@@ -6093,7 +5994,6 @@
                                                                                     "file": "union"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_union:TokenizeCard"
                                                                             },
                                                                             "value": {
@@ -6123,7 +6023,6 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_union:TokenizeCard"
                                                                 }
                                                             },
@@ -6143,7 +6042,6 @@
                                                             "file": "union"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_union:PaymentMethodUnion"
                                                     }
                                                 },
@@ -10385,7 +10283,6 @@
         "subpackage_union": {
             "name": "union",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "union"

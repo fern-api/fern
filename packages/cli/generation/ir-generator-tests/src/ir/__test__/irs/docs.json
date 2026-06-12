@@ -25,7 +25,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:Object"
             },
             "shape": {
@@ -85,7 +84,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -186,7 +184,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:Object",
                                     "default": null,
                                     "inline": null
@@ -261,7 +258,6 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:Object"
                                                             },
                                                             "value": {
@@ -291,7 +287,6 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_service:Object"
                                                 }
                                             },
@@ -652,7 +647,6 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

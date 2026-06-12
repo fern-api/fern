@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:BulkUpdateTasksResponse"
             },
             "shape": {
@@ -87,7 +86,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -428,7 +426,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:BulkUpdateTasksResponse",
                                     "default": null,
                                     "inline": null
@@ -679,7 +676,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:BulkUpdateTasksResponse"
                                                             },
                                                             "value": {
@@ -725,7 +721,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:BulkUpdateTasksResponse"
                                                 }
                                             },

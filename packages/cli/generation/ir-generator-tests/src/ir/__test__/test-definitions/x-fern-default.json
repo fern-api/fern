@@ -59,7 +59,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TestGetResponse"
             },
             "shape": {
@@ -123,7 +122,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -287,7 +285,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:TestGetResponse",
                                     "default": null,
                                     "inline": null
@@ -461,7 +458,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TestGetResponse"
                                                             },
                                                             "value": {
@@ -509,7 +505,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:TestGetResponse"
                                                 }
                                             },

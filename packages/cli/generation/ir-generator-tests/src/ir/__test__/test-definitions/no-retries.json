@@ -25,7 +25,6 @@
                     "file": "retries"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_retries:User"
             },
             "shape": {
@@ -107,7 +106,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -169,7 +167,6 @@
                                                 "file": "retries"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_retries:User",
                                             "default": null,
                                             "inline": null
@@ -228,7 +225,6 @@
                                                                                     "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_retries:User"
                                                                             },
                                                                             "value": {
@@ -257,7 +253,6 @@
                                                                                     "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_retries:User"
                                                                             },
                                                                             "value": {
@@ -287,7 +282,6 @@
                                                                         "file": "retries"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_retries:User"
                                                                 }
                                                             },
@@ -314,7 +308,6 @@
                                                                                     "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_retries:User"
                                                                             },
                                                                             "value": {
@@ -343,7 +336,6 @@
                                                                                     "file": "retries"
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_retries:User"
                                                                             },
                                                                             "value": {
@@ -373,7 +365,6 @@
                                                                         "file": "retries"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_retries:User"
                                                                 }
                                                             },
@@ -394,7 +385,6 @@
                                                             "file": "retries"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_retries:User",
                                                         "default": null,
                                                         "inline": null
@@ -693,7 +683,6 @@
         "subpackage_retries": {
             "name": "retries",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "retries"

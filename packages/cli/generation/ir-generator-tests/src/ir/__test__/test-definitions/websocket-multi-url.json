@@ -34,7 +34,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:SendEvent"
             },
             "shape": {
@@ -113,7 +112,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent"
             },
             "shape": {
@@ -259,7 +257,6 @@
             "auth": true,
             "name": "realtime",
             "displayName": null,
-            "subtitle": null,
             "connectMethodName": null,
             "headers": [],
             "pathParameters": [
@@ -336,7 +333,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent",
                             "default": null,
                             "inline": null
@@ -364,7 +360,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent",
                             "default": null,
                             "inline": null
@@ -617,7 +612,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -646,7 +640,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -674,7 +667,6 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_realtime:SendEvent"
                                     }
                                 },
@@ -705,7 +697,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -734,7 +725,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -762,7 +752,6 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_realtime:ReceiveEvent"
                                     }
                                 },
@@ -1180,7 +1169,6 @@
         "subpackage_realtime": {
             "name": "realtime",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "realtime"

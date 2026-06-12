@@ -34,7 +34,6 @@
                     "file": "auth"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_auth:AuthGetTokenResponse"
             },
             "shape": {
@@ -94,7 +93,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -263,7 +261,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -386,7 +383,6 @@
                                         "file": "auth"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_auth:AuthGetTokenResponse",
                                     "default": null,
                                     "inline": null
@@ -596,7 +592,6 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_auth:AuthGetTokenResponse"
                                                             },
                                                             "value": {
@@ -626,7 +621,6 @@
                                                         "file": "auth"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_auth:AuthGetTokenResponse"
                                                 }
                                             },
@@ -666,7 +660,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -1828,7 +1821,6 @@
         "subpackage_items": {
             "name": "items",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "items"
@@ -1850,7 +1842,6 @@
         "subpackage_auth": {
             "name": "auth",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "auth"
@@ -1874,7 +1865,6 @@
         "subpackage_files": {
             "name": "files",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "files"

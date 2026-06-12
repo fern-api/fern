@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SseServerEvent"
             },
             "shape": {
@@ -43,11 +42,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:SseMessageEvent"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -62,11 +59,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:SseHeartbeatEvent"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -81,11 +76,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:SseErrorEvent"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -120,7 +113,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SseMessageEventData"
             },
             "shape": {
@@ -181,7 +173,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SseMessageEvent"
             },
             "shape": {
@@ -199,7 +190,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:SseMessageEventData",
                             "default": null,
                             "inline": null
@@ -269,7 +259,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SseHeartbeatEvent"
             },
             "shape": {
@@ -330,7 +319,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SseErrorEvent"
             },
             "shape": {
@@ -413,7 +401,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:RegularUnion"
             },
             "shape": {
@@ -433,11 +420,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:DogVariant"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -452,11 +437,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:CatVariant"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -489,7 +472,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:DogVariant"
             },
             "shape": {
@@ -572,7 +554,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:CatVariant"
             },
             "shape": {
@@ -654,7 +635,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ExplicitContextUnion"
             },
             "shape": {
@@ -674,11 +654,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:ExplicitMessageEvent"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -693,11 +671,9 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:ExplicitHeartbeatEvent"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -730,7 +706,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ExplicitMessageEvent"
             },
             "shape": {
@@ -791,7 +766,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ExplicitHeartbeatEvent"
             },
             "shape": {
@@ -855,7 +829,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -911,7 +884,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:SseServerEvent",
                                     "default": null,
                                     "inline": null
@@ -1169,7 +1141,6 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:SseMessageEvent"
                                                                                 },
                                                                                 "value": {
@@ -1188,7 +1159,6 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
-                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:SseMessageEventData"
                                                                                                     },
                                                                                                     "value": {
@@ -1236,7 +1206,6 @@
                                                                                                 "file": null
                                                                                             },
                                                                                             "displayName": null,
-                                                                                            "subtitle": null,
                                                                                             "typeId": "type_:SseMessageEventData"
                                                                                         }
                                                                                     },
@@ -1256,7 +1225,6 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:SseMessageEvent"
                                                                                 },
                                                                                 "value": {
@@ -1309,7 +1277,6 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_:SseServerEvent"
                                                         }
                                                     },
@@ -1382,7 +1349,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:RegularUnion",
                                     "default": null,
                                     "inline": null
@@ -1571,7 +1537,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:DogVariant"
                                                                         },
                                                                         "value": {
@@ -1598,7 +1563,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:DogVariant"
                                                                         },
                                                                         "value": {
@@ -1651,7 +1615,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:RegularUnion"
                                                 }
                                             },
@@ -1719,7 +1682,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:ExplicitContextUnion",
                                     "default": null,
                                     "inline": null
@@ -1890,7 +1852,6 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:ExplicitMessageEvent"
                                                                                 },
                                                                                 "value": {
@@ -1943,7 +1904,6 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_:ExplicitContextUnion"
                                                         }
                                                     },

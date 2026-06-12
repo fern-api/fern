@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Plant"
             },
             "shape": {
@@ -131,7 +130,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -191,7 +189,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Plant",
                                             "default": null,
                                             "inline": null
@@ -365,7 +362,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Plant",
                                                         "default": null,
                                                         "inline": null
@@ -426,7 +422,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:Plant"
                                                                             },
                                                                             "value": {
@@ -453,7 +448,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:Plant"
                                                                             },
                                                                             "value": {
@@ -480,7 +474,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:Plant"
                                                                             },
                                                                             "value": {
@@ -528,7 +521,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:Plant"
                                                                 }
                                                             },
@@ -554,7 +546,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:Plant"
                                                                             },
                                                                             "value": {
@@ -581,7 +572,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:Plant"
                                                                             },
                                                                             "value": {
@@ -608,7 +598,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_:Plant"
                                                                             },
                                                                             "value": {
@@ -656,7 +645,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:Plant"
                                                                 }
                                                             },
@@ -676,7 +664,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Plant",
                                                         "default": null,
                                                         "inline": null
@@ -822,7 +809,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Plant",
                                     "default": null,
                                     "inline": null
@@ -1050,7 +1036,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Plant"
                                                             },
                                                             "value": {
@@ -1077,7 +1062,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Plant"
                                                             },
                                                             "value": {
@@ -1104,7 +1088,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Plant"
                                                             },
                                                             "value": {
@@ -1152,7 +1135,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Plant"
                                                 }
                                             },

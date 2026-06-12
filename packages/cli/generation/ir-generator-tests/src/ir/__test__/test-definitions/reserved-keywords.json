@@ -25,7 +25,6 @@
                     "file": "package"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_package:Package"
             },
             "shape": {
@@ -82,7 +81,6 @@
                     "file": "package"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_package:Record"
             },
             "shape": {
@@ -181,7 +179,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -793,7 +790,6 @@
         "subpackage_package": {
             "name": "package",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "package"

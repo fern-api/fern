@@ -34,7 +34,6 @@
                     "file": "users"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_users:User"
             },
             "shape": {
@@ -113,7 +112,6 @@
                     "file": "users"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_users:ListUsersUriPaginationResponse"
             },
             "shape": {
@@ -137,7 +135,6 @@
                                         "file": "users"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_users:User",
                                     "default": null,
                                     "inline": null
@@ -211,7 +208,6 @@
                     "file": "users"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_users:ListUsersPathPaginationResponse"
             },
             "shape": {
@@ -235,7 +231,6 @@
                                         "file": "users"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_users:User",
                                     "default": null,
                                     "inline": null
@@ -312,7 +307,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -370,7 +364,6 @@
                                         "file": "users"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_users:ListUsersUriPaginationResponse",
                                     "default": null,
                                     "inline": null
@@ -421,7 +414,6 @@
                                                                     "file": "users"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_users:ListUsersUriPaginationResponse"
                                                             },
                                                             "value": {
@@ -448,7 +440,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -477,7 +468,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -505,7 +495,6 @@
                                                                                             "file": "users"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_users:User"
                                                                                     }
                                                                                 },
@@ -532,7 +521,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -561,7 +549,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -589,7 +576,6 @@
                                                                                             "file": "users"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_users:User"
                                                                                     }
                                                                                 },
@@ -610,7 +596,6 @@
                                                                                 "file": "users"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_users:User",
                                                                             "default": null,
                                                                             "inline": null
@@ -642,7 +627,6 @@
                                                                     "file": "users"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_users:ListUsersUriPaginationResponse"
                                                             },
                                                             "value": {
@@ -692,7 +676,6 @@
                                                         "file": "users"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_users:ListUsersUriPaginationResponse"
                                                 }
                                             },
@@ -768,7 +751,6 @@
                                                 "file": "users"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_users:User",
                                             "default": null,
                                             "inline": null
@@ -839,7 +821,6 @@
                                         "file": "users"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_users:ListUsersPathPaginationResponse",
                                     "default": null,
                                     "inline": null
@@ -890,7 +871,6 @@
                                                                     "file": "users"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_users:ListUsersPathPaginationResponse"
                                                             },
                                                             "value": {
@@ -917,7 +897,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -946,7 +925,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -974,7 +952,6 @@
                                                                                             "file": "users"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_users:User"
                                                                                     }
                                                                                 },
@@ -1001,7 +978,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -1030,7 +1006,6 @@
                                                                                                         "file": "users"
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_users:User"
                                                                                                 },
                                                                                                 "value": {
@@ -1058,7 +1033,6 @@
                                                                                             "file": "users"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_users:User"
                                                                                     }
                                                                                 },
@@ -1079,7 +1053,6 @@
                                                                                 "file": "users"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_users:User",
                                                                             "default": null,
                                                                             "inline": null
@@ -1111,7 +1084,6 @@
                                                                     "file": "users"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_users:ListUsersPathPaginationResponse"
                                                             },
                                                             "value": {
@@ -1161,7 +1133,6 @@
                                                         "file": "users"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_users:ListUsersPathPaginationResponse"
                                                 }
                                             },
@@ -1237,7 +1208,6 @@
                                                 "file": "users"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_users:User",
                                             "default": null,
                                             "inline": null
@@ -1925,7 +1895,6 @@
         "subpackage_users": {
             "name": "users",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "users"

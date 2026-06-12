@@ -36,7 +36,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/ec2",
                 "parts": []
@@ -208,7 +207,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/s3",
                 "parts": []
@@ -1000,7 +998,6 @@
         "subpackage_ec2": {
             "name": "ec2",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "ec2"
@@ -1022,7 +1019,6 @@
         "subpackage_s3": {
             "name": "s3",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "s3"

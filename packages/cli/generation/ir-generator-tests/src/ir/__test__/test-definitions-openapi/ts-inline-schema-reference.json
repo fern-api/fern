@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:GetExampleResponse"
             },
             "shape": {
@@ -97,7 +96,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PostRootRequestBarInnerBar"
             },
             "shape": {
@@ -186,7 +184,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PostRootRequestBar"
             },
             "shape": {
@@ -236,7 +233,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:PostRootRequestBarInnerBar",
                                     "default": null,
                                     "inline": null
@@ -280,7 +276,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PostRootResponseBarInnerBar"
             },
             "shape": {
@@ -369,7 +364,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PostRootResponseBar"
             },
             "shape": {
@@ -419,7 +413,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:PostRootResponseBarInnerBar",
                                     "default": null,
                                     "inline": null
@@ -463,7 +456,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PostRootResponse"
             },
             "shape": {
@@ -513,7 +505,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:PostRootResponseBar",
                                     "default": null,
                                     "inline": null
@@ -558,7 +549,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema1InlineUnionMapValue"
             },
             "shape": {
@@ -648,7 +638,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema1"
             },
             "shape": {
@@ -741,7 +730,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Schema1InlineUnionMapValue",
                                             "default": null,
                                             "inline": null
@@ -787,7 +775,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2TestEnum"
             },
             "shape": {
@@ -834,7 +821,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2TestDiscriminatedUnionZero"
             },
             "shape": {
@@ -895,7 +881,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2TestDiscriminatedUnionOne"
             },
             "shape": {
@@ -956,7 +941,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2TestDiscriminatedUnion"
             },
             "shape": {
@@ -1022,7 +1006,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2TestUnionA"
             },
             "shape": {
@@ -1083,7 +1066,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2TestUnionB"
             },
             "shape": {
@@ -1144,7 +1126,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2TestUnion"
             },
             "shape": {
@@ -1210,7 +1191,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Schema2"
             },
             "shape": {
@@ -1288,7 +1268,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Schema2TestEnum",
                                     "default": null,
                                     "inline": null
@@ -1319,7 +1298,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Schema2TestDiscriminatedUnion",
                                     "default": null,
                                     "inline": null
@@ -1350,7 +1328,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Schema2TestUnion",
                                     "default": null,
                                     "inline": null
@@ -1400,7 +1377,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:RootUnionMapValue"
             },
             "shape": {
@@ -1490,7 +1466,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:RootUnionMap"
             },
             "shape": {
@@ -1519,7 +1494,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:RootUnionMapValue",
                             "default": null,
                             "inline": null
@@ -1550,7 +1524,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:RootUnionMapValue",
                             "default": null,
                             "inline": null
@@ -1585,7 +1558,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -1641,7 +1613,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:GetExampleResponse",
                                     "default": null,
                                     "inline": null
@@ -1895,7 +1866,6 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Schema1InlineUnionMapValue",
                                                                                                     "default": null,
                                                                                                     "inline": null
@@ -1930,7 +1900,6 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:Schema1InlineUnionMapValue",
                                                                                                 "default": null,
                                                                                                 "inline": null
@@ -2023,7 +1992,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Schema1"
                                                                         },
                                                                         "value": {
@@ -2068,7 +2036,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Schema1"
                                                                         },
                                                                         "value": {
@@ -2115,7 +2082,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:Schema1"
                                                                         },
                                                                         "value": {
@@ -2189,7 +2155,6 @@
                                                                                                                         "file": null
                                                                                                                     },
                                                                                                                     "displayName": null,
-                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_:Schema1InlineUnionMapValue"
                                                                                                                 }
                                                                                                             },
@@ -2217,7 +2182,6 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Schema1InlineUnionMapValue",
                                                                                                     "default": null,
                                                                                                     "inline": null
@@ -2252,7 +2216,6 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:Schema1InlineUnionMapValue",
                                                                                                 "default": null,
                                                                                                 "inline": null
@@ -2278,7 +2241,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Schema1"
                                                             }
                                                         },
@@ -2299,7 +2261,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:GetExampleResponse"
                                                 }
                                             },
@@ -2400,7 +2361,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:PostRootRequestBar",
                                             "default": null,
                                             "inline": null
@@ -2449,7 +2409,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:PostRootResponse",
                                     "default": null,
                                     "inline": null
@@ -2750,7 +2709,6 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
-                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:PostRootResponseBarInnerBar",
                                                                                                             "default": null,
                                                                                                             "inline": null
@@ -2795,7 +2753,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:PostRootResponseBar",
                                                                             "default": null,
                                                                             "inline": null
@@ -2901,7 +2858,6 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_:PostRootRequestBar",
                                                             "default": null,
                                                             "inline": null
@@ -2934,7 +2890,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:PostRootResponse"
                                                             },
                                                             "value": {
@@ -2981,7 +2936,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:PostRootResponse"
                                                             },
                                                             "value": {
@@ -3005,7 +2959,6 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:PostRootResponseBar"
                                                                                             },
                                                                                             "value": {
@@ -3052,7 +3005,6 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:PostRootResponseBar"
                                                                                             },
                                                                                             "value": {
@@ -3076,7 +3028,6 @@
                                                                                                                                     "file": null
                                                                                                                                 },
                                                                                                                                 "displayName": null,
-                                                                                                                                "subtitle": null,
                                                                                                                                 "typeId": "type_:PostRootResponseBarInnerBar"
                                                                                                                             },
                                                                                                                             "value": {
@@ -3123,7 +3074,6 @@
                                                                                                                                     "file": null
                                                                                                                                 },
                                                                                                                                 "displayName": null,
-                                                                                                                                "subtitle": null,
                                                                                                                                 "typeId": "type_:PostRootResponseBarInnerBar"
                                                                                                                             },
                                                                                                                             "value": {
@@ -3171,7 +3121,6 @@
                                                                                                                         "file": null
                                                                                                                     },
                                                                                                                     "displayName": null,
-                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_:PostRootResponseBarInnerBar"
                                                                                                                 }
                                                                                                             },
@@ -3189,7 +3138,6 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
-                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:PostRootResponseBarInnerBar",
                                                                                                             "default": null,
                                                                                                             "inline": null
@@ -3214,7 +3162,6 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:PostRootResponseBar"
                                                                                 }
                                                                             },
@@ -3235,7 +3182,6 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_:PostRootResponseBar",
                                                                             "default": null,
                                                                             "inline": null
@@ -3263,7 +3209,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:PostRootResponse"
                                                 }
                                             },

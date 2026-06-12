@@ -25,7 +25,6 @@
                     "file": "conversations"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_conversations:OutboundCallConversationsResponse"
             },
             "shape": {
@@ -99,7 +98,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:User"
             },
             "shape": {
@@ -201,7 +199,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -329,7 +326,6 @@
                                         "file": "conversations"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_conversations:OutboundCallConversationsResponse",
                                     "default": null,
                                     "inline": null
@@ -570,7 +566,6 @@
                                                                     "file": "conversations"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_conversations:OutboundCallConversationsResponse"
                                                             },
                                                             "value": {
@@ -612,7 +607,6 @@
                                                                     "file": "conversations"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_conversations:OutboundCallConversationsResponse"
                                                             },
                                                             "value": {
@@ -640,7 +634,6 @@
                                                         "file": "conversations"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_conversations:OutboundCallConversationsResponse"
                                                 }
                                             },
@@ -683,7 +676,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -807,7 +799,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -1030,7 +1021,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1057,7 +1047,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1084,7 +1073,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1125,7 +1113,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -1864,7 +1851,6 @@
         "subpackage_conversations": {
             "name": "conversations",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "conversations"
@@ -1888,7 +1874,6 @@
         "subpackage_users": {
             "name": "users",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "users"

@@ -25,7 +25,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:SendEvent"
             },
             "shape": {
@@ -104,7 +103,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:send_snake_case"
             },
             "shape": {
@@ -183,7 +181,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent"
             },
             "shape": {
@@ -262,7 +259,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:receive_snake_case"
             },
             "shape": {
@@ -341,7 +337,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:SendEvent2"
             },
             "shape": {
@@ -419,7 +414,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent2"
             },
             "shape": {
@@ -519,7 +513,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent3"
             },
             "shape": {
@@ -576,7 +569,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:TranscriptEvent"
             },
             "shape": {
@@ -654,7 +646,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:FlushedEvent"
             },
             "shape": {
@@ -710,7 +701,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:ErrorEvent"
             },
             "shape": {
@@ -789,7 +779,6 @@
                     "file": "status"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_status:StatusResponse"
             },
             "shape": {
@@ -849,7 +838,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -907,7 +895,6 @@
                                         "file": "status"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_status:StatusResponse",
                                     "default": null,
                                     "inline": null
@@ -958,7 +945,6 @@
                                                                     "file": "status"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_status:StatusResponse"
                                                             },
                                                             "value": {
@@ -988,7 +974,6 @@
                                                         "file": "status"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_status:StatusResponse"
                                                 }
                                             },
@@ -1057,7 +1042,6 @@
             "auth": false,
             "name": "empty-realtime",
             "displayName": null,
-            "subtitle": null,
             "connectMethodName": null,
             "headers": [],
             "pathParameters": [],
@@ -1095,7 +1079,6 @@
             "auth": true,
             "name": "realtime",
             "displayName": null,
-            "subtitle": null,
             "connectMethodName": "createRealtimeConnection",
             "headers": [],
             "pathParameters": [
@@ -1232,7 +1215,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent",
                             "default": null,
                             "inline": null
@@ -1260,7 +1242,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:send_snake_case",
                             "default": null,
                             "inline": null
@@ -1288,7 +1269,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent2",
                             "default": null,
                             "inline": null
@@ -1316,7 +1296,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent",
                             "default": null,
                             "inline": null
@@ -1344,7 +1323,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:receive_snake_case",
                             "default": null,
                             "inline": null
@@ -1372,7 +1350,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent2",
                             "default": null,
                             "inline": null
@@ -1400,7 +1377,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent3",
                             "default": null,
                             "inline": null
@@ -1428,7 +1404,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:TranscriptEvent",
                             "default": null,
                             "inline": null
@@ -1456,7 +1431,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:FlushedEvent",
                             "default": null,
                             "inline": null
@@ -1484,7 +1458,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:ErrorEvent",
                             "default": null,
                             "inline": null
@@ -1934,7 +1907,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -1963,7 +1935,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -1991,7 +1962,6 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_realtime:SendEvent"
                                     }
                                 },
@@ -2022,7 +1992,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -2051,7 +2020,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -2079,7 +2047,6 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_realtime:ReceiveEvent"
                                     }
                                 },
@@ -3596,7 +3563,6 @@
         "subpackage_empty": {
             "name": "empty",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "empty"
@@ -3622,7 +3588,6 @@
         "subpackage_empty/empty-realtime": {
             "name": "empty-realtime",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "empty",
@@ -3647,7 +3612,6 @@
         "subpackage_realtime": {
             "name": "realtime",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "realtime"
@@ -3680,7 +3644,6 @@
         "subpackage_status": {
             "name": "status",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "status"

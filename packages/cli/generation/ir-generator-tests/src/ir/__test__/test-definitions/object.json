@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Type"
             },
             "shape": {
@@ -488,7 +487,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Name",
                             "default": null,
                             "inline": null
@@ -663,7 +661,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -688,7 +685,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -715,7 +711,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -740,7 +735,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -765,7 +759,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -791,7 +784,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -816,7 +808,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -841,7 +832,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -868,7 +858,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -928,7 +917,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -977,7 +965,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1075,7 +1062,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1120,7 +1106,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1142,7 +1127,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1284,7 +1268,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1427,7 +1410,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1521,7 +1503,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1551,7 +1532,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1643,7 +1623,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1668,7 +1647,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1693,7 +1671,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1718,7 +1695,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1745,7 +1721,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1787,7 +1762,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1828,7 +1802,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -1909,7 +1882,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Name"
             },
             "shape": {
@@ -1998,7 +1970,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Name"
                                 },
                                 "propertyAccess": null
@@ -2025,7 +1996,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Name"
                                 },
                                 "propertyAccess": null

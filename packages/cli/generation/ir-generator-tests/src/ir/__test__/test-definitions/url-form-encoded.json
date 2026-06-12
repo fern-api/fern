@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PostSubmitResponse"
             },
             "shape": {
@@ -112,7 +111,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TokenRequest"
             },
             "shape": {
@@ -189,7 +187,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TokenResponse"
             },
             "shape": {
@@ -281,7 +278,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -407,7 +403,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:PostSubmitResponse",
                                     "default": null,
                                     "inline": null
@@ -678,7 +673,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:PostSubmitResponse"
                                                             },
                                                             "value": {
@@ -725,7 +719,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:PostSubmitResponse"
                                                             },
                                                             "value": {
@@ -773,7 +766,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:PostSubmitResponse"
                                                 }
                                             },
@@ -834,7 +826,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:TokenRequest",
                             "default": null,
                             "inline": null
@@ -858,7 +849,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:TokenRequest",
                                     "default": null,
                                     "inline": null
@@ -885,7 +875,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:TokenResponse",
                                     "default": null,
                                     "inline": null
@@ -1145,7 +1134,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:TokenRequest"
                                                     },
                                                     "value": {
@@ -1172,7 +1160,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:TokenRequest"
                                                     },
                                                     "value": {
@@ -1200,7 +1187,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:TokenRequest"
                                         }
                                     },
@@ -1229,7 +1215,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TokenResponse"
                                                             },
                                                             "value": {
@@ -1276,7 +1261,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TokenResponse"
                                                             },
                                                             "value": {
@@ -1322,7 +1306,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:TokenResponse"
                                                 }
                                             },
