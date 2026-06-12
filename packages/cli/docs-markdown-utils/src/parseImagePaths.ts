@@ -23,9 +23,23 @@ import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes.js";
  * (all digits 0-7, e.g. 001015) but leaves values with non-octal digits (8, 9)
  * unquoted (e.g. 001999). A downstream YAML 1.2 parser then interprets bare
  * 001999 as the integer 1999, losing the leading zeros.
+ *
+ * Only applies to the YAML frontmatter block (between --- delimiters), not the
+ * markdown body, to avoid corrupting body content like code fences.
  */
-function requoteLeadingZeroValues(yaml: string): string {
-    return yaml.replace(/^(\s*[\w][\w-]*:\s+)(0\d+)\s*$/gm, '$1"$2"');
+function requoteLeadingZeroValues(doc: string): string {
+    const openIdx = doc.indexOf("---\n");
+    if (openIdx !== 0) {
+        return doc;
+    }
+    const closeIdx = doc.indexOf("\n---\n", 4);
+    if (closeIdx === -1) {
+        return doc;
+    }
+    const frontmatter = doc.slice(0, closeIdx);
+    const rest = doc.slice(closeIdx);
+    const fixed = frontmatter.replace(/^(\s*[\w][\w-]*:\s+)(0\d+)\s*$/gm, '$1"$2"');
+    return fixed + rest;
 }
 
 function getLargeFileBytes(): number {

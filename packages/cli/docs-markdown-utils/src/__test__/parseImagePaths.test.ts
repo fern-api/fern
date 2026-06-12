@@ -1179,5 +1179,14 @@ describe("consistency between AST and streaming parsers", () => {
             expect(result.markdown).toContain("title: 0");
             expect(result.markdown).not.toContain('title: "0"');
         });
+
+        it("should not modify leading-zero patterns in body content", () => {
+            const page = "---\ntitle: '001999'\n---\nSome text\n```yaml\nport: 08080\ncode: 0123\n```\nMore text";
+            const result = parseImagePaths(page, PATHS);
+            expect(result.markdown).toContain("port: 08080");
+            expect(result.markdown).toContain("code: 0123");
+            expect(result.markdown).not.toContain('port: "08080"');
+            expect(result.markdown).not.toContain('code: "0123"');
+        });
     });
 });
