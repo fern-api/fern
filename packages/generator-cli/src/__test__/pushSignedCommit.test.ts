@@ -97,16 +97,16 @@ describe("pushSignedCommit", () => {
             "local-sha",
             expect.stringMatching(/^refs\/temp\/fern-/)
         );
-        // `author` always sent; `committer` omitted so GitHub fills it in and signs.
+        // `author` and `committer` both omitted so GitHub fills them in and signs.
         expect(octokit.git.createCommit).toHaveBeenCalledWith({
             owner: "acme",
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha",
-            parents: ["parent-sha"],
-            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
+            parents: ["parent-sha"]
         });
         const defaultCall = octokit.git.createCommit.mock.calls[0]?.[0] as Record<string, unknown>;
+        expect(defaultCall).not.toHaveProperty("author");
         expect(defaultCall).not.toHaveProperty("committer");
         expect(octokit.git.updateRef).toHaveBeenCalledWith({
             owner: "acme",
@@ -230,10 +230,10 @@ describe("pushSignedCommit", () => {
             repo: "acme-sdk",
             message: "SDK Generation",
             tree: "tree-sha-2",
-            parents: ["parent-sha-2"],
-            author: { name: "fern-api", email: "115122769+fern-api[bot]@users.noreply.github.com" }
+            parents: ["parent-sha-2"]
         });
         const retryCall = octokit.git.createCommit.mock.calls[1]?.[0] as Record<string, unknown>;
+        expect(retryCall).not.toHaveProperty("author");
         expect(retryCall).not.toHaveProperty("committer");
         // Temp ref re-push on the rebase retry must force, because the rebased commit
         // is not a descendant of the original tempRef tip.
