@@ -447,7 +447,7 @@ export class WireTestFunctionGenerator {
                     undiscriminatedUnion: (exampleUnionType) => {
                         const swiftType = this.getSwiftTypeReferenceForExampleTypeReference(
                             exampleUnionType.singleUnionType,
-                            fromScope
+                            symbol
                         );
                         return swift.Expression.methodCall({
                             target: swift.Expression.reference(symbol.name),
@@ -484,8 +484,36 @@ export class WireTestFunctionGenerator {
         return typeReference.shape._visit({
             container: (exampleContainer) => {
                 return exampleContainer._visit({
-                    // TODO(kafkas): Implement this
-                    literal: () => this.referencer.referenceAsIsType("JSONValue"),
+                    literal: (literalContainer) =>
+                        literalContainer.literal._visit({
+                            string: (val) => {
+                                const literalEnumSymbol =
+                                    this.sdkGeneratorContext.project.nameRegistry.getNestedLiteralEnumSymbol(
+                                        fromScope,
+                                        val.original
+                                    );
+                                if (literalEnumSymbol == null) {
+                                    return this.referencer.referenceAsIsType("JSONValue");
+                                }
+                                return this.sdkGeneratorContext
+                                    .createReferencer(fromScope)
+                                    .referenceType(literalEnumSymbol);
+                            },
+                            boolean: () => this.referencer.referenceAsIsType("JSONValue"),
+                            integer: () => this.referencer.referenceAsIsType("JSONValue"),
+                            uint: () => this.referencer.referenceAsIsType("JSONValue"),
+                            uint64: () => this.referencer.referenceAsIsType("JSONValue"),
+                            long: () => this.referencer.referenceAsIsType("JSONValue"),
+                            float: () => this.referencer.referenceAsIsType("JSONValue"),
+                            double: () => this.referencer.referenceAsIsType("JSONValue"),
+                            bigInteger: () => this.referencer.referenceAsIsType("JSONValue"),
+                            date: () => this.referencer.referenceAsIsType("JSONValue"),
+                            datetime: () => this.referencer.referenceAsIsType("JSONValue"),
+                            datetimeRfc2822: () => this.referencer.referenceAsIsType("JSONValue"),
+                            base64: () => this.referencer.referenceAsIsType("JSONValue"),
+                            uuid: () => this.referencer.referenceAsIsType("JSONValue"),
+                            _other: () => this.referencer.referenceAsIsType("JSONValue")
+                        }),
                     map: (exampleMapContainer) =>
                         swift.TypeReference.dictionary(
                             this.sdkGeneratorContext.getSwiftTypeReferenceFromTestModuleScope(

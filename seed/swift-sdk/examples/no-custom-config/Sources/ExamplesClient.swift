@@ -107,7 +107,7 @@ public final class ExamplesClient: Sendable {
         )
     }
 
-    public func createType(request: Type, requestOptions: RequestOptions? = nil) async throws -> Identifier {
+    public func createType(request: `Type`, requestOptions: RequestOptions? = nil) async throws -> Identifier {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",

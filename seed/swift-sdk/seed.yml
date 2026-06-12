@@ -155,7 +155,6 @@ allowedFailures:
   - request-parameters
   - required-nullable:no-custom-config
   - required-nullable:nullable-as-optional
-  - reserved-keywords
   - response-property
   - streaming
   - streaming-parameter

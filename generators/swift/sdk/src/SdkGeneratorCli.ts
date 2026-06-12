@@ -2,7 +2,7 @@ import { File, GeneratorError, GeneratorNotificationService, getWireValue } from
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, RootAsIsFiles, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
-import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { sanitizeSwiftIdentifier, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
     AliasGenerator,
@@ -295,7 +295,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                     return fileProperty._visit({
                                         file: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(
+                                                unsafeName: sanitizeSwiftIdentifier(
                                                     context.caseConverter.camelUnsafe(property.key)
                                                 ),
                                                 accessLevel: "public",
@@ -308,7 +308,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         },
                                         fileArray: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(
+                                                unsafeName: sanitizeSwiftIdentifier(
                                                     context.caseConverter.camelUnsafe(property.key)
                                                 ),
                                                 accessLevel: "public",
@@ -326,7 +326,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 },
                                 bodyProperty: (property) => {
                                     return swift.property({
-                                        unsafeName: sanitizeSelf(context.caseConverter.camelUnsafe(property.name)),
+                                        unsafeName: sanitizeSwiftIdentifier(
+                                            context.caseConverter.camelUnsafe(property.name)
+                                        ),
                                         accessLevel: "public",
                                         declarationType: "let",
                                         type: context.getSwiftTypeReferenceFromScope(
