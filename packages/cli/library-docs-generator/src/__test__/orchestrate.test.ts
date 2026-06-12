@@ -5,6 +5,7 @@ import { CliError, type TaskContext, TaskResult } from "@fern-api/task-context";
 import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
 import * as CppDocsGenerator from "../CppDocsGenerator.js";
+import * as LocalParserRunner from "../LocalParserRunner.js";
 import { runLibraryDocsGeneration, type StepWrapper } from "../orchestrate.js";
 import * as PythonDocsGenerator from "../PythonDocsGenerator.js";
 
@@ -17,6 +18,10 @@ vi.mock("../CppDocsGenerator.js", async () => {
     const actual = await vi.importActual<typeof import("../CppDocsGenerator.js")>("../CppDocsGenerator.js");
     return { ...actual, generateCpp: vi.fn() };
 });
+
+vi.mock("../LocalParserRunner.js", () => ({
+    runLocalParser: vi.fn()
+}));
 
 type LoggerMock = { info: Mock; error: Mock; debug: Mock; warn: Mock; trace: Mock; log: Mock };
 
@@ -190,7 +195,7 @@ describe("runLibraryDocsGeneration", () => {
         ).rejects.toThrow(/Library 'nonexistent' not found/);
     });
 
-    it("rejects when a library uses unsupported 'path' input", async () => {
+    it("rejects 'path' input for remote generation (requires --local)", async () => {
         await expect(
             runLibraryDocsGeneration({
                 libraries: {
@@ -205,7 +210,35 @@ describe("runLibraryDocsGeneration", () => {
                 tokenValue: "tok",
                 context: makeContext()
             })
-        ).rejects.toThrow(/'path' input is not yet supported/);
+        ).rejects.toThrow(/'path' input requires the --local flag/);
+    });
+
+    it("local mode: parses a 'path' input library without a token and generates (Python)", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue(mockPythonIr);
+
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: {
+                    "my-sdk": {
+                        input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                        output: { path: "./docs" },
+                        lang: "python"
+                    }
+                },
+                docsDirectoryPath: DOCS_DIR,
+                orgId: "org",
+                context: makeContext(),
+                local: true
+            })
+        ).resolves.toEqual({ successful: 1 });
+
+        expect(LocalParserRunner.runLocalParser).toHaveBeenCalledTimes(1);
+        const call = (LocalParserRunner.runLocalParser as Mock).mock.calls[0]?.[0] as Record<string, unknown>;
+        expect(call.language).toBe("PYTHON");
+        expect(String(call.sourcePath)).toBe("/tmp/docs/local-src");
+        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
+            expect.objectContaining({ ir: mockPythonIr, slug: "my-sdk", title: "my-sdk" })
+        );
     });
 
     it("happy path: start → poll → download IR → generate (Python)", async () => {
