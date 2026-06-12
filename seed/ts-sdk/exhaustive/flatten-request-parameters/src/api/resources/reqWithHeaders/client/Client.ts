@@ -46,7 +46,7 @@ export class ReqWithHeadersClient {
         const {
             "X-TEST-SERVICE-HEADER": xTestServiceHeader,
             "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            ..._body
+            body: _body,
         } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

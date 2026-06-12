@@ -131,7 +131,7 @@ export class InlinedRequestsClient {
         request: SeedExhaustive.PostWithArrayBodyAndHeaders,
         requestOptions?: InlinedRequestsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        const { "X-Custom-Header": xCustomHeader, ..._body } = request;
+        const { "X-Custom-Header": xCustomHeader, body: _body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-Custom-Header": xCustomHeader }),

@@ -490,7 +490,7 @@ export class ParamsClient {
         request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        const { param, ..._body } = request;
+        const { param, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
