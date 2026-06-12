@@ -967,12 +967,31 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference body with flattenRequestParameters=true", () => {
+        it("returns true for non-named reference body with flattenRequestParameters=true", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
                         requestBodyType: STRING_TYPE,
+                        docs: undefined,
+                        contentType: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
+        });
+
+        it("returns false for named object reference body with flattenRequestParameters=true", () => {
+            const namedType = createNamedTypeReference("MyObject");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: namedType,
                         docs: undefined,
                         contentType: undefined,
                         v2Examples: undefined
@@ -2472,12 +2491,31 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(wrapper.hasBodyProperty(context)).toBe(true);
         });
 
-        it("returns false for reference request body when flattened", () => {
+        it("returns true for non-named reference request body when flattened", () => {
             const init = createDefaultInit({
                 flattenRequestParameters: true,
                 endpoint: createHttpEndpoint({
                     requestBody: FernIr.HttpRequestBody.reference({
                         requestBodyType: STRING_TYPE,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
+        });
+
+        it("returns false for named object reference request body when flattened", () => {
+            const namedType = createNamedTypeReference("MyObject");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: namedType,
                         contentType: undefined,
                         docs: undefined,
                         v2Examples: undefined

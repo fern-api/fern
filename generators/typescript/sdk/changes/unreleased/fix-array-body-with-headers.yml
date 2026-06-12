@@ -1,0 +1,5 @@
+- summary: |
+    Fix request body serialization when flattenRequestParameters is enabled with
+    a non-object reference body (e.g., list<string>) and header parameters. Previously
+    the generated code used spread destructuring which wrapped the body in an object.
+  type: fix
