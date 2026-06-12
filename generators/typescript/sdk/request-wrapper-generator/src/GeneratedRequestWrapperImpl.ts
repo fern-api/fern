@@ -856,10 +856,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 // Non-named types (e.g., list<string>) cannot be flattened and get
                 // wrapped in a body property instead.
                 if (referenceToRequestBody.requestBodyType.type === "named") {
-                    const typeDeclaration = this.getTypeDeclaration(
-                        referenceToRequestBody.requestBodyType,
-                        context
-                    );
+                    const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
                     if (typeDeclaration?.shape.type === "object") {
                         return false;
                     }
