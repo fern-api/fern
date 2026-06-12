@@ -448,7 +448,7 @@ export class WireMock {
     private normalizeExampleDatetimes(ref: FernIr.ExampleTypeReference): unknown {
         switch (ref.shape.type) {
             case "primitive":
-                if (ref.shape.primitive.type === "datetime") {
+                if (ref.shape.primitive.type === "datetime" || ref.shape.primitive.type === "datetimeRfc2822") {
                     const raw = ref.jsonExample;
                     if (typeof raw === "string" && /^\d{4}-\d{2}-\d{2}T/.test(raw)) {
                         return raw;
