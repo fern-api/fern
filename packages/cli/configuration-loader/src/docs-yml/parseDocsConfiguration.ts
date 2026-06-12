@@ -438,7 +438,8 @@ function convertPageActions(
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
             ),
-            skills: convertSkillsPageAction(pageActions.options?.skills)
+            skills: convertSkillsPageAction(pageActions.options?.skills),
+            skillsDirectory: resolveFilepath(pageActions.options?.skills?.path, absoluteFilepathToDocsConfig)
         }
     };
 }

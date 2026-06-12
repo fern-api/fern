@@ -38,6 +38,13 @@ export interface ParsedPageActionsConfig {
         vscode: boolean;
         custom: ParsedCustomPageAction[];
         skills: CjsFdrSdk.docs.v1.commons.PageActionOptions["skills"];
+        /**
+         * Resolved `skills.path` — a same-repo directory of agent skills. At publish time the
+         * CLI discovers every subdirectory containing a SKILL.md, generates the index.json
+         * discovery manifest, and uploads the bundle at `.well-known/skills/…`. CLI-only:
+         * never sent to FDR (the docs site reads the served manifest, not this path).
+         */
+        skillsDirectory: AbsoluteFilePath | undefined;
     };
 }
 

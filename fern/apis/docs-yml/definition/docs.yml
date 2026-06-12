@@ -495,11 +495,20 @@ types:
   SkillsPageActionConfig:
     docs: |
       Configures the "Install skills" page action and its modal. Sites that ship agent skills
-      point at where those skills live and how to install them. If the docs site also serves a
-      `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array with the
-      served manifest; `title`, `description`, `learn-more-url`, `repository`, and
+      point at where those skills live (`path`) and how to install them. If the docs site also
+      serves a `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array
+      with the served manifest; `title`, `description`, `learn-more-url`, `repository`, and
       `install-command` always come from this config.
     properties:
+      path:
+        type: optional<string>
+        docs: |
+          Path to a directory of agent skills in this repo, resolved relative to the folder
+          containing this docs.yml (`../` is allowed, e.g. a repo-root `.agents/skills/`
+          folder). Every subdirectory containing a `SKILL.md` is published as one skill: the CLI
+          validates the bundle, generates the `/.well-known/skills/index.json` discovery
+          manifest, and uploads every file at `.well-known/skills/<skill-name>/…` so that
+          `npx skills add https://<docs-domain>` works. Nothing is written back to the repo.
       title:
         type: optional<string>
         docs: Overrides the modal title.

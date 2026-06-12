@@ -1,25 +1,49 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { discoverDeclaredSkills, validateSkillFrontmatter } from "@fern-api/docs-resolver";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    join,
+    RelativeFilePath,
+    relative,
+    resolve
+} from "@fern-api/fs-utils";
 import { readdir, readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 
 /**
- * Validates author-supplied Agent Skills bundles placed under `.well-known/skills/` (legacy
- * v0.1.0 layout) or `.well-known/agent-skills/` (current spec layout) in the docs folder.
- * These files are uploaded verbatim and served by the docs site so that
- * `npx skills add https://<docs-domain>` works; serving is passthrough and never validates,
- * so the CLI validates the bundle at upload time instead:
+ * Validates the Agent Skills a docs site publishes for `npx skills add https://<docs-domain>`.
+ * Serving is passthrough and never validates, so the CLI validates at check/publish time:
  *
- * - an `index.json` discovery manifest must exist at the root of the directory and parse as JSON
- * - each `<skill-name>/SKILL.md` must have frontmatter with a kebab-case `name` (max 64
- *   characters) matching its parent directory, and a non-empty `description` (max 1024 characters)
+ * - When docs.yml declares `page-actions.options.skills.path`, the declared directory is the
+ *   source of truth: every subdirectory containing a `SKILL.md` is one skill, validated by
+ *   `discoverDeclaredSkills` (path exists and contains skills, kebab-case `name` matching the
+ *   directory, non-empty `description`, unique names, no references escaping a skill's
+ *   directory). The CLI generates the discovery manifest at publish time, so a hand-populated
+ *   `.well-known/skills/` folder is ignored — flagged here as a warning.
+ *
+ * - Without a declared path, author-supplied bundles under `.well-known/skills/` (legacy
+ *   v0.1.0 layout) and `.well-known/agent-skills/` (current spec layout) are uploaded
+ *   verbatim, so each must ship its own `index.json` and valid `<skill-name>/SKILL.md`s.
  */
 export const ValidWellKnownSkillsRule: Rule = {
     name: "valid-well-known-skills",
     create: ({ workspace }) => {
         return {
-            file: async () => {
+            file: async ({ config }) => {
+                const declaredSkillsPath = config.pageActions?.options?.skills?.path;
+                if (declaredSkillsPath != null) {
+                    return validateDeclaredSkillsPath({
+                        absolutePathToFernFolder: workspace.absoluteFilePath,
+                        absolutePathToSkillsDirectory: resolve(
+                            dirname(workspace.absoluteFilepathToDocsConfig),
+                            declaredSkillsPath
+                        )
+                    });
+                }
+
                 const violations: RuleViolation[] = [];
                 for (const wellKnownDirectory of WELL_KNOWN_SKILLS_DIRECTORIES) {
                     violations.push(
@@ -35,14 +59,48 @@ export const ValidWellKnownSkillsRule: Rule = {
     }
 };
 
-const WELL_KNOWN_SKILLS_DIRECTORIES = [
-    RelativeFilePath.of(".well-known/skills"),
-    RelativeFilePath.of(".well-known/agent-skills")
-];
+const WELL_KNOWN_SKILLS_DIRECTORY = RelativeFilePath.of(".well-known/skills");
+const WELL_KNOWN_AGENT_SKILLS_DIRECTORY = RelativeFilePath.of(".well-known/agent-skills");
+const WELL_KNOWN_SKILLS_DIRECTORIES = [WELL_KNOWN_SKILLS_DIRECTORY, WELL_KNOWN_AGENT_SKILLS_DIRECTORY];
 
-const MAX_SKILL_NAME_LENGTH = 64;
-const MAX_SKILL_DESCRIPTION_LENGTH = 1024;
-const KEBAB_CASE_REGEX = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+export async function validateDeclaredSkillsPath({
+    absolutePathToFernFolder,
+    absolutePathToSkillsDirectory
+}: {
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToSkillsDirectory: AbsoluteFilePath;
+}): Promise<RuleViolation[]> {
+    const { violations } = await discoverDeclaredSkills({ absolutePathToSkillsDirectory });
+
+    const ruleViolations: RuleViolation[] = violations.map((violation): RuleViolation => {
+        if (violation.absoluteFilePath == null) {
+            return { severity: violation.severity, message: violation.message };
+        }
+        const relativeFilepath = relative(absolutePathToFernFolder, violation.absoluteFilePath);
+        // files outside the fern folder (e.g. a repo-root ../.agents/skills path) don't have a
+        // meaningful workspace-relative path, so name them in the message instead
+        if (relativeFilepath.startsWith("..")) {
+            return {
+                severity: violation.severity,
+                message: `${violation.absoluteFilePath}: ${violation.message}`
+            };
+        }
+        return { severity: violation.severity, message: violation.message, relativeFilepath };
+    });
+
+    // the declared path wins over a hand-populated .well-known/skills folder
+    if (await doesPathExist(join(absolutePathToFernFolder, WELL_KNOWN_SKILLS_DIRECTORY))) {
+        ruleViolations.push({
+            severity: "warning",
+            message:
+                `${WELL_KNOWN_SKILLS_DIRECTORY}/ is ignored because page-actions.options.skills.path is declared in docs.yml — ` +
+                "the skills bundle is generated from the declared path instead. Remove the folder to silence this warning.",
+            relativeFilepath: WELL_KNOWN_SKILLS_DIRECTORY
+        });
+    }
+
+    return ruleViolations;
+}
 
 export async function validateWellKnownSkillsDirectory({
     absolutePathToFernFolder,
@@ -130,53 +188,11 @@ export function validateSkillMarkdown({
         ];
     }
 
-    const violations: RuleViolation[] = [];
-
-    const name = frontmatter.name;
-    if (typeof name !== "string" || name.length === 0) {
-        violations.push({
+    return validateSkillFrontmatter({ frontmatter, skillDirectoryName }).map(
+        (message): RuleViolation => ({
             severity: "error",
-            message: "SKILL.md frontmatter is missing a `name`.",
+            message,
             relativeFilepath: skillMarkdownRelativePath
-        });
-    } else {
-        if (!KEBAB_CASE_REGEX.test(name)) {
-            violations.push({
-                severity: "error",
-                message: `Skill name "${name}" must be kebab-case (lowercase letters, numbers, and hyphens).`,
-                relativeFilepath: skillMarkdownRelativePath
-            });
-        }
-        if (name.length > MAX_SKILL_NAME_LENGTH) {
-            violations.push({
-                severity: "error",
-                message: `Skill name "${name}" exceeds ${MAX_SKILL_NAME_LENGTH} characters.`,
-                relativeFilepath: skillMarkdownRelativePath
-            });
-        }
-        if (name !== skillDirectoryName) {
-            violations.push({
-                severity: "error",
-                message: `Skill name "${name}" must match its parent directory "${skillDirectoryName}".`,
-                relativeFilepath: skillMarkdownRelativePath
-            });
-        }
-    }
-
-    const description = frontmatter.description;
-    if (typeof description !== "string" || description.trim().length === 0) {
-        violations.push({
-            severity: "error",
-            message: "SKILL.md frontmatter is missing a non-empty `description`.",
-            relativeFilepath: skillMarkdownRelativePath
-        });
-    } else if (description.length > MAX_SKILL_DESCRIPTION_LENGTH) {
-        violations.push({
-            severity: "error",
-            message: `Skill description exceeds ${MAX_SKILL_DESCRIPTION_LENGTH} characters.`,
-            relativeFilepath: skillMarkdownRelativePath
-        });
-    }
-
-    return violations;
+        })
+    );
 }
