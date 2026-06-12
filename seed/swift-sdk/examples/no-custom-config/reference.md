@@ -654,7 +654,7 @@ private func main() async throws {
             name: "name"
         ),
         metadata: MetadataType.html(
-
+            "metadata"
         ),
         commonMetadata: Metadata(
             id: "id",
@@ -673,7 +673,7 @@ private func main() async throws {
             )
         ),
         data: Data.string(
-
+            "data"
         ),
         migration: Migration(
             name: "name",
@@ -687,7 +687,7 @@ private func main() async throws {
             )
         ),
         test: Test.and(
-
+            true
         ),
         node: Node(
             name: "name",

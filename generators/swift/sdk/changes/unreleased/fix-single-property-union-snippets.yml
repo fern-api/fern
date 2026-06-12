@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed generated snippets and wire tests for single-property discriminated
+    union variants. The wrapped value is serialized under the `value` key, but
+    the snippet/wire-test generator was reading it from the discriminant's wire
+    name, so variants whose discriminant differed from `value` (e.g. a `date` or
+    `datetime` case) emitted an empty enum case like `UnionWithTime.date()` that
+    failed to compile. The value is now read from the correct `value` key.
+  type: fix
