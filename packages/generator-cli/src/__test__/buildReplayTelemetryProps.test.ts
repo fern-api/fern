@@ -248,6 +248,24 @@ describe("buildReplayTelemetryProps", () => {
         expect(props.success).toBe(true);
         expect(props.patches_detected).toBe(0);
         expect(props.unresolved_patches_count).toBe(0);
+        // No replayCommitted on the step result → not committed.
+        expect(props.replay_committed).toBe(false);
+    });
+
+    it("reports replay_committed when the run committed the seeded lockfile", () => {
+        const replay = makeReplayResult({
+            flow: "first-generation",
+            replayCommitted: true,
+            patchesDetected: 0,
+            patchesApplied: 0,
+            patchesAbsorbed: 0,
+            patchesKeptAsUserOwned: 0
+        });
+        const props = buildReplayTelemetryProps({
+            ...BASE_INPUT,
+            pipelineResult: makePipelineResult(replay)
+        });
+        expect(props.replay_committed).toBe(true);
     });
 
     it("emits zero-valued properties when ReplayStepResult is missing", () => {

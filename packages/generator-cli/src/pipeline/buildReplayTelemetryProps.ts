@@ -111,6 +111,10 @@ export function buildReplayTelemetryProps(input: {
         replay_crashed: replay?.replayCrashed === true,
         auto_bootstrapped: replay?.autoBootstrapped === true,
         bootstrap_attempted: replay?.bootstrapAttempted === true,
+        // flow="first-generation" now spans three realities (seeded lock
+        // committed, kill switch, bootstrap crash) — this disambiguates the
+        // seeded one.
+        replay_committed: replay?.replayCommitted === true,
         pipeline_success: pipelineResult.success,
         pipeline_warnings_count: pipelineResult.warnings?.length ?? 0,
         replay_warnings_count: replay?.warnings?.length ?? 0,
