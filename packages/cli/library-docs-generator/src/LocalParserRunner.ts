@@ -11,24 +11,25 @@ import type { LibraryLanguage } from "./orchestrate.js";
 
 /**
  * Docker images that parse library source into library-docs IR. These mirror
- * the parsers that run server-side for the remote (FDR) generation path.
+ * the parsers that run server-side for the remote (FDR) generation path, and
+ * follow the `fernapi/fern-*` Docker Hub convention used by the SDK generators.
  */
 const PARSER_IMAGES: Record<LibraryLanguage, string> = {
-    PYTHON: "ghcr.io/fern-api/python-library-docs-parser",
-    CPP: "ghcr.io/fern-api/cpp-library-docs-parser"
+    PYTHON: "fernapi/fern-python-library-docs-parser",
+    CPP: "fernapi/fern-cpp-library-docs-parser"
 };
 
 /**
- * Pinned parser image version, bumped when the published parser images change.
- * Versioned alongside the CLI release — the same way `fern generate --local`
- * pins SDK generator versions in CLI source.
+ * Tag used for the parser images. `latest` is intentional: the CLI always runs
+ * the newest published parser (see the force-pull in {@link runLocalParser}).
+ * There is deliberately no user-facing version override yet.
  */
-const PARSER_VERSION = "0.1.0";
+const PARSER_IMAGE_TAG = "latest";
 
 /**
  * Per-language env vars that override the parser image (e.g. a locally-built
- * `:local` tag), bypassing the pinned version. Intended for development before
- * the images are published to ghcr.io.
+ * `:local` tag), bypassing the default. Intended for development before the
+ * images are published to Docker Hub.
  */
 const PARSER_IMAGE_ENV_VARS: Record<LibraryLanguage, string> = {
     PYTHON: "FERN_PYTHON_PARSER_IMAGE",
@@ -40,7 +41,7 @@ function getParserImage(language: LibraryLanguage): string {
     if (override != null && override.trim() !== "") {
         return override;
     }
-    return `${PARSER_IMAGES[language]}:${PARSER_VERSION}`;
+    return `${PARSER_IMAGES[language]}:${PARSER_IMAGE_TAG}`;
 }
 
 /**
@@ -103,7 +104,11 @@ export async function runLocalParser({
             imageName,
             args: PARSER_CLI_COMMAND,
             binds: [`${sourcePath}:/repo:ro`, `${outputDir.path}:/output`, `${configFile.path}:/input/config.json:ro`],
-            removeAfterCompletion: true
+            removeAfterCompletion: true,
+            // `latest` is a mutable tag, so force a pull to avoid reusing a stale local copy.
+            // Immutable tags (e.g. a `:local` dev build via the env override) keep the
+            // default pull-when-missing behavior.
+            pull: imageName.endsWith(`:${PARSER_IMAGE_TAG}`)
         });
 
         const irPath = join(outputDir.path, "ir.json");

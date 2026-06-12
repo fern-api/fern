@@ -59,8 +59,9 @@ describe("runLocalParser", () => {
         const call = (runContainer as Mock).mock.calls[0]?.[0];
         // Without this command the image boots the Lambda handler instead of the CLI.
         expect(call.args).toEqual(["python", "-m", "src.cli_entrypoint"]);
-        // Pinned, version-tagged image (exact version asserted by the env-override test below).
-        expect(call.imageName).toMatch(/^ghcr\.io\/fern-api\/python-library-docs-parser:/);
+        // Always the `latest` tag, and force-pulled because `latest` is mutable.
+        expect(call.imageName).toBe("fernapi/fern-python-library-docs-parser:latest");
+        expect(call.pull).toBe(true);
         expect(call.binds).toContain("/tmp/src:/repo:ro");
         // `undefined` fields (e.g. doxyfileContent for Python) are dropped by JSON.stringify.
         expect(writtenConfig).toEqual({ packagePath: "pkg", sourceUrl: "https://github.com/acme/sdk" });
@@ -85,7 +86,8 @@ describe("runLocalParser", () => {
 
         expect(ir).toEqual({ rootNamespace: { name: "acme" } });
         const call = (runContainer as Mock).mock.calls[0]?.[0];
-        expect(call.imageName).toMatch(/^ghcr\.io\/fern-api\/cpp-library-docs-parser:/);
+        expect(call.imageName).toBe("fernapi/fern-cpp-library-docs-parser:latest");
+        expect(call.pull).toBe(true);
         expect(writtenConfig).toEqual({
             doxyfileContent: "PROJECT_NAME = acme",
             sourceUrl: "https://github.com/acme/cpp"
@@ -107,6 +109,8 @@ describe("runLocalParser", () => {
 
         const call = (runContainer as Mock).mock.calls[0]?.[0];
         expect(call.imageName).toBe("python-library-docs-parser:local");
+        // A `:local` dev build is immutable from our perspective — don't force a pull.
+        expect(call.pull).toBe(false);
     });
 
     it("throws when the container produces no ir.json", async () => {

@@ -15,6 +15,12 @@ export declare namespace runContainer {
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
+        /**
+         * When true, always pull the image before running (`docker run --pull always`)
+         * rather than only when it is absent locally. Use for mutable tags like
+         * `latest`; leave unset for immutable, version-pinned images.
+         */
+        pull?: boolean;
         /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
         signal?: AbortSignal;
     }
@@ -34,6 +40,7 @@ export async function runContainer({
     writeLogsToFile = true,
     removeAfterCompletion = false,
     runner,
+    pull = false,
     signal
 }: runContainer.Args): Promise<void> {
     const tryRun = () =>
@@ -47,6 +54,7 @@ export async function runContainer({
             removeAfterCompletion,
             writeLogsToFile,
             runner,
+            pull,
             signal
         });
     try {
@@ -99,6 +107,7 @@ async function tryRunContainer({
     removeAfterCompletion,
     writeLogsToFile,
     runner,
+    pull = false,
     signal
 }: {
     logger: Logger;
@@ -110,6 +119,7 @@ async function tryRunContainer({
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
+    pull?: boolean;
     signal?: AbortSignal;
 }): Promise<void> {
     if (process.env["FERN_STACK_TRACK"]) {
@@ -119,6 +129,7 @@ async function tryRunContainer({
         "run",
         "--user",
         "root",
+        ...(pull ? ["--pull", "always"] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
         ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),

@@ -3,10 +3,8 @@ import { docsYml } from "@fern-api/configuration";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
-import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError, type TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
-import tmp from "tmp-promise";
 
 import { generateCpp } from "./CppDocsGenerator.js";
 import { runLocalParser } from "./LocalParserRunner.js";
@@ -381,9 +379,14 @@ async function generateIrRemotely({
 }
 
 /**
- * Produces the library-docs IR by running the parser Docker image locally. For
- * `git` inputs the repository is shallow-cloned to a temp directory; for `path`
- * inputs the source path is resolved relative to the docs directory.
+ * Produces the library-docs IR by running the parser Docker image locally on a
+ * `path` input. The source path is resolved relative to the docs directory and
+ * mounted into the container.
+ *
+ * `--local` deliberately does NOT clone `git` inputs: cloning an attacker-
+ * controlled repository (or git URL) on the user's machine / CI runner is a
+ * code-execution risk, and the point of `--local` is to stay offline. `git`
+ * inputs are handled remotely (server-side) instead.
  */
 async function generateIrLocally({
     context,
@@ -402,62 +405,23 @@ async function generateIrLocally({
     doxyfileContent: string | undefined;
     wrapStep: StepWrapper;
 }): Promise<unknown> {
-    let sourcePath: AbsoluteFilePath;
-    let packagePath: string | undefined;
-    let sourceUrl: string | undefined;
-    let cleanupClone: (() => Promise<void>) | undefined;
-
     if (isGitLibraryInput(config.input)) {
-        const gitInput = config.input;
-        const clone = await wrapStep({
-            message: `Library '${name}': cloning ${gitInput.git}`,
-            operation: () => shallowClone(context, name, gitInput.git)
-        });
-        sourcePath = clone.path;
-        cleanupClone = clone.cleanup;
-        packagePath = gitInput.subpath;
-        sourceUrl = gitInput.git;
-    } else {
-        sourcePath = resolve(docsDirectoryPath, config.input.path);
-    }
-
-    try {
-        const ir = await wrapStep({
-            message: `Library '${name}': parsing library source locally`,
-            operation: () =>
-                runLocalParser({ context, sourcePath, language, config: { packagePath, sourceUrl, doxyfileContent } })
-        });
-        validateLibraryIr(ir, language, name);
-        return ir;
-    } finally {
-        if (cleanupClone != null) {
-            await cleanupClone();
-        }
-    }
-}
-
-/**
- * Shallow-clones a git repository into a temp directory. The returned `cleanup`
- * removes the directory; callers must invoke it when done.
- */
-async function shallowClone(
-    context: TaskContext,
-    name: string,
-    gitUrl: string
-): Promise<{ path: AbsoluteFilePath; cleanup: () => Promise<void> }> {
-    const dir = await tmp.dir({ unsafeCleanup: true });
-    try {
-        await loggingExeca(context.logger, "git", ["clone", "--depth", "1", gitUrl, dir.path], {
-            doNotPipeOutput: true
-        });
-    } catch (error) {
-        await dir.cleanup();
         throw new CliError({
-            message: `Library '${name}': failed to clone '${gitUrl}': ${extractErrorMessage(error)}`,
-            code: CliError.Code.InternalError
+            message:
+                `Library '${name}': 'git' inputs are generated remotely, not with --local. ` +
+                `For --local, use a 'path' input pointing at a local checkout of the library.`,
+            code: CliError.Code.ConfigError
         });
     }
-    return { path: AbsoluteFilePath.of(dir.path), cleanup: () => dir.cleanup() };
+
+    const sourcePath = resolve(docsDirectoryPath, config.input.path);
+
+    const ir = await wrapStep({
+        message: `Library '${name}': parsing library source locally`,
+        operation: () => runLocalParser({ context, sourcePath, language, config: { doxyfileContent } })
+    });
+    validateLibraryIr(ir, language, name);
+    return ir;
 }
 
 async function startGeneration(

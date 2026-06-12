@@ -241,6 +241,20 @@ describe("runLibraryDocsGeneration", () => {
         );
     });
 
+    it("rejects 'git' input under --local (git is generated remotely, never cloned locally)", async () => {
+        await expect(
+            runLibraryDocsGeneration({
+                libraries: { "my-sdk": pythonConfig() },
+                docsDirectoryPath: DOCS_DIR,
+                orgId: "org",
+                context: makeContext(),
+                local: true
+            })
+        ).rejects.toThrow(/'git' inputs are generated remotely/);
+        // The CLI must never shell out to clone an untrusted git URL.
+        expect(LocalParserRunner.runLocalParser).not.toHaveBeenCalled();
+    });
+
     it("happy path: start → poll → download IR → generate (Python)", async () => {
         const { mockFn, startCalls } = makeMockFetch({
             startResponse: { body: { jobId: "job-1" } },
