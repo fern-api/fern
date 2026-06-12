@@ -78,6 +78,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // namespaceExport is kept for backwards compatibility
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
+    serdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
