@@ -2,6 +2,7 @@ import { ContainerType, Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { collectNamedTypeIdsFromTypeReference } from "../../utils/ConvertProperties.js";
 import { SchemaConverter } from "./SchemaConverter.js";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";
 
@@ -84,6 +85,9 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
             for (const typeId of Object.keys(convertedAdditionalProperties.inlinedTypes)) {
                 referencedTypes.add(typeId);
             }
+            // Capture named types referenced via $ref values (e.g. `additionalProperties: { $ref }`),
+            // which have no inline schema/inlinedTypes to harvest from. Mirrors ArraySchemaConverter.
+            collectNamedTypeIdsFromTypeReference(convertedAdditionalProperties.type, referencedTypes);
 
             return {
                 type: Type.alias({
