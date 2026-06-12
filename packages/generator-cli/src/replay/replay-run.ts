@@ -146,9 +146,8 @@ export async function replayPrepare(
         // Auto-bootstrap so customers don't need to run `fern replay init` separately.
         // bootstrap() writes the lockfile, .fernignore entries, and .gitattributes;
         // the subsequent prepareReplay commit captures them via `git add -A`.
-        // `importHistory: false` is load-bearing: scanning past patches inline would
-        // blow the generate-time budget, and "track future edits only" is the safe
-        // default for opt-out.
+        // Bootstrap is always a clean start anchored on HEAD: replay tracks
+        // customizations committed after this point only.
         bootstrapAttempted = true;
         if (state) {
             state.bootstrapAttempted = true;
@@ -162,9 +161,7 @@ export async function replayPrepare(
         } else {
             try {
                 const bootstrapResult = await bootstrap(outputDir, {
-                    fernignoreAction: "skip",
-                    force: false,
-                    importHistory: false
+                    force: false
                 });
                 // generationCommit == null: brand-new repo with no prior
                 // [fern-generated] commit. Bootstrap stays anchored-or-nothing (a
