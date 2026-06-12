@@ -456,7 +456,6 @@ function convertSkillsPageAction(
         title: skills.title,
         description: skills.description,
         learnMoreUrl: skills.learnMoreUrl,
-        repository: skills.repository,
         installCommand: skills.installCommand,
         skills: skills.skills?.map((skill) => ({
             name: skill.name,
