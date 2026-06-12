@@ -83,7 +83,9 @@ export class WireTestGenerator {
                 }
             );
 
-            this.context.project.addGoFiles(serviceTestFile);
+            if (serviceTestFile != null) {
+                this.context.project.addGoFiles(serviceTestFile);
+            }
         }
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
@@ -107,7 +109,7 @@ export class WireTestGenerator {
         serviceName: string,
         endpoints: FernIr.HttpEndpoint[],
         filePath: FernIr.FernFilepath
-    ): Promise<GoFile> {
+    ): Promise<GoFile | null> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
             // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
@@ -189,6 +191,11 @@ export class WireTestGenerator {
                 return endpointTestCaseCodeBlock;
             })
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
+
+        // If all endpoints were skipped (e.g., file downloads, bytes requests), don't generate the file
+        if (endpointTestCaseCodeBlocks.length === 0) {
+            return null;
+        }
 
         const serviceTestFileContent = go.codeblock((writer) => {
             const sortedImports = Array.from(imports.entries()).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
