@@ -51,6 +51,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -69,6 +70,7 @@
                     "id": "endpoint_.ping",
                     "name": "ping",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

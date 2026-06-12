@@ -94,6 +94,7 @@
                     "file": "auth"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_auth:TokenResponse"
             },
             "shape": {
@@ -225,6 +226,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -243,6 +245,7 @@
                     "id": "endpoint_auth.getToken",
                     "name": "getToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -318,6 +321,7 @@
                                         "file": "auth"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_auth:TokenResponse",
                                     "default": null,
                                     "inline": null
@@ -387,6 +391,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -415,6 +420,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -443,6 +449,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -469,6 +476,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -518,6 +526,7 @@
                                                         "file": "auth"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_auth:TokenResponse"
                                                 }
                                             },
@@ -563,6 +572,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/nested-no-auth",
                 "parts": []
@@ -581,6 +591,7 @@
                     "id": "endpoint_nested-no-auth/api.getSomething",
                     "name": "getSomething",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -665,6 +676,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/nested",
                 "parts": []
@@ -683,6 +695,7 @@
                     "id": "endpoint_nested/api.getSomething",
                     "name": "getSomething",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -768,6 +781,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -786,6 +800,7 @@
                     "id": "endpoint_simple.getSomething",
                     "name": "getSomething",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1736,6 +1751,7 @@
         "subpackage_auth": {
             "name": "auth",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "auth"
@@ -1759,6 +1775,7 @@
         "subpackage_nested-no-auth": {
             "name": "nested-no-auth",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "nested-no-auth"
@@ -1784,6 +1801,7 @@
         "subpackage_nested-no-auth/api": {
             "name": "api",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "nested-no-auth",
@@ -1808,6 +1826,7 @@
         "subpackage_nested": {
             "name": "nested",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "nested"
@@ -1833,6 +1852,7 @@
         "subpackage_nested/api": {
             "name": "api",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "nested",
@@ -1857,6 +1877,7 @@
         "subpackage_simple": {
             "name": "simple",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "simple"

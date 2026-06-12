@@ -25,6 +25,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_service:Foo"
             },
             "shape": {
@@ -634,6 +635,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/ruby-reserved-word-properties",
                 "parts": []
@@ -652,6 +654,7 @@
                     "id": "endpoint_service.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -690,6 +693,7 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_service:Foo",
                                     "default": null,
                                     "inline": null
@@ -740,6 +744,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -768,6 +773,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -796,6 +802,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -824,6 +831,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -852,6 +860,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -880,6 +889,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -908,6 +918,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -936,6 +947,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -964,6 +976,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -992,6 +1005,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1020,6 +1034,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1048,6 +1063,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1076,6 +1092,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1104,6 +1121,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1132,6 +1150,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1160,6 +1179,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1188,6 +1208,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1216,6 +1237,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1244,6 +1266,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1272,6 +1295,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1300,6 +1324,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1328,6 +1353,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1356,6 +1382,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1384,6 +1411,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1412,6 +1440,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1440,6 +1469,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:Foo"
                                                             },
                                                             "value": {
@@ -1469,6 +1499,7 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_service:Foo"
                                                 }
                                             },
@@ -2500,6 +2531,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

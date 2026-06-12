@@ -25,6 +25,7 @@
                     "file": "literals"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_literals:LiteralString"
             },
             "shape": {
@@ -74,6 +75,7 @@
                     "file": "literals"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_literals:UnionOverLiteral"
             },
             "shape": {
@@ -327,6 +329,7 @@
         "subpackage_literals": {
             "name": "literals",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "literals"

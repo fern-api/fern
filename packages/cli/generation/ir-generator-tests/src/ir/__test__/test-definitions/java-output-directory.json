@@ -25,6 +25,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_service:User"
             },
             "shape": {
@@ -106,6 +107,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -124,6 +126,7 @@
                     "id": "endpoint_service.getUser",
                     "name": "getUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -220,6 +223,7 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_service:User",
                                     "default": null,
                                     "inline": null
@@ -286,6 +290,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:User"
                                                             },
                                                             "value": {
@@ -314,6 +319,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:User"
                                                             },
                                                             "value": {
@@ -343,6 +349,7 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_service:User"
                                                 }
                                             },
@@ -661,6 +668,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

@@ -25,6 +25,7 @@
                     "file": "nullable"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_nullable:Email"
             },
             "shape": {
@@ -88,6 +89,7 @@
                     "file": "nullable"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_nullable:UserId"
             },
             "shape": {
@@ -139,6 +141,7 @@
                     "file": "nullable"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_nullable:WeirdNumber"
             },
             "shape": {
@@ -241,6 +244,7 @@
                     "file": "nullable"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_nullable:User"
             },
             "shape": {
@@ -282,6 +286,7 @@
                                 "file": "nullable"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_nullable:UserId",
                             "default": null,
                             "inline": null
@@ -350,6 +355,7 @@
                                                 "file": "nullable"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_nullable:Metadata",
                                             "default": null,
                                             "inline": null
@@ -380,6 +386,7 @@
                                 "file": "nullable"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_nullable:Email",
                             "default": null,
                             "inline": null
@@ -406,6 +413,7 @@
                                 "file": "nullable"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_nullable:WeirdNumber",
                             "default": null,
                             "inline": null
@@ -536,6 +544,7 @@
                     "file": "nullable"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_nullable:Status"
             },
             "shape": {
@@ -550,6 +559,7 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -573,6 +583,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -596,6 +607,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -627,6 +639,7 @@
                     "file": "nullable"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_nullable:Metadata"
             },
             "shape": {
@@ -743,6 +756,7 @@
                                 "file": "nullable"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_nullable:Status",
                             "default": null,
                             "inline": null
@@ -846,6 +860,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -864,6 +879,7 @@
                     "id": "endpoint_nullable.getUsers",
                     "name": "getUsers",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1077,6 +1093,7 @@
                                                 "file": "nullable"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_nullable:User",
                                             "default": null,
                                             "inline": null
@@ -1135,6 +1152,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -1163,6 +1181,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -1193,6 +1212,7 @@
                                                                                             "file": "nullable"
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nullable:UserId"
                                                                                     }
                                                                                 },
@@ -1212,6 +1232,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -1306,6 +1327,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -1336,6 +1358,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -1363,6 +1386,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -1390,6 +1414,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -1438,6 +1463,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -1508,6 +1534,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -1535,6 +1562,7 @@
                                                                                                                                         "file": "nullable"
                                                                                                                                     },
                                                                                                                                     "displayName": null,
+                                                                                                                                    "subtitle": null,
                                                                                                                                     "typeId": "type_nullable:Status"
                                                                                                                                 }
                                                                                                                             },
@@ -1556,6 +1584,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -1743,6 +1772,7 @@
                                                                                                                     "file": "nullable"
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_nullable:Metadata"
                                                                                                             }
                                                                                                         },
@@ -1770,6 +1800,7 @@
                                                                                                             "file": "nullable"
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_nullable:Metadata",
                                                                                                         "default": null,
                                                                                                         "inline": null
@@ -1804,6 +1835,7 @@
                                                                                                         "file": "nullable"
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_nullable:Metadata",
                                                                                                     "default": null,
                                                                                                     "inline": null
@@ -1839,6 +1871,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -1889,6 +1922,7 @@
                                                                                             "file": "nullable"
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nullable:Email"
                                                                                     }
                                                                                 },
@@ -1908,6 +1942,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -1937,6 +1972,7 @@
                                                                                             "file": "nullable"
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nullable:WeirdNumber"
                                                                                     }
                                                                                 },
@@ -1956,6 +1992,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -2081,6 +2118,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -2224,6 +2262,7 @@
                                                                         "file": "nullable"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_nullable:User"
                                                                 }
                                                             },
@@ -2277,6 +2316,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -2305,6 +2345,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -2335,6 +2376,7 @@
                                                                                             "file": "nullable"
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nullable:UserId"
                                                                                     }
                                                                                 },
@@ -2354,6 +2396,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -2448,6 +2491,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -2478,6 +2522,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -2505,6 +2550,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -2532,6 +2578,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -2580,6 +2627,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -2650,6 +2698,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -2677,6 +2726,7 @@
                                                                                                                                         "file": "nullable"
                                                                                                                                     },
                                                                                                                                     "displayName": null,
+                                                                                                                                    "subtitle": null,
                                                                                                                                     "typeId": "type_nullable:Status"
                                                                                                                                 }
                                                                                                                             },
@@ -2698,6 +2748,7 @@
                                                                                                                                 "file": "nullable"
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                                         },
                                                                                                                         "value": {
@@ -2885,6 +2936,7 @@
                                                                                                                     "file": "nullable"
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_nullable:Metadata"
                                                                                                             }
                                                                                                         },
@@ -2912,6 +2964,7 @@
                                                                                                             "file": "nullable"
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_nullable:Metadata",
                                                                                                         "default": null,
                                                                                                         "inline": null
@@ -2946,6 +2999,7 @@
                                                                                                         "file": "nullable"
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_nullable:Metadata",
                                                                                                     "default": null,
                                                                                                     "inline": null
@@ -2981,6 +3035,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -3031,6 +3086,7 @@
                                                                                             "file": "nullable"
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nullable:Email"
                                                                                     }
                                                                                 },
@@ -3050,6 +3106,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -3079,6 +3136,7 @@
                                                                                             "file": "nullable"
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nullable:WeirdNumber"
                                                                                     }
                                                                                 },
@@ -3098,6 +3156,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -3223,6 +3282,7 @@
                                                                                     "file": "nullable"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_nullable:User"
                                                                             },
                                                                             "value": {
@@ -3366,6 +3426,7 @@
                                                                         "file": "nullable"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_nullable:User"
                                                                 }
                                                             },
@@ -3413,6 +3474,7 @@
                                                             "file": "nullable"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_nullable:User",
                                                         "default": null,
                                                         "inline": null
@@ -3505,6 +3567,7 @@
                     "id": "endpoint_nullable.createUser",
                     "name": "createUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3602,6 +3665,7 @@
                                                 "file": "nullable"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_nullable:Metadata",
                                             "default": null,
                                             "inline": null
@@ -3686,6 +3750,7 @@
                                         "file": "nullable"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_nullable:User",
                                     "default": null,
                                     "inline": null
@@ -3782,6 +3847,7 @@
                                                                 "file": "nullable"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_nullable:Metadata",
                                                             "default": null,
                                                             "inline": null
@@ -3848,6 +3914,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -3876,6 +3943,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -3906,6 +3974,7 @@
                                                                             "file": "nullable"
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_nullable:UserId"
                                                                     }
                                                                 },
@@ -3925,6 +3994,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -4019,6 +4089,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -4049,6 +4120,7 @@
                                                                                                                 "file": "nullable"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                         },
                                                                                                         "value": {
@@ -4076,6 +4148,7 @@
                                                                                                                 "file": "nullable"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                         },
                                                                                                         "value": {
@@ -4103,6 +4176,7 @@
                                                                                                                 "file": "nullable"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                         },
                                                                                                         "value": {
@@ -4151,6 +4225,7 @@
                                                                                                                 "file": "nullable"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                         },
                                                                                                         "value": {
@@ -4221,6 +4296,7 @@
                                                                                                                 "file": "nullable"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                         },
                                                                                                         "value": {
@@ -4248,6 +4324,7 @@
                                                                                                                         "file": "nullable"
                                                                                                                     },
                                                                                                                     "displayName": null,
+                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_nullable:Status"
                                                                                                                 }
                                                                                                             },
@@ -4269,6 +4346,7 @@
                                                                                                                 "file": "nullable"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_nullable:Metadata"
                                                                                                         },
                                                                                                         "value": {
@@ -4456,6 +4534,7 @@
                                                                                                     "file": "nullable"
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_nullable:Metadata"
                                                                                             }
                                                                                         },
@@ -4483,6 +4562,7 @@
                                                                                             "file": "nullable"
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nullable:Metadata",
                                                                                         "default": null,
                                                                                         "inline": null
@@ -4517,6 +4597,7 @@
                                                                                         "file": "nullable"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_nullable:Metadata",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -4552,6 +4633,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -4602,6 +4684,7 @@
                                                                             "file": "nullable"
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_nullable:Email"
                                                                     }
                                                                 },
@@ -4621,6 +4704,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -4650,6 +4734,7 @@
                                                                             "file": "nullable"
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_nullable:WeirdNumber"
                                                                     }
                                                                 },
@@ -4669,6 +4754,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -4794,6 +4880,7 @@
                                                                     "file": "nullable"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_nullable:User"
                                                             },
                                                             "value": {
@@ -4937,6 +5024,7 @@
                                                         "file": "nullable"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_nullable:User"
                                                 }
                                             },
@@ -4993,6 +5081,7 @@
                     "id": "endpoint_nullable.deleteUser",
                     "name": "deleteUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7094,6 +7183,7 @@
         "subpackage_nullable": {
             "name": "nullable",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "nullable"

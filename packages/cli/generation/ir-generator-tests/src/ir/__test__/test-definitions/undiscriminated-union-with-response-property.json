@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionResponse"
             },
             "shape": {
@@ -40,6 +41,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:MyUnion",
                             "default": null,
                             "inline": null
@@ -84,6 +86,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionListResponse"
             },
             "shape": {
@@ -105,6 +108,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:MyUnion",
                                     "default": null,
                                     "inline": null
@@ -151,6 +155,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:MyUnion"
             },
             "shape": {
@@ -233,6 +238,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:VariantA"
             },
             "shape": {
@@ -308,6 +314,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:VariantB"
             },
             "shape": {
@@ -383,6 +390,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:VariantC"
             },
             "shape": {
@@ -460,6 +468,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -478,6 +487,7 @@
                     "id": "endpoint_.getUnion",
                     "name": "getUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -514,6 +524,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UnionResponse",
                                     "default": null,
                                     "inline": null
@@ -529,6 +540,7 @@
                                             "file": null
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_:MyUnion",
                                         "default": null,
                                         "inline": null
@@ -586,6 +598,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UnionResponse"
                                                             },
                                                             "value": {
@@ -610,6 +623,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:VariantA"
                                                                                             },
                                                                                             "value": {
@@ -639,6 +653,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:VariantA"
                                                                                             },
                                                                                             "value": {
@@ -666,6 +681,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:VariantA"
                                                                                 }
                                                                             },
@@ -683,6 +699,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:MyUnion"
                                                                     }
                                                                 },
@@ -704,6 +721,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:UnionResponse"
                                                 }
                                             },
@@ -735,6 +753,7 @@
                     "id": "endpoint_.listUnions",
                     "name": "listUnions",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -771,6 +790,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UnionListResponse",
                                     "default": null,
                                     "inline": null
@@ -790,6 +810,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_:MyUnion",
                                                 "default": null,
                                                 "inline": null
@@ -849,6 +870,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UnionListResponse"
                                                             },
                                                             "value": {
@@ -879,6 +901,7 @@
                                                                                                                     "file": null
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_:VariantA"
                                                                                                             },
                                                                                                             "value": {
@@ -908,6 +931,7 @@
                                                                                                                     "file": null
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_:VariantA"
                                                                                                             },
                                                                                                             "value": {
@@ -935,6 +959,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:VariantA"
                                                                                                 }
                                                                                             },
@@ -952,6 +977,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:MyUnion"
                                                                                     }
                                                                                 },
@@ -982,6 +1008,7 @@
                                                                                                                     "file": null
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_:VariantA"
                                                                                                             },
                                                                                                             "value": {
@@ -1011,6 +1038,7 @@
                                                                                                                     "file": null
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_:VariantA"
                                                                                                             },
                                                                                                             "value": {
@@ -1038,6 +1066,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:VariantA"
                                                                                                 }
                                                                                             },
@@ -1055,6 +1084,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:MyUnion"
                                                                                     }
                                                                                 },
@@ -1073,6 +1103,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:MyUnion",
                                                                             "default": null,
                                                                             "inline": null
@@ -1103,6 +1134,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:UnionListResponse"
                                                 }
                                             },

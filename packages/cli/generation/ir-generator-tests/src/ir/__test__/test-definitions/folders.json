@@ -30,6 +30,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_a/d/types:Foo"
             },
             "shape": {
@@ -103,6 +104,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -118,6 +120,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -136,6 +139,7 @@
                     "id": "endpoint_.foo",
                     "name": "foo",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -221,6 +225,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -239,6 +244,7 @@
                     "id": "endpoint_a/b.foo",
                     "name": "foo",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -324,6 +330,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -342,6 +349,7 @@
                     "id": "endpoint_a/c.foo",
                     "name": "foo",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -425,6 +433,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -443,6 +452,7 @@
                     "id": "endpoint_folder.foo",
                     "name": "foo",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -527,6 +537,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/service",
                 "parts": []
@@ -545,6 +556,7 @@
                     "id": "endpoint_folder/service.endpoint",
                     "name": "endpoint",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -615,6 +627,7 @@
                     "id": "endpoint_folder/service.unknownRequest",
                     "name": "unknownRequest",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1592,6 +1605,7 @@
         "subpackage_a": {
             "name": "a",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a"
@@ -1619,6 +1633,7 @@
         "subpackage_a/b": {
             "name": "b",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1644,6 +1659,7 @@
         "subpackage_a/c": {
             "name": "c",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1669,6 +1685,7 @@
         "subpackage_folder": {
             "name": "folder",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder"
@@ -1694,6 +1711,7 @@
         "subpackage_a/d": {
             "name": "d",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1721,6 +1739,7 @@
         "subpackage_a/d/types": {
             "name": "types",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1749,6 +1768,7 @@
         "subpackage_folder/service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder",

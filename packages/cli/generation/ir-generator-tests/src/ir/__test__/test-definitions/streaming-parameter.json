@@ -25,6 +25,7 @@
                     "file": "dummy"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_dummy:RegularResponse"
             },
             "shape": {
@@ -109,6 +110,7 @@
                     "file": "dummy"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_dummy:StreamResponse"
             },
             "shape": {
@@ -196,6 +198,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -214,6 +217,7 @@
                     "id": "endpoint_dummy.generate",
                     "name": "generate",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -342,6 +346,7 @@
                                             "file": "dummy"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_dummy:RegularResponse",
                                         "default": null,
                                         "inline": null
@@ -363,6 +368,7 @@
                                         "file": "dummy"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_dummy:StreamResponse",
                                     "default": null,
                                     "inline": null
@@ -614,6 +620,7 @@
                                                                     "file": "dummy"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_dummy:RegularResponse"
                                                             },
                                                             "value": {
@@ -642,6 +649,7 @@
                                                                     "file": "dummy"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_dummy:RegularResponse"
                                                             },
                                                             "value": {
@@ -691,6 +699,7 @@
                                                         "file": "dummy"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_dummy:RegularResponse"
                                                 }
                                             },
@@ -1250,6 +1259,7 @@
         "subpackage_dummy": {
             "name": "dummy",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "dummy"

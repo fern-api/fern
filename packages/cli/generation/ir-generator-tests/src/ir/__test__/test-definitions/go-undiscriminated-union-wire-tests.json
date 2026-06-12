@@ -34,6 +34,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_service:DocumentItem"
             },
             "shape": {
@@ -100,6 +101,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_service:DocumentObject"
             },
             "shape": {
@@ -156,6 +158,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_service:RerankRequest"
             },
             "shape": {
@@ -179,6 +182,7 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_service:DocumentItem",
                                     "default": null,
                                     "inline": null
@@ -247,6 +251,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_service:RerankResponse"
             },
             "shape": {
@@ -312,6 +317,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -330,6 +336,7 @@
                     "id": "endpoint_service.rerank",
                     "name": "rerank",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -362,6 +369,7 @@
                                 "file": "service"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_service:RerankRequest",
                             "default": null,
                             "inline": null
@@ -387,6 +395,7 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_service:RerankRequest",
                                     "default": null,
                                     "inline": null
@@ -415,6 +424,7 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_service:RerankResponse",
                                     "default": null,
                                     "inline": null
@@ -636,6 +646,7 @@
                                                                         "file": "service"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_service:DocumentItem",
                                                                     "default": null,
                                                                     "inline": null
@@ -845,6 +856,7 @@
                                                             "file": "service"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_service:RerankRequest"
                                                     },
                                                     "value": {
@@ -882,6 +894,7 @@
                                                                                     "file": "service"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_service:DocumentItem"
                                                                             }
                                                                         },
@@ -916,6 +929,7 @@
                                                                                     "file": "service"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_service:DocumentItem"
                                                                             }
                                                                         },
@@ -933,6 +947,7 @@
                                                                         "file": "service"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_service:DocumentItem",
                                                                     "default": null,
                                                                     "inline": null
@@ -958,6 +973,7 @@
                                                             "file": "service"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_service:RerankRequest"
                                                     },
                                                     "value": {
@@ -987,6 +1003,7 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_service:RerankRequest"
                                         }
                                     },
@@ -1020,6 +1037,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_service:RerankResponse"
                                                             },
                                                             "value": {
@@ -1086,6 +1104,7 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_service:RerankResponse"
                                                 }
                                             },
@@ -1690,6 +1709,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

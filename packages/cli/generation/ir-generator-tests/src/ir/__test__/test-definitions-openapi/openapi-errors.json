@@ -33,6 +33,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": "Invalid request URI. The message will vary depending on the cause."
         },
@@ -55,6 +56,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": "Invalid token."
         },
@@ -77,6 +79,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": "Insufficient scope, expected: read:actions."
         },
@@ -99,6 +102,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
         }
@@ -114,6 +118,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -132,6 +137,7 @@
                     "id": "endpoint_.getFoo",
                     "name": "getFoo",
                     "displayName": "getFoo",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -554,6 +560,7 @@
                     "id": "endpoint_.create_foo",
                     "name": "create_foo",
                     "displayName": "Create foo",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

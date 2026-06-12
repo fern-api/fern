@@ -27,6 +27,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -45,6 +46,7 @@
                     "id": "endpoint_service.getText",
                     "name": "getText",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -131,6 +133,7 @@
                     "id": "endpoint_service.getCsv",
                     "name": "getCsv",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -217,6 +220,7 @@
                     "id": "endpoint_service.getXml",
                     "name": "getXml",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -585,6 +589,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

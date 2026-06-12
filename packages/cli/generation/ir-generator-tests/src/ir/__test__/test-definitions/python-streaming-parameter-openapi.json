@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ChatRequest"
             },
             "shape": {
@@ -104,6 +105,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ChatResponse"
             },
             "shape": {
@@ -192,6 +194,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ChatStreamEvent"
             },
             "shape": {
@@ -283,6 +286,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -301,6 +305,7 @@
                     "id": "endpoint_.chat_stream",
                     "name": "chat_stream",
                     "displayName": "Chat endpoint with streaming support",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -401,6 +406,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:ChatStreamEvent",
                                     "default": null,
                                     "inline": null
@@ -680,6 +686,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:ChatStreamEvent"
                                                                     },
                                                                     "value": {
@@ -726,6 +733,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:ChatStreamEvent"
                                                                     },
                                                                     "value": {
@@ -771,6 +779,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:ChatStreamEvent"
                                                         }
                                                     },
@@ -803,6 +812,7 @@
                     "id": "endpoint_.chat",
                     "name": "chat",
                     "displayName": "Chat endpoint with streaming support",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -903,6 +913,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:ChatResponse",
                                     "default": null,
                                     "inline": null
@@ -1157,6 +1168,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:ChatResponse"
                                                             },
                                                             "value": {
@@ -1203,6 +1215,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:ChatResponse"
                                                             },
                                                             "value": {
@@ -1250,6 +1263,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:ChatResponse"
                                                 }
                                             },

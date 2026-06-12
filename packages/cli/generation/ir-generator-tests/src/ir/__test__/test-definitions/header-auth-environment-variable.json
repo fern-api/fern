@@ -51,6 +51,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -69,6 +70,7 @@
                     "id": "endpoint_service.getWithBearerToken",
                     "name": "getWithBearerToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -326,6 +328,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

@@ -36,6 +36,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -54,6 +55,7 @@
                     "id": "endpoint_dummy.getDummy",
                     "name": "getDummy",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -382,6 +384,7 @@
         "subpackage_dummy": {
             "name": "dummy",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "dummy"

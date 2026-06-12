@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:NullableObject"
             },
             "shape": {
@@ -139,6 +140,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ResponseBody"
             },
             "shape": {
@@ -201,6 +203,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -219,6 +222,7 @@
                     "id": "endpoint_.postWithNullableNamedRequestBodyType",
                     "name": "postWithNullableNamedRequestBodyType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -311,6 +315,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:NullableObject",
                                     "default": null,
                                     "inline": null
@@ -347,6 +352,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:ResponseBody",
                                     "default": null,
                                     "inline": null
@@ -425,6 +431,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_:NullableObject",
                                                 "default": null,
                                                 "inline": null
@@ -555,6 +562,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_:NullableObject",
                                                 "default": null,
                                                 "inline": null
@@ -582,6 +590,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:ResponseBody"
                                                             },
                                                             "value": {
@@ -626,6 +635,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:ResponseBody"
                                                 }
                                             },
@@ -654,6 +664,7 @@
                     "id": "endpoint_.postWithNonNullableNamedRequestBodyType",
                     "name": "postWithNonNullableNamedRequestBodyType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -856,6 +867,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:ResponseBody",
                                     "default": null,
                                     "inline": null
@@ -1112,6 +1124,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:ResponseBody"
                                                             },
                                                             "value": {
@@ -1156,6 +1169,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:ResponseBody"
                                                 }
                                             },

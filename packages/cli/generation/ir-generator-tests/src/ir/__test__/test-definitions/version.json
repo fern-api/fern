@@ -84,6 +84,7 @@
                     "file": "user"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_user:UserId"
             },
             "shape": {
@@ -135,6 +136,7 @@
                     "file": "user"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_user:User"
             },
             "shape": {
@@ -154,6 +156,7 @@
                                 "file": "user"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_user:UserId",
                             "default": null,
                             "inline": null
@@ -222,6 +225,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -240,6 +244,7 @@
                     "id": "endpoint_user.getUser",
                     "name": "getUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -279,6 +284,7 @@
                                     "file": "user"
                                 },
                                 "displayName": null,
+                                "subtitle": null,
                                 "typeId": "type_user:UserId",
                                 "default": null,
                                 "inline": null
@@ -308,6 +314,7 @@
                                     "file": "user"
                                 },
                                 "displayName": null,
+                                "subtitle": null,
                                 "typeId": "type_user:UserId",
                                 "default": null,
                                 "inline": null
@@ -344,6 +351,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -397,6 +405,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:UserId"
                                                 }
                                             },
@@ -431,6 +440,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -461,6 +471,7 @@
                                                                             "file": "user"
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_user:UserId"
                                                                     }
                                                                 },
@@ -480,6 +491,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -509,6 +521,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:User"
                                                 }
                                             },
@@ -899,6 +912,7 @@
         "subpackage_user": {
             "name": "user",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "user"

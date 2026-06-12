@@ -32,6 +32,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DocumentMetadata"
             },
             "shape": {
@@ -174,6 +175,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DocumentUploadResult"
             },
             "shape": {
@@ -262,6 +264,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UploadDocumentResponse"
             },
             "shape": {
@@ -330,6 +333,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -348,6 +352,7 @@
                     "id": "endpoint_.uploadJsonDocument",
                     "name": "uploadJsonDocument",
                     "displayName": "Upload document metadata (JSON) or document file",
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -499,6 +504,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UploadDocumentResponse",
                                     "default": null,
                                     "inline": null
@@ -926,6 +932,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -972,6 +979,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -1016,6 +1024,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -1098,6 +1107,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:DocumentMetadata"
                                                                         },
                                                                         "value": {
@@ -1145,6 +1155,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:DocumentMetadata"
                                                             }
                                                         },
@@ -1171,6 +1182,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:UploadDocumentResponse"
                                                 }
                                             },
@@ -1209,6 +1221,7 @@
                     "id": "endpoint_.uploadPdfDocument",
                     "name": "uploadPdfDocument",
                     "displayName": "Upload document metadata (JSON) or document file",
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1268,6 +1281,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UploadDocumentResponse",
                                     "default": null,
                                     "inline": null

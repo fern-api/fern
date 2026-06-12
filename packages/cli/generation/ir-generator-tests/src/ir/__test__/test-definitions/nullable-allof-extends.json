@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RootObject"
             },
             "shape": {
@@ -36,6 +37,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:NormalObject"
                     },
                     {
@@ -46,6 +48,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:NullableObject"
                     }
                 ],
@@ -135,6 +138,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:NormalObject"
             },
             "shape": {
@@ -195,6 +199,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:NullableObject"
             },
             "shape": {
@@ -258,6 +263,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -276,6 +282,7 @@
                     "id": "endpoint_.getTest",
                     "name": "getTest",
                     "displayName": "Get Test",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -312,6 +319,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RootObject",
                                     "default": null,
                                     "inline": null
@@ -401,6 +409,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:NormalObject"
                                                             },
                                                             "propertyAccess": null
@@ -453,6 +462,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootObject"
                                                             },
                                                             "value": {
@@ -499,6 +509,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootObject"
                                                             },
                                                             "value": {
@@ -546,6 +557,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:RootObject"
                                                 }
                                             },
@@ -575,6 +587,7 @@
                     "id": "endpoint_.createTest",
                     "name": "createTest",
                     "displayName": "Create Test",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -605,6 +618,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:RootObject",
                             "default": null,
                             "inline": null
@@ -628,6 +642,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RootObject",
                                     "default": null,
                                     "inline": null
@@ -654,6 +669,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RootObject",
                                     "default": null,
                                     "inline": null
@@ -764,6 +780,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:NormalObject"
                                                             },
                                                             "propertyAccess": null
@@ -812,6 +829,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:RootObject"
                                                     },
                                                     "value": {
@@ -846,6 +864,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:RootObject"
                                                     },
                                                     "value": {
@@ -881,6 +900,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:RootObject"
                                         }
                                     },
@@ -906,6 +926,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootObject"
                                                             },
                                                             "value": {
@@ -952,6 +973,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootObject"
                                                             },
                                                             "value": {
@@ -999,6 +1021,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:RootObject"
                                                 }
                                             },

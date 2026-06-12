@@ -25,6 +25,7 @@
                     "file": "commons"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_commons:Imported"
             },
             "shape": {
@@ -79,6 +80,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_folder-a/service:Response"
             },
             "shape": {
@@ -105,6 +107,7 @@
                                         "file": "common"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_folder-b/common:Foo",
                                     "default": null,
                                     "inline": null
@@ -154,6 +157,7 @@
                     "file": "common"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_folder-b/common:Foo"
             },
             "shape": {
@@ -180,6 +184,7 @@
                                         "file": "common"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_folder-c/common:FolderCFoo",
                                     "default": null,
                                     "inline": null
@@ -228,6 +233,7 @@
                     "file": "common"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_folder-c/common:FolderCFoo"
             },
             "shape": {
@@ -283,6 +289,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_folder-d/service:Response"
             },
             "shape": {
@@ -339,6 +346,7 @@
                     "file": "foo"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_foo:ImportingType"
             },
             "shape": {
@@ -358,6 +366,7 @@
                                 "file": "commons"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_commons:Imported",
                             "default": null,
                             "inline": null
@@ -401,6 +410,7 @@
                     "file": "foo"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_foo:OptionalString"
             },
             "shape": {
@@ -464,6 +474,7 @@
                     "file": "foo"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_foo:FilteredType"
             },
             "shape": {
@@ -554,6 +565,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -572,6 +584,7 @@
                     "id": "endpoint_folder-a/service.getDirectThread",
                     "name": "getDirectThread",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -672,6 +685,7 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_folder-a/service:Response",
                                     "default": null,
                                     "inline": null
@@ -762,6 +776,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_folder-a/service:Response"
                                                             },
                                                             "value": {
@@ -790,6 +805,7 @@
                                                                                                     "file": "common"
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_folder-b/common:Foo"
                                                                                             },
                                                                                             "value": {
@@ -818,6 +834,7 @@
                                                                                                                                     "file": "common"
                                                                                                                                 },
                                                                                                                                 "displayName": null,
+                                                                                                                                "subtitle": null,
                                                                                                                                 "typeId": "type_folder-c/common:FolderCFoo"
                                                                                                                             },
                                                                                                                             "value": {
@@ -848,6 +865,7 @@
                                                                                                                         "file": "common"
                                                                                                                     },
                                                                                                                     "displayName": null,
+                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_folder-c/common:FolderCFoo"
                                                                                                                 }
                                                                                                             },
@@ -869,6 +887,7 @@
                                                                                                                 "file": "common"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_folder-c/common:FolderCFoo",
                                                                                                             "default": null,
                                                                                                             "inline": null
@@ -897,6 +916,7 @@
                                                                                         "file": "common"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_folder-b/common:Foo"
                                                                                 }
                                                                             },
@@ -920,6 +940,7 @@
                                                                                 "file": "common"
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_folder-b/common:Foo",
                                                                             "default": null,
                                                                             "inline": null
@@ -950,6 +971,7 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_folder-a/service:Response"
                                                 }
                                             },
@@ -998,6 +1020,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/partner-path",
                 "parts": []
@@ -1016,6 +1039,7 @@
                     "id": "endpoint_folder-d/service.getDirectThread",
                     "name": "getDirectThread",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1057,6 +1081,7 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_folder-d/service:Response",
                                     "default": null,
                                     "inline": null
@@ -1110,6 +1135,7 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_folder-d/service:Response"
                                                             },
                                                             "value": {
@@ -1142,6 +1168,7 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_folder-d/service:Response"
                                                 }
                                             },
@@ -1183,6 +1210,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -1201,6 +1229,7 @@
                     "id": "endpoint_foo.find",
                     "name": "find",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1232,6 +1261,7 @@
                                     "file": "foo"
                                 },
                                 "displayName": null,
+                                "subtitle": null,
                                 "typeId": "type_foo:OptionalString",
                                 "default": null,
                                 "inline": null
@@ -1345,6 +1375,7 @@
                                         "file": "foo"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_foo:ImportingType",
                                     "default": null,
                                     "inline": null
@@ -1449,6 +1480,7 @@
                                                                     "file": "foo"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_foo:ImportingType"
                                                             },
                                                             "value": {
@@ -1479,6 +1511,7 @@
                                                                             "file": "commons"
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_commons:Imported"
                                                                     }
                                                                 },
@@ -1499,6 +1532,7 @@
                                                         "file": "foo"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_foo:ImportingType"
                                                 }
                                             },
@@ -3290,6 +3324,7 @@
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -3313,6 +3348,7 @@
         "subpackage_folder-a": {
             "name": "folder-a",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-a"
@@ -3338,6 +3374,7 @@
         "subpackage_folder-a/service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-a",
@@ -3364,6 +3401,7 @@
         "subpackage_folder-b": {
             "name": "folder-b",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-b"
@@ -3389,6 +3427,7 @@
         "subpackage_folder-b/common": {
             "name": "common",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-b",
@@ -3415,6 +3454,7 @@
         "subpackage_folder-c": {
             "name": "folder-c",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-c"
@@ -3440,6 +3480,7 @@
         "subpackage_folder-c/common": {
             "name": "common",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-c",
@@ -3466,6 +3507,7 @@
         "subpackage_folder-d": {
             "name": "folder-d",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-d"
@@ -3491,6 +3533,7 @@
         "subpackage_folder-d/service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder-d",
@@ -3517,6 +3560,7 @@
         "subpackage_foo": {
             "name": "foo",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "foo"

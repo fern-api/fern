@@ -81,6 +81,7 @@
                     "file": "payment"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_payment:Currency"
             },
             "shape": {
@@ -127,6 +128,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/payment",
                 "parts": []
@@ -145,6 +147,7 @@
                     "id": "endpoint_payment.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -208,6 +211,7 @@
                                         "file": "payment"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_payment:Currency",
                                     "default": null,
                                     "inline": null
@@ -312,6 +316,7 @@
                                                             "file": "payment"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_payment:Currency"
                                                     }
                                                 },
@@ -360,6 +365,7 @@
                     "id": "endpoint_payment.delete",
                     "name": "delete",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1035,6 +1041,7 @@
         "subpackage_payment": {
             "name": "payment",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "payment"

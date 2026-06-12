@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:Node"
             },
             "shape": {
@@ -99,6 +100,7 @@
                                         "file": "metadata"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_commons/metadata:Metadata",
                                     "default": null,
                                     "inline": null
@@ -154,6 +156,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Node"
                                 },
                                 "propertyAccess": null
@@ -200,6 +203,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Node"
                                 },
                                 "propertyAccess": null
@@ -436,6 +440,7 @@
                                                     "file": "metadata"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_commons/metadata:Metadata",
                                                 "default": null,
                                                 "inline": null
@@ -458,6 +463,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Node"
                                 },
                                 "propertyAccess": null
@@ -505,6 +511,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Node"
                                 },
                                 "propertyAccess": null
@@ -551,6 +558,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Node"
                                 },
                                 "propertyAccess": null
@@ -787,6 +795,7 @@
                                                     "file": "metadata"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_commons/metadata:Metadata",
                                                 "default": null,
                                                 "inline": null
@@ -809,6 +818,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Node"
                                 },
                                 "propertyAccess": null
@@ -845,6 +855,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:Tree"
             },
             "shape": {
@@ -870,6 +881,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:Node",
                                             "default": null,
                                             "inline": null
@@ -1239,6 +1251,7 @@
                                                                                                     "file": "metadata"
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_commons/metadata:Metadata",
                                                                                                 "default": null,
                                                                                                 "inline": null
@@ -1601,6 +1614,7 @@
                                                                                                     "file": "metadata"
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_commons/metadata:Metadata",
                                                                                                 "default": null,
                                                                                                 "inline": null
@@ -1653,6 +1667,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:Node",
                                                             "default": null,
                                                             "inline": null
@@ -1697,6 +1712,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:Node",
                                                         "default": null,
                                                         "inline": null
@@ -1738,6 +1754,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Tree"
                                 },
                                 "propertyAccess": null
@@ -1794,6 +1811,7 @@
                     "file": "metadata"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_commons/metadata:Metadata"
             },
             "shape": {
@@ -1910,6 +1928,7 @@
                                         "file": "metadata"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_commons/metadata:Metadata"
                                 },
                                 "propertyAccess": null
@@ -2057,6 +2076,7 @@
                                         "file": "metadata"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_commons/metadata:Metadata"
                                 },
                                 "propertyAccess": null
@@ -2091,6 +2111,7 @@
                     "file": "file"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_file:File"
             },
             "shape": {
@@ -2154,6 +2175,7 @@
                                 "file": "file"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_file:FileInfo",
                             "default": null,
                             "inline": null
@@ -2209,6 +2231,7 @@
                                         "file": "file"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file:File"
                                 },
                                 "propertyAccess": null
@@ -2237,6 +2260,7 @@
                                         "file": "file"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file:File"
                                 },
                                 "propertyAccess": null
@@ -2275,6 +2299,7 @@
                                         "file": "file"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file:File"
                                 },
                                 "propertyAccess": null
@@ -2318,6 +2343,7 @@
                                         "file": "file"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file:File"
                                 },
                                 "propertyAccess": null
@@ -2346,6 +2372,7 @@
                                         "file": "file"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file:File"
                                 },
                                 "propertyAccess": null
@@ -2384,6 +2411,7 @@
                                         "file": "file"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file:File"
                                 },
                                 "propertyAccess": null
@@ -2416,6 +2444,7 @@
                     "file": "file"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_file:FileInfo"
             },
             "shape": {
@@ -2481,6 +2510,7 @@
                     "file": "directory"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_file/directory:Directory"
             },
             "shape": {
@@ -2530,6 +2560,7 @@
                                                 "file": "file"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_file:File",
                                             "default": null,
                                             "inline": null
@@ -2571,6 +2602,7 @@
                                                 "file": "directory"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_file/directory:Directory",
                                             "default": null,
                                             "inline": null
@@ -2635,6 +2667,7 @@
                                         "file": "directory"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file/directory:Directory"
                                 },
                                 "propertyAccess": null
@@ -2786,6 +2819,7 @@
                                                                 "file": "file"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_file:File",
                                                             "default": null,
                                                             "inline": null
@@ -2815,6 +2849,7 @@
                                                             "file": "file"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_file:File",
                                                         "default": null,
                                                         "inline": null
@@ -2844,6 +2879,7 @@
                                         "file": "directory"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file/directory:Directory"
                                 },
                                 "propertyAccess": null
@@ -3060,6 +3096,7 @@
                                                                                                                 "file": "file"
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_file:File",
                                                                                                             "default": null,
                                                                                                             "inline": null
@@ -3089,6 +3126,7 @@
                                                                                                             "file": "file"
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_file:File",
                                                                                                         "default": null,
                                                                                                         "inline": null
@@ -3152,6 +3190,7 @@
                                                                 "file": "directory"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_file/directory:Directory",
                                                             "default": null,
                                                             "inline": null
@@ -3189,6 +3228,7 @@
                                                             "file": "directory"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_file/directory:Directory",
                                                         "default": null,
                                                         "inline": null
@@ -3223,6 +3263,7 @@
                                         "file": "directory"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_file/directory:Directory"
                                 },
                                 "propertyAccess": null
@@ -4176,6 +4217,7 @@
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -4201,6 +4243,7 @@
         "subpackage_commons/metadata": {
             "name": "metadata",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons",
@@ -4227,6 +4270,7 @@
         "subpackage_file": {
             "name": "file",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "file"
@@ -4253,6 +4297,7 @@
         "subpackage_file/directory": {
             "name": "directory",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "file",

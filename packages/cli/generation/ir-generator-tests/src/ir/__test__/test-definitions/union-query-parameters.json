@@ -25,6 +25,7 @@
                     "file": "events"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_events:EventTypeEnum"
             },
             "shape": {
@@ -74,6 +75,7 @@
                     "file": "events"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_events:EventTypeParam"
             },
             "shape": {
@@ -114,6 +116,7 @@
                                         "file": "events"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_events:EventTypeEnum",
                                     "default": null,
                                     "inline": null
@@ -150,6 +153,7 @@
                     "file": "events"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_events:StringOrListParam"
             },
             "shape": {
@@ -219,6 +223,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/events",
                 "parts": []
@@ -237,6 +242,7 @@
                     "id": "endpoint_events.subscribe",
                     "name": "subscribe",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -272,6 +278,7 @@
                                             "file": "events"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_events:EventTypeParam",
                                         "default": null,
                                         "inline": null
@@ -306,6 +313,7 @@
                                             "file": "events"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_events:StringOrListParam",
                                         "default": null,
                                         "inline": null
@@ -954,6 +962,7 @@
         "subpackage_events": {
             "name": "events",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "events"

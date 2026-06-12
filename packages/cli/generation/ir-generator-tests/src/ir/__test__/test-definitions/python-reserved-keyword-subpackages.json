@@ -27,6 +27,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -45,6 +46,7 @@
                     "id": "endpoint_class.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -153,6 +155,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -171,6 +174,7 @@
                     "id": "endpoint_automations/import.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -279,6 +283,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -297,6 +302,7 @@
                     "id": "endpoint_automations/export.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -751,6 +757,7 @@
         "subpackage_class": {
             "name": "class",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "class"
@@ -772,6 +779,7 @@
         "subpackage_automations": {
             "name": "automations",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "automations"
@@ -798,6 +806,7 @@
         "subpackage_automations/import": {
             "name": "import",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "automations",
@@ -822,6 +831,7 @@
         "subpackage_automations/export": {
             "name": "export",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "automations",

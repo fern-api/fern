@@ -25,6 +25,7 @@
                     "file": "service"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_service:Object"
             },
             "shape": {
@@ -187,6 +188,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -205,6 +207,7 @@
                     "id": "endpoint_service.test-availability",
                     "name": "test-availability",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1112,6 +1115,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

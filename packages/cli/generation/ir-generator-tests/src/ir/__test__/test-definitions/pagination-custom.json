@@ -32,6 +32,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UsersListResponse"
             },
             "shape": {
@@ -136,6 +137,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Link",
                                     "default": null,
                                     "inline": null
@@ -207,6 +209,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:Link"
             },
             "shape": {
@@ -310,6 +313,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -328,6 +332,7 @@
                     "id": "endpoint_users.listWithCustomPager",
                     "name": "listWithCustomPager",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -435,6 +440,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UsersListResponse",
                                     "default": null,
                                     "inline": null
@@ -483,6 +489,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UsersListResponse"
                                                             },
                                                             "value": {
@@ -527,6 +534,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UsersListResponse"
                                                             },
                                                             "value": {
@@ -571,6 +579,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UsersListResponse"
                                                             },
                                                             "value": {
@@ -614,6 +623,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UsersListResponse"
                                                             },
                                                             "value": {
@@ -638,6 +648,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Link"
                                                                                                 },
                                                                                                 "value": {
@@ -664,6 +675,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Link"
                                                                                                 },
                                                                                                 "value": {
@@ -690,6 +702,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Link"
                                                                                                 },
                                                                                                 "value": {
@@ -717,6 +730,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:Link"
                                                                                     }
                                                                                 },
@@ -742,6 +756,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Link"
                                                                                                 },
                                                                                                 "value": {
@@ -768,6 +783,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Link"
                                                                                                 },
                                                                                                 "value": {
@@ -794,6 +810,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:Link"
                                                                                                 },
                                                                                                 "value": {
@@ -821,6 +838,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:Link"
                                                                                     }
                                                                                 },
@@ -840,6 +858,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:Link",
                                                                             "default": null,
                                                                             "inline": null
@@ -871,6 +890,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UsersListResponse"
                                                             },
                                                             "value": {
@@ -935,6 +955,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:UsersListResponse"
                                                 }
                                             },
@@ -1621,6 +1642,7 @@
         "subpackage_users": {
             "name": "users",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "users"

@@ -25,6 +25,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:D"
             },
             "shape": {
@@ -87,6 +88,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:C"
             },
             "shape": {
@@ -110,6 +112,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:D",
                                     "default": null,
                                     "inline": null
@@ -155,6 +158,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:B"
             },
             "shape": {
@@ -174,6 +178,7 @@
                                 "file": "deep-cursor-path"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_deep-cursor-path:C",
                             "default": null,
                             "inline": null
@@ -218,6 +223,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:A"
             },
             "shape": {
@@ -241,6 +247,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:B",
                                     "default": null,
                                     "inline": null
@@ -288,6 +295,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:Response"
             },
             "shape": {
@@ -378,6 +386,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:IndirectionRequired"
             },
             "shape": {
@@ -468,6 +477,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:MainRequired"
             },
             "shape": {
@@ -487,6 +497,7 @@
                                 "file": "deep-cursor-path"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_deep-cursor-path:IndirectionRequired",
                             "default": null,
                             "inline": null
@@ -530,6 +541,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:InlineD"
             },
             "shape": {
@@ -592,6 +604,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:InlineC"
             },
             "shape": {
@@ -615,6 +628,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:InlineD",
                                     "default": null,
                                     "inline": null
@@ -660,6 +674,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:InlineB"
             },
             "shape": {
@@ -679,6 +694,7 @@
                                 "file": "deep-cursor-path"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_deep-cursor-path:InlineC",
                             "default": null,
                             "inline": null
@@ -723,6 +739,7 @@
                     "file": "deep-cursor-path"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_deep-cursor-path:InlineA"
             },
             "shape": {
@@ -746,6 +763,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:InlineB",
                                     "default": null,
                                     "inline": null
@@ -814,6 +832,7 @@
                     "id": "endpoint_deep-cursor-path.do-thing",
                     "name": "do-thing",
                     "displayName": "Do Thing",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -846,6 +865,7 @@
                                 "file": "deep-cursor-path"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_deep-cursor-path:A",
                             "default": null,
                             "inline": null
@@ -871,6 +891,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:A",
                                     "default": null,
                                     "inline": null
@@ -899,6 +920,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:Response",
                                     "default": null,
                                     "inline": null
@@ -945,6 +967,7 @@
                                                             "file": "deep-cursor-path"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_deep-cursor-path:A"
                                                     },
                                                     "value": {
@@ -964,6 +987,7 @@
                                                                         "file": "deep-cursor-path"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_deep-cursor-path:B",
                                                                     "default": null,
                                                                     "inline": null
@@ -986,6 +1010,7 @@
                                                 "file": "deep-cursor-path"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_deep-cursor-path:A"
                                         }
                                     },
@@ -1013,6 +1038,7 @@
                                                                     "file": "deep-cursor-path"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_deep-cursor-path:Response"
                                                             },
                                                             "value": {
@@ -1061,6 +1087,7 @@
                                                                     "file": "deep-cursor-path"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_deep-cursor-path:Response"
                                                             },
                                                             "value": {
@@ -1127,6 +1154,7 @@
                                                         "file": "deep-cursor-path"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_deep-cursor-path:Response"
                                                 }
                                             },
@@ -1165,6 +1193,7 @@
                                                     "file": "deep-cursor-path"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_deep-cursor-path:B",
                                                 "default": null,
                                                 "inline": null
@@ -1185,6 +1214,7 @@
                                             "file": "deep-cursor-path"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_deep-cursor-path:C",
                                         "default": null,
                                         "inline": null
@@ -1207,6 +1237,7 @@
                                                     "file": "deep-cursor-path"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_deep-cursor-path:D",
                                                 "default": null,
                                                 "inline": null
@@ -1322,6 +1353,7 @@
                     "id": "endpoint_deep-cursor-path.do-thing-required",
                     "name": "do-thing-required",
                     "displayName": "Do Thing",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1354,6 +1386,7 @@
                                 "file": "deep-cursor-path"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_deep-cursor-path:MainRequired",
                             "default": null,
                             "inline": null
@@ -1379,6 +1412,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:MainRequired",
                                     "default": null,
                                     "inline": null
@@ -1407,6 +1441,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:Response",
                                     "default": null,
                                     "inline": null
@@ -1453,6 +1488,7 @@
                                                             "file": "deep-cursor-path"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_deep-cursor-path:MainRequired"
                                                     },
                                                     "value": {
@@ -1473,6 +1509,7 @@
                                                                                 "file": "deep-cursor-path"
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_deep-cursor-path:IndirectionRequired"
                                                                         },
                                                                         "value": {
@@ -1509,6 +1546,7 @@
                                                                                 "file": "deep-cursor-path"
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_deep-cursor-path:IndirectionRequired"
                                                                         },
                                                                         "value": {
@@ -1575,6 +1613,7 @@
                                                                     "file": "deep-cursor-path"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_deep-cursor-path:IndirectionRequired"
                                                             }
                                                         },
@@ -1600,6 +1639,7 @@
                                                 "file": "deep-cursor-path"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_deep-cursor-path:MainRequired"
                                         }
                                     },
@@ -1634,6 +1674,7 @@
                                                                     "file": "deep-cursor-path"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_deep-cursor-path:Response"
                                                             },
                                                             "value": {
@@ -1682,6 +1723,7 @@
                                                                     "file": "deep-cursor-path"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_deep-cursor-path:Response"
                                                             },
                                                             "value": {
@@ -1748,6 +1790,7 @@
                                                         "file": "deep-cursor-path"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_deep-cursor-path:Response"
                                                 }
                                             },
@@ -1782,6 +1825,7 @@
                                             "file": "deep-cursor-path"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_deep-cursor-path:IndirectionRequired",
                                         "default": null,
                                         "inline": null
@@ -1895,6 +1939,7 @@
                     "id": "endpoint_deep-cursor-path.do-thing-inline",
                     "name": "do-thing-inline",
                     "displayName": "Do Thing",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1927,6 +1972,7 @@
                                 "file": "deep-cursor-path"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_deep-cursor-path:InlineA",
                             "default": null,
                             "inline": null
@@ -1952,6 +1998,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:InlineA",
                                     "default": null,
                                     "inline": null
@@ -1980,6 +2027,7 @@
                                         "file": "deep-cursor-path"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_deep-cursor-path:Response",
                                     "default": null,
                                     "inline": null
@@ -2026,6 +2074,7 @@
                                                             "file": "deep-cursor-path"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_deep-cursor-path:InlineA"
                                                     },
                                                     "value": {
@@ -2045,6 +2094,7 @@
                                                                         "file": "deep-cursor-path"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_deep-cursor-path:InlineB",
                                                                     "default": null,
                                                                     "inline": null
@@ -2067,6 +2117,7 @@
                                                 "file": "deep-cursor-path"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_deep-cursor-path:InlineA"
                                         }
                                     },
@@ -2094,6 +2145,7 @@
                                                                     "file": "deep-cursor-path"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_deep-cursor-path:Response"
                                                             },
                                                             "value": {
@@ -2142,6 +2194,7 @@
                                                                     "file": "deep-cursor-path"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_deep-cursor-path:Response"
                                                             },
                                                             "value": {
@@ -2208,6 +2261,7 @@
                                                         "file": "deep-cursor-path"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_deep-cursor-path:Response"
                                                 }
                                             },
@@ -2246,6 +2300,7 @@
                                                     "file": "deep-cursor-path"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_deep-cursor-path:InlineB",
                                                 "default": null,
                                                 "inline": null
@@ -2266,6 +2321,7 @@
                                             "file": "deep-cursor-path"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_deep-cursor-path:InlineC",
                                         "default": null,
                                         "inline": null
@@ -2288,6 +2344,7 @@
                                                     "file": "deep-cursor-path"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_deep-cursor-path:InlineD",
                                                 "default": null,
                                                 "inline": null
@@ -3919,6 +3976,7 @@
         "subpackage_deep-cursor-path": {
             "name": "deep-cursor-path",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "deep-cursor-path"

@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasMapInline"
             },
             "shape": {
@@ -51,6 +52,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
@@ -81,6 +83,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
@@ -112,6 +115,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasSetInline"
             },
             "shape": {
@@ -129,6 +133,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
@@ -148,6 +153,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
@@ -179,6 +185,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasListInline"
             },
             "shape": {
@@ -196,6 +203,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
@@ -215,6 +223,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasInlineValue",
                             "default": null,
                             "inline": null
@@ -246,6 +255,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasInlineValue"
             },
             "shape": {
@@ -322,6 +332,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RequestTypeInlineType1"
             },
             "shape": {
@@ -376,6 +387,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RootType1"
             },
             "shape": {
@@ -415,6 +427,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:RootType1InlineType1",
                             "default": null,
                             "inline": null
@@ -454,6 +467,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RootType1FooMapValue",
                                     "default": null,
                                     "inline": null
@@ -484,6 +498,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RootType1FooListItem",
                                     "default": null,
                                     "inline": null
@@ -514,6 +529,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RootType1FooSetItem",
                                     "default": null,
                                     "inline": null
@@ -540,6 +556,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -587,6 +604,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RootType1FooMapValue"
             },
             "shape": {
@@ -626,6 +644,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -667,6 +686,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RootType1FooListItem"
             },
             "shape": {
@@ -706,6 +726,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -747,6 +768,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RootType1FooSetItem"
             },
             "shape": {
@@ -786,6 +808,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -827,6 +850,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RootType1InlineType1"
             },
             "shape": {
@@ -866,6 +890,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:RootType1InlineType1NestedInlineType1",
                             "default": null,
                             "inline": null
@@ -890,6 +915,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -933,6 +959,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:RootType1InlineType1NestedInlineType1"
             },
             "shape": {
@@ -994,6 +1021,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:InlineEnum1",
                             "default": null,
                             "inline": null
@@ -1018,6 +1046,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -1060,6 +1089,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DiscriminatedUnion1"
             },
             "shape": {
@@ -1079,9 +1109,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DiscriminatedUnion1InlineType1"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -1096,9 +1128,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DiscriminatedUnion1InlineType2"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -1113,9 +1147,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
@@ -1150,6 +1186,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DiscriminatedUnion1InlineType1"
             },
             "shape": {
@@ -1189,6 +1226,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DiscriminatedUnion1InlineType1InlineType1",
                             "default": null,
                             "inline": null
@@ -1213,6 +1251,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -1255,6 +1294,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DiscriminatedUnion1InlineType1InlineType1"
             },
             "shape": {
@@ -1294,6 +1334,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -1335,6 +1376,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DiscriminatedUnion1InlineType2"
             },
             "shape": {
@@ -1374,6 +1416,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -1415,6 +1458,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1"
             },
             "shape": {
@@ -1515,6 +1559,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UndiscriminatedUnion1InlineListItem1",
                                     "default": null,
                                     "inline": null
@@ -1537,6 +1582,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UndiscriminatedUnion1InlineSetItem1",
                                     "default": null,
                                     "inline": null
@@ -1570,6 +1616,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UndiscriminatedUnion1InlineMapItem1",
                                     "default": null,
                                     "inline": null
@@ -1632,6 +1679,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1InlineType1"
             },
             "shape": {
@@ -1671,6 +1719,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UndiscriminatedUnion1InlineType1InlineType1",
                             "default": null,
                             "inline": null
@@ -1695,6 +1744,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -1737,6 +1787,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1InlineType1InlineType1"
             },
             "shape": {
@@ -1776,6 +1827,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -1817,6 +1869,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1InlineType2"
             },
             "shape": {
@@ -1856,6 +1909,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -1897,6 +1951,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:InlineEnum1"
             },
             "shape": {
@@ -1948,6 +2003,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1"
             },
             "shape": {
@@ -1967,9 +2023,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -1984,9 +2042,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -2001,9 +2061,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
@@ -2038,6 +2100,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1"
             },
             "shape": {
@@ -2077,6 +2140,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1",
                             "default": null,
                             "inline": null
@@ -2101,6 +2165,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -2143,6 +2208,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
             },
             "shape": {
@@ -2182,6 +2248,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -2223,6 +2290,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2"
             },
             "shape": {
@@ -2262,6 +2330,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -2303,6 +2372,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1InlineEnum1"
             },
             "shape": {
@@ -2354,6 +2424,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UserId"
             },
             "shape": {
@@ -2403,6 +2474,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1InlineListItem1"
             },
             "shape": {
@@ -2442,6 +2514,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -2483,6 +2556,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1InlineSetItem1"
             },
             "shape": {
@@ -2522,6 +2596,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -2563,6 +2638,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnion1InlineMapItem1"
             },
             "shape": {
@@ -2602,6 +2678,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ReferenceType",
                             "default": null,
                             "inline": null
@@ -2643,6 +2720,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:MapResponseValue"
             },
             "shape": {
@@ -2708,6 +2786,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:MapResponseValueNested",
                                     "default": null,
                                     "inline": null
@@ -2751,6 +2830,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:MapResponseValueNested"
             },
             "shape": {
@@ -2827,6 +2907,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:SharedChildType"
             },
             "shape": {
@@ -2903,6 +2984,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:OrphanParentWithSharedChild"
             },
             "shape": {
@@ -2946,6 +3028,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:SharedChildType",
                                     "default": null,
                                     "inline": null
@@ -2989,6 +3072,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ReferenceType"
             },
             "shape": {
@@ -3043,6 +3127,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionTypeWithAliasVariant"
             },
             "shape": {
@@ -3061,6 +3146,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasProperty",
                             "default": null,
                             "inline": null
@@ -3087,9 +3173,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasVariantType"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3104,9 +3192,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:NonAliasVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3142,6 +3232,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionTypeWithAliasMapVariant"
             },
             "shape": {
@@ -3160,6 +3251,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasProperty",
                             "default": null,
                             "inline": null
@@ -3193,6 +3285,7 @@
                                             "file": null
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_:AliasVariant",
                                         "default": null,
                                         "inline": null
@@ -3206,6 +3299,7 @@
                                             "file": null
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_:OtherAliasVariant",
                                         "default": null,
                                         "inline": null
@@ -3214,6 +3308,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3250,6 +3345,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionTypeWithAliasListVariant"
             },
             "shape": {
@@ -3268,6 +3364,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasProperty",
                             "default": null,
                             "inline": null
@@ -3301,6 +3398,7 @@
                                             "file": null
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_:AliasVariant",
                                         "default": null,
                                         "inline": null
@@ -3309,6 +3407,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3343,6 +3442,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionTypeWithAliasSetVariant"
             },
             "shape": {
@@ -3361,6 +3461,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasProperty",
                             "default": null,
                             "inline": null
@@ -3394,6 +3495,7 @@
                                             "file": null
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_:AliasVariant",
                                         "default": null,
                                         "inline": null
@@ -3402,6 +3504,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3436,6 +3539,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnionTypeWithAliasVariant"
             },
             "shape": {
@@ -3502,6 +3606,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnionTypeWithAliasMapVariant"
             },
             "shape": {
@@ -3522,6 +3627,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasVariant",
                                     "default": null,
                                     "inline": null
@@ -3535,6 +3641,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:OtherAliasVariant",
                                     "default": null,
                                     "inline": null
@@ -3572,6 +3679,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnionTypeWithAliasListVariant"
             },
             "shape": {
@@ -3592,6 +3700,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasVariant",
                                     "default": null,
                                     "inline": null
@@ -3627,6 +3736,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UndiscriminatedUnionTypeWithAliasSetVariant"
             },
             "shape": {
@@ -3647,6 +3757,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasVariant",
                                     "default": null,
                                     "inline": null
@@ -3682,6 +3793,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ObjectTypeWithAliasType"
             },
             "shape": {
@@ -3699,6 +3811,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:AliasProperty",
                             "default": null,
                             "inline": null
@@ -3741,6 +3854,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ObjectTypeWithMapAliasTypeValue"
             },
             "shape": {
@@ -3773,6 +3887,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasProperty",
                                     "default": null,
                                     "inline": null
@@ -3817,6 +3932,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ObjectTypeWithMapAliasTypeKey"
             },
             "shape": {
@@ -3838,6 +3954,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasProperty",
                                     "default": null,
                                     "inline": null
@@ -3893,6 +4010,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ObjectTypeWithMapAliasTypeBoth"
             },
             "shape": {
@@ -3914,6 +4032,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasProperty",
                                     "default": null,
                                     "inline": null
@@ -3927,6 +4046,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:OtherAliasProperty",
                                     "default": null,
                                     "inline": null
@@ -3973,6 +4093,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ObjectTypeWithListAliasType"
             },
             "shape": {
@@ -3994,6 +4115,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasProperty",
                                     "default": null,
                                     "inline": null
@@ -4038,6 +4160,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ObjectTypeWithSetAliasType"
             },
             "shape": {
@@ -4059,6 +4182,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:AliasProperty",
                                     "default": null,
                                     "inline": null
@@ -4103,6 +4227,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasVariant"
             },
             "shape": {
@@ -4116,6 +4241,7 @@
                         "file": null
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "typeId": "type_:AliasVariantType",
                     "default": null,
                     "inline": null
@@ -4130,6 +4256,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:AliasVariantType"
                     },
                     "shape": "OBJECT"
@@ -4159,6 +4286,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:OtherAliasVariant"
             },
             "shape": {
@@ -4172,6 +4300,7 @@
                         "file": null
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "typeId": "type_:OtherAliasVariantType",
                     "default": null,
                     "inline": null
@@ -4186,6 +4315,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:OtherAliasVariantType"
                     },
                     "shape": "OBJECT"
@@ -4215,6 +4345,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasProperty"
             },
             "shape": {
@@ -4228,6 +4359,7 @@
                         "file": null
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "typeId": "type_:AliasPropertyType",
                     "default": null,
                     "inline": null
@@ -4242,6 +4374,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:AliasPropertyType"
                     },
                     "shape": "OBJECT"
@@ -4271,6 +4404,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:OtherAliasProperty"
             },
             "shape": {
@@ -4284,6 +4418,7 @@
                         "file": null
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "typeId": "type_:OtherAliasPropertyType",
                     "default": null,
                     "inline": null
@@ -4298,6 +4433,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:OtherAliasPropertyType"
                     },
                     "shape": "OBJECT"
@@ -4327,6 +4463,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasVariantType"
             },
             "shape": {
@@ -4381,6 +4518,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:OtherAliasVariantType"
             },
             "shape": {
@@ -4435,6 +4573,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:AliasPropertyType"
             },
             "shape": {
@@ -4489,6 +4628,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:OtherAliasPropertyType"
             },
             "shape": {
@@ -4543,6 +4683,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:NonAliasVariant"
             },
             "shape": {
@@ -4600,6 +4741,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/root",
                 "parts": []
@@ -4618,6 +4760,7 @@
                     "id": "endpoint_.getRoot",
                     "name": "getRoot",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4653,6 +4796,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RequestTypeInlineType1",
                                     "default": null,
                                     "inline": null
@@ -4721,6 +4865,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:RootType1",
                                     "default": null,
                                     "inline": null
@@ -4770,6 +4915,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:RequestTypeInlineType1"
                                                                 },
                                                                 "value": {
@@ -4797,6 +4943,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:RequestTypeInlineType1"
                                                     }
                                                 },
@@ -4850,6 +4997,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootType1"
                                                             },
                                                             "value": {
@@ -4876,6 +5024,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootType1"
                                                             },
                                                             "value": {
@@ -4894,6 +5043,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:RootType1InlineType1"
                                                                                 },
                                                                                 "value": {
@@ -4920,6 +5070,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:RootType1InlineType1"
                                                                                 },
                                                                                 "value": {
@@ -4938,6 +5089,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:RootType1InlineType1NestedInlineType1"
                                                                                                     },
                                                                                                     "value": {
@@ -4964,6 +5116,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:RootType1InlineType1NestedInlineType1"
                                                                                                     },
                                                                                                     "value": {
@@ -4990,6 +5143,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:RootType1InlineType1NestedInlineType1"
                                                                                                     },
                                                                                                     "value": {
@@ -5007,6 +5161,7 @@
                                                                                                                     "file": null
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_:InlineEnum1"
                                                                                                             }
                                                                                                         },
@@ -5024,6 +5179,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:RootType1InlineType1NestedInlineType1"
                                                                                                     },
                                                                                                     "value": {
@@ -5042,6 +5198,7 @@
                                                                                                                                 "file": null
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_:ReferenceType"
                                                                                                                         },
                                                                                                                         "value": {
@@ -5069,6 +5226,7 @@
                                                                                                                     "file": null
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_:ReferenceType"
                                                                                                             }
                                                                                                         },
@@ -5089,6 +5247,7 @@
                                                                                                 "file": null
                                                                                             },
                                                                                             "displayName": null,
+                                                                                            "subtitle": null,
                                                                                             "typeId": "type_:RootType1InlineType1NestedInlineType1"
                                                                                         }
                                                                                     },
@@ -5113,6 +5272,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:RootType1InlineType1"
                                                                                 },
                                                                                 "value": {
@@ -5131,6 +5291,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:ReferenceType"
                                                                                                     },
                                                                                                     "value": {
@@ -5158,6 +5319,7 @@
                                                                                                 "file": null
                                                                                             },
                                                                                             "displayName": null,
+                                                                                            "subtitle": null,
                                                                                             "typeId": "type_:ReferenceType"
                                                                                         }
                                                                                     },
@@ -5178,6 +5340,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:RootType1InlineType1"
                                                                     }
                                                                 },
@@ -5208,6 +5371,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootType1"
                                                             },
                                                             "value": {
@@ -5245,6 +5409,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:RootType1FooMapValue"
                                                                                                     },
                                                                                                     "value": {
@@ -5271,6 +5436,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:RootType1FooMapValue"
                                                                                                     },
                                                                                                     "value": {
@@ -5289,6 +5455,7 @@
                                                                                                                                 "file": null
                                                                                                                             },
                                                                                                                             "displayName": null,
+                                                                                                                            "subtitle": null,
                                                                                                                             "typeId": "type_:ReferenceType"
                                                                                                                         },
                                                                                                                         "value": {
@@ -5316,6 +5483,7 @@
                                                                                                                     "file": null
                                                                                                                 },
                                                                                                                 "displayName": null,
+                                                                                                                "subtitle": null,
                                                                                                                 "typeId": "type_:ReferenceType"
                                                                                                             }
                                                                                                         },
@@ -5336,6 +5504,7 @@
                                                                                                 "file": null
                                                                                             },
                                                                                             "displayName": null,
+                                                                                            "subtitle": null,
                                                                                             "typeId": "type_:RootType1FooMapValue"
                                                                                         }
                                                                                     },
@@ -5368,6 +5537,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:RootType1FooMapValue",
                                                                             "default": null,
                                                                             "inline": null
@@ -5395,6 +5565,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootType1"
                                                             },
                                                             "value": {
@@ -5419,6 +5590,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:RootType1FooListItem"
                                                                                                 },
                                                                                                 "value": {
@@ -5445,6 +5617,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:RootType1FooListItem"
                                                                                                 },
                                                                                                 "value": {
@@ -5463,6 +5636,7 @@
                                                                                                                             "file": null
                                                                                                                         },
                                                                                                                         "displayName": null,
+                                                                                                                        "subtitle": null,
                                                                                                                         "typeId": "type_:ReferenceType"
                                                                                                                     },
                                                                                                                     "value": {
@@ -5490,6 +5664,7 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:ReferenceType"
                                                                                                         }
                                                                                                     },
@@ -5510,6 +5685,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:RootType1FooListItem"
                                                                                     }
                                                                                 },
@@ -5536,6 +5712,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:RootType1FooListItem"
                                                                                                 },
                                                                                                 "value": {
@@ -5562,6 +5739,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:RootType1FooListItem"
                                                                                                 },
                                                                                                 "value": {
@@ -5580,6 +5758,7 @@
                                                                                                                             "file": null
                                                                                                                         },
                                                                                                                         "displayName": null,
+                                                                                                                        "subtitle": null,
                                                                                                                         "typeId": "type_:ReferenceType"
                                                                                                                     },
                                                                                                                     "value": {
@@ -5607,6 +5786,7 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:ReferenceType"
                                                                                                         }
                                                                                                     },
@@ -5627,6 +5807,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:RootType1FooListItem"
                                                                                     }
                                                                                 },
@@ -5647,6 +5828,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:RootType1FooListItem",
                                                                             "default": null,
                                                                             "inline": null
@@ -5680,6 +5862,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootType1"
                                                             },
                                                             "value": {
@@ -5704,6 +5887,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:RootType1FooSetItem"
                                                                                                 },
                                                                                                 "value": {
@@ -5730,6 +5914,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:RootType1FooSetItem"
                                                                                                 },
                                                                                                 "value": {
@@ -5748,6 +5933,7 @@
                                                                                                                             "file": null
                                                                                                                         },
                                                                                                                         "displayName": null,
+                                                                                                                        "subtitle": null,
                                                                                                                         "typeId": "type_:ReferenceType"
                                                                                                                     },
                                                                                                                     "value": {
@@ -5775,6 +5961,7 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:ReferenceType"
                                                                                                         }
                                                                                                     },
@@ -5795,6 +5982,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:RootType1FooSetItem"
                                                                                     }
                                                                                 },
@@ -5815,6 +6003,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:RootType1FooSetItem",
                                                                             "default": null,
                                                                             "inline": null
@@ -5842,6 +6031,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:RootType1"
                                                             },
                                                             "value": {
@@ -5860,6 +6050,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:ReferenceType"
                                                                                 },
                                                                                 "value": {
@@ -5887,6 +6078,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:ReferenceType"
                                                                     }
                                                                 },
@@ -5907,6 +6099,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:RootType1"
                                                 }
                                             },
@@ -5982,6 +6175,7 @@
                     "id": "endpoint_.getDiscriminatedUnion",
                     "name": "getDiscriminatedUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6017,6 +6211,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:DiscriminatedUnion1",
                                     "default": null,
                                     "inline": null
@@ -6121,6 +6316,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:DiscriminatedUnion1InlineType1"
                                                                             },
                                                                             "value": {
@@ -6147,6 +6343,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:DiscriminatedUnion1InlineType1"
                                                                             },
                                                                             "value": {
@@ -6165,6 +6362,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:DiscriminatedUnion1InlineType1InlineType1"
                                                                                                 },
                                                                                                 "value": {
@@ -6191,6 +6389,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:DiscriminatedUnion1InlineType1InlineType1"
                                                                                                 },
                                                                                                 "value": {
@@ -6209,6 +6408,7 @@
                                                                                                                             "file": null
                                                                                                                         },
                                                                                                                         "displayName": null,
+                                                                                                                        "subtitle": null,
                                                                                                                         "typeId": "type_:ReferenceType"
                                                                                                                     },
                                                                                                                     "value": {
@@ -6236,6 +6436,7 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:ReferenceType"
                                                                                                         }
                                                                                                     },
@@ -6256,6 +6457,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:DiscriminatedUnion1InlineType1InlineType1"
                                                                                     }
                                                                                 },
@@ -6278,6 +6480,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:DiscriminatedUnion1InlineType1"
                                                                             },
                                                                             "value": {
@@ -6296,6 +6499,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:ReferenceType"
                                                                                                 },
                                                                                                 "value": {
@@ -6323,6 +6527,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:ReferenceType"
                                                                                     }
                                                                                 },
@@ -6348,6 +6553,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:DiscriminatedUnion1"
                                                     }
                                                 },
@@ -6427,6 +6633,7 @@
                     "id": "endpoint_.getUndiscriminatedUnion",
                     "name": "getUndiscriminatedUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6462,6 +6669,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UndiscriminatedUnion1",
                                     "default": null,
                                     "inline": null
@@ -6565,6 +6773,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:UndiscriminatedUnion1InlineType1"
                                                                             },
                                                                             "value": {
@@ -6591,6 +6800,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:UndiscriminatedUnion1InlineType1"
                                                                             },
                                                                             "value": {
@@ -6609,6 +6819,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:UndiscriminatedUnion1InlineType1InlineType1"
                                                                                                 },
                                                                                                 "value": {
@@ -6635,6 +6846,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:UndiscriminatedUnion1InlineType1InlineType1"
                                                                                                 },
                                                                                                 "value": {
@@ -6653,6 +6865,7 @@
                                                                                                                             "file": null
                                                                                                                         },
                                                                                                                         "displayName": null,
+                                                                                                                        "subtitle": null,
                                                                                                                         "typeId": "type_:ReferenceType"
                                                                                                                     },
                                                                                                                     "value": {
@@ -6680,6 +6893,7 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:ReferenceType"
                                                                                                         }
                                                                                                     },
@@ -6700,6 +6914,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:UndiscriminatedUnion1InlineType1InlineType1"
                                                                                     }
                                                                                 },
@@ -6722,6 +6937,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:UndiscriminatedUnion1InlineType1"
                                                                             },
                                                                             "value": {
@@ -6740,6 +6956,7 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
+                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_:ReferenceType"
                                                                                                 },
                                                                                                 "value": {
@@ -6767,6 +6984,7 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
+                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:ReferenceType"
                                                                                     }
                                                                                 },
@@ -6787,6 +7005,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UndiscriminatedUnion1InlineType1"
                                                                 }
                                                             },
@@ -6812,6 +7031,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UndiscriminatedUnion1"
                                                     }
                                                 },
@@ -6889,6 +7109,7 @@
                     "id": "endpoint_.getMapResponse",
                     "name": "getMapResponse",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6940,6 +7161,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:MapResponseValue",
                                             "default": null,
                                             "inline": null
@@ -7009,6 +7231,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:MapResponseValue"
                                                                                 },
                                                                                 "value": {
@@ -7035,6 +7258,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:MapResponseValue"
                                                                                 },
                                                                                 "value": {
@@ -7061,6 +7285,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:MapResponseValue"
                                                                                 },
                                                                                 "value": {
@@ -7084,6 +7309,7 @@
                                                                                                                         "file": null
                                                                                                                     },
                                                                                                                     "displayName": null,
+                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_:MapResponseValueNested"
                                                                                                                 },
                                                                                                                 "value": {
@@ -7110,6 +7336,7 @@
                                                                                                                         "file": null
                                                                                                                     },
                                                                                                                     "displayName": null,
+                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_:MapResponseValueNested"
                                                                                                                 },
                                                                                                                 "value": {
@@ -7137,6 +7364,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:MapResponseValueNested"
                                                                                                     }
                                                                                                 },
@@ -7154,6 +7382,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:MapResponseValueNested",
                                                                                                 "default": null,
                                                                                                 "inline": null
@@ -7178,6 +7407,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:MapResponseValue"
                                                                     }
                                                                 },
@@ -7212,6 +7442,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:MapResponseValue",
                                                         "default": null,
                                                         "inline": null
@@ -7250,6 +7481,7 @@
                     "id": "endpoint_.getSharedChild",
                     "name": "getSharedChild",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7286,6 +7518,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:SharedChildType",
                                     "default": null,
                                     "inline": null
@@ -7334,6 +7567,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:SharedChildType"
                                                             },
                                                             "value": {
@@ -7360,6 +7594,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:SharedChildType"
                                                             },
                                                             "value": {
@@ -7387,6 +7622,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:SharedChildType"
                                                 }
                                             },
@@ -7416,6 +7652,7 @@
                     "id": "endpoint_.getOrphanParent",
                     "name": "getOrphanParent",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7452,6 +7689,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:OrphanParentWithSharedChild",
                                     "default": null,
                                     "inline": null
@@ -7500,6 +7738,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:OrphanParentWithSharedChild"
                                                             },
                                                             "value": {
@@ -7526,6 +7765,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:OrphanParentWithSharedChild"
                                                             },
                                                             "value": {
@@ -7549,6 +7789,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:SharedChildType"
                                                                                             },
                                                                                             "value": {
@@ -7575,6 +7816,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:SharedChildType"
                                                                                             },
                                                                                             "value": {
@@ -7602,6 +7844,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:SharedChildType"
                                                                                 }
                                                                             },
@@ -7619,6 +7862,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:SharedChildType",
                                                                             "default": null,
                                                                             "inline": null
@@ -7643,6 +7887,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:OrphanParentWithSharedChild"
                                                 }
                                             },

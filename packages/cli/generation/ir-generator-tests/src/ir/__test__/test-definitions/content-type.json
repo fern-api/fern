@@ -27,6 +27,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -45,6 +46,7 @@
                     "id": "endpoint_service.patch",
                     "name": "patch",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -244,6 +246,7 @@
                     "id": "endpoint_service.patchComplex",
                     "name": "patchComplex",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1041,6 +1044,7 @@
                     "id": "endpoint_service.namedPatchWithMixed",
                     "name": "namedPatchWithMixed",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1366,6 +1370,7 @@
                     "id": "endpoint_service.optionalMergePatchTest",
                     "name": "optionalMergePatchTest",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1709,6 +1714,7 @@
                     "id": "endpoint_service.regularPatch",
                     "name": "regularPatch",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3642,6 +3648,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

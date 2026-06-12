@@ -29,6 +29,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_a/aa:A"
             },
             "shape": {
@@ -66,6 +67,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_a/aa:B"
             },
             "shape": {
@@ -103,6 +105,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_a/aa:SubTestType"
             },
             "shape": {
@@ -126,6 +129,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_a/aa:A",
                             "default": null,
                             "inline": null
@@ -156,6 +160,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_a/aa:B",
                             "default": null,
                             "inline": null
@@ -202,6 +207,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_b:TestType"
             },
             "shape": {
@@ -225,6 +231,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_a/aa:A",
                             "default": null,
                             "inline": null
@@ -255,6 +262,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_a/aa:B",
                             "default": null,
                             "inline": null
@@ -299,6 +307,7 @@
                     "file": "tasktest"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_tasktest:Task"
             },
             "shape": {
@@ -358,6 +367,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -376,6 +386,7 @@
                     "id": "endpoint_tasktest.hello",
                     "name": "hello",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1200,6 +1211,7 @@
         "subpackage_a": {
             "name": "a",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a"
@@ -1225,6 +1237,7 @@
         "subpackage_a/aa": {
             "name": "aa",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1254,6 +1267,7 @@
         "subpackage_b": {
             "name": "b",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "b"
@@ -1279,6 +1293,7 @@
         "subpackage_tasktest": {
             "name": "tasktest",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "tasktest"

@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:Foo"
             },
             "shape": {
@@ -170,6 +171,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -188,6 +190,7 @@
                     "id": "endpoint_.getFoo",
                     "name": "getFoo",
                     "displayName": "Get foo",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -355,6 +358,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Foo",
                                     "default": null,
                                     "inline": null
@@ -745,6 +749,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -791,6 +796,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -863,6 +869,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -909,6 +916,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -936,6 +944,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:Foo"
                                                 }
                                             },
@@ -967,6 +976,7 @@
                     "id": "endpoint_.updateFoo",
                     "name": "updateFoo",
                     "displayName": "Update foo",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1202,6 +1212,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Foo",
                                     "default": null,
                                     "inline": null
@@ -1372,6 +1383,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1418,6 +1430,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1490,6 +1503,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1536,6 +1550,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:Foo"
                                                             },
                                                             "value": {
@@ -1563,6 +1578,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:Foo"
                                                 }
                                             },

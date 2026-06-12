@@ -44,6 +44,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": "Admin not found"
         }
@@ -61,6 +62,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/container",
                 "parts": []
@@ -79,6 +81,7 @@
                     "id": "endpoint_service.endpoint",
                     "name": "endpoint",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -351,6 +354,7 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

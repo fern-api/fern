@@ -25,6 +25,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:StreamedCompletion"
             },
             "shape": {
@@ -109,6 +110,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:CompletionEvent"
             },
             "shape": {
@@ -165,6 +167,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:EventEvent"
             },
             "shape": {
@@ -243,6 +246,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:ErrorEvent"
             },
             "shape": {
@@ -327,6 +331,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:StreamEventContextProtocol"
             },
             "shape": {
@@ -348,9 +353,11 @@
                                 "file": "completions"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_completions:CompletionEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -367,9 +374,11 @@
                                 "file": "completions"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_completions:ErrorEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -386,9 +395,11 @@
                                 "file": "completions"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_completions:EventEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -424,6 +435,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:GroupCreatedEvent"
             },
             "shape": {
@@ -502,6 +514,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:GroupDeletedEvent"
             },
             "shape": {
@@ -580,6 +593,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:StreamEventDiscriminantInData"
             },
             "shape": {
@@ -601,9 +615,11 @@
                                 "file": "completions"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_completions:GroupCreatedEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -620,9 +636,11 @@
                                 "file": "completions"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_completions:GroupDeletedEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -657,6 +675,7 @@
                     "file": "completions"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_completions:StreamEvent"
             },
             "shape": {
@@ -678,9 +697,11 @@
                                 "file": "completions"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_completions:CompletionEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -697,9 +718,11 @@
                                 "file": "completions"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_completions:ErrorEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -753,6 +776,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -770,6 +794,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -788,6 +813,7 @@
                     "id": "endpoint_completions.stream",
                     "name": "stream",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -869,6 +895,7 @@
                                         "file": "completions"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_completions:StreamedCompletion",
                                     "default": null,
                                     "inline": null
@@ -1285,6 +1312,7 @@
                                                                             "file": "completions"
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
@@ -1313,6 +1341,7 @@
                                                                             "file": "completions"
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
@@ -1360,6 +1389,7 @@
                                                                 "file": "completions"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_completions:StreamedCompletion"
                                                         }
                                                     },
@@ -1457,6 +1487,7 @@
                     "id": "endpoint_completions.streamEvents",
                     "name": "streamEvents",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1538,6 +1569,7 @@
                                         "file": "completions"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_completions:StreamEvent",
                                     "default": null,
                                     "inline": null
@@ -1893,6 +1925,7 @@
                                                                                         "file": "completions"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_completions:CompletionEvent"
                                                                                 },
                                                                                 "value": {
@@ -1927,6 +1960,7 @@
                                                                 "file": "completions"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_completions:StreamEvent"
                                                         }
                                                     },
@@ -2024,6 +2058,7 @@
                     "id": "endpoint_completions.streamEventsDiscriminantInData",
                     "name": "streamEventsDiscriminantInData",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2105,6 +2140,7 @@
                                         "file": "completions"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_completions:StreamEventDiscriminantInData",
                                     "default": null,
                                     "inline": null
@@ -2452,6 +2488,7 @@
                                                                                         "file": "completions"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_completions:GroupCreatedEvent"
                                                                                 },
                                                                                 "value": {
@@ -2480,6 +2517,7 @@
                                                                                         "file": "completions"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_completions:GroupCreatedEvent"
                                                                                 },
                                                                                 "value": {
@@ -2514,6 +2552,7 @@
                                                                 "file": "completions"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_completions:StreamEventDiscriminantInData"
                                                         }
                                                     },
@@ -2612,6 +2651,7 @@
                     "id": "endpoint_completions.streamEventsContextProtocol",
                     "name": "streamEventsContextProtocol",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2693,6 +2733,7 @@
                                         "file": "completions"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_completions:StreamEventContextProtocol",
                                     "default": null,
                                     "inline": null
@@ -3048,6 +3089,7 @@
                                                                                         "file": "completions"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_completions:CompletionEvent"
                                                                                 },
                                                                                 "value": {
@@ -3082,6 +3124,7 @@
                                                                 "file": "completions"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_completions:StreamEventContextProtocol"
                                                         }
                                                     },
@@ -5194,6 +5237,7 @@
         "subpackage_completions": {
             "name": "completions",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "completions"

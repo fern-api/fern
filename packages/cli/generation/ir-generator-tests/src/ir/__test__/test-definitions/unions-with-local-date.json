@@ -25,6 +25,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:BigUnion"
             },
             "shape": {
@@ -111,9 +112,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:NormalSweet"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -130,9 +133,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:ThankfulFactor"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -149,9 +154,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:JumboEnd"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -168,9 +175,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:HastyPain"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -187,9 +196,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:MistySnow"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -206,9 +217,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:DistinctFailure"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -225,9 +238,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:PracticalPrinciple"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -244,9 +259,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:LimpingStep"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -263,9 +280,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:VibrantExcitement"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -282,9 +301,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:ActiveDiamond"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -301,9 +322,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:PopularLimit"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -320,9 +343,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:FalseMirror"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -339,9 +364,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:PrimaryBlock"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -358,9 +385,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:RotatingRatio"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -377,9 +406,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:ColorfulCover"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -396,9 +427,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:DisloyalValue"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -415,9 +448,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:GruesomeCoach"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -434,9 +469,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:TotalWork"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -453,9 +490,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:HarmoniousPlay"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -472,9 +511,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:UniqueStress"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -491,9 +532,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:UnwillingSmoke"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -510,9 +553,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:FrozenSleep"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -529,9 +574,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:DiligentDeal"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -548,9 +595,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:AttractiveScript"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -567,9 +616,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:HoarseMouse"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -586,9 +637,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:CircularCard"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -605,9 +658,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:PotableBad"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -624,9 +679,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:TriangularRepair"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -643,9 +700,11 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:GaseousRoad"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -1059,6 +1118,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:NormalSweet"
             },
             "shape": {
@@ -1127,6 +1187,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:NormalSweet"
                                 },
                                 "propertyAccess": null
@@ -1168,6 +1229,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:NormalSweet"
                                 },
                                 "propertyAccess": null
@@ -1209,6 +1271,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:NormalSweet"
                                 },
                                 "propertyAccess": null
@@ -1239,6 +1302,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:ThankfulFactor"
             },
             "shape": {
@@ -1307,6 +1371,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:ThankfulFactor"
                                 },
                                 "propertyAccess": null
@@ -1348,6 +1413,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:ThankfulFactor"
                                 },
                                 "propertyAccess": null
@@ -1389,6 +1455,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:ThankfulFactor"
                                 },
                                 "propertyAccess": null
@@ -1419,6 +1486,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:JumboEnd"
             },
             "shape": {
@@ -1475,6 +1543,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:HastyPain"
             },
             "shape": {
@@ -1531,6 +1600,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:MistySnow"
             },
             "shape": {
@@ -1587,6 +1657,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:DistinctFailure"
             },
             "shape": {
@@ -1643,6 +1714,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:PracticalPrinciple"
             },
             "shape": {
@@ -1699,6 +1771,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:LimpingStep"
             },
             "shape": {
@@ -1755,6 +1828,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:VibrantExcitement"
             },
             "shape": {
@@ -1811,6 +1885,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:ActiveDiamond"
             },
             "shape": {
@@ -1867,6 +1942,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:PopularLimit"
             },
             "shape": {
@@ -1923,6 +1999,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:FalseMirror"
             },
             "shape": {
@@ -1979,6 +2056,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:PrimaryBlock"
             },
             "shape": {
@@ -2035,6 +2113,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:RotatingRatio"
             },
             "shape": {
@@ -2091,6 +2170,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:ColorfulCover"
             },
             "shape": {
@@ -2147,6 +2227,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:DisloyalValue"
             },
             "shape": {
@@ -2203,6 +2284,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:GruesomeCoach"
             },
             "shape": {
@@ -2259,6 +2341,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:TotalWork"
             },
             "shape": {
@@ -2315,6 +2398,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:HarmoniousPlay"
             },
             "shape": {
@@ -2371,6 +2455,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:UniqueStress"
             },
             "shape": {
@@ -2427,6 +2512,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:UnwillingSmoke"
             },
             "shape": {
@@ -2483,6 +2569,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:FrozenSleep"
             },
             "shape": {
@@ -2539,6 +2626,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:DiligentDeal"
             },
             "shape": {
@@ -2595,6 +2683,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:AttractiveScript"
             },
             "shape": {
@@ -2651,6 +2740,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:HoarseMouse"
             },
             "shape": {
@@ -2707,6 +2797,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:CircularCard"
             },
             "shape": {
@@ -2763,6 +2854,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:PotableBad"
             },
             "shape": {
@@ -2819,6 +2911,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:TriangularRepair"
             },
             "shape": {
@@ -2875,6 +2968,7 @@
                     "file": "bigunion"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_bigunion:GaseousRoad"
             },
             "shape": {
@@ -2931,6 +3025,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:Union"
             },
             "shape": {
@@ -2955,12 +3050,14 @@
                                     "file": "types"
                                 },
                                 "displayName": null,
+                                "subtitle": null,
                                 "typeId": "type_types:Foo",
                                 "default": null,
                                 "inline": null
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -2980,12 +3077,14 @@
                                     "file": "types"
                                 },
                                 "displayName": null,
+                                "subtitle": null,
                                 "typeId": "type_types:Bar",
                                 "default": null,
                                 "inline": null
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3020,6 +3119,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithDiscriminant"
             },
             "shape": {
@@ -3047,12 +3147,14 @@
                                     "file": "types"
                                 },
                                 "displayName": null,
+                                "subtitle": null,
                                 "typeId": "type_types:Foo",
                                 "default": null,
                                 "inline": null
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "This is a Foo field."
                     },
@@ -3072,12 +3174,14 @@
                                     "file": "types"
                                 },
                                 "displayName": null,
+                                "subtitle": null,
                                 "typeId": "type_types:Bar",
                                 "default": null,
                                 "inline": null
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3112,6 +3216,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithPrimitive"
             },
             "shape": {
@@ -3138,6 +3243,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3159,6 +3265,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3249,6 +3356,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithDuplicatePrimitive"
             },
             "shape": {
@@ -3275,6 +3383,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3296,6 +3405,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3317,6 +3427,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3338,6 +3449,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3486,6 +3598,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithoutKey"
             },
             "shape": {
@@ -3507,9 +3620,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3526,9 +3641,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Bar"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": "This is a bar field."
                     }
@@ -3672,6 +3789,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithNoProperties"
             },
             "shape": {
@@ -3693,9 +3811,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3705,6 +3825,7 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3812,6 +3933,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithMultipleNoProperties"
             },
             "shape": {
@@ -3833,9 +3955,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3845,6 +3969,7 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -3854,6 +3979,7 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -3980,6 +4106,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithLiteral"
             },
             "shape": {
@@ -4027,6 +4154,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -4111,6 +4239,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithBaseProperties"
             },
             "shape": {
@@ -4160,6 +4289,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -4181,6 +4311,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -4197,9 +4328,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -4397,6 +4530,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithTime"
             },
             "shape": {
@@ -4423,6 +4557,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -4440,6 +4575,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -4457,6 +4593,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -4574,6 +4711,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithOptionalTime"
             },
             "shape": {
@@ -4602,6 +4740,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -4625,6 +4764,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -4816,6 +4956,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithSingleElement"
             },
             "shape": {
@@ -4837,9 +4978,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -4928,6 +5071,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithDuplicateTypes"
             },
             "shape": {
@@ -4949,9 +5093,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -4968,9 +5114,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -5113,6 +5261,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithSubTypes"
             },
             "shape": {
@@ -5134,9 +5283,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:Foo"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -5153,9 +5304,11 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:FooExtended"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -5263,6 +5416,7 @@
                                                     "file": "types"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_types:Foo"
                                             },
                                             "propertyAccess": null
@@ -5326,6 +5480,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:Foo"
             },
             "shape": {
@@ -5394,6 +5549,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:Foo"
                                 },
                                 "propertyAccess": null
@@ -5435,6 +5591,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:Foo"
                                 },
                                 "propertyAccess": null
@@ -5465,6 +5622,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:FooExtended"
             },
             "shape": {
@@ -5480,6 +5638,7 @@
                             "file": "types"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_types:Foo"
                     }
                 ],
@@ -5571,6 +5730,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:Foo"
                                 },
                                 "propertyAccess": null
@@ -5597,6 +5757,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:FooExtended"
                                 },
                                 "propertyAccess": null
@@ -5639,6 +5800,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:Foo"
                                 },
                                 "propertyAccess": null
@@ -5665,6 +5827,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:FooExtended"
                                 },
                                 "propertyAccess": null
@@ -5696,6 +5859,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:Bar"
             },
             "shape": {
@@ -5764,6 +5928,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:Bar"
                                 },
                                 "propertyAccess": null
@@ -5805,6 +5970,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:Bar"
                                 },
                                 "propertyAccess": null
@@ -5835,6 +6001,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithSameStringTypes"
             },
             "shape": {
@@ -5861,6 +6028,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -5882,6 +6050,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -5903,6 +6072,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -6025,6 +6195,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:UnionWithSameNumberTypes"
             },
             "shape": {
@@ -6051,6 +6222,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -6072,6 +6244,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -6093,6 +6266,7 @@
                             }
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -6209,6 +6383,7 @@
                     "file": "union"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_union:GetShapeRequest"
             },
             "shape": {
@@ -6277,6 +6452,7 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_union:GetShapeRequest"
                                 },
                                 "propertyAccess": null
@@ -6307,6 +6483,7 @@
                     "file": "union"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_union:WithName"
             },
             "shape": {
@@ -6363,6 +6540,7 @@
                     "file": "union"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_union:Shape"
             },
             "shape": {
@@ -6379,6 +6557,7 @@
                             "file": "union"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_union:WithName"
                     }
                 ],
@@ -6420,9 +6599,11 @@
                                 "file": "union"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_union:Circle"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -6439,9 +6620,11 @@
                                 "file": "union"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_union:Square"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -6545,6 +6728,7 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_union:Shape"
                                 }
                             }
@@ -6644,6 +6828,7 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_union:Shape"
                                 }
                             }
@@ -6675,6 +6860,7 @@
                     "file": "union"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_union:Circle"
             },
             "shape": {
@@ -6731,6 +6917,7 @@
                     "file": "union"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_union:Square"
             },
             "shape": {
@@ -6790,6 +6977,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -6808,6 +6996,7 @@
                     "id": "endpoint_bigunion.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6904,6 +7093,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:BigUnion",
                                     "default": null,
                                     "inline": null
@@ -6977,6 +7167,7 @@
                                                                                 "file": "bigunion"
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_bigunion:NormalSweet"
                                                                         },
                                                                         "value": {
@@ -7071,6 +7262,7 @@
                                                         "file": "bigunion"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_bigunion:BigUnion"
                                                 }
                                             },
@@ -7103,6 +7295,7 @@
                     "id": "endpoint_bigunion.update",
                     "name": "update",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7135,6 +7328,7 @@
                                 "file": "bigunion"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_bigunion:BigUnion",
                             "default": null,
                             "inline": null
@@ -7160,6 +7354,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:BigUnion",
                                     "default": null,
                                     "inline": null
@@ -7236,6 +7431,7 @@
                                                                         "file": "bigunion"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_bigunion:NormalSweet"
                                                                 },
                                                                 "value": {
@@ -7319,6 +7515,7 @@
                                                 "file": "bigunion"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_bigunion:BigUnion"
                                         }
                                     },
@@ -7364,6 +7561,7 @@
                     "id": "endpoint_bigunion.update-many",
                     "name": "update-many",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7400,6 +7598,7 @@
                                         "file": "bigunion"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_bigunion:BigUnion",
                                     "default": null,
                                     "inline": null
@@ -7431,6 +7630,7 @@
                                                 "file": "bigunion"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_bigunion:BigUnion",
                                             "default": null,
                                             "inline": null
@@ -7532,6 +7732,7 @@
                                                                                         "file": "bigunion"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_bigunion:NormalSweet"
                                                                                 },
                                                                                 "value": {
@@ -7615,6 +7816,7 @@
                                                                 "file": "bigunion"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_bigunion:BigUnion"
                                                         }
                                                     },
@@ -7650,6 +7852,7 @@
                                                                                         "file": "bigunion"
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_bigunion:NormalSweet"
                                                                                 },
                                                                                 "value": {
@@ -7733,6 +7936,7 @@
                                                                 "file": "bigunion"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_bigunion:BigUnion"
                                                         }
                                                     },
@@ -7755,6 +7959,7 @@
                                                     "file": "bigunion"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_bigunion:BigUnion",
                                                 "default": null,
                                                 "inline": null
@@ -7870,6 +8075,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/time",
                 "parts": []
@@ -7888,6 +8094,7 @@
                     "id": "endpoint_types.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7984,6 +8191,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:UnionWithTime",
                                     "default": null,
                                     "inline": null
@@ -8225,6 +8433,7 @@
                                                         "file": "types"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_types:UnionWithTime"
                                                 }
                                             },
@@ -8254,6 +8463,7 @@
                     "id": "endpoint_types.update",
                     "name": "update",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8286,6 +8496,7 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_types:UnionWithTime",
                             "default": null,
                             "inline": null
@@ -8311,6 +8522,7 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_types:UnionWithTime",
                                     "default": null,
                                     "inline": null
@@ -8543,6 +8755,7 @@
                                                 "file": "types"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_types:UnionWithTime"
                                         }
                                     },
@@ -8597,6 +8810,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -8615,6 +8829,7 @@
                     "id": "endpoint_union.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8711,6 +8926,7 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_union:Shape",
                                     "default": null,
                                     "inline": null
@@ -8784,6 +9000,7 @@
                                                                                 "file": "union"
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_union:Circle"
                                                                         },
                                                                         "value": {
@@ -8833,6 +9050,7 @@
                                                                     "file": "union"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_union:WithName"
                                                             },
                                                             "value": {
@@ -8861,6 +9079,7 @@
                                                         "file": "union"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_union:Shape"
                                                 }
                                             },
@@ -8891,6 +9110,7 @@
                     "id": "endpoint_union.update",
                     "name": "update",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8923,6 +9143,7 @@
                                 "file": "union"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_union:Shape",
                             "default": null,
                             "inline": null
@@ -8948,6 +9169,7 @@
                                         "file": "union"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_union:Shape",
                                     "default": null,
                                     "inline": null
@@ -9024,6 +9246,7 @@
                                                                         "file": "union"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_union:Circle"
                                                                 },
                                                                 "value": {
@@ -9073,6 +9296,7 @@
                                                             "file": "union"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_union:WithName"
                                                     },
                                                     "value": {
@@ -9101,6 +9325,7 @@
                                                 "file": "union"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_union:Shape"
                                         }
                                     },
@@ -20125,6 +20350,7 @@
         "subpackage_bigunion": {
             "name": "bigunion",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "bigunion"
@@ -20177,6 +20403,7 @@
         "subpackage_types": {
             "name": "types",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "types"
@@ -20218,6 +20445,7 @@
         "subpackage_union": {
             "name": "union",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "union"

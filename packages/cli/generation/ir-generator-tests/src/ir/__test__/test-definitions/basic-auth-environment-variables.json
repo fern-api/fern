@@ -39,6 +39,7 @@
                     "file": "errors"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
             },
             "shape": {
@@ -111,6 +112,7 @@
                     "file": "errors"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_errors:UnauthorizedRequestErrorBody",
                 "default": null,
                 "inline": null
@@ -118,6 +120,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": null
         },
@@ -140,6 +143,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -157,6 +161,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -175,6 +180,7 @@
                     "id": "endpoint_basic-auth.getWithBasicAuth",
                     "name": "getWithBasicAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -306,6 +312,7 @@
                                                                 "file": "errors"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                                         },
                                                         "value": {
@@ -335,6 +342,7 @@
                                                     "file": "errors"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                             }
                                         },
@@ -373,6 +381,7 @@
                     "id": "endpoint_basic-auth.postWithBasicAuth",
                     "name": "postWithBasicAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -563,6 +572,7 @@
                                                                 "file": "errors"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                                         },
                                                         "value": {
@@ -592,6 +602,7 @@
                                                     "file": "errors"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                             }
                                         },
@@ -1066,6 +1077,7 @@
         "subpackage_basic-auth": {
             "name": "basic-auth",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "basic-auth"
@@ -1087,6 +1099,7 @@
         "subpackage_errors": {
             "name": "errors",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "errors"

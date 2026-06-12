@@ -34,6 +34,7 @@
                     "file": "realtime-no-auth"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime-no-auth:NoAuthSendEvent"
             },
             "shape": {
@@ -90,6 +91,7 @@
                     "file": "realtime-no-auth"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime-no-auth:NoAuthReceiveEvent"
             },
             "shape": {
@@ -146,6 +148,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:SendEvent"
             },
             "shape": {
@@ -224,6 +227,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:send_snake_case"
             },
             "shape": {
@@ -302,6 +306,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent"
             },
             "shape": {
@@ -380,6 +385,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:receive_snake_case"
             },
             "shape": {
@@ -458,6 +464,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:SendEvent2"
             },
             "shape": {
@@ -535,6 +542,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent2"
             },
             "shape": {
@@ -634,6 +642,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent3"
             },
             "shape": {
@@ -721,6 +730,7 @@
             "auth": false,
             "name": "realtime-no-auth",
             "displayName": null,
+            "subtitle": null,
             "connectMethodName": null,
             "headers": [],
             "pathParameters": [
@@ -797,6 +807,7 @@
                                 "file": "realtime-no-auth"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime-no-auth:NoAuthSendEvent",
                             "default": null,
                             "inline": null
@@ -824,6 +835,7 @@
                                 "file": "realtime-no-auth"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime-no-auth:NoAuthReceiveEvent",
                             "default": null,
                             "inline": null
@@ -880,6 +892,7 @@
                                                         "file": "realtime-no-auth"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime-no-auth:NoAuthSendEvent"
                                                 },
                                                 "value": {
@@ -909,6 +922,7 @@
                                             "file": "realtime-no-auth"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_realtime-no-auth:NoAuthSendEvent"
                                     }
                                 },
@@ -938,6 +952,7 @@
                                                         "file": "realtime-no-auth"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime-no-auth:NoAuthReceiveEvent"
                                                 },
                                                 "value": {
@@ -967,6 +982,7 @@
                                             "file": "realtime-no-auth"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_realtime-no-auth:NoAuthReceiveEvent"
                                     }
                                 },
@@ -1001,6 +1017,7 @@
             "auth": true,
             "name": "realtime",
             "displayName": null,
+            "subtitle": null,
             "connectMethodName": null,
             "headers": [],
             "pathParameters": [
@@ -1107,6 +1124,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent",
                             "default": null,
                             "inline": null
@@ -1134,6 +1152,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:send_snake_case",
                             "default": null,
                             "inline": null
@@ -1161,6 +1180,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent2",
                             "default": null,
                             "inline": null
@@ -1188,6 +1208,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent",
                             "default": null,
                             "inline": null
@@ -1215,6 +1236,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:receive_snake_case",
                             "default": null,
                             "inline": null
@@ -1242,6 +1264,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent2",
                             "default": null,
                             "inline": null
@@ -1269,6 +1292,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent3",
                             "default": null,
                             "inline": null
@@ -1718,6 +1742,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -1746,6 +1771,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -1773,6 +1799,7 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_realtime:SendEvent"
                                     }
                                 },
@@ -1803,6 +1830,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -1831,6 +1859,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -1858,6 +1887,7 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_realtime:ReceiveEvent"
                                     }
                                 },
@@ -3025,6 +3055,7 @@
         "subpackage_realtime-no-auth": {
             "name": "realtime-no-auth",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "realtime-no-auth"
@@ -3049,6 +3080,7 @@
         "subpackage_realtime": {
             "name": "realtime",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "realtime"

@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UserData"
             },
             "shape": {
@@ -127,6 +128,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:User"
             },
             "shape": {
@@ -278,6 +280,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/api",
                 "parts": []
@@ -296,6 +299,7 @@
                     "id": "endpoint_.createUser",
                     "name": "createUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -356,6 +360,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UserData",
                             "default": null,
                             "inline": null
@@ -390,6 +395,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -434,6 +440,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -460,6 +467,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -486,6 +494,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -521,6 +530,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:UserData"
                                         }
                                     },
@@ -549,6 +559,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -575,6 +586,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -601,6 +613,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -627,6 +640,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -671,6 +685,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -698,6 +713,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -730,6 +746,7 @@
                     "id": "endpoint_.updateUser",
                     "name": "updateUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -848,6 +865,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UserData",
                             "default": null,
                             "inline": null
@@ -882,6 +900,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -942,6 +961,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -968,6 +988,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -994,6 +1015,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -1029,6 +1051,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:UserData"
                                         }
                                     },
@@ -1057,6 +1080,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1083,6 +1107,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1109,6 +1134,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1135,6 +1161,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1179,6 +1206,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1206,6 +1234,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -1238,6 +1267,7 @@
                     "id": "endpoint_.createUserWithOptions",
                     "name": "createUserWithOptions",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1328,6 +1358,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UserData",
                             "default": null,
                             "inline": null
@@ -1362,6 +1393,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -1406,6 +1438,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -1432,6 +1465,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -1458,6 +1492,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -1493,6 +1528,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:UserData"
                                         }
                                     },
@@ -1521,6 +1557,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1547,6 +1584,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1573,6 +1611,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1599,6 +1638,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1643,6 +1683,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1670,6 +1711,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -1702,6 +1744,7 @@
                     "id": "endpoint_.createUserWithRequiredHeader",
                     "name": "createUserWithRequiredHeader",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1756,6 +1799,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UserData",
                             "default": null,
                             "inline": null
@@ -1790,6 +1834,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -1850,6 +1895,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -1876,6 +1922,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -1902,6 +1949,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -1937,6 +1985,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:UserData"
                                         }
                                     },
@@ -1965,6 +2014,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -1991,6 +2041,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2017,6 +2068,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2043,6 +2095,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2087,6 +2140,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2114,6 +2168,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -2146,6 +2201,7 @@
                     "id": "endpoint_.createUserWithRequiredQuery",
                     "name": "createUserWithRequiredQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2201,6 +2257,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UserData",
                             "default": null,
                             "inline": null
@@ -2235,6 +2292,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -2298,6 +2356,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -2324,6 +2383,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -2350,6 +2410,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UserData"
                                                     },
                                                     "value": {
@@ -2385,6 +2446,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:UserData"
                                         }
                                     },
@@ -2413,6 +2475,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2439,6 +2502,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2465,6 +2529,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2491,6 +2556,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2535,6 +2601,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -2562,6 +2629,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },
@@ -2594,6 +2662,7 @@
                     "id": "endpoint_.getUsers",
                     "name": "getUsers",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2675,6 +2744,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:User",
                                             "default": null,
                                             "inline": null
@@ -2731,6 +2801,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2757,6 +2828,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2783,6 +2855,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2809,6 +2882,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2853,6 +2927,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2880,6 +2955,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:User"
                                                                 }
                                                             },
@@ -2907,6 +2983,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2933,6 +3010,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2959,6 +3037,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -2985,6 +3064,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -3029,6 +3109,7 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_:User"
                                                                             },
                                                                             "value": {
@@ -3056,6 +3137,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:User"
                                                                 }
                                                             },
@@ -3077,6 +3159,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:User",
                                                         "default": null,
                                                         "inline": null
@@ -3121,6 +3204,7 @@
                     "id": "endpoint_.createUserInlined",
                     "name": "createUserInlined",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3280,6 +3364,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
@@ -3393,6 +3478,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -3419,6 +3505,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -3445,6 +3532,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -3471,6 +3559,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -3515,6 +3604,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:User"
                                                             },
                                                             "value": {
@@ -3542,6 +3632,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:User"
                                                 }
                                             },

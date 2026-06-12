@@ -70,6 +70,7 @@
                     "file": "auth"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_auth:TokenResponse"
             },
             "shape": {
@@ -154,6 +155,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:SendEvent"
             },
             "shape": {
@@ -232,6 +234,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:send_snake_case"
             },
             "shape": {
@@ -310,6 +313,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent"
             },
             "shape": {
@@ -388,6 +392,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:receive_snake_case"
             },
             "shape": {
@@ -466,6 +471,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:SendEvent2"
             },
             "shape": {
@@ -543,6 +549,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent2"
             },
             "shape": {
@@ -642,6 +649,7 @@
                     "file": "realtime"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_realtime:ReceiveEvent3"
             },
             "shape": {
@@ -701,6 +709,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -719,6 +728,7 @@
                     "id": "endpoint_auth.getTokenWithClientCredentials",
                     "name": "getTokenWithClientCredentials",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -916,6 +926,7 @@
                                         "file": "auth"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_auth:TokenResponse",
                                     "default": null,
                                     "inline": null
@@ -1087,6 +1098,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -1115,6 +1127,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -1164,6 +1177,7 @@
                                                         "file": "auth"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_auth:TokenResponse"
                                                 }
                                             },
@@ -1193,6 +1207,7 @@
                     "id": "endpoint_auth.refreshToken",
                     "name": "refreshToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1412,6 +1427,7 @@
                                         "file": "auth"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_auth:TokenResponse",
                                     "default": null,
                                     "inline": null
@@ -1600,6 +1616,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -1628,6 +1645,7 @@
                                                                     "file": "auth"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_auth:TokenResponse"
                                                             },
                                                             "value": {
@@ -1677,6 +1695,7 @@
                                                         "file": "auth"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_auth:TokenResponse"
                                                 }
                                             },
@@ -1748,6 +1767,7 @@
             "auth": true,
             "name": "realtime",
             "displayName": null,
+            "subtitle": null,
             "connectMethodName": null,
             "headers": [],
             "pathParameters": [
@@ -1854,6 +1874,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent",
                             "default": null,
                             "inline": null
@@ -1881,6 +1902,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:send_snake_case",
                             "default": null,
                             "inline": null
@@ -1908,6 +1930,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent2",
                             "default": null,
                             "inline": null
@@ -1935,6 +1958,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent",
                             "default": null,
                             "inline": null
@@ -1962,6 +1986,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:receive_snake_case",
                             "default": null,
                             "inline": null
@@ -1989,6 +2014,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent2",
                             "default": null,
                             "inline": null
@@ -2016,6 +2042,7 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_realtime:ReceiveEvent3",
                             "default": null,
                             "inline": null
@@ -2465,6 +2492,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -2493,6 +2521,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -2520,6 +2549,7 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_realtime:SendEvent"
                                     }
                                 },
@@ -2550,6 +2580,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -2578,6 +2609,7 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ReceiveEvent"
                                                 },
                                                 "value": {
@@ -2605,6 +2637,7 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
+                                        "subtitle": null,
                                         "typeId": "type_realtime:ReceiveEvent"
                                     }
                                 },
@@ -4677,6 +4710,7 @@
         "subpackage_auth": {
             "name": "auth",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "auth"
@@ -4700,6 +4734,7 @@
         "subpackage_realtime": {
             "name": "realtime",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "realtime"

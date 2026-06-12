@@ -25,6 +25,7 @@
                     "file": "unknown"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_unknown:MyAlias"
             },
             "shape": {
@@ -60,6 +61,7 @@
                     "file": "unknown"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_unknown:MyObject"
             },
             "shape": {
@@ -121,6 +123,7 @@
                                         "file": "unknown"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_unknown:MyObject"
                                 },
                                 "propertyAccess": null
@@ -157,6 +160,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -175,6 +179,7 @@
                     "id": "endpoint_unknown.post",
                     "name": "post",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -337,6 +342,7 @@
                     "id": "endpoint_unknown.postObject",
                     "name": "postObject",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -369,6 +375,7 @@
                                 "file": "unknown"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_unknown:MyObject",
                             "default": null,
                             "inline": null
@@ -394,6 +401,7 @@
                                         "file": "unknown"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_unknown:MyObject",
                                     "default": null,
                                     "inline": null
@@ -462,6 +470,7 @@
                                                             "file": "unknown"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_unknown:MyObject"
                                                     },
                                                     "value": {
@@ -490,6 +499,7 @@
                                                 "file": "unknown"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_unknown:MyObject"
                                         }
                                     },
@@ -957,6 +967,7 @@
         "subpackage_unknown": {
             "name": "unknown",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "unknown"

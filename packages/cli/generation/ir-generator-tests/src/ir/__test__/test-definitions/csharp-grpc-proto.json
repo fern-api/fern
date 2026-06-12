@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CreateResponse"
             },
             "shape": {
@@ -44,6 +45,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UserModel",
                                     "default": null,
                                     "inline": null
@@ -104,6 +106,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UserModel"
             },
             "shape": {
@@ -229,6 +232,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Metadata",
                                     "default": null,
                                     "inline": null
@@ -288,6 +292,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:Metadata"
             },
             "shape": {
@@ -319,6 +324,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:MetadataValue",
                                     "default": null,
                                     "inline": null
@@ -384,6 +390,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:MetadataValue"
             },
             "shape": {
@@ -498,6 +505,7 @@
                     "id": "endpoint_userService.Create",
                     "name": "Create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -641,6 +649,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:Metadata",
                                             "default": null,
                                             "inline": null
@@ -689,6 +698,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CreateResponse",
                                     "default": null,
                                     "inline": null
@@ -1030,6 +1040,7 @@
                                                                                                                                         "file": null
                                                                                                                                     },
                                                                                                                                     "displayName": null,
+                                                                                                                                    "subtitle": null,
                                                                                                                                     "typeId": "type_:MetadataValue",
                                                                                                                                     "default": null,
                                                                                                                                     "inline": null
@@ -1055,6 +1066,7 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:Metadata",
                                                                                                             "default": null,
                                                                                                             "inline": null
@@ -1100,6 +1112,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:UserModel",
                                                                             "default": null,
                                                                             "inline": null
@@ -1272,6 +1285,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:Metadata",
                                                             "default": null,
                                                             "inline": null
@@ -1304,6 +1318,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CreateResponse"
                                                             },
                                                             "value": {
@@ -1327,6 +1342,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:UserModel"
                                                                                             },
                                                                                             "value": {
@@ -1373,6 +1389,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:UserModel"
                                                                                             },
                                                                                             "value": {
@@ -1419,6 +1436,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:UserModel"
                                                                                             },
                                                                                             "value": {
@@ -1459,6 +1477,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:UserModel"
                                                                                             },
                                                                                             "value": {
@@ -1499,6 +1518,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:UserModel"
                                                                                             },
                                                                                             "value": {
@@ -1556,6 +1576,7 @@
                                                                                                                                                         "file": null
                                                                                                                                                     },
                                                                                                                                                     "displayName": null,
+                                                                                                                                                    "subtitle": null,
                                                                                                                                                     "typeId": "type_:MetadataValue"
                                                                                                                                                 }
                                                                                                                                             },
@@ -1583,6 +1604,7 @@
                                                                                                                                         "file": null
                                                                                                                                     },
                                                                                                                                     "displayName": null,
+                                                                                                                                    "subtitle": null,
                                                                                                                                     "typeId": "type_:MetadataValue",
                                                                                                                                     "default": null,
                                                                                                                                     "inline": null
@@ -1602,6 +1624,7 @@
                                                                                                                         "file": null
                                                                                                                     },
                                                                                                                     "displayName": null,
+                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_:Metadata"
                                                                                                                 }
                                                                                                             },
@@ -1618,6 +1641,7 @@
                                                                                                                 "file": null
                                                                                                             },
                                                                                                             "displayName": null,
+                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_:Metadata",
                                                                                                             "default": null,
                                                                                                             "inline": null
@@ -1641,6 +1665,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:UserModel"
                                                                                 }
                                                                             },
@@ -1663,6 +1688,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:UserModel",
                                                                             "default": null,
                                                                             "inline": null
@@ -1692,6 +1718,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CreateResponse"
                                                 }
                                             },
@@ -2456,6 +2483,7 @@
         "subpackage_userService": {
             "name": "userService",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "userService"

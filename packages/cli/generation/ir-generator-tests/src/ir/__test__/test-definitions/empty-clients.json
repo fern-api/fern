@@ -30,6 +30,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_level1/level2/types:Person"
             },
             "shape": {
@@ -76,6 +77,7 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_level1/level2/types:Address",
                             "default": null,
                             "inline": null
@@ -124,6 +126,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_level1/level2/types:Address"
             },
             "shape": {
@@ -298,6 +301,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_level1/types:Person"
             },
             "shape": {
@@ -342,6 +346,7 @@
                                 "file": "types"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_level1/types:Address",
                             "default": null,
                             "inline": null
@@ -388,6 +393,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_level1/types:Address"
             },
             "shape": {
@@ -1605,6 +1611,7 @@
         "subpackage_level1": {
             "name": "level1",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "level1"
@@ -1631,6 +1638,7 @@
         "subpackage_level1/level2": {
             "name": "level2",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "level1",
@@ -1658,6 +1666,7 @@
         "subpackage_level1/level2/types": {
             "name": "types",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "level1",
@@ -1687,6 +1696,7 @@
         "subpackage_level1/types": {
             "name": "types",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "level1",

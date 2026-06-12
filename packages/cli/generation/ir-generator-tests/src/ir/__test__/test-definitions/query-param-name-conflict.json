@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:BulkUpdateTasksResponse"
             },
             "shape": {
@@ -86,6 +87,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -104,6 +106,7 @@
                     "id": "endpoint_.bulkUpdateTasks",
                     "name": "bulkUpdateTasks",
                     "displayName": "Bulk-update tasks. Query params and body share some property names.",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -425,6 +428,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:BulkUpdateTasksResponse",
                                     "default": null,
                                     "inline": null
@@ -675,6 +679,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:BulkUpdateTasksResponse"
                                                             },
                                                             "value": {
@@ -720,6 +725,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:BulkUpdateTasksResponse"
                                                 }
                                             },

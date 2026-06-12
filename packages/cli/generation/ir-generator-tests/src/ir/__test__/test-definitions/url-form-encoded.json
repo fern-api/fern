@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:PostSubmitResponse"
             },
             "shape": {
@@ -111,6 +112,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:TokenRequest"
             },
             "shape": {
@@ -187,6 +189,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:TokenResponse"
             },
             "shape": {
@@ -278,6 +281,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -296,6 +300,7 @@
                     "id": "endpoint_.submitFormData",
                     "name": "submitFormData",
                     "displayName": "Submit form data",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -402,6 +407,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:PostSubmitResponse",
                                     "default": null,
                                     "inline": null
@@ -672,6 +678,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:PostSubmitResponse"
                                                             },
                                                             "value": {
@@ -718,6 +725,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:PostSubmitResponse"
                                                             },
                                                             "value": {
@@ -765,6 +773,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:PostSubmitResponse"
                                                 }
                                             },
@@ -794,6 +803,7 @@
                     "id": "endpoint_.get_token",
                     "name": "get_token",
                     "displayName": "Get OAuth token",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -824,6 +834,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:TokenRequest",
                             "default": null,
                             "inline": null
@@ -847,6 +858,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:TokenRequest",
                                     "default": null,
                                     "inline": null
@@ -873,6 +885,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:TokenResponse",
                                     "default": null,
                                     "inline": null
@@ -1132,6 +1145,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:TokenRequest"
                                                     },
                                                     "value": {
@@ -1158,6 +1172,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:TokenRequest"
                                                     },
                                                     "value": {
@@ -1185,6 +1200,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:TokenRequest"
                                         }
                                     },
@@ -1213,6 +1229,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:TokenResponse"
                                                             },
                                                             "value": {
@@ -1259,6 +1276,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:TokenResponse"
                                                             },
                                                             "value": {
@@ -1304,6 +1322,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:TokenResponse"
                                                 }
                                             },

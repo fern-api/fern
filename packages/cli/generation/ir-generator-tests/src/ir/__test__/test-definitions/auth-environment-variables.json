@@ -206,6 +206,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -242,6 +243,7 @@
                         }
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -361,6 +363,7 @@
                         }
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1067,6 +1070,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     {

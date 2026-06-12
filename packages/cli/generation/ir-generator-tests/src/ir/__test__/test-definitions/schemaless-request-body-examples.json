@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CreatePlantResponse"
             },
             "shape": {
@@ -111,6 +112,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UpdatePlantResponse"
             },
             "shape": {
@@ -199,6 +201,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CreatePlantWithSchemaResponse"
             },
             "shape": {
@@ -290,6 +293,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -308,6 +312,7 @@
                     "id": "endpoint_.createPlant",
                     "name": "createPlant",
                     "displayName": "Create a new plant",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -367,6 +372,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CreatePlantResponse",
                                     "default": null,
                                     "inline": null
@@ -597,6 +603,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CreatePlantResponse"
                                                             },
                                                             "value": {
@@ -643,6 +650,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CreatePlantResponse"
                                                             },
                                                             "value": {
@@ -690,6 +698,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CreatePlantResponse"
                                                 }
                                             },
@@ -719,6 +728,7 @@
                     "id": "endpoint_.updatePlant",
                     "name": "updatePlant",
                     "displayName": "Update an existing plant",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -831,6 +841,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UpdatePlantResponse",
                                     "default": null,
                                     "inline": null
@@ -1079,6 +1090,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UpdatePlantResponse"
                                                             },
                                                             "value": {
@@ -1125,6 +1137,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:UpdatePlantResponse"
                                                             },
                                                             "value": {
@@ -1172,6 +1185,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:UpdatePlantResponse"
                                                 }
                                             },
@@ -1201,6 +1215,7 @@
                     "id": "endpoint_.createPlantWithSchema",
                     "name": "createPlantWithSchema",
                     "displayName": "Create a plant with both schema and example",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1314,6 +1329,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CreatePlantWithSchemaResponse",
                                     "default": null,
                                     "inline": null
@@ -1637,6 +1653,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CreatePlantWithSchemaResponse"
                                                             },
                                                             "value": {
@@ -1683,6 +1700,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CreatePlantWithSchemaResponse"
                                                             },
                                                             "value": {
@@ -1730,6 +1748,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CreatePlantWithSchemaResponse"
                                                 }
                                             },

@@ -25,6 +25,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:LargeObject"
             },
             "shape": {
@@ -8459,6 +8460,7 @@
                     "file": "types"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_types:LargeObjectWithLongsAndDoubles"
             },
             "shape": {
@@ -30771,6 +30773,7 @@
         "subpackage_types": {
             "name": "types",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "types"

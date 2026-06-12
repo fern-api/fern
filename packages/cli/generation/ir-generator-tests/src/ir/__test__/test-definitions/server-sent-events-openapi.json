@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamProtocolNoCollisionResponse"
             },
             "shape": {
@@ -42,9 +43,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolHeartbeat"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -59,9 +62,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolStringEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -76,9 +81,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolNumberEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -93,9 +100,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolObjectEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -131,6 +140,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamProtocolCollisionResponse"
             },
             "shape": {
@@ -150,9 +160,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolHeartbeat"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -167,9 +179,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolStringEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -184,9 +198,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolNumberEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -201,9 +217,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolCollisionObjectEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -239,6 +257,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamDataContextResponse"
             },
             "shape": {
@@ -258,9 +277,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DataContextHeartbeat"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -275,9 +296,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DataContextEntityEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -313,6 +336,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamNoContextResponse"
             },
             "shape": {
@@ -332,9 +356,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DataContextHeartbeat"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -349,9 +375,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DataContextEntityEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -387,6 +415,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamProtocolWithFlatSchemaResponse"
             },
             "shape": {
@@ -406,9 +435,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DataContextHeartbeat"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -423,9 +454,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:DataContextEntityEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -461,6 +494,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamDataContextWithEnvelopeSchemaResponse"
             },
             "shape": {
@@ -480,9 +514,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolHeartbeat"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -497,9 +533,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolStringEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -514,9 +552,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolNumberEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -531,9 +571,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ProtocolObjectEvent"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -569,6 +611,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamXFernStreamingUnionStreamRequest"
             },
             "shape": {
@@ -610,9 +653,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamMessageVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -627,9 +672,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamInterruptVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -644,9 +691,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamCompactVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -681,6 +730,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamXFernStreamingUnionRequest"
             },
             "shape": {
@@ -722,9 +772,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamMessageVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -739,9 +791,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamInterruptVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -756,9 +810,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamCompactVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -793,6 +849,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ValidateUnionRequestResponse"
             },
             "shape": {
@@ -852,6 +909,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StreamRequest"
             },
             "shape": {
@@ -912,6 +970,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:Event"
             },
             "shape": {
@@ -1056,6 +1115,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:StatusPayload"
             },
             "shape": {
@@ -1128,6 +1188,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ObjectPayloadWithEventField"
             },
             "shape": {
@@ -1226,6 +1287,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:HeartbeatPayload"
             },
             "shape": {
@@ -1282,6 +1344,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:EntityEventPayloadEventType"
             },
             "shape": {
@@ -1333,6 +1396,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:EntityEventPayload"
             },
             "shape": {
@@ -1382,6 +1446,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:EntityEventPayloadEventType",
                                     "default": null,
                                     "inline": null
@@ -1449,6 +1514,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ProtocolHeartbeat"
             },
             "shape": {
@@ -1480,6 +1546,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ProtocolStringEvent"
             },
             "shape": {
@@ -1534,6 +1601,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ProtocolNumberEvent"
             },
             "shape": {
@@ -1588,6 +1656,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ProtocolObjectEvent"
             },
             "shape": {
@@ -1605,6 +1674,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StatusPayload",
                             "default": null,
                             "inline": null
@@ -1646,6 +1716,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:ProtocolCollisionObjectEvent"
             },
             "shape": {
@@ -1663,6 +1734,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:ObjectPayloadWithEventField",
                             "default": null,
                             "inline": null
@@ -1704,6 +1776,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DataContextHeartbeat"
             },
             "shape": {
@@ -1717,6 +1790,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:HeartbeatPayload"
                     }
                 ],
@@ -1773,6 +1847,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:DataContextEntityEvent"
             },
             "shape": {
@@ -1786,6 +1861,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:EntityEventPayload"
                     }
                 ],
@@ -1835,6 +1911,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:EntityEventPayloadEventType",
                                     "default": null,
                                     "inline": null
@@ -1901,6 +1978,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CompletionRequest"
             },
             "shape": {
@@ -1982,6 +2060,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:NullableStreamRequest"
             },
             "shape": {
@@ -2069,6 +2148,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CompletionFullResponseFinishReason"
             },
             "shape": {
@@ -2115,6 +2195,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CompletionFullResponse"
             },
             "shape": {
@@ -2164,6 +2245,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionFullResponseFinishReason",
                                     "default": null,
                                     "inline": null
@@ -2207,6 +2289,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CompletionStreamChunk"
             },
             "shape": {
@@ -2295,6 +2378,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionStreamRequestBase"
             },
             "shape": {
@@ -2376,6 +2460,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionStreamMessageVariant"
             },
             "shape": {
@@ -2389,6 +2474,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:UnionStreamRequestBase"
                     }
                 ],
@@ -2493,6 +2579,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionStreamInterruptVariant"
             },
             "shape": {
@@ -2506,6 +2593,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:UnionStreamRequestBase"
                     }
                 ],
@@ -2587,6 +2675,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionStreamCompactVariant"
             },
             "shape": {
@@ -2600,6 +2689,7 @@
                             "file": null
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "typeId": "type_:UnionStreamRequestBase"
                     }
                 ],
@@ -2704,6 +2794,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:UnionStreamRequest"
             },
             "shape": {
@@ -2723,9 +2814,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamMessageVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -2740,9 +2833,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamInterruptVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -2757,9 +2852,11 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamCompactVariant"
                         },
                         "displayName": null,
+                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -2797,6 +2894,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -2815,6 +2913,7 @@
                     "id": "endpoint_.streamProtocolNoCollision",
                     "name": "streamProtocolNoCollision",
                     "displayName": "Protocol context with no field collision and mixed data types",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2845,6 +2944,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -2868,6 +2968,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -2894,6 +2995,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamProtocolNoCollisionResponse",
                                     "default": null,
                                     "inline": null
@@ -3024,6 +3126,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -3059,6 +3162,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },
@@ -3098,6 +3202,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:StreamProtocolNoCollisionResponse"
                                                         }
                                                     },
@@ -3129,6 +3234,7 @@
                     "id": "endpoint_.streamProtocolCollision",
                     "name": "streamProtocolCollision",
                     "displayName": "Protocol context with event field collision and mixed data types",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3159,6 +3265,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -3182,6 +3289,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -3208,6 +3316,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamProtocolCollisionResponse",
                                     "default": null,
                                     "inline": null
@@ -3338,6 +3447,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -3373,6 +3483,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },
@@ -3412,6 +3523,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:StreamProtocolCollisionResponse"
                                                         }
                                                     },
@@ -3443,6 +3555,7 @@
                     "id": "endpoint_.streamDataContext",
                     "name": "streamDataContext",
                     "displayName": "Explicit data context with discriminant flattened via allOf",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3473,6 +3586,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -3496,6 +3610,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -3522,6 +3637,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamDataContextResponse",
                                     "default": null,
                                     "inline": null
@@ -3639,6 +3755,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:HeartbeatPayload"
                                                                                 },
                                                                                 "propertyAccess": null
@@ -3695,6 +3812,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -3730,6 +3848,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },
@@ -3764,6 +3883,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:DataContextHeartbeat"
                                                                                 },
                                                                                 "value": {
@@ -3811,6 +3931,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:StreamDataContextResponse"
                                                         }
                                                     },
@@ -3843,6 +3964,7 @@
                     "id": "endpoint_.streamNoContext",
                     "name": "streamNoContext",
                     "displayName": "No context extension, defaults to data context",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3873,6 +3995,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -3896,6 +4019,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -3922,6 +4046,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamNoContextResponse",
                                     "default": null,
                                     "inline": null
@@ -4039,6 +4164,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:HeartbeatPayload"
                                                                                 },
                                                                                 "propertyAccess": null
@@ -4095,6 +4221,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -4130,6 +4257,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },
@@ -4164,6 +4292,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:DataContextHeartbeat"
                                                                                 },
                                                                                 "value": {
@@ -4211,6 +4340,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:StreamNoContextResponse"
                                                         }
                                                     },
@@ -4243,6 +4373,7 @@
                     "id": "endpoint_.streamProtocolWithFlatSchema",
                     "name": "streamProtocolWithFlatSchema",
                     "displayName": "Protocol context with flat allOf schema pattern",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4273,6 +4404,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -4296,6 +4428,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -4322,6 +4455,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamProtocolWithFlatSchemaResponse",
                                     "default": null,
                                     "inline": null
@@ -4439,6 +4573,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:HeartbeatPayload"
                                                                                 },
                                                                                 "propertyAccess": null
@@ -4495,6 +4630,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -4530,6 +4666,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },
@@ -4564,6 +4701,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:DataContextHeartbeat"
                                                                                 },
                                                                                 "value": {
@@ -4611,6 +4749,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:StreamProtocolWithFlatSchemaResponse"
                                                         }
                                                     },
@@ -4643,6 +4782,7 @@
                     "id": "endpoint_.streamDataContextWithEnvelopeSchema",
                     "name": "streamDataContextWithEnvelopeSchema",
                     "displayName": "Data context with envelope+data schema pattern",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4673,6 +4813,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -4696,6 +4837,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -4722,6 +4864,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamDataContextWithEnvelopeSchemaResponse",
                                     "default": null,
                                     "inline": null
@@ -4852,6 +4995,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -4887,6 +5031,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },
@@ -4926,6 +5071,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:StreamDataContextWithEnvelopeSchemaResponse"
                                                         }
                                                     },
@@ -4957,6 +5103,7 @@
                     "id": "endpoint_.streamOasSpecNative",
                     "name": "streamOasSpecNative",
                     "displayName": "OAS 3.2 spec-native SSE pattern with inline variants and contentSchema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -4987,6 +5134,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -5010,6 +5158,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -5036,6 +5185,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Event",
                                     "default": null,
                                     "inline": null
@@ -5320,6 +5470,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -5355,6 +5506,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },
@@ -5382,6 +5534,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:Event"
                                                                     },
                                                                     "value": {
@@ -5408,6 +5561,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:Event"
                                                                     },
                                                                     "value": {
@@ -5454,6 +5608,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:Event"
                                                                     },
                                                                     "value": {
@@ -5500,6 +5655,7 @@
                                                                             "file": null
                                                                         },
                                                                         "displayName": null,
+                                                                        "subtitle": null,
                                                                         "typeId": "type_:Event"
                                                                     },
                                                                     "value": {
@@ -5551,6 +5707,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_:Event"
                                                         }
                                                     },
@@ -5585,6 +5742,7 @@
                     "id": "endpoint_.streamXFernStreamingCondition_stream",
                     "name": "streamXFernStreamingCondition_stream",
                     "displayName": "x-fern-streaming with stream-condition and $ref request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -5685,6 +5843,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionStreamChunk",
                                     "default": null,
                                     "inline": null
@@ -5959,6 +6118,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -6005,6 +6165,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -6050,6 +6211,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:CompletionStreamChunk"
                                                     }
                                                 },
@@ -6080,6 +6242,7 @@
                     "id": "endpoint_.streamXFernStreamingCondition",
                     "name": "streamXFernStreamingCondition",
                     "displayName": "x-fern-streaming with stream-condition and $ref request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6180,6 +6343,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionFullResponse",
                                     "default": null,
                                     "inline": null
@@ -6351,6 +6515,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -6462,6 +6627,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -6508,6 +6674,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -6530,6 +6697,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:CompletionFullResponseFinishReason"
                                                                                 }
                                                                             },
@@ -6544,6 +6712,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -6565,6 +6734,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CompletionFullResponse"
                                                 }
                                             },
@@ -6594,6 +6764,7 @@
                     "id": "endpoint_.streamXFernStreamingSharedSchema_stream",
                     "name": "streamXFernStreamingSharedSchema_stream",
                     "displayName": "x-fern-streaming with shared request schema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -6716,6 +6887,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionStreamChunk",
                                     "default": null,
                                     "inline": null
@@ -7024,6 +7196,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -7070,6 +7243,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -7115,6 +7289,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:CompletionStreamChunk"
                                                     }
                                                 },
@@ -7145,6 +7320,7 @@
                     "id": "endpoint_.streamXFernStreamingSharedSchema",
                     "name": "streamXFernStreamingSharedSchema",
                     "displayName": "x-fern-streaming with shared request schema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7267,6 +7443,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionFullResponse",
                                     "default": null,
                                     "inline": null
@@ -7455,6 +7632,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -7583,6 +7761,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -7629,6 +7808,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -7651,6 +7831,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:CompletionFullResponseFinishReason"
                                                                                 }
                                                                             },
@@ -7665,6 +7846,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -7686,6 +7868,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CompletionFullResponse"
                                                 }
                                             },
@@ -7715,6 +7898,7 @@
                     "id": "endpoint_.validateCompletion",
                     "name": "validateCompletion",
                     "displayName": "Non-streaming endpoint sharing request schema with endpoint 10",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7843,6 +8027,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionFullResponse",
                                     "default": null,
                                     "inline": null
@@ -8013,6 +8198,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -8146,6 +8332,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -8192,6 +8379,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -8214,6 +8402,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:CompletionFullResponseFinishReason"
                                                                                 }
                                                                             },
@@ -8228,6 +8417,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -8249,6 +8439,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CompletionFullResponse"
                                                 }
                                             },
@@ -8278,6 +8469,7 @@
                     "id": "endpoint_.streamXFernStreamingUnion_stream",
                     "name": "streamXFernStreamingUnion_stream",
                     "displayName": "x-fern-streaming with discriminated union request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8308,6 +8500,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamXFernStreamingUnionStreamRequest",
                             "default": null,
                             "inline": null
@@ -8331,6 +8524,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamXFernStreamingUnionStreamRequest",
                                     "default": null,
                                     "inline": null
@@ -8357,6 +8551,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionStreamChunk",
                                     "default": null,
                                     "inline": null
@@ -8430,6 +8625,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamRequestBase"
                                                                 },
                                                                 "propertyAccess": null
@@ -8499,6 +8695,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamRequestBase"
                                                                 },
                                                                 "propertyAccess": null
@@ -8700,6 +8897,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamMessageVariant"
                                                                 },
                                                                 "value": {
@@ -8726,6 +8924,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamMessageVariant"
                                                                 },
                                                                 "value": {
@@ -8759,6 +8958,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamMessageVariant"
                                                                 },
                                                                 "value": {
@@ -8808,6 +9008,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamXFernStreamingUnionStreamRequest"
                                         }
                                     },
@@ -8839,6 +9040,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -8885,6 +9087,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -8930,6 +9133,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:CompletionStreamChunk"
                                                     }
                                                 },
@@ -8960,6 +9164,7 @@
                     "id": "endpoint_.streamXFernStreamingUnion",
                     "name": "streamXFernStreamingUnion",
                     "displayName": "x-fern-streaming with discriminated union request body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8990,6 +9195,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamXFernStreamingUnionRequest",
                             "default": null,
                             "inline": null
@@ -9013,6 +9219,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamXFernStreamingUnionRequest",
                                     "default": null,
                                     "inline": null
@@ -9039,6 +9246,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionFullResponse",
                                     "default": null,
                                     "inline": null
@@ -9111,6 +9319,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamRequestBase"
                                                                 },
                                                                 "propertyAccess": null
@@ -9180,6 +9389,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamRequestBase"
                                                                 },
                                                                 "propertyAccess": null
@@ -9319,6 +9529,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -9391,6 +9602,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamMessageVariant"
                                                                 },
                                                                 "value": {
@@ -9417,6 +9629,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamMessageVariant"
                                                                 },
                                                                 "value": {
@@ -9450,6 +9663,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:UnionStreamMessageVariant"
                                                                 },
                                                                 "value": {
@@ -9499,6 +9713,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamXFernStreamingUnionRequest"
                                         }
                                     },
@@ -9529,6 +9744,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -9575,6 +9791,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -9597,6 +9814,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:CompletionFullResponseFinishReason"
                                                                                 }
                                                                             },
@@ -9611,6 +9829,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -9632,6 +9851,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CompletionFullResponse"
                                                 }
                                             },
@@ -9661,6 +9881,7 @@
                     "id": "endpoint_.validateUnionRequest",
                     "name": "validateUnionRequest",
                     "displayName": "Non-streaming endpoint referencing the union base schema",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -9691,6 +9912,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:UnionStreamRequestBase",
                             "default": null,
                             "inline": null
@@ -9714,6 +9936,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:UnionStreamRequestBase",
                                     "default": null,
                                     "inline": null
@@ -9740,6 +9963,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:ValidateUnionRequestResponse",
                                     "default": null,
                                     "inline": null
@@ -9924,6 +10148,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UnionStreamRequestBase"
                                                     },
                                                     "value": {
@@ -9957,6 +10182,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:UnionStreamRequestBase"
                                                     },
                                                     "value": {
@@ -9984,6 +10210,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:UnionStreamRequestBase"
                                         }
                                     },
@@ -10011,6 +10238,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:ValidateUnionRequestResponse"
                                                             },
                                                             "value": {
@@ -10055,6 +10283,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:ValidateUnionRequestResponse"
                                                 }
                                             },
@@ -10083,6 +10312,7 @@
                     "id": "endpoint_.streamXFernStreamingNullableCondition_stream",
                     "name": "streamXFernStreamingNullableCondition_stream",
                     "displayName": "x-fern-streaming with nullable stream condition field",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -10183,6 +10413,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionStreamChunk",
                                     "default": null,
                                     "inline": null
@@ -10457,6 +10688,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -10503,6 +10735,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:CompletionStreamChunk"
                                                                 },
                                                                 "value": {
@@ -10548,6 +10781,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:CompletionStreamChunk"
                                                     }
                                                 },
@@ -10578,6 +10812,7 @@
                     "id": "endpoint_.streamXFernStreamingNullableCondition",
                     "name": "streamXFernStreamingNullableCondition",
                     "displayName": "x-fern-streaming with nullable stream condition field",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -10678,6 +10913,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CompletionFullResponse",
                                     "default": null,
                                     "inline": null
@@ -10849,6 +11085,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -10960,6 +11197,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -11006,6 +11244,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CompletionFullResponse"
                                                             },
                                                             "value": {
@@ -11028,6 +11267,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:CompletionFullResponseFinishReason"
                                                                                 }
                                                                             },
@@ -11042,6 +11282,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:CompletionFullResponseFinishReason",
                                                                             "default": null,
                                                                             "inline": null
@@ -11063,6 +11304,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CompletionFullResponse"
                                                 }
                                             },
@@ -11092,6 +11334,7 @@
                     "id": "endpoint_.streamXFernStreamingSseOnly",
                     "name": "streamXFernStreamingSseOnly",
                     "displayName": "x-fern-streaming with SSE format but no stream-condition",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -11122,6 +11365,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:StreamRequest",
                             "default": null,
                             "inline": null
@@ -11145,6 +11389,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:StreamRequest",
                                     "default": null,
                                     "inline": null
@@ -11276,6 +11521,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:StreamRequest"
                                                     },
                                                     "value": {
@@ -11311,6 +11557,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:StreamRequest"
                                         }
                                     },

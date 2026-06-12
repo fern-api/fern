@@ -25,6 +25,7 @@
                     "file": "organizations"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_organizations:Organization"
             },
             "shape": {
@@ -109,6 +110,7 @@
                     "file": "user"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_user:User"
             },
             "shape": {
@@ -196,6 +198,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/organizations/",
                 "parts": [
@@ -243,6 +246,7 @@
                     "id": "endpoint_organizations.getOrganization",
                     "name": "getOrganization",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -337,6 +341,7 @@
                                         "file": "organizations"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_organizations:Organization",
                                     "default": null,
                                     "inline": null
@@ -419,6 +424,7 @@
                                                                     "file": "organizations"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_organizations:Organization"
                                                             },
                                                             "value": {
@@ -447,6 +453,7 @@
                                                                     "file": "organizations"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_organizations:Organization"
                                                             },
                                                             "value": {
@@ -513,6 +520,7 @@
                                                         "file": "organizations"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_organizations:Organization"
                                                 }
                                             },
@@ -545,6 +553,7 @@
                     "id": "endpoint_organizations.getOrganizationUser",
                     "name": "getOrganizationUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -705,6 +714,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -803,6 +813,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -831,6 +842,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -897,6 +909,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:User"
                                                 }
                                             },
@@ -929,6 +942,7 @@
                     "id": "endpoint_organizations.searchOrganizations",
                     "name": "searchOrganizations",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1068,6 +1082,7 @@
                                                 "file": "organizations"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_organizations:Organization",
                                             "default": null,
                                             "inline": null
@@ -1158,6 +1173,7 @@
                                                                                     "file": "organizations"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_organizations:Organization"
                                                                             },
                                                                             "value": {
@@ -1186,6 +1202,7 @@
                                                                                     "file": "organizations"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_organizations:Organization"
                                                                             },
                                                                             "value": {
@@ -1252,6 +1269,7 @@
                                                                         "file": "organizations"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_organizations:Organization"
                                                                 }
                                                             },
@@ -1281,6 +1299,7 @@
                                                                                     "file": "organizations"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_organizations:Organization"
                                                                             },
                                                                             "value": {
@@ -1309,6 +1328,7 @@
                                                                                     "file": "organizations"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_organizations:Organization"
                                                                             },
                                                                             "value": {
@@ -1375,6 +1395,7 @@
                                                                         "file": "organizations"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_organizations:Organization"
                                                                 }
                                                             },
@@ -1398,6 +1419,7 @@
                                                             "file": "organizations"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_organizations:Organization",
                                                         "default": null,
                                                         "inline": null
@@ -1453,6 +1475,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/user",
                 "parts": []
@@ -1471,6 +1494,7 @@
                     "id": "endpoint_user.getUser",
                     "name": "getUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1604,6 +1628,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -1686,6 +1711,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -1714,6 +1740,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -1780,6 +1807,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:User"
                                                 }
                                             },
@@ -1812,6 +1840,7 @@
                     "id": "endpoint_user.createUser",
                     "name": "createUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1873,6 +1902,7 @@
                                 "file": "user"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_user:User",
                             "default": null,
                             "inline": null
@@ -1898,6 +1928,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -1926,6 +1957,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -1988,6 +2020,7 @@
                                                             "file": "user"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_user:User"
                                                     },
                                                     "value": {
@@ -2016,6 +2049,7 @@
                                                             "file": "user"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_user:User"
                                                     },
                                                     "value": {
@@ -2082,6 +2116,7 @@
                                                 "file": "user"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_user:User"
                                         }
                                     },
@@ -2115,6 +2150,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -2143,6 +2179,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -2209,6 +2246,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:User"
                                                 }
                                             },
@@ -2241,6 +2279,7 @@
                     "id": "endpoint_user.updateUser",
                     "name": "updateUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2358,6 +2397,7 @@
                                 "file": "user"
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_user:User",
                             "default": null,
                             "inline": null
@@ -2394,6 +2434,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -2472,6 +2513,7 @@
                                                             "file": "user"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_user:User"
                                                     },
                                                     "value": {
@@ -2500,6 +2542,7 @@
                                                             "file": "user"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_user:User"
                                                     },
                                                     "value": {
@@ -2566,6 +2609,7 @@
                                                 "file": "user"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_user:User"
                                         }
                                     },
@@ -2599,6 +2643,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -2627,6 +2672,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -2693,6 +2739,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:User"
                                                 }
                                             },
@@ -2725,6 +2772,7 @@
                     "id": "endpoint_user.searchUsers",
                     "name": "searchUsers",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -2893,6 +2941,7 @@
                                                 "file": "user"
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_user:User",
                                             "default": null,
                                             "inline": null
@@ -2983,6 +3032,7 @@
                                                                                     "file": "user"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_user:User"
                                                                             },
                                                                             "value": {
@@ -3011,6 +3061,7 @@
                                                                                     "file": "user"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_user:User"
                                                                             },
                                                                             "value": {
@@ -3077,6 +3128,7 @@
                                                                         "file": "user"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_user:User"
                                                                 }
                                                             },
@@ -3106,6 +3158,7 @@
                                                                                     "file": "user"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_user:User"
                                                                             },
                                                                             "value": {
@@ -3134,6 +3187,7 @@
                                                                                     "file": "user"
                                                                                 },
                                                                                 "displayName": null,
+                                                                                "subtitle": null,
                                                                                 "typeId": "type_user:User"
                                                                             },
                                                                             "value": {
@@ -3200,6 +3254,7 @@
                                                                         "file": "user"
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_user:User"
                                                                 }
                                                             },
@@ -3223,6 +3278,7 @@
                                                             "file": "user"
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_user:User",
                                                         "default": null,
                                                         "inline": null
@@ -3267,6 +3323,7 @@
                     "id": "endpoint_user.getUserMetadata",
                     "name": "getUserMetadata",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3454,6 +3511,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -3549,6 +3607,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -3577,6 +3636,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -3643,6 +3703,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:User"
                                                 }
                                             },
@@ -3675,6 +3736,7 @@
                     "id": "endpoint_user.getUserSpecifics",
                     "name": "getUserSpecifics",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -3916,6 +3978,7 @@
                                         "file": "user"
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_user:User",
                                     "default": null,
                                     "inline": null
@@ -4026,6 +4089,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -4054,6 +4118,7 @@
                                                                     "file": "user"
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_user:User"
                                                             },
                                                             "value": {
@@ -4120,6 +4185,7 @@
                                                         "file": "user"
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_user:User"
                                                 }
                                             },
@@ -6212,6 +6278,7 @@
         "subpackage_organizations": {
             "name": "organizations",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "organizations"
@@ -6235,6 +6302,7 @@
         "subpackage_user": {
             "name": "user",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "user"

@@ -25,6 +25,7 @@
                     "file": "errors"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_errors:PropertyBasedErrorTestBody"
             },
             "shape": {
@@ -97,6 +98,7 @@
                     "file": "errors"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_errors:PropertyBasedErrorTestBody",
                 "default": null,
                 "inline": null
@@ -104,6 +106,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -121,6 +124,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -139,6 +143,7 @@
                     "id": "endpoint_property-based-error.ThrowError",
                     "name": "ThrowError",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -269,6 +274,7 @@
                                                                 "file": "errors"
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_errors:PropertyBasedErrorTestBody"
                                                         },
                                                         "value": {
@@ -298,6 +304,7 @@
                                                     "file": "errors"
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_errors:PropertyBasedErrorTestBody"
                                             }
                                         },
@@ -564,6 +571,7 @@
         "subpackage_errors": {
             "name": "errors",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "errors"
@@ -589,6 +597,7 @@
         "subpackage_property-based-error": {
             "name": "property-based-error",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "property-based-error"

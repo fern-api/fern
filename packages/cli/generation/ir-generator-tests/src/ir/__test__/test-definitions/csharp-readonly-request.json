@@ -23,6 +23,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:Vendor"
             },
             "shape": {
@@ -143,6 +144,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CreateVendorRequest"
             },
             "shape": {
@@ -175,6 +177,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Vendor",
                                     "default": null,
                                     "inline": null
@@ -218,6 +221,7 @@
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_:CreateVendorResponse"
             },
             "shape": {
@@ -250,6 +254,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:Vendor",
                                     "default": null,
                                     "inline": null
@@ -296,6 +301,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/vendors",
                 "parts": []
@@ -314,6 +320,7 @@
                     "id": "endpoint_.batchCreate",
                     "name": "batchCreate",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -344,6 +351,7 @@
                                 "file": null
                             },
                             "displayName": null,
+                            "subtitle": null,
                             "typeId": "type_:CreateVendorRequest",
                             "default": null,
                             "inline": null
@@ -367,6 +375,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CreateVendorRequest",
                                     "default": null,
                                     "inline": null
@@ -393,6 +402,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
+                                    "subtitle": null,
                                     "typeId": "type_:CreateVendorResponse",
                                     "default": null,
                                     "inline": null
@@ -610,6 +620,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:Vendor",
                                                                     "default": null,
                                                                     "inline": null
@@ -846,6 +857,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:Vendor",
                                                                             "default": null,
                                                                             "inline": null
@@ -924,6 +936,7 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
+                                                        "subtitle": null,
                                                         "typeId": "type_:CreateVendorRequest"
                                                     },
                                                     "value": {
@@ -961,6 +974,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:Vendor"
                                                                                             },
                                                                                             "value": {
@@ -987,6 +1001,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:Vendor"
                                                                                             },
                                                                                             "value": {
@@ -1013,6 +1028,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:Vendor"
                                                                                             },
                                                                                             "value": {
@@ -1039,6 +1055,7 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
+                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:Vendor"
                                                                                             },
                                                                                             "value": {
@@ -1066,6 +1083,7 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
+                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:Vendor"
                                                                                 }
                                                                             },
@@ -1098,6 +1116,7 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
+                                                                    "subtitle": null,
                                                                     "typeId": "type_:Vendor",
                                                                     "default": null,
                                                                     "inline": null
@@ -1126,6 +1145,7 @@
                                                 "file": null
                                             },
                                             "displayName": null,
+                                            "subtitle": null,
                                             "typeId": "type_:CreateVendorRequest"
                                         }
                                     },
@@ -1160,6 +1180,7 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
+                                                                "subtitle": null,
                                                                 "typeId": "type_:CreateVendorResponse"
                                                             },
                                                             "value": {
@@ -1197,6 +1218,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:Vendor"
                                                                                                     },
                                                                                                     "value": {
@@ -1223,6 +1245,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:Vendor"
                                                                                                     },
                                                                                                     "value": {
@@ -1249,6 +1272,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:Vendor"
                                                                                                     },
                                                                                                     "value": {
@@ -1275,6 +1299,7 @@
                                                                                                             "file": null
                                                                                                         },
                                                                                                         "displayName": null,
+                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_:Vendor"
                                                                                                     },
                                                                                                     "value": {
@@ -1302,6 +1327,7 @@
                                                                                                 "file": null
                                                                                             },
                                                                                             "displayName": null,
+                                                                                            "subtitle": null,
                                                                                             "typeId": "type_:Vendor"
                                                                                         }
                                                                                     },
@@ -1334,6 +1360,7 @@
                                                                                 "file": null
                                                                             },
                                                                             "displayName": null,
+                                                                            "subtitle": null,
                                                                             "typeId": "type_:Vendor",
                                                                             "default": null,
                                                                             "inline": null
@@ -1362,6 +1389,7 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
+                                                    "subtitle": null,
                                                     "typeId": "type_:CreateVendorResponse"
                                                 }
                                             },
