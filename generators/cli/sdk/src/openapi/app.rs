@@ -1975,10 +1975,26 @@ pub(crate) fn collect_params_from_flags(
 
         if param_def.repeated {
             if let Some(values) = matched_args.get_many::<String>(&arg_id) {
-                let arr: Vec<serde_json::Value> = values
-                    .map(|v| serde_json::Value::String(v.clone()))
-                    .collect();
-                params.insert(param_name.clone(), serde_json::Value::Array(arr));
+                // A value that parses as a JSON array is spliced in element
+                // by element (`--to '["a","b"]'` ≡ `--to a --to b`); anything
+                // else — including non-array JSON like "123" — stays a
+                // literal string.
+                let mut arr: Vec<serde_json::Value> = Vec::new();
+                for v in values {
+                    match serde_json::from_str(v) {
+                        Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
+                        _ => arr.push(serde_json::Value::String(v.clone())),
+                    }
+                }
+                // For oneOf [string, array<string>] unions, a single scalar
+                // value stays a plain string — only multiple values (or an
+                // explicit JSON array) produce an array on the wire.
+                let value = if param_def.scalar_or_array && arr.len() == 1 {
+                    arr.into_iter().next().unwrap()
+                } else {
+                    serde_json::Value::Array(arr)
+                };
+                params.insert(param_name.clone(), value);
             }
             continue;
         }
@@ -3128,6 +3144,223 @@ mod tests {
         assert_eq!(
             result.get("ids").and_then(|v| v.as_str()),
             Some("not-json"),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_json_array_value_flattened() {
+        // A repeated string flag (array body props and string|array<string>
+        // unions both lower to this shape) carrying a JSON-array literal must
+        // be parsed and its elements spliced in — not wrapped verbatim as a
+        // single array element.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches =
+            cmd.get_matches_from(vec!["test", "--to", r#"["a@example.com","b@example.com"]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+            "JSON-array value on a repeated flag must be parsed, not passed verbatim",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_mixed_json_array_and_literal() {
+        // Occurrences can mix: a JSON-array literal flattens in place while
+        // plain values stay literal strings.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test",
+            "--to",
+            r#"["a@example.com"]"#,
+            "--to",
+            "b@example.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_non_array_json_stays_literal() {
+        // Values that parse as non-array JSON ("123", "null", "{}") keep the
+        // old literal-string behavior — only arrays flatten.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "tags".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("tags")
+                    .long("tags")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches =
+            cmd.get_matches_from(vec!["test", "--tags", "123", "--tags", "null", "--tags", "{}"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("tags"),
+            Some(&serde_json::json!(["123", "null", "{}"])),
+            "non-array values must stay literal strings",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_single_value_stays_scalar() {
+        // For oneOf [string, array<string>] unions, a single value should be
+        // sent as a plain string, not wrapped in a length-1 array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--to", "a@example.com"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!("a@example.com")),
+            "single value on scalar_or_array param must be a plain string",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_multiple_values_become_array() {
+        // Multiple values on a scalar_or_array param should produce an array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test", "--to", "a@example.com", "--to", "b@example.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_json_array_stays_array() {
+        // A JSON-array literal on a scalar_or_array param with >1 element
+        // produces an array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test", "--to", r#"["a@example.com","b@example.com"]"#,
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
         );
     }
 

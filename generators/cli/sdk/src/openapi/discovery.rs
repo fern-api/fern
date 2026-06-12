@@ -941,6 +941,11 @@ pub struct MethodParameter {
     pub enum_descriptions: Option<Vec<String>>,
     #[serde(default)]
     pub repeated: bool,
+    /// True for `oneOf/anyOf [string, array<string>]` unions where a single
+    /// value should be sent as a scalar string, not wrapped in a length-1
+    /// array. Pure `type: array` params leave this `false`.
+    #[serde(default)]
+    pub scalar_or_array: bool,
     pub minimum: Option<String>,
     pub maximum: Option<String>,
     #[serde(default)]
