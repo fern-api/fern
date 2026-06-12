@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.47.2
+  changelogEntry:
+    - summary: |
+        Stop dropping custom scalars in the GraphQL converter. Custom scalars (e.g. `DateTime`,
+        `URL`, `EmailAddress`) are now emitted as named alias types in the `types` map with a stable
+        id, and references to them point to that id so the type can be linked to in documentation.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
 - version: 5.47.1
   changelogEntry:
     - summary: |
