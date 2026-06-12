@@ -464,10 +464,7 @@ export class GithubStep extends BaseStep {
     }
 
     private deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {
-        if (replayResult == null) {
-            return false;
-        }
-        return replayResult.executed && replayResult.flow != null && replayResult.flow !== "first-generation";
+        return deriveSkipCommit(replayResult);
     }
 
     private deriveReplayConflictInfo(replayResult: ReplayStepResult | undefined):
@@ -616,6 +613,26 @@ export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
  */
 export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | undefined): boolean {
     return (replayResult?.patchesWithConflicts ?? 0) > 0;
+}
+
+/**
+ * Decides whether GithubStep still owes a commit for this run. Replay's
+ * non-first-generation flows always commit (their `[fern-replay]` commit is
+ * load-bearing), so they skip. The first-generation flow skips only when the
+ * run reports the lockfile as actually committed (`replayCommitted === true`,
+ * derived empirically in `replayApply`): engine versions that predate
+ * first-generation lock seeding leave the seeded lock untracked, and skipping
+ * the commit against them would drop the lock from the push entirely.
+ * Exported for testing.
+ */
+export function deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {
+    if (replayResult == null || !replayResult.executed) {
+        return false;
+    }
+    if (replayResult.replayCommitted === true) {
+        return true;
+    }
+    return replayResult.flow != null && replayResult.flow !== "first-generation";
 }
 
 /**

@@ -1,6 +1,43 @@
 import { describe, expect, it } from "vitest";
-import { resolveBranchAction, shouldPushGenerationBaseTag } from "../pipeline/steps/GithubStep.js";
+import { deriveSkipCommit, resolveBranchAction, shouldPushGenerationBaseTag } from "../pipeline/steps/GithubStep.js";
 import type { ReplayStepResult } from "../pipeline/types.js";
+
+describe("deriveSkipCommit", () => {
+    const base: ReplayStepResult = {
+        executed: true,
+        success: true,
+        patchesDetected: 0,
+        patchesApplied: 0,
+        patchesWithConflicts: 0
+    };
+
+    it("returns false when replay did not run", () => {
+        expect(deriveSkipCommit(undefined)).toBe(false);
+        expect(deriveSkipCommit({ ...base, executed: false, flow: "no-patches" })).toBe(false);
+    });
+
+    it("returns false when flow is missing", () => {
+        expect(deriveSkipCommit({ ...base })).toBe(false);
+    });
+
+    it("non-first-generation flows skip the GithubStep commit (unchanged behavior)", () => {
+        expect(deriveSkipCommit({ ...base, flow: "no-patches" })).toBe(true);
+        expect(deriveSkipCommit({ ...base, flow: "normal-regeneration" })).toBe(true);
+        expect(deriveSkipCommit({ ...base, flow: "skip-application" })).toBe(true);
+        // replayCommitted does not change the outcome for these flows.
+        expect(deriveSkipCommit({ ...base, flow: "no-patches", replayCommitted: false })).toBe(true);
+    });
+
+    it("first-generation skips ONLY when the lock is reported committed", () => {
+        // Engine seeded and committed the lock — GithubStep must not commit
+        // again (its sweep would be empty; branchAction becomes replay-branch).
+        expect(deriveSkipCommit({ ...base, flow: "first-generation", replayCommitted: true })).toBe(true);
+        // Engine predates seeding (lock untracked) or stageOnly: GithubStep's
+        // commit must sweep the lock or it is lost on push.
+        expect(deriveSkipCommit({ ...base, flow: "first-generation" })).toBe(false);
+        expect(deriveSkipCommit({ ...base, flow: "first-generation", replayCommitted: false })).toBe(false);
+    });
+});
 
 describe("resolveBranchAction", () => {
     describe("automation mode", () => {

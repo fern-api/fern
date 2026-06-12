@@ -200,6 +200,15 @@ export interface ReplayStepResult extends StepResult {
      */
     bootstrapAttempted?: boolean;
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
+    /**
+     * True when the replay run left `.fern/replay.lock` committed (tracked and
+     * clean). Derived empirically from git state in `replayApply` so it stays
+     * truthful across `@fern-api/replay` versions that do or don't commit the
+     * seeded first-generation lock. GithubStep skips its own commit when this
+     * is true even for the first-generation flow; when false/undefined the
+     * GithubStep commit sweeps the lock so it isn't lost on push.
+     */
+    replayCommitted?: boolean;
     patchesDetected?: number;
     patchesApplied?: number;
     patchesWithConflicts?: number;
