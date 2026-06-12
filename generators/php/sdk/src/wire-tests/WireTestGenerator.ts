@@ -44,6 +44,12 @@ export class WireTestGenerator {
 
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
+                // Bytes request bodies cannot be exercised against WireMock, so mock-utils omits
+                // their stub mappings. Skip them here too, otherwise the generated test would call
+                // an endpoint with no matching stub and fail.
+                if (endpoint.requestBody?.type === "bytes") {
+                    return false;
+                }
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
                 return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
             });

@@ -501,7 +501,7 @@ class ParamsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/params/path-bool/{$param}",
+                    path: "/params/path-bool/" . ($param ? 'true' : 'false'),
                     method: HttpMethod::GET,
                 ),
                 $options,
