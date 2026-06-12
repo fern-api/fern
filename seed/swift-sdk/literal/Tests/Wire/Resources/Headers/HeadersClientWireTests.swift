@@ -23,7 +23,7 @@ import Literal
         let expectedResponse = SendResponse(
             message: "The weather is sunny",
             status: 200,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.headers.send(
             request: .init(query: "What is the weather today"),
@@ -52,7 +52,7 @@ import Literal
         let expectedResponse = SendResponse(
             message: "message",
             status: 1,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.headers.send(
             request: .init(query: "query"),

@@ -4,7 +4,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
     case customName(String)
     case defaultName(Bob)
     case george(Bool)
-    case literalGeorge(JSONValue)
+    case literalGeorge(Bool)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -17,7 +17,7 @@ public enum DiscriminatedLiteral: Codable, Hashable, Sendable {
         case "george":
             self = .george(try container.decode(Bool.self, forKey: .value))
         case "literalGeorge":
-            self = .literalGeorge(try container.decode(JSONValue.self, forKey: .value))
+            self = .literalGeorge(try container.decode(Bool.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(

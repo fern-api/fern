@@ -133,7 +133,6 @@ allowedFailures:
   - examples:no-custom-config
   - examples:readme-config
   - exhaustive
-  - literal
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference

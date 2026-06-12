@@ -323,13 +323,30 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): swift.Expression {
         const symbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+        const exampleProperties = this.context.getExampleObjectProperties({
+            parameters: object_.properties,
+            snippetObject: value
+        });
+        const examplePropertiesByWireValue = new Map(
+            exampleProperties.map((typeInstance) => [typeInstance.name.wireValue, typeInstance])
+        );
+        // Literal properties are constants that the generated initializer always requires, so emit
+        // them in declaration order even when the example omits them.
+        const orderedProperties = object_.properties
+            .map((property) => {
+                const exampleProperty = examplePropertiesByWireValue.get(property.name.wireValue);
+                if (exampleProperty != null) {
+                    return exampleProperty;
+                }
+                if (property.typeReference.type === "literal") {
+                    return { name: property.name, typeReference: property.typeReference, value: undefined };
+                }
+                return null;
+            })
+            .filter((typeInstance) => typeInstance != null);
         return swift.Expression.structInitialization({
             unsafeName: symbol.name,
-            arguments_: this.context
-                .getExampleObjectProperties({
-                    parameters: object_.properties,
-                    snippetObject: value
-                })
+            arguments_: orderedProperties
                 .map((typeInstance) => {
                     const expression = this.convert({
                         fromSymbol,
@@ -341,11 +358,7 @@ export class DynamicTypeLiteralMapper {
                     }
                     return swift.functionArgument({
                         label: sanitizeSwiftIdentifier(typeInstance.name.name.camelCase.unsafeName),
-                        value: this.convert({
-                            fromSymbol,
-                            typeReference: typeInstance.typeReference,
-                            value: typeInstance.value
-                        })
+                        value: expression
                     });
                 })
                 .filter((argument) => argument != null),

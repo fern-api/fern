@@ -6,12 +6,16 @@ import {
 } from "@fern-api/base-generator";
 import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
+import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs.js";
 import { SwiftProject } from "../project/index.js";
 import { CycleDetector } from "./cycle-detector.js";
-import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
+import {
+    registerLiteralEnums,
+    registerLiteralEnumsForObjectProperties,
+    registerLiteralEnumsForTypeReference
+} from "./register-literal-enums.js";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
 export abstract class AbstractSwiftGeneratorContext<
@@ -156,12 +160,52 @@ export abstract class AbstractSwiftGeneratorContext<
             });
         });
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            nameRegistry.registerSubClientSymbol({
+            const subClientSymbol = nameRegistry.registerSubClientSymbol({
                 subpackageId,
                 fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map((name) =>
                     this.caseConverter.pascalUnsafe(name)
                 ),
                 subpackageNamePascalCase: this.caseConverter.pascalUnsafe(subpackage.name)
+            });
+            if (subpackage.service != null) {
+                this.registerEndpointParameterLiteralEnums({
+                    parentSymbol: subClientSymbol,
+                    service: ir.services[subpackage.service],
+                    registry: nameRegistry
+                });
+            }
+        });
+        if (ir.rootPackage.service != null) {
+            this.registerEndpointParameterLiteralEnums({
+                parentSymbol: nameRegistry.getRootClientSymbolOrThrow(),
+                service: ir.services[ir.rootPackage.service],
+                registry: nameRegistry
+            });
+        }
+    }
+
+    /**
+     * Inline literal query parameters become method parameters on the generated client, so their
+     * literal enums must be registered under the owning client symbol (matching the scope used to
+     * resolve the parameter's Swift type). Otherwise the parameter falls back to `JSONValue` while
+     * snippets and wire tests emit the literal enum case, producing a type mismatch.
+     */
+    private registerEndpointParameterLiteralEnums({
+        parentSymbol,
+        service,
+        registry
+    }: {
+        parentSymbol: swift.Symbol;
+        service: FernIr.HttpService | undefined;
+        registry: NameRegistry;
+    }): void {
+        service?.endpoints.forEach((endpoint) => {
+            endpoint.queryParameters.forEach((queryParam) => {
+                registerLiteralEnumsForTypeReference({
+                    parentSymbol,
+                    registry,
+                    typeReference: queryParam.valueType
+                });
             });
         });
     }
@@ -282,7 +326,7 @@ export abstract class AbstractSwiftGeneratorContext<
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => referencer.referenceAsIsType("JSONValue"),
+                            boolean: () => referencer.referenceSwiftType("Bool"),
                             string: (literalValue) => {
                                 const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbol(
                                     fromSymbol,
