@@ -1,4 +1,4 @@
-import { replayApply, replayRun } from "../../replay/replay-run";
+import { readReplayDegraded, replayApply, replayRun } from "../../replay/replay-run";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { PipelineContext, ReplayStepConfig, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
@@ -116,9 +116,14 @@ export class ReplayStep extends BaseStep {
         }
 
         const report = result.report;
+        // Tolerant of engine versions without the degraded channel: the reader
+        // returns [] on reports that predate `degradedReasons`.
+        const degradedReasons = readReplayDegraded(report);
         return {
             executed: true,
             success: true,
+            degraded: degradedReasons.length > 0 ? true : undefined,
+            degradedReasons: degradedReasons.length > 0 ? degradedReasons : undefined,
             previousGenerationSha: result.previousGenerationSha ?? undefined,
             currentGenerationSha: result.currentGenerationSha ?? undefined,
             autoBootstrapped: result.autoBootstrapped,
