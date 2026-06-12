@@ -8,6 +8,6 @@ export class GeneratorsYmlTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = "GeneratorsYmlTimeoutError";
+        this.name = this.constructor.name;
     }
 }

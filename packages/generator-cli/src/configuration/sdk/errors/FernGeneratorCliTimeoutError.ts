@@ -8,6 +8,6 @@ export class FernGeneratorCliTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = "FernGeneratorCliTimeoutError";
+        this.name = this.constructor.name;
     }
 }

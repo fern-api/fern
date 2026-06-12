@@ -25,7 +25,7 @@ export class GeneratorsYmlError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = "GeneratorsYmlError";
+        this.name = this.constructor.name;
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

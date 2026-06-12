@@ -10,7 +10,7 @@ export class FernDocsConfigTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = "FernDocsConfigTimeoutError";
+        this.name = this.constructor.name;
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

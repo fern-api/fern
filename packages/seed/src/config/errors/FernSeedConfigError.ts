@@ -25,7 +25,7 @@ export class FernSeedConfigError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = "FernSeedConfigError";
+        this.name = this.constructor.name;
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

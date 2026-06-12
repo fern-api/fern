@@ -28,7 +28,7 @@ export class FernDocsConfigError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = "FernDocsConfigError";
+        this.name = this.constructor.name;
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
