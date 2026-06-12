@@ -16,6 +16,15 @@ type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
     collapsed?: boolean | "open-by-default";
 };
 
+/**
+ * Reads the `fieldPath` array from a GraphQL operation. The field is not yet
+ * declared on `APIV1Read.GraphQlOperation` in the current pinned `@fern-api/fdr-sdk`.
+ * Remove this helper once fern-platform#11183 ships and the SDK is bumped.
+ */
+function getFieldPath(operation: APIV1Read.GraphQlOperation): string[] | undefined {
+    return (operation as { fieldPath?: string[] }).fieldPath;
+}
+
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -1192,8 +1201,7 @@ export class ApiReferenceNodeConverter {
                     operations,
                     sectionSlug,
                     parentAvailability,
-                    operationType,
-                    namespace
+                    operationType
                 );
 
                 const sectionNode = {
@@ -1298,8 +1306,7 @@ export class ApiReferenceNodeConverter {
         operations: APIV1Read.GraphQlOperation[],
         parentSlug: FernNavigation.V1.SlugGenerator,
         parentAvailability: docsYml.RawSchemas.Availability | undefined,
-        operationType: string,
-        namespace?: string
+        operationType: string
     ): FernNavigation.V1.ApiPackageChild[] {
         // Only group queries by fieldPath; mutations and subscriptions stay flat.
         // Maintain insertion order: groups appear at the position of their first member.
@@ -1311,10 +1318,7 @@ export class ApiReferenceNodeConverter {
         > = [];
 
         for (const operation of operations) {
-            // fieldPath is not yet declared on GraphQlOperation in the current pinned
-            // @fern-api/fdr-sdk. The cast is required until the platform PR
-            // (fern-platform#11183) ships a new SDK version that includes the field.
-            const parentField = (operation as { fieldPath?: string[] }).fieldPath?.[0];
+            const parentField = getFieldPath(operation)?.[0];
             if (shouldGroup && parentField != null) {
                 const group = groupedByParent.get(parentField);
                 if (group != null) {
@@ -1332,13 +1336,19 @@ export class ApiReferenceNodeConverter {
 
         for (const entry of insertionOrder) {
             if (entry.type === "flat") {
-                const fieldPath = (entry.operation as { fieldPath?: string[] }).fieldPath;
+                const fieldPath = getFieldPath(entry.operation);
                 const leafName = entry.operation.name ?? entry.operation.id;
-                const slugSegment =
-                    fieldPath != null && fieldPath.length > 0
-                        ? [...fieldPath.map(kebabCase), kebabCase(leafName)].join("-")
-                        : kebabCase(leafName);
-                const operationSlug = parentSlug.append(slugSegment);
+                let operationSlug = parentSlug;
+                // Nest fieldPath segments as URL path components so that namespaced
+                // slugs (e.g. /mutations/account/create) never collide with top-level
+                // operations whose camelCase name kebab-cases identically (e.g.
+                // /mutations/account-create from "accountCreate").
+                if (fieldPath != null && fieldPath.length > 0) {
+                    for (const segment of fieldPath) {
+                        operationSlug = operationSlug.append(kebabCase(segment));
+                    }
+                }
+                operationSlug = operationSlug.append(kebabCase(leafName));
                 children.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${entry.operation.id}`),
                     type: "graphql" as const,
@@ -1358,9 +1368,10 @@ export class ApiReferenceNodeConverter {
                     featureFlags: undefined
                 });
             } else {
-                // Render namespace queries as a single flat entry titled with the parent field name.
-                // The first child operation provides the graphql operation data; the snippet generator
-                // uses fieldPath to wrap the request in the parent field automatically.
+                // Render the parent field as a single sidebar entry. The page content
+                // shows all child operations: the frontend discovers siblings by
+                // finding every operation in the API definition whose fieldPath[0]
+                // matches this parent field and whose operationType matches.
                 const groupOps = groupedByParent.get(entry.parentField) ?? [];
                 const firstOp = groupOps[0];
                 if (firstOp == null) {
