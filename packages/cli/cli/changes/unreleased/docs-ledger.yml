@@ -3,8 +3,10 @@
     publish via the new ledger backend; `legacy` (default) uses the
     existing register flow. The ledger path uses content-addressed
     storage for incremental deploys and supports multi-locale
-    translations, custom JS components, favicon resolution, git
-    provenance metadata, multi-domain forwarding, stable file-path
-    references in page markdown, MIME-type inference for uploads, and a
-    dedicated preview endpoint.
+    translations (including localized API reference content with
+    per-locale apiManifest blobs and sidebar titles), custom JS
+    components, favicon resolution, git provenance metadata,
+    multi-domain forwarding, stable file-path references in page
+    markdown, MIME-type inference for uploads, and a dedicated preview
+    endpoint.
   type: feat

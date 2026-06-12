@@ -1,6 +1,0 @@
-- summary: |
-    Ledger translations now include localized API reference content. When
-    translated OpenAPI specs exist under `translations/<locale>/apis/<apiName>/`,
-    the ledger publish path builds per-locale apiManifest blobs with translated
-    descriptions and patches sidebar titles to match the translated API content.
-  type: feat
