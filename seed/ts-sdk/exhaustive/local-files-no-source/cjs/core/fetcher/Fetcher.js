@@ -191,6 +191,7 @@ function fetcherImpl(args) {
         const requestBody = yield (0, getRequestBody_js_1.getRequestBody)({
             body: args.body,
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
+            omitEmptyArrays: args.omitEmptyArrays,
         });
         const fetchFn = (_b = args.fetchFn) !== null && _b !== void 0 ? _b : (yield (0, getFetchFn_js_1.getFetchFn)());
         const headers = yield getHeaders(args);

@@ -28,6 +28,7 @@ export interface Fetcher {
                 endpointMetadata: "endpointMetadata";
                 fetchFn: "fetchFn";
                 logging: "logging";
+                omitEmptyArrays: "omitEmptyArrays";
             };
         };
         Error: {
@@ -164,6 +165,7 @@ export declare namespace Fetcher {
         fetchFn?: ts.Expression;
         logging?: ts.Expression;
         queryString?: ts.Expression;
+        omitEmptyArrays?: boolean;
     }
 }
 
@@ -236,7 +238,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 timeoutInSeconds: "timeoutInSeconds",
                 endpointMetadata: "endpointMetadata",
                 fetchFn: "fetchFn",
-                logging: "logging"
+                logging: "logging",
+                omitEmptyArrays: "omitEmptyArrays"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -359,6 +362,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             if (args.logging != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logging, args.logging)
+                );
+            }
+            if (args.omitEmptyArrays) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.omitEmptyArrays,
+                        ts.factory.createTrue()
+                    )
                 );
             }
 

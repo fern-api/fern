@@ -116,6 +116,7 @@ function createClientClass(opts?: {
     retainOriginalCasing?: boolean;
     inlineFileProperties?: boolean;
     omitUndefined?: boolean;
+    omitEmptyArrays?: boolean;
     allowExtraFields?: boolean;
     streamType?: "wrapper" | "web";
     fileResponseType?: "stream" | "binary-response";
@@ -148,6 +149,7 @@ function createClientClass(opts?: {
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         inlineFileProperties: opts?.inlineFileProperties ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
+        omitEmptyArrays: opts?.omitEmptyArrays ?? false,
         allowExtraFields: opts?.allowExtraFields ?? false,
         streamType: opts?.streamType ?? "wrapper",
         fileResponseType: opts?.fileResponseType ?? "stream",

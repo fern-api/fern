@@ -46,6 +46,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packageJson: z.optional(z.record(z.any())),
     publishToJsr: z.optional(z.boolean()),
     omitUndefined: z.optional(z.boolean()),
+    omitEmptyArrays: z.optional(z.boolean()),
     useLegacyExports: z.optional(z.boolean()),
     streamType: z.optional(z.enum(["wrapper", "web"])),
     fileResponseType: z.optional(z.enum(["stream", "binary-response"])),

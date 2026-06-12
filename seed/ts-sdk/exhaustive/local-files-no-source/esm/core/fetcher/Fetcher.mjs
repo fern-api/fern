@@ -187,6 +187,7 @@ export function fetcherImpl(args) {
         const requestBody = yield getRequestBody({
             body: args.body,
             type: (_a = args.requestType) !== null && _a !== void 0 ? _a : "other",
+            omitEmptyArrays: args.omitEmptyArrays,
         });
         const fetchFn = (_b = args.fetchFn) !== null && _b !== void 0 ? _b : (yield getFetchFn());
         const headers = yield getHeaders(args);

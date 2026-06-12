@@ -169,6 +169,7 @@ function createImpl(opts?: {
     includeSerdeLayer?: boolean;
     retainOriginalCasing?: boolean;
     omitUndefined?: boolean;
+    omitEmptyArrays?: boolean;
     streamType?: "wrapper" | "web";
     fileResponseType?: "stream" | "binary-response";
     generateEndpointMetadata?: boolean;
@@ -186,6 +187,7 @@ function createImpl(opts?: {
         includeSerdeLayer: opts?.includeSerdeLayer ?? true,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
+        omitEmptyArrays: opts?.omitEmptyArrays ?? false,
         streamType: opts?.streamType ?? "wrapper",
         fileResponseType: opts?.fileResponseType ?? "stream",
         generateEndpointMetadata: opts?.generateEndpointMetadata ?? false,

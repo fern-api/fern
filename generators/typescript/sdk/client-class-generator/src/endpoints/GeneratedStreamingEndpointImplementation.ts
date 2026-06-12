@@ -29,6 +29,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        omitEmptyArrays: boolean;
         streamType: "wrapper" | "web";
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -48,6 +49,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
+    private readonly omitEmptyArrays: boolean;
     private readonly streamType: "wrapper" | "web";
     private readonly generateEndpointMetadata: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -62,6 +64,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         includeSerdeLayer,
         retainOriginalCasing,
         omitUndefined,
+        omitEmptyArrays,
         streamType,
         generateEndpointMetadata,
         parameterNaming
@@ -75,6 +78,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.omitEmptyArrays = omitEmptyArrays;
         this.streamType = streamType;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
@@ -292,7 +296,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                : undefined
+                : undefined,
+            omitEmptyArrays: this.omitEmptyArrays
         };
 
         return [

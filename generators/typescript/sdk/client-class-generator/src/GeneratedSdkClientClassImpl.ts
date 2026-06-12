@@ -74,6 +74,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         retainOriginalCasing: boolean;
         inlineFileProperties: boolean;
         omitUndefined: boolean;
+        omitEmptyArrays: boolean;
         allowExtraFields: boolean;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
@@ -120,6 +121,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly inlineFileProperties: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly omitUndefined: boolean;
+    private readonly omitEmptyArrays: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly allowExtraFields: boolean;
     private readonly exportsManager: ExportsManager;
@@ -148,6 +150,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         retainOriginalCasing,
         inlineFileProperties,
         omitUndefined,
+        omitEmptyArrays,
         allowExtraFields,
         exportsManager,
         streamType,
@@ -171,6 +174,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.inlineFileProperties = inlineFileProperties;
         this.includeSerdeLayer = includeSerdeLayer;
         this.omitUndefined = omitUndefined;
+        this.omitEmptyArrays = omitEmptyArrays;
         this.allowExtraFields = allowExtraFields;
         this.formDataSupport = formDataSupport;
         this.exportsManager = exportsManager;
@@ -261,6 +265,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         includeSerdeLayer,
                         retainOriginalCasing: this.retainOriginalCasing,
                         omitUndefined: this.omitUndefined,
+                        omitEmptyArrays: this.omitEmptyArrays,
                         generateEndpointMetadata: this.generateEndpointMetadata,
                         parameterNaming
                     });
@@ -284,6 +289,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
+                            omitEmptyArrays: this.omitEmptyArrays,
                             streamType,
                             fileResponseType,
                             generateEndpointMetadata: this.generateEndpointMetadata,
@@ -307,6 +313,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
+                            omitEmptyArrays: this.omitEmptyArrays,
                             streamType,
                             generateEndpointMetadata: this.generateEndpointMetadata,
                             parameterNaming
@@ -327,6 +334,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
+                            omitEmptyArrays: this.omitEmptyArrays,
                             streamType,
                             generateEndpointMetadata: this.generateEndpointMetadata,
                             parameterNaming
@@ -349,6 +357,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeSerdeLayer,
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
+                            omitEmptyArrays: this.omitEmptyArrays,
                             streamType,
                             fileResponseType,
                             generateEndpointMetadata: this.generateEndpointMetadata,

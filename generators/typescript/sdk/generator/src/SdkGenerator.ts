@@ -143,6 +143,7 @@ export declare namespace SdkGenerator {
         inlinePathParameters: boolean;
         enableInlineTypes: boolean;
         omitUndefined: boolean;
+        omitEmptyArrays: boolean;
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
         apiName: string;
@@ -535,6 +536,7 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             inlineFileProperties: config.inlineFileProperties,
             omitUndefined: config.omitUndefined,
+            omitEmptyArrays: config.omitEmptyArrays,
             allowExtraFields: config.allowExtraFields,
             streamType: config.streamType,
             fileResponseType: config.fileResponseType,
