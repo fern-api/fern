@@ -1,3 +1,3 @@
 import Foundation
 
-public typealias AliasToStream = JSONValue
+public typealias AliasToStream = Bool

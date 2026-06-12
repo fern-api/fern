@@ -3,14 +3,14 @@ import Foundation
 public struct SendResponse: Codable, Hashable, Sendable {
     public let message: String
     public let status: Int
-    public let success: JSONValue
+    public let success: Bool
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         message: String,
         status: Int,
-        success: JSONValue,
+        success: Bool,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.message = message
@@ -23,7 +23,7 @@ public struct SendResponse: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.message = try container.decode(String.self, forKey: .message)
         self.status = try container.decode(Int.self, forKey: .status)
-        self.success = try container.decode(JSONValue.self, forKey: .success)
+        self.success = try container.decode(Bool.self, forKey: .success)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

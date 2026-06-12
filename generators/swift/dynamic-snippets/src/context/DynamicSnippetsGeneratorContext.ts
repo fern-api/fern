@@ -164,12 +164,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             list: (ref) => swift.TypeReference.array(this.getSwiftTypeReferenceFromScope(ref.value, fromSymbol)),
             literal: (ref) => {
                 return visitDiscriminatedUnion(ref.value, "type")._visit({
-                    boolean: () => referencer.referenceAsIsType("JSONValue"),
+                    boolean: () => referencer.referenceSwiftType("Bool"),
                     string: (literalType) => {
-                        const symbol = this.nameRegistry.getNestedLiteralEnumSymbolOrThrow(
-                            fromSymbol,
-                            literalType.value
-                        );
+                        const symbol = this.nameRegistry.getNestedLiteralEnumSymbol(fromSymbol, literalType.value);
+                        if (symbol == null) {
+                            return referencer.referenceAsIsType("JSONValue");
+                        }
                         return referencer.referenceType(symbol);
                     },
                     _other: () => referencer.referenceAsIsType("JSONValue")

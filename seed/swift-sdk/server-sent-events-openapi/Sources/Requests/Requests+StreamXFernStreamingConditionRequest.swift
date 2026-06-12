@@ -5,13 +5,13 @@ extension Requests {
         /// The prompt or query to complete.
         public let query: String
         /// Whether to stream the response.
-        public let stream: JSONValue
+        public let stream: Bool
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
         public init(
             query: String,
-            stream: JSONValue,
+            stream: Bool,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.query = query
@@ -22,7 +22,7 @@ extension Requests {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.query = try container.decode(String.self, forKey: .query)
-            self.stream = try container.decode(JSONValue.self, forKey: .stream)
+            self.stream = try container.decode(Bool.self, forKey: .stream)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 

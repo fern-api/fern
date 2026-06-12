@@ -6,7 +6,7 @@ extension Requests {
         public let context: YoureSuperWise?
         public let query: String
         public let temperature: Double?
-        public let stream: JSONValue
+        public let stream: Bool
         public let aliasedContext: SomeAliasedLiteral
         public let maybeContext: SomeAliasedLiteral?
         public let objectWithLiteral: ATopLevelLiteral
@@ -18,7 +18,7 @@ extension Requests {
             context: YoureSuperWise? = nil,
             query: String,
             temperature: Double? = nil,
-            stream: JSONValue,
+            stream: Bool,
             aliasedContext: SomeAliasedLiteral,
             maybeContext: SomeAliasedLiteral? = nil,
             objectWithLiteral: ATopLevelLiteral,
@@ -41,7 +41,7 @@ extension Requests {
             self.context = try container.decodeIfPresent(YoureSuperWise.self, forKey: .context)
             self.query = try container.decode(String.self, forKey: .query)
             self.temperature = try container.decodeIfPresent(Double.self, forKey: .temperature)
-            self.stream = try container.decode(JSONValue.self, forKey: .stream)
+            self.stream = try container.decode(Bool.self, forKey: .stream)
             self.aliasedContext = try container.decode(SomeAliasedLiteral.self, forKey: .aliasedContext)
             self.maybeContext = try container.decodeIfPresent(SomeAliasedLiteral.self, forKey: .maybeContext)
             self.objectWithLiteral = try container.decode(ATopLevelLiteral.self, forKey: .objectWithLiteral)
