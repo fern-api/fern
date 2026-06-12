@@ -548,7 +548,7 @@ export class WireMock {
                         named.typeName.typeId,
                         typeof named.shape.singleUnionType.wireDiscriminantValue === "string"
                             ? named.shape.singleUnionType.wireDiscriminantValue
-                            : named.shape.singleUnionType.wireDiscriminantValue?.wireValue ?? ""
+                            : (named.shape.singleUnionType.wireDiscriminantValue?.wireValue ?? "")
                     );
                     obj[propertyWireName] = this.normalizeExampleDatetimes(unionShape);
                 } else if (unionShape.type === "samePropertiesAsObject") {
