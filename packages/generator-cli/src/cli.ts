@@ -455,7 +455,7 @@ void yargs(hideBin(process.argv))
                 )
                 .command(
                     "forget [args..]",
-                    false, // hidden from --help
+                    "Permanently dismiss tracked customizations by patch ID, file pattern, or --all",
                     (subYargs) => {
                         return subYargs
                             .positional("args", {

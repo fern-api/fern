@@ -158,8 +158,11 @@ export function formatReplayPrBody(
         parts.push(`|------|-------------------|-------------------|`);
         for (const patch of unresolvedPatches) {
             const description = patchDescription(patch);
+            // Surface the patch ID so the permanent-dismiss instruction below
+            // (`fern replay forget <patch-id>`) is actionable from the PR body.
+            const descriptionWithId = patch.patchId ? `${description} (\`${patch.patchId}\`)` : description;
             for (const file of patch.conflictDetails) {
-                parts.push(`| \`${file.file}\` | ${description} | ${formatConflictReason(file.conflictReason)} |`);
+                parts.push(`| \`${file.file}\` | ${descriptionWithId} | ${formatConflictReason(file.conflictReason)} |`);
             }
         }
 
@@ -185,6 +188,9 @@ export function formatReplayPrBody(
         parts.push(`4. Resolve using your editor's merge tools (VS Code, IntelliJ, etc.)`);
         parts.push(`5. Run: \`fern replay resolve\` again to finalize`);
         parts.push(`6. Push your changes\n`);
+        parts.push(
+            `To permanently dismiss a customization instead — keep the generated code, and it will not return on future generations — run: \`fern replay forget <patch-id>\` (patch IDs are shown in the table above).\n`
+        );
         parts.push(`Your resolved customizations will be remembered on future SDK generations.`);
         parts.push(
             `If you merge this PR without resolving, your unresolved customizations will conflict again on the next generation.`
