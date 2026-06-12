@@ -78,6 +78,7 @@ function visitEndpoint({
     visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
         "display-name": noop,
+        subtitle: noop,
         availability: noop,
         "base-path": noop,
         path: noop,
