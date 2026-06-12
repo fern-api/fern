@@ -590,8 +590,8 @@ export class WireMock {
                     return getWireValue(matchingType.shape.name);
                 }
             }
-        } catch {
-            // Fall through to default
+        } catch (e) {
+            console.warn(`Failed to look up singleProperty wire name for typeId=${typeId}: ${e}`);
         }
         return "body";
     }
