@@ -211,19 +211,18 @@ export async function runLibraryDocsGeneration({
     );
 
     const failures = results.filter((r): r is PromiseRejectedResult => r.status === "rejected");
-    for (const failure of failures) {
-        context.logger.error(chalk.red(extractErrorMessage(failure.reason)));
-    }
 
-    const firstFailure = failures[0];
-    if (firstFailure != null) {
-        // Surface the first specific failure so the caller exits with a useful message.
-        const reason = firstFailure.reason;
-        if (reason instanceof CliError) {
-            throw reason;
+    if (failures.length > 0) {
+        // Surface failures exactly once: the CLI's task handler prints the thrown
+        // CliError, so logging here as well would double-print each message. A single
+        // failure is re-thrown as-is (preserving its error code); multiple failures are
+        // combined into one message.
+        const soleReason = failures.length === 1 ? failures[0]?.reason : undefined;
+        if (soleReason instanceof CliError) {
+            throw soleReason;
         }
         throw new CliError({
-            message: extractErrorMessage(reason),
+            message: failures.map((failure) => extractErrorMessage(failure.reason)).join("\n"),
             code: CliError.Code.InternalError
         });
     }
