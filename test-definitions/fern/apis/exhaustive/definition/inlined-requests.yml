@@ -23,3 +23,14 @@ service:
       response: objects.ObjectWithOptionalField
       errors:
         - errors.BadRequestBody
+
+    postWithArrayBodyAndHeaders:
+      docs: POST with root-level array body and header params
+      path: /array-body-with-headers
+      method: POST
+      request:
+        name: PostWithArrayBodyAndHeaders
+        body: list<string>
+        headers:
+          X-Custom-Header: optional<string>
+      response: string

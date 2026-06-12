@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.0
+  changelogEntry:
+    - summary: |
+        Add `serdeLayer` config option as a positive alternative to the `noSerdeLayer` double negative.
+        When both are specified, `serdeLayer` takes precedence.
+      type: feat
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.71.9
+  changelogEntry:
+    - summary: |
+        Fix request body serialization when flattenRequestParameters is enabled with
+        a non-object reference body (e.g., `list<string>`) and header parameters. Previously
+        the generated code used spread destructuring which wrapped the body in an object.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
 - version: 3.71.8
   changelogEntry:
     - summary: |

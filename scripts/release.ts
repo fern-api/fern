@@ -10,6 +10,7 @@ import {
     getSoftwareConfig,
     getUnreleasedDir,
     listConfiguredSoftware,
+    loadReleaseConfig,
     type SoftwareConfig
 } from "./release-config.js";
 import { setupSoftware } from "./release-setup.js";
@@ -350,6 +351,69 @@ function moveUnreleasedFiles(unreleasedDir: string, versionDir: string, changes:
     }
 }
 
+/**
+ * When a software entry declares `propagatesTo`, this function creates an
+ * auto-generated changelog entry in each target's unreleased folder. The
+ * entry uses the highest severity type from the source's changes so that
+ * the dependent receives at least a matching semver bump (e.g. a `feat`
+ * in the Rust SDK produces a `feat` entry for the CLI Generator).
+ *
+ * Returns the list of file paths that were written (relative to the repo
+ * root) so the caller can stage them in the same git commit.
+ */
+function propagateToDownstream(
+    softwareName: string,
+    sourceVersion: string,
+    config: SoftwareConfig,
+    changes: UnreleasedChange[]
+): string[] {
+    const targets = config.propagatesTo;
+    if (!targets || targets.length === 0) {
+        return [];
+    }
+
+    const allConfigs = loadReleaseConfig();
+    const writtenPaths: string[] = [];
+
+    // Determine the highest severity type from the source changes.
+    // Initialize from the first entry so patch-level types propagate
+    // faithfully (fix → fix, not fix → chore).
+    let highestType: ChangelogEntry["type"] | undefined;
+    for (const change of changes) {
+        for (const entry of change.entries) {
+            if (highestType === undefined || getSeverityFromType(entry.type) === "minor") {
+                highestType = entry.type;
+            }
+        }
+    }
+    highestType = highestType ?? "chore";
+
+    for (const targetKey of targets) {
+        const targetConfig = allConfigs.software[targetKey];
+        if (!targetConfig) {
+            console.warn(`⚠️  propagatesTo target "${targetKey}" not found in release-config.json — skipping`);
+            continue;
+        }
+
+        const targetUnreleasedDir = join(__dirname, "..", getUnreleasedDir(targetConfig));
+        if (!existsSync(targetUnreleasedDir)) {
+            mkdirSync(targetUnreleasedDir, { recursive: true });
+        }
+
+        const filename = `auto-propagated-from-${softwareName}-${sourceVersion}.yml`;
+        const filePath = join(targetUnreleasedDir, filename);
+
+        const content = `- summary: |\n    Includes ${config.name} ${sourceVersion} updates.\n  type: ${highestType}\n`;
+        writeFileSync(filePath, content);
+
+        const relativePath = join(getUnreleasedDir(targetConfig), filename);
+        writtenPaths.push(relativePath);
+        console.log(`   📡 Propagated ${softwareName} → ${targetKey} (${relativePath})`);
+    }
+
+    return writtenPaths;
+}
+
 function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     const versionsFile = join(__dirname, "..", config.versionsFile);
     const changelogFolder = join(__dirname, "..", getChangelogFolder(config));
@@ -420,11 +484,17 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     moveUnreleasedFiles(fullUnreleasedDir, versionDir, changes);
     console.log(`   ✅ Files moved to ${getChangelogFolder(config)}/${nextVersion}/\n`);
 
+    // Propagate changelog entries to downstream dependents (e.g. rust → cli-generator)
+    const propagatedPaths = propagateToDownstream(softwareName, nextVersion, config, changes);
+
     // Commit changes
     console.log("💾 Committing changes...");
     try {
         execSync(`git add ${config.versionsFile}`, { stdio: "inherit" });
         execSync(`git add ${getChangelogFolder(config)}`, { stdio: "inherit" });
+        for (const propagatedPath of propagatedPaths) {
+            execSync(`git add ${propagatedPath}`, { stdio: "inherit" });
+        }
         execSync(`git commit -m "chore(${softwareName}): release ${nextVersion}"`, { stdio: "inherit" });
         console.log("   ✅ Changes committed\n");
     } catch (error) {
