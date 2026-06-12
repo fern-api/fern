@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.47.3
+  changelogEntry:
+    - summary: |
+        Use string literal for `this.name` in error classes instead of
+        `this.constructor.name`, which gets mangled by minifiers.
+      type: fix
+    - summary: |
+        Fix text/* content types (e.g. text/csv, text/xml) being silently converted
+        to text/plain during OpenAPI export. The original media type is now preserved
+        through the IR via a new optional `contentType` field on `TextResponse`.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
 - version: 5.47.2
   changelogEntry:
     - summary: |
