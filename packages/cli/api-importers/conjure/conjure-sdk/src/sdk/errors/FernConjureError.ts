@@ -25,7 +25,7 @@ export class FernConjureError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "FernConjureError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

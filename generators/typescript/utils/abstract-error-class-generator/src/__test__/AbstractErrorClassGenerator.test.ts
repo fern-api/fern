@@ -201,14 +201,15 @@ describe("AbstractErrorClassGenerator", () => {
             expect(text).toContain("this.constructor");
         });
 
-        it("sets this.name = this.constructor.name", () => {
+        it("sets this.name to a string literal (minification-safe)", () => {
             const generator = new TestErrorClassGenerator({
                 errorClassName: "NamedError"
             });
             const context = createMockContext();
             generator.writeToFile(context);
             const text = context.sourceFile.getFullText();
-            expect(text).toContain("this.name = this.constructor.name");
+            expect(text).toContain('this.name = "NamedError"');
+            expect(text).not.toContain("this.constructor.name");
         });
 
         it("invokes addToClass callback", () => {

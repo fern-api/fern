@@ -25,7 +25,7 @@ export class FernDefinitionError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "FernDefinitionError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

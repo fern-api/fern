@@ -25,7 +25,7 @@ export class FernOpenapiIrError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "FernOpenapiIrError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

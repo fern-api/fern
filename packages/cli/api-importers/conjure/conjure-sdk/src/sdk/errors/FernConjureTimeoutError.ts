@@ -8,6 +8,6 @@ export class FernConjureTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "FernConjureTimeoutError";
     }
 }
