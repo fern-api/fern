@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.45.0
+  changelogEntry:
+    - summary: |
+        The Go SDK now accepts space-separated datetime strings (e.g. "2025-02-15 10:30:00+00:00")
+        in addition to standard RFC3339 format during deserialization. This matches the leniency of
+        the Python and TypeScript SDKs.
+      type: feat
+  createdAt: "2026-06-12"
+  irVersion: 66
 - version: 1.44.9
   changelogEntry:
     - summary: |
