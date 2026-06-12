@@ -291,28 +291,13 @@ function convertService(
                 },
                 _other: () => undefined
             }),
-            includeInApiExplorer: irEndpoint.apiPlayground
+            includeInApiExplorer: irEndpoint.apiPlayground,
+            subtitle: irEndpoint.subtitle ?? undefined
         };
-        attachSubtitle(endpoint, irEndpoint);
         attachUserSpecifiedV2ExamplesMarker(endpoint, irEndpoint);
         endpoints.push(endpoint);
     }
     return endpoints;
-}
-
-/**
- * Attach the subtitle from the IR endpoint onto the FDR register payload.
- * The FDR SDK type will include `subtitle` once the fern-platform PR ships;
- * until then we cast to add the field so it's ready to be consumed.
- */
-function attachSubtitle(
-    endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition,
-    irEndpoint: Ir.http.HttpEndpoint
-): void {
-    if (irEndpoint.subtitle == null) {
-        return;
-    }
-    (endpoint as FdrCjsSdk.api.v1.register.EndpointDefinition & { subtitle?: string }).subtitle = irEndpoint.subtitle;
 }
 
 /**
