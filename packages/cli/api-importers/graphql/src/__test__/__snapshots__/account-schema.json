@@ -81,6 +81,9 @@
       "operationType": "MUTATION",
       "name": "addUserToAccount",
       "description": "Adds a user to an account.",
+      "fieldPath": [
+        "account"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -103,6 +106,9 @@
       "operationType": "MUTATION",
       "name": "removeUserFromAccount",
       "description": "Removes a user from an account and all associated entities.",
+      "fieldPath": [
+        "account"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -125,6 +131,9 @@
       "operationType": "MUTATION",
       "name": "createCheckout",
       "description": "Creates a Checkout for a Merchant.",
+      "fieldPath": [
+        "checkout"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -147,6 +156,9 @@
       "operationType": "MUTATION",
       "name": "cancelSubscription",
       "description": "Cancels a Subscription for a Merchant.",
+      "fieldPath": [
+        "subscription"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -169,6 +181,9 @@
       "operationType": "MUTATION",
       "name": "createUserWithPassword",
       "description": "Creates a user with password.",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -191,6 +206,9 @@
       "operationType": "MUTATION",
       "name": "createUser",
       "description": "Creates a user.",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -213,6 +231,9 @@
       "operationType": "MUTATION",
       "name": "addUserToStore",
       "description": "Adds a user to a store.",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -235,6 +256,9 @@
       "operationType": "MUTATION",
       "name": "removeUserFromStore",
       "description": "Removes user from a store.",
+      "fieldPath": [
+        "user"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -257,6 +281,9 @@
       "operationType": "MUTATION",
       "name": "createEventSource",
       "description": "Creates an Amazon EventSource.",
+      "fieldPath": [
+        "app"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -279,6 +306,9 @@
       "operationType": "MUTATION",
       "name": "deleteEventSource",
       "description": "Deletes an Amazon EventSource.",
+      "fieldPath": [
+        "app"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -301,6 +331,9 @@
       "operationType": "MUTATION",
       "name": "addUsersToUserGroups",
       "description": "Adds users to user groups.",
+      "fieldPath": [
+        "userGroup"
+      ],
       "arguments": [
         {
           "name": "input",
@@ -323,6 +356,9 @@
       "operationType": "MUTATION",
       "name": "removeUsersFromUserGroup",
       "description": "Removes users from a user group.",
+      "fieldPath": [
+        "userGroup"
+      ],
       "arguments": [
         {
           "name": "input",
