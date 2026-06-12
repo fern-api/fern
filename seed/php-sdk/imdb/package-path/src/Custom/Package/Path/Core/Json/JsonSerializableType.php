@@ -174,7 +174,7 @@ abstract class JsonSerializableType implements \JsonSerializable
                 /** @var array<string, mixed> $arrayValue */
                 $arrayValue = $value;
                 $value = JsonDeserializer::deserializeObject($arrayValue, $type->getName());
-            } elseif ($type instanceof ReflectionNamedType && $type->isBuiltin() && is_numeric($value) && !is_bool($value)) {
+            } elseif ($type instanceof ReflectionNamedType && $type->isBuiltin() && is_numeric($value)) {
                 // Coerce numeric JSON to the declared scalar type. json_decode returns
                 // float for decimal notation, scientific notation, or values that fit a
                 // double but not an int — without this, a wire value like 1.5e15 would
