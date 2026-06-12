@@ -8,7 +8,7 @@ import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
 import { pushSignedCommit } from "../github/pushSignedCommit";
 import type { PipelineLogger } from "../PipelineLogger";
-import { formatReplayPrBody } from "../replay-summary";
+import { composePrBody, formatReplayDegradedBlock, formatReplayPrBody } from "../replay-summary";
 import type {
     AutoVersionStepResult,
     GithubStepConfig,
@@ -235,7 +235,12 @@ export class GithubStep extends BaseStep {
             changelogUrl
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
-        let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
+        // Degraded runs ship loudly, never withheld: the warning block sits at
+        // the TOP of the PR body, above the version header. It is composed
+        // separately from `replaySection` because formatReplayPrBody returns
+        // undefined for the zero-preserved/zero-conflict shape of degraded runs.
+        const degradedBlock = formatReplayDegradedBlock(replayResult);
+        let enrichedBody = composePrBody({ prBody, replaySection, degradedBlock });
         enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config, resolved);
 
         if (isUpdatingExistingPR && existingPR != null) {

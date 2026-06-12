@@ -47,6 +47,8 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     // `success=` reflects whether the replay logic itself succeeded (NOT step.success,
     // which stays true on replay crashes so the orchestrator doesn't abort generation).
     const replayLogicSucceeded = result.replayCrashed !== true;
+    // `degraded=` is APPEND-ONLY: the existing keys are frozen on-call grep
+    // keys (see CONTEXT.md in fern-replay) — never rename or reorder them.
     logger.info(
         `[replay] flow=${result.flow ?? "unknown"} detected=${result.patchesDetected ?? 0} ` +
             `applied=${applied} conflicts=${result.patchesWithConflicts ?? 0} ` +
@@ -54,7 +56,8 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
             `content_rebased=${result.patchesContentRebased ?? 0} ` +
             `kept_as_user_owned=${result.patchesKeptAsUserOwned ?? 0} ` +
             `unresolved=${unresolvedCount} unresolved_files=${unresolvedFiles} ` +
-            `warnings=${result.warnings?.length ?? 0} success=${replayLogicSucceeded}`
+            `warnings=${result.warnings?.length ?? 0} success=${replayLogicSucceeded} ` +
+            `degraded=${result.degraded === true}`
     );
 
     if (preserved > 0) {
@@ -115,6 +118,72 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     for (const warning of result.warnings ?? []) {
         logger.warn(`Replay: ${warning}`);
     }
+}
+
+/**
+ * Renders the degraded-run warning block for the TOP of a PR body, or
+ * undefined when the run was healthy.
+ *
+ * Deliberately separate from `formatReplayPrBody`: that function returns
+ * undefined when nothing was preserved and nothing conflicted — exactly the
+ * shape of a degraded run — so a degraded warning routed through it would
+ * never render. This block is composed independently via `composePrBody`.
+ *
+ * Also renders when the replay logic crashed (`replayCrashed === true`):
+ * a crashed run ships a PR with zero replay signal otherwise, which is the
+ * same silent-loss hole.
+ */
+export function formatReplayDegradedBlock(result: ReplayStepResult | undefined): string | undefined {
+    if (result == null || !result.executed) {
+        return undefined;
+    }
+
+    const reasons = result.degradedReasons ?? [];
+    const isDegraded = result.degraded === true || reasons.length > 0;
+    const crashed = result.replayCrashed === true;
+    if (!isDegraded && !crashed) {
+        return undefined;
+    }
+
+    const lines: string[] = [];
+    lines.push(`> [!WARNING]`);
+    lines.push(
+        `> **Customizations may not have been preserved in this update — review the diff before merging.**`
+    );
+    if (reasons.length > 0) {
+        lines.push(`>`);
+        for (const reason of reasons) {
+            lines.push(`> - ${reason.message}`);
+        }
+    } else if (crashed) {
+        lines.push(`>`);
+        const detail = result.errorMessage != null ? ` (${result.errorMessage})` : "";
+        lines.push(`> - Replay did not complete on this run${detail}.`);
+    }
+    lines.push(`>`);
+    lines.push(
+        `> The previous generation was not reachable while this update was prepared. ` +
+            `To verify customizations were carried forward, widen the clone window ` +
+            `(e.g. \`git fetch --unshallow\`) and re-run generation.`
+    );
+    return lines.join("\n");
+}
+
+/**
+ * Pure PR-body composition. The degraded block — when present — sits at the
+ * very top, above the version header; the replay section appends after a
+ * divider. One composition site serves both the create-PR and
+ * update-existing-PR paths in GithubStep.
+ */
+export function composePrBody(parts: { prBody: string; replaySection?: string; degradedBlock?: string }): string {
+    let body = parts.prBody;
+    if (parts.replaySection != null) {
+        body = body + "\n\n---\n\n" + parts.replaySection;
+    }
+    if (parts.degradedBlock != null) {
+        body = parts.degradedBlock + "\n\n---\n\n" + body;
+    }
+    return body;
 }
 
 export function formatReplayPrBody(

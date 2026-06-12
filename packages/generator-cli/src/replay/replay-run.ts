@@ -268,6 +268,45 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
 }
 
 /**
+ * Tolerant reader for the engine's degraded channel. The pinned
+ * `@fern-api/replay` release may predate `ReplayReport.degradedReasons`
+ * (added after 0.18.0), so this walks the report as `unknown` and returns
+ * only well-formed `{ code, message }` entries — `[]` when the field is
+ * absent or malformed. Reason codes are kept as plain strings so future
+ * engine codes pass through without a consumer release.
+ */
+export function readReplayDegraded(report: ReplayReport): Array<{ code: string; message: string }> {
+    const candidate: unknown = report;
+    if (typeof candidate !== "object" || candidate == null) {
+        return [];
+    }
+    if (!("degradedReasons" in candidate)) {
+        return [];
+    }
+    const value: unknown = candidate.degradedReasons;
+    if (!Array.isArray(value)) {
+        return [];
+    }
+    const reasons: Array<{ code: string; message: string }> = [];
+    for (const entry of value) {
+        const candidateEntry: unknown = entry;
+        if (typeof candidateEntry !== "object" || candidateEntry == null) {
+            continue;
+        }
+        if (!("code" in candidateEntry) || !("message" in candidateEntry)) {
+            continue;
+        }
+        const code: unknown = candidateEntry.code;
+        const message: unknown = candidateEntry.message;
+        if (typeof code !== "string" || typeof message !== "string") {
+            continue;
+        }
+        reasons.push({ code, message });
+    }
+    return reasons;
+}
+
+/**
  * True when `outputDir` is a git work tree whose HEAD has no commits yet
  * (`git init` just ran — the brand-new SDK repo case). Returns false for
  * non-git directories so bootstrap() still surfaces those as failures.

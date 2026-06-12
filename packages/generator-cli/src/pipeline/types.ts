@@ -238,6 +238,23 @@ export interface ReplayStepResult extends StepResult {
         }>;
     }>;
     warnings?: string[];
+    /**
+     * True when the replay run completed but could not guarantee customizations
+     * were preserved — the previous generation (the baseline) was unreachable
+     * during the run (shallow clone / pruned history). Mirrors the engine
+     * report's `degraded` field; undefined on healthy runs AND on engine
+     * versions that don't emit it yet. Serialized into the pipeline JSON.
+     */
+    degraded?: boolean;
+    /**
+     * Structured reasons for a degraded run. `code` is intentionally widened to
+     * `string` so future engine reason codes pass through without a consumer
+     * release. The same facts also appear as strings in `warnings`.
+     */
+    degradedReasons?: Array<{
+        code: string;
+        message: string;
+    }>;
 }
 
 export interface FernignoreStepResult extends StepResult {
