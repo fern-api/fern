@@ -1,0 +1,14 @@
+- summary: |
+    Agent skills can now be declared in docs.yml via `page-actions.options.skills.path`,
+    pointing at a directory of skills in the docs repo (resolved relative to the folder
+    containing docs.yml; `../` is allowed). At `fern generate --docs`, every subdirectory
+    containing a SKILL.md is published as one skill: the CLI validates the bundle
+    (kebab-case names matching directories, non-empty descriptions, unique names, no
+    references escaping a skill's directory), generates the `.well-known/skills/index.json`
+    discovery manifest, and uploads every file at `.well-known/skills/<name>/…` so that
+    `npx skills add https://<docs-domain>` works — without writing anything back to the
+    repo. A declared path wins over a hand-populated `fern/.well-known/skills/` folder
+    (warned on conflict); the raw well-known passthrough still applies when no path is
+    declared. The unused `repository` display field is removed from the skills page
+    action config.
+  type: feat

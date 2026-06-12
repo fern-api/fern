@@ -4,20 +4,27 @@ import type * as FernDocsConfig from "../../../index.js";
 
 /**
  * Configures the "Install skills" page action and its modal. Sites that ship agent skills
- * point at where those skills live and how to install them. If the docs site also serves a
- * `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array with the
- * served manifest; `title`, `description`, `learn-more-url`, `repository`, and
+ * point at where those skills live (`path`) and how to install them. If the docs site also
+ * serves a `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array
+ * with the served manifest; `title`, `description`, `learn-more-url`, and
  * `install-command` always come from this config.
  */
 export interface SkillsPageActionConfig {
+    /**
+     * Path to a directory of agent skills in this repo, resolved relative to the folder
+     * containing this docs.yml (`../` is allowed, e.g. a repo-root `.agents/skills/`
+     * folder). Every subdirectory containing a `SKILL.md` is published as one skill: the CLI
+     * validates the bundle, generates the `/.well-known/skills/index.json` discovery
+     * manifest, and uploads every file at `.well-known/skills/<skill-name>/…` so that
+     * `npx skills add https://<docs-domain>` works. Nothing is written back to the repo.
+     */
+    path?: string;
     /** Overrides the modal title. */
     title?: string;
     /** Overrides the modal description/blurb. */
     description?: string;
     /** Optional "Learn more" link shown alongside the description. */
     learnMoreUrl?: string;
-    /** Source repository (e.g. GitHub or GitLab) shown as a "View source" button. */
-    repository?: string;
     /**
      * Command(s) used to install the skills, rendered verbatim as a copyable block. Providing a
      * custom command disables the modal's per-skill selection. When omitted, the docs site

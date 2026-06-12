@@ -9,7 +9,7 @@ import { Rule, RuleViolation } from "../../Rule.js";
  *
  * - skill entries must have a non-empty `name`
  * - `install-command` entries must be non-empty (a custom command is rendered verbatim)
- * - `learn-more-url`, `repository`, and per-skill `url` must be syntactically valid URLs
+ * - `learn-more-url` and per-skill `url` must be syntactically valid URLs
  */
 export const ValidSkillsPageActionRule: Rule = {
     name: "valid-skills-page-action",
@@ -28,6 +28,13 @@ export function validateSkillsPageAction(
     }
 
     const violations: RuleViolation[] = [];
+
+    if (skills.path != null && skills.path.trim().length === 0) {
+        violations.push({
+            severity: "error",
+            message: "page-actions.options.skills.path must not be empty."
+        });
+    }
 
     if (skills.installCommand != null) {
         const installCommands =
@@ -67,13 +74,6 @@ export function validateSkillsPageAction(
         violations.push({
             severity: "warning",
             message: `page-actions.options.skills.learn-more-url is not a valid URL: "${skills.learnMoreUrl}"`
-        });
-    }
-
-    if (skills.repository != null && !isValidUrl(skills.repository)) {
-        violations.push({
-            severity: "warning",
-            message: `page-actions.options.skills.repository is not a valid URL: "${skills.repository}"`
         });
     }
 

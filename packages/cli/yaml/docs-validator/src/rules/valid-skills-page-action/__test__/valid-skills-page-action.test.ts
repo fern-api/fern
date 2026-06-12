@@ -17,7 +17,6 @@ describe("validateSkillsPageAction", () => {
                 title: "Install agent skills",
                 description: "Skills for authoring Fern docs.",
                 learnMoreUrl: "https://buildwithfern.com/learn/docs/ai/agent-skills",
-                repository: "https://github.com/fern-api/skills",
                 installCommand: "npx skills add fern-api/skills --skill fern-docs",
                 skills: [
                     {
@@ -67,10 +66,9 @@ describe("validateSkillsPageAction", () => {
     it("warns on invalid URLs", () => {
         const violations = validateSkillsPageAction({
             learnMoreUrl: "not a url",
-            repository: "also not a url",
             skills: [{ name: "fern-docs", url: "/relative/path" }]
         });
-        expect(violations).toHaveLength(3);
+        expect(violations).toHaveLength(2);
         expect(violations.every((violation) => violation.severity === "warning")).toBe(true);
         expect(violations.map((violation) => violation.message).join("\n")).toContain("learn-more-url");
     });

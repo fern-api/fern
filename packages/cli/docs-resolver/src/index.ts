@@ -23,6 +23,16 @@ export {
 } from "./DocsDefinitionResolver.js";
 export { stitchGlobalTheme } from "./stitchGlobalTheme.js";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
+export {
+    DECLARED_SKILLS_UPLOAD_DIRECTORY,
+    type DeclaredSkill,
+    type DeclaredSkillFile,
+    type DeclaredSkillsViolation,
+    type DiscoveredDeclaredSkills,
+    discoverDeclaredSkills,
+    generateSkillsIndexManifest,
+    validateSkillFrontmatter
+} from "./utils/declaredSkills.js";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces.js";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3.js";
 export { updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";

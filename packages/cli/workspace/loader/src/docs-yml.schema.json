@@ -4255,6 +4255,17 @@
     "docs.SkillsPageActionConfig": {
       "type": "object",
       "properties": {
+        "path": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Path to a directory of agent skills in this repo, resolved relative to the folder\ncontaining this docs.yml (`../` is allowed, e.g. a repo-root `.agents/skills/`\nfolder). Every subdirectory containing a `SKILL.md` is published as one skill: the CLI\nvalidates the bundle, generates the `/.well-known/skills/index.json` discovery\nmanifest, and uploads every file at `.well-known/skills/<skill-name>/…` so that\n`npx skills add https://<docs-domain>` works. Nothing is written back to the repo."
+        },
         "title": {
           "oneOf": [
             {
@@ -4288,17 +4299,6 @@
           ],
           "description": "Optional \"Learn more\" link shown alongside the description."
         },
-        "repository": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Source repository (e.g. GitHub or GitLab) shown as a \"View source\" button."
-        },
         "install-command": {
           "oneOf": [
             {
@@ -4326,7 +4326,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Configures the \"Install skills\" page action and its modal. Sites that ship agent skills\npoint at where those skills live and how to install them. If the docs site also serves a\n`/.well-known` skills manifest, the modal replaces the hand-listed `skills` array with the\nserved manifest; `title`, `description`, `learn-more-url`, `repository`, and\n`install-command` always come from this config."
+      "description": "Configures the \"Install skills\" page action and its modal. Sites that ship agent skills\npoint at where those skills live (`path`) and how to install them. If the docs site also\nserves a `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array\nwith the served manifest; `title`, `description`, `learn-more-url`, and\n`install-command` always come from this config."
     },
     "docs.PageActionOptions": {
       "type": "object",

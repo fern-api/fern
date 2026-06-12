@@ -10,20 +10,20 @@ export const SkillsPageActionConfig: core.serialization.ObjectSchema<
     serializers.SkillsPageActionConfig.Raw,
     FernDocsConfig.SkillsPageActionConfig
 > = core.serialization.object({
+    path: core.serialization.string().optional(),
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
     learnMoreUrl: core.serialization.property("learn-more-url", core.serialization.string().optional()),
-    repository: core.serialization.string().optional(),
     installCommand: core.serialization.property("install-command", SkillsInstallCommand.optional()),
     skills: core.serialization.list(SkillEntry).optional(),
 });
 
 export declare namespace SkillsPageActionConfig {
     export interface Raw {
+        path?: string | null;
         title?: string | null;
         description?: string | null;
         "learn-more-url"?: string | null;
-        repository?: string | null;
         "install-command"?: SkillsInstallCommand.Raw | null;
         skills?: SkillEntry.Raw[] | null;
     }
