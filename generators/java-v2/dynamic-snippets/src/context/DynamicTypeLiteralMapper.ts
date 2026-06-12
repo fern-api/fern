@@ -1100,6 +1100,9 @@ export class DynamicTypeLiteralMapper {
     }
 
     private normalizeDateTimeString(dateTime: string): string {
+        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?$/.test(dateTime)) {
+            return `${dateTime}Z`;
+        }
         if (/^\d{4}-\d{2}-\d{2}T/.test(dateTime)) {
             return dateTime;
         }

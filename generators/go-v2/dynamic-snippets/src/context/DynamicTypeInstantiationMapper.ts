@@ -853,6 +853,9 @@ export class DynamicTypeInstantiationMapper {
         if (/^\d{4}-\d{2}-\d{2}$/.test(dateTime)) {
             return `${dateTime}T00:00:00Z`;
         }
+        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?$/.test(dateTime)) {
+            return `${dateTime}Z`;
+        }
         if (/^\d{4}-\d{2}-\d{2}T/.test(dateTime)) {
             return dateTime;
         }
