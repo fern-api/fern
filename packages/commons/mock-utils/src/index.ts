@@ -558,6 +558,14 @@ export class WireMock {
                             obj[wireKey] = this.normalizeExampleDatetimes(prop.value);
                         }
                     }
+                    if (unionShape.object.extraProperties) {
+                        for (const extra of unionShape.object.extraProperties) {
+                            const wireKey = typeof extra.name === "string" ? extra.name : extra.name?.wireValue;
+                            if (wireKey != null) {
+                                obj[wireKey] = this.normalizeExampleDatetimes(extra.value);
+                            }
+                        }
+                    }
                 }
                 return obj;
             }
