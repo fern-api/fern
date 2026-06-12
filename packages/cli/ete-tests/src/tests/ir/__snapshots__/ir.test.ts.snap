@@ -149,7 +149,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     "file": "app"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_app:GetAppResponse"
             },
             "shape": {
@@ -165,7 +164,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                             "file": "commons"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_commons:Deployment"
                     }
                 ],
@@ -208,7 +206,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                 "file": "commons"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_commons:AppId",
                             "default": null,
                             "inline": null
@@ -284,7 +281,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                         "file": "commons"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_commons:Deployment"
                                 },
                                 "propertyAccess": null
@@ -313,7 +309,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                         "file": "app"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_app:GetAppResponse"
                                 },
                                 "propertyAccess": null
@@ -345,7 +340,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:AppId"
             },
             "shape": {
@@ -418,7 +412,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:Deployment"
             },
             "shape": {
@@ -438,7 +431,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                 "file": "commons"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_commons:AppId",
                             "default": null,
                             "inline": null
@@ -824,7 +816,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "subpackage_app": {
             "name": "app",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "app"
@@ -848,7 +839,6 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -936,7 +926,6 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -1395,7 +1384,6 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         "subpackage_file-upload": {
             "name": "file-upload",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "file-upload"
@@ -4695,7 +4683,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "docs": null
                     },
                     {
@@ -4789,7 +4776,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "docs": null
                     },
                     {
@@ -4883,7 +4869,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "docs": null
                     },
                     {
@@ -4977,7 +4962,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "docs": "i am docs"
                     }
                 ]
@@ -7786,7 +7770,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -7816,7 +7799,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                         }
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "method": "POST",
                     "headers": [],
                     "baseUrl": null,
@@ -12428,7 +12410,6 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                         }
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "method": "DELETE",
                     "headers": [],
                     "baseUrl": null,
@@ -15393,7 +15374,6 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -15565,7 +15545,6 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -16087,7 +16066,6 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
         "subpackage_endpoint-urls": {
             "name": "endpoint-urls",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "endpoint-urls"
@@ -16109,7 +16087,6 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
         "subpackage_service-url": {
             "name": "service-url",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service-url"
@@ -16223,7 +16200,6 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "subpackage_subpackage": {
             "name": "subpackage",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "subpackage"
@@ -16249,7 +16225,6 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "subpackage_subpackage/x": {
             "name": "x",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "subpackage",
@@ -16350,7 +16325,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "file": "nested"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_nested:Response"
             },
             "shape": {
@@ -16389,7 +16363,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                 "file": "nested"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_nested:Product",
                                             "default": null,
                                             "inline": null
@@ -16437,7 +16410,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "file": "nested"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_nested:Product"
             },
             "shape": {
@@ -16492,7 +16464,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "file": "nested"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_nested:StringAlias"
             },
             "shape": {
@@ -16568,7 +16539,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/nested",
                 "parts": []
@@ -16630,7 +16600,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                         "file": "nested"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_nested:Response",
                                     "default": null,
                                     "inline": null
@@ -16811,7 +16780,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                             "file": "nested"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nested:Product",
                                                                                         "default": null,
                                                                                         "inline": null
@@ -16855,7 +16823,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                         "file": "nested"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_nested:Product",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -16948,7 +16915,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                     "file": "nested"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_nested:Response"
                                                             },
                                                             "value": {
@@ -16993,7 +16959,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                                         "file": "nested"
                                                                                                                     },
                                                                                                                     "displayName": null,
-                                                                                                                    "subtitle": null,
                                                                                                                     "typeId": "type_nested:Product"
                                                                                                                 },
                                                                                                                 "value": {
@@ -17036,7 +17001,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                             "file": "nested"
                                                                                                         },
                                                                                                         "displayName": null,
-                                                                                                        "subtitle": null,
                                                                                                         "typeId": "type_nested:Product"
                                                                                                     }
                                                                                                 },
@@ -17070,7 +17034,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                             "file": "nested"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_nested:Product",
                                                                                         "default": null,
                                                                                         "inline": null
@@ -17111,7 +17074,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                         "file": "nested"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_nested:Product",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -17143,7 +17105,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                         "file": "nested"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_nested:Response"
                                                 }
                                             },
@@ -17635,7 +17596,6 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         "subpackage_nested": {
             "name": "nested",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "nested"
@@ -17719,7 +17679,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:RootString"
             },
             "shape": {
@@ -17773,7 +17732,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_package:PackageString"
             },
             "shape": {
@@ -17825,7 +17783,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "file": "importer"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_importer:Foo"
             },
             "shape": {
@@ -17843,7 +17800,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:RootString",
                             "default": null,
                             "inline": null
@@ -17872,7 +17828,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_package:PackageString",
                             "default": null,
                             "inline": null
@@ -17920,7 +17875,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "file": "a"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_package/a:A"
             },
             "shape": {
@@ -17973,7 +17927,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -18076,7 +18029,6 @@ exports[`ir > {"name":"packages"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -18531,7 +18483,6 @@ exports[`ir > {"name":"packages"} 1`] = `
         "subpackage_package": {
             "name": "package",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "package"
@@ -18560,7 +18511,6 @@ exports[`ir > {"name":"packages"} 1`] = `
         "subpackage_importer": {
             "name": "importer",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "importer"
@@ -18584,7 +18534,6 @@ exports[`ir > {"name":"packages"} 1`] = `
         "subpackage_package/a": {
             "name": "a",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "package",
@@ -18611,7 +18560,6 @@ exports[`ir > {"name":"packages"} 1`] = `
         "subpackage_package/b": {
             "name": "b",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "package",
@@ -18699,7 +18647,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:WithDocs"
             },
             "shape": {
@@ -18756,7 +18703,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:Movie"
             },
             "shape": {
@@ -18813,7 +18759,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:Response"
             },
             "shape": {
@@ -18829,7 +18774,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "file": "service"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_service:WithDocs"
                     }
                 ],
@@ -18847,7 +18791,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                 "file": "service"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_service:Movie",
                             "default": null,
                             "inline": null
@@ -18918,7 +18861,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -19015,7 +18957,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:Response",
                                     "default": null,
                                     "inline": null
@@ -19033,7 +18974,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                             "file": "service"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_service:Movie",
                                         "default": null,
                                         "inline": null
@@ -19105,7 +19045,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:Response"
                                                             },
                                                             "value": {
@@ -19126,7 +19065,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                                         "file": "service"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_service:Movie"
                                                                                 },
                                                                                 "value": {
@@ -19156,7 +19094,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                             "file": "service"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_service:Movie"
                                                                     }
                                                                 },
@@ -19178,7 +19115,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:Response"
                                                             },
                                                             "value": {
@@ -19208,7 +19144,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_service:Response"
                                                 }
                                             },
@@ -19318,7 +19253,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:Response",
                                     "default": null,
                                     "inline": null
@@ -19403,7 +19337,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:Response"
                                                             },
                                                             "value": {
@@ -19424,7 +19357,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                                         "file": "service"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_service:Movie"
                                                                                 },
                                                                                 "value": {
@@ -19454,7 +19386,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                             "file": "service"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_service:Movie"
                                                                     }
                                                                 },
@@ -19476,7 +19407,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:Response"
                                                             },
                                                             "value": {
@@ -19506,7 +19436,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_service:Response"
                                                 }
                                             },
@@ -20094,7 +20023,6 @@ exports[`ir > {"name":"response-property"} 1`] = `
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"
@@ -20213,7 +20141,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:Internal"
             },
             "shape": {
@@ -20270,7 +20197,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:UnknownRequest"
             },
             "shape": {
@@ -20328,7 +20254,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -20346,7 +20271,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -20427,7 +20351,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:UnknownRequest",
                             "default": null,
                             "inline": null
@@ -20453,7 +20376,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:UnknownRequest",
                                     "default": null,
                                     "inline": null
@@ -20555,7 +20477,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:UnknownRequest"
                                                     },
                                                     "value": {
@@ -20584,7 +20505,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:UnknownRequest"
                                         }
                                     },
@@ -20661,7 +20581,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:UnknownRequest"
                                                     },
                                                     "value": {
@@ -20690,7 +20609,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:UnknownRequest"
                                         }
                                     },
@@ -21174,7 +21092,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -21200,7 +21117,6 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
         "subpackage_imdb": {
             "name": "imdb",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "imdb"
@@ -21318,7 +21234,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:Type"
             },
             "shape": {
@@ -21375,7 +21290,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:MovieId"
             },
             "shape": {
@@ -21468,7 +21382,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:CreateMovieRequest"
             },
             "shape": {
@@ -21565,7 +21478,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -21638,7 +21550,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -21683,7 +21594,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -21701,7 +21611,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -21782,7 +21691,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
                             "inline": null
@@ -21808,7 +21716,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest",
                                     "default": null,
                                     "inline": null
@@ -21837,7 +21744,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:MovieId",
                                     "default": null,
                                     "inline": null
@@ -22332,7 +22238,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -22361,7 +22266,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -22424,7 +22328,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:CreateMovieRequest"
                                         }
                                     },
@@ -22468,7 +22371,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -22525,7 +22427,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -22554,7 +22455,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -22617,7 +22517,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:CreateMovieRequest"
                                         }
                                     },
@@ -23209,7 +23108,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -23235,7 +23133,6 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
         "subpackage_imdb": {
             "name": "imdb",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "imdb"
@@ -23354,7 +23251,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:Internal"
             },
             "shape": {
@@ -23411,7 +23307,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:Type"
             },
             "shape": {
@@ -23468,7 +23363,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:UndiscriminatedUnion"
             },
             "shape": {
@@ -23575,7 +23469,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "director"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_director:Director"
             },
             "shape": {
@@ -23617,7 +23510,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "director"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_director:Age",
                             "default": null,
                             "inline": null
@@ -23673,7 +23565,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "director"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_director:Director"
                                 },
                                 "propertyAccess": null
@@ -23721,7 +23612,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "director"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_director:Director"
                                 },
                                 "propertyAccess": null
@@ -23753,7 +23643,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "director"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_director:Age"
             },
             "shape": {
@@ -23824,7 +23713,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "director"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_director:LiteralBoolean"
             },
             "shape": {
@@ -23874,7 +23762,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "director"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_director:LiteralString"
             },
             "shape": {
@@ -23924,7 +23811,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:CurrencyAmount"
             },
             "shape": {
@@ -23997,7 +23883,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:MovieId"
             },
             "shape": {
@@ -24090,7 +23975,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:ActorId"
             },
             "shape": {
@@ -24142,7 +24026,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Movie"
             },
             "shape": {
@@ -24162,7 +24045,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:MovieId",
                             "default": null,
                             "inline": null
@@ -24283,7 +24165,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie"
                                 },
                                 "propertyAccess": null
@@ -24312,7 +24193,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie"
                                 },
                                 "propertyAccess": null
@@ -24339,7 +24219,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie"
                                 },
                                 "propertyAccess": null
@@ -24372,7 +24251,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:CreateMovieRequest"
             },
             "shape": {
@@ -24469,7 +24347,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -24542,7 +24419,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -24578,7 +24454,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:DirectorWrapper"
             },
             "shape": {
@@ -24598,7 +24473,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "director"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_director:Director",
                             "default": null,
                             "inline": null
@@ -24745,7 +24619,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:DirectorWrapper"
                                 },
                                 "propertyAccess": null
@@ -24779,7 +24652,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:EmptyObject"
             },
             "shape": {
@@ -24813,7 +24685,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Person"
             },
             "shape": {
@@ -24838,14 +24709,12 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "file": "imdb"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_imdb:ActorId",
                                 "default": null,
                                 "inline": null
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -24862,11 +24731,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "director"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_director:Director"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -24883,11 +24750,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:EmptyObject"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -24904,11 +24769,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:EmptyObject"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": "i am docs"
                     }
@@ -25123,7 +24986,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:UnknownRequest"
             },
             "shape": {
@@ -25172,7 +25034,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:RecursiveType"
             },
             "shape": {
@@ -25188,7 +25049,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "file": "imdb"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_imdb:CreateMovieRequest"
                     }
                 ],
@@ -25210,7 +25070,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:RecursiveType",
                                     "default": null,
                                     "inline": null
@@ -25320,7 +25179,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -25393,7 +25251,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -25448,7 +25305,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "file": "imdb"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     },
                                                                     "propertyAccess": null
@@ -25510,7 +25366,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "file": "imdb"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     },
                                                                     "propertyAccess": null
@@ -25534,7 +25389,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                         "file": "imdb"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_imdb:RecursiveType",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -25612,7 +25466,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "file": "imdb"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     },
                                                                     "propertyAccess": null
@@ -25650,7 +25503,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "file": "imdb"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     },
                                                                     "propertyAccess": null
@@ -25674,7 +25526,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                         "file": "imdb"
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_imdb:RecursiveType",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -25719,7 +25570,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "file": "imdb"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_imdb:RecursiveType",
                                                 "default": null,
                                                 "inline": null
@@ -25752,7 +25602,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:RecursiveType"
                                 },
                                 "propertyAccess": null
@@ -25814,7 +25663,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -25887,7 +25735,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 },
                                 "propertyAccess": null
@@ -25911,7 +25758,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "file": "imdb"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_imdb:RecursiveType",
                                                 "default": null,
                                                 "inline": null
@@ -25930,7 +25776,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:RecursiveType"
                                 },
                                 "propertyAccess": null
@@ -25976,7 +25821,6 @@ exports[`ir > {"name":"simple"} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         },
@@ -26009,7 +25853,6 @@ exports[`ir > {"name":"simple"} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -26027,7 +25870,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -26108,7 +25950,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:UnknownRequest",
                             "default": null,
                             "inline": null
@@ -26134,7 +25975,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:UnknownRequest",
                                     "default": null,
                                     "inline": null
@@ -26236,7 +26076,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:UnknownRequest"
                                                     },
                                                     "value": {
@@ -26265,7 +26104,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:UnknownRequest"
                                         }
                                     },
@@ -26342,7 +26180,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:UnknownRequest"
                                                     },
                                                     "value": {
@@ -26371,7 +26208,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:UnknownRequest"
                                         }
                                     },
@@ -26479,7 +26315,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
                             "inline": null
@@ -26505,7 +26340,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest",
                                     "default": null,
                                     "inline": null
@@ -26534,7 +26368,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:MovieId",
                                     "default": null,
                                     "inline": null
@@ -27029,7 +26862,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -27058,7 +26890,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -27121,7 +26952,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:CreateMovieRequest"
                                         }
                                     },
@@ -27165,7 +26995,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -27222,7 +27051,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -27251,7 +27079,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -27314,7 +27141,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:CreateMovieRequest"
                                         }
                                     },
@@ -27362,6 +27188,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "id": "endpoint_imdb.getMovie",
                     "name": "getMovie",
                     "displayName": "Get Movie by Id",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -27405,7 +27232,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "file": "imdb"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -27458,7 +27284,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "file": "imdb"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -27530,7 +27355,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie",
                                     "default": null,
                                     "inline": null
@@ -27953,7 +27777,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -28023,7 +27846,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                     "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -28054,7 +27876,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                             "file": "imdb"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_imdb:MovieId"
                                                                     }
                                                                 },
@@ -28074,7 +27895,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                     "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -28103,7 +27923,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                     "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -28131,7 +27950,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:Movie"
                                                 }
                                             },
@@ -28183,7 +28001,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -28297,7 +28114,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -28423,7 +28239,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "file": "imdb"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -28476,7 +28291,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "file": "imdb"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -28559,7 +28373,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -28635,7 +28448,6 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -31158,7 +30970,6 @@ exports[`ir > {"name":"simple"} 1`] = `
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -31186,7 +30997,6 @@ exports[`ir > {"name":"simple"} 1`] = `
         "subpackage_director": {
             "name": "director",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "director"
@@ -31213,7 +31023,6 @@ exports[`ir > {"name":"simple"} 1`] = `
         "subpackage_imdb": {
             "name": "imdb",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "imdb"
@@ -31312,7 +31121,6 @@ exports[`ir > {"name":"streaming"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -31907,7 +31715,6 @@ exports[`ir > {"name":"streaming"} 1`] = `
         "subpackage_streaming": {
             "name": "streaming",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "streaming"
@@ -31989,7 +31796,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:StringAlias"
             },
             "shape": {
@@ -32044,7 +31850,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -32107,7 +31912,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                                     "file": "commons"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_commons:StringAlias",
                                 "default": null,
                                 "inline": null
@@ -32137,7 +31941,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                                     "file": "commons"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_commons:StringAlias",
                                 "default": null,
                                 "inline": null
@@ -32165,7 +31968,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                                     "file": "commons"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_commons:StringAlias",
                                 "default": null,
                                 "inline": null
@@ -32233,7 +32035,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                                                         "file": "commons"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_commons:StringAlias"
                                                 }
                                             },
@@ -32275,7 +32076,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                                                         "file": "commons"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_commons:StringAlias"
                                                 }
                                             },
@@ -32340,7 +32140,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:StringAlias",
                 "default": null,
                 "inline": null
@@ -32371,7 +32170,6 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:StringAlias",
                 "default": null,
                 "inline": null
@@ -32656,7 +32454,6 @@ exports[`ir > {"name":"variables"} 1`] = `
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -32680,7 +32477,6 @@ exports[`ir > {"name":"variables"} 1`] = `
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"
@@ -32763,7 +32559,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     "file": "webhooks"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_webhooks:UserCreatedPayload"
             },
             "shape": {
@@ -32842,7 +32637,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     "file": "webhooks"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_webhooks:OrderCompletedPayload"
             },
             "shape": {
@@ -32921,7 +32715,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     "file": "webhooks"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_webhooks:PaymentNotificationPayload"
             },
             "shape": {
@@ -33022,7 +32815,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                     "file": "webhooks"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_webhooks:RefundProcessedPayload"
             },
             "shape": {
@@ -33144,7 +32936,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
             {
                 "id": "webhooks_webhooks.userCreated",
                 "displayName": null,
-                "subtitle": null,
                 "method": "POST",
                 "name": "userCreated",
                 "headers": [],
@@ -33161,7 +32952,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "file": "webhooks"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_webhooks:UserCreatedPayload",
                         "default": null,
                         "inline": null
@@ -33198,7 +32988,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
             {
                 "id": "webhooks_webhooks.orderCompleted",
                 "displayName": null,
-                "subtitle": null,
                 "method": "POST",
                 "name": "orderCompleted",
                 "headers": [],
@@ -33215,7 +33004,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "file": "webhooks"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_webhooks:OrderCompletedPayload",
                         "default": null,
                         "inline": null
@@ -33252,7 +33040,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
             {
                 "id": "webhooks_webhooks.paymentNotification",
                 "displayName": null,
-                "subtitle": null,
                 "method": "POST",
                 "name": "paymentNotification",
                 "headers": [],
@@ -33269,7 +33056,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "file": "webhooks"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_webhooks:PaymentNotificationPayload",
                         "default": null,
                         "inline": null
@@ -33303,7 +33089,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
             {
                 "id": "webhooks_webhooks.refundProcessed",
                 "displayName": null,
-                "subtitle": null,
                 "method": "POST",
                 "name": "refundProcessed",
                 "headers": [],
@@ -33320,7 +33105,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "file": "webhooks"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_webhooks:RefundProcessedPayload",
                         "default": null,
                         "inline": null
@@ -33961,7 +33745,6 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "subpackage_webhooks": {
             "name": "webhooks",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "webhooks"
