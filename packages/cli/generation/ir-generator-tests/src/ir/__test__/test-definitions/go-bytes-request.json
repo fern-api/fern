@@ -27,7 +27,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -237,7 +236,6 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

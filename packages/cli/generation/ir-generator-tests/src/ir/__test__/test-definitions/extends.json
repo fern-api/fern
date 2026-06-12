@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ExampleType"
             },
             "shape": {
@@ -37,7 +36,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:Docs"
                     }
                 ],
@@ -127,7 +125,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Docs"
                                 },
                                 "propertyAccess": null
@@ -154,7 +151,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:ExampleType"
                                 },
                                 "propertyAccess": null
@@ -184,7 +180,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:NestedType"
             },
             "shape": {
@@ -198,7 +193,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:JSON"
                     }
                 ],
@@ -311,7 +305,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Docs"
                                 },
                                 "propertyAccess": null
@@ -338,7 +331,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:NestedType"
                                 },
                                 "propertyAccess": null
@@ -365,7 +357,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:JSON"
                                 },
                                 "propertyAccess": null
@@ -396,7 +387,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Docs"
             },
             "shape": {
@@ -463,7 +453,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Docs"
                                 },
                                 "propertyAccess": null
@@ -492,7 +481,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:JSON"
             },
             "shape": {
@@ -506,7 +494,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:Docs"
                     }
                 ],
@@ -596,7 +583,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Docs"
                                 },
                                 "propertyAccess": null
@@ -623,7 +609,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:JSON"
                                 },
                                 "propertyAccess": null
@@ -656,7 +641,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/extends",
                 "parts": []
@@ -707,7 +691,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:ExampleType"
                             }
                         ],

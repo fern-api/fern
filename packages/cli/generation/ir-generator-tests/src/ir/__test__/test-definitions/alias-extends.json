@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:AliasType"
             },
             "shape": {
@@ -37,7 +36,6 @@
                         "file": null
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "typeId": "type_:Parent",
                     "default": null,
                     "inline": null
@@ -52,7 +50,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:Parent"
                     },
                     "shape": "OBJECT"
@@ -143,7 +140,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Parent"
             },
             "shape": {
@@ -210,7 +206,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Parent"
                                 },
                                 "propertyAccess": null
@@ -239,7 +234,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Child"
             },
             "shape": {
@@ -253,7 +247,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:Parent"
                     }
                 ],
@@ -343,7 +336,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Parent"
                                 },
                                 "propertyAccess": null
@@ -370,7 +362,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Child"
                                 },
                                 "propertyAccess": null
@@ -403,7 +394,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/extends",
                 "parts": []
@@ -454,7 +444,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:AliasType"
                             }
                         ],

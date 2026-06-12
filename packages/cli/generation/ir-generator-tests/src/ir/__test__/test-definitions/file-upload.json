@@ -25,7 +25,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:Id"
             },
             "shape": {
@@ -77,7 +76,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:MyObjectWithOptional"
             },
             "shape": {
@@ -162,7 +160,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:MyAliasObject"
             },
             "shape": {
@@ -178,7 +175,6 @@
                         "file": "service"
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "typeId": "type_service:MyObject",
                     "default": null,
                     "inline": null
@@ -195,7 +191,6 @@
                             "file": "service"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_service:MyObject"
                     },
                     "shape": "OBJECT"
@@ -227,7 +222,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:MyCollectionAliasObject"
             },
             "shape": {
@@ -247,7 +241,6 @@
                                 "file": "service"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_service:MyObject",
                             "default": null,
                             "inline": null
@@ -269,7 +262,6 @@
                                 "file": "service"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_service:MyObject",
                             "default": null,
                             "inline": null
@@ -303,7 +295,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:MyObject"
             },
             "shape": {
@@ -360,7 +351,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:ObjectType"
             },
             "shape": {
@@ -404,7 +394,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:MyInlineType"
             },
             "shape": {
@@ -461,7 +450,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:ModelType"
             },
             "shape": {
@@ -511,7 +499,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:OpenEnumType"
             },
             "shape": {
@@ -563,7 +550,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -789,7 +775,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
@@ -848,7 +833,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:ObjectType",
                                             "default": null,
                                             "inline": null
@@ -884,7 +868,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:Id",
                                             "default": null,
                                             "inline": null
@@ -916,7 +899,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyAliasObject",
                                     "default": null,
                                     "inline": null
@@ -950,7 +932,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:MyAliasObject",
                                             "default": null,
                                             "inline": null
@@ -982,7 +963,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyCollectionAliasObject",
                                     "default": null,
                                     "inline": null
@@ -1570,7 +1550,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyObject",
                                     "default": null,
                                     "inline": null
@@ -1604,7 +1583,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
@@ -1737,7 +1715,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyObject",
                                     "default": null,
                                     "inline": null
@@ -2001,7 +1978,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
@@ -2060,7 +2036,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:ObjectType",
                                             "default": null,
                                             "inline": null
@@ -2096,7 +2071,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:Id",
                                             "default": null,
                                             "inline": null
@@ -2132,7 +2106,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:MyObjectWithOptional",
                                             "default": null,
                                             "inline": null
@@ -2164,7 +2137,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyAliasObject",
                                     "default": null,
                                     "inline": null
@@ -2198,7 +2170,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:MyAliasObject",
                                             "default": null,
                                             "inline": null
@@ -2230,7 +2201,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyCollectionAliasObject",
                                     "default": null,
                                     "inline": null
@@ -2493,7 +2463,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyInlineType",
                                     "default": null,
                                     "inline": null
@@ -2621,7 +2590,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:MyObject",
                                             "default": null,
                                             "inline": null
@@ -2747,7 +2715,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:MyObject",
                                     "default": null,
                                     "inline": null
@@ -3049,7 +3016,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:ModelType",
                                             "default": null,
                                             "inline": null
@@ -3085,7 +3051,6 @@
                                                 "file": "service"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_service:OpenEnumType",
                                             "default": null,
                                             "inline": null
@@ -7854,7 +7819,6 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

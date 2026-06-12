@@ -25,7 +25,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody"
             },
             "shape": {
@@ -104,7 +103,6 @@
                     "file": "simple"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_simple:FooRequest"
             },
             "shape": {
@@ -173,7 +171,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooRequest"
                                 },
                                 "propertyAccess": null
@@ -204,7 +201,6 @@
                     "file": "simple"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_simple:FooResponse"
             },
             "shape": {
@@ -273,7 +269,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooResponse"
                                 },
                                 "propertyAccess": null
@@ -320,7 +315,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody",
                 "default": null,
                 "inline": null
@@ -418,7 +412,6 @@
             ],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         },
@@ -448,7 +441,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody",
                 "default": null,
                 "inline": null
@@ -456,7 +448,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         },
@@ -486,7 +477,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody",
                 "default": null,
                 "inline": null
@@ -494,7 +484,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         },
@@ -524,7 +513,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody",
                 "default": null,
                 "inline": null
@@ -532,7 +520,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         },
@@ -562,7 +549,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody",
                 "default": null,
                 "inline": null
@@ -570,7 +556,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -588,7 +573,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -640,7 +624,6 @@
                                 "file": "simple"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_simple:FooRequest",
                             "default": null,
                             "inline": null
@@ -666,7 +649,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooRequest",
                                     "default": null,
                                     "inline": null
@@ -695,7 +677,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooResponse",
                                     "default": null,
                                     "inline": null
@@ -785,7 +766,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -815,7 +795,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -845,7 +824,6 @@
                                                                     "file": "simple"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_simple:FooResponse"
                                                             },
                                                             "value": {
@@ -875,7 +853,6 @@
                                                         "file": "simple"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_simple:FooResponse"
                                                 }
                                             },
@@ -918,7 +895,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -948,7 +924,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -976,7 +951,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1005,7 +979,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1033,7 +1006,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -1087,7 +1059,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -1117,7 +1088,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -1145,7 +1115,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1174,7 +1143,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1202,7 +1170,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -1256,7 +1223,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -1286,7 +1252,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -1314,7 +1279,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1343,7 +1307,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1371,7 +1334,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -1444,7 +1406,6 @@
                                 "file": "simple"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_simple:FooRequest",
                             "default": null,
                             "inline": null
@@ -1470,7 +1431,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooRequest",
                                     "default": null,
                                     "inline": null
@@ -1499,7 +1459,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooResponse",
                                     "default": null,
                                     "inline": null
@@ -1617,7 +1576,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -1647,7 +1605,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -1677,7 +1634,6 @@
                                                                     "file": "simple"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_simple:FooResponse"
                                                             },
                                                             "value": {
@@ -1707,7 +1663,6 @@
                                                         "file": "simple"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_simple:FooResponse"
                                                 }
                                             },
@@ -1750,7 +1705,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -1780,7 +1734,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -1808,7 +1761,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1837,7 +1789,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1865,7 +1816,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -1919,7 +1869,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -1949,7 +1898,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -1977,7 +1925,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2006,7 +1953,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2034,7 +1980,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -2088,7 +2033,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -2118,7 +2062,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -2146,7 +2089,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2175,7 +2117,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2203,7 +2144,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -2257,7 +2197,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -2287,7 +2226,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -2315,7 +2253,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2344,7 +2281,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2372,7 +2308,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -2426,7 +2361,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -2456,7 +2390,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -2484,7 +2417,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2513,7 +2445,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -2541,7 +2472,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -2614,7 +2544,6 @@
                                 "file": "simple"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_simple:FooRequest",
                             "default": null,
                             "inline": null
@@ -2640,7 +2569,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooRequest",
                                     "default": null,
                                     "inline": null
@@ -2669,7 +2597,6 @@
                                         "file": "simple"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_simple:FooResponse",
                                     "default": null,
                                     "inline": null
@@ -3248,7 +3175,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -3278,7 +3204,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -3308,7 +3233,6 @@
                                                                     "file": "simple"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_simple:FooResponse"
                                                             },
                                                             "value": {
@@ -3338,7 +3262,6 @@
                                                         "file": "simple"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_simple:FooResponse"
                                                 }
                                             },
@@ -3381,7 +3304,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -3411,7 +3333,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -3439,7 +3360,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -3468,7 +3388,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -3496,7 +3415,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -3550,7 +3468,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -3580,7 +3497,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -3608,7 +3524,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -3637,7 +3552,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -3665,7 +3579,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -3719,7 +3632,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -3749,7 +3661,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -3777,7 +3688,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -3806,7 +3716,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -3834,7 +3743,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -3888,7 +3796,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -3918,7 +3825,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -3946,7 +3852,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -3975,7 +3880,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -4003,7 +3907,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -4057,7 +3960,6 @@
                                                             "file": "simple"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_simple:FooRequest"
                                                     },
                                                     "value": {
@@ -4087,7 +3989,6 @@
                                                 "file": "simple"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_simple:FooRequest"
                                         }
                                     },
@@ -4115,7 +4016,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -4144,7 +4044,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -4172,7 +4071,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -4853,7 +4751,6 @@
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -4881,7 +4778,6 @@
         "subpackage_simple": {
             "name": "simple",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "simple"

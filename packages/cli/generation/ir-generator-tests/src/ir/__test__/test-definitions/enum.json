@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Operand"
             },
             "shape": {
@@ -98,7 +97,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Color"
             },
             "shape": {
@@ -159,7 +157,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ColorOrOperand"
             },
             "shape": {
@@ -258,7 +255,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ForwardCompatibleEnum"
             },
             "shape": {
@@ -331,7 +327,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:EnumWithSpecialCharacters"
             },
             "shape": {
@@ -379,7 +374,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:EnumWithCustom"
             },
             "shape": {
@@ -452,7 +446,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SpecialEnum"
             },
             "shape": {
@@ -742,7 +735,6 @@
                     "file": "unknown"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_unknown:Status"
             },
             "shape": {
@@ -789,7 +781,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -839,7 +830,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:Operand",
                                 "default": null,
                                 "inline": null
@@ -869,7 +859,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:Operand",
                                         "default": null,
                                         "inline": null
@@ -897,7 +886,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:ColorOrOperand",
                                 "default": null,
                                 "inline": null
@@ -927,7 +915,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:ColorOrOperand",
                                         "default": null,
                                         "inline": null
@@ -994,7 +981,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Operand"
                                                 }
                                             },
@@ -1027,7 +1013,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Color"
                                                             }
                                                         },
@@ -1042,7 +1027,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:ColorOrOperand"
                                                 }
                                             },
@@ -1093,7 +1077,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -1148,7 +1131,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Operand",
                                     "default": null,
                                     "inline": null
@@ -1177,7 +1159,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Operand",
                                             "default": null,
                                             "inline": null
@@ -1204,7 +1185,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:ColorOrOperand",
                                     "default": null,
                                     "inline": null
@@ -1233,7 +1213,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:ColorOrOperand",
                                             "default": null,
                                             "inline": null
@@ -1420,7 +1399,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Operand"
                                                     }
                                                 },
@@ -1445,7 +1423,6 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_:Operand",
                                                             "default": null,
                                                             "inline": null
@@ -1481,7 +1458,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:Color"
                                                                 }
                                                             },
@@ -1496,7 +1472,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:ColorOrOperand"
                                                     }
                                                 },
@@ -1521,7 +1496,6 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_:ColorOrOperand",
                                                             "default": null,
                                                             "inline": null
@@ -1574,7 +1548,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -1630,7 +1603,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Color",
                                     "default": null,
                                     "inline": null
@@ -1662,7 +1634,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Color",
                                             "default": null,
                                             "inline": null
@@ -1696,7 +1667,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Color",
                                             "default": null,
                                             "inline": null
@@ -1734,7 +1704,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Color",
                                                     "default": null,
                                                     "inline": null
@@ -1806,7 +1775,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -1871,7 +1839,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:Operand",
                                 "default": null,
                                 "inline": null
@@ -1897,7 +1864,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:ColorOrOperand",
                                 "default": null,
                                 "inline": null
@@ -1925,7 +1891,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:Operand",
                                 "default": null,
                                 "inline": null
@@ -1951,7 +1916,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:ColorOrOperand",
                                 "default": null,
                                 "inline": null
@@ -2106,7 +2070,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Operand"
                                                 }
                                             },
@@ -2139,7 +2102,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Color"
                                                             }
                                                         },
@@ -2154,7 +2116,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:ColorOrOperand"
                                                 }
                                             },
@@ -2204,7 +2165,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -2253,7 +2213,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:Operand",
                                 "default": null,
                                 "inline": null
@@ -2284,7 +2243,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:Operand",
                                         "default": null,
                                         "inline": null
@@ -2313,7 +2271,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:ColorOrOperand",
                                 "default": null,
                                 "inline": null
@@ -2344,7 +2301,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:ColorOrOperand",
                                         "default": null,
                                         "inline": null
@@ -2521,7 +2477,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Operand"
                                                 }
                                             },
@@ -2557,7 +2512,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Color"
                                                             }
                                                         },
@@ -2572,7 +2526,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:ColorOrOperand"
                                                 }
                                             },
@@ -2640,7 +2593,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:Operand",
                                 "default": null,
                                 "inline": null
@@ -2671,7 +2623,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:Operand",
                                         "default": null,
                                         "inline": null
@@ -2700,7 +2651,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:ColorOrOperand",
                                 "default": null,
                                 "inline": null
@@ -2731,7 +2681,6 @@
                                             "file": null
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_:ColorOrOperand",
                                         "default": null,
                                         "inline": null
@@ -2805,7 +2754,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Operand"
                                                 }
                                             },
@@ -2841,7 +2789,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Color"
                                                             }
                                                         },
@@ -2856,7 +2803,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:ColorOrOperand"
                                                 }
                                             },
@@ -5784,7 +5730,6 @@
         "subpackage_headers": {
             "name": "headers",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "headers"
@@ -5806,7 +5751,6 @@
         "subpackage_inlined-request": {
             "name": "inlined-request",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "inlined-request"
@@ -5828,7 +5772,6 @@
         "subpackage_multipart-form": {
             "name": "multipart-form",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "multipart-form"
@@ -5850,7 +5793,6 @@
         "subpackage_path-param": {
             "name": "path-param",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "path-param"
@@ -5872,7 +5814,6 @@
         "subpackage_query-param": {
             "name": "query-param",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "query-param"
@@ -5894,7 +5835,6 @@
         "subpackage_unknown": {
             "name": "unknown",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "unknown"

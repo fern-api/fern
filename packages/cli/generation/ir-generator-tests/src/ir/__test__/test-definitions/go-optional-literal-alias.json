@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SortField"
             },
             "shape": {
@@ -71,7 +70,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SearchRequest"
             },
             "shape": {
@@ -93,7 +91,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:SortField",
                                     "default": null,
                                     "inline": null
@@ -159,7 +156,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SearchResponse"
             },
             "shape": {
@@ -217,7 +213,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -267,7 +262,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:SearchRequest",
                             "default": null,
                             "inline": null
@@ -291,7 +285,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:SearchRequest",
                                     "default": null,
                                     "inline": null
@@ -318,7 +311,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:SearchResponse",
                                     "default": null,
                                     "inline": null
@@ -412,7 +404,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:SortField",
                                                                     "default": null,
                                                                     "inline": null
@@ -558,7 +549,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:SearchRequest"
                                                     },
                                                     "value": {
@@ -576,7 +566,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_:SortField",
                                                                     "default": null,
                                                                     "inline": null
@@ -596,7 +585,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:SearchRequest"
                                                     },
                                                     "value": {
@@ -624,7 +612,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:SearchRequest"
                                         }
                                     },
@@ -652,7 +639,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -680,7 +666,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:SearchResponse"
                                                 }
                                             },

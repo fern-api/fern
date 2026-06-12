@@ -25,7 +25,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:MovieId"
             },
             "shape": {
@@ -77,7 +76,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Movie"
             },
             "shape": {
@@ -97,7 +95,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:MovieId",
                             "default": null,
                             "inline": null
@@ -172,7 +169,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Cast",
                                     "default": null,
                                     "inline": null
@@ -220,7 +216,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:CreateMovieRequest"
             },
             "shape": {
@@ -299,7 +294,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Cast"
             },
             "shape": {
@@ -320,7 +314,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:Name",
                             "default": null,
                             "inline": null
@@ -342,7 +335,6 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -352,7 +344,6 @@
                             "_type": "noProperties"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -386,7 +377,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:Name"
             },
             "shape": {
@@ -438,7 +428,6 @@
                     "file": "webhooks"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_webhooks:User"
             },
             "shape": {
@@ -511,7 +500,6 @@
                     "file": "imdb"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_imdb:MovieId",
                 "default": null,
                 "inline": null
@@ -519,7 +507,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -537,7 +524,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/movies",
                 "parts": []
@@ -589,7 +575,6 @@
                                 "file": "imdb"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
                             "inline": null
@@ -615,7 +600,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:CreateMovieRequest",
                                     "default": null,
                                     "inline": null
@@ -644,7 +628,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:MovieId",
                                     "default": null,
                                     "inline": null
@@ -691,7 +674,6 @@
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -720,7 +702,6 @@
                                                             "file": "imdb"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -748,7 +729,6 @@
                                                 "file": "imdb"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_imdb:CreateMovieRequest"
                                         }
                                     },
@@ -789,7 +769,6 @@
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -858,7 +837,6 @@
                                     "file": "imdb"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -888,7 +866,6 @@
                                     "file": "imdb"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -925,7 +902,6 @@
                                         "file": "imdb"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_imdb:Movie",
                                     "default": null,
                                     "inline": null
@@ -1285,7 +1261,6 @@
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -1320,7 +1295,6 @@
                                                                     "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -1351,7 +1325,6 @@
                                                                             "file": "imdb"
                                                                         },
                                                                         "displayName": null,
-                                                                        "subtitle": null,
                                                                         "typeId": "type_imdb:MovieId"
                                                                     }
                                                                 },
@@ -1371,7 +1344,6 @@
                                                                     "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -1400,7 +1372,6 @@
                                                                     "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -1427,7 +1398,6 @@
                                                                     "file": "imdb"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -1479,7 +1449,6 @@
                                                                                                                 "file": "imdb"
                                                                                                             },
                                                                                                             "displayName": null,
-                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_imdb:Name"
                                                                                                         }
                                                                                                     },
@@ -1499,7 +1468,6 @@
                                                                                             "file": "imdb"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_imdb:Cast"
                                                                                     }
                                                                                 },
@@ -1551,7 +1519,6 @@
                                                                                                                 "file": "imdb"
                                                                                                             },
                                                                                                             "displayName": null,
-                                                                                                            "subtitle": null,
                                                                                                             "typeId": "type_imdb:Name"
                                                                                                         }
                                                                                                     },
@@ -1571,7 +1538,6 @@
                                                                                             "file": "imdb"
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_imdb:Cast"
                                                                                     }
                                                                                 },
@@ -1592,7 +1558,6 @@
                                                                                 "file": "imdb"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_imdb:Cast",
                                                                             "default": null,
                                                                             "inline": null
@@ -1625,7 +1590,6 @@
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:Movie"
                                                 }
                                             },
@@ -1687,7 +1651,6 @@
                                                         "file": "imdb"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -1730,7 +1693,6 @@
                                                     "file": "imdb"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_imdb:MovieId"
                                             }
                                         },
@@ -1844,7 +1806,6 @@
                             "file": "webhooks"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_webhooks:User",
                         "default": null,
                         "inline": null
@@ -1897,7 +1858,6 @@
                             "file": "webhooks"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_webhooks:User",
                         "default": null,
                         "inline": null
@@ -2971,7 +2931,6 @@
         "subpackage_imdb": {
             "name": "imdb",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "imdb"
@@ -3001,7 +2960,6 @@
         "subpackage_webhooks": {
             "name": "webhooks",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "webhooks"

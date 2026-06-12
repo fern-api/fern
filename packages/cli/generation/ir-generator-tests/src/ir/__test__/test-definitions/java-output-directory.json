@@ -25,7 +25,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:User"
             },
             "shape": {
@@ -107,7 +106,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/users",
                 "parts": []
@@ -223,7 +221,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:User",
                                     "default": null,
                                     "inline": null
@@ -290,7 +287,6 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:User"
                                                             },
                                                             "value": {
@@ -319,7 +315,6 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:User"
                                                             },
                                                             "value": {
@@ -349,7 +344,6 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_service:User"
                                                 }
                                             },
@@ -668,7 +662,6 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

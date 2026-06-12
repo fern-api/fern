@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Widget"
             },
             "shape": {
@@ -83,7 +82,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -165,7 +163,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Widget",
                             "default": null,
                             "inline": null
@@ -189,7 +186,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Widget",
                                     "default": null,
                                     "inline": null
@@ -216,7 +212,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Widget",
                                     "default": null,
                                     "inline": null
@@ -416,7 +411,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Widget"
                                                     },
                                                     "value": {
@@ -444,7 +438,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Widget"
                                         }
                                     },
@@ -472,7 +465,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Widget"
                                                             },
                                                             "value": {
@@ -500,7 +492,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Widget"
                                                 }
                                             },
@@ -791,7 +782,6 @@
         "subpackage_widgets": {
             "name": "widgets",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "widgets"

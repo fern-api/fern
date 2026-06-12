@@ -30,7 +30,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_a/d/types:Foo"
             },
             "shape": {
@@ -104,7 +103,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -120,7 +118,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -225,7 +222,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -330,7 +326,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -433,7 +428,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -537,7 +531,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/service",
                 "parts": []
@@ -1605,7 +1598,6 @@
         "subpackage_a": {
             "name": "a",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a"
@@ -1633,7 +1625,6 @@
         "subpackage_a/b": {
             "name": "b",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1659,7 +1650,6 @@
         "subpackage_a/c": {
             "name": "c",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1685,7 +1675,6 @@
         "subpackage_folder": {
             "name": "folder",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder"
@@ -1711,7 +1700,6 @@
         "subpackage_a/d": {
             "name": "d",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1739,7 +1727,6 @@
         "subpackage_a/d/types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1768,7 +1755,6 @@
         "subpackage_folder/service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "folder",

@@ -25,7 +25,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody"
             },
             "shape": {
@@ -82,7 +81,6 @@
                     "file": "dummy"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_dummy:StreamResponse"
             },
             "shape": {
@@ -183,7 +181,6 @@
                     "file": "commons"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_commons:ErrorBody",
                 "default": null,
                 "inline": null
@@ -191,7 +188,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": null
         }
@@ -209,7 +205,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -310,7 +305,6 @@
                                         "file": "dummy"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_dummy:StreamResponse",
                                     "default": null,
                                     "inline": null
@@ -414,7 +408,6 @@
                                                                         "file": "dummy"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_dummy:StreamResponse"
                                                                 },
                                                                 "value": {
@@ -443,7 +436,6 @@
                                                                         "file": "dummy"
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_dummy:StreamResponse"
                                                                 },
                                                                 "value": {
@@ -493,7 +485,6 @@
                                                             "file": "dummy"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_dummy:StreamResponse"
                                                     }
                                                 },
@@ -562,7 +553,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -592,7 +582,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -669,7 +658,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -699,7 +687,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -820,7 +807,6 @@
                                         "file": "dummy"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_dummy:StreamResponse",
                                     "default": null,
                                     "inline": null
@@ -1070,7 +1056,6 @@
                                                                     "file": "dummy"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_dummy:StreamResponse"
                                                             },
                                                             "value": {
@@ -1099,7 +1084,6 @@
                                                                     "file": "dummy"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_dummy:StreamResponse"
                                                             },
                                                             "value": {
@@ -1149,7 +1133,6 @@
                                                         "file": "dummy"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_dummy:StreamResponse"
                                                 }
                                             },
@@ -1217,7 +1200,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1247,7 +1229,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -1324,7 +1305,6 @@
                                                                 "file": "commons"
                                                             },
                                                             "displayName": null,
-                                                            "subtitle": null,
                                                             "typeId": "type_commons:ErrorBody"
                                                         },
                                                         "value": {
@@ -1354,7 +1334,6 @@
                                                     "file": "commons"
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_commons:ErrorBody"
                                             }
                                         },
@@ -2045,7 +2024,6 @@
         "subpackage_commons": {
             "name": "commons",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "commons"
@@ -2071,7 +2049,6 @@
         "subpackage_dummy": {
             "name": "dummy",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "dummy"

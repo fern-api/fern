@@ -63,7 +63,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_v1:UserV1"
             },
             "shape": {
@@ -150,7 +149,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_v2:UserV2Profile"
             },
             "shape": {
@@ -243,7 +241,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_v2:UserV2"
             },
             "shape": {
@@ -287,7 +284,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_v2:UserV2Profile",
                             "default": null,
                             "inline": null
@@ -336,7 +332,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -400,7 +395,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_v1:UserV1",
                                             "default": null,
                                             "inline": null
@@ -563,7 +557,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_v1:UserV1",
                                                         "default": null,
                                                         "inline": null
@@ -627,7 +620,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v1:UserV1"
                                                                             },
                                                                             "value": {
@@ -658,7 +650,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v1:UserV1"
                                                                             },
                                                                             "value": {
@@ -710,7 +701,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_v1:UserV1"
                                                                 }
                                                             },
@@ -739,7 +729,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v1:UserV1"
                                                                             },
                                                                             "value": {
@@ -770,7 +759,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v1:UserV1"
                                                                             },
                                                                             "value": {
@@ -822,7 +810,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_v1:UserV1"
                                                                 }
                                                             },
@@ -845,7 +832,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_v1:UserV1",
                                                         "default": null,
                                                         "inline": null
@@ -897,7 +883,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -1002,7 +987,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_v2:UserV2",
                                             "default": null,
                                             "inline": null
@@ -1265,7 +1249,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_v2:UserV2",
                                                         "default": null,
                                                         "inline": null
@@ -1332,7 +1315,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v2:UserV2"
                                                                             },
                                                                             "value": {
@@ -1363,7 +1345,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v2:UserV2"
                                                                             },
                                                                             "value": {
@@ -1386,7 +1367,6 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_v2:UserV2Profile"
                                                                                                 },
                                                                                                 "value": {
@@ -1437,7 +1417,6 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_v2:UserV2Profile"
                                                                                                 },
                                                                                                 "value": {
@@ -1489,7 +1468,6 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_v2:UserV2Profile"
                                                                                     }
                                                                                 },
@@ -1515,7 +1493,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_v2:UserV2"
                                                                 }
                                                             },
@@ -1547,7 +1524,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v2:UserV2"
                                                                             },
                                                                             "value": {
@@ -1578,7 +1554,6 @@
                                                                                     "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "subtitle": null,
                                                                                 "typeId": "type_v2:UserV2"
                                                                             },
                                                                             "value": {
@@ -1601,7 +1576,6 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_v2:UserV2Profile"
                                                                                                 },
                                                                                                 "value": {
@@ -1652,7 +1626,6 @@
                                                                                                         "file": null
                                                                                                     },
                                                                                                     "displayName": null,
-                                                                                                    "subtitle": null,
                                                                                                     "typeId": "type_v2:UserV2Profile"
                                                                                                 },
                                                                                                 "value": {
@@ -1704,7 +1677,6 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_v2:UserV2Profile"
                                                                                     }
                                                                                 },
@@ -1730,7 +1702,6 @@
                                                                         "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "subtitle": null,
                                                                     "typeId": "type_v2:UserV2"
                                                                 }
                                                             },
@@ -1756,7 +1727,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_v2:UserV2",
                                                         "default": null,
                                                         "inline": null
@@ -2651,7 +2621,6 @@
         "subpackage_v1": {
             "name": "v1",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "v1"
@@ -2677,7 +2646,6 @@
         "subpackage_v2": {
             "name": "v2",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "v2"

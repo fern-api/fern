@@ -44,7 +44,6 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
-            "subtitle": null,
             "headers": [],
             "docs": "Admin not found"
         }
@@ -62,7 +61,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/container",
                 "parts": []
@@ -354,7 +352,6 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

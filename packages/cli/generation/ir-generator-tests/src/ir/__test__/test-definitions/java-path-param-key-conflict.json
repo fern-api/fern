@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Item"
             },
             "shape": {
@@ -103,7 +102,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -314,7 +312,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Item",
                                     "default": null,
                                     "inline": null
@@ -573,7 +570,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Item"
                                                             },
                                                             "value": {
@@ -600,7 +596,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Item"
                                                             },
                                                             "value": {
@@ -628,7 +623,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Item"
                                                 }
                                             },

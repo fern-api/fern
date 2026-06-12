@@ -25,7 +25,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:SendEvent"
             },
             "shape": {
@@ -82,7 +81,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:ConversationHistoryMessage"
             },
             "shape": {
@@ -182,7 +180,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:FunctionCallHistoryMessage"
             },
             "shape": {
@@ -227,7 +224,6 @@
                                         "file": "realtime"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_realtime:FunctionCall",
                                     "default": null,
                                     "inline": null
@@ -273,7 +269,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:ConversationTextMessage"
             },
             "shape": {
@@ -373,7 +368,6 @@
                     "file": "realtime"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_realtime:FunctionCall"
             },
             "shape": {
@@ -496,7 +490,6 @@
             "auth": false,
             "name": "realtime",
             "displayName": null,
-            "subtitle": null,
             "connectMethodName": null,
             "headers": [],
             "pathParameters": [],
@@ -518,7 +511,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:SendEvent",
                             "default": null,
                             "inline": null
@@ -546,7 +538,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:ConversationHistoryMessage",
                             "default": null,
                             "inline": null
@@ -574,7 +565,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:FunctionCallHistoryMessage",
                             "default": null,
                             "inline": null
@@ -602,7 +592,6 @@
                                 "file": "realtime"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_realtime:ConversationTextMessage",
                             "default": null,
                             "inline": null
@@ -921,7 +910,6 @@
                                                                     "file": "realtime"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_realtime:FunctionCall",
                                                                 "default": null,
                                                                 "inline": null
@@ -1080,7 +1068,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:SendEvent"
                                                 },
                                                 "value": {
@@ -1110,7 +1097,6 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_realtime:SendEvent"
                                     }
                                 },
@@ -1140,7 +1126,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ConversationHistoryMessage"
                                                 },
                                                 "value": {
@@ -1172,7 +1157,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ConversationHistoryMessage"
                                                 },
                                                 "value": {
@@ -1201,7 +1185,6 @@
                                                         "file": "realtime"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_realtime:ConversationHistoryMessage"
                                                 },
                                                 "value": {
@@ -1231,7 +1214,6 @@
                                             "file": "realtime"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_realtime:ConversationHistoryMessage"
                                     }
                                 },
@@ -2008,7 +1990,6 @@
         "subpackage_realtime": {
             "name": "realtime",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "realtime"

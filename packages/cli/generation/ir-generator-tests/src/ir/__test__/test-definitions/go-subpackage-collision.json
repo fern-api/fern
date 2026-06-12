@@ -30,7 +30,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_a/common/types:Metadata"
             },
             "shape": {
@@ -118,7 +117,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_a/types:Response"
             },
             "shape": {
@@ -147,7 +145,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_a/common/types:Metadata",
                                     "default": null,
                                     "inline": null
@@ -220,7 +217,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_b/common/types:Metadata"
             },
             "shape": {
@@ -308,7 +304,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_b/types:Response"
             },
             "shape": {
@@ -337,7 +332,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_b/common/types:Metadata",
                                     "default": null,
                                     "inline": null
@@ -1211,7 +1205,6 @@
         "subpackage_a": {
             "name": "a",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a"
@@ -1238,7 +1231,6 @@
         "subpackage_a/common": {
             "name": "common",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1266,7 +1258,6 @@
         "subpackage_a/common/types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1295,7 +1286,6 @@
         "subpackage_a/types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a",
@@ -1322,7 +1312,6 @@
         "subpackage_b": {
             "name": "b",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "b"
@@ -1349,7 +1338,6 @@
         "subpackage_b/common": {
             "name": "common",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "b",
@@ -1377,7 +1365,6 @@
         "subpackage_b/common/types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "b",
@@ -1406,7 +1393,6 @@
         "subpackage_b/types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "b",

@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TypeId"
             },
             "shape": {
@@ -94,7 +93,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Type"
             },
             "shape": {
@@ -112,7 +110,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:TypeId",
                             "default": null,
                             "inline": null
@@ -207,7 +204,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -234,7 +230,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Type"
                                 },
                                 "propertyAccess": null
@@ -264,7 +259,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Object"
             },
             "shape": {
@@ -278,7 +272,6 @@
                         "file": null
                     },
                     "displayName": null,
-                    "subtitle": null,
                     "typeId": "type_:Type",
                     "default": null,
                     "inline": null
@@ -293,7 +286,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:Type"
                     },
                     "shape": "OBJECT"
@@ -435,7 +427,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -492,7 +483,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:TypeId",
                                 "default": null,
                                 "inline": null
@@ -520,7 +510,6 @@
                                     "file": null
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_:TypeId",
                                 "default": null,
                                 "inline": null
@@ -586,7 +575,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:TypeId"
                                                 }
                                             },

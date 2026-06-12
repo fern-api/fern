@@ -30,7 +30,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_common/foo/types:BaseType"
             },
             "shape": {
@@ -118,7 +117,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_consumer/types:Result"
             },
             "shape": {
@@ -147,7 +145,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_common/foo/types:BaseType",
                                     "default": null,
                                     "inline": null
@@ -635,7 +632,6 @@
         "subpackage_common": {
             "name": "common",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "common"
@@ -661,7 +657,6 @@
         "subpackage_common/foo": {
             "name": "foo",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "common",
@@ -689,7 +684,6 @@
         "subpackage_common/foo/types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "common",
@@ -718,7 +712,6 @@
         "subpackage_consumer": {
             "name": "consumer",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "consumer"
@@ -744,7 +737,6 @@
         "subpackage_consumer/types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "consumer",

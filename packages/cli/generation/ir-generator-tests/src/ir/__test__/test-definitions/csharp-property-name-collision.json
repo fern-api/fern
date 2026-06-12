@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:CatalogV1Id"
             },
             "shape": {
@@ -112,7 +111,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:Activity"
             },
             "shape": {
@@ -206,7 +204,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -256,7 +253,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:CatalogV1Id",
                             "default": null,
                             "inline": null
@@ -280,7 +276,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:CatalogV1Id",
                                     "default": null,
                                     "inline": null
@@ -307,7 +302,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:CatalogV1Id",
                                     "default": null,
                                     "inline": null
@@ -513,7 +507,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:CatalogV1Id"
                                                     },
                                                     "value": {
@@ -548,7 +541,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:CatalogV1Id"
                                                     },
                                                     "value": {
@@ -584,7 +576,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:CatalogV1Id"
                                         }
                                     },
@@ -610,7 +601,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:CatalogV1Id"
                                                             },
                                                             "value": {
@@ -657,7 +647,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:CatalogV1Id"
                                                             },
                                                             "value": {
@@ -705,7 +694,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:CatalogV1Id"
                                                 }
                                             },
@@ -766,7 +754,6 @@
                                 "file": null
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_:Activity",
                             "default": null,
                             "inline": null
@@ -790,7 +777,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Activity",
                                     "default": null,
                                     "inline": null
@@ -817,7 +803,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:Activity",
                                     "default": null,
                                     "inline": null
@@ -1023,7 +1008,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Activity"
                                                     },
                                                     "value": {
@@ -1058,7 +1042,6 @@
                                                             "file": null
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_:Activity"
                                                     },
                                                     "value": {
@@ -1094,7 +1077,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:Activity"
                                         }
                                     },
@@ -1120,7 +1102,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Activity"
                                                             },
                                                             "value": {
@@ -1167,7 +1148,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:Activity"
                                                             },
                                                             "value": {
@@ -1215,7 +1195,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:Activity"
                                                 }
                                             },
@@ -1663,7 +1642,6 @@
         "subpackage_": {
             "name": "",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     ""

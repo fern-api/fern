@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:TimeZoneModel"
             },
             "shape": {
@@ -153,7 +152,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -209,7 +207,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:TimeZoneModel",
                                     "default": null,
                                     "inline": null
@@ -258,7 +255,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TimeZoneModel"
                                                             },
                                                             "value": {
@@ -285,7 +281,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TimeZoneModel"
                                                             },
                                                             "value": {
@@ -312,7 +307,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TimeZoneModel"
                                                             },
                                                             "value": {
@@ -339,7 +333,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:TimeZoneModel"
                                                             },
                                                             "value": {
@@ -387,7 +380,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:TimeZoneModel"
                                                 }
                                             },

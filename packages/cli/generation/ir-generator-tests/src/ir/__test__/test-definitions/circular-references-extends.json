@@ -25,7 +25,6 @@
                     "file": "common"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_common:BaseType"
             },
             "shape": {
@@ -49,7 +48,6 @@
                                         "file": "common"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_common:ChildType",
                                     "default": null,
                                     "inline": null
@@ -96,7 +94,6 @@
                     "file": "common"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_common:ChildType"
             },
             "shape": {
@@ -112,7 +109,6 @@
                             "file": "common"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_common:BaseType"
                     }
                 ],
@@ -159,7 +155,6 @@
                                         "file": "common"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_common:ChildType",
                                     "default": null,
                                     "inline": null
@@ -204,7 +199,6 @@
                     "file": "derived"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_derived:DerivedType"
             },
             "shape": {
@@ -220,7 +214,6 @@
                             "file": "common"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_common:BaseType"
                     }
                 ],
@@ -267,7 +260,6 @@
                                         "file": "common"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_common:ChildType",
                                     "default": null,
                                     "inline": null
@@ -725,7 +717,6 @@
         "subpackage_common": {
             "name": "common",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "common"
@@ -750,7 +741,6 @@
         "subpackage_derived": {
             "name": "derived",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "derived"

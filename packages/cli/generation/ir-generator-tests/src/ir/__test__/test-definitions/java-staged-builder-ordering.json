@@ -25,7 +25,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_types:SimpleStaged"
             },
             "shape": {
@@ -126,7 +125,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_types:MediumStaged"
             },
             "shape": {
@@ -276,7 +274,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_types:ComplexStaged"
             },
             "shape": {
@@ -503,7 +500,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_types:MixedStaged"
             },
             "shape": {
@@ -581,7 +577,6 @@
                                 "file": "types"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_types:SimpleStaged",
                             "default": null,
                             "inline": null
@@ -647,7 +642,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_types:Child"
             },
             "shape": {
@@ -726,7 +720,6 @@
                     "file": "types"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_types:Parent"
             },
             "shape": {
@@ -768,7 +761,6 @@
                                 "file": "types"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_types:Child",
                             "default": null,
                             "inline": null
@@ -837,7 +829,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/staged-builder",
                 "parts": []
@@ -889,7 +880,6 @@
                                 "file": "types"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_types:SimpleStaged",
                             "default": null,
                             "inline": null
@@ -915,7 +905,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_types:SimpleStaged",
                                     "default": null,
                                     "inline": null
@@ -1425,7 +1414,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:SimpleStaged"
                                                     },
                                                     "value": {
@@ -1454,7 +1442,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:SimpleStaged"
                                                     },
                                                     "value": {
@@ -1483,7 +1470,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:SimpleStaged"
                                                     },
                                                     "value": {
@@ -1513,7 +1499,6 @@
                                                 "file": "types"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_types:SimpleStaged"
                                         }
                                     },
@@ -1593,7 +1578,6 @@
                                 "file": "types"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_types:MediumStaged",
                             "default": null,
                             "inline": null
@@ -1619,7 +1603,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_types:MediumStaged",
                                     "default": null,
                                     "inline": null
@@ -2131,7 +2114,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MediumStaged"
                                                     },
                                                     "value": {
@@ -2160,7 +2142,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MediumStaged"
                                                     },
                                                     "value": {
@@ -2187,7 +2168,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MediumStaged"
                                                     },
                                                     "value": {
@@ -2216,7 +2196,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MediumStaged"
                                                     },
                                                     "value": {
@@ -2243,7 +2222,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MediumStaged"
                                                     },
                                                     "value": {
@@ -2281,7 +2259,6 @@
                                                 "file": "types"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_types:MediumStaged"
                                         }
                                     },
@@ -2362,7 +2339,6 @@
                                 "file": "types"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_types:ComplexStaged",
                             "default": null,
                             "inline": null
@@ -2388,7 +2364,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_types:ComplexStaged",
                                     "default": null,
                                     "inline": null
@@ -3480,7 +3455,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3509,7 +3483,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3536,7 +3509,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3563,7 +3535,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3592,7 +3563,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3619,7 +3589,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3656,7 +3625,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3693,7 +3661,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:ComplexStaged"
                                                     },
                                                     "value": {
@@ -3730,7 +3697,6 @@
                                                 "file": "types"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_types:ComplexStaged"
                                         }
                                     },
@@ -3812,7 +3778,6 @@
                                 "file": "types"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_types:MixedStaged",
                             "default": null,
                             "inline": null
@@ -3838,7 +3803,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_types:MixedStaged",
                                     "default": null,
                                     "inline": null
@@ -4516,7 +4480,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MixedStaged"
                                                     },
                                                     "value": {
@@ -4543,7 +4506,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MixedStaged"
                                                     },
                                                     "value": {
@@ -4572,7 +4534,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MixedStaged"
                                                     },
                                                     "value": {
@@ -4600,7 +4561,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MixedStaged"
                                                     },
                                                     "value": {
@@ -4621,7 +4581,6 @@
                                                                                 "file": "types"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_types:SimpleStaged"
                                                                         },
                                                                         "value": {
@@ -4650,7 +4609,6 @@
                                                                                 "file": "types"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_types:SimpleStaged"
                                                                         },
                                                                         "value": {
@@ -4679,7 +4637,6 @@
                                                                                 "file": "types"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_types:SimpleStaged"
                                                                         },
                                                                         "value": {
@@ -4709,7 +4666,6 @@
                                                                     "file": "types"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_types:SimpleStaged"
                                                             }
                                                         },
@@ -4733,7 +4689,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:MixedStaged"
                                                     },
                                                     "value": {
@@ -4761,7 +4716,6 @@
                                                 "file": "types"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_types:MixedStaged"
                                         }
                                     },
@@ -4847,7 +4801,6 @@
                                 "file": "types"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_types:Parent",
                             "default": null,
                             "inline": null
@@ -4873,7 +4826,6 @@
                                         "file": "types"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_types:Parent",
                                     "default": null,
                                     "inline": null
@@ -5381,7 +5333,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:Parent"
                                                     },
                                                     "value": {
@@ -5410,7 +5361,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:Parent"
                                                     },
                                                     "value": {
@@ -5431,7 +5381,6 @@
                                                                                 "file": "types"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_types:Child"
                                                                         },
                                                                         "value": {
@@ -5460,7 +5409,6 @@
                                                                                 "file": "types"
                                                                             },
                                                                             "displayName": null,
-                                                                            "subtitle": null,
                                                                             "typeId": "type_types:Child"
                                                                         },
                                                                         "value": {
@@ -5488,7 +5436,6 @@
                                                                     "file": "types"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_types:Child"
                                                             }
                                                         },
@@ -5511,7 +5458,6 @@
                                                             "file": "types"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_types:Parent"
                                                     },
                                                     "value": {
@@ -5541,7 +5487,6 @@
                                                 "file": "types"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_types:Parent"
                                         }
                                     },
@@ -7291,7 +7236,6 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"
@@ -7313,7 +7257,6 @@
         "subpackage_types": {
             "name": "types",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "types"

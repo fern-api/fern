@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SortOrder"
             },
             "shape": {
@@ -65,7 +64,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:SearchResponse"
             },
             "shape": {
@@ -242,7 +240,6 @@
                                                 "file": null
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_:SortOrder",
                                             "default": null,
                                             "inline": null
@@ -291,7 +288,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/api",
                 "parts": []
@@ -455,7 +451,6 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "subtitle": null,
                                                 "typeId": "type_:SortOrder",
                                                 "default": null,
                                                 "inline": null
@@ -612,7 +607,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:SearchResponse",
                                     "default": null,
                                     "inline": null
@@ -661,7 +655,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -725,7 +718,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -750,7 +742,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -823,7 +814,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -894,7 +884,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -963,7 +952,6 @@
                                                                     "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_:SearchResponse"
                                                             },
                                                             "value": {
@@ -991,7 +979,6 @@
                                                                                                     "file": null
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "subtitle": null,
                                                                                                 "typeId": "type_:SortOrder"
                                                                                             }
                                                                                         },
@@ -1006,7 +993,6 @@
                                                                                             "file": null
                                                                                         },
                                                                                         "displayName": null,
-                                                                                        "subtitle": null,
                                                                                         "typeId": "type_:SortOrder",
                                                                                         "default": null,
                                                                                         "inline": null
@@ -1028,7 +1014,6 @@
                                                                                         "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "subtitle": null,
                                                                                     "typeId": "type_:SortOrder",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -1052,7 +1037,6 @@
                                                         "file": null
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_:SearchResponse"
                                                 }
                                             },

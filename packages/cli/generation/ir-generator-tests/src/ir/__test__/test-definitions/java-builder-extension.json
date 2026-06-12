@@ -34,7 +34,6 @@
                     "file": "service"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_service:HelloResponse"
             },
             "shape": {
@@ -94,7 +93,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/api",
                 "parts": []
@@ -156,7 +154,6 @@
                                         "file": "service"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_service:HelloResponse",
                                     "default": null,
                                     "inline": null
@@ -207,7 +204,6 @@
                                                                     "file": "service"
                                                                 },
                                                                 "displayName": null,
-                                                                "subtitle": null,
                                                                 "typeId": "type_service:HelloResponse"
                                                             },
                                                             "value": {
@@ -237,7 +233,6 @@
                                                         "file": "service"
                                                     },
                                                     "displayName": null,
-                                                    "subtitle": null,
                                                     "typeId": "type_service:HelloResponse"
                                                 }
                                             },
@@ -631,7 +626,6 @@
         "subpackage_service": {
             "name": "service",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "service"

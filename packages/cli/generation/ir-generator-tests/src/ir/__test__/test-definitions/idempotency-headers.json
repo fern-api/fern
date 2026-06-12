@@ -81,7 +81,6 @@
                     "file": "payment"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_payment:Currency"
             },
             "shape": {
@@ -128,7 +127,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "/payment",
                 "parts": []
@@ -211,7 +209,6 @@
                                         "file": "payment"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_payment:Currency",
                                     "default": null,
                                     "inline": null
@@ -316,7 +313,6 @@
                                                             "file": "payment"
                                                         },
                                                         "displayName": null,
-                                                        "subtitle": null,
                                                         "typeId": "type_payment:Currency"
                                                     }
                                                 },
@@ -1041,7 +1037,6 @@
         "subpackage_payment": {
             "name": "payment",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "payment"

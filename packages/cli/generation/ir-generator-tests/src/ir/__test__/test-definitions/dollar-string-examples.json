@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:PaymentInfo"
             },
             "shape": {
@@ -156,7 +155,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:PaymentInfo",
                         "default": null,
                         "inline": null

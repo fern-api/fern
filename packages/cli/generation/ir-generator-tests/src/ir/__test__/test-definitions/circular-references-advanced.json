@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:ImportingA"
             },
             "shape": {
@@ -47,7 +46,6 @@
                                         "file": "a"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_a:A",
                                     "default": null,
                                     "inline": null
@@ -92,7 +90,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:RootType"
             },
             "shape": {
@@ -149,7 +146,6 @@
                     "file": "a"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_a:A"
             },
             "shape": {
@@ -163,7 +159,6 @@
                             "file": null
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_:RootType"
                     }
                 ],
@@ -220,7 +215,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Animal"
             },
             "shape": {
@@ -297,7 +291,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Fruit"
             },
             "shape": {
@@ -374,7 +367,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Node"
             },
             "shape": {
@@ -447,7 +439,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Cat"
             },
             "shape": {
@@ -467,7 +458,6 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:Fruit",
                             "default": null,
                             "inline": null
@@ -517,7 +507,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Dog"
             },
             "shape": {
@@ -537,7 +526,6 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:Fruit",
                             "default": null,
                             "inline": null
@@ -587,7 +575,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Acai"
             },
             "shape": {
@@ -603,7 +590,6 @@
                             "file": "ast"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "typeId": "type_ast:Berry"
                     }
                 ],
@@ -623,7 +609,6 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:Animal",
                             "default": null,
                             "inline": null
@@ -671,7 +656,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Fig"
             },
             "shape": {
@@ -691,7 +675,6 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:Animal",
                             "default": null,
                             "inline": null
@@ -741,7 +724,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:Berry"
             },
             "shape": {
@@ -761,7 +743,6 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:Animal",
                             "default": null,
                             "inline": null
@@ -811,7 +792,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:BranchNode"
             },
             "shape": {
@@ -835,7 +815,6 @@
                                         "file": "ast"
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_ast:Node",
                                     "default": null,
                                     "inline": null
@@ -883,7 +862,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:LeafNode"
             },
             "shape": {
@@ -917,7 +895,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:NodesWrapper"
             },
             "shape": {
@@ -945,7 +922,6 @@
                                                 "file": "ast"
                                             },
                                             "displayName": null,
-                                            "subtitle": null,
                                             "typeId": "type_ast:Node",
                                             "default": null,
                                             "inline": null
@@ -995,7 +971,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:ContainerValue"
             },
             "shape": {
@@ -1024,7 +999,6 @@
                                             "file": "ast"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
@@ -1033,7 +1007,6 @@
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -1057,7 +1030,6 @@
                                             "file": "ast"
                                         },
                                         "displayName": null,
-                                        "subtitle": null,
                                         "typeId": "type_ast:FieldValue",
                                         "default": null,
                                         "inline": null
@@ -1066,7 +1038,6 @@
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -1103,7 +1074,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:PrimitiveValue"
             },
             "shape": {
@@ -1147,7 +1117,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:ObjectValue"
             },
             "shape": {
@@ -1181,7 +1150,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:FieldName"
             },
             "shape": {
@@ -1233,7 +1201,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:FieldValue"
             },
             "shape": {
@@ -1258,14 +1225,12 @@
                                     "file": "ast"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_ast:PrimitiveValue",
                                 "default": null,
                                 "inline": null
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -1282,11 +1247,9 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:ObjectValue"
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     },
@@ -1306,14 +1269,12 @@
                                     "file": "ast"
                                 },
                                 "displayName": null,
-                                "subtitle": null,
                                 "typeId": "type_ast:ContainerValue",
                                 "default": null,
                                 "inline": null
                             }
                         },
                         "displayName": null,
-                        "subtitle": null,
                         "availability": null,
                         "docs": null
                     }
@@ -1350,7 +1311,6 @@
                     "file": "ast"
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_ast:ObjectFieldValue"
             },
             "shape": {
@@ -1370,7 +1330,6 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:FieldName",
                             "default": null,
                             "inline": null
@@ -1397,7 +1356,6 @@
                                 "file": "ast"
                             },
                             "displayName": null,
-                            "subtitle": null,
                             "typeId": "type_ast:FieldValue",
                             "default": null,
                             "inline": null
@@ -3470,7 +3428,6 @@
         "subpackage_a": {
             "name": "a",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "a"
@@ -3494,7 +3451,6 @@
         "subpackage_ast": {
             "name": "ast",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "ast"

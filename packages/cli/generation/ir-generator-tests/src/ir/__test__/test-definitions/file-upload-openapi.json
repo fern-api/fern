@@ -23,7 +23,6 @@
                     "file": null
                 },
                 "displayName": null,
-                "subtitle": null,
                 "typeId": "type_:FileId"
             },
             "shape": {
@@ -78,7 +77,6 @@
                 }
             },
             "displayName": null,
-            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -187,7 +185,6 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "subtitle": null,
                                     "typeId": "type_:FileId",
                                     "default": null,
                                     "inline": null
@@ -585,7 +582,6 @@
         "subpackage_fileUploadExample": {
             "name": "fileUploadExample",
             "displayName": null,
-            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "fileUploadExample"
