@@ -538,7 +538,10 @@ export function parseImagePaths(
         replacedContent = applyEdits(content, edits);
     }
 
-    return { filepaths: [...filepaths], markdown: requoteLeadingZeroValues(grayMatter.stringify(replacedContent, data)) };
+    return {
+        filepaths: [...filepaths],
+        markdown: requoteLeadingZeroValues(grayMatter.stringify(replacedContent, data))
+    };
 }
 
 function resolvePath(
