@@ -158,7 +158,7 @@
             "_visit": [Function],
             "type": "openapi",
           },
-          "subtitle": "Retrieve a **paginated** list of payments for your account",
+          "subtitle": undefined,
           "transport": undefined,
           "userSpecifiedExamples": [],
           "v2BaseUrls": undefined,
