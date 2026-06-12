@@ -1,0 +1,7 @@
+- summary: |
+    Fix: reconcile types mod.rs to register all generated type files.
+    When the upstream rust-model generator emits request wrapper types
+    (e.g. for endpoints with both a body and query parameters) without
+    adding them to mod.rs, the CLI generator now detects and appends the
+    missing declarations, preventing "cannot find type" compilation errors.
+  type: fix
