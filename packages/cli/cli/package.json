@@ -70,7 +70,7 @@
     "@fern-api/docs-preview": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/docs-validator": "workspace:*",
-    "@fern-api/fdr-sdk": "1.2.16-3b754a56be",
+    "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fern-definition-formatter": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fern-definition-validator": "workspace:*",
