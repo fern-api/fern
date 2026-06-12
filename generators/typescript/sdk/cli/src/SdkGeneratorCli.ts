@@ -108,7 +108,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy"
         };
 
-        const serdeLayerExplicitlyEnabled = parsed?.serdeLayer === true || parsed?.noSerdeLayer === false;
+        if (parsed?.serdeLayer != null && parsed?.noSerdeLayer != null) {
+            logger.warn(
+                "Both `serdeLayer` and `noSerdeLayer` are set. `serdeLayer` takes precedence; consider removing `noSerdeLayer`."
+            );
+        }
+        const serdeLayerExplicitlyEnabled =
+            parsed?.serdeLayer != null ? parsed.serdeLayer === true : parsed?.noSerdeLayer === false;
         if (serdeLayerExplicitlyEnabled && typeof parsed?.enableInlineTypes === "undefined") {
             logger.info(
                 "serdeLayer is enabled while enableInlineTypes is implicitly true. Changing enableInlineTypes to false."

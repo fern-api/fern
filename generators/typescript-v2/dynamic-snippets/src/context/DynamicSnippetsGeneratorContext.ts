@@ -3,7 +3,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
+import { TypescriptCustomConfigSchema, resolveNoSerdeLayer, ts } from "@fern-api/typescript-ast";
 import { constructNpmPackage, getNamespaceExport, resolveNaming } from "@fern-api/typescript-browser-compatible-base";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
@@ -66,7 +66,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        if (this.customConfig?.retainOriginalCasing || this.customConfig?.noSerdeLayer) {
+        if (this.customConfig?.retainOriginalCasing || resolveNoSerdeLayer(this.customConfig)) {
             return this.formatOriginalPropertyName(name.originalName);
         }
         return name.camelCase.unsafeName;
