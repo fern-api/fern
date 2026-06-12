@@ -3,7 +3,7 @@ import {
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { TypescriptCustomConfigSchema, resolveNoSerdeLayer, ts } from "@fern-api/typescript-ast";
+import { resolveNoSerdeLayer, TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { constructNpmPackage, getNamespaceExport, resolveNaming } from "@fern-api/typescript-browser-compatible-base";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
