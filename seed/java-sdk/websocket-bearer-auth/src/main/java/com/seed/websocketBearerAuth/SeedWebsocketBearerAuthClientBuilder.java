@@ -126,7 +126,7 @@ public class SeedWebsocketBearerAuthClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        if (this.apiKey != null) {
+        if (this.apiKey != null && !this.apiKey.isEmpty()) {
             builder.addHeader("Authorization", "Bearer " + this.apiKey);
         }
     }

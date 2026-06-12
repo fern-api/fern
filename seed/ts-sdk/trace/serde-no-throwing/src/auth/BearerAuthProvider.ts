@@ -21,7 +21,7 @@ export class BearerAuthProvider implements core.AuthProvider {
         endpointMetadata?: core.EndpointMetadata;
     } = {}): Promise<core.AuthRequest> {
         const token = await core.Supplier.get(this.options[TOKEN_PARAM]);
-        if (token == null) {
+        if (token == null || token === "") {
             return { headers: {} };
         }
 

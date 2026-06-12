@@ -62,6 +62,9 @@ class BearerAuthProvider {
                     message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
                 });
             }
+            if (token === "") {
+                return { headers: {} };
+            }
             return {
                 headers: { Authorization: `Bearer ${token}` },
             };

@@ -205,7 +205,7 @@ public class SeedAnyAuthClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        if (this.token != null) {
+        if (this.token != null && !this.token.isEmpty()) {
             builder.addHeader("Authorization", "Bearer " + this.token);
         }
         builder.addHeader("X-API-Key", this.apiKey);

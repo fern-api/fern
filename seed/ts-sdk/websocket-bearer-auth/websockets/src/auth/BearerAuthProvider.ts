@@ -28,6 +28,9 @@ export class BearerAuthProvider implements core.AuthProvider {
                 message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
+        if (apiKey === "") {
+            return { headers: {} };
+        }
 
         return {
             headers: { Authorization: `Bearer ${apiKey}` },

@@ -270,10 +270,10 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                 : supplierGetCode;
 
         if (this.neverThrowErrors) {
-            // When neverThrowErrors is true, return empty headers if token is missing
+            // When neverThrowErrors is true, return empty headers if token is missing or empty
             return `
         const ${tokenVar} = ${envFallback};
-        if (${tokenVar} == null) {
+        if (${tokenVar} == null || ${tokenVar} === "") {
             return { headers: {} };
         }
 
@@ -282,7 +282,8 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         };
         `;
         } else {
-            // When neverThrowErrors is false, throw an error if token is missing
+            // When neverThrowErrors is false, throw an error if token is missing;
+            // return empty headers if token is empty string (intentional no-auth)
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
@@ -293,6 +294,9 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
             throw new ${errorConstructor}({
                 message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
             });
+        }
+        if (${tokenVar} === "") {
+            return { headers: {} };
         }
 
         return {

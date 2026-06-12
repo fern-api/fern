@@ -405,7 +405,7 @@ export class BearerAuthProvider implements core.AuthProvider {
                 const token = 
                     (await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata })) ??
                     process.env?.[ENV_TOKEN];
-                if (token == null) {
+                if (token == null || token === "") {
                     return { headers: {} };
                 }
 
@@ -456,6 +456,9 @@ export class BearerAuthProvider implements core.AuthProvider {
                         message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
                     });
                 }
+                if (token === "") {
+                    return { headers: {} };
+                }
 
                 return {
                     headers: { Authorization: \`Bearer \${token}\` },
@@ -496,7 +499,7 @@ export class BearerAuthProvider implements core.AuthProvider {
         } = {}): Promise<core.AuthRequest> {
 
                 const token = await core.Supplier.get(this.options[TOKEN_PARAM], { endpointMetadata });
-                if (token == null) {
+                if (token == null || token === "") {
                     return { headers: {} };
                 }
 
@@ -545,6 +548,9 @@ export class BearerAuthProvider implements core.AuthProvider {
                         message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
                     });
                 }
+                if (token === "") {
+                    return { headers: {} };
+                }
 
                 return {
                     headers: { Authorization: \`Bearer \${token}\` },
@@ -591,6 +597,9 @@ export class BearerAuthProvider implements core.AuthProvider {
                     throw new errors.SeedApiError({
                         message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
                     });
+                }
+                if (token === "") {
+                    return { headers: {} };
                 }
 
                 return {

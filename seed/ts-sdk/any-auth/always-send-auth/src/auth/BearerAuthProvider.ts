@@ -30,6 +30,9 @@ export class BearerAuthProvider implements core.AuthProvider {
                 message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
+        if (token === "") {
+            return { headers: {} };
+        }
 
         return {
             headers: { Authorization: `Bearer ${token}` },

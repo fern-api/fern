@@ -383,7 +383,9 @@ class ClientWrapperGenerator:
             writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
             with writer.indent():
                 writer.write_line(f"token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
-                writer.write_line('headers["Authorization"] = f"Bearer {token}"')
+                writer.write_line("if token:")
+                with writer.indent():
+                    writer.write_line('headers["Authorization"] = f"Bearer {token}"')
             if self._has_inferred_auth():
                 writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_AUTH_HEADERS_MEMBER_NAME} is not None:")
                 with writer.indent():
@@ -625,24 +627,31 @@ class ClientWrapperGenerator:
                                 writer.write_line(
                                     f"{param.constructor_parameter_name} = self.{param.getter_method.name}()"
                                 )
-                                writer.write_line(f"if {param.constructor_parameter_name} is not None:")
+                                writer.write_line(f"if {param.constructor_parameter_name}:")
                                 with writer.indent():
                                     writer.write_line(
                                         f'headers["{param.header_key}"] = f"{param.header_prefix} {{{param.constructor_parameter_name}}}"'
                                     )
                             else:
                                 writer.write_line(
-                                    f'headers["{param.header_key}"] = f"{param.header_prefix} {{self.{param.getter_method.name}()}}"'
+                                    f"{param.constructor_parameter_name} = self.{param.getter_method.name}()"
                                 )
+                                writer.write_line(f"if {param.constructor_parameter_name}:")
+                                with writer.indent():
+                                    writer.write_line(
+                                        f'headers["{param.header_key}"] = f"{param.header_prefix} {{{param.constructor_parameter_name}}}"'
+                                    )
                         elif param.private_member_name is not None:
                             if param.type_hint.is_optional:
-                                writer.write_line(f"if self.{param.private_member_name} is not None:")
+                                writer.write_line(f"if self.{param.private_member_name}:")
+                                writer.indent()
+                            else:
+                                writer.write_line(f"if self.{param.private_member_name}:")
                                 writer.indent()
                             writer.write_line(
                                 f'headers["{param.header_key}"] = f"{param.header_prefix} {{self.{param.private_member_name}}}"'
                             )
-                            if param.type_hint.is_optional:
-                                writer.outdent()
+                            writer.outdent()
                     else:
                         stringify = (lambda expr: f"str({expr})") if param.needs_str_conversion else (lambda expr: expr)
                         if param.getter_method is not None:

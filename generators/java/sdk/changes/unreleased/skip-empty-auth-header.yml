@@ -1,0 +1,5 @@
+- summary: |
+    The SDK no longer sends the `Authorization` header when the bearer token is
+    set to an empty string. This allows using the SDK against backends that do
+    not require authentication without setting a dummy token value.
+  type: feat

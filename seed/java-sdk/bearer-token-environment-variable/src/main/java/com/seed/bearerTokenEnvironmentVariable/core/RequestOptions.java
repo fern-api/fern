@@ -55,7 +55,7 @@ public final class RequestOptions {
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
-        if (this.apiKey != null) {
+        if (this.apiKey != null && !this.apiKey.isEmpty()) {
             headers.put("Authorization", "Bearer " + this.apiKey);
         }
         if (this.version != null) {

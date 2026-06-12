@@ -39,7 +39,9 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        headers["Authorization"] = f"Bearer {self._get_api_key()}"
+        api_key = self._get_api_key()
+        if api_key:
+            headers["Authorization"] = f"Bearer {api_key}"
         headers["X-API-Version"] = self._version if self._version is not None else "1.0.0"
         return headers
 
@@ -132,5 +134,6 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers = self.get_headers()
         if self._async_token is not None:
             token = await self._async_token()
-            headers["Authorization"] = f"Bearer {token}"
+            if token:
+                headers["Authorization"] = f"Bearer {token}"
         return headers
