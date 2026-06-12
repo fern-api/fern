@@ -20,7 +20,7 @@ class CustomFiles extends JsonSerializableType
     /**
      * @var (
      *    BasicCustomFiles
-     *   |array<value-of<Language>, Files>
+     *   |array<Language, Files>
      *   |mixed
      * ) $value
      */
@@ -35,7 +35,7 @@ class CustomFiles extends JsonSerializableType
      * ),
      *   value: (
      *    BasicCustomFiles
-     *   |array<value-of<Language>, Files>
+     *   |array<Language, Files>
      *   |mixed
      * ),
      * } $values
@@ -60,7 +60,7 @@ class CustomFiles extends JsonSerializableType
     }
 
     /**
-     * @param array<value-of<Language>, Files> $custom
+     * @param array<Language, Files> $custom
      * @return CustomFiles
      */
     public static function custom(array $custom): CustomFiles
@@ -102,7 +102,7 @@ class CustomFiles extends JsonSerializableType
     }
 
     /**
-     * @return array<value-of<Language>, Files>
+     * @return array<Language, Files>
      */
     public function asCustom(): array
     {

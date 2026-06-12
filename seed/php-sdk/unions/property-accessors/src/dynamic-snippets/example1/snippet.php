@@ -13,7 +13,7 @@ $client = new SeedClient(
     ],
 );
 $client->bigunion->update(
-    BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+    BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
         'value' => 'value',
-    ])),
+    ]), new DateTime('2024-01-15T09:30:00Z')),
 );

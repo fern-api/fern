@@ -4,7 +4,7 @@ namespace SeedInferredAuthImplicitNoExpiry.Nested;
 
 public partial interface IApiClient
 {
-    Task GetSomethingAsync(
+    WithRawResponseTask GetSomethingAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

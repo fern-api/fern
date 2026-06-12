@@ -2,12 +2,12 @@ import { describe, expect, it } from "vitest";
 import { validateCustomConfig } from "../customConfig.js";
 
 describe("validateCustomConfig", () => {
-    it("returns the empty default for null/undefined", () => {
-        expect(validateCustomConfig(null)).toEqual({});
-        expect(validateCustomConfig(undefined)).toEqual({});
+    it("returns defaults (customCommands: true) for null/undefined", () => {
+        expect(validateCustomConfig(null)).toEqual({ customCommands: true });
+        expect(validateCustomConfig(undefined)).toEqual({ customCommands: true });
     });
 
-    it("returns the empty default for an empty object", () => {
+    it("returns the empty result for an empty object (customCommands resolved at pipeline level)", () => {
         expect(validateCustomConfig({})).toEqual({});
     });
 
@@ -37,5 +37,13 @@ describe("validateCustomConfig", () => {
 
     it("throws on non-object input (array)", () => {
         expect(() => validateCustomConfig(["acme"])).toThrow(/expected an object, got array/);
+    });
+
+    it("accepts a boolean customCommands", () => {
+        expect(validateCustomConfig({ customCommands: false })).toEqual({ customCommands: false });
+    });
+
+    it("throws on non-boolean customCommands", () => {
+        expect(() => validateCustomConfig({ customCommands: "yes" })).toThrow(/expected a boolean, got string/);
     });
 });

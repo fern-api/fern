@@ -202,7 +202,6 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $testId = 'endpoints.params.upload_with_path.0';
         $this->client->endpoints->params->uploadWithPath(
             'upload-path',
-            ,
             [
                 'headers' => [
                     'X-Test-Id' => 'endpoints.params.upload_with_path.0',

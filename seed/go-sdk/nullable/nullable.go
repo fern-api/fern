@@ -374,6 +374,8 @@ type Status struct {
 	Active      interface{}
 	Archived    *time.Time
 	SoftDeleted *time.Time
+
+	rawJSON json.RawMessage
 }
 
 func (s *Status) GetType() string {
@@ -439,6 +441,7 @@ func (s *Status) UnmarshalJSON(data []byte) error {
 		}
 		s.SoftDeleted = valueUnmarshaler.SoftDeleted.TimePtr()
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -475,6 +478,9 @@ func (s Status) MarshalJSON() ([]byte, error) {
 			SoftDeleted: internal.NewOptionalDateTime(s.SoftDeleted),
 		}
 		return json.Marshal(marshaler)
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -514,6 +520,9 @@ func (s *Status) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Type != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
 		}
 		return fmt.Errorf("type %T is empty", s)

@@ -1220,6 +1220,8 @@ type Exception struct {
 	Type    string
 	Generic *ExceptionInfo
 	Timeout interface{}
+
+	rawJSON json.RawMessage
 }
 
 func NewExceptionFromGeneric(value *ExceptionInfo) *Exception {
@@ -1276,6 +1278,7 @@ func (e *Exception) UnmarshalJSON(data []byte) error {
 		}
 		e.Timeout = value
 	}
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1285,6 +1288,9 @@ func (e Exception) MarshalJSON() ([]byte, error) {
 	}
 	switch e.Type {
 	default:
+		if len(e.rawJSON) > 0 {
+			return e.rawJSON, nil
+		}
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "generic":
 		return internal.MarshalJSONWithExtraProperty(e.Generic, "type", "generic")
@@ -1329,6 +1335,9 @@ func (e *Exception) validate() error {
 	}
 	if len(fields) == 0 {
 		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
 		}
 		return fmt.Errorf("type %T is empty", e)
@@ -1817,6 +1826,8 @@ type Metadata struct {
 	Tags     []string
 	HTML     string
 	Markdown string
+
+	rawJSON json.RawMessage
 }
 
 func NewMetadataFromHTML(value string) *Metadata {
@@ -1895,6 +1906,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 		}
 		m.Markdown = valueUnmarshaler.Markdown
 	}
+	m.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -1904,6 +1916,9 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 	}
 	switch m.Type {
 	default:
+		if len(m.rawJSON) > 0 {
+			return m.rawJSON, nil
+		}
 		return nil, fmt.Errorf("invalid type %s in %T", m.Type, m)
 	case "html":
 		var marshaler = struct {
@@ -1963,6 +1978,9 @@ func (m *Metadata) validate() error {
 	}
 	if len(fields) == 0 {
 		if m.Type != "" {
+			if len(m.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", m, m.Type)
 		}
 		return fmt.Errorf("type %T is empty", m)
@@ -3042,6 +3060,8 @@ type Test struct {
 	Type string
 	And  bool
 	Or   bool
+
+	rawJSON json.RawMessage
 }
 
 func NewTestFromAnd(value bool) *Test {
@@ -3102,6 +3122,7 @@ func (t *Test) UnmarshalJSON(data []byte) error {
 		}
 		t.Or = valueUnmarshaler.Or
 	}
+	t.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -3111,6 +3132,9 @@ func (t Test) MarshalJSON() ([]byte, error) {
 	}
 	switch t.Type {
 	default:
+		if len(t.rawJSON) > 0 {
+			return t.rawJSON, nil
+		}
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "and":
 		var marshaler = struct {
@@ -3162,6 +3186,9 @@ func (t *Test) validate() error {
 	}
 	if len(fields) == 0 {
 		if t.Type != "" {
+			if len(t.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", t, t.Type)
 		}
 		return fmt.Errorf("type %T is empty", t)

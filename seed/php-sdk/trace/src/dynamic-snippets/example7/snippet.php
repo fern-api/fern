@@ -40,7 +40,7 @@ $client->admin->storeTracedWorkspace(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -53,12 +53,12 @@ $client->admin->storeTracedWorkspace(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],
@@ -69,7 +69,7 @@ $client->admin->storeTracedWorkspace(
             new TraceResponse([
                 'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
-                'returnValue' => DebugVariableValue::integerValue(),
+                'returnValue' => DebugVariableValue::integerValue(1),
                 'expressionLocation' => new ExpressionLocation([
                     'start' => 1,
                     'offset' => 1,
@@ -82,12 +82,12 @@ $client->admin->storeTracedWorkspace(
                         'scopes' => [
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                             new Scope([
                                 'variables' => [
-                                    'variables' => DebugVariableValue::integerValue(),
+                                    'variables' => DebugVariableValue::integerValue(1),
                                 ],
                             ]),
                         ],

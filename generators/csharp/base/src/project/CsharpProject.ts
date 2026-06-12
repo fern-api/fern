@@ -175,7 +175,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await loggingExeca(
             this.context.logger,
             csharpier,
-            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--syntax-errors-as-warnings"],
             {
                 doNotPipeOutput: false,
                 cwd: absolutePathToSrcDirectory

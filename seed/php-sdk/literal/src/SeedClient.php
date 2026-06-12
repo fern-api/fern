@@ -77,11 +77,11 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($version != null) {
+        if ($version !== null) {
             $defaultHeaders['X-API-Version'] = $version;
         }
-        if ($auditLogging != null) {
-            $defaultHeaders['X-API-Enable-Audit-Logging'] = $auditLogging;
+        if ($auditLogging !== null) {
+            $defaultHeaders['X-API-Enable-Audit-Logging'] = $auditLogging ? 'true' : 'false';
         }
 
         $this->options = $options ?? [];

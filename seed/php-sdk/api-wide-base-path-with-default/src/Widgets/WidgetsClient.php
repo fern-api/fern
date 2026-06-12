@@ -49,8 +49,8 @@ class WidgetsClient
     }
 
     /**
-     * @param string $apiVersion
      * @param Widget $request
+     * @param string $apiVersion
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,7 +63,7 @@ class WidgetsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function create(string $apiVersion = 'v1beta', Widget $request, ?array $options = null): ?Widget
+    public function create(Widget $request, string $apiVersion = 'v1beta', ?array $options = null): ?Widget
     {
         $options = array_merge($this->options, $options ?? []);
         try {

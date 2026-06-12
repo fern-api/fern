@@ -32,7 +32,7 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
     rm brace-expansion-5.0.6.tgz
 
-RUN dotnet tool install -g csharpier --version "1.2.6"
+RUN dotnet tool install -g csharpier --version "1.3.0"
 
 COPY generators/csharp/model/dist /dist
 

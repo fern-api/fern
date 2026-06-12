@@ -227,7 +227,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -255,7 +255,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -529,7 +529,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -557,7 +557,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -707,7 +707,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -735,7 +735,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1032,7 +1032,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1061,7 +1061,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1215,7 +1215,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1244,7 +1244,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1403,7 +1403,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1433,7 +1433,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1593,7 +1593,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1622,7 +1622,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1823,7 +1823,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {
@@ -1853,7 +1853,7 @@ public class RawServiceClient {
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers((RequestOptions) null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         try (Response response = client.newCall(okhttpRequest).execute()) {

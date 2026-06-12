@@ -8,7 +8,11 @@ import com.seed.object.core.RequestOptions;
 import com.seed.object.requests.GetDiscriminatedUnionRequest;
 import com.seed.object.requests.GetUndiscriminatedUnionRequest;
 import com.seed.object.requests.PostRootRequest;
+import com.seed.object.types.MapResponseValue;
+import com.seed.object.types.OrphanParentWithSharedChild;
 import com.seed.object.types.RootType1;
+import com.seed.object.types.SharedChildType;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncSeedObjectClient {
@@ -52,6 +56,30 @@ public class AsyncSeedObjectClient {
     public CompletableFuture<Void> getUndiscriminatedUnion(
             GetUndiscriminatedUnionRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUndiscriminatedUnion(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Map<String, MapResponseValue>> getMapResponse() {
+        return this.rawClient.getMapResponse().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Map<String, MapResponseValue>> getMapResponse(RequestOptions requestOptions) {
+        return this.rawClient.getMapResponse(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SharedChildType> getSharedChild() {
+        return this.rawClient.getSharedChild().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SharedChildType> getSharedChild(RequestOptions requestOptions) {
+        return this.rawClient.getSharedChild(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<OrphanParentWithSharedChild> getOrphanParent() {
+        return this.rawClient.getOrphanParent().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<OrphanParentWithSharedChild> getOrphanParent(RequestOptions requestOptions) {
+        return this.rawClient.getOrphanParent(requestOptions).thenApply(response -> response.body());
     }
 
     public static AsyncSeedObjectClientBuilder builder() {

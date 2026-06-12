@@ -1,0 +1,4 @@
+- summary: |
+    Fix mypy errors in raw client for stream-condition endpoints by removing
+    `@contextmanager` decorator and correcting overload return types.
+  type: fix

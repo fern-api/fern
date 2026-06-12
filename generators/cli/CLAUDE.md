@@ -86,7 +86,7 @@ the path the patched Cargo.toml references).
 | [`src/patchCargoToml.ts`](src/patchCargoToml.ts) | Literal string replacements against the shipped `Cargo.toml`. Throws if no anchors matched. |
 | [`src/patchDistWorkspace.ts`](src/patchDistWorkspace.ts) | Strips Fern-specific cargo-dist metadata (npm-scope, npm-package) from the shipped `dist-workspace.toml`. |
 | [`src/identity.ts`](src/identity.ts) | `deriveBinaryName`, `toKebabCase`, `toEnvVarPrefix`. Resolves `customConfig.binaryName ?? ir.apiDisplayName`. |
-| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. Only `binaryName` for now. |
+| [`src/customConfig.ts`](src/customConfig.ts) | Type + boundary validator for `generators.yml`'s `config:` block. `binaryName` and `customCommands` (unified flag controlling types/SDK/glue generation). |
 | [`src/detectAuth.ts`](src/detectAuth.ts) | Visits the IR's `auth.schemes` (via `FernIr.AuthScheme._visit`) and emits one `.auth_scheme_env(...)` / `.auth_basic_scheme(...)` per supported scheme. Synchronous — no disk reads. |
 | [`build.mjs`](build.mjs) | Bundles `src/cli.ts` → `dist/cli.cjs`, copies `./sdk/` → `./dist/sdk/` with `SDK_IGNORE` (template dev files that shouldn't ship). |
 | [`Dockerfile`](Dockerfile) | Bakes `dist/` into the generator image. Entrypoint reads `/fern/config.json`. |
@@ -196,6 +196,64 @@ docker build --no-cache -f docker/seed/Dockerfile.cli -t fernapi/cli-seed:latest
 The image warms a cargo target cache against the committed
 `Cargo.lock`; mounted fixtures use `cargo build --locked` and would
 otherwise refuse to start when the dep tree drifts.
+
+### Syncing the vendored SDK from cli-sdk
+
+The SDK at [`./sdk/`](./sdk/) is a **vendored snapshot** of
+[`fern-api/cli-sdk`](https://github.com/fern-api/cli-sdk). A daily
+GitHub Actions workflow (`.github/workflows/sync-cli-sdk.yml`) pulls
+`cli-sdk` `main` HEAD into this directory, opens a PR for human review,
+and relies on seed tests + a human reviewer as the trust boundary.
+
+**How the sync works:**
+
+[`generators/cli/scripts/sync-sdk.sh`](scripts/sync-sdk.sh) takes a
+local cli-sdk checkout and:
+
+1. **Rsyncs source files** (`src/`, `tests/`, `cli/openapi-fixture/`)
+   under the same `SDK_IGNORE` rules as `build.mjs` — template-only
+   files (smoke tests, demo binaries, `.github/`, `docs/`, etc.) are
+   excluded.
+2. **Projects `Cargo.toml`** — the vendored manifest is a deterministic
+   projection of cli-sdk's workspace manifest, **not** a copy. A naïve
+   `cp` would re-introduce `[workspace]`, `version.workspace = true`,
+   and ~35 `[[bin]]` entries. The projection:
+   - **Drops** `[workspace]` + `[workspace.package]`
+   - **Keeps only** the `openapi-fixture` and `strip-schema` `[[bin]]`
+     entries
+   - **Rewrites** `version.workspace = true` → literal
+     `version = "<synced>"`
+   - **Injects** the 3 Fern comment blocks that `patchCargoToml.ts`
+     anchors on (`TEMPLATE_TOP_COMMENT`, `TEMPLATE_BIN_COMMENT`, the
+     `strip-schema` "Internal tool…" comment) plus `readme = "README.md"`
+     and `[package.metadata.dist] dist = false`
+   - **Copies verbatim**: `[dependencies]`, `[features]`, `[lib]`,
+     `[profile.dist]`, `[build-dependencies]`, `[dev-dependencies]`
+3. **Regenerates `Cargo.lock`** so `cargo build --locked` is honest.
+4. **Writes `.synced-from`** with `cli-sdk@<sha>` + timestamp for
+   provenance tracking.
+
+**Manual sync** (when you can't wait for the daily cron):
+
+```bash
+# From the fern repo root:
+git clone --depth 1 https://github.com/fern-api/cli-sdk.git /tmp/cli-sdk
+bash generators/cli/scripts/sync-sdk.sh /tmp/cli-sdk
+# Review the diff, then commit.
+```
+
+**Must-rebuild list** (only when `Cargo.lock` changes):
+
+```bash
+pnpm turbo run dist:cli --filter @fern-api/cli-generator
+docker build --no-cache -f docker/seed/Dockerfile.cli -t fernapi/cli-seed:latest .
+pnpm turbo run dist:cli --filter @fern-api/seed-cli
+```
+
+**Key invariant**: every `patchCargoToml.ts` anchor must be present in
+the projected `Cargo.toml`. If you rename a comment block in the
+template, update `sync-sdk.sh`'s projection accordingly — the
+`patchCargoToml.test.ts` will catch any mismatch at test time.
 
 ## Conventions
 

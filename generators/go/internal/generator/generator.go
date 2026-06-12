@@ -617,7 +617,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
 		}
-		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.ClientName, g.config.ClientConstructorName)
+		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.ClientName, g.config.ExportedClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
 		}
@@ -1284,6 +1284,7 @@ func newClientTestFile(
 	rootPackageName string,
 	coordinator *coordinator.Client,
 	clientNameOverride string,
+	exportedClientNameOverride string,
 	clientConstructorNameOverride string,
 ) (*File, error) {
 	var filename = "client/client_test.go"
@@ -1307,7 +1308,7 @@ func newClientTestFile(
 		nil,
 		coordinator,
 	)
-	content := replaceClientTestConstructorName(clientTestFile, clientNameOverride, clientConstructorNameOverride)
+	content := replaceClientTestConstructorName(clientTestFile, clientNameOverride, exportedClientNameOverride, clientConstructorNameOverride)
 	f.WriteRaw(content)
 	return f.File()
 }
@@ -1458,13 +1459,18 @@ func newExtraPropertiesTestFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func replaceClientTestConstructorName(content string, clientNameOverride string, clientConstructorNameOverride string) string {
-	if clientNameOverride == "" && clientConstructorNameOverride == "" {
+func replaceClientTestConstructorName(content string, clientNameOverride string, exportedClientNameOverride string, clientConstructorNameOverride string) string {
+	if clientNameOverride == "" && exportedClientNameOverride == "" && clientConstructorNameOverride == "" {
 		return content
 	}
-	override := "New" + clientNameOverride
-	if clientConstructorNameOverride != "" {
+	override := "NewClient"
+	switch {
+	case clientConstructorNameOverride != "":
 		override = clientConstructorNameOverride
+	case exportedClientNameOverride != "":
+		override = "New" + exportedClientNameOverride
+	case clientNameOverride != "":
+		override = "New" + clientNameOverride
 	}
 	return strings.Replace(
 		content,

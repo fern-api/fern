@@ -8,7 +8,7 @@ import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { command } from "../../_internal/command.js";
 import { commandGroup } from "../../_internal/commandGroup.js";
 
-const PROVIDERS = ["anthropic", "openai", "bedrock"] as const;
+const PROVIDERS = ["anthropic", "openai", "aws-bedrock"] as const;
 type Provider = (typeof PROVIDERS)[number];
 
 function isProvider(value: string): value is Provider {
@@ -41,7 +41,7 @@ export class AiSetProviderCommand {
         context.stderr.info(
             `${chalk.green("✓")} AI provider set to ${chalk.cyan(args.provider)} in ${chalk.cyan(loader.absoluteFilePath)}`
         );
-        if (args.provider === "bedrock") {
+        if (args.provider === "aws-bedrock") {
             context.stderr.info(
                 chalk.dim(
                     "  Bedrock uses AWS credentials from your environment (AWS_ACCESS_KEY_ID / AWS_PROFILE / etc.)"
@@ -79,10 +79,10 @@ export class AiSetKeyCommand {
             });
         }
 
-        if (providerInput === "bedrock") {
+        if (providerInput === "aws-bedrock") {
             throw new CliError({
                 message:
-                    `Provider 'bedrock' does not use a stored API key.\n` +
+                    `Provider 'aws-bedrock' does not use a stored API key.\n` +
                     `  Bedrock reads credentials from your AWS environment (AWS_ACCESS_KEY_ID, AWS_PROFILE, etc.).`,
                 code: CliError.Code.ConfigError
             });
@@ -122,9 +122,9 @@ export class AiGetKeyCommand {
             });
         }
 
-        if (providerInput === "bedrock") {
+        if (providerInput === "aws-bedrock") {
             throw new CliError({
-                message: `Provider 'bedrock' does not use a stored API key (uses AWS credentials).`,
+                message: `Provider 'aws-bedrock' does not use a stored API key (uses AWS credentials).`,
                 code: CliError.Code.ConfigError
             });
         }
@@ -194,7 +194,7 @@ function addAiSetProviderCommand(cli: Argv<GlobalArgs>): void {
     command(
         cli,
         "set-provider <provider>",
-        "Choose the AI provider for `fern check` fixes (anthropic, openai, or bedrock)",
+        "Choose the AI provider for `fern check` fixes (anthropic, openai, or aws-bedrock)",
         (context, args) => cmd.handle(context, args as AiSetProviderCommand.Args),
         (yargs) =>
             yargs.positional("provider", {

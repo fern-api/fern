@@ -21,6 +21,7 @@ pub mod man;
 pub mod openapi;
 pub mod stability;
 pub mod validate;
+pub mod sdk_executor;
 pub mod websocket;
 
 // Convenience re-exports for auth types

@@ -1,0 +1,4 @@
+- summary: |
+    Fix union serialization for enum variants: use `->value` for serialization
+    and `::from()` for deserialization instead of `->jsonSerialize()` / `::jsonDeserialize()`.
+  type: fix

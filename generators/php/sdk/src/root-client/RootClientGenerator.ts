@@ -364,11 +364,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
                 for (const param of constructorParameters.literal) {
                     if (param.header != null) {
-                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.controlFlow("if", php.codeblock(`$${param.name} !== null`));
                         writer.write(`$defaultHeaders['${param.header.name}'] = `);
-                        writer.writeNodeStatement(
-                            this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
-                        );
+                        if (param.value.type === "boolean") {
+                            writer.writeTextStatement(`$${param.name} ? 'true' : 'false'`);
+                        } else {
+                            writer.writeNodeStatement(
+                                this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                            );
+                        }
                         writer.endControlFlow();
                     }
                 }
@@ -383,19 +387,21 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 if (resolvedBasicAuthSchemes.length > 0) {
                     const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
                     const needsControlFlow = isAuthOptional || resolvedBasicAuthSchemes.length > 1;
-                    for (let i = 0; i < resolvedBasicAuthSchemes.length; i++) {
-                        const resolved = resolvedBasicAuthSchemes[i];
+                    let hasWrittenIf = false;
+                    for (const resolved of resolvedBasicAuthSchemes) {
                         if (resolved == null) {
                             continue;
                         }
                         const { condition, credentialExpr } = resolved;
-                        if (needsControlFlow) {
-                            writer.controlFlow(i === 0 ? "if" : "else if", php.codeblock(condition));
+                        const hasCondition = needsControlFlow && condition.length > 0;
+                        if (hasCondition) {
+                            writer.controlFlow(hasWrittenIf ? "else if" : "if", php.codeblock(condition));
+                            hasWrittenIf = true;
                         }
                         writer.writeLine(
                             `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${credentialExpr});`
                         );
-                        if (needsControlFlow) {
+                        if (hasCondition) {
                             writer.endControlFlow();
                         }
                     }
@@ -685,7 +691,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
                 const oauthConfig = scheme.configuration;
                 if (oauthConfig.type === "clientCredentials") {
-                    return [
+                    const params: ConstructorParameter[] = [
                         {
                             name: "clientId",
                             docs: "The client ID for OAuth authentication.",
@@ -709,6 +715,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             environmentVariable: oauthConfig.clientSecretEnvVar
                         }
                     ];
+                    return params;
                 }
                 // Fallback to the default bearer token scheme for other OAuth types
                 const name = "token";
@@ -811,11 +818,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             return undefined;
         }
 
+        // Only add null-check conditions for params without environment variable fallbacks.
+        // Params with env vars are guaranteed non-null after the ??= getFromEnvOrThrow assignment.
         const conditions: string[] = [];
-        if (!usernameOmitted) {
+        if (!usernameOmitted && scheme.usernameEnvVar == null) {
             conditions.push(`$${usernameName} !== null`);
         }
-        if (!passwordOmitted) {
+        if (!passwordOmitted && scheme.passwordEnvVar == null) {
             conditions.push(`$${passwordName} !== null`);
         }
 
@@ -877,7 +886,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$this->oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
-        writer.writeLine("($clientId ?? '', $clientSecret ?? '', $authClient);");
+        const clientIdFallback = oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
+        const clientSecretFallback =
+            oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
+        writer.writeLine(`(${clientIdFallback}, ${clientSecretFallback}, $authClient);`);
         writer.writeLine();
     }
 

@@ -127,6 +127,18 @@ export interface PostWithObjectBody {
 /**
  * @example
  *     {
+ *         "X-Custom-Header": "X-Custom-Header",
+ *         body: ["string", "string"]
+ *     }
+ */
+export interface PostWithArrayBodyAndHeaders {
+    "X-Custom-Header"?: string;
+    body: string[];
+}
+
+/**
+ * @example
+ *     {
  *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
  *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
  *         body: "string"

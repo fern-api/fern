@@ -142,6 +142,9 @@ fixtures:
     - outputFolder: multiple-exports
       customConfig:
         generateSubpackageExports: true
+    - outputFolder: flatten-request-parameters
+      customConfig:
+        flattenRequestParameters: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
@@ -569,7 +572,6 @@ allowedFailures:
   - exhaustive:never-throw-errors
   - exhaustive:multiple-exports
   - oauth-client-credentials-custom
-  - package-yml
   - inferred-auth-implicit-reference
   - unions:serde-layer
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing

@@ -132,6 +132,15 @@ paths:
               external:
                 name: External
                 description: External collaborators only.
+        # `status:in` exercises FER-10430 flag-name sanitization. The
+        # colon is a shell-special character (YAML separator, completion
+        # quirks) so the CLI must expose `--status-in` while the wire
+        # request still sends `status:in=<value>` in the query string.
+        - name: "status:in"
+          in: query
+          description: Filter users by status. Comma-separated list.
+          schema:
+            type: string
         # `limit` exercises the standard OpenAPI `default:` keyword. The
         # extension is absent, so the schema default is treated as a
         # documentation hint — it shows up in `--help` but the CLI does
@@ -896,6 +905,37 @@ paths:
         "201":
           description: Created person
 
+  # Endpoint with REQUIRED nested object fields. Used to verify that the
+  # object-shorthand body flag (--name '{...}') satisfies required leaf
+  # parameters whose values come from the JSON payload rather than per-leaf
+  # flags. See test_object_shorthand_satisfies_required_nested_leaves.
+  /persons/required-nested:
+    post:
+      x-fern-sdk-group-name:
+        - persons
+      x-fern-sdk-method-name: createRequiredNested
+      operationId: persons_create_required_nested
+      summary: Create a person with required nested fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: object
+                  required: [first, last]
+                  properties:
+                    first:
+                      type: string
+                    last:
+                      type: string
+      responses:
+        "201":
+          description: Created person
+
   # --- articles ---
   # Endpoint with an array body field. Exercises repeated:true so
   # --tag admin --tag reviewer accumulates into ["admin","reviewer"].
@@ -968,6 +1008,120 @@ paths:
       responses:
         "201":
           description: Created order
+
+  # --- uploads (multipart/form-data) ---
+  # Endpoint with a multipart/form-data body containing both text and
+  # file fields. Exercises the multipart parser + executor pipeline.
+  /uploads:
+    post:
+      x-fern-sdk-group-name:
+        - uploads
+      x-fern-sdk-method-name: create
+      operationId: uploads_create
+      summary: Upload a file with metadata
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload
+                purpose:
+                  type: string
+                  description: Purpose of the upload
+      responses:
+        "201":
+          description: Upload created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  filename:
+                    type: string
+                  purpose:
+                    type: string
+
+  # Endpoint with multipart/form-data where all fields are text
+  # (no file upload). Covers the text-only multipart case.
+  /uploads/metadata:
+    post:
+      x-fern-sdk-group-name:
+        - uploads
+      x-fern-sdk-method-name: create-metadata
+      operationId: uploads_createMetadata
+      summary: Create upload metadata (text-only multipart)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the upload
+                tags:
+                  type: string
+                  description: Comma-separated tags
+      responses:
+        "201":
+          description: Metadata created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+
+  # Endpoint whose multipart field name collides with the builtin --output
+  # flag.  Exercises the guard in collect_multipart_parts that prevents the
+  # builtin flag value from leaking into the request body.
+  /uploads/collide:
+    post:
+      x-fern-sdk-group-name:
+        - uploads
+      x-fern-sdk-method-name: create-collide
+      operationId: uploads_createCollide
+      summary: Multipart with a field named output (builtin collision)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                output:
+                  type: string
+                  description: Field that collides with the builtin --output flag
+                description:
+                  type: string
+                  description: A normal text field
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  output:
+                    type: string
 
   # --- messages (form-urlencoded) ---
 

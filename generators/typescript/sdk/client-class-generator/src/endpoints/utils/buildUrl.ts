@@ -40,10 +40,10 @@ export function buildUrl({
         if (endpoint.fullPath.head.length === 0) {
             return undefined;
         }
-        return ts.factory.createStringLiteral(endpoint.fullPath.head);
+        return ts.factory.createStringLiteral(collapseSlashes(endpoint.fullPath.head));
     }
     return ts.factory.createTemplateExpression(
-        ts.factory.createTemplateHead(endpoint.fullPath.head),
+        ts.factory.createTemplateHead(collapseSlashes(endpoint.fullPath.head)),
         endpoint.fullPath.parts.map((part, index) => {
             const pathParameter = endpoint.allPathParameters.find(
                 (param) => getOriginalName(param.name) === part.pathParameter
@@ -107,11 +107,23 @@ export function buildUrl({
             return ts.factory.createTemplateSpan(
                 context.coreUtilities.urlUtils.encodePathParam._invoke(referenceToPathParameterValue),
                 index === endpoint.fullPath.parts.length - 1
-                    ? ts.factory.createTemplateTail(part.tail)
-                    : ts.factory.createTemplateMiddle(part.tail)
+                    ? ts.factory.createTemplateTail(collapseSlashes(part.tail))
+                    : ts.factory.createTemplateMiddle(collapseSlashes(part.tail))
             );
         })
     );
+}
+
+/**
+ * Collapses consecutive slashes in a URL path fragment into a single slash.
+ *
+ * Joining a base-path, service base-path, and endpoint path can introduce duplicate
+ * slashes (e.g. `/{id}` + `/` + `/{nestedId}` => `/{id}//{nestedId}`). The example URL
+ * in the IR already normalizes these, so the request URL must match to keep generated
+ * wire tests (and real requests) consistent.
+ */
+function collapseSlashes(pathFragment: string): string {
+    return pathFragment.replace(/\/{2,}/g, "/");
 }
 
 function getReferenceToPathParameter({

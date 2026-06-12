@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.V2.<a href="/src/SeedTrace/V2/V2Client.cs">TestAsync</a>()</code></summary>
+<details><summary><code>client.V2.<a href="/src/SeedTrace/V2/V2Client.cs">TestAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -26,7 +26,7 @@ await client.V2.TestAsync();
 </details>
 
 ## Admin
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, TestSubmissionStatus { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateTestSubmissionStatusAsync</a>(submissionId, TestSubmissionStatus { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -77,7 +77,7 @@ await client.Admin.UpdateTestSubmissionStatusAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendTestSubmissionUpdateAsync</a>(submissionId, TestSubmissionUpdate { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendTestSubmissionUpdateAsync</a>(submissionId, TestSubmissionUpdate { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ await client.Admin.SendTestSubmissionUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, WorkspaceSubmissionStatus { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">UpdateWorkspaceSubmissionStatusAsync</a>(submissionId, WorkspaceSubmissionStatus { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -185,7 +185,7 @@ await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendWorkspaceSubmissionUpdateAsync</a>(submissionId, WorkspaceSubmissionUpdate { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">SendWorkspaceSubmissionUpdateAsync</a>(submissionId, WorkspaceSubmissionUpdate { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -242,7 +242,7 @@ await client.Admin.SendWorkspaceSubmissionUpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseAsync</a>(submissionId, testCaseId, StoreTracedTestCaseRequest { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseAsync</a>(submissionId, testCaseId, StoreTracedTestCaseRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -409,7 +409,7 @@ await client.Admin.StoreTracedTestCaseAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable&lt;TraceResponseV2&gt; { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable&lt;TraceResponseV2&gt; { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -553,7 +553,7 @@ await client.Admin.StoreTracedTestCaseV2Async(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceAsync</a>(submissionId, StoreTracedWorkspaceRequest { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceAsync</a>(submissionId, StoreTracedWorkspaceRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -717,7 +717,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable&lt;TraceResponseV2&gt; { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable&lt;TraceResponseV2&gt; { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -878,7 +878,7 @@ await client.Homepage.GetHomepageProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable&lt;string&gt; { ... })</code></summary>
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable&lt;string&gt; { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1248,7 +1248,7 @@ await client.Playlist.UpdatePlaylistAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">DeletePlaylistAsync</a>(serviceParam, playlistId)</code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">DeletePlaylistAsync</a>(serviceParam, playlistId) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1580,7 +1580,7 @@ await client.Problem.UpdateProblemAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">DeleteProblemAsync</a>(problemId)</code></summary>
+<details><summary><code>client.Problem.<a href="/src/SeedTrace/Problem/ProblemClient.cs">DeleteProblemAsync</a>(problemId) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1816,7 +1816,7 @@ await client.Submission.GetExecutionSessionAsync("sessionId");
 </dl>
 </details>
 
-<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">StopExecutionSessionAsync</a>(sessionId)</code></summary>
+<details><summary><code>client.Submission.<a href="/src/SeedTrace/Submission/SubmissionClient.cs">StopExecutionSessionAsync</a>(sessionId) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -1896,7 +1896,7 @@ await client.Submission.GetExecutionSessionsStateAsync();
 </details>
 
 ## Sysprop
-<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">SetNumWarmInstancesAsync</a>(language, numWarmInstances)</code></summary>
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">SetNumWarmInstancesAsync</a>(language, numWarmInstances) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

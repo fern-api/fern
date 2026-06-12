@@ -1,4 +1,56 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.9.3
+  changelogEntry:
+    - summary: |
+        Escape Java reserved keywords (e.g. `enum`, `extends`) in package names used by
+        generated snippets, README, and reference docs. These now match the SDK code
+        (e.g. `com.seed._enum`) instead of producing uncompilable imports like
+        `com.seed.enum`.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 4.9.2
+  changelogEntry:
+    - summary: |
+        Update java-sdk-generator container to fix CVE-2026-7010 (perl-HTTP-Tiny
+        CRLF injection), CVE-2026-48864/CVE-2026-9149/CVE-2026-9150/CVE-2026-48863
+        (libsolv buffer overflows), and CVE-2026-8376 (perl heap buffer overflow).
+      type: chore
+  createdAt: "2026-06-10"
+  irVersion: 66
+- version: 4.9.1
+  changelogEntry:
+    - summary: |
+        Fix inline types referenced only from endpoint responses (e.g., map value
+        types) not being generated as standalone files when `enable-inline-types`
+        is enabled.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
+- version: 4.9.0
+  changelogEntry:
+    - summary: |
+        Add `exported-client-class-name` config to the Java SDK generator. When set, docs surfaces
+        (dynamic snippets, README, reference.md) display this name for the root client instead of
+        `client-class-name` — for teams that wrap the generated client with a hand-written public class
+        and want documentation to show the wrapper. Generated source code and wire tests are unaffected.
+      type: feat
+    - summary: |
+        SSE streaming endpoints now decide protocol-level vs data-level union discrimination from the API spec's x-fern-discriminator-context (IR discriminatorContext) instead of inferring from the discriminator's field name. Unions whose discriminator happens to be named event/id/retry/data but lives in the data payload are now correctly parsed from the data JSON; envelope dispatch only happens when x-fern-discriminator-context: protocol is explicit.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
+- version: 4.8.12
+  changelogEntry:
+    - summary: |
+        Fix compilation error on multipart file-upload endpoints when idempotency
+        headers are configured. The generator now emits `headers((RequestOptions) null)`
+        instead of a bare `headers(null)`, which resolves the ambiguous method
+        reference between `headers(RequestOptions)` and
+        `headers(IdempotentRequestOptions)` overloads in `ClientOptions`.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
 - version: 4.8.11
   changelogEntry:
     - summary: |

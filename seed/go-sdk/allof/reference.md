@@ -184,3 +184,144 @@ client.GetOrganization(
 </dl>
 </details>
 
+<details><summary><code>client.CreatePlant(request) -> *fern.PlantStrict</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests three-level allOf chain where a parent schema itself uses allOf with $ref elements. The grandparent's properties must be resolved through the nested $ref.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.PlantPost{
+        Species: "species",
+        Family: "family",
+        Genus: "genus",
+        SunExposure: fern.PlantPostSunExposureFull,
+    }
+client.CreatePlant(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**sunExposure:** `*fern.PlantPostSunExposure` — Required sun exposure level.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**plantedAt:** `*time.Time` — Date the plant was planted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**soilType:** `*string` — Preferred soil type.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.CreateTree(request) -> *fern.TreeRecord</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that when a parent's allOf contains multiple $ref entries, all of them are resolved and their properties merged.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.TreeRecord{
+        ID: "id",
+    }
+client.CreateTree(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*fern.TreeRecord` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

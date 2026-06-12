@@ -9,6 +9,7 @@ import com.seed.javaWebsocketSharedDiscriminator.core.ClientOptions;
 import com.seed.javaWebsocketSharedDiscriminator.core.DisconnectReason;
 import com.seed.javaWebsocketSharedDiscriminator.core.ObjectMappers;
 import com.seed.javaWebsocketSharedDiscriminator.core.ReconnectingWebSocketListener;
+import com.seed.javaWebsocketSharedDiscriminator.core.RequestOptions;
 import com.seed.javaWebsocketSharedDiscriminator.core.WebSocketReadyState;
 import com.seed.javaWebsocketSharedDiscriminator.resources.realtime.types.ConversationHistoryMessage;
 import com.seed.javaWebsocketSharedDiscriminator.resources.realtime.types.ConversationTextMessage;
@@ -93,7 +94,7 @@ public class RealtimeWebSocketClient implements AutoCloseable {
         }
         HttpUrl.Builder urlBuilder = parsedUrl.newBuilder();
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
-        clientOptions.headers(null).forEach(requestBuilder::addHeader);
+        clientOptions.headers((RequestOptions) null).forEach(requestBuilder::addHeader);
         final Request request = requestBuilder.build();
         this.readyState = WebSocketReadyState.CONNECTING;
         ReconnectingWebSocketListener.ReconnectOptions reconnectOpts = this.reconnectOptions != null

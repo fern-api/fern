@@ -93,6 +93,11 @@ export function findRemovedSlugs(
     }
     const removed: RemovedSlug[] = [];
     for (const publishedEntry of publishedEntries) {
+        // Empty slugs are FDR's fallback for pages without standalone nav nodes
+        // (for example changelog entries), not distinct redirectable URLs.
+        if (publishedEntry.slug.trim() === "") {
+            continue;
+        }
         const localSlugs = localPageIdToSlugs.get(publishedEntry.pageId);
         if (localSlugs == null) {
             if (activeSlugs.has(publishedEntry.slug)) {

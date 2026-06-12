@@ -6,6 +6,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "base-api-exception-class-name": z.string().optional(),
     "base-exception-class-name": z.string().optional(),
     "client-class-name": z.string().optional(),
+    "exported-client-class-name": z.string().optional(),
     "inline-file-properties": z.boolean().optional(),
     "inline-path-parameters": z.boolean().optional(),
     "package-layout": z.enum(["flat", "nested"]).optional(),

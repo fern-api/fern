@@ -309,8 +309,14 @@ class EndpointFunctionGenerator:
                     )
                 )
             )
-        # Add contextmanager decorators for streaming endpoints in raw clients
-        elif self._is_raw_client and is_streaming_endpoint(self._endpoint):
+        # Add contextmanager decorators for streaming endpoints in raw clients.
+        # Skip for overloaded streaming methods (stream-condition endpoints) since
+        # the non-streaming path returns directly instead of yielding.
+        elif (
+            self._is_raw_client
+            and is_streaming_endpoint(self._endpoint)
+            and not is_overloaded_streaming_method(self._endpoint)
+        ):
             if self._is_async:
                 decorators.append(
                     AST.Expression(
@@ -1179,12 +1185,24 @@ class EndpointFunctionGenerator:
 
         # Handle streaming case
         is_streaming = response_body and is_streaming_endpoint(self._endpoint)
+        # For non-streaming overloads of stream-condition endpoints in raw client,
+        # skip the streaming wrapper so the return type is HttpResponse[T] directly
+        if is_streaming and streaming_parameter == "non-streaming" and self._is_raw_client:
+            is_streaming = False
         if is_streaming:
             if self._is_raw_client:
                 stream_type = self._get_stream_func_return_type()
                 streaming_type = (
                     AST.TypeHint.async_iterator(stream_type) if is_async else AST.TypeHint.iterator(stream_type)
                 )
+                # For the base implementation of overloaded streaming methods (stream-condition),
+                # return Union[streaming_type, HttpResponse[T]] so mypy accepts both paths
+                if streaming_parameter is None and is_overloaded_streaming_method(self._endpoint):
+                    non_stream_underlying = self._get_response_body_underlying_type(
+                        response_body, is_async, "non-streaming"
+                    )
+                    non_stream_return = self._get_http_response_wrapper_type(is_async, non_stream_underlying)
+                    return AST.TypeHint.union(streaming_type, non_stream_return)
             else:
                 streaming_type = (
                     AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
@@ -1288,15 +1306,14 @@ class EndpointFunctionGenerator:
         )
 
     def _get_nested_json_response_type(self, response: ir_types.JsonResponseBodyWithProperty) -> AST.TypeHint:
-        response_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-            response.response_body_type
-        )
         property_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
             response.response_property.value_type
             if response.response_property is not None
             else response.response_body_type
         )
-        if response_type.is_optional:
+        # When the response body resolves to an optional type (including named aliases such as
+        # optional<...>), an empty response yields data=None, so the property type must be optional.
+        if self._context.resolved_schema_is_optional_or_unknown(response.response_body_type):
             return AST.TypeHint.optional(property_type)
         return property_type
 

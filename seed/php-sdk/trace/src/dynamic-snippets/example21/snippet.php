@@ -27,8 +27,8 @@ $client->problem->updateProblem(
         'problemName' => 'problemName',
         'problemDescription' => new ProblemDescription([
             'boards' => [
-                ProblemDescriptionBoard::html(),
-                ProblemDescriptionBoard::html(),
+                ProblemDescriptionBoard::html('boards'),
+                ProblemDescriptionBoard::html('boards'),
             ],
         ]),
         'files' => [
@@ -65,21 +65,21 @@ $client->problem->updateProblem(
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        VariableValue::integerValue(),
-                        VariableValue::integerValue(),
+                        VariableValue::integerValue(1),
+                        VariableValue::integerValue(1),
                     ],
                 ]),
-                'expectedResult' => VariableValue::integerValue(),
+                'expectedResult' => VariableValue::integerValue(1),
             ]),
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        VariableValue::integerValue(),
-                        VariableValue::integerValue(),
+                        VariableValue::integerValue(1),
+                        VariableValue::integerValue(1),
                     ],
                 ]),
-                'expectedResult' => VariableValue::integerValue(),
+                'expectedResult' => VariableValue::integerValue(1),
             ]),
         ],
         'methodName' => 'methodName',

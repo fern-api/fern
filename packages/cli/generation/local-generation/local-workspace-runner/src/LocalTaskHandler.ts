@@ -790,13 +790,16 @@ export class LocalTaskHandler {
         const pathsToPreserve = await this.getPathsToPreserve(fernIgnorePaths);
 
         // Copy files from local output to tmp directory
-        await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
+        await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true, verbatimSymlinks: true });
 
         // Initialize a throwaway git repo in the temp directory. This is only used to
         // leverage git's file-tracking for resolving .fernignore paths. We inline the
         // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
         // Touch ID on macOS) and unnecessary overhead.
         await this.runThrowawayGitCommand(["init"], tmpOutputResolutionDir);
+        // Disable auto-gc so that no background pack processes run during
+        // the subsequent operations, which would race with the rm(.git) below.
+        await this.runThrowawayGitCommand(["config", "gc.auto", "0"], tmpOutputResolutionDir);
         await this.runThrowawayGitCommand(["add", "."], tmpOutputResolutionDir);
         await this.runThrowawayGitCommand(
             [
@@ -827,11 +830,16 @@ export class LocalTaskHandler {
         await this.runThrowawayGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
-        await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+        await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), {
+            recursive: true,
+            force: true,
+            maxRetries: 3,
+            retryDelay: 100
+        });
 
         // Delete local output directory and copy all files from the generated directory
         await rm(this.absolutePathToLocalOutput, { recursive: true });
-        await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true });
+        await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true, verbatimSymlinks: true });
     }
 
     private async copyGeneratedFilesNoFernIgnorePreservingGit(): Promise<void> {
@@ -885,11 +893,11 @@ export class LocalTaskHandler {
                 await cp(
                     join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(localOutputItem)),
                     join(outputPath, RelativeFilePath.of(localOutputItem)),
-                    { recursive: true }
+                    { recursive: true, verbatimSymlinks: true }
                 );
             }
         } else {
-            await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true });
+            await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true, verbatimSymlinks: true });
         }
     }
 

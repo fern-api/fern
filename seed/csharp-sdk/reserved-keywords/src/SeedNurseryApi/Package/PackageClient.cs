@@ -11,10 +11,7 @@ public partial class PackageClient : IPackageClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Package.TestAsync(new TestRequest { For = "for" });
-    /// </code></example>
-    public async Task TestAsync(
+    private async Task<RawResponse> TestAsyncCore(
         TestRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -45,7 +42,12 @@ public partial class PackageClient : IPackageClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedNurseryApi.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -54,8 +56,26 @@ public partial class PackageClient : IPackageClient
             throw new SeedNurseryApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedNurseryApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Package.TestAsync(new TestRequest { For = "for" });
+    /// </code></example>
+    public WithRawResponseTask TestAsync(
+        TestRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(TestAsyncCore(request, options, cancellationToken));
     }
 }

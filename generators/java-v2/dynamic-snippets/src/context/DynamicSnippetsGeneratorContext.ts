@@ -6,7 +6,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
+import { BaseJavaCustomConfigSchema, escapeJavaKeyword, java } from "@fern-api/java-ast";
 import { camelCase } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
@@ -89,13 +89,23 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getRootClientClassReference(): java.ClassReference {
         return java.classReference({
-            name: this.getRootClientClassName(),
+            name: this.getRootClientClassNameForSnippets(),
             packageName: this.getRootPackageName()
         });
     }
 
     public getRootClientClassName(): string {
         return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`;
+    }
+
+    /**
+     * The client class name surfaced in documentation snippets (dynamic snippets, README, reference.md).
+     * Customers may export the generated root client under a different, hand-written class name; this
+     * accessor reflects that exported name. Falls back to the internal client class name when unset, so
+     * output is unchanged for users who have not configured `exported-client-class-name`.
+     */
+    public getRootClientClassNameForSnippets(): string {
+        return this.customConfig?.["exported-client-class-name"] ?? this.getRootClientClassName();
     }
 
     public getEnvironmentClassName(): string {
@@ -441,7 +451,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? "_" + token : token;
+            return this.startsWithNumber(token) ? "_" + token : escapeJavaKeyword(token);
         });
         return sanitizedTokens.join(".");
     }

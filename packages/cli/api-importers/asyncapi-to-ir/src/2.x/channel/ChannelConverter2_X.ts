@@ -287,7 +287,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     in: "path",
                     description: parameterObject.description,
                     required: parameterObject.required ?? true
-                }
+                },
+                parameterNamePrefix: this.channelPath
             });
             const convertedParameter = parameterConverter.convert();
             if (convertedParameter != null) {
@@ -320,7 +321,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                         required: required.includes(name),
                         schema: resolvedHeader,
                         description: "description" in resolvedHeader ? resolvedHeader.description : undefined
-                    }
+                    },
+                    parameterNamePrefix: this.channelPath
                 });
 
                 const convertedParameter = parameterConverter.convert();
@@ -385,7 +387,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                         schema: resolvedQuery,
                         description: "description" in resolvedQuery ? resolvedQuery.description : undefined,
                         deprecated: resolvedQuery.deprecated ?? false
-                    }
+                    },
+                    parameterNamePrefix: this.channelPath
                 });
 
                 const convertedParameter = parameterConverter.convert();

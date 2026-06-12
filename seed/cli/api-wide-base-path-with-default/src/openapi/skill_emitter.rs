@@ -118,7 +118,7 @@ fn render_shared_skill(
     );
     let _ = writeln!(
         out,
-        "| `-o, --output <PATH>` | Write binary responses to a file | |"
+        "| `-o, --output <PATH>` | Write binary responses to a file; use `-` to stream to stdout for piping into other commands (e.g. `ffplay -`, `aplay -`). | |"
     );
     let _ = writeln!(
         out,
@@ -248,7 +248,8 @@ fn describe_credential_source(src: &AuthCredentialSource) -> String {
         AuthCredentialSource::Cli(arg) => format!("`--{arg}` flag"),
         AuthCredentialSource::File(path) => format!("`{}` file", path.display()),
         AuthCredentialSource::Literal(_) => "built-in literal".to_string(),
-        AuthCredentialSource::Closure(_) => "custom resolver".to_string(),
+        AuthCredentialSource::Closure(_, Some(hint)) => hint.clone(),
+        AuthCredentialSource::Closure(_, None) => "custom resolver".to_string(),
         AuthCredentialSource::Chain(sources) => sources
             .iter()
             .map(describe_credential_source)

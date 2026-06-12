@@ -1,0 +1,147 @@
+# Sources the architecture-doc refresh agent reads from each run.
+#
+# This file is consumed by the playbook at PLAYBOOK.md. The schema is
+# stable; new sources can be added by extending the file and updating
+# the corresponding section in PLAYBOOK.md.
+
+version: 1
+
+# ---------------------------------------------------------------------------
+# GitHub: where the code lives.
+# ---------------------------------------------------------------------------
+github:
+  repo: fern-api/cli-sdk
+  base_branch: main
+  # PRs opened by the agent target this branch:
+  target_branch: main
+  # Architecturally-significant paths get extra weight when classifying PRs.
+  # Source of truth — keep in sync with PLAYBOOK.md §"Architecturally significant paths".
+  significant_paths:
+    - src/lib.rs
+    - src/openapi/app.rs
+    - src/openapi/parser.rs
+    - src/openapi/discovery.rs
+    - src/openapi/executor.rs
+    - src/openapi/overlay.rs
+    - src/openapi/commands.rs
+    - src/graphql/app.rs
+    - src/graphql/parser.rs
+    - src/graphql/discovery.rs
+    - src/graphql/executor.rs
+    - src/graphql/commands.rs
+    - src/auth/provider.rs
+    - src/auth/credential.rs
+    - src/auth/compose.rs
+    - src/auth/oauth2.rs
+    - src/http.rs
+    - src/websocket/**
+    - src/formatter.rs
+    - src/validate.rs
+    - src/error.rs
+    - src/custom_commands.rs
+    - src/early_intercept.rs
+    - Cargo.toml
+    - docs/adr/**
+
+# ---------------------------------------------------------------------------
+# Linear: where tickets live.
+# ---------------------------------------------------------------------------
+linear:
+  team: Fern
+  team_id: 44849e91-4ac1-49a4-8aa8-d89975e5ec25
+  project: "[SDKs] CLI Generator"
+  project_id: db48c4e2-71cb-4c91-b8a5-77ddf1622d85
+  # Ticket statuses to pull each run:
+  pull_statuses:
+    - Done       # closed in window
+    - "In Progress"  # only if mentioned by a merged PR in the window
+  # FER-* matching regex (anchor for cross-referencing in Slack and Notion):
+  ticket_id_pattern: 'FER-\d+'
+
+# ---------------------------------------------------------------------------
+# Slack: where conversations live.
+# ---------------------------------------------------------------------------
+slack:
+  # Where the weekly digest gets posted:
+  summary_channel: "#project-cli-generator"
+  # Always include these channels in the search, even if no FER-* match:
+  always_include_channels:
+    - "#project-cli-generator"
+  # Auto-discovery: for every FER-* ID found in the GH/Linear data,
+  # search the workspace for messages mentioning it. Channels that
+  # match become the Slack source set for this run.
+  auto_discover_from_ticket_ids: true
+  # Channel-name patterns to *also* always include if they exist:
+  channel_name_patterns:
+    - '^(fern-)?cli$'
+    - '^(cli-)?sdk$'
+    - '^project-cli'
+  # How much surrounding context to include for each matching thread:
+  context_messages_per_thread: 5
+
+# ---------------------------------------------------------------------------
+# Notion: where design docs live.
+# ---------------------------------------------------------------------------
+notion:
+  # Search Notion for pages mentioning FER-* IDs from the window:
+  auto_discover_from_ticket_ids: true
+  # Also include pages tagged or linked with these keywords:
+  search_keywords:
+    - cli-sdk
+    - "CLI Generator"
+    - fern-cli
+  # Pull the current content (not historical versions):
+  fetch_mode: current
+
+# ---------------------------------------------------------------------------
+# Run window.
+# ---------------------------------------------------------------------------
+window:
+  # The agent reads the `<!-- last-run: <ISO> -->` marker in
+  # CHANGELOG-ARCH.md to determine the window start. If the marker is
+  # missing, it falls back to N days back:
+  fallback_days: 7
+  # Manual override:
+  override_flag_name: "--since"
+
+# ---------------------------------------------------------------------------
+# Output: where the agent writes.
+# ---------------------------------------------------------------------------
+output:
+  # Files the agent is permitted to modify:
+  allowed_paths:
+    - docs/architecture/ARCHITECTURE.md
+    - docs/architecture/CHANGELOG-ARCH.md
+    - docs/architecture/decisions/INDEX.md
+    - docs/architecture/diagrams/**
+  # The agent must not touch anything outside these paths.
+  pr_settings:
+    branch_prefix: arch-doc-refresh
+    draft: true
+    auto_merge: false
+    base: main
+  # Maximum PRs per run:
+  max_prs_per_run: 1
+
+# ---------------------------------------------------------------------------
+# Schedule (consumed by the runtime, not the playbook itself).
+# ---------------------------------------------------------------------------
+schedule:
+  cadence: weekly
+  day_of_week: Monday
+  # Off-hours UTC to avoid colliding with team activity:
+  hour_utc: 14
+  # In the user's local time, this is ~7am Pacific / 10am Eastern — early
+  # enough that the digest is waiting when the team starts the week.
+
+# ---------------------------------------------------------------------------
+# Failure-mode posture.
+# ---------------------------------------------------------------------------
+failure:
+  source_timeout_seconds: 60
+  # If a source fails, continue with a note rather than blocking the run:
+  on_source_failure: continue
+  # If no architectural changes are detected, still open a heartbeat PR:
+  emit_heartbeat_on_no_changes: true
+  # If three consecutive runs find no signal, alert a human:
+  alert_on_consecutive_empty_runs: 3

@@ -1,0 +1,7 @@
+- summary: |
+    Fix false positive warnings in the `missing-redirects` check for changelog
+    entries and embedded content pages. FDR stores an empty slug for pages that
+    don't resolve to a standalone navigation node; these are no longer reported as
+    removed pages whose previously published URL was "/", even when the site's home
+    page lives under a non-root slug or basepath.
+  type: fix

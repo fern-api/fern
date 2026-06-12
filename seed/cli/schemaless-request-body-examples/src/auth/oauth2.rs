@@ -101,7 +101,7 @@ struct CachedToken {
 /// The file is a JSON object keyed by token_url:
 /// ```json
 /// {
-///   "https://identity.example.com/connect/token": {
+///   "https://identity.xero.com/connect/token": {
 ///     "access_token": "...",
 ///     "refresh_token": "...",
 ///     "expires_at": 1715550000
@@ -492,7 +492,7 @@ impl OAuth2TokenProvider {
     }
 
     /// Enable on-disk token persistence. `cli_name` is the binary name
-    /// (e.g., `"myapi"`) — tokens are stored under the platform config dir.
+    /// (e.g., `"xero"`) — tokens are stored under the platform config dir.
     pub fn with_cache(mut self, cli_name: &str) -> Self {
         self.cache = TokenCache::for_cli(cli_name);
         self
@@ -656,6 +656,28 @@ impl AuthProvider for OAuth2TokenProvider {
                     && env_is_set(client_secret_env)
                     && env_is_set(refresh_token_env)
             }
+        }
+    }
+
+    fn credential_hints(&self) -> Vec<String> {
+        match &self.grant {
+            OAuth2Grant::ClientCredentials {
+                client_id_env,
+                client_secret_env,
+                ..
+            } => vec![
+                format!("{client_id_env} environment variable"),
+                format!("{client_secret_env} environment variable"),
+            ],
+            OAuth2Grant::RefreshToken {
+                client_id_env,
+                client_secret_env,
+                refresh_token_env,
+            } => vec![
+                format!("{client_id_env} environment variable"),
+                format!("{client_secret_env} environment variable"),
+                format!("{refresh_token_env} environment variable"),
+            ],
         }
     }
 
