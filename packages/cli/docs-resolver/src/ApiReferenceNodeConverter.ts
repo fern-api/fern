@@ -16,6 +16,15 @@ type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
     collapsed?: boolean | "open-by-default";
 };
 
+/**
+ * Reads the `fieldPath` array from a GraphQL operation. The field is not yet
+ * declared on `APIV1Read.GraphQlOperation` in the current pinned `@fern-api/fdr-sdk`.
+ * Remove this helper once fern-platform#11183 ships and the SDK is bumped.
+ */
+function getFieldPath(operation: APIV1Read.GraphQlOperation): string[] | undefined {
+    return (operation as { fieldPath?: string[] }).fieldPath;
+}
+
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -1136,7 +1145,7 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.V1.SlugGenerator,
         parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild[] {
-        // First, group operations by namespace, then by type
+        // Group operations by namespace, then by type
         const operationsByNamespace: Record<string, Record<string, APIV1Read.GraphQlOperation[]>> = {};
         const operationsWithoutNamespace: Record<string, APIV1Read.GraphQlOperation[]> = {};
 
@@ -1188,27 +1197,12 @@ export class ApiReferenceNodeConverter {
                 const sectionTitle = operationTypeLabels[operationType];
                 const sectionSlug = namespaceSlug.append(kebabCase(sectionTitle));
 
-                const children: FernNavigation.V1.ApiPackageChild[] = operations.map((operation) => {
-                    const operationSlug = sectionSlug.append(operation.name ?? operation.id);
-                    return {
-                        id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
-                        type: "graphql" as const,
-                        collapsed: undefined,
-                        operationType: operation.operationType,
-                        graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
-                        apiDefinitionId: this.apiDefinitionId,
-                        availability: convertDocsAvailability(parentAvailability),
-                        title: operation.displayName ?? operation.name ?? operation.id,
-                        slug: operationSlug.get(),
-                        icon: undefined,
-                        hidden: this.hideChildren,
-                        playground: undefined,
-                        authed: undefined,
-                        viewers: undefined,
-                        orphaned: undefined,
-                        featureFlags: undefined
-                    };
-                });
+                const children = this.#buildFieldPathGroupedChildren(
+                    operations,
+                    sectionSlug,
+                    parentAvailability,
+                    operationType
+                );
 
                 const sectionNode = {
                     id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
@@ -1236,7 +1230,6 @@ export class ApiReferenceNodeConverter {
                 namespaceChildren.push(sectionNode);
             }
 
-            // Create the namespace section containing the operation type sections
             const namespaceNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:namespace:${namespace}`),
                 type: "apiPackage",
@@ -1263,7 +1256,7 @@ export class ApiReferenceNodeConverter {
             sections.push(namespaceNode);
         }
 
-        // Create sections for operations without namespace (grouped by type only)
+        // Create sections for operations without namespace (grouped by type, then by fieldPath)
         for (const operationType of operationTypeOrder) {
             const operations = operationsWithoutNamespace[operationType];
             if (operations == null || operations.length === 0) {
@@ -1273,27 +1266,12 @@ export class ApiReferenceNodeConverter {
             const sectionTitle = operationTypeLabels[operationType];
             const sectionSlug = parentSlug.append(kebabCase(sectionTitle));
 
-            const children: FernNavigation.V1.ApiPackageChild[] = operations.map((operation) => {
-                const operationSlug = sectionSlug.append(operation.name ?? operation.id);
-                return {
-                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${operation.id}`),
-                    type: "graphql" as const,
-                    collapsed: undefined,
-                    operationType: operation.operationType,
-                    graphqlOperationId: APIV1Read.GraphQlOperationId(operation.id),
-                    apiDefinitionId: this.apiDefinitionId,
-                    availability: convertDocsAvailability(parentAvailability),
-                    title: operation.displayName ?? operation.name ?? operation.id,
-                    slug: operationSlug.get(),
-                    icon: undefined,
-                    hidden: this.hideChildren,
-                    playground: undefined,
-                    authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined,
-                    featureFlags: undefined
-                };
-            });
+            const children = this.#buildFieldPathGroupedChildren(
+                operations,
+                sectionSlug,
+                parentAvailability,
+                operationType
+            );
 
             const sectionNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
@@ -1322,6 +1300,106 @@ export class ApiReferenceNodeConverter {
         }
 
         return sections;
+    }
+
+    #buildFieldPathGroupedChildren(
+        operations: APIV1Read.GraphQlOperation[],
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability: docsYml.RawSchemas.Availability | undefined,
+        operationType: string
+    ): FernNavigation.V1.ApiPackageChild[] {
+        // Only group queries by fieldPath; mutations and subscriptions stay flat.
+        // Maintain insertion order: groups appear at the position of their first member.
+        const shouldGroup = operationType === "QUERY";
+
+        const groupedByParent = new Map<string, APIV1Read.GraphQlOperation[]>();
+        const insertionOrder: Array<
+            { type: "group"; parentField: string } | { type: "flat"; operation: APIV1Read.GraphQlOperation }
+        > = [];
+
+        for (const operation of operations) {
+            const parentField = getFieldPath(operation)?.[0];
+            if (shouldGroup && parentField != null) {
+                const group = groupedByParent.get(parentField);
+                if (group != null) {
+                    group.push(operation);
+                } else {
+                    groupedByParent.set(parentField, [operation]);
+                    insertionOrder.push({ type: "group", parentField });
+                }
+            } else {
+                insertionOrder.push({ type: "flat", operation });
+            }
+        }
+
+        const children: FernNavigation.V1.ApiPackageChild[] = [];
+
+        for (const entry of insertionOrder) {
+            if (entry.type === "flat") {
+                const fieldPath = getFieldPath(entry.operation);
+                const leafName = entry.operation.name ?? entry.operation.id;
+                let operationSlug = parentSlug;
+                // Nest fieldPath segments as URL path components so that namespaced
+                // slugs (e.g. /mutations/account/create) never collide with top-level
+                // operations whose camelCase name kebab-cases identically (e.g.
+                // /mutations/account-create from "accountCreate").
+                if (fieldPath != null && fieldPath.length > 0) {
+                    for (const segment of fieldPath) {
+                        operationSlug = operationSlug.append(kebabCase(segment));
+                    }
+                }
+                operationSlug = operationSlug.append(kebabCase(leafName));
+                children.push({
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${entry.operation.id}`),
+                    type: "graphql" as const,
+                    collapsed: undefined,
+                    operationType: entry.operation.operationType,
+                    graphqlOperationId: APIV1Read.GraphQlOperationId(entry.operation.id),
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: convertDocsAvailability(parentAvailability),
+                    title: entry.operation.displayName ?? entry.operation.name ?? entry.operation.id,
+                    slug: operationSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                });
+            } else {
+                // Render the parent field as a single sidebar entry. The page content
+                // shows all child operations: the frontend discovers siblings by
+                // finding every operation in the API definition whose fieldPath[0]
+                // matches this parent field and whose operationType matches.
+                const groupOps = groupedByParent.get(entry.parentField) ?? [];
+                const firstOp = groupOps[0];
+                if (firstOp == null) {
+                    continue;
+                }
+                const fieldSlug = parentSlug.append(kebabCase(entry.parentField));
+                children.push({
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${firstOp.id}`),
+                    type: "graphql" as const,
+                    collapsed: undefined,
+                    operationType: firstOp.operationType,
+                    graphqlOperationId: APIV1Read.GraphQlOperationId(firstOp.id),
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: convertDocsAvailability(parentAvailability),
+                    title: entry.parentField,
+                    slug: fieldSlug.get(),
+                    icon: undefined,
+                    hidden: this.hideChildren,
+                    playground: undefined,
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                });
+            }
+        }
+
+        return children;
     }
 
     #convertApiDefinitionPackageId(

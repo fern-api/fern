@@ -1,4 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.47.4
+  changelogEntry:
+    - summary: |
+        Group GraphQL queries by parent field in the sidebar; mutations and subscriptions remain flat. Field path is now included on all GraphQL operations for correct snippet nesting.
+      type: fix
+    - summary: |
+        Include field-level arguments when converting GraphQL object types and interfaces
+        to FDR format. Previously, arguments were only captured for top-level query/mutation
+        fields but not for nested object type fields (e.g., Image.url(width, height, lossy)).
+        Namespace grouping types (object types whose fields are all promoted to top-level
+        operations) are no longer double-registered as plain type definitions.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.3
+  changelogEntry:
+    - summary: |
+        Use string literal for `this.name` in error classes instead of
+        `this.constructor.name`, which gets mangled by minifiers.
+      type: fix
+    - summary: |
+        Fix text/* content types (e.g. text/csv, text/xml) being silently converted
+        to text/plain during OpenAPI export. The original media type is now preserved
+        through the IR via a new optional `contentType` field on `TextResponse`.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.2
+  changelogEntry:
+    - summary: |
+        Stop dropping custom scalars in the GraphQL converter. Custom scalars (e.g. `DateTime`,
+        `URL`, `EmailAddress`) are now emitted as named alias types in the `types` map with a stable
+        id, and references to them point to that id so the type can be linked to in documentation.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
 - version: 5.47.1
   changelogEntry:
     - summary: |

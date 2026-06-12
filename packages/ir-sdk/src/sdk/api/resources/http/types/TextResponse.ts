@@ -2,4 +2,7 @@
 
 import type * as FernIr from "../../../index.js";
 
-export interface TextResponse extends FernIr.WithDocs, FernIr.WithV2Examples {}
+export interface TextResponse extends FernIr.WithDocs, FernIr.WithV2Examples {
+    /** The original media type (e.g. text/csv, text/xml). Defaults to text/plain when absent. */
+    contentType: string | undefined;
+}

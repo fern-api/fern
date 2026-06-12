@@ -1,0 +1,4 @@
+- summary: |
+    Bump bundled @fern-api/generator-cli to 0.9.39 (Replay 0.18.0) for more reliable
+    customization detection during regeneration.
+  type: chore
