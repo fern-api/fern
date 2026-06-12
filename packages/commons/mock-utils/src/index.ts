@@ -47,7 +47,10 @@ export interface WireMockMapping {
 }
 
 export class WireMock {
+    private typeDeclarations: Record<string, FernIr.TypeDeclaration> = {};
+
     public convertToWireMock(ir: FernIr.IntermediateRepresentation): WireMockStubMapping {
+        this.typeDeclarations = ir.types;
         const mappings: WireMockMapping[] = [];
 
         // First pass: identify endpoints that share the same URL path and method
@@ -541,7 +544,13 @@ export class WireMock {
                 }
                 const unionShape = named.shape.singleUnionType.shape;
                 if (unionShape.type === "singleProperty") {
-                    obj["body"] = this.normalizeExampleDatetimes(unionShape);
+                    const propertyWireName = this.getSinglePropertyWireName(
+                        named.typeName.typeId,
+                        typeof named.shape.singleUnionType.wireDiscriminantValue === "string"
+                            ? named.shape.singleUnionType.wireDiscriminantValue
+                            : named.shape.singleUnionType.wireDiscriminantValue?.wireValue ?? ""
+                    );
+                    obj[propertyWireName] = this.normalizeExampleDatetimes(unionShape);
                 } else if (unionShape.type === "samePropertiesAsObject") {
                     for (const prop of unionShape.object.properties) {
                         const wireKey = typeof prop.name === "string" ? prop.name : prop.name?.wireValue;
@@ -560,6 +569,23 @@ export class WireMock {
             default:
                 return undefined;
         }
+    }
+
+    private getSinglePropertyWireName(typeId: string, discriminantWireValue: string): string {
+        try {
+            const typeDeclaration = this.typeDeclarations[typeId];
+            if (typeDeclaration?.shape.type === "union") {
+                const matchingType = typeDeclaration.shape.types.find(
+                    (t) => getWireValue(t.discriminantValue) === discriminantWireValue
+                );
+                if (matchingType?.shape.propertiesType === "singleProperty") {
+                    return getWireValue(matchingType.shape.name);
+                }
+            }
+        } catch {
+            // Fall through to default
+        }
+        return "body";
     }
 
     private getDateTime(exampleTypeReference: FernIr.ExampleTypeReference): Date | undefined {
