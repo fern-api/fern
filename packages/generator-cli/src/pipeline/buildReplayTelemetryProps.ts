@@ -147,6 +147,12 @@ export function buildReplayTelemetryProps(input: {
         patches_refreshed: replay?.patchesRefreshed ?? 0,
         unresolved_patches_count: unresolvedPatches.length,
         unresolved_conflict_files_count: unresolvedConflictFilesCount,
+        // Degraded channel (append-only props; frozen dashboard keys once shipped).
+        replay_degraded: replay?.degraded === true,
+        replay_degraded_reason_codes:
+            replay?.degradedReasons != null && replay.degradedReasons.length > 0
+                ? replay.degradedReasons.map((reason) => reason.code).join(",")
+                : null,
         conflicts_same_line_edit: conflictBuckets["same-line-edit"],
         conflicts_new_file_both: conflictBuckets["new-file-both"],
         conflicts_base_generation_mismatch: conflictBuckets["base-generation-mismatch"],
