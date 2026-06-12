@@ -2324,7 +2324,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(properties[0]?.docs).toEqual(["The raw body"]);
         });
 
-        it("returns empty for non-object type declaration when flattened", () => {
+        it("wraps non-object named type as body property when flattened", () => {
             const namedBodyRef = createNamedTypeReference("AliasPayload");
             const init = createDefaultInit({
                 flattenRequestParameters: true,
@@ -2362,8 +2362,9 @@ describe("GeneratedRequestWrapperImpl", () => {
                 getTypeDeclarationFn: () => aliasTypeDeclaration
             });
             const properties = wrapper.getRequestProperties(context);
-            // Alias type can't be flattened into properties
-            expect(properties).toHaveLength(0);
+            // Named non-object types get wrapped as a body property
+            expect(properties).toHaveLength(1);
+            expect(properties[0]?.name).toBe("body");
         });
 
         it("uses enableInlineTypes createNamespacedPropertyType when flattening named reference body", () => {
