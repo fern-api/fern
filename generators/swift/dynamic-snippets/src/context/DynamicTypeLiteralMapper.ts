@@ -259,10 +259,14 @@ export class DynamicTypeLiteralMapper {
                     if (record == null) {
                         return swift.Expression.nop();
                     }
+                    // For single-property union variants, the wrapped value is always
+                    // serialized under the "value" key (see the generated union's CodingKeys),
+                    // not under the discriminant value's wire name.
+                    const propertyKey = "value";
                     const converted = this.convert({
                         fromSymbol,
                         typeReference: unionVariant.typeReference,
-                        value: record[unionVariant.discriminantValue.wireValue]
+                        value: record[propertyKey]
                     });
                     return swift.Expression.methodCall({
                         target: swift.Expression.reference(unionSymbol.name),

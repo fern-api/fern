@@ -357,7 +357,7 @@ import Examples
                     name: "name"
                 ),
                 metadata: MetadataType.html(
-
+                    "metadata"
                 ),
                 commonMetadata: Metadata(
                     id: "id",
@@ -376,7 +376,7 @@ import Examples
                     )
                 ),
                 data: Data.string(
-
+                    "data"
                 ),
                 migration: Migration(
                     name: "name",
@@ -390,7 +390,7 @@ import Examples
                     )
                 ),
                 test: Test.and(
-
+                    true
                 ),
                 node: Node(
                     name: "name",
