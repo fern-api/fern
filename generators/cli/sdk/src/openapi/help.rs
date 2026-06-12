@@ -106,11 +106,32 @@ fn build_operation_schema(resource_path: &[&str], method_name: &str, method: &Re
     param_names.sort();
     for name in param_names {
         let param = &method.parameters[name];
-        let mut prop = json!({
-            "type": param.param_type.as_deref().unwrap_or("string"),
-            "description": param.description.as_deref().unwrap_or(""),
-            "location": param.location.as_deref().unwrap_or("query"),
-        });
+        let element_type = param.param_type.as_deref().unwrap_or("string");
+        let mut prop = if param.scalar_or_array {
+            // oneOf [string, array<string>]: single value is scalar, multiple
+            // values become an array.
+            json!({
+                "oneOf": [
+                    { "type": element_type },
+                    { "type": "array", "items": { "type": element_type } },
+                ],
+                "description": param.description.as_deref().unwrap_or(""),
+                "location": param.location.as_deref().unwrap_or("query"),
+            })
+        } else if param.repeated {
+            json!({
+                "type": "array",
+                "items": { "type": element_type },
+                "description": param.description.as_deref().unwrap_or(""),
+                "location": param.location.as_deref().unwrap_or("query"),
+            })
+        } else {
+            json!({
+                "type": element_type,
+                "description": param.description.as_deref().unwrap_or(""),
+                "location": param.location.as_deref().unwrap_or("query"),
+            })
+        };
         if let Some(enums) = &param.enum_values {
             prop["enum"] = json!(enums);
             // When `x-fern-enum` overrides are present, expose the
@@ -482,5 +503,78 @@ mod tests {
         // Should resolve as the leaf operation, not be misrouted via "memberships" as method name.
         let result = build_schema(&doc, &path);
         assert!(result.is_some(), "nested path should resolve correctly");
+    }
+
+    #[test]
+    fn test_repeated_param_rendered_as_array_in_schema() {
+        let mut params = HashMap::new();
+        params.insert(
+            "tags".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some("Tags".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "subject".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some("Subject line".to_string()),
+                location: Some("body".to_string()),
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "/messages/send".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["messages"], "send", &method);
+        let props = &schema["parameters"]["properties"];
+
+        // Pure array param: type is array with items.
+        assert_eq!(props["tags"]["type"], "array");
+        assert_eq!(props["tags"]["items"]["type"], "string");
+
+        // Scalar param: plain type.
+        assert_eq!(props["subject"]["type"], "string");
+        assert!(props["subject"]["items"].is_null());
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_rendered_as_oneof_in_schema() {
+        let mut params = HashMap::new();
+        params.insert(
+            "to".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some("Recipient addresses".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "/messages/send".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["messages"], "send", &method);
+        let props = &schema["parameters"]["properties"];
+
+        // Union param: oneOf [string, array<string>].
+        assert!(props["to"]["type"].is_null(), "should not have top-level type");
+        let one_of = props["to"]["oneOf"].as_array().unwrap();
+        assert_eq!(one_of.len(), 2);
+        assert_eq!(one_of[0]["type"], "string");
+        assert_eq!(one_of[1]["type"], "array");
+        assert_eq!(one_of[1]["items"]["type"], "string");
+        assert_eq!(props["to"]["description"], "Recipient addresses");
     }
 }
