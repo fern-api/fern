@@ -3370,12 +3370,8 @@
                 "name": "pollingId",
                 "description": "The unique identifier used to poll the status of the asynchronous operation.",
                 "type": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "scalar",
-                    "name": "UUID",
-                    "description": "The UUID scalar type represents a universally unique identifier."
-                  }
+                  "type": "id",
+                  "value": "UUID"
                 }
               }
             ]

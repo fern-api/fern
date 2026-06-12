@@ -29,6 +29,9 @@
       "operationType": "MUTATION",
       "name": "create",
       "description": "Create an account.",
+      "fieldPath": [
+        "account"
+      ],
       "arguments": [
         {
           "name": "name",
@@ -61,6 +64,9 @@
       "operationType": "MUTATION",
       "name": "delete",
       "description": "Delete an account by ID.",
+      "fieldPath": [
+        "account"
+      ],
       "arguments": [
         {
           "name": "id",
