@@ -6,7 +6,13 @@ import {
 } from "@fern-api/base-generator";
 import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
+import {
+    BaseSwiftCustomConfigSchema,
+    NameRegistry,
+    Referencer,
+    swift,
+    UndiscriminatedUnion
+} from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs.js";
 import { SwiftProject } from "../project/index.js";
