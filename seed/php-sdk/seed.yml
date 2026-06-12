@@ -182,7 +182,12 @@ scripts:
       test:
         - composer test
 allowedFailures:
-  # Dynamic snippet: default-valued base-path param ordered before request body.
+  # Dynamic snippet: a base-path parameter with a clientDefault is optional in the
+  # generated SDK and is ordered after the request body, but the snippet emits it as a
+  # required argument before the body, producing a type mismatch. Fixing this requires the
+  # dynamic IR to carry the parameter's `clientDefault` (it currently drops the field), which
+  # is an additive IR change that must ship via the separate IR-publish flow before the
+  # generator can consume it. Tracked separately; left here until the IR change lands.
   - api-wide-base-path-with-default
   # Wire test: path param request failures unrelated to dynamic snippets.
   - exhaustive:wire-tests
