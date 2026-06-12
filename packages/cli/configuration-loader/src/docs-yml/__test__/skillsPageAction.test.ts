@@ -39,7 +39,6 @@ describe("parseDocsConfiguration — page-actions.options.skills", () => {
                         title: "Install agent skills",
                         description: "Skills for authoring Fern docs, maintained in our skills repo.",
                         "learn-more-url": "https://buildwithfern.com/learn/docs/ai/agent-skills",
-                        repository: "https://github.com/fern-api/skills",
                         "install-command": "npx skills add fern-api/skills --skill fern-docs",
                         skills: [
                             {
@@ -57,7 +56,6 @@ describe("parseDocsConfiguration — page-actions.options.skills", () => {
             title: "Install agent skills",
             description: "Skills for authoring Fern docs, maintained in our skills repo.",
             learnMoreUrl: "https://buildwithfern.com/learn/docs/ai/agent-skills",
-            repository: "https://github.com/fern-api/skills",
             installCommand: "npx skills add fern-api/skills --skill fern-docs",
             skills: [
                 {

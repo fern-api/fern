@@ -6,7 +6,7 @@ import type * as FernDocsConfig from "../../../index.js";
  * Configures the "Install skills" page action and its modal. Sites that ship agent skills
  * point at where those skills live (`path`) and how to install them. If the docs site also
  * serves a `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array
- * with the served manifest; `title`, `description`, `learn-more-url`, `repository`, and
+ * with the served manifest; `title`, `description`, `learn-more-url`, and
  * `install-command` always come from this config.
  */
 export interface SkillsPageActionConfig {
@@ -25,8 +25,6 @@ export interface SkillsPageActionConfig {
     description?: string;
     /** Optional "Learn more" link shown alongside the description. */
     learnMoreUrl?: string;
-    /** Source repository (e.g. GitHub or GitLab) shown as a "View source" button. */
-    repository?: string;
     /**
      * Command(s) used to install the skills, rendered verbatim as a copyable block. Providing a
      * custom command disables the modal's per-skill selection. When omitted, the docs site

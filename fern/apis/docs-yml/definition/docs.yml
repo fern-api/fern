@@ -497,7 +497,7 @@ types:
       Configures the "Install skills" page action and its modal. Sites that ship agent skills
       point at where those skills live (`path`) and how to install them. If the docs site also
       serves a `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array
-      with the served manifest; `title`, `description`, `learn-more-url`, `repository`, and
+      with the served manifest; `title`, `description`, `learn-more-url`, and
       `install-command` always come from this config.
     properties:
       path:
@@ -518,9 +518,6 @@ types:
       "learn-more-url":
         type: optional<string>
         docs: Optional "Learn more" link shown alongside the description.
-      repository:
-        type: optional<string>
-        docs: Source repository (e.g. GitHub or GitLab) shown as a "View source" button.
       "install-command":
         type: optional<SkillsInstallCommand>
         docs: |

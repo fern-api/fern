@@ -4299,17 +4299,6 @@
           ],
           "description": "Optional \"Learn more\" link shown alongside the description."
         },
-        "repository": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Source repository (e.g. GitHub or GitLab) shown as a \"View source\" button."
-        },
         "install-command": {
           "oneOf": [
             {
@@ -4337,7 +4326,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Configures the \"Install skills\" page action and its modal. Sites that ship agent skills\npoint at where those skills live (`path`) and how to install them. If the docs site also\nserves a `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array\nwith the served manifest; `title`, `description`, `learn-more-url`, `repository`, and\n`install-command` always come from this config."
+      "description": "Configures the \"Install skills\" page action and its modal. Sites that ship agent skills\npoint at where those skills live (`path`) and how to install them. If the docs site also\nserves a `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array\nwith the served manifest; `title`, `description`, `learn-more-url`, and\n`install-command` always come from this config."
     },
     "docs.PageActionOptions": {
       "type": "object",
