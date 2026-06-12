@@ -179,8 +179,12 @@ abstract class JsonSerializableType implements \JsonSerializable
                 // float for decimal notation, scientific notation, or values that fit a
                 // double but not an int — without this, a wire value like 1.5e15 would
                 // hit PHP 8.x's TypeError on assignment to a typed int property.
+                // For int, the `(int)$value == $value` guard ensures we only coerce
+                // when the round-trip is lossless — fractional, infinite, NaN, or
+                // out-of-range floats fall through to PHP's TypeError rather than
+                // being silently truncated.
                 $typeName = $type->getName();
-                if ($typeName === 'int') {
+                if ($typeName === 'int' && (int) $value == $value) {
                     $value = (int) $value;
                 } elseif ($typeName === 'float') {
                     $value = (float) $value;
