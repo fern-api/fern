@@ -30,6 +30,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "file": null
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_imported:RootString"
             },
             "shape": {
@@ -81,6 +82,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "file": "y"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_y:IntegerAlias"
             },
             "shape": {
@@ -135,6 +137,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "file": "x"
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_imported/x:StringAlias"
             },
             "shape": {
@@ -191,6 +194,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -209,6 +213,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "id": "endpoint_imported.rootEndpoint",
                     "name": "rootEndpoint",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -662,6 +667,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "subpackage_imported": {
             "name": "imported",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "imported"
@@ -689,6 +695,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "subpackage_y": {
             "name": "y",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "y"
@@ -712,6 +719,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         "subpackage_imported/x": {
             "name": "x",
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     "imported",
@@ -771,4 +779,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2290425`;
+exports[`dependencies > file dependencies 1`] = `2290767`;
