@@ -139,6 +139,10 @@ export function buildEndpoint({
         convertedEndpoint["display-name"] = endpoint.summary;
     }
 
+    if (endpoint.subtitle != null) {
+        convertedEndpoint["subtitle"] = endpoint.subtitle;
+    }
+
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
     const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
     const authHeaderName = context.builder.getAuthHeaderName();

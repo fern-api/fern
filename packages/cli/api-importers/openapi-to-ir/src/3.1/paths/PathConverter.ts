@@ -5,6 +5,7 @@ import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { HttpMethods } from "../../constants/HttpMethods.js";
 import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent.js";
 import { FernPaginationExtension } from "../../extensions/x-fern-pagination.js";
+import { FernSubtitleExtension } from "../../extensions/x-fern-subtitle.js";
 import { FernStreamingExtension, getDocumentLevelResumable } from "../../extensions/x-fern-streaming.js";
 import { FernWebhookExtension } from "../../extensions/x-fern-webhook.js";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1.js";
@@ -198,6 +199,13 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         });
         const isIdempotent = idempotentExtensionConverter.convert();
 
+        const subtitleExtensionConverter = new FernSubtitleExtension({
+            breadcrumbs: operationBreadcrumbs,
+            operation,
+            context: this.context
+        });
+        const subtitle = subtitleExtensionConverter.convert();
+
         const operationConverter = new OperationConverter({
             context: this.context,
             breadcrumbs: operationBreadcrumbs,
@@ -206,6 +214,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             path: this.path,
             pathItemParameters: this.pathItem.parameters,
             idempotent: isIdempotent,
+            subtitle,
             idToAuthScheme: this.idToAuthScheme,
             topLevelServers: this.topLevelServers,
             pathLevelServers: this.pathItem.servers,

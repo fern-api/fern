@@ -343,6 +343,16 @@ export const FernOpenAPIExtension = {
     IGNORE: "x-fern-ignore",
 
     /**
+     * A short subtitle for the endpoint, rendered below the title in the docs UI.
+     *
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-subtitle: Retrieve a plant by its unique identifier
+     */
+    SUBTITLE: "x-fern-subtitle",
+
+    /**
      * paths:
      *  /path/to/my:
      *    get:

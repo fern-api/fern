@@ -326,6 +326,11 @@ types:
           This string includes templated path parameters.
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
+      subtitle:
+        type: optional<string>
+        docs: |
+          A short subtitle for the endpoint, populated from `x-fern-subtitle`.
+          Rendered below the endpoint title in the docs UI.
       operationId: optional<string>
       tags: list<commons.TagId>
       pathParameters: list<PathParameter>

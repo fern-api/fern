@@ -10,6 +10,7 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
     auth?: FernDefinition.HttpEndpointAuth;
     idempotent?: boolean;
+    subtitle?: string;
     "stream-condition"?: string;
     request?: FernDefinition.HttpRequest;
     response?: FernDefinition.HttpResponseSchema;
