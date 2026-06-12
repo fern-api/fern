@@ -85,6 +85,9 @@ export async function runLocalParser({
     config: LocalParserConfig;
 }): Promise<unknown> {
     const imageName = getParserImage(language);
+    // True for the bundled `:latest` defaults; false when overridden via env, where the
+    // dev's image is used verbatim (no force-pull, no platform override).
+    const isDefaultImage = imageName.endsWith(`:${PARSER_IMAGE_TAG}`);
 
     const outputDir = await tmp.dir({ unsafeCleanup: true });
     const configFile = await tmp.file({ postfix: ".json" });
@@ -108,7 +111,11 @@ export async function runLocalParser({
             // `latest` is a mutable tag, so force a pull to avoid reusing a stale local copy.
             // Immutable tags (e.g. a `:local` dev build via the env override) keep the
             // default pull-when-missing behavior.
-            pull: imageName.endsWith(`:${PARSER_IMAGE_TAG}`)
+            pull: isDefaultImage,
+            // The default C++ parser image is published amd64-only, so force amd64 to run it
+            // (under emulation) on arm64 hosts. Python is multi-arch and runs natively.
+            // Remove once the C++ image ships an arm64 build. Overrides are used as-is.
+            platform: isDefaultImage && language === "CPP" ? "linux/amd64" : undefined
         });
 
         const irPath = join(outputDir.path, "ir.json");

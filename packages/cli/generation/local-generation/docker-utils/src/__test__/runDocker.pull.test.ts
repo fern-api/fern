@@ -45,4 +45,29 @@ describe("runContainer pull policy", () => {
 
         expect(lastContainerArgs()).not.toContain("--pull");
     });
+
+    it("injects `--platform <value>` before the image when platform is set", async () => {
+        await runContainer({
+            logger: CONSOLE_LOGGER,
+            imageName: "img:latest",
+            binds: [],
+            platform: "linux/amd64",
+            writeLogsToFile: false
+        });
+
+        const args = lastContainerArgs();
+        expect(args[args.indexOf("--platform") + 1]).toBe("linux/amd64");
+        expect(args.indexOf("--platform")).toBeLessThan(args.indexOf("img:latest"));
+    });
+
+    it("does not pass `--platform` by default (host-native platform)", async () => {
+        await runContainer({
+            logger: CONSOLE_LOGGER,
+            imageName: "img:1.0.0",
+            binds: [],
+            writeLogsToFile: false
+        });
+
+        expect(lastContainerArgs()).not.toContain("--platform");
+    });
 });

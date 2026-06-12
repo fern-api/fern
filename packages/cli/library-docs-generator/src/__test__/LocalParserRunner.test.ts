@@ -62,6 +62,8 @@ describe("runLocalParser", () => {
         // Always the `latest` tag, and force-pulled because `latest` is mutable.
         expect(call.imageName).toBe("fernapi/fern-python-library-docs-parser:latest");
         expect(call.pull).toBe(true);
+        // Python is multi-arch — run natively, no platform override.
+        expect(call.platform).toBeUndefined();
         expect(call.binds).toContain("/tmp/src:/repo:ro");
         // `undefined` fields (e.g. doxyfileContent for Python) are dropped by JSON.stringify.
         expect(writtenConfig).toEqual({ packagePath: "pkg", sourceUrl: "https://github.com/acme/sdk" });
@@ -88,6 +90,8 @@ describe("runLocalParser", () => {
         const call = (runContainer as Mock).mock.calls[0]?.[0];
         expect(call.imageName).toBe("fernapi/fern-cpp-library-docs-parser:latest");
         expect(call.pull).toBe(true);
+        // The published C++ image is amd64-only — force the platform so it runs on arm64.
+        expect(call.platform).toBe("linux/amd64");
         expect(writtenConfig).toEqual({
             doxyfileContent: "PROJECT_NAME = acme",
             sourceUrl: "https://github.com/acme/cpp"
@@ -111,6 +115,27 @@ describe("runLocalParser", () => {
         expect(call.imageName).toBe("python-library-docs-parser:local");
         // A `:local` dev build is immutable from our perspective — don't force a pull.
         expect(call.pull).toBe(false);
+        expect(call.platform).toBeUndefined();
+    });
+
+    it("uses an overridden C++ image as-is (no force-pull, no platform override)", async () => {
+        process.env.FERN_CPP_PARSER_IMAGE = "libdocs-cpp:local";
+        (runContainer as Mock).mockImplementation(async ({ binds }: { binds: string[] }) => {
+            await writeFile(join(bindFor(binds, ":/output"), "ir.json"), JSON.stringify({ ir: { rootNamespace: {} } }));
+        });
+
+        await runLocalParser({
+            context: makeContext(),
+            sourcePath: AbsoluteFilePath.of("/tmp/cpp"),
+            language: "CPP",
+            config: {}
+        });
+
+        const call = (runContainer as Mock).mock.calls[0]?.[0];
+        expect(call.imageName).toBe("libdocs-cpp:local");
+        expect(call.pull).toBe(false);
+        // A locally-built override is presumably native arch — don't force amd64.
+        expect(call.platform).toBeUndefined();
     });
 
     it("throws when the container produces no ir.json", async () => {
