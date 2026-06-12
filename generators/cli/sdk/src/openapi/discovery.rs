@@ -102,6 +102,24 @@ pub struct RestDescription {
     /// parameters with the same wire-name win.
     #[serde(default, skip)]
     pub global_headers: Vec<GlobalHeader>,
+    /// Global request-property definitions parsed from the spec-root
+    /// `x-fern-global-parameters` extension. Empty when the extension is
+    /// absent.
+    ///
+    /// Where [`GlobalHeader`] stamps a value as an HTTP header on the
+    /// wire, each entry here injects its resolved value into the request
+    /// **body** (at a dotted path like `config.currency`) or **query
+    /// string** (as a named param) of every operation that declares that
+    /// target field. The value is surfaced as a top-level-style flag
+    /// (`--currency`) on each relevant command, with an env-var fallback
+    /// and an optional baked-in default; a per-call flag for the same
+    /// target path (`--config.currency`) wins when supplied.
+    ///
+    /// This is the body/query analogue of `x-fern-global-headers` —
+    /// added because locale-style defaults (`currency`, `country`,
+    /// `language`) frequently live in the request body, not in headers.
+    #[serde(default, skip)]
+    pub global_parameters: Vec<GlobalParameter>,
     /// Top-level group metadata sourced from the document-root
     /// [`x-fern-groups`](https://buildwithfern.com/learn/api-definitions/openapi/extensions/groups)
     /// extension. Mirrors the upstream Fern OpenAPI importer's
@@ -168,6 +186,64 @@ pub struct GlobalHeader {
     /// nor the environment variable is supplied. Mirrors the upstream
     /// `x-fern-default` shape — only the value is preserved; the
     /// schema type is informational.
+    pub default: Option<String>,
+}
+
+/// Where a [`GlobalParameter`]'s resolved value is injected into the
+/// outgoing request. `Header` is included so the one extension can cover
+/// every parameter location, but the body/query variants are the reason
+/// the extension exists — `x-fern-global-headers` already covers headers.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum GlobalParamLocation {
+    /// Inject into the JSON request body at the (possibly dotted) target
+    /// path, e.g. `config.currency`. The default when `in:` is omitted —
+    /// body fields are the common case this extension was added for.
+    #[default]
+    Body,
+    /// Append to the request query string as `target=value`.
+    Query,
+    /// Stamp as an HTTP header named `target`. Behaves like
+    /// `x-fern-global-headers`; offered for completeness so a single
+    /// extension can express all three locations.
+    Header,
+}
+
+/// A single global request-property definition from the spec-root
+/// `x-fern-global-parameters` extension. The body/query counterpart of
+/// [`GlobalHeader`].
+///
+/// `name` derives the kebab-cased CLI flag (`currency` → `--currency`)
+/// and the SCREAMING_SNAKE env-var basis; `location` + `target` say where
+/// the resolved value lands on the wire (body path / query param / header
+/// name). When `env` is set the flag accepts that environment variable as
+/// a fallback, and `default` is used when neither the flag nor the env var
+/// is supplied. A per-call flag for the same target (e.g. the body
+/// dot-notation flag `--config.currency`) wins when the user supplies it.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct GlobalParameter {
+    /// SDK/CLI parameter name. Drives the kebab-cased flag name
+    /// (`--currency`) and the SCREAMING_SNAKE env-var basis. Required.
+    pub name: String,
+    /// Where the resolved value is injected — body (default), query, or
+    /// header.
+    pub location: GlobalParamLocation,
+    /// The wire target. For [`GlobalParamLocation::Body`] this is a
+    /// dotted JSON path within the request body (`config.currency`); for
+    /// [`GlobalParamLocation::Query`] the query-param name; for
+    /// [`GlobalParamLocation::Header`] the HTTP header name. Defaults to
+    /// `name` when omitted in the spec.
+    pub target: String,
+    /// When `false` (the default), the flag is required on every
+    /// operation that declares the target field — such a request must
+    /// carry a value. When `true`, the value is simply omitted when none
+    /// resolved.
+    pub optional: bool,
+    /// Optional environment variable that provides a fallback value for
+    /// the generated flag.
+    pub env: Option<String>,
+    /// Optional baked-in default value applied when neither the flag nor
+    /// the environment variable is supplied. Mirrors the upstream
+    /// `x-fern-default` shape — only the value is preserved.
     pub default: Option<String>,
 }
 

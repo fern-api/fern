@@ -551,6 +551,110 @@ fn parse_and_validate_inputs(
     })
 }
 
+/// True when `dotted` (e.g. `config.currency`) resolves to an existing
+/// value inside `value`. Used to detect a per-call body input — a dotted
+/// flag, object-shorthand flag, or `--json` payload — that should win
+/// over an `x-fern-global-parameters` default.
+fn json_path_present(value: &Value, dotted: &str) -> bool {
+    let mut cur = value;
+    for seg in dotted.split('.') {
+        match cur {
+            Value::Object(map) => match map.get(seg) {
+                Some(v) => cur = v,
+                None => return false,
+            },
+            _ => return false,
+        }
+    }
+    true
+}
+
+/// Inject resolved `x-fern-global-parameters` values into the assembled
+/// request. `resolved` is the `(name, value)` list produced by the app
+/// layer (flag → env → default on the CLI path; env → default on the
+/// programmatic path).
+///
+/// For each declared global parameter, in spec order:
+///   * skip unless the operation declares the target field (relevance —
+///     keeps unrelated commands clean and the required-check scoped);
+///   * skip when the target is already populated by a per-call input
+///     (body path present, or query/header already set) — per-call wins;
+///   * otherwise inject the resolved value, coercing body values to the
+///     declared field type, or error when the parameter is required
+///     (`optional: false`) and nothing resolved.
+fn apply_global_parameters(
+    input: &mut ExecutionInput,
+    doc: &RestDescription,
+    method: &RestMethod,
+    resolved: &[(String, String)],
+) -> Result<(), CliError> {
+    use crate::openapi::app::{
+        missing_required_global_param_error, operation_declares_global_param_target,
+    };
+    use crate::openapi::discovery::GlobalParamLocation;
+
+    for gp in &doc.global_parameters {
+        // Relevance: only operations that declare the target field.
+        if !operation_declares_global_param_target(method, gp) {
+            continue;
+        }
+
+        // Per-call wins: bail out if the user already supplied the target.
+        let already_present = match gp.location {
+            GlobalParamLocation::Body => input
+                .body
+                .as_ref()
+                .map(|b| json_path_present(b, &gp.target))
+                .unwrap_or(false),
+            GlobalParamLocation::Query => input.query_params.iter().any(|(k, _)| k == &gp.target),
+            GlobalParamLocation::Header => input
+                .header_params
+                .iter()
+                .any(|(k, _)| k.eq_ignore_ascii_case(&gp.target)),
+        };
+        if already_present {
+            continue;
+        }
+
+        let value = match resolved.iter().find(|(name, _)| name == &gp.name) {
+            Some((_, v)) => v.clone(),
+            None => {
+                // Required parameter with nothing resolved → error;
+                // optional → silently omit.
+                if !gp.optional {
+                    return Err(missing_required_global_param_error(gp));
+                }
+                continue;
+            }
+        };
+
+        match gp.location {
+            GlobalParamLocation::Body => {
+                let coerced = coerce_body_param_value(
+                    &Value::String(value),
+                    method
+                        .parameters
+                        .get(&gp.target)
+                        .and_then(|p| p.param_type.as_deref()),
+                )?;
+                let obj = input.body.get_or_insert_with(|| Value::Object(Map::new()));
+                // A non-object body (array / scalar) can't carry a named
+                // field; leave it untouched rather than clobbering it.
+                if let Value::Object(map) = obj {
+                    set_nested_value(map, &gp.target, coerced);
+                }
+            }
+            GlobalParamLocation::Query => {
+                input.query_params.push((gp.target.clone(), value));
+            }
+            GlobalParamLocation::Header => {
+                input.header_params.push((gp.target.clone(), value));
+            }
+        }
+    }
+    Ok(())
+}
+
 /// Build the per-operation auth metadata from the lowered security
 /// requirements. Computed once per execute_method call and reused across
 /// pagination iterations — the requirements don't change page to page.
@@ -1607,6 +1711,7 @@ pub async fn execute_method(
     no_retry: bool,
     no_stream: bool,
     extra_headers: &[(String, String)],
+    extra_params: &[(String, String)],
 ) -> Result<Option<Value>, CliError> {
     let binary_flag = method
         .binary_request_body
@@ -1625,7 +1730,15 @@ pub async fn execute_method(
         )));
     }
 
-    let input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers)?;
+    let mut input = parse_and_validate_inputs(doc, method, params_json, body_json, upload.is_some(), base_url_override, extra_headers)?;
+
+    // Inject spec-root `x-fern-global-parameters` into the assembled
+    // request. Runs after parse/validate (and after `extra_headers` were
+    // stamped) so the fully-resolved body/query/headers are visible: a
+    // per-call input for the same target — a dotted body flag, an
+    // object-shorthand flag, or a whole `--json` body — is already present
+    // and wins; the global default only fills what the user left blank.
+    apply_global_parameters(&mut input, doc, method, extra_params)?;
 
     // Human-readable identifier for the operation, used in
     // `x-fern-sdk-return-value` extraction errors so the user can find
@@ -3877,6 +3990,246 @@ mod tests {
 
     fn enabled_cfg() -> RetriesConfig {
         RetriesConfig::default()
+    }
+
+    // ---------------------------------------------------------------
+    // x-fern-global-parameters injection (FER-11190)
+    // ---------------------------------------------------------------
+
+    use crate::openapi::discovery::{GlobalParamLocation, GlobalParameter};
+
+    fn gp(name: &str, loc: GlobalParamLocation, target: &str, optional: bool) -> GlobalParameter {
+        GlobalParameter {
+            name: name.into(),
+            location: loc,
+            target: target.into(),
+            optional,
+            env: None,
+            default: None,
+        }
+    }
+
+    /// A method declaring a body `config.currency` field plus a `query`
+    /// field — mirrors Channel 3's `/v1/search` shape.
+    fn search_method() -> RestMethod {
+        let mut parameters = HashMap::new();
+        parameters.insert(
+            "query".to_string(),
+            MethodParameter {
+                location: Some("body".into()),
+                param_type: Some("string".into()),
+                ..Default::default()
+            },
+        );
+        parameters.insert(
+            "config.currency".to_string(),
+            MethodParameter {
+                location: Some("body".into()),
+                param_type: Some("string".into()),
+                ..Default::default()
+            },
+        );
+        RestMethod {
+            http_method: "POST".into(),
+            parameters,
+            ..Default::default()
+        }
+    }
+
+    fn input_with_body(body: Option<Value>) -> ExecutionInput {
+        ExecutionInput {
+            body,
+            full_url: "https://api.example.com/v1/search".into(),
+            query_params: Vec::new(),
+            header_params: Vec::new(),
+            is_upload: false,
+        }
+    }
+
+    /// Acceptance #1: env/default value lands in the body at the dotted
+    /// target path, merged alongside an existing per-op body field.
+    #[test]
+    fn test_apply_global_parameters_injects_body() {
+        let doc = RestDescription {
+            global_parameters: vec![gp(
+                "currency",
+                GlobalParamLocation::Body,
+                "config.currency",
+                true,
+            )],
+            ..Default::default()
+        };
+        let method = search_method();
+        let mut input = input_with_body(Some(json!({ "query": "shoes" })));
+
+        apply_global_parameters(
+            &mut input,
+            &doc,
+            &method,
+            &[("currency".to_string(), "USD".to_string())],
+        )
+        .unwrap();
+
+        assert_eq!(
+            input.body.unwrap(),
+            json!({ "query": "shoes", "config": { "currency": "USD" } }),
+        );
+    }
+
+    /// Acceptance #2: a per-call value already at the target path wins —
+    /// the global default does not overwrite it.
+    #[test]
+    fn test_apply_global_parameters_per_call_wins() {
+        let doc = RestDescription {
+            global_parameters: vec![gp(
+                "currency",
+                GlobalParamLocation::Body,
+                "config.currency",
+                true,
+            )],
+            ..Default::default()
+        };
+        let method = search_method();
+        let mut input =
+            input_with_body(Some(json!({ "query": "shoes", "config": { "currency": "EUR" } })));
+
+        apply_global_parameters(
+            &mut input,
+            &doc,
+            &method,
+            &[("currency".to_string(), "USD".to_string())],
+        )
+        .unwrap();
+
+        assert_eq!(
+            input.body.unwrap()["config"]["currency"],
+            json!("EUR"),
+            "per-call EUR must win over the global USD default",
+        );
+    }
+
+    /// A relevant query-located global parameter appends to the query
+    /// string; an already-present query param wins.
+    #[test]
+    fn test_apply_global_parameters_query() {
+        let mut parameters = HashMap::new();
+        parameters.insert(
+            "locale".to_string(),
+            MethodParameter {
+                location: Some("query".into()),
+                param_type: Some("string".into()),
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            parameters,
+            ..Default::default()
+        };
+        let doc = RestDescription {
+            global_parameters: vec![gp("locale", GlobalParamLocation::Query, "locale", true)],
+            ..Default::default()
+        };
+
+        let mut input = input_with_body(None);
+        apply_global_parameters(
+            &mut input,
+            &doc,
+            &method,
+            &[("locale".to_string(), "en-US".to_string())],
+        )
+        .unwrap();
+        assert_eq!(
+            input.query_params,
+            vec![("locale".to_string(), "en-US".to_string())],
+        );
+
+        // Already-present query param wins.
+        let mut input2 = input_with_body(None);
+        input2.query_params.push(("locale".into(), "fr-FR".into()));
+        apply_global_parameters(
+            &mut input2,
+            &doc,
+            &method,
+            &[("locale".to_string(), "en-US".to_string())],
+        )
+        .unwrap();
+        assert_eq!(
+            input2.query_params,
+            vec![("locale".to_string(), "fr-FR".to_string())]
+        );
+    }
+
+    /// A required global parameter with no resolved value errors on a
+    /// relevant operation; an optional one is silently omitted.
+    #[test]
+    fn test_apply_global_parameters_required_vs_optional() {
+        let method = search_method();
+
+        // Required, nothing resolved → error.
+        let doc_required = RestDescription {
+            global_parameters: vec![gp(
+                "currency",
+                GlobalParamLocation::Body,
+                "config.currency",
+                false,
+            )],
+            ..Default::default()
+        };
+        let mut input = input_with_body(Some(json!({ "query": "shoes" })));
+        let err = apply_global_parameters(&mut input, &doc_required, &method, &[]).unwrap_err();
+        assert!(format!("{err}").contains("config.currency"));
+
+        // Optional, nothing resolved → body untouched.
+        let doc_optional = RestDescription {
+            global_parameters: vec![gp(
+                "currency",
+                GlobalParamLocation::Body,
+                "config.currency",
+                true,
+            )],
+            ..Default::default()
+        };
+        let mut input = input_with_body(Some(json!({ "query": "shoes" })));
+        apply_global_parameters(&mut input, &doc_optional, &method, &[]).unwrap();
+        assert_eq!(input.body.unwrap(), json!({ "query": "shoes" }));
+    }
+
+    /// An operation that doesn't declare the target field is left
+    /// untouched — and a required global doesn't error there.
+    #[test]
+    fn test_apply_global_parameters_irrelevant_operation_untouched() {
+        let doc = RestDescription {
+            global_parameters: vec![gp(
+                "currency",
+                GlobalParamLocation::Body,
+                "config.currency",
+                false, // required, but irrelevant op must not error
+            )],
+            ..Default::default()
+        };
+        // Method declares no `config.currency` field.
+        let method = RestMethod {
+            http_method: "GET".into(),
+            ..Default::default()
+        };
+        let mut input = input_with_body(Some(json!({ "id": "123" })));
+        apply_global_parameters(
+            &mut input,
+            &doc,
+            &method,
+            &[("currency".to_string(), "USD".to_string())],
+        )
+        .unwrap();
+        assert_eq!(input.body.unwrap(), json!({ "id": "123" }));
+    }
+
+    #[test]
+    fn test_json_path_present() {
+        let v = json!({ "config": { "currency": "USD" }, "query": "x" });
+        assert!(json_path_present(&v, "query"));
+        assert!(json_path_present(&v, "config.currency"));
+        assert!(!json_path_present(&v, "config.country"));
+        assert!(!json_path_present(&v, "missing.path"));
     }
 
     #[test]
@@ -9416,10 +9769,97 @@ async fn test_execute_method_dry_run() {
         false, // no_retry
         false, // no_stream
         &[],
+        &[],
     )
     .await;
 
     assert!(result.is_ok());
+}
+
+/// FER-11190 acceptance #1: an `x-fern-global-parameters` body default is
+/// injected into the dry-run request body (NOT a header), merged with the
+/// per-op `--query` field. Mirrors `channel3 products search --query shoes
+/// --dry-run` with `CHANNEL3_CURRENCY=USD`.
+#[tokio::test]
+async fn test_execute_method_dry_run_injects_global_param_into_body() {
+    let mut parameters = HashMap::new();
+    parameters.insert(
+        "query".to_string(),
+        crate::openapi::discovery::MethodParameter {
+            location: Some("body".to_string()),
+            param_type: Some("string".to_string()),
+            ..Default::default()
+        },
+    );
+    parameters.insert(
+        "config.currency".to_string(),
+        crate::openapi::discovery::MethodParameter {
+            location: Some("body".to_string()),
+            param_type: Some("string".to_string()),
+            ..Default::default()
+        },
+    );
+
+    let doc = RestDescription {
+        root_url: "https://api.trychannel3.com/".to_string(),
+        global_parameters: vec![crate::openapi::discovery::GlobalParameter {
+            name: "currency".to_string(),
+            location: crate::openapi::discovery::GlobalParamLocation::Body,
+            target: "config.currency".to_string(),
+            optional: true,
+            env: Some("CHANNEL3_CURRENCY".to_string()),
+            default: None,
+        }],
+        ..Default::default()
+    };
+
+    let method = RestMethod {
+        http_method: "POST".to_string(),
+        id: Some("products.search".to_string()),
+        path: "v1/search".to_string(),
+        parameters,
+        ..Default::default()
+    };
+
+    let http_config = crate::http::HttpConfig::new("test").unwrap();
+    let result = execute_method(
+        &doc,
+        &method,
+        Some(r#"{"query": "shoes"}"#),
+        None,
+        &crate::auth::no_auth_provider(),
+        None,
+        None,
+        None,
+        None,
+        true, // dry_run
+        &PaginationConfig::default(),
+        &crate::formatter::OutputPipeline::default(),
+        true, // capture_output → return the dry-run info
+        None,
+        &http_config,
+        false,
+        false,
+        false,
+        &[],
+        // Resolved global-param values (as the binding layer would pass).
+        &[("currency".to_string(), "USD".to_string())],
+    )
+    .await
+    .expect("dry run should succeed")
+    .expect("capture_output yields the dry-run info");
+
+    assert_eq!(
+        result["body"],
+        json!({ "query": "shoes", "config": { "currency": "USD" } }),
+        "currency must be injected into the body at config.currency",
+    );
+    // And crucially NOT stamped as a header.
+    assert_eq!(
+        result["headers"],
+        json!([]),
+        "global param must not leak onto the wire as a header",
+    );
 }
 
 #[tokio::test]
@@ -9463,6 +9903,7 @@ async fn test_execute_method_missing_path_param() {
         false, // no_extract
         false, // no_retry
         false, // no_stream
+        &[],
         &[],
     )
     .await;

@@ -440,6 +440,169 @@ pub(crate) fn build_global_header_overrides(
     })
 }
 
+// ---------------------------------------------------------------------------
+// x-fern-global-parameters (FER-11190) — body/query analogue of the
+// global-headers machinery above.
+//
+// Unlike global headers (registered once at the root with `.global(true)`),
+// global parameters are registered as ordinary per-operation flags in
+// `commands::build_resource_command`, but ONLY on operations that declare
+// the target field. This keeps the flag relevant to each command AND sidesteps
+// the clap duplicate-`long` debug_assert that fires when a root-global flag
+// collides with a same-named per-op flag (FER-11145): the registration site
+// skips a global-parameter flag whose `long` is already taken on that op.
+//
+// Value resolution (flag → env → default) and the actual body/query/header
+// injection live in the executor (`apply_global_parameters`), where the
+// fully-assembled request is visible so per-call inputs — a dotted body flag
+// (`--config.currency`), an object-shorthand flag, or a whole `--json` body —
+// transparently win over the global default.
+// ---------------------------------------------------------------------------
+
+/// A resolved global-parameter value (`name` → `value`) ready for the
+/// executor to inject. Only entries whose value actually resolved are
+/// produced; an unresolved entry is simply absent (the executor's
+/// required-check keys off absence).
+pub(crate) type GlobalParamValues = Vec<(String, String)>;
+
+/// Derive the kebab-cased CLI flag (`--<flag>`) for a global parameter
+/// from its `name` (`currency` → `--currency`). Mirrors
+/// [`global_header_flag_name`].
+pub(crate) fn global_param_flag_name(gp: &crate::openapi::discovery::GlobalParameter) -> String {
+    crate::text::to_kebab_flag(&gp.name)
+}
+
+/// Stable clap arg ID for a global parameter, namespaced so it can never
+/// collide with a per-operation parameter's arg ID (which equals the wire
+/// name). Anchored to `name` so resolution and registration agree.
+pub(crate) fn global_param_arg_id(gp: &crate::openapi::discovery::GlobalParameter) -> String {
+    format!("__global_param::{}", gp.name)
+}
+
+/// Merge `x-fern-global-parameters` declarations across specs. First
+/// write wins on `name` collisions, mirroring [`merge_global_headers`].
+fn merge_global_parameters(
+    acc: &mut Vec<crate::openapi::discovery::GlobalParameter>,
+    incoming: Vec<crate::openapi::discovery::GlobalParameter>,
+) {
+    use std::collections::HashSet;
+    let existing: HashSet<String> = acc.iter().map(|p| p.name.clone()).collect();
+    for p in incoming {
+        if !existing.contains(&p.name) {
+            acc.push(p);
+        }
+    }
+}
+
+/// Resolve a global parameter's value from clap's `ArgMatches`. The flag
+/// is registered as a per-operation arg with `.env()` + `.default_value()`
+/// bindings, so a single lookup incorporates the flag → env → default
+/// chain. Returns `None` when nothing resolved or the value is empty /
+/// whitespace-only (mirrors [`resolve_global_header_value`]).
+pub(crate) fn resolve_global_param_value(
+    matched_args: &clap::ArgMatches,
+    gp: &crate::openapi::discovery::GlobalParameter,
+) -> Option<String> {
+    matched_args
+        .try_get_one::<String>(&global_param_arg_id(gp))
+        .ok()
+        .flatten()
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_string())
+}
+
+/// Resolve a global parameter's value without clap — reading the env var
+/// then the baked-in default. Used by the custom-command / programmatic
+/// path ([`AppContext`]), which has no per-operation clap flags to read.
+pub(crate) fn resolve_global_param_value_envless(
+    gp: &crate::openapi::discovery::GlobalParameter,
+) -> Option<String> {
+    if let Some(env) = &gp.env {
+        if let Ok(v) = std::env::var(env) {
+            let trimmed = v.trim();
+            if !trimmed.is_empty() {
+                return Some(trimmed.to_string());
+            }
+        }
+    }
+    gp.default
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(str::to_string)
+}
+
+/// Build the resolved `(name, value)` list of `x-fern-global-parameters`
+/// for this invocation by reading clap's matches. Entries that resolve to
+/// nothing are omitted; the executor handles per-call-wins, relevance, and
+/// the required-check against [`RestDescription::global_parameters`].
+pub(crate) fn build_global_param_overrides(
+    matched_args: &clap::ArgMatches,
+    doc: &RestDescription,
+) -> GlobalParamValues {
+    doc.global_parameters
+        .iter()
+        .filter_map(|gp| resolve_global_param_value(matched_args, gp).map(|v| (gp.name.clone(), v)))
+        .collect()
+}
+
+/// The location discriminator as the `MethodParameter.location` string the
+/// parser stamps (`"body"` / `"query"` / `"header"`).
+pub(crate) fn global_param_location_str(
+    loc: crate::openapi::discovery::GlobalParamLocation,
+) -> &'static str {
+    use crate::openapi::discovery::GlobalParamLocation::*;
+    match loc {
+        Body => "body",
+        Query => "query",
+        Header => "header",
+    }
+}
+
+/// True when `method` declares the global parameter's target field at the
+/// matching location — i.e. the operation is "relevant" and should both
+/// expose the flag and accept the injected value. Body/query targets match
+/// case-sensitively (JSON keys / query names); header targets match
+/// case-insensitively (RFC 7230 §3.2).
+pub(crate) fn operation_declares_global_param_target(
+    method: &RestMethod,
+    gp: &crate::openapi::discovery::GlobalParameter,
+) -> bool {
+    use crate::openapi::discovery::GlobalParamLocation;
+    let want_loc = global_param_location_str(gp.location);
+    method.parameters.iter().any(|(k, p)| {
+        if p.location.as_deref() != Some(want_loc) {
+            return false;
+        }
+        match gp.location {
+            GlobalParamLocation::Header => k.eq_ignore_ascii_case(&gp.target),
+            _ => k == &gp.target,
+        }
+    })
+}
+
+/// Validation error when a required (`optional: false`) global parameter
+/// has no resolved value on an operation that declares its target field.
+pub(crate) fn missing_required_global_param_error(
+    gp: &crate::openapi::discovery::GlobalParameter,
+) -> CliError {
+    let flag = global_param_flag_name(gp);
+    let env_hint = match &gp.env {
+        Some(e) => format!(" or set ${e}"),
+        None => String::new(),
+    };
+    let loc = match gp.location {
+        crate::openapi::discovery::GlobalParamLocation::Body => "body field",
+        crate::openapi::discovery::GlobalParamLocation::Query => "query parameter",
+        crate::openapi::discovery::GlobalParamLocation::Header => "header",
+    };
+    CliError::Validation(format!(
+        "Missing required global {loc} '{}': provide --{flag}{env_hint}",
+        gp.target
+    ))
+}
+
 /// Compose the root `--help` footer from the optional global-headers
 /// section, the optional auth section, and the always-present runtime
 /// footer. Sections are joined with a single newline; absent sections
@@ -897,6 +1060,10 @@ impl CliApp {
                     merge_security_schemes(&mut acc.security_schemes, spec_doc.security_schemes);
                     merge_sdk_variables(&mut acc.sdk_variables, spec_doc.sdk_variables);
                     merge_global_headers(&mut acc.global_headers, spec_doc.global_headers);
+                    merge_global_parameters(
+                        &mut acc.global_parameters,
+                        spec_doc.global_parameters,
+                    );
                 }
             }
         }
@@ -1381,6 +1548,12 @@ pub(crate) struct BindingEntry {
     pub(crate) auth_provider: DynAuthProvider,
     pub(crate) http_config: crate::http::HttpConfig,
     pub(crate) global_headers: Vec<(String, String)>,
+    /// Resolved `x-fern-global-parameters` values (`name` → `value`) for
+    /// the custom-command / programmatic path. Resolved from env + default
+    /// at construction time (these callers have no per-op clap flags); the
+    /// executor injects them into the body/query/header with per-call
+    /// inputs from `params_json` / `body_json` winning.
+    pub(crate) global_parameters: GlobalParamValues,
 }
 
 /// Runtime context passed to custom command handlers.
@@ -1412,8 +1585,19 @@ impl AppContext {
         http_config: crate::http::HttpConfig,
         global_headers: Vec<(String, String)>,
     ) -> Self {
+        let global_parameters: GlobalParamValues = doc
+            .global_parameters
+            .iter()
+            .filter_map(|gp| resolve_global_param_value_envless(gp).map(|v| (gp.name.clone(), v)))
+            .collect();
         Self {
-            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
+            entries: vec![BindingEntry {
+                doc,
+                auth_provider,
+                http_config,
+                global_headers,
+                global_parameters,
+            }],
             quiet: false,
             base_url_override: None,
         }
@@ -1571,6 +1755,7 @@ impl AppContext {
                 // opt-in buffered toggle.
                 false,
                 &extra_headers,
+                &entry.global_parameters,
             ))
         })
         .map(|_| ())
@@ -1642,6 +1827,7 @@ impl AppContext {
                 // unary-response shape callers already handle.
                 true,
                 &extra_headers,
+                &entry.global_parameters,
             ))
         })?;
 
@@ -2215,6 +2401,170 @@ mod tests {
         }
     }
 
+    // ------------------------------------------------------------------
+    // x-fern-global-parameters (FER-11190) — resolution + helper layer.
+    // Registration is covered in commands.rs; injection in executor.rs.
+    // ------------------------------------------------------------------
+
+    use crate::openapi::discovery::{GlobalParamLocation, GlobalParameter};
+
+    fn gp(name: &str, loc: GlobalParamLocation, target: &str) -> GlobalParameter {
+        GlobalParameter {
+            name: name.into(),
+            location: loc,
+            target: target.into(),
+            optional: true,
+            env: None,
+            default: None,
+        }
+    }
+
+    /// Flag name derives from `name` (kebab-cased) and the arg ID is
+    /// namespaced so it can never collide with a per-op param's arg ID.
+    #[test]
+    fn test_global_param_flag_name_and_arg_id() {
+        let p = gp("pageSize", GlobalParamLocation::Query, "pageSize");
+        assert_eq!(global_param_flag_name(&p), "page-size");
+        assert_eq!(global_param_arg_id(&p), "__global_param::pageSize");
+    }
+
+    /// Resolution reads the clap flag, honoring `.env()` + `.default_value()`
+    /// bindings, and trims/empty-filters like the global-header path.
+    #[test]
+    fn test_resolve_global_param_value_from_flag_and_default() {
+        use clap::Command;
+        let mut p = gp("currency", GlobalParamLocation::Body, "config.currency");
+        p.default = Some("USD".into());
+
+        // Default applies when the flag is absent.
+        let cmd = Command::new("t").arg(
+            clap::Arg::new(global_param_arg_id(&p))
+                .long(global_param_flag_name(&p))
+                .default_value("USD"),
+        );
+        let m = cmd.try_get_matches_from(["t"]).unwrap();
+        assert_eq!(resolve_global_param_value(&m, &p).as_deref(), Some("USD"));
+
+        // Explicit flag wins over the default.
+        let cmd = Command::new("t").arg(
+            clap::Arg::new(global_param_arg_id(&p))
+                .long(global_param_flag_name(&p))
+                .default_value("USD"),
+        );
+        let m = cmd.try_get_matches_from(["t", "--currency", "EUR"]).unwrap();
+        assert_eq!(resolve_global_param_value(&m, &p).as_deref(), Some("EUR"));
+    }
+
+    /// `build_global_param_overrides` collects only entries that resolved
+    /// to a value, keyed by the parameter `name`.
+    #[test]
+    fn test_build_global_param_overrides_collects_resolved() {
+        use clap::Command;
+        let mut currency = gp("currency", GlobalParamLocation::Body, "config.currency");
+        currency.default = Some("USD".into());
+        let language = gp("language", GlobalParamLocation::Body, "config.language");
+        let doc = RestDescription {
+            global_parameters: vec![currency.clone(), language.clone()],
+            ..Default::default()
+        };
+
+        let cmd = Command::new("t")
+            .arg(
+                clap::Arg::new(global_param_arg_id(&currency))
+                    .long(global_param_flag_name(&currency))
+                    .default_value("USD"),
+            )
+            .arg(
+                clap::Arg::new(global_param_arg_id(&language))
+                    .long(global_param_flag_name(&language)),
+            );
+        let m = cmd.try_get_matches_from(["t"]).unwrap();
+
+        let resolved = build_global_param_overrides(&m, &doc);
+        // currency resolves to its default; language resolves to nothing.
+        assert_eq!(resolved, vec![("currency".to_string(), "USD".to_string())]);
+    }
+
+    /// Relevance: an operation is "relevant" to a global parameter only
+    /// when it declares the target field at the matching location.
+    #[test]
+    fn test_operation_declares_global_param_target() {
+        use crate::openapi::discovery::MethodParameter;
+        use std::collections::HashMap;
+
+        let mut parameters: HashMap<String, MethodParameter> = HashMap::new();
+        parameters.insert(
+            "config.currency".into(),
+            MethodParameter {
+                location: Some("body".into()),
+                ..Default::default()
+            },
+        );
+        parameters.insert(
+            "pageSize".into(),
+            MethodParameter {
+                location: Some("query".into()),
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            parameters,
+            ..Default::default()
+        };
+
+        // Body target present at body location → relevant.
+        assert!(operation_declares_global_param_target(
+            &method,
+            &gp("currency", GlobalParamLocation::Body, "config.currency"),
+        ));
+        // Query target present at query location → relevant.
+        assert!(operation_declares_global_param_target(
+            &method,
+            &gp("pageSize", GlobalParamLocation::Query, "pageSize"),
+        ));
+        // Right name, wrong location → not relevant.
+        assert!(!operation_declares_global_param_target(
+            &method,
+            &gp("pageSize", GlobalParamLocation::Body, "pageSize"),
+        ));
+        // Target the op doesn't declare → not relevant.
+        assert!(!operation_declares_global_param_target(
+            &method,
+            &gp("country", GlobalParamLocation::Body, "config.country"),
+        ));
+    }
+
+    /// First write wins on `name` collisions when merging across specs,
+    /// mirroring [`merge_global_headers`].
+    #[test]
+    fn test_merge_global_parameters_first_write_wins() {
+        let mut acc = vec![gp("currency", GlobalParamLocation::Body, "config.currency")];
+        merge_global_parameters(
+            &mut acc,
+            vec![
+                gp("currency", GlobalParamLocation::Query, "currency"),
+                gp("language", GlobalParamLocation::Body, "config.language"),
+            ],
+        );
+        assert_eq!(acc.len(), 2);
+        // The original `currency` (Body) is preserved; the incoming dup dropped.
+        assert_eq!(acc[0].location, GlobalParamLocation::Body);
+        assert_eq!(acc[1].name, "language");
+    }
+
+    /// The required-parameter error names the flag, the env var, and the
+    /// target so spec authors can correlate it.
+    #[test]
+    fn test_missing_required_global_param_error_message() {
+        let mut p = gp("currency", GlobalParamLocation::Body, "config.currency");
+        p.optional = false;
+        p.env = Some("CHANNEL3_CURRENCY".into());
+        let msg = format!("{}", missing_required_global_param_error(&p));
+        assert!(msg.contains("--currency"), "names the flag: {msg}");
+        assert!(msg.contains("CHANNEL3_CURRENCY"), "names the env: {msg}");
+        assert!(msg.contains("config.currency"), "names the target: {msg}");
+    }
+
     #[test]
     fn test_cli_app_builder() {
         let app = CliApp::new("test-cli")
@@ -2674,6 +3024,7 @@ mod tests {
             auth_provider: crate::auth::no_auth_provider(),
             http_config: crate::http::HttpConfig::new("test").unwrap(),
             global_headers: Vec::new(),
+            global_parameters: Vec::new(),
         });
 
         // find_method should find methods from either entry.

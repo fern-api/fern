@@ -1,0 +1,18 @@
+- summary: |
+    Add the `x-fern-global-parameters` spec-root extension: a global default
+    for a request **body** or **query** field, set once via a top-level flag
+    (`--currency`) with an env-var fallback (`CHANNEL3_CURRENCY`) and optional
+    baked-in default, injected into every operation that declares the target
+    field. The body/query counterpart of `x-fern-global-headers` (which only
+    targets HTTP headers).
+
+    Each entry declares `name` (the flag), `in` (`body` | `query` | `header`,
+    default `body`), and `target` (a dotted body path like `config.currency`,
+    a query-param name, or a header name). The resolved value is injected into
+    the request body/query/headers; a per-call input for the same target — a
+    dotted body flag (`--config.currency`), an object-shorthand flag, or a
+    whole `--json` body — wins. The flag is registered only on operations that
+    declare the target field, and is skipped (with a warning) when its name
+    collides with a same-named per-op flag so the per-op flag wins and clap
+    never panics.
+  type: feat
