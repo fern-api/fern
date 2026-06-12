@@ -1,0 +1,8 @@
+- summary: |
+    Coerce numeric JSON values to the property's declared scalar type during deserialization.
+    Previously, a wire value that PHP `json_decode` interprets as float (decimal notation,
+    scientific notation, or values larger than the int range) would hit a TypeError when
+    assigned to a typed `int` property, e.g. `Cannot assign float to property
+    SendTransacSmsResponse::$messageId`. Numeric `int`/`float` properties now accept either
+    wire representation.
+  type: fix

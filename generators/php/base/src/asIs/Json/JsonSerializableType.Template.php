@@ -174,6 +174,17 @@ abstract class JsonSerializableType implements \JsonSerializable
                 /** @var array<string, mixed> $arrayValue */
                 $arrayValue = $value;
                 $value = JsonDeserializer::deserializeObject($arrayValue, $type->getName());
+            } elseif ($type instanceof ReflectionNamedType && $type->isBuiltin() && is_numeric($value) && !is_bool($value)) {
+                // Coerce numeric JSON to the declared scalar type. json_decode returns
+                // float for decimal notation, scientific notation, or values that fit a
+                // double but not an int — without this, a wire value like 1.5e15 would
+                // hit PHP 8.x's TypeError on assignment to a typed int property.
+                $typeName = $type->getName();
+                if ($typeName === 'int') {
+                    $value = (int) $value;
+                } elseif ($typeName === 'float') {
+                    $value = (float) $value;
+                }
             }
 
             $args[$property->getName()] = $value;
