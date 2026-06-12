@@ -1,7 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
 import { describe, expect, it } from "vitest";
 
-import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
+import { DocsDefinitionResolver } from "../../DocsDefinitionResolver.js";
 
 function convertPageActionsFor(pageActions: docsYml.ParsedPageActionsConfig | undefined): unknown {
     const resolver = Object.create(DocsDefinitionResolver.prototype) as DocsDefinitionResolver;
@@ -28,7 +28,8 @@ function makeParsedPageActions(
             vscode: false,
             mcp: true,
             custom: [],
-            skills
+            skills,
+            skillsDirectory: undefined
         }
     };
 }

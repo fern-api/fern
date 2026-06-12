@@ -105,6 +105,38 @@ describe("parseDocsConfiguration — page-actions.options.skills", () => {
         ]);
     });
 
+    it("resolves `path` against the docs.yml directory and keeps it off the FDR-bound config", async () => {
+        const parsed = await parseRawDocsYml({
+            instances: [],
+            navigation: [],
+            "page-actions": { options: { skills: { path: "./agent-skills" } } }
+        });
+
+        expect(parsed.pageActions?.options.skillsDirectory).toEqual("/fern/agent-skills");
+        // `path` is CLI-only: the docs site reads the served manifest, not the repo path
+        expect(parsed.pageActions?.options.skills).toEqual({});
+    });
+
+    it("resolves a `../` path (e.g. a repo-root .agents/skills folder shared with coding agents)", async () => {
+        const parsed = await parseRawDocsYml({
+            instances: [],
+            navigation: [],
+            "page-actions": { options: { skills: { path: "../.agents/skills" } } }
+        });
+
+        expect(parsed.pageActions?.options.skillsDirectory).toEqual("/.agents/skills");
+    });
+
+    it("leaves skillsDirectory undefined when no path is declared", async () => {
+        const parsed = await parseRawDocsYml({
+            instances: [],
+            navigation: [],
+            "page-actions": { options: { skills: {} } }
+        });
+
+        expect(parsed.pageActions?.options.skillsDirectory).toBeUndefined();
+    });
+
     it("rejects a skill entry without a name", async () => {
         await expect(
             parseRawDocsYml({

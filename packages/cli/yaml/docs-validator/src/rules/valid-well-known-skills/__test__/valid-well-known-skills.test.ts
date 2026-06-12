@@ -4,7 +4,11 @@ import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { validateSkillMarkdown, validateWellKnownSkillsDirectory } from "../valid-well-known-skills.js";
+import {
+    validateDeclaredSkillsPath,
+    validateSkillMarkdown,
+    validateWellKnownSkillsDirectory
+} from "../valid-well-known-skills.js";
 
 const SKILLS_DIRECTORY = RelativeFilePath.of(".well-known/skills");
 
@@ -97,6 +101,104 @@ describe("validateWellKnownSkillsDirectory", () => {
             wellKnownDirectory: SKILLS_DIRECTORY
         });
         expect(violations).toEqual([]);
+    });
+});
+
+describe("validateDeclaredSkillsPath", () => {
+    let fernFolder: AbsoluteFilePath;
+
+    beforeEach(async () => {
+        fernFolder = AbsoluteFilePath.of(await mkdtemp(path.join(tmpdir(), "fern-declared-skills-rule-")));
+    });
+
+    afterEach(async () => {
+        await rm(fernFolder, { recursive: true, force: true });
+    });
+
+    async function writeFileAt(relativePath: string, contents: string): Promise<void> {
+        const absolutePath = path.join(fernFolder, relativePath);
+        await mkdir(path.dirname(absolutePath), { recursive: true });
+        await writeFile(absolutePath, contents);
+    }
+
+    function declaredSkillsDirectory(relativePath: string): AbsoluteFilePath {
+        return AbsoluteFilePath.of(path.join(fernFolder, relativePath));
+    }
+
+    it("returns no violations for a valid declared skills directory (no index.json required)", async () => {
+        await writeFileAt(
+            "agent-skills/best-practices/SKILL.md",
+            "---\nname: best-practices\ndescription: How to use the API well.\n---\n"
+        );
+
+        const violations = await validateDeclaredSkillsPath({
+            absolutePathToFernFolder: fernFolder,
+            absolutePathToSkillsDirectory: declaredSkillsDirectory("agent-skills")
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("errors when the declared path does not exist", async () => {
+        const violations = await validateDeclaredSkillsPath({
+            absolutePathToFernFolder: fernFolder,
+            absolutePathToSkillsDirectory: declaredSkillsDirectory("agent-skills")
+        });
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toEqual("error");
+        expect(violations[0]?.message).toContain("does not exist");
+    });
+
+    it("maps discovery errors onto workspace-relative file paths", async () => {
+        await writeFileAt(
+            "agent-skills/best-practices/SKILL.md",
+            "---\nname: other-name\ndescription: How to use the API well.\n---\n"
+        );
+
+        const violations = await validateDeclaredSkillsPath({
+            absolutePathToFernFolder: fernFolder,
+            absolutePathToSkillsDirectory: declaredSkillsDirectory("agent-skills")
+        });
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toEqual("error");
+        expect(violations[0]?.message).toContain('must match its parent directory "best-practices"');
+        expect(violations[0]?.relativeFilepath).toEqual("agent-skills/best-practices/SKILL.md");
+    });
+
+    it("warns when a hand-populated .well-known/skills folder is also present (declared path wins)", async () => {
+        await writeFileAt(
+            "agent-skills/best-practices/SKILL.md",
+            "---\nname: best-practices\ndescription: How to use the API well.\n---\n"
+        );
+        await writeFileAt(".well-known/skills/index.json", JSON.stringify({ skills: [] }));
+
+        const violations = await validateDeclaredSkillsPath({
+            absolutePathToFernFolder: fernFolder,
+            absolutePathToSkillsDirectory: declaredSkillsDirectory("agent-skills")
+        });
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toEqual("warning");
+        expect(violations[0]?.message).toContain(".well-known/skills/ is ignored");
+    });
+
+    it("names files outside the fern folder in the message instead of a relative path", async () => {
+        await writeFileAt(
+            "agent-skills/best-practices/SKILL.md",
+            "---\nname: best-practices\ndescription: How to use the API well.\n---\n"
+        );
+
+        // validate from a deeper "fern folder" so the skills directory is outside it (../)
+        const nestedFernFolder = AbsoluteFilePath.of(path.join(fernFolder, "docs", "fern"));
+        await mkdir(nestedFernFolder, { recursive: true });
+        await writeFileAt("agent-skills/wrong-name/SKILL.md", "---\nname: nope\ndescription: d.\n---\n");
+
+        const violations = await validateDeclaredSkillsPath({
+            absolutePathToFernFolder: nestedFernFolder,
+            absolutePathToSkillsDirectory: declaredSkillsDirectory("agent-skills")
+        });
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.relativeFilepath).toBeUndefined();
+        expect(violations[0]?.message).toContain("agent-skills/wrong-name/SKILL.md");
+        expect(violations[0]?.message).toContain('must match its parent directory "wrong-name"');
     });
 });
 

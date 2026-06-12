@@ -43,7 +43,7 @@ const allRules = [
     ValidFrontmatter,
     TranslationDirectoriesExistRule,
     ValidChangelogSlugRule,
-    ValidWellKnownSkillsRule, // Validate author-supplied Agent Skills bundles under .well-known/
+    ValidWellKnownSkillsRule, // Validate Agent Skills (docs.yml-declared path, or raw .well-known/ bundles)
     ValidSkillsPageActionRule // Validate the "Install skills" page action display config
     // ValidMarkdownFileReferences
 ];
