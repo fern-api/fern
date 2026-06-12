@@ -1,0 +1,5 @@
+- summary: |
+    Update generated `sdk_glue.rs` to box `SdkError` when bridging to the SDK's
+    `RequestExecutor` trait and downcast `ApiError::Executor` back to `SdkError`
+    for structured error recovery.
+  type: fix

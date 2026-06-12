@@ -4,7 +4,7 @@
 
 use std::sync::Arc;
 
-use crate::auth::{AuthCredentialSource, DynAuthProvider};
+use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider};
 use crate::binding::{Binding, BoxFuture, DispatchResult};
 use crate::error::CliError;
 use crate::openapi::commands;
@@ -129,6 +129,33 @@ impl OpenApiBinding {
         provider: crate::auth::DynAuthProvider,
     ) -> Self {
         self.inner = self.inner.auth_provider_shared(scheme_name, provider);
+        self
+    }
+
+    /// Pin how multiple auth schemes compose. See [`AuthStrategy`].
+    pub fn auth_strategy(mut self, strategy: AuthStrategy) -> Self {
+        self.inner = self.inner.auth_strategy(strategy);
+        self
+    }
+
+    /// Register an additive auth layer applied on top of the primary auth
+    /// whenever its credential is present. See [`CliApp::auth_layer`].
+    ///
+    /// [`CliApp::auth_layer`]: crate::openapi::app::CliApp::auth_layer
+    pub fn auth_layer(
+        mut self,
+        provider: impl crate::auth::provider::AuthProvider + 'static,
+    ) -> Self {
+        self.inner = self.inner.auth_layer(provider);
+        self
+    }
+
+    /// Register a pre-built shared additive auth layer.
+    /// See [`CliApp::auth_layer_shared`].
+    ///
+    /// [`CliApp::auth_layer_shared`]: crate::openapi::app::CliApp::auth_layer_shared
+    pub fn auth_layer_shared(mut self, provider: crate::auth::DynAuthProvider) -> Self {
+        self.inner = self.inner.auth_layer_shared(provider);
         self
     }
 
@@ -269,6 +296,7 @@ impl OpenApiBinding {
             f(matches, ctx)
         })
     }
+
 }
 
 impl Binding for OpenApiBinding {
@@ -312,8 +340,8 @@ impl Binding for OpenApiBinding {
         if !missing.is_empty() {
             missing.sort();
             // Warn rather than fail — multi-spec binaries may intentionally
-            // bind only a subset of schemes (e.g. basic auth
-            // but not the OAuth2 schemes).
+            // bind only a subset of schemes (e.g. Twilio binds basic auth
+            // but not the IAM OAuth2 schemes).
             tracing::warn!(
                 "Spec declares security scheme(s) [{}] with no .auth() binding. \
                  Those endpoints will run unauthenticated.",
@@ -321,6 +349,11 @@ impl Binding for OpenApiBinding {
             );
         }
         Ok(())
+    }
+
+    fn schema(&self, path: &[String]) -> Result<Option<serde_json::Value>, CliError> {
+        let prepared = self.ensure_prepared()?;
+        Ok(super::help::build_schema(&prepared.doc, path))
     }
 
     fn build_command(&self) -> Result<clap::Command, CliError> {
@@ -344,26 +377,6 @@ impl Binding for OpenApiBinding {
         }
 
         Ok(cli)
-    }
-
-    fn render_json_help(
-        &self,
-        subcommand_path: &[String],
-        out: &mut dyn std::io::Write,
-    ) -> Result<bool, CliError> {
-        let prepared = self.ensure_prepared()?;
-        match super::help::write_json_help(&prepared.doc, subcommand_path, out) {
-            Ok(()) => Ok(true),
-            // "Resource not found" / "Operation not found" means the path
-            // belongs to a different binding — return false so the
-            // dispatch_pipeline loop tries the next one.
-            Err(CliError::Validation(msg))
-                if msg.contains("not found") =>
-            {
-                Ok(false)
-            }
-            Err(e) => Err(e),
-        }
     }
 
     fn dispatch<'a>(
@@ -464,13 +477,20 @@ impl Binding for OpenApiBinding {
                         .map(|s| s.as_str())
                 });
 
-            // Validate binary body path for dangerous characters.
+            // Validate binary body path for dangerous characters. Validate the
+            // SAME string the executor will use as the file path — for plain
+            // and `@`-prefixed values that's the input with the optional `@`
+            // stripped; for the `\@<REST>` escape that's the literal `@<REST>`
+            // produced by `strip_or_escape_at`. Unlike the multipart and
+            // JSON-shorthand sites, the binary-body escape still opens a file
+            // (see `BinaryBodySource::parse` → `File(...)`), so path-shape
+            // validation must apply in both branches. FER-10436.
             if let Some(path_str) = binary_body_path {
-                let stripped = path_str.strip_prefix('@').unwrap_or(path_str);
-                if stripped != "-" {
+                let stripped = executor::strip_or_escape_at(path_str);
+                if stripped.as_ref() != "-" {
                     let flag = method.binary_request_body.as_ref()
                         .map(|b| b.flag_name.as_str()).unwrap_or("file");
-                    crate::output::reject_dangerous_chars(stripped, &format!("--{flag}"))?;
+                    crate::output::reject_dangerous_chars(stripped.as_ref(), &format!("--{flag}"))?;
                 }
             }
 
@@ -486,20 +506,32 @@ impl Binding for OpenApiBinding {
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let base_url_override = base_url_override_owned.as_deref();
 
-            // Read --output flag for binary response file writing.
-            // validate_safe_file_path rejects traversal, symlink escapes,
-            // and control characters per AGENTS.md.
+            // Read --output flag for binary response file writing. The literal
+            // `-` is a stdout sentinel (curl/wget convention) and bypasses
+            // path validation — handle_binary_response branches on it to
+            // stream raw bytes to stdout instead of touching the filesystem.
+            // Every other value flows through validate_safe_file_path, which
+            // rejects traversal, symlink escapes, and control characters
+            // per AGENTS.md.
             let output_path_owned = matched_args
                 .try_get_one::<String>("output")
                 .ok()
                 .flatten()
                 .cloned();
-            let output_path_buf = if let Some(ref p) = output_path_owned {
-                Some(crate::validate::validate_safe_file_path(p, "--output")?)
-            } else {
-                None
+            let output_path_buf = match output_path_owned.as_deref() {
+                Some("-") => None,
+                Some(p) => Some(crate::validate::validate_safe_file_path(p, "--output")?),
+                None => None,
             };
-            let output_path = output_path_buf.as_deref().and_then(|p| p.to_str());
+            let output_path = if output_path_owned.as_deref() == Some("-") {
+                Some("-")
+            } else {
+                output_path_buf.as_deref().and_then(|p| p.to_str())
+            };
+
+            // Collect multipart/form-data parts from CLI flags for operations
+            // that declare a `multipart/form-data` body. `None` for all others.
+            let multipart_parts = super::app::collect_multipart_parts(method, matched_args)?;
 
             // Execute with capture_output = true to get the Value back
             // instead of printing to stdout.
@@ -512,6 +544,7 @@ impl Binding for OpenApiBinding {
                 output_path,
                 None,  // upload
                 binary_body_path,
+                multipart_parts,
                 dry_run,
                 &pagination,
                 &crate::formatter::OutputPipeline::default(),
@@ -543,12 +576,15 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let base_url_override =
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         let ctx = super::AppContext::new(
             entry.doc,
             entry.auth_provider,
             entry.http_config,
             entry.global_headers,
-        ).with_quiet(quiet);
+        ).with_quiet(quiet)
+         .with_base_url_override(base_url_override);
         Ok(Some(Box::new(ctx)))
     }
 
@@ -564,6 +600,8 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let base_url_override =
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {
@@ -578,7 +616,8 @@ impl Binding for OpenApiBinding {
                         entry.auth_provider,
                         entry.http_config,
                         entry.global_headers,
-                    ).with_quiet(quiet);
+                    ).with_quiet(quiet)
+                     .with_base_url_override(base_url_override);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
@@ -589,7 +628,8 @@ impl Binding for OpenApiBinding {
                     entry.auth_provider,
                     entry.http_config,
                     entry.global_headers,
-                ).with_quiet(quiet);
+                ).with_quiet(quiet)
+                 .with_base_url_override(base_url_override);
                 Ok(Some(Box::new(ctx)))
             }
         }

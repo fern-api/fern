@@ -33,6 +33,18 @@ service:
             foo: string
         content-type: application/json
         name: GetUndiscriminatedUnionRequest
+    getMapResponse:
+      path: /map-response
+      method: GET
+      response: map<string, MapResponseValue>
+    getSharedChild:
+      path: /shared-child
+      method: GET
+      response: SharedChildType
+    getOrphanParent:
+      path: /orphan-parent
+      method: GET
+      response: OrphanParentWithSharedChild
 
 types:
   # this is also the type that would be produced by
@@ -354,6 +366,31 @@ types:
       ref:
         type: ReferenceType
         docs: lorem ipsum
+
+  MapResponseValue:
+    inline: true
+    properties:
+      name: string
+      description: string
+      nested: optional<MapResponseValueNested>
+
+  MapResponseValueNested:
+    inline: true
+    properties:
+      key: string
+      value: string
+
+  SharedChildType:
+    inline: true
+    properties:
+      name: string
+      detail: string
+
+  OrphanParentWithSharedChild:
+    inline: true
+    properties:
+      label: string
+      child: optional<SharedChildType>
 
   ReferenceType:
     docs: lorem ipsum

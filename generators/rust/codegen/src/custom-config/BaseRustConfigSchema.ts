@@ -57,7 +57,15 @@ export const BaseRustCustomConfigSchema = z.object({
     // When true, common initialisms like ID, JSON, XML are uppercased in generated names
     // (e.g., UserID instead of UserId, JSONBody instead of JsonBody).
     // Default is false (idiomatic Rust casing).
-    capitalizeInitialisms: z.boolean().optional().default(false)
+    capitalizeInitialisms: z.boolean().optional().default(false),
+
+    // =========================================================================
+    // Internal Configuration (not user-facing — threaded by parent generators)
+    // =========================================================================
+    // Path prefix for core serde helper modules (flexible_datetime, base64_bytes, etc.)
+    // in generated #[serde(with = "...")] attributes. Defaults to "crate::core".
+    // The CLI generator overrides this when producing a standalone types crate.
+    coreModulePath: z.string().optional().default("crate::core")
 });
 
 export type BaseRustCustomConfigSchema = z.infer<typeof BaseRustCustomConfigSchema>;

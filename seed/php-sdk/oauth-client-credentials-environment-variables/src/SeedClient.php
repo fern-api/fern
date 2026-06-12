@@ -83,7 +83,7 @@ class SeedClient
 
         $authRawClient = new RawClient(['headers' => []]);
         $authClient = new AuthClient($authRawClient);
-        $this->oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
+        $this->oauthTokenProvider = new OAuthTokenProvider($clientId, $clientSecret, $authClient);
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,

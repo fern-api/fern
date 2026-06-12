@@ -56,7 +56,7 @@ public partial class NullableClient : INullableClient
                 return new WithRawResponse<IEnumerable<User>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedNullable.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -70,7 +70,13 @@ public partial class NullableClient : INullableClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedNullable.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -81,7 +87,13 @@ public partial class NullableClient : INullableClient
             throw new SeedNullableApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedNullable.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -122,7 +134,7 @@ public partial class NullableClient : INullableClient
                 return new WithRawResponse<User>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedNullable.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -136,7 +148,13 @@ public partial class NullableClient : INullableClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedNullable.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -147,7 +165,13 @@ public partial class NullableClient : INullableClient
             throw new SeedNullableApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedNullable.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -188,7 +212,7 @@ public partial class NullableClient : INullableClient
                 return new WithRawResponse<bool>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedNullable.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -202,7 +226,13 @@ public partial class NullableClient : INullableClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedNullable.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -213,7 +243,13 @@ public partial class NullableClient : INullableClient
             throw new SeedNullableApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedNullable.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

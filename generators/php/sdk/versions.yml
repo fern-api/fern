@@ -1,4 +1,59 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.10
+  changelogEntry:
+    - summary: |
+        Fix the generated OAuth and inferred-auth token providers to construct the typed token request
+        object when the token endpoint uses a referenced (non-inlined) request body. Previously the
+        provider passed an associative array to the token endpoint method, which expects the typed
+        request, causing PHPStan failures.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
+- version: 2.10.9
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet argument ordering for discriminated union factory methods
+        with optional base properties. Required base fields now come before the variant
+        value, and optional base fields come after, matching the PHP Method AST's
+        automatic parameter reordering.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
+- version: 2.10.8
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation: filter out unsupported bytes body arguments
+        that produced syntax errors, and reorder IR-level path parameters (which have
+        defaults) after required body parameters to match the SDK method signatures.
+      type: fix
+  createdAt: "2026-06-05"
+  irVersion: 66
+- version: 2.10.7
+  changelogEntry:
+    - summary: |
+        Fix union serialization for enum variants: use `->value` for serialization
+        and `::from()` for deserialization instead of `->jsonSerialize()` / `::jsonDeserialize()`.
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
+- version: 2.10.6
+  changelogEntry:
+    - summary: |
+        Fix PHPStan error for literal boolean headers by using strict null comparison
+        (`!== null`) instead of loose comparison (`!= null`).
+      type: fix
+  createdAt: "2026-06-04"
+  irVersion: 66
+- version: 2.10.5
+  changelogEntry:
+    - summary: |
+        Fix multiple PHP generator bugs: add missing HEAD enum case, fix fully-qualified
+        exception class references, use preserveEnums for union return types, fix required
+        parameter ordering after optional parameters, prevent toJson on literal types, cast
+        boolean header values to strings, and fix basic-auth null checks when env vars are set.
+      type: fix
+  createdAt: "2026-06-03"
+  irVersion: 66
 - version: 2.10.4
   changelogEntry:
     - summary: |

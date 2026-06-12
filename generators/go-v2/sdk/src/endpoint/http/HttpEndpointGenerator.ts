@@ -1005,6 +1005,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         this.context.goTypeMapper.convert({ reference: responseBody.value.responseBodyType })
                     );
                 });
+            case "bytes":
             case "fileDownload":
             case "text":
                 return go.codeblock((writer) => {
@@ -1013,7 +1014,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
             case "streaming":
             case "streamParameter":
-            case "bytes":
                 return undefined;
             default:
                 assertNever(responseBody);
@@ -1090,11 +1090,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         switch (responseBody.type) {
             case "json":
                 return this.getResponseBodyReferenceForJson({ jsonResponse: responseBody.value });
-            case "bytes":
             case "fileDownload":
             case "streaming":
             case "streamParameter":
                 return go.codeblock("response");
+            case "bytes":
+                return go.codeblock("response.Bytes()");
             case "text":
                 return go.codeblock("response.String()");
             default:
@@ -1263,9 +1264,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private addQueryValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
+        // `value` is already a fully-formed Go string expression (e.g. the quoted
+        // output of getLiteralAsString), so it is written verbatim rather than
+        // being wrapped in another set of quotes.
         return go.codeblock((writer) => {
             writer.writeNewLineIfLastLineNot();
-            writer.write(`queryParams.Add("${wireValue}", "${value}")`);
+            writer.write(`queryParams.Add("${wireValue}", ${value})`);
         });
     }
 

@@ -12,5 +12,4 @@ $client = new SeedClient(
 );
 $client->endpoints->params->uploadWithPath(
     'upload-path',
-    ,
 );

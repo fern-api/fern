@@ -2273,7 +2273,9 @@ func (f *fileWriter) getPaginationInfo(
 			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
 			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
 		}, nil
-	case "custom":
+	case "custom", "uri", "path":
+		// The v1 client is overwritten by v2, which generates these endpoints as
+		// regular (non-auto-paginated) methods, so there is nothing to do here.
 		return nil, nil
 	default:
 		return nil, fmt.Errorf("%s pagination is not supported yet", t)
@@ -3141,6 +3143,13 @@ func (f *fileWriter) endpointFromIR(
 			signatureReturnValues = "(io.Reader, error)"
 			successfulReturnValues = "response, nil"
 			errorReturnValues = "nil, err"
+		case "bytes":
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "([]byte, error)"
+			successfulReturnValues = "response.Bytes(), nil"
+			errorReturnValues = "nil, err"
 		case "text":
 			responseType = "bytes.NewBuffer(nil)"
 			responseInitializerFormat = "response := %s"
@@ -3157,6 +3166,26 @@ func (f *fileWriter) endpointFromIR(
 			responseParameterName = "response"
 			signatureReturnValues = fmt.Sprintf("(*core.Stream[%s], error)", responseType)
 			errorReturnValues = "nil, err"
+		case "streamParameter":
+			// A stream-condition endpoint exposes both a streaming and a
+			// non-streaming response; v1's client is overwritten by v2, so we
+			// generate the non-streaming (regular) variant to keep generation
+			// from aborting.
+			nonStreamResponse := irEndpoint.Response.Body.StreamParameter.GetNonStreamResponse()
+			if nonStreamResponse == nil || nonStreamResponse.Json == nil {
+				return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
+			}
+			typeReference := typeReferenceFromJsonResponse(nonStreamResponse.Json)
+			if typeReference == nil {
+				return nil, fmt.Errorf("unsupported json response type: %s", nonStreamResponse.Json.Type)
+			}
+			responseType = typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+			responseInitializerFormat = "var response %s"
+			responseIsOptionalParameter = getOptionalOrNullableContainer(typeReference) != nil
+			responseParameterName = "&response"
+			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
+			successfulReturnValues = "response, nil"
+			errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(typeReference, f.types))
 		default:
 			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
 		}

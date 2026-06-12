@@ -514,17 +514,17 @@ export class SubClientGenerator {
         return endpoints.some((endpoint) => endpoint.pagination != null);
     }
 
-    private hasQueryParameters(): boolean {
+    public hasQueryParameters(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => endpoint.queryParameters.length > 0);
     }
 
-    private hasBinaryEndpoints(): boolean {
+    public hasBinaryEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => this.isBinaryResponse(endpoint));
     }
 
-    private hasSseEndpoints(): boolean {
+    public hasSseEndpoints(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) => this.getResponseStreamType(endpoint) === "sse");
     }

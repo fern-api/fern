@@ -198,6 +198,91 @@ impl CliApp {
         self
     }
 
+    /// Register a top-level custom command with compile-time typed arguments.
+    ///
+    /// `A` is a [`clap::Args`] struct (typically `#[derive(clap::Args)]`)
+    /// whose fields become CLI flags. The handler receives the parsed `A`
+    /// and the binding context `C` (e.g. [`AppContext`]) directly — no
+    /// wrapper needed.
+    ///
+    /// ```rust,ignore
+    /// #[derive(clap::Args)]
+    /// struct AdoptArgs {
+    ///     name: String,
+    ///     #[arg(long)]
+    ///     tag: Option<String>,
+    /// }
+    ///
+    /// fn handle_adopt(args: AdoptArgs, ctx: &AppContext) -> Result<(), CliError> {
+    ///     println!("adopting {}", args.name);
+    ///     Ok(())
+    /// }
+    ///
+    /// CliApp::new("my-cli")
+    ///     .binding(OpenApiBinding::new().spec(include_str!("openapi.yaml")))
+    ///     .command_typed("adopt", "Adopt a pet", handle_adopt)
+    ///     .run()
+    /// ```
+    ///
+    /// For full [`clap::Command`] customization (long_about, aliases, etc.)
+    /// use [`command_typed_with`](Self::command_typed_with).
+    ///
+    /// **Note:** `transform_response` and `recover_error` hooks do not
+    /// apply to custom commands. Custom command handlers manage their
+    /// own output directly.
+    pub fn command_typed<A, C>(
+        self,
+        name: &str,
+        about: &str,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        self.command_typed_with(
+            clap::Command::new(name.to_string()).about(about.to_string()),
+            handler,
+        )
+    }
+
+    /// Like [`command_typed`](Self::command_typed) but accepts a full
+    /// [`clap::Command`] for advanced customization.
+    ///
+    /// ```rust,ignore
+    /// app.command_typed_with(
+    ///     clap::Command::new("adopt")
+    ///         .about("Adopt a pet")
+    ///         .long_about("Create and fetch back a pet record."),
+    ///     handle_adopt,
+    /// )
+    /// ```
+    pub fn command_typed_with<A, C>(
+        mut self,
+        cmd: clap::Command,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        let augmented = A::augment_args(cmd);
+        let erased: CliCommandHandler = Box::new(move |matches, ctx| {
+            let args = A::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler(args, ctx)
+        });
+        self.cli_commands.push(CliCommand {
+            path: Vec::new(),
+            cmd: augmented,
+            handler: erased,
+        });
+        self
+    }
+
     /// Register a custom command under an existing command path.
     ///
     /// ```rust,ignore
@@ -224,6 +309,64 @@ impl CliApp {
             path: path.iter().map(|s| s.to_string()).collect(),
             cmd,
             handler,
+        });
+        self
+    }
+
+    /// Register a typed custom command under an existing command path.
+    ///
+    /// Like [`command_typed`](Self::command_typed) but nests the command
+    /// under `path` in the command tree.
+    ///
+    /// ```rust,ignore
+    /// app.command_under_typed(&["pets"], "find", "Find pets by name", handle_find)
+    /// ```
+    ///
+    /// For full [`clap::Command`] customization use
+    /// [`command_under_typed_with`](Self::command_under_typed_with).
+    pub fn command_under_typed<A, C>(
+        self,
+        path: &[&str],
+        name: &str,
+        about: &str,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        self.command_under_typed_with(
+            path,
+            clap::Command::new(name.to_string()).about(about.to_string()),
+            handler,
+        )
+    }
+
+    /// Like [`command_under_typed`](Self::command_under_typed) but
+    /// accepts a full [`clap::Command`].
+    pub fn command_under_typed_with<A, C>(
+        mut self,
+        path: &[&str],
+        cmd: clap::Command,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self
+    where
+        A: clap::Args + 'static,
+        C: 'static,
+    {
+        let augmented = A::augment_args(cmd);
+        let erased: CliCommandHandler = Box::new(move |matches, ctx| {
+            let args = A::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler(args, ctx)
+        });
+        self.cli_commands.push(CliCommand {
+            path: path.iter().map(|s| s.to_string()).collect(),
+            cmd: augmented,
+            handler: erased,
         });
         self
     }
@@ -414,14 +557,91 @@ impl CliApp {
             return Ok(PipelineOutcome::HelpShown);
         }
 
-        // 0b. Intercept `--help --format json` before clap parses.
-        if crate::cli_args::wants_json_help(&str_args) {
+        // 0b. Intercept the `--schema` global flag — the agent-facing
+        // machine-readable counterpart to `--help`. Done before clap parses
+        // so paths with required args still emit their spec without tripping
+        // clap's required-arg validation (mirrors how `--help` is handled).
+        //
+        // Each binding's contribution is fetched via `Binding::schema(&path)`.
+        // Empty path: aggregate across all bindings (operations concatenated,
+        // sdkVariables unioned, root shape preserved). Non-empty path: first
+        // binding to own the path wins. A real `Err` from one binding is
+        // logged and the walk continues — one broken spec cannot mask its
+        // sibling's surface.
+        if crate::cli_args::wants_schema(&str_args) {
             let path = crate::cli_args::extract_subcommand_path(&str_args);
+
+            if path.is_empty() {
+                let mut sdk_vars: Vec<serde_json::Value> = Vec::new();
+                let mut ops: Vec<serde_json::Value> = Vec::new();
+                let mut any_sdk_vars = false;
+                for binding in &self.bindings {
+                    match binding.schema(&path) {
+                        Ok(Some(serde_json::Value::Array(arr))) => ops.extend(arr),
+                        Ok(Some(serde_json::Value::Object(obj))) => {
+                            if let Some(serde_json::Value::Array(vs)) =
+                                obj.get("sdkVariables")
+                            {
+                                any_sdk_vars = true;
+                                sdk_vars.extend(vs.iter().cloned());
+                            }
+                            if let Some(serde_json::Value::Array(os)) =
+                                obj.get("operations")
+                            {
+                                ops.extend(os.iter().cloned());
+                            }
+                        }
+                        Ok(Some(other)) => ops.push(other),
+                        Ok(None) => {}
+                        Err(e) => tracing::warn!(
+                            "--schema: binding `{}` errored: {e}",
+                            binding.name()
+                        ),
+                    }
+                }
+                let output = if any_sdk_vars {
+                    serde_json::json!({
+                        "sdkVariables": sdk_vars,
+                        "operations": ops,
+                    })
+                } else {
+                    serde_json::Value::Array(ops)
+                };
+                writeln!(
+                    out,
+                    "{}",
+                    serde_json::to_string_pretty(&output).map_err(|e| {
+                        CliError::Validation(format!("Failed to serialize spec: {e}"))
+                    })?
+                )
+                .map_err(|e| CliError::Other(e.into()))?;
+                return Ok(PipelineOutcome::Success);
+            }
+
             for binding in &self.bindings {
-                if binding.render_json_help(&path, out)? {
-                    return Ok(PipelineOutcome::HelpShown);
+                match binding.schema(&path) {
+                    Ok(Some(value)) => {
+                        writeln!(
+                            out,
+                            "{}",
+                            serde_json::to_string_pretty(&value).map_err(|e| {
+                                CliError::Validation(format!("Failed to serialize spec: {e}"))
+                            })?
+                        )
+                        .map_err(|e| CliError::Other(e.into()))?;
+                        return Ok(PipelineOutcome::Success);
+                    }
+                    Ok(None) => {}
+                    Err(e) => tracing::warn!(
+                        "--schema: binding `{}` errored: {e}",
+                        binding.name()
+                    ),
                 }
             }
+            return Err(CliError::Discovery(format!(
+                "--schema: no binding contains path `{}`",
+                path.join(" ")
+            )));
         }
 
         // 1. Build merged command tree from all bindings.
@@ -450,6 +670,17 @@ impl CliApp {
                     .help("Override the API base URL (e.g. for testing against a mock server)")
                     .value_name("URL")
                     .global(true),
+            )
+            // Discoverability only — the `--schema` flag is intercepted before
+            // clap parses (see step 0b above). Registering it here makes it
+            // appear in `--help` output so users / agents discover it
+            // alongside `--help`.
+            .arg(
+                clap::Arg::new("schema")
+                    .long("schema")
+                    .help("Print machine-readable JSON schema for this scope (agent-facing counterpart to --help)")
+                    .action(clap::ArgAction::SetTrue)
+                    .global(true),
             );
 
         // Collect each binding's subtree commands, global args, and help
@@ -462,18 +693,31 @@ impl CliApp {
         let mut seen_arg_ids: std::collections::HashSet<String> = [
             "format".to_string(),
             "base-url".to_string(),
+            "schema".to_string(),
             "help".to_string(),
             "version".to_string(),
         ]
         .into();
+        // Pre-seeded with subcommands that get registered AFTER the binding
+        // merge loop (built-in `completion` and `man`, added below in 1c). If
+        // a binding's spec happens to expose a top-level subcommand by one of
+        // those names, the loop skips it so the built-in wins instead of
+        // tripping clap's duplicate-subcommand panic at parse time.
+        let mut seen_subcommand_names: std::collections::HashSet<String> =
+            ["completion".to_string(), "man".to_string()].into();
         for (idx, binding) in self.bindings.iter().enumerate() {
             let subcmd = binding.build_command()?;
-            // Record which top-level subcommand names belong to which binding.
-            for sub in subcmd.get_subcommands() {
-                binding_commands.push((idx, vec![sub.get_name().to_string()]));
-            }
-            // Merge this binding's subcommands into the root.
+            // Merge this binding's subcommands into the root. If two bindings
+            // contribute a subcommand with the same name, only the first
+            // wins — clap panics on duplicate names, and the path-based
+            // resolver in `resolve_binding_for_path` already disambiguates by
+            // which binding owns the path.
             for sub in subcmd.get_subcommands().cloned() {
+                let name = sub.get_name().to_string();
+                if !seen_subcommand_names.insert(name.clone()) {
+                    continue;
+                }
+                binding_commands.push((idx, vec![name]));
                 cli = cli.subcommand(sub);
             }
             // Merge binding-level global args (server vars, SDK vars,

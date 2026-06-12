@@ -42,7 +42,7 @@ public partial class ServiceClient : IServiceClient
             return new WithRawResponse<string>()
             {
                 Data = responseBody,
-                RawResponse = new RawResponse()
+                RawResponse = new SeedPlainText.RawResponse()
                 {
                     StatusCode = response.Raw.StatusCode,
                     Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -57,7 +57,13 @@ public partial class ServiceClient : IServiceClient
             throw new SeedPlainTextApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedPlainText.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

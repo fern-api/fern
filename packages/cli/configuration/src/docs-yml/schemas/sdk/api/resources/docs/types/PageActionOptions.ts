@@ -63,4 +63,12 @@ export interface PageActionOptions {
      * Example: `cursor`
      */
     custom?: FernDocsConfig.CustomPageAction[];
+    /**
+     * Enables the "Install skills" page action and configures its modal. Presence of this key
+     * enables the action; omit it and the action is hidden. An empty object (`skills: {}`) is
+     * valid and enables the action with all defaults — the right minimal config for sites that
+     * serve a `/.well-known` skills manifest, where the docs site generates the
+     * `npx skills add https://<domain>` command and fetches the live skill list itself.
+     */
+    skills?: FernDocsConfig.SkillsPageActionConfig;
 }

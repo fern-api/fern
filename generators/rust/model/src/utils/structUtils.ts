@@ -246,11 +246,12 @@ export function generateFieldAttributes(
     // since the with modules may not exist and aren't needed.
     if (context && !options?.skipSerialization) {
         const dateTimeType = context.getDateTimeType();
+        const coreModulePath = context.getCoreModulePath();
         const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
         if (isDateTimeOnlyType(typeRef)) {
             const modulePath = dateTimeType === "utc" 
-                ? "crate::core::flexible_datetime::utc" 
-                : "crate::core::flexible_datetime::offset";
+                ? `${coreModulePath}::flexible_datetime::utc` 
+                : `${coreModulePath}::flexible_datetime::offset`;
             if (isOptional) {
                 // For optional datetime fields with custom deserializer, we need serde(default)
                 // to handle missing fields in JSON (otherwise serde expects the field to be present)
@@ -265,9 +266,9 @@ export function generateFieldAttributes(
         if (isBase64Type(typeRef)) {
             if (isOptional) {
                 attributes.push(Attribute.serde.default());
-                attributes.push(Attribute.serde.with("crate::core::base64_bytes::option"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::base64_bytes::option`));
             } else {
-                attributes.push(Attribute.serde.with("crate::core::base64_bytes"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::base64_bytes`));
             }
         }
 
@@ -275,9 +276,9 @@ export function generateFieldAttributes(
         if (isBigIntType(typeRef)) {
             if (isOptional) {
                 attributes.push(Attribute.serde.default());
-                attributes.push(Attribute.serde.with("crate::core::bigint_string::option"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::bigint_string::option`));
             } else {
-                attributes.push(Attribute.serde.with("crate::core::bigint_string"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::bigint_string`));
             }
         }
 
@@ -285,9 +286,9 @@ export function generateFieldAttributes(
         if (isFloatingPointType(typeRef)) {
             if (isOptional) {
                 attributes.push(Attribute.serde.default());
-                attributes.push(Attribute.serde.with("crate::core::number_serializers::option"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::number_serializers::option`));
             } else {
-                attributes.push(Attribute.serde.with("crate::core::number_serializers"));
+                attributes.push(Attribute.serde.with(`${coreModulePath}::number_serializers`));
             }
         }
     }

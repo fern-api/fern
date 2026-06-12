@@ -42,6 +42,7 @@ import {
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
+import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -1359,28 +1360,50 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 }),
         async (argv) => {
-            // Docs validation may reference APIs outside `--api`; apply the filter
-            // only to API-level validation.
-            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: true
-            });
-
-            if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
-                cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
-                    code: CliError.Code.ConfigError
+            let project: Project | undefined;
+            try {
+                // Docs validation may reference APIs outside `--api`; apply the filter
+                // only to API-level validation.
+                project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: undefined,
+                    defaultToAllApiWorkspaces: true
                 });
-            }
 
-            await validateWorkspaces({
-                project,
-                cliContext,
-                logWarnings: argv.warnings,
-                brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi,
-                commandLineApiWorkspace: argv.api
-            });
+                if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                    cliContext.instrumentPostHogEvent({
+                        command: "fern check",
+                        properties: {
+                            passed: false,
+                            abortReason: `API does not exist: ${argv.api}`
+                        }
+                    });
+                    cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
+                        code: CliError.Code.ConfigError
+                    });
+                }
+
+                await validateWorkspaces({
+                    project,
+                    cliContext,
+                    logWarnings: argv.warnings,
+                    brokenLinks: argv.brokenLinks,
+                    errorOnBrokenLinks: argv.strictBrokenLinks,
+                    directFromOpenapi: argv.fromOpenapi,
+                    commandLineApiWorkspace: argv.api
+                });
+            } catch (error) {
+                if (project == null) {
+                    const reason = error instanceof Error ? error.message.slice(0, 100) : "project load failed";
+                    cliContext.instrumentPostHogEvent({
+                        command: "fern check",
+                        properties: {
+                            passed: false,
+                            abortReason: reason
+                        }
+                    });
+                }
+                throw error;
+            }
         }
     );
 }
@@ -2559,7 +2582,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "enrich <openapi>",
-        "Merge an AI examples overrides file into an OpenAPI spec",
+        "Enrich an OpenAPI spec with AI-generated examples",
         (yargs) =>
             yargs
                 .positional("openapi", {
@@ -2570,26 +2593,55 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("file", {
                     type: "string",
                     alias: "f",
-                    description: "Path to the overrides file (e.g. ai_examples_overrides.yml)",
-                    demandOption: true
+                    description: "Path to the overrides file containing x-fern-examples"
                 })
                 .option("output", {
                     type: "string",
                     alias: "o",
-                    description: "Path to write the enriched output file",
-                    demandOption: true
+                    description: "Path to write the output file (defaults to in-place update)"
+                })
+                .option("split", {
+                    type: "boolean",
+                    default: false,
+                    description: "Extract only the enriched examples instead of the full spec"
+                })
+                .option("ai-examples", {
+                    type: "boolean",
+                    description: "Generate examples using AI (coming soon)"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern api enrich"
             });
             const openapiPath = resolve(cwd(), argv.openapi as string);
+            if (argv.file == null) {
+                if (argv["ai-examples"] === true) {
+                    cliContext.failAndThrow(
+                        "AI example generation is not yet available. Provide an overrides file with --file in the meantime.",
+                        undefined,
+                        { code: CliError.Code.ConfigError }
+                    );
+                }
+                cliContext.failAndThrow(
+                    "Provide an overrides file with --file (-f), or pass --ai-examples to generate examples with AI.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.split === true && argv.output == null) {
+                cliContext.failAndThrow(
+                    "--split requires --output (-o) to specify where to write the extracted examples.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             const overridesPath = resolve(cwd(), argv.file);
-            const outputPath = resolve(cwd(), argv.output);
+            const outputPath = argv.output != null ? resolve(cwd(), argv.output) : openapiPath;
             await mergeOpenAPIWithOverrides({
                 openapiPath: AbsoluteFilePath.of(openapiPath),
                 overridesPath: AbsoluteFilePath.of(overridesPath),
                 outputPath: AbsoluteFilePath.of(outputPath),
+                split: argv.split === true,
                 cliContext
             });
         }

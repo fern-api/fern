@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:."]
+members = ["cargo:.", "cargo:crates/pipeline-fixture", "nullable-allof-extends-test-types", "nullable-allof-extends-test-sdk"]
 
 # Config for 'dist'
 [dist]

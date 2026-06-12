@@ -150,9 +150,16 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	// Collect property names and types from extended objects recursively
 	var collectProperties func(*ir.ObjectTypeDeclaration)
 	collectProperties = func(obj *ir.ObjectTypeDeclaration) {
-		// First collect from extended objects
+		if obj == nil {
+			return
+		}
+		// First collect from extended objects, resolving through any alias indirection.
 		for _, extend := range obj.Extends {
-			collectProperties(t.writer.types[extend.TypeId].Shape.Object)
+			extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+			if extended == nil {
+				continue
+			}
+			collectProperties(extended)
 		}
 		// Then collect from this object's properties
 		for _, property := range obj.Properties {
@@ -380,15 +387,76 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	return nil
 }
 
+// unionDiscriminantFieldName returns the exported Go field name used for a
+// discriminated union's discriminant. The union is generated as a flat struct
+// with one field for the discriminant plus one field per member (named after
+// the member's discriminant value), along with any extended and base
+// properties. When the discriminant's own name collides with one of those
+// field names — e.g. a discriminant "event" alongside a member also keyed
+// "event" — emitting both would produce duplicate identifiers that do not
+// compile, so the discriminant field is given a unique, collision-free name.
+// The member fields keep their names so the public accessors and constructors
+// are unaffected.
+func (t *typeVisitor) unionDiscriminantFieldName(union *ir.UnionTypeDeclaration) string {
+	base := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	taken := make(map[string]struct{}, len(union.Types)+len(union.BaseProperties))
+	for _, unionType := range union.Types {
+		taken[goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)] = struct{}{}
+	}
+	for _, property := range union.BaseProperties {
+		taken[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+	}
+	// Properties inherited via extends are also emitted as struct fields, so they
+	// must be considered when checking for a collision with the discriminant.
+	seen := make(map[common.TypeId]struct{})
+	var collectExtends func(extends []*ir.DeclaredTypeName)
+	collectExtends = func(extends []*ir.DeclaredTypeName) {
+		for _, extend := range extends {
+			if _, ok := seen[extend.TypeId]; ok {
+				continue
+			}
+			seen[extend.TypeId] = struct{}{}
+			typeDeclaration, ok := t.writer.types[extend.TypeId]
+			if !ok || typeDeclaration == nil || typeDeclaration.Shape.Object == nil {
+				continue
+			}
+			object := typeDeclaration.Shape.Object
+			for _, property := range object.Properties {
+				taken[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+			}
+			collectExtends(object.Extends)
+		}
+	}
+	collectExtends(union.Extends)
+	if _, collides := taken[base]; !collides {
+		return base
+	}
+	// Avoid underscores in the disambiguated name so the result stays idiomatic
+	// Go (and lint-clean). "Type" reads naturally for a discriminant selector.
+	for suffix := 0; ; suffix++ {
+		candidate := base + "Type"
+		if suffix > 0 {
+			candidate += fmt.Sprintf("%d", suffix+1)
+		}
+		if _, collides := taken[candidate]; !collides {
+			return candidate
+		}
+	}
+}
+
 func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
-	discriminantName := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
+	discriminantName := t.unionDiscriminantFieldName(union)
+	// Base properties that share a name with an extended property would otherwise
+	// be emitted twice, producing duplicate struct fields and getters that fail to
+	// compile. Skip those base properties; the extended property already covers them.
+	extendedPropertyNames := t.unionExtendedPropertyNames(union)
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
 	for _, extend := range union.Extends {
 		extendedObjectProperties := t.visitObjectProperties(
-			t.writer.types[extend.TypeId].Shape.Object,
+			resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 			false, // includeJSONTags
 			false, // includeURLTags
 			false, // includeOptionals
@@ -397,6 +465,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		literals = append(literals, extendedObjectProperties.literals...)
 	}
 	for _, property := range union.BaseProperties {
+		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
 			continue
@@ -433,6 +504,10 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	}
 	for _, literal := range literals {
 		t.writer.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+	}
+	if t.includeRawJSON {
+		t.writer.P()
+		t.writer.P("rawJSON json.RawMessage")
 	}
 	t.writer.P("}")
 	t.writer.P()
@@ -482,7 +557,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	var propertyNames []string
 	for _, extend := range union.Extends {
 		extendedObjectProperties := t.visitObjectProperties(
-			t.writer.types[extend.TypeId].Shape.Object,
+			resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 			true,  // includeJSONTags
 			true,  // includeURLTags
 			false, // includeOptionals
@@ -491,6 +566,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		propertyNames = append(propertyNames, extendedObjectProperties.names...)
 	}
 	for _, property := range union.BaseProperties {
+		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
 		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 		if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
 			propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
@@ -564,6 +642,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(receiver, ".", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " = value")
 	}
 	t.writer.P("}")
+	if t.includeRawJSON {
+		// Preserve the raw payload so that unknown union variants can be re-marshaled
+		// without loss; this makes the union forward-compatible with new variants
+		// introduced server-side.
+		t.writer.P(receiver, ".rawJSON = json.RawMessage(data)")
+	}
 	t.writer.P("return nil")
 	t.writer.P("}")
 	t.writer.P()
@@ -580,6 +664,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if i == 0 && t.unionVersion != UnionVersionV1 {
 			// Implement the default case first.
 			t.writer.P("default:")
+			if t.includeRawJSON {
+				// Forward-compatible: return the preserved raw payload when the
+				// discriminant does not match any known variant.
+				t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+				t.writer.P("return ", receiver, ".rawJSON, nil")
+				t.writer.P("}")
+			}
 			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".", discriminantName, ", ", receiver, ")")
 		}
 		var (
@@ -629,7 +720,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
 			_ = t.visitObjectProperties(
-				t.writer.types[extend.TypeId].Shape.Object,
+				resolveObjectTypeDeclaration(extend.TypeId, t.writer.types),
 				true,  // includeJSONTags
 				true,  // includeURLTags
 				false, // includeOptionals
@@ -637,6 +728,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			)
 		}
 		for _, property := range union.BaseProperties {
+			if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+				continue
+			}
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 				continue
 			}
@@ -688,6 +782,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		// Close the switch statement, if present.
 		t.writer.P("}")
 	} else {
+		if t.includeRawJSON {
+			// Forward-compatible: return the preserved raw payload when no known
+			// variant is set (e.g. an unknown discriminant was unmarshaled).
+			t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+			t.writer.P("return ", receiver, ".rawJSON, nil")
+			t.writer.P("}")
+		}
 		t.writer.P("return nil, fmt.Errorf(\"type %T does not define a non-empty union type\", ", receiver, ")")
 	}
 	t.writer.P("}")
@@ -793,6 +894,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	}
 	t.writer.P("if len(fields) == 0 {")
 	t.writer.P("if ", receiver, ".", discriminantName, ` != "" {`)
+	if t.includeRawJSON {
+		// Allow round-tripping an unknown variant: the discriminant is set and
+		// the raw payload is preserved, but no known variant field matches.
+		t.writer.P("if len(", receiver, ".rawJSON) > 0 {")
+		t.writer.P("return nil")
+		t.writer.P("}")
+	}
 	t.writer.P(`return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", `, receiver, ", ", receiver, ".", discriminantName, ")")
 	t.writer.P("}")
 	t.writer.P(`return fmt.Errorf("type %T is empty", `, receiver, ")")
@@ -1235,6 +1343,36 @@ type literal struct {
 	Value *ir.Literal
 }
 
+// resolveObjectTypeDeclaration resolves a type ID to its underlying object
+// declaration, following alias indirection. Fern permits an object or request
+// body to extend an alias whose target (transitively) resolves to an object.
+// Returns nil if the type cannot be resolved to an object.
+func resolveObjectTypeDeclaration(
+	typeId common.TypeId,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) *ir.ObjectTypeDeclaration {
+	seen := make(map[common.TypeId]struct{})
+	for {
+		if _, ok := seen[typeId]; ok {
+			return nil
+		}
+		seen[typeId] = struct{}{}
+		typeDeclaration, ok := types[typeId]
+		if !ok || typeDeclaration == nil {
+			return nil
+		}
+		if typeDeclaration.Shape.Object != nil {
+			return typeDeclaration.Shape.Object
+		}
+		if alias := typeDeclaration.Shape.Alias; alias != nil &&
+			alias.AliasOf != nil && alias.AliasOf.Named != nil {
+			typeId = alias.AliasOf.Named.TypeId
+			continue
+		}
+		return nil
+	}
+}
+
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with
 // the object's extended properties (if any). The 'includeJSONTags' parameter controls whether or not
 // to generate JSON struct tags, which is only relevant for object types (not unions).
@@ -1253,9 +1391,17 @@ func (t *typeVisitor) visitObjectProperties(
 		literals []*literal
 		dates    []*date
 	)
+	if object == nil {
+		return &objectProperties{}
+	}
 	for _, extend := range object.Extends {
-		// You can only extend other objects.
-		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeJSONTags, includeURLTags, includeOptionals, includeLiterals)
+		// An object may extend another object directly, or an alias that
+		// (transitively) resolves to an object, so resolve through aliases.
+		extendedObject := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extendedObject == nil {
+			continue
+		}
+		extendedObjectProperties := t.visitObjectProperties(extendedObject, includeJSONTags, includeURLTags, includeOptionals, includeLiterals)
 		names = append(names, extendedObjectProperties.names...)
 		literals = append(literals, extendedObjectProperties.literals...)
 		dates = append(dates, extendedObjectProperties.dates...)
@@ -1396,8 +1542,14 @@ func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[com
 // getTypeFieldsForObject retrieves the type fields for the given object.
 func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) []*typeField {
 	var fields []*typeField
+	if object == nil {
+		return fields
+	}
 	for _, extend := range object.Extends {
-		extended := t.writer.types[extend.TypeId].Shape.Object
+		extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extended == nil {
+			continue
+		}
 		fields = append(fields, t.getTypeFieldsForObject(extended)...)
 	}
 	for _, property := range object.Properties {
@@ -1416,24 +1568,55 @@ func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) [
 	return fields
 }
 
+// unionExtendedPropertyNames returns the set of exported Go field names contributed
+// by the union's extended objects (transitively). Base properties whose exported name
+// collides with one of these are skipped during generation so the union doesn't emit
+// duplicate struct fields, getters, or marshaler entries.
+func (t *typeVisitor) unionExtendedPropertyNames(union *ir.UnionTypeDeclaration) map[string]struct{} {
+	names := make(map[string]struct{})
+	var collect func(obj *ir.ObjectTypeDeclaration)
+	collect = func(obj *ir.ObjectTypeDeclaration) {
+		if obj == nil {
+			return
+		}
+		for _, extend := range obj.Extends {
+			collect(t.writer.types[extend.TypeId].Shape.Object)
+		}
+		for _, property := range obj.Properties {
+			names[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+		}
+	}
+	for _, extend := range union.Extends {
+		collect(t.writer.types[extend.TypeId].Shape.Object)
+	}
+	return names
+}
+
 // getTypeFieldsForUnion retrieves the type fields for the given union.
 func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*typeField {
 	var fields []*typeField
 	fields = append(
 		fields,
 		&typeField{
-			Name:             goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName),
+			Name:             t.unionDiscriminantFieldName(union),
 			GoType:           "string",
 			ZeroValue:        `""`,
 			Optional:         false,
 			NeedsDereference: false,
 		},
 	)
+	extendedPropertyNames := t.unionExtendedPropertyNames(union)
 	for _, extend := range union.Extends {
-		extended := t.writer.types[extend.TypeId].Shape.Object
+		extended := resolveObjectTypeDeclaration(extend.TypeId, t.writer.types)
+		if extended == nil {
+			continue
+		}
 		fields = append(fields, t.getTypeFieldsForObject(extended)...)
 	}
 	for _, property := range union.BaseProperties {
+		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
@@ -2410,24 +2593,24 @@ func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {
 
 // reserveValidIdentifierForLiteral reserves a valid identifier for the given literal,
 // ensuring that it does not conflict with any existing identifiers in the given scope.
+//
+// The literal value is run through goExportedFieldName so that values which are not
+// valid Go identifiers on their own (e.g. starting with a digit) still produce a
+// usable exported field name.
 func reserveValidIdentifierForLiteral(scope *gospec.Scope, literal *ir.Literal) string {
-	return capitalizeFirstLetter(scope.Add(literalToValue(literal)))
-}
-
-// capitalizeFirstLetter capitalizes the first letter of the given string.
-func capitalizeFirstLetter(s string) string {
-	if len(s) == 0 {
-		return s
-	}
-	return strings.ToUpper(s[:1]) + s[1:]
+	return goExportedFieldName(scope.Add(literalToValue(literal)))
 }
 
 // goReservedIdentifiers contains Go keywords and predeclared types that should be
 // avoided as struct field names. We check case-insensitively since PascalCase versions
 // like "String" should also be prefixed.
+// "extraproperties" is reserved because every generated object already exposes a
+// built-in GetExtraProperties() accessor for unmodeled JSON fields; a user property
+// of the same name would otherwise produce a duplicate field/getter that fails to compile.
 // We will just add to this list as needed
 var goReservedIdentifiers = map[string]bool{
-	"string": true,
+	"string":          true,
+	"extraproperties": true,
 }
 
 // goExportedFieldName converts a name to a valid Go exported identifier.

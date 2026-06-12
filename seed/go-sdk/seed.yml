@@ -355,45 +355,11 @@ scripts:
           fi
           exit $TEST_EXIT_CODE
 allowedFailures:
-  - schemaless-request-body-examples
-  - alias-extends
-  - bytes-upload
-  - bytes-download
-  - enum
-  - errors
-  - literal
-  - mixed-case:no-custom-config
-  - mixed-case:default-values
-  - request-parameters
-  - reserved-keywords
-  - streaming-parameter
-  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-  - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
-  - server-sent-events-openapi:with-wire-tests # TODO: fix go wire test generation for augmented fixture
-  - server-url-templating
-  - trace
-  - property-access
-  - oauth-client-credentials:.
-  - oauth-client-credentials-reference
-
-  # TODO: Fix example generator to produce valid dynamic snippets.
+  # Unsupported features in the v1 Go generator (generation aborts with
+  # "not supported yet" or a nil-pointer panic). These need feature work.
   - pagination
-  - pagination-uri-path
 
-  # TODO: Update the dynamic snippet generator to handle these cases.
-  - examples:exported-client-name
-  - path-parameters:no-custom-config
-  - path-parameters:package-name
-
-  - oauth-client-credentials-with-variables
-  - variables
-
-  # Will include these back in once we fix dynamic snippets for inline file properties
-  - file-upload:no-custom-config
-  - file-upload:package-name
-  - file-upload-openapi
-
-  - go-deterministic-ordering:.
-
-  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
-  - exhaustive:omit-empty-request-wrappers
+  # Generated Go code does not compile. Each needs a generator fix.
+  - enum # enum-union header value is not converted to a string
+  - trace # generated v2/ subpackage references undefined test types
+  - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline

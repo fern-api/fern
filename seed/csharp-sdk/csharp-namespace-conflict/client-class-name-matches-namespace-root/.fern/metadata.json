@@ -1,15 +1,14 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-csharp-sdk",
-  "generatorVersion": "local",
+  "generatorVersion": "latest",
   "generatorConfig": {
     "namespace": "Seed.CsharpNamespaceConflict",
     "client-class-name": "Seed",
     "experimental-fully-qualified-namespaces": true
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
+  "invokedBy": "manual",
   "requestedVersion": "0.0.1",
-  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }

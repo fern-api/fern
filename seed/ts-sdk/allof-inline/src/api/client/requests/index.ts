@@ -1,2 +1,3 @@
+export { PlantPost } from "./PlantPost.js";
 export { RuleCreateRequest } from "./RuleCreateRequest.js";
 export type { SearchRuleTypesRequest } from "./SearchRuleTypesRequest.js";

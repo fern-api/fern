@@ -16,7 +16,7 @@ describe("BigunionClient", () => {
             value: "value",
         };
 
-        server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/bigunion/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.bigunion.get("id");
         expect(response).toEqual(rawResponseBody);
@@ -36,7 +36,7 @@ describe("BigunionClient", () => {
 
         server
             .mockEndpoint()
-            .patch("")
+            .patch("/bigunion")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -76,7 +76,7 @@ describe("BigunionClient", () => {
 
         server
             .mockEndpoint()
-            .patch("/many")
+            .patch("/bigunion/many")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

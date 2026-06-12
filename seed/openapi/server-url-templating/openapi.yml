@@ -27,6 +27,7 @@ paths:
       summary: Get all users
       servers:
         - url: https://api.example.com/v1
+          description: Regional API server
   /users/{userId}:
     get:
       operationId: getUser
@@ -57,6 +58,7 @@ paths:
       summary: Get a user by ID
       servers:
         - url: https://api.example.com/v1
+          description: Regional API server
   /auth/token:
     post:
       operationId: getToken
@@ -78,6 +80,7 @@ paths:
       summary: Get authentication token
       servers:
         - url: https://auth.example.com
+          description: Regional API server
       requestBody:
         required: true
         content:
@@ -138,3 +141,8 @@ components:
         - access_token
         - expires_in
   securitySchemes: {}
+servers:
+  - url: https://api.example.com/v1
+    description: Regional API server (Base)
+  - url: https://auth.example.com
+    description: Regional API server (Auth)

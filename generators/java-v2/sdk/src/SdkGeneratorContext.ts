@@ -1,6 +1,6 @@
 import { GeneratorError, GeneratorNotificationService, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { java } from "@fern-api/java-ast";
+import { escapeJavaKeyword, java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -271,7 +271,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getRootClientClassReference(): java.ClassReference {
         return java.classReference({
-            name: this.getRootClientClassName(),
+            name: this.getRootClientClassNameForSnippets(),
             packageName: this.getRootPackageName()
         });
     }
@@ -285,13 +285,27 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`;
     }
 
+    /**
+     * The client class name surfaced in documentation snippets (README, reference.md).
+     * Customers may export the generated root client under a different, hand-written class name; this
+     * accessor reflects that exported name. Falls back to the internal client class name when unset, so
+     * output is unchanged for users who have not configured `exported-client-class-name`.
+     *
+     * Note: wire tests compile against the generated code and must continue to use the internal
+     * `getRootClientClassName()`; the exported class is hand-written by customers and does not exist
+     * in generator output.
+     */
+    public getRootClientClassNameForSnippets(): string {
+        return this.customConfig?.["exported-client-class-name"] ?? this.getRootClientClassName();
+    }
+
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
     }
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? "_" + token : token;
+            return this.startsWithNumber(token) ? "_" + token : escapeJavaKeyword(token);
         });
         return sanitizedTokens.join(".");
     }

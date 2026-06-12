@@ -30,7 +30,7 @@ RUN apk --no-cache upgrade && \
 # itself.
 RUN rm -rf /usr/share/powershell /usr/bin/pwsh
 
-RUN dotnet tool install -g csharpier --version "1.2.6"
+RUN dotnet tool install -g csharpier --version "1.3.0"
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/

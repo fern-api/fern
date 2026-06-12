@@ -118,7 +118,7 @@ fn render_shared_skill(
     );
     let _ = writeln!(
         out,
-        "| `-o, --output <PATH>` | Write binary responses to a file | |"
+        "| `-o, --output <PATH>` | Write binary responses to a file; use `-` to stream to stdout for piping into other commands (e.g. `ffplay -`, `aplay -`). | |"
     );
     let _ = writeln!(
         out,
@@ -248,7 +248,8 @@ fn describe_credential_source(src: &AuthCredentialSource) -> String {
         AuthCredentialSource::Cli(arg) => format!("`--{arg}` flag"),
         AuthCredentialSource::File(path) => format!("`{}` file", path.display()),
         AuthCredentialSource::Literal(_) => "built-in literal".to_string(),
-        AuthCredentialSource::Closure(_) => "custom resolver".to_string(),
+        AuthCredentialSource::Closure(_, Some(hint)) => hint.clone(),
+        AuthCredentialSource::Closure(_, None) => "custom resolver".to_string(),
         AuthCredentialSource::Chain(sources) => sources
             .iter()
             .map(describe_credential_source)
@@ -331,12 +332,17 @@ fn render_group_skill(
 
     // Discovering Commands
     let _ = writeln!(out, "## Discovering Commands\n");
-    let _ = writeln!(out, "Before calling any API method, inspect it:\n");
+    let _ = writeln!(
+        out,
+        "**Agents: always prefer `--schema` over `--help`** — `--schema` returns \
+         JSON; `--help` returns human prose.\n"
+    );
     let _ = writeln!(out, "```bash");
-    let _ = writeln!(out, "# Browse resources and methods");
-    let _ = writeln!(out, "{bin_name} {group_name} --help\n");
-    let _ = writeln!(out, "# Machine-readable operation list");
-    let _ = writeln!(out, "{bin_name} {group_name} --help --format json");
+    let _ = writeln!(out, "# Machine-readable surface (use this)");
+    let _ = writeln!(out, "{bin_name} {group_name} --schema");
+    let _ = writeln!(out, "{bin_name} {group_name} <method> --schema\n");
+    let _ = writeln!(out, "# Human-readable help (for humans)");
+    let _ = writeln!(out, "{bin_name} {group_name} --help");
     let _ = writeln!(out, "```\n");
 
     out
@@ -576,7 +582,7 @@ mod tests {
         let group = &files[1].1;
         assert!(group.contains("## Discovering Commands"));
         assert!(group.contains("testcli items --help"));
-        assert!(group.contains("--help --format json"));
+        assert!(group.contains("testcli items --schema"));
     }
 
     #[test]

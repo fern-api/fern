@@ -104,21 +104,36 @@ pub fn validate_safe_dir_path(dir: &str) -> Result<PathBuf, CliError> {
     Ok(canonical)
 }
 
-/// Validates that a file path (e.g. `--upload` or `--output`) is safe.
+/// Validates a `--output` (or otherwise write-side) file path.
 ///
 /// Rejects paths that escape above CWD via `..` traversal, contain
-/// control characters, or follow symlinks to locations outside CWD.
-/// Absolute paths are allowed (reading an existing file from a known
-/// location is legitimate) but the resolved target must still live
-/// under CWD.
+/// control characters, name a parent directory that doesn't exist, or
+/// follow intermediate symlinks to locations outside CWD. Absolute
+/// paths are allowed, but the resolved target must still live under CWD.
+///
+/// # Returns a path with an *un-canonicalized basename*
+///
+/// The returned [`PathBuf`] is `canonical_parent.join(basename)`. The
+/// basename is preserved verbatim so that callers can open it with
+/// `O_NOFOLLOW` and have the kernel refuse a final-component symlink
+/// atomically. A full `canonicalize()` of the whole path would silently
+/// resolve a basename symlink, opening a writeback primitive against the
+/// symlink target.
+///
+/// This means **callers MUST open the returned path with `O_NOFOLLOW`**
+/// (or equivalent — see [`crate::openapi::executor`] `create_file_no_follow`).
+/// A plain [`tokio::fs::File::open`] / [`std::fs::read`] on the returned
+/// path will silently follow a basename symlink — re-introducing the
+/// vulnerability this function was designed to prevent.
 ///
 /// # TOCTOU caveat
 ///
-/// This is a best-effort defence-in-depth check. A local attacker with
-/// write access to a parent directory could replace a path component
-/// between this validation and the subsequent I/O. Fully eliminating
-/// TOCTOU would require `openat(O_NOFOLLOW)` on each path component,
-/// which is tracked as a follow-up for Unix platforms.
+/// Best-effort defence-in-depth. A local attacker with write access to a
+/// parent directory could replace a path component between validation
+/// and the subsequent I/O. Race-free protection requires
+/// `openat2(RESOLVE_NO_SYMLINKS|RESOLVE_BENEATH)` on Linux or a
+/// per-component `openat(O_NOFOLLOW|O_DIRECTORY)` chain from a CWD
+/// dir-fd elsewhere — tracked as a follow-up.
 pub fn validate_safe_file_path(path_str: &str, flag_name: &str) -> Result<PathBuf, CliError> {
     reject_control_chars(path_str, flag_name)?;
 
@@ -132,50 +147,69 @@ pub fn validate_safe_file_path(path_str: &str, flag_name: &str) -> Result<PathBu
         cwd.join(path)
     };
 
-    // For existing files, canonicalize to resolve symlinks.
-    // For non-existing files, get the prefix canonicalized then normalize
-    // the remaining components to resolve any `..` or `.` segments.
-    let canonical = if resolved.exists() {
-        resolved.canonicalize().map_err(|e| {
-            CliError::Validation(format!("Failed to resolve {flag_name} '{path_str}': {e}"))
-        })?
-    } else {
-        let raw = normalize_non_existing(&resolved)?;
-        // normalize_non_existing does NOT resolve `..` in the non-existent
-        // suffix. We must resolve them here to prevent bypass via paths like
-        // `non_existent/../../etc/passwd`.
-        normalize_dotdot(&raw)
-    };
+    // Reject empty / dot-only inputs explicitly so the user sees a clear
+    // diagnostic instead of the misleading "resolves to <cwd> which is
+    // outside the current directory" message that would otherwise fire
+    // (because `cwd.join("")` and `cwd.join(".")` both have file_name() ==
+    // `<cwd_basename>` and parent() == `<parent-of-cwd>`).
+    let trimmed = path_str.trim();
+    if trimmed.is_empty() || trimmed == "." || trimmed == ".." {
+        return Err(CliError::Validation(format!(
+            "{flag_name} requires a filename, got '{path_str}'"
+        )));
+    }
+
+    // Separate the basename from the parent directory: we canonicalize the
+    // *parent* (resolves intermediate symlinks for traversal detection) but
+    // leave the basename un-resolved. Callers that open the returned path
+    // with `O_NOFOLLOW` (see openapi::executor::create_file_no_follow) then
+    // rely on the kernel to refuse a final-component symlink atomically.
+    // A full `canonicalize()` of the whole path would silently resolve the
+    // basename symlink, opening a writeback primitive against its target.
+    //
+    // We REQUIRE the parent to already exist. Lexically projecting a path
+    // whose parent doesn't exist (the old `normalize_non_existing` branch)
+    // was a vector for the intermediate-symlink bypass: an attacker could
+    // plant the missing parent as a symlink to outside CWD between validate
+    // and open, and `O_NOFOLLOW` only catches the FINAL component. Users
+    // must `mkdir -p <parent>` first.
+    let basename = resolved.file_name().ok_or_else(|| {
+        CliError::Validation(format!(
+            "{flag_name} '{path_str}' has no filename component"
+        ))
+    })?;
+    let parent = resolved.parent().ok_or_else(|| {
+        CliError::Validation(format!(
+            "{flag_name} '{path_str}' has no parent directory"
+        ))
+    })?;
+    if !parent.exists() {
+        return Err(CliError::Validation(format!(
+            "{flag_name} '{}' parent directory '{}' does not exist; create it first (e.g. `mkdir -p {}`)",
+            path_str,
+            parent.display(),
+            parent.display(),
+        )));
+    }
+    let canonical_parent = parent.canonicalize().map_err(|e| {
+        CliError::Validation(format!("Failed to resolve {flag_name} '{path_str}': {e}"))
+    })?;
 
     let canonical_cwd = cwd.canonicalize().map_err(|e| {
         CliError::Validation(format!("Failed to canonicalize current directory: {e}"))
     })?;
 
-    if !canonical.starts_with(&canonical_cwd) {
+    if !canonical_parent.starts_with(&canonical_cwd) {
         return Err(CliError::Validation(format!(
             "{flag_name} '{}' resolves to '{}' which is outside the current directory",
             path_str,
-            canonical.display()
+            canonical_parent.join(basename).display()
         )));
     }
 
-    Ok(canonical)
+    Ok(canonical_parent.join(basename))
 }
 
-/// Resolve `.` and `..` components in a path without touching the filesystem.
-fn normalize_dotdot(path: &Path) -> PathBuf {
-    let mut out = PathBuf::new();
-    for component in path.components() {
-        match component {
-            std::path::Component::ParentDir => {
-                out.pop();
-            }
-            std::path::Component::CurDir => {}
-            c => out.push(c),
-        }
-    }
-    out
-}
 
 // reject_control_chars is now a re-export from crate::output (see top of file)
 
@@ -217,25 +251,31 @@ fn normalize_non_existing(path: &Path) -> Result<PathBuf, CliError> {
     Ok(resolved)
 }
 
-/// Characters to encode in a single URL path segment. Keeps RFC 3986 §2.3
-/// unreserved characters that commonly appear in resource IDs (`-` and `_`)
-/// unencoded; encodes everything else including `.` (dots appear in email-style
-/// calendar IDs and should not carry path semantics).
+/// Characters to encode in a single URL path segment. All RFC 3986 §2.3
+/// unreserved characters (`A-Z a-z 0-9 - . _ ~`) are left unencoded;
+/// everything else is percent-encoded.
 use percent_encoding::{AsciiSet, CONTROLS};
 const PATH_SEGMENT: &AsciiSet = &CONTROLS
     .add(b' ').add(b'!').add(b'"').add(b'#').add(b'$').add(b'%')
     .add(b'&').add(b'\'').add(b'(').add(b')').add(b'*').add(b'+')
-    .add(b',').add(b'.').add(b'/').add(b':').add(b';').add(b'<')
+    .add(b',').add(b'/').add(b':').add(b';').add(b'<')
     .add(b'=').add(b'>').add(b'?').add(b'@').add(b'[').add(b'\\')
-    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}')
-    .add(b'~');
+    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}');
 
 /// Percent-encode a value for use as a single URL path segment (e.g., file ID,
-/// calendar ID, message ID). Hyphens and underscores are left unencoded since
-/// they are unreserved per RFC 3986 and ubiquitous in resource IDs.
+/// calendar ID, message ID). All RFC 3986 §2.3 unreserved characters
+/// (`A-Z a-z 0-9 - . _ ~`) are left unencoded.
 pub fn encode_path_segment(s: &str) -> String {
     use percent_encoding::utf8_percent_encode;
     utf8_percent_encode(s, PATH_SEGMENT).to_string()
+}
+
+/// Returns `true` when `segment` is a WHATWG dot-segment that would be
+/// collapsed by `url::Url::parse()`. Encoding cannot prevent this —
+/// `%2E` and `%2e` are also collapsed — so the caller must reject
+/// rather than encode.
+pub fn is_dot_segment(segment: &str) -> bool {
+    matches!(segment, "." | "..")
 }
 
 /// Percent-encode a value for use in URI path templates where `/` should stay
@@ -260,9 +300,9 @@ pub fn validate_resource_name(s: &str) -> Result<&str, CliError> {
             "Resource name must not be empty".to_string(),
         ));
     }
-    if s.split('/').any(|seg| seg == "..") {
+    if s.split('/').any(|seg| seg == ".." || seg == ".") {
         return Err(CliError::Validation(format!(
-            "Resource name must not contain path traversal ('..') segments: {s}"
+            "Resource name must not contain dot-segments ('.' or '..') : {s}"
         )));
     }
     if s.chars()
@@ -481,10 +521,25 @@ mod tests {
 
     #[test]
     fn test_encode_path_segment_email() {
-        // Calendar IDs are often email addresses
+        // Calendar IDs are often email addresses. `@` is a reserved
+        // character and must be encoded; `.` is unreserved per RFC 3986
+        // §2.3 and must NOT be encoded.
         let encoded = encode_path_segment("user@gmail.com");
-        assert!(!encoded.contains('@'));
-        assert!(!encoded.contains('.'));
+        assert!(!encoded.contains('@'), "@ must be percent-encoded");
+        assert!(encoded.contains('.'), ". is unreserved and must not be encoded");
+        assert_eq!(encoded, "user%40gmail.com");
+    }
+
+    #[test]
+    fn test_encode_path_segment_dot_and_tilde_unreserved() {
+        // `.` and `~` are RFC 3986 §2.3 unreserved characters and must
+        // not be percent-encoded in path segments.
+        assert_eq!(encode_path_segment("file.txt"), "file.txt");
+        assert_eq!(encode_path_segment("user~archive"), "user~archive");
+        assert_eq!(
+            encode_path_segment("codex-test@agentmail.to"),
+            "codex-test%40agentmail.to"
+        );
     }
 
     #[test]
@@ -502,11 +557,34 @@ mod tests {
     }
 
     #[test]
+    fn test_encode_path_segment_dot_segment_guard() {
+        // `.` and `~` pass through unencoded (RFC 3986 §2.3 unreserved).
+        assert_eq!(encode_path_segment("file.txt"), "file.txt");
+        assert_eq!(encode_path_segment("..."), "...");
+        assert_eq!(encode_path_segment(".hidden"), ".hidden");
+        // Bare `.` and `..` also pass through from the encoder — WHATWG
+        // dot-segment rejection must happen at the caller, not here.
+        assert_eq!(encode_path_segment("."), ".");
+        assert_eq!(encode_path_segment(".."), "..");
+    }
+
+    #[test]
+    fn test_is_dot_segment() {
+        assert!(is_dot_segment("."));
+        assert!(is_dot_segment(".."));
+        assert!(!is_dot_segment("..."));
+        assert!(!is_dot_segment(".hidden"));
+        assert!(!is_dot_segment("file.txt"));
+        assert!(!is_dot_segment(""));
+    }
+
+    #[test]
     fn test_encode_path_segment_path_traversal() {
-        // Encoding makes traversal segments harmless
+        // Encoding `/` makes traversal harmless — the path cannot escape
+        // the segment even though `.` is left unencoded (unreserved).
         let encoded = encode_path_segment("../../etc/passwd");
-        assert!(!encoded.contains('/'));
-        assert!(!encoded.contains(".."));
+        assert!(!encoded.contains('/'), "slashes must be encoded");
+        assert_eq!(encoded, "..%2F..%2Fetc%2Fpasswd");
     }
 
     #[test]
@@ -568,6 +646,15 @@ mod tests {
     }
 
     #[test]
+    fn test_validate_resource_name_single_dot() {
+        assert!(validate_resource_name(".").is_err());
+        assert!(validate_resource_name("projects/./topics/t1").is_err());
+        // Dots inside segment names are fine
+        assert!(validate_resource_name("file.txt").is_ok());
+        assert!(validate_resource_name("user@mail.co").is_ok());
+    }
+
+    #[test]
     fn test_validate_resource_name_control_chars() {
         assert!(validate_resource_name("spaces/\0bad").is_err());
         assert!(validate_resource_name("spaces/\nbad").is_err());
@@ -593,7 +680,7 @@ mod tests {
         assert!(err.to_string().contains("must not be empty"));
 
         let err = validate_resource_name("../bad").unwrap_err();
-        assert!(err.to_string().contains("path traversal"));
+        assert!(err.to_string().contains("dot-segment"));
 
         let err = validate_resource_name("bad\0id").unwrap_err();
         assert!(err.to_string().contains("invalid characters"));
@@ -782,9 +869,15 @@ mod tests {
         std::env::set_current_dir(&saved_cwd).unwrap();
 
         assert!(result.is_err(), "path traversal should be rejected");
+        let err = result.unwrap_err().to_string();
+        // The traversal is rejected either by the "outside CWD" check (if the
+        // computed parent exists and canonicalizes outside CWD) or by the
+        // "parent does not exist" check (if the computed parent doesn't exist
+        // on this runner). Both are valid refusal paths — the security
+        // property is "not accepted", not the message wording.
         assert!(
-            result.unwrap_err().to_string().contains("outside"),
-            "error should mention 'outside'"
+            err.contains("outside") || err.contains("does not exist"),
+            "error should indicate traversal/non-existent parent rejection; got: {err}"
         );
     }
 

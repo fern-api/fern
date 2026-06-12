@@ -2018,6 +2018,8 @@ type StreamDataContextResponse struct {
 	Event     string
 	Heartbeat *DataContextHeartbeat
 	Entity    *DataContextEntityEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamDataContextResponse) GetEvent() string {
@@ -2066,6 +2068,7 @@ func (s *StreamDataContextResponse) UnmarshalJSON(data []byte) error {
 		}
 		s.Entity = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2078,6 +2081,9 @@ func (s StreamDataContextResponse) MarshalJSON() ([]byte, error) {
 	}
 	if s.Entity != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Entity, "event", "entity")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -2110,6 +2116,9 @@ func (s *StreamDataContextResponse) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -2137,6 +2146,8 @@ type StreamDataContextWithEnvelopeSchemaResponse struct {
 	StringData *ProtocolStringEvent
 	NumberData *ProtocolNumberEvent
 	ObjectData *ProtocolObjectEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamDataContextWithEnvelopeSchemaResponse) GetEvent() string {
@@ -2211,6 +2222,7 @@ func (s *StreamDataContextWithEnvelopeSchemaResponse) UnmarshalJSON(data []byte)
 		}
 		s.ObjectData = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2229,6 +2241,9 @@ func (s StreamDataContextWithEnvelopeSchemaResponse) MarshalJSON() ([]byte, erro
 	}
 	if s.ObjectData != nil {
 		return internal.MarshalJSONWithExtraProperty(s.ObjectData, "event", "object_data")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -2275,6 +2290,9 @@ func (s *StreamDataContextWithEnvelopeSchemaResponse) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -2300,6 +2318,8 @@ type StreamNoContextResponse struct {
 	Event     string
 	Heartbeat *DataContextHeartbeat
 	Entity    *DataContextEntityEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamNoContextResponse) GetEvent() string {
@@ -2348,6 +2368,7 @@ func (s *StreamNoContextResponse) UnmarshalJSON(data []byte) error {
 		}
 		s.Entity = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2360,6 +2381,9 @@ func (s StreamNoContextResponse) MarshalJSON() ([]byte, error) {
 	}
 	if s.Entity != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Entity, "event", "entity")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -2392,6 +2416,9 @@ func (s *StreamNoContextResponse) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -2419,6 +2446,8 @@ type StreamProtocolCollisionResponse struct {
 	StringData *ProtocolStringEvent
 	NumberData *ProtocolNumberEvent
 	ObjectData *ProtocolCollisionObjectEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamProtocolCollisionResponse) GetEvent() string {
@@ -2493,6 +2522,7 @@ func (s *StreamProtocolCollisionResponse) UnmarshalJSON(data []byte) error {
 		}
 		s.ObjectData = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2511,6 +2541,9 @@ func (s StreamProtocolCollisionResponse) MarshalJSON() ([]byte, error) {
 	}
 	if s.ObjectData != nil {
 		return internal.MarshalJSONWithExtraProperty(s.ObjectData, "event", "object_data")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -2557,6 +2590,9 @@ func (s *StreamProtocolCollisionResponse) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -2584,6 +2620,8 @@ type StreamProtocolNoCollisionResponse struct {
 	StringData *ProtocolStringEvent
 	NumberData *ProtocolNumberEvent
 	ObjectData *ProtocolObjectEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamProtocolNoCollisionResponse) GetEvent() string {
@@ -2658,6 +2696,7 @@ func (s *StreamProtocolNoCollisionResponse) UnmarshalJSON(data []byte) error {
 		}
 		s.ObjectData = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2676,6 +2715,9 @@ func (s StreamProtocolNoCollisionResponse) MarshalJSON() ([]byte, error) {
 	}
 	if s.ObjectData != nil {
 		return internal.MarshalJSONWithExtraProperty(s.ObjectData, "event", "object_data")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -2722,6 +2764,9 @@ func (s *StreamProtocolNoCollisionResponse) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -2747,6 +2792,8 @@ type StreamProtocolWithFlatSchemaResponse struct {
 	Event     string
 	Heartbeat *DataContextHeartbeat
 	Entity    *DataContextEntityEvent
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamProtocolWithFlatSchemaResponse) GetEvent() string {
@@ -2795,6 +2842,7 @@ func (s *StreamProtocolWithFlatSchemaResponse) UnmarshalJSON(data []byte) error 
 		}
 		s.Entity = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -2807,6 +2855,9 @@ func (s StreamProtocolWithFlatSchemaResponse) MarshalJSON() ([]byte, error) {
 	}
 	if s.Entity != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Entity, "event", "entity")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -2839,6 +2890,9 @@ func (s *StreamProtocolWithFlatSchemaResponse) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -2951,6 +3005,8 @@ type StreamXFernStreamingUnionRequest struct {
 	Interrupt      *UnionStreamInterruptVariant
 	Compact        *UnionStreamCompactVariant
 	streamResponse bool
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamXFernStreamingUnionRequest) GetType() string {
@@ -3024,6 +3080,7 @@ func (s *StreamXFernStreamingUnionRequest) UnmarshalJSON(data []byte) error {
 		}
 		s.Compact = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -3039,6 +3096,9 @@ func (s StreamXFernStreamingUnionRequest) MarshalJSON() ([]byte, error) {
 	}
 	if s.Compact != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Compact, "type", "compact")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -3078,6 +3138,9 @@ func (s *StreamXFernStreamingUnionRequest) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Type != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -3106,6 +3169,8 @@ type StreamXFernStreamingUnionStreamRequest struct {
 	Interrupt      *UnionStreamInterruptVariant
 	Compact        *UnionStreamCompactVariant
 	streamResponse bool
+
+	rawJSON json.RawMessage
 }
 
 func (s *StreamXFernStreamingUnionStreamRequest) GetType() string {
@@ -3179,6 +3244,7 @@ func (s *StreamXFernStreamingUnionStreamRequest) UnmarshalJSON(data []byte) erro
 		}
 		s.Compact = value
 	}
+	s.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -3194,6 +3260,9 @@ func (s StreamXFernStreamingUnionStreamRequest) MarshalJSON() ([]byte, error) {
 	}
 	if s.Compact != nil {
 		return internal.MarshalJSONWithExtraProperty(s.Compact, "type", "compact")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
 }
@@ -3233,6 +3302,9 @@ func (s *StreamXFernStreamingUnionStreamRequest) validate() error {
 	}
 	if len(fields) == 0 {
 		if s.Type != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
 		}
 		return fmt.Errorf("type %T is empty", s)
@@ -3603,6 +3675,8 @@ type UnionStreamRequest struct {
 	Message   *UnionStreamMessageVariant
 	Interrupt *UnionStreamInterruptVariant
 	Compact   *UnionStreamCompactVariant
+
+	rawJSON json.RawMessage
 }
 
 func (u *UnionStreamRequest) GetType() string {
@@ -3664,6 +3738,7 @@ func (u *UnionStreamRequest) UnmarshalJSON(data []byte) error {
 		}
 		u.Compact = value
 	}
+	u.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -3679,6 +3754,9 @@ func (u UnionStreamRequest) MarshalJSON() ([]byte, error) {
 	}
 	if u.Compact != nil {
 		return internal.MarshalJSONWithExtraProperty(u.Compact, "type", "compact")
+	}
+	if len(u.rawJSON) > 0 {
+		return u.rawJSON, nil
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -3718,6 +3796,9 @@ func (u *UnionStreamRequest) validate() error {
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
+			if len(u.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
 		}
 		return fmt.Errorf("type %T is empty", u)

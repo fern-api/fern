@@ -29,8 +29,13 @@ export abstract class AbstractEndpointGenerator {
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({ serviceId, endpoint });
         const request = getEndpointRequest({ context: this.context, endpoint, serviceId, service });
         const requestParameter = request != null ? this.getRequestParameter({ request }) : undefined;
+        // Sort parameters so required params (no initializer) come before optional params (with initializer).
+        // PHP requires this ordering to avoid "required parameter follows optional parameter" errors.
+        const allParams = [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null);
+        const requiredParams = allParams.filter((p) => p.initializer == null);
+        const optionalParams = allParams.filter((p) => p.initializer != null);
         return {
-            baseParameters: [...pathParameters, requestParameter].filter((p): p is php.Parameter => p != null),
+            baseParameters: [...requiredParams, ...optionalParams],
             pathParameters,
             pathParameterReferences,
             request,

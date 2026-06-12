@@ -25,6 +25,12 @@
       "source": "./src/pipeline/index.ts",
       "types": "./lib/pipeline/index.d.ts",
       "default": "./lib/pipeline/index.js"
+    },
+    "./readme": {
+      "development": "./src/readme/index.ts",
+      "source": "./src/readme/index.ts",
+      "types": "./lib/readme/index.d.ts",
+      "default": "./lib/readme/index.js"
     }
   },
   "main": "lib/api.js",
@@ -41,7 +47,7 @@
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-api/replay": "0.16.2",
+    "@fern-api/replay": "0.18.0",
     "@fern-api/task-context": "workspace:*",
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",

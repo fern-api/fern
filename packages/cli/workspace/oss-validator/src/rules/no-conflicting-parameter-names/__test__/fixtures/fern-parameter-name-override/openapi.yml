@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /plants/{id}/keys:
+    get:
+      operationId: listPlantKeys
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+          x-fern-parameter-name: key_id
+      responses:
+        "200":
+          description: OK

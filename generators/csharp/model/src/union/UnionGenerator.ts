@@ -107,8 +107,23 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             class_.addNestedClass(basePropertiesClass);
         }
 
+        // When the union has required base properties, the internal constructor is used by
+        // ReadAsPropertyName (dictionary-key deserialization) which only has the discriminant
+        // available and cannot populate the required base properties. Annotate it with
+        // [SetsRequiredMembers] so callers are not forced to set them at that call site.
+        const hasRequiredBaseProperties = baseProperties.some((property) => property.isRequired);
         class_.addConstructor({
             access: ast.Access.Internal,
+            annotations: hasRequiredBaseProperties
+                ? [
+                      this.csharp.annotation({
+                          reference: this.csharp.classReference({
+                              name: "SetsRequiredMembersAttribute",
+                              namespace: "System.Diagnostics.CodeAnalysis"
+                          })
+                      })
+                  ]
+                : undefined,
             parameters: [
                 this.csharp.parameter({
                     name: "type",

@@ -13,6 +13,8 @@ type Data struct {
 	Type        string
 	FieldString string
 	Base64      []byte
+
+	rawJSON json.RawMessage
 }
 
 func NewDataFromFieldString(value string) *Data {
@@ -73,6 +75,7 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 		}
 		d.Base64 = valueUnmarshaler.Base64
 	}
+	d.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -82,6 +85,9 @@ func (d Data) MarshalJSON() ([]byte, error) {
 	}
 	switch d.Type {
 	default:
+		if len(d.rawJSON) > 0 {
+			return d.rawJSON, nil
+		}
 		return nil, fmt.Errorf("invalid type %s in %T", d.Type, d)
 	case "string":
 		var marshaler = struct {
@@ -133,6 +139,9 @@ func (d *Data) validate() error {
 	}
 	if len(fields) == 0 {
 		if d.Type != "" {
+			if len(d.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", d, d.Type)
 		}
 		return fmt.Errorf("type %T is empty", d)
@@ -158,6 +167,8 @@ type EventInfo struct {
 	Type     string
 	Metadata *Metadata
 	Tag      Tag
+
+	rawJSON json.RawMessage
 }
 
 func NewEventInfoFromMetadata(value *Metadata) *EventInfo {
@@ -216,6 +227,7 @@ func (e *EventInfo) UnmarshalJSON(data []byte) error {
 		}
 		e.Tag = valueUnmarshaler.Tag
 	}
+	e.rawJSON = json.RawMessage(data)
 	return nil
 }
 
@@ -225,6 +237,9 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 	}
 	switch e.Type {
 	default:
+		if len(e.rawJSON) > 0 {
+			return e.rawJSON, nil
+		}
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "metadata":
 		return internal.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
@@ -269,6 +284,9 @@ func (e *EventInfo) validate() error {
 	}
 	if len(fields) == 0 {
 		if e.Type != "" {
+			if len(e.rawJSON) > 0 {
+				return nil
+			}
 			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
 		}
 		return fmt.Errorf("type %T is empty", e)

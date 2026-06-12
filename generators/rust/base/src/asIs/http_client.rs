@@ -1,5 +1,5 @@
 {{BASE64_IMPORT}}use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
-use futures::{Stream, StreamExt};
+use futures::{future::BoxFuture, Stream, StreamExt};
 use reqwest::{
     header::{HeaderMap, HeaderName, HeaderValue},
     Client, Method, Request, Response,
@@ -100,6 +100,39 @@ impl Stream for ByteStream {
     }
 }
 
+/// Trait for executing HTTP requests, enabling injection of custom
+/// transport implementations (e.g., for CLI execution-sharing).
+///
+/// When an external executor is provided, the SDK delegates raw HTTP
+/// execution to it, allowing the caller's transport stack to handle
+/// auth, retries, and TLS configuration.
+#[doc(hidden)]
+pub trait RequestExecutor: Send + Sync {
+    fn execute(
+        &self,
+        request: Request,
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>>;
+}
+
+/// Default executor that delegates to a `reqwest::Client`.
+struct ReqwestExecutor {
+    client: Client,
+}
+
+impl RequestExecutor for ReqwestExecutor {
+    fn execute(
+        &self,
+        request: Request,
+    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
+        Box::pin(async move {
+            self.client
+                .execute(request)
+                .await
+                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
+        })
+    }
+}
+
 /// Configuration for OAuth token fetching.
 ///
 /// This struct contains all the information needed to automatically fetch
@@ -124,6 +157,7 @@ struct OAuthTokenResponse {
 #[derive(Clone)]
 pub struct HttpClient {
     client: Client,
+    executor: Option<Arc<dyn RequestExecutor>>,
     config: ClientConfig,
     /// Optional OAuth configuration for automatic token management
     oauth_config: Option<OAuthConfig>,
@@ -151,9 +185,31 @@ impl HttpClient {
 
         Ok(Self {
             client,
+            executor: None,
             config,
             oauth_config,
         })
+    }
+
+    /// Creates an HttpClient with an injected request executor.
+    ///
+    /// When using an injected executor, the client delegates HTTP execution
+    /// entirely to the executor. Auth headers, custom headers, and retry
+    /// logic are NOT applied by this client — the executor's transport
+    /// stack is expected to handle them. This prevents double-retry and
+    /// double-auth when the SDK is embedded inside a CLI.
+    #[doc(hidden)]
+    pub fn with_executor(
+        executor: Arc<dyn RequestExecutor>,
+        config: ClientConfig,
+    ) -> Self {
+        let client = Client::new();
+        Self {
+            client,
+            executor: Some(executor),
+            config,
+            oauth_config: None,
+        }
     }
 
     /// Returns the configured base URL.
@@ -199,12 +255,9 @@ impl HttpClient {
             request = request.json(&body);
         }
 
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = self.send_request(req, &options).await?;
         self.parse_response_raw(response).await
     }
 
@@ -218,37 +271,28 @@ impl HttpClient {
         options: Option<RequestOptions>,
     ) -> Result<T, ApiError>
     where
-        T: DeserializeOwned, // Generic T: DeserializeOwned means the response will be automatically deserialized into whatever type you specify:
+        T: DeserializeOwned,
     {
         let url = join_url(&self.config.base_url, path);
         let mut request = self.client.request(method, &url);
 
-        // Apply query parameters if provided
         if let Some(params) = query_params {
             request = request.query(&params);
         }
 
-        // Apply additional query parameters from options
         if let Some(opts) = &options {
             if !opts.additional_query_params.is_empty() {
                 request = request.query(&opts.additional_query_params);
             }
         }
 
-        // Apply body if provided
         if let Some(body) = body {
             request = request.json(&body);
         }
 
-        // Build the request
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // Execute with retries
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = self.send_request(req, &options).await?;
         self.parse_response(response).await
     }
 
@@ -285,16 +329,31 @@ impl HttpClient {
             request = request.json(&body);
         }
 
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = self.send_request(req, &options).await?;
         self.parse_response(response).await
     }
 
-{{MULTIPART_METHOD}}{{BYTES_METHOD}}    async fn apply_auth_headers(
+{{MULTIPART_METHOD}}{{BYTES_METHOD}}    /// Applies auth/headers and executes the request, choosing between
+    /// the injected executor path (no SDK-level auth/headers/retries)
+    /// and the default path (full SDK behavior).
+    async fn send_request(
+        &self,
+        req: Request,
+        options: &Option<RequestOptions>,
+    ) -> Result<Response, ApiError> {
+        if let Some(executor) = &self.executor {
+            executor.execute(req).await.map_err(ApiError::Executor)
+        } else {
+            let mut req = req;
+            self.apply_auth_headers(&mut req, options).await?;
+            self.apply_custom_headers(&mut req, options)?;
+            self.execute_with_retries(req, options).await
+        }
+    }
+
+    async fn apply_auth_headers(
         &self,
         request: &mut Request,
         options: &Option<RequestOptions>,
@@ -484,9 +543,14 @@ impl HttpClient {
         let status = response.status().as_u16();
         let text = response.text().await.map_err(ApiError::Network)?;
 
-        // Handle empty response bodies (e.g., 202 Accepted for deferred requests)
         if text.is_empty() {
-            return Err(ApiError::Http {
+            if status >= 400 {
+                return Err(ApiError::Http {
+                    status,
+                    message: String::new(),
+                });
+            }
+            return serde_json::from_value(serde_json::Value::Null).map_err(|_| ApiError::Http {
                 status,
                 message: String::new(),
             });
@@ -504,10 +568,15 @@ impl HttpClient {
         let text = response.text().await.map_err(ApiError::Network)?;
 
         if text.is_empty() {
-            return Err(ApiError::Http {
-                status: status_code,
-                message: String::new(),
-            });
+            if status_code >= 400 {
+                return Err(ApiError::Http {
+                    status: status_code,
+                    message: String::new(),
+                });
+            }
+            return serde_json::from_value(serde_json::Value::Null)
+                .map(|body| RawResponse { body, status_code, headers })
+                .map_err(|_| ApiError::Http { status: status_code, message: String::new() });
         }
 
         let body: T = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
@@ -603,14 +672,9 @@ impl HttpClient {
         }
 
         // Build the request
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        // Apply authentication and headers
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        // Execute with retries
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = self.send_request(req, &options).await?;
 
         // Return streaming response
         Ok(ByteStream::new(response))
@@ -643,12 +707,9 @@ impl HttpClient {
             request = request.json(&body);
         }
 
-        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
 
-        self.apply_auth_headers(&mut req, &options).await?;
-        self.apply_custom_headers(&mut req, &options)?;
-
-        let response = self.execute_with_retries(req, &options).await?;
+        let response = self.send_request(req, &options).await?;
 
         Ok(ByteStream::new(response))
     }
