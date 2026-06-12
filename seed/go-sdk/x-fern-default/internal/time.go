@@ -152,6 +152,13 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 	}
 	iso8601Err := err
 
+	// Fall back to space-separated datetime with fractional seconds and timezone offset.
+	parsedTime, err = time.Parse("2006-01-02 15:04:05.999999999Z07:00", raw)
+	if err == nil {
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+
 	// Fall back to space-separated datetime with timezone offset (e.g. "2025-02-15 10:30:00+00:00").
 	parsedTime, err = time.Parse("2006-01-02 15:04:05Z07:00", raw)
 	if err == nil {
@@ -159,6 +166,14 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 	spaceTzErr := err
+
+	// Fall back to space-separated datetime with fractional seconds, no timezone (assume UTC).
+	parsedTime, err = time.Parse("2006-01-02 15:04:05.999999999", raw)
+	if err == nil {
+		parsedTime = parsedTime.UTC()
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
 
 	// Fall back to space-separated datetime without timezone (assume UTC).
 	parsedTime, err = time.Parse("2006-01-02 15:04:05", raw)
