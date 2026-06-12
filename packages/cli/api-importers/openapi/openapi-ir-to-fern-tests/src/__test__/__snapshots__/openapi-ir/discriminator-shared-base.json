@@ -355,14 +355,14 @@
                 "differentSchema": true
               }
             },
-            "generatedName": "unauthorizedErrorCode",
+            "generatedName": "unauthorizedErrorBodyCode",
             "key": "code",
             "schema": {
-              "generatedName": "UnauthorizedErrorCode",
+              "generatedName": "UnauthorizedErrorBodyCode",
               "description": "Machine-readable error code",
               "value": {
                 "description": "Machine-readable error code",
-                "generatedName": "UnauthorizedErrorCode",
+                "generatedName": "UnauthorizedErrorBodyCode",
                 "values": [
                   {
                     "generatedName": "UNABLE_TO_AUTHENTICATE",
@@ -414,14 +414,14 @@
                 "differentSchema": true
               }
             },
-            "generatedName": "forbiddenErrorCode",
+            "generatedName": "forbiddenErrorBodyCode",
             "key": "code",
             "schema": {
-              "generatedName": "ForbiddenErrorCode",
+              "generatedName": "ForbiddenErrorBodyCode",
               "description": "Machine-readable error code",
               "value": {
                 "description": "Machine-readable error code",
-                "generatedName": "ForbiddenErrorCode",
+                "generatedName": "ForbiddenErrorBodyCode",
                 "values": [
                   {
                     "generatedName": "ACCESS_DENIED",
