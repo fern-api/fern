@@ -304,6 +304,71 @@ fn global_header_flag_collides_with_builtin(kebab: &str) -> bool {
     crate::openapi::commands::BUILTIN_FLAG_NAMES.contains(&kebab)
 }
 
+/// Returns true when some operation command in the tree rooted at `cli`
+/// declares a flag whose long name equals `long`. A `global(true)` arg
+/// that shares a long name with a per-operation parameter makes clap
+/// panic at build time ("Long option names must be unique for each
+/// argument"), so a global-header flag that collides with a parameter on
+/// any operation cannot be registered globally — see the call site in
+/// [`CliApp::decorate_command`].
+///
+/// Only descendant (subcommand) args are inspected; the root's own global
+/// flags (`--format`, `--dry-run`, …) are screened separately by
+/// [`global_header_flag_collides_with_builtin`].
+fn global_header_long_collides_with_param(cli: &clap::Command, long: &str) -> bool {
+    cli.get_subcommands().any(|sub| command_declares_long(sub, long))
+}
+
+/// Recursive worker for [`global_header_long_collides_with_param`]: true
+/// if `cmd` or any of its descendants declares a flag with long name
+/// `long`.
+fn command_declares_long(cmd: &clap::Command, long: &str) -> bool {
+    cmd.get_arguments().any(|a| a.get_long() == Some(long))
+        || cmd
+            .get_subcommands()
+            .any(|sub| command_declares_long(sub, long))
+}
+
+/// Register `arg` (a global-header flag that is *not* marked
+/// `global(true)`) on every leaf operation command whose flags don't
+/// already include the arg's long name. Leaves that declare a same-named
+/// per-operation parameter are left untouched so the per-op parameter
+/// wins (mirroring the importer semantics documented on
+/// [`GlobalHeader`](crate::openapi::discovery::GlobalHeader)).
+///
+/// Intermediate (resource) commands are recursed into but never carry
+/// the flag themselves — the resolved value is read from the leaf's
+/// `ArgMatches` (see [`build_global_header_overrides`]), so attaching it
+/// to the leaf is what makes the flag, its env fallback, and its default
+/// available on the operations that don't collide.
+fn register_global_header_on_nonconflicting_leaves(
+    cmd: clap::Command,
+    arg: &clap::Arg,
+    long: &str,
+) -> clap::Command {
+    let sub_names: Vec<String> = cmd
+        .get_subcommands()
+        .map(|c| c.get_name().to_string())
+        .collect();
+    if sub_names.is_empty() {
+        // Leaf operation command: attach the flag unless it already
+        // declares one with the same long name (per-op param wins).
+        if cmd.get_arguments().any(|a| a.get_long() == Some(long)) {
+            return cmd;
+        }
+        return cmd.arg(arg.clone());
+    }
+    let mut out = cmd;
+    for name in sub_names {
+        let arg = arg.clone();
+        let long = long.to_string();
+        out = out.mut_subcommand(name, move |sub| {
+            register_global_header_on_nonconflicting_leaves(sub, &arg, &long)
+        });
+    }
+    out
+}
+
 /// Resolve a global header value from `matched_args`, the env, and the
 /// configured default — in that order. Returns `None` when none of the
 /// three sources produced a value, OR when the resolved value is empty
@@ -311,16 +376,26 @@ fn global_header_flag_collides_with_builtin(kebab: &str) -> bool {
 /// on the wire — that's almost always a user mistake worth surfacing as a
 /// required-header error, and matches the env-var-handling convention).
 ///
-/// `matched_args.get_one::<String>` already incorporates clap's
+/// `matched_args.try_get_one::<String>` already incorporates clap's
 /// `.env()` and `.default_value()` bindings, so the lookup is a single
 /// read; the explicit env/default fields on [`GlobalHeader`] are what
 /// feed those clap bindings at registration time.
+///
+/// Uses `try_get_one` rather than `get_one` because the flag is not
+/// guaranteed to be registered on every command: when its long name
+/// collides with a per-operation parameter, the flag is dropped from
+/// that operation's command (the per-op parameter wins — see
+/// `register_global_header_on_nonconflicting_leaves`). On such a command
+/// the arg id is unknown and `get_one` would panic; `try_get_one`
+/// returns `Err`, which we map to `None`.
 pub(crate) fn resolve_global_header_value(
     matched_args: &clap::ArgMatches,
     h: &crate::openapi::discovery::GlobalHeader,
 ) -> Option<String> {
     matched_args
-        .get_one::<String>(&global_header_arg_id(h))
+        .try_get_one::<String>(&global_header_arg_id(h))
+        .ok()
+        .flatten()
         .map(|s| s.trim())
         .filter(|s| !s.is_empty())
         .map(|s| s.to_string())
@@ -574,7 +649,7 @@ impl CliApp {
     /// `x-fern-audiences` values. Operations without an
     /// `x-fern-audiences` tag, or whose tags don't intersect this set,
     /// are dropped from the command tree at build time — they don't
-    /// appear in `--help`, JSON help, completions, or anywhere else.
+    /// appear in `--help`, `--schema`, completions, or anywhere else.
     ///
     /// Multiple audiences union (OR): an operation tagged with *any* of
     /// the listed audiences survives. Calling `.audiences([])` (or not
@@ -1221,8 +1296,7 @@ impl CliApp {
             let prefix = format!("--{kebab} <{value_name}>");
             global_header_help_pairs.push((prefix, help_text.clone()));
             let mut arg = clap::Arg::new(arg_id)
-                .long(kebab)
-                .global(true)
+                .long(kebab.clone())
                 .hide(true)
                 .value_name(value_name)
                 .help(help_text);
@@ -1232,7 +1306,24 @@ impl CliApp {
             if let Some(def) = &h.default {
                 arg = arg.default_value(def.clone());
             }
-            cli = cli.arg(arg);
+            // A `global(true)` arg whose long name matches a per-operation
+            // parameter makes clap panic at build time ("Long option names
+            // must be unique for each argument"). When the flag collides
+            // with a parameter on some operation, register it per-command
+            // on the non-colliding leaves and let the per-op parameter win
+            // on the rest — rather than handing clap two args with the same
+            // long name (FER-11145).
+            if global_header_long_collides_with_param(&cli, &kebab) {
+                tracing::debug!(
+                    header = %h.header,
+                    flag = %kebab,
+                    "Global-header flag collides with a per-operation parameter; \
+                     registering per-command so the per-op parameter wins"
+                );
+                cli = register_global_header_on_nonconflicting_leaves(cli, &arg, &kebab);
+            } else {
+                cli = cli.arg(arg.global(true));
+            }
         }
 
         // Compose the root --help footer. Preserves the section order
@@ -1915,8 +2006,17 @@ pub(crate) fn collect_params_from_flags(
                     // so the style-aware serializer receives a `Value::Object` /
                     // `Value::Array` rather than a verbatim string. Falls back
                     // to the raw string when the value isn't valid JSON.
-                    serde_json::from_str(value.as_str())
-                        .unwrap_or_else(|_| serde_json::Value::String(value.clone()))
+                    match serde_json::from_str::<serde_json::Value>(value.as_str()) {
+                        Ok(mut parsed) => {
+                            // Resolve `@filename` references inside nested
+                            // string values — mirrors Stainless's CLI shorthand
+                            // semantics (e.g. `--profile '{"pic":"@abe.jpg"}'`).
+                            // FER-10436.
+                            executor::resolve_file_refs(&mut parsed)?;
+                            parsed
+                        }
+                        Err(_) => serde_json::Value::String(value.clone()),
+                    }
                 } else {
                     let wire = param_def
                         .resolve_enum_display_to_wire(value.as_str())
@@ -1986,10 +2086,25 @@ pub(crate) fn collect_multipart_parts(
 
         if field.is_file {
             let raw = value.as_str();
-            let stripped = raw.strip_prefix('@').unwrap_or(raw);
-            if stripped != "-" {
+            // `\@literal` — escape syntax for sending a literal `@`-prefixed
+            // value on a file-typed field (FER-10436). The value is sent as a
+            // plain text part; no file read is attempted, and the path-safety
+            // validators that normally guard file inputs are skipped because
+            // there is no path to validate.
+            if executor::is_escaped_literal(raw) {
+                let literal = executor::strip_or_escape_at(raw).into_owned();
+                parts.push(executor::MultipartPart::Text {
+                    name: field.wire_name.clone(),
+                    value: literal,
+                    content_type: field.content_type.clone(),
+                });
+                continue;
+            }
+            let stripped = executor::strip_or_escape_at(raw);
+            let stripped_ref: &str = stripped.as_ref();
+            if stripped_ref != "-" {
                 crate::output::reject_dangerous_chars(
-                    stripped,
+                    stripped_ref,
                     &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
                 )?;
             }
@@ -2191,6 +2306,154 @@ mod tests {
         assert!(
             overrides.is_empty(),
             "per-op param suppresses the global override, got: {overrides:?}",
+        );
+    }
+
+    /// `global_header_long_collides_with_param` inspects descendant
+    /// (subcommand) args only — a long shared with a per-op param is a
+    /// collision; a long that only exists as a root-level global is not.
+    #[test]
+    fn test_global_header_long_collides_with_param_scopes_to_subcommands() {
+        let cli = clap::Command::new("cli")
+            // A root-level global flag must NOT count as a collision.
+            .arg(clap::Arg::new("format").long("format").global(true))
+            .subcommand(
+                clap::Command::new("products").subcommand(
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
+                ),
+            );
+        assert!(
+            global_header_long_collides_with_param(&cli, "country"),
+            "a per-op param on a leaf must register as a collision",
+        );
+        assert!(
+            !global_header_long_collides_with_param(&cli, "format"),
+            "a root-level global flag must not register as a collision",
+        );
+        assert!(
+            !global_header_long_collides_with_param(&cli, "language"),
+            "a long that exists nowhere in the tree is not a collision",
+        );
+    }
+
+    /// `register_global_header_on_nonconflicting_leaves` attaches the flag
+    /// to leaves that don't already declare it and leaves colliding leaves
+    /// untouched.
+    #[test]
+    fn test_register_global_header_skips_conflicting_leaf() {
+        let cli = clap::Command::new("cli").subcommand(
+            clap::Command::new("products")
+                .subcommand(
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
+                )
+                .subcommand(clap::Command::new("list")),
+        );
+        let arg = clap::Arg::new("__global_header::X-Country").long("country");
+        let cli = register_global_header_on_nonconflicting_leaves(cli, &arg, "country");
+        let products = cli.find_subcommand("products").unwrap();
+        let retrieve = products.find_subcommand("retrieve").unwrap();
+        let list = products.find_subcommand("list").unwrap();
+        // retrieve already declares --country → no global-header arg added.
+        assert!(
+            !retrieve
+                .get_arguments()
+                .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
+            "colliding leaf must keep only its per-op param",
+        );
+        // list has no --country → global-header arg attached.
+        assert!(
+            list.get_arguments()
+                .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
+            "non-colliding leaf must receive the global-header flag",
+        );
+    }
+
+    /// Full regression for FER-11145: a global header whose flag name
+    /// matches a per-operation parameter must not make clap panic, and the
+    /// per-op param must win on the colliding command while the global
+    /// flag stays available on non-colliding siblings.
+    #[test]
+    fn test_decorate_command_global_header_param_collision_no_panic() {
+        use crate::openapi::discovery::{
+            GlobalHeader, MethodParameter, RestDescription, RestMethod, RestResource,
+        };
+        use std::collections::HashMap;
+
+        // products.retrieve declares a per-op `country` query param.
+        let mut retrieve_params: HashMap<String, MethodParameter> = HashMap::new();
+        retrieve_params.insert(
+            "country".into(),
+            MethodParameter {
+                location: Some("query".into()),
+                param_type: Some("string".into()),
+                ..Default::default()
+            },
+        );
+        let retrieve = RestMethod {
+            http_method: "GET".into(),
+            parameters: retrieve_params,
+            ..Default::default()
+        };
+        // products.list carries no `country` param.
+        let list = RestMethod {
+            http_method: "GET".into(),
+            ..Default::default()
+        };
+        let mut products = RestResource::default();
+        products.methods.insert("retrieve".into(), retrieve);
+        products.methods.insert("list".into(), list);
+        let mut resources = HashMap::new();
+        resources.insert("products".into(), products);
+
+        let doc = RestDescription {
+            name: "channel3".into(),
+            resources,
+            global_headers: vec![GlobalHeader {
+                header: "X-Channel3-Country".into(),
+                name: Some("country".into()),
+                optional: true,
+                env: Some("CHANNEL3_COUNTRY".into()),
+                default: None,
+            }],
+            ..Default::default()
+        };
+
+        let app = CliApp::new("channel3");
+        let cli = crate::openapi::commands::build_cli(&doc);
+        let cli = app.decorate_command(&doc, cli);
+
+        // Before the fix, building this command panicked because
+        // `--country` was registered twice (global header + per-op param).
+        cli.clone().debug_assert();
+
+        // Colliding command: `--country` binds to the per-op param, and the
+        // global-header arg id is absent (per-op param wins).
+        let matches = cli
+            .clone()
+            .try_get_matches_from(["channel3", "products", "retrieve", "--country", "US"])
+            .expect("retrieve should parse --country as the per-op param");
+        let (_, products_m) = matches.subcommand().unwrap();
+        let (_, retrieve_m) = products_m.subcommand().unwrap();
+        assert_eq!(
+            retrieve_m.get_one::<String>("country").map(String::as_str),
+            Some("US"),
+        );
+        assert!(
+            resolve_global_header_value(retrieve_m, &doc.global_headers[0]).is_none(),
+            "global header must be dropped from the colliding command",
+        );
+
+        // Non-colliding sibling: `--country` binds to the global header.
+        let matches = cli
+            .try_get_matches_from(["channel3", "products", "list", "--country", "CA"])
+            .expect("list should parse --country as the global-header flag");
+        let (_, products_m) = matches.subcommand().unwrap();
+        let (_, list_m) = products_m.subcommand().unwrap();
+        assert_eq!(
+            resolve_global_header_value(list_m, &doc.global_headers[0]).as_deref(),
+            Some("CA"),
         );
     }
 

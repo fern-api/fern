@@ -371,6 +371,14 @@ struct OpenApiOperation {
     parameters: Vec<OpenApiParamOrRef>,
     #[serde(rename = "requestBody")]
     request_body: Option<OpenApiRequestBody>,
+    /// OpenAPI `responses` map (status code → response object). Only the
+    /// content media types are consumed — we look at the 2xx entries to
+    /// decide whether the operation can return a binary body, which gates
+    /// whether `--output PATH` is surfaced on the CLI command. Status keys
+    /// follow OpenAPI conventions: `"200"`, `"201"`, …, the `"2XX"`
+    /// wildcard, or `"default"` (which we ignore — it's an error fallback).
+    #[serde(default)]
+    responses: HashMap<String, OpenApiResponse>,
     #[serde(default)]
     servers: Vec<OpenApiServer>,
     #[serde(default)]
@@ -581,6 +589,14 @@ struct OpenApiRequestBody {
     x_fern_parameter_name: Option<String>,
 }
 
+/// The slice of OpenAPI's Response object we care about — only `content`,
+/// the media-type → schema map, since that's what tells us whether the
+/// operation's response is JSON or binary.
+#[derive(Debug, Deserialize)]
+struct OpenApiResponse {
+    content: Option<HashMap<String, OpenApiMediaType>>,
+}
+
 #[derive(Debug, Deserialize)]
 struct OpenApiMediaType {
     schema: Option<OpenApiSchemaObject>,
@@ -719,7 +735,7 @@ struct OpenApiSchemaObject {
     #[serde(default)]
     nullable: bool,
     description: Option<String>,
-    #[serde(default, deserialize_with = "deserialize_tolerant_properties")]
+    #[serde(default)]
     properties: HashMap<String, OpenApiSchemaObject>,
     items: Option<Box<OpenApiSchemaObject>>,
     #[serde(default)]
@@ -968,76 +984,10 @@ where
     deserializer.deserialize_any(AdditionalPropertiesVisitor)
 }
 
-/// Deserialize a `HashMap<String, OpenApiSchemaObject>` that tolerates
-/// malformed entries whose value is a YAML/JSON sequence (array) instead of
-/// a mapping (object).  Real-world specs — e.g. ElevenLabs 3.1 — sometimes
-/// emit `"property": [{"x-fern-type-name": "…"}]` which is not a valid
-/// JSON Schema property but must not prevent the rest of the spec from
-/// loading.  Entries with non-object values are logged as warnings and dropped.
-fn deserialize_tolerant_properties<'de, D>(
-    deserializer: D,
-) -> Result<HashMap<String, OpenApiSchemaObject>, D::Error>
-where
-    D: serde::Deserializer<'de>,
-{
-    use serde::de;
-
-    struct TolerantPropertiesVisitor;
-
-    impl<'de> de::Visitor<'de> for TolerantPropertiesVisitor {
-        type Value = HashMap<String, OpenApiSchemaObject>;
-
-        fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-            formatter.write_str("a map of schema objects (non-object values are skipped)")
-        }
-
-        fn visit_map<M: de::MapAccess<'de>>(self, mut map: M) -> Result<Self::Value, M::Error> {
-            let mut out = HashMap::new();
-            while let Some(key) = map.next_key::<String>()? {
-                // Try to deserialize the value. If the entry is a
-                // sequence or another unexpected type, `serde_yaml`
-                // will fail — catch the error and skip the entry
-                // rather than aborting the entire spec parse.
-                match map.next_value::<serde_yaml::Value>() {
-                    Ok(val) => {
-                        if val.is_mapping() {
-                            match OpenApiSchemaObject::deserialize(val) {
-                                Ok(schema) => { out.insert(key, schema); }
-                                Err(e) => {
-                                    tracing::warn!(
-                                        key = %key,
-                                        error = %e,
-                                        "skipping property with malformed schema object",
-                                    );
-                                }
-                            }
-                        } else {
-                            tracing::warn!(
-                                key = %key,
-                                "skipping property whose value is not an object",
-                            );
-                        }
-                    }
-                    Err(e) => {
-                        tracing::warn!(
-                            key = %key,
-                            error = %e,
-                            "skipping unparseable property value",
-                        );
-                    }
-                }
-            }
-            Ok(out)
-        }
-    }
-
-    deserializer.deserialize_map(TolerantPropertiesVisitor)
-}
-
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 struct OpenApiComponents {
-    #[serde(default, deserialize_with = "deserialize_tolerant_properties")]
+    #[serde(default)]
     schemas: HashMap<String, OpenApiSchemaObject>,
     #[serde(default)]
     parameters: HashMap<String, OpenApiParameter>,
@@ -2716,6 +2666,8 @@ pub fn load_openapi_spec_from_value(
                 operation.operation_id.as_deref().unwrap_or("unknown"),
             )?;
 
+            let has_binary_response = response_has_binary_media_type(&operation.responses);
+
             // Mutual exclusivity: an operation that's both streamed and
             // paginated is incoherent — pagination drives a loop of
             // requests against fully-buffered responses, while
@@ -2756,6 +2708,7 @@ pub fn load_openapi_spec_from_value(
                 streaming,
                 retries,
                 audiences,
+                has_binary_response,
                 ..Default::default()
             };
 
@@ -2825,6 +2778,53 @@ type ExtractedRequestBody = (
     HashMap<String, MethodParameter>,
     Vec<MultipartField>,
 );
+
+/// Decide whether any 2xx response declares a non-JSON content media type.
+///
+/// Mirrors the runtime predicate in
+/// `src/openapi/executor.rs:1973-1974` — JSON means `application/json` or
+/// `text/json`; anything else (audio/*, image/*, application/octet-stream,
+/// text/csv, application/pdf, …) is routed to the binary file-writing path
+/// in `handle_binary_response`. We walk only 2xx and `2XX`/`2xx` status
+/// codes — the binary-body affordance is for successful responses, not the
+/// JSON error shapes commonly declared on 4xx/5xx of the same operation
+/// (which is why the mixed-response case still surfaces `--output`).
+///
+/// An empty `responses` map, or one whose 2xx entries have no `content`
+/// block (e.g. `204 No Content`), returns `false` — there's no body to
+/// write, so `--output` would be meaningless.
+fn response_has_binary_media_type(responses: &HashMap<String, OpenApiResponse>) -> bool {
+    for (status, response) in responses {
+        if !is_success_status(status) {
+            continue;
+        }
+        let Some(content) = response.content.as_ref() else {
+            continue;
+        };
+        for media_type in content.keys() {
+            if !is_json_media_type(media_type) {
+                return true;
+            }
+        }
+    }
+    false
+}
+
+fn is_success_status(status: &str) -> bool {
+    // OpenAPI accepts `200`, `201`, ..., and the wildcard `2XX` / `2xx`.
+    // The `default` key is the catch-all (typically errors) — not a 2xx.
+    let s = status.trim();
+    if s.eq_ignore_ascii_case("2XX") {
+        return true;
+    }
+    s.starts_with('2') && s.len() == 3 && s[1..].chars().all(|c| c.is_ascii_digit())
+}
+
+fn is_json_media_type(media_type: &str) -> bool {
+    // Mirror the executor's runtime predicate so the gate aligns with the
+    // path actually taken at request time.
+    media_type.contains("application/json") || media_type.contains("text/json")
+}
 
 /// Returns `(json_schema, binary_body, body_encoding, body_params, multipart_fields)`:
 /// - `json_schema`: a SchemaRef for the JSON request body (if `application/json` is declared).
@@ -3678,6 +3678,187 @@ paths:
         let binary = send.binary_request_body.as_ref().unwrap();
         assert_eq!(binary.content_type, "text/plain");
         assert_eq!(binary.flag_name, "body");
+    }
+
+    #[test]
+    fn test_has_binary_response_true_for_audio_2xx() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /tts:
+    post:
+      x-fern-sdk-group-name: tts
+      x-fern-sdk-method-name: convert
+      operationId: convertTts
+      responses:
+        "200":
+          description: ok
+          content:
+            audio/mpeg:
+              schema: { type: string, format: binary }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let convert = &doc.resources["tts"].methods["convert"];
+        assert!(
+            convert.has_binary_response,
+            "audio/mpeg 2xx should flip has_binary_response on"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_false_for_json_only_2xx() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /models:
+    get:
+      x-fern-sdk-group-name: models
+      x-fern-sdk-method-name: list
+      operationId: listModels
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema: { type: array, items: { type: object } }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let list = &doc.resources["models"].methods["list"];
+        assert!(
+            !list.has_binary_response,
+            "JSON-only 2xx must NOT flip has_binary_response on"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_mixed_binary_2xx_and_json_4xx() {
+        // The edge case the user called out: a 2xx that returns audio and
+        // a 4xx that returns JSON-shaped errors must still surface --output
+        // because the success path is what writes the file.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /tts:
+    post:
+      x-fern-sdk-group-name: tts
+      x-fern-sdk-method-name: convert
+      operationId: convertTts
+      responses:
+        "200":
+          description: ok
+          content:
+            audio/mpeg:
+              schema: { type: string, format: binary }
+        "422":
+          description: validation error
+          content:
+            application/json:
+              schema: { type: object }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let convert = &doc.resources["tts"].methods["convert"];
+        assert!(
+            convert.has_binary_response,
+            "mixed (audio 2xx + JSON 4xx) must keep --output available"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_false_for_non_json_only_on_4xx() {
+        // Symmetric inverse of the mixed case: a 4xx with a non-JSON shape
+        // does NOT, on its own, make the operation binary — only 2xx
+        // bodies are written via --output.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /models:
+    get:
+      x-fern-sdk-group-name: models
+      x-fern-sdk-method-name: list
+      operationId: listModels
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema: { type: object }
+        "400":
+          description: error
+          content:
+            text/plain:
+              schema: { type: string }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let list = &doc.resources["models"].methods["list"];
+        assert!(
+            !list.has_binary_response,
+            "text/plain on a 4xx must not flip the binary-response gate"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_honors_2xx_wildcard() {
+        // OpenAPI lets specs use a `2XX` wildcard instead of a specific
+        // status code. The gate must treat that the same as `200`/`201`.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /download:
+    get:
+      x-fern-sdk-group-name: files
+      x-fern-sdk-method-name: download
+      operationId: downloadFile
+      responses:
+        "2XX":
+          description: ok
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let dl = &doc.resources["files"].methods["download"];
+        assert!(
+            dl.has_binary_response,
+            "the 2XX wildcard must be treated as a success status"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_false_for_empty_responses() {
+        // No declared response media types → can't know, default to false.
+        // The runtime still honors the actual Content-Type when the request
+        // is made, but the help surface shouldn't advertise --output
+        // speculatively for ops that don't declare any body shape.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /ping:
+    get:
+      x-fern-sdk-group-name: ops
+      x-fern-sdk-method-name: ping
+      operationId: ping
+      responses:
+        "204":
+          description: no content
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let ping = &doc.resources["ops"].methods["ping"];
+        assert!(
+            !ping.has_binary_response,
+            "204 No Content has no body — --output is meaningless, gate stays off"
+        );
     }
 
     #[test]
@@ -9985,58 +10166,6 @@ components:
         assert_eq!(
             lowered_31.properties["email"].prop_type.as_deref(),
             Some("string"),
-        );
-    }
-
-    /// Regression: a spec whose `properties` map contains an entry whose
-    /// value is a YAML/JSON **array** (e.g. `[{"x-fern-type-name": "…"}]`)
-    /// must not abort the entire parse. The tolerant deserializer should
-    /// silently drop the offending entry and preserve valid siblings.
-    #[test]
-    fn test_properties_with_array_value_are_skipped() {
-        let yaml = r##"
-openapi: "3.1.0"
-info:
-  title: test
-  version: "1.0"
-paths:
-  /items:
-    get:
-      operationId: listItems
-      responses:
-        "200":
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Item"
-components:
-  schemas:
-    Item:
-      type: object
-      properties:
-        name:
-          type: string
-        state:
-          - x-fern-type-name: ItemState
-        count:
-          type: integer
-"##;
-        let desc = load_openapi_spec(yaml, "test-cli")
-            .expect("spec with array property value must not fail to parse");
-        let item_schema = desc.schemas.get("Item").expect("Item schema should exist");
-        // 'name' and 'count' are valid properties; 'state' (array) is dropped.
-        assert!(
-            item_schema.properties.contains_key("name"),
-            "valid property 'name' must be preserved",
-        );
-        assert!(
-            item_schema.properties.contains_key("count"),
-            "valid property 'count' must be preserved",
-        );
-        assert!(
-            !item_schema.properties.contains_key("state"),
-            "array property 'state' must be dropped",
         );
     }
 }
