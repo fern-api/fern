@@ -20,6 +20,7 @@ import { loadGitHubConfig } from "./configuration/loadGitHubConfig.js";
 import { loadReadmeConfig } from "./configuration/loadReadmeConfig.js";
 import { loadReferenceConfig } from "./configuration/loadReferenceConfig.js";
 import { type PipelineConfig, PostGenerationPipeline } from "./pipeline/index.js";
+import { getRemovedReplayFlagError } from "./replay/removed-flags.js";
 
 const STDIN_MARKER = "-";
 
@@ -294,10 +295,18 @@ void yargs(hideBin(process.argv))
                             .option("import-history", {
                                 type: "boolean",
                                 default: false,
-                                description: "Scan git history for existing patches (migration)"
+                                description: "Removed — prints migration guidance and exits"
                             });
                     },
                     async (argv) => {
+                        const removedFlagError = getRemovedReplayFlagError({
+                            importHistory: argv["import-history"]
+                        });
+                        if (removedFlagError != null) {
+                            process.stderr.write(`${removedFlagError}\n`);
+                            process.exit(1);
+                        }
+
                         if (argv.github == null) {
                             process.stderr.write("missing required argument; please specify --github flag\n");
                             process.exit(1);
@@ -315,8 +324,7 @@ void yargs(hideBin(process.argv))
                                 token: argv.token,
                                 dryRun: argv["dry-run"],
                                 maxCommitsToScan: argv["max-commits"],
-                                force: argv.force,
-                                importHistory: argv["import-history"]
+                                force: argv.force
                             });
 
                             const logEntries = formatBootstrapSummary(result);
@@ -361,15 +369,25 @@ void yargs(hideBin(process.argv))
                                 type: "string",
                                 choices: ["migrate", "delete", "skip"],
                                 default: "skip",
-                                description: "How to handle .fernignore: migrate, delete, or skip"
+                                description:
+                                    ".fernignore handling: skip or delete (migrate was removed — prints guidance and exits)"
                             })
                             .option("import-history", {
                                 type: "boolean",
                                 default: false,
-                                description: "Scan git history for existing patches (migration)"
+                                description: "Removed — prints migration guidance and exits"
                             });
                     },
                     async (argv) => {
+                        const removedFlagError = getRemovedReplayFlagError({
+                            importHistory: argv["import-history"],
+                            fernignoreAction: argv["fernignore-action"]
+                        });
+                        if (removedFlagError != null) {
+                            process.stderr.write(`${removedFlagError}\n`);
+                            process.exit(1);
+                        }
+
                         const sdkDir = argv["sdk-dir"];
                         if (sdkDir == null) {
                             process.stderr.write("Missing required argument: sdk-dir\n");
@@ -379,15 +397,8 @@ void yargs(hideBin(process.argv))
                         try {
                             const { bootstrap } = await import("@fern-api/replay");
                             const outputDir = resolve(cwd(), sdkDir);
-                            const fernignoreAction = argv["fernignore-action"] as
-                                | "migrate"
-                                | "delete"
-                                | "skip"
-                                | undefined;
                             const result = await bootstrap(outputDir, {
-                                dryRun: argv["dry-run"],
-                                fernignoreAction,
-                                importHistory: argv["import-history"]
+                                dryRun: argv["dry-run"]
                             });
 
                             if (result.generationCommit) {

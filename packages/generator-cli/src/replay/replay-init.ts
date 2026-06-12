@@ -16,8 +16,6 @@ export interface ReplayInitParams {
     maxCommitsToScan?: number;
     /** Overwrite existing lockfile if present. Default: false */
     force?: boolean;
-    /** Scan git history for existing patches (migration). Default: false */
-    importHistory?: boolean;
 }
 
 export interface ReplayInitResult {
@@ -57,13 +55,11 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         targetDirectory: repoPath
     });
 
-    // 2. Run bootstrap
+    // 2. Run bootstrap (clean start — the only mode)
     const bootstrapResult = await bootstrap(repoPath, {
         dryRun,
-        fernignoreAction: "skip",
         maxCommitsToScan: params.maxCommitsToScan,
-        force: params.force ?? false,
-        importHistory: params.importHistory
+        force: params.force ?? false
     });
 
     if (!bootstrapResult.generationCommit) {
