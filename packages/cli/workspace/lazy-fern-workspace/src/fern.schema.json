@@ -3073,6 +3073,16 @@
             }
           ]
         },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "stream-condition": {
           "oneOf": [
             {
