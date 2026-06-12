@@ -1177,6 +1177,35 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.P()
 	}
 
+	// Implement fmt.Stringer so undiscriminated unions can be sent as request
+	// headers. Header values are added to the http.Header as strings, so without
+	// this the generated client passes the union struct where a string is
+	// expected and fails to compile. Only emit on unions reachable from a header
+	// position to avoid bloating unrelated types.
+	if _, headerReachable := t.writer.headerReachableUnions[t.typeId]; headerReachable {
+		t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P(`return ""`)
+		t.writer.P("}")
+		for _, member := range members {
+			if member.isLiteral {
+				// Literals are constants; the server doesn't need them echoed back.
+				continue
+			}
+			field := fmt.Sprintf("%s.%s", receiver, member.field)
+			if member.date != nil && !member.isOptional {
+				t.writer.P(fmt.Sprintf("if %s.typ == %q || !%s.IsZero() {", receiver, member.field, field))
+			} else {
+				t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
+			}
+			t.writer.P(`return fmt.Sprintf("%v", `, field, ")")
+			t.writer.P("}")
+		}
+		t.writer.P(`return ""`)
+		t.writer.P("}")
+		t.writer.P()
+	}
+
 	// Generate the Visitor interface.
 	t.writer.P("type ", t.typeName, "Visitor interface {")
 	for _, member := range members {

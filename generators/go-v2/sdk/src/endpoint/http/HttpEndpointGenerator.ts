@@ -891,6 +891,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
                 const headerNameVal = header.name;
                 const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(headerNameVal)}`;
+                // Undiscriminated unions are added to the header as a string via their
+                // generated String() method, since the union struct itself isn't a string.
+                if (this.context.maybeUndiscriminatedUnion(header.valueType) != null) {
+                    const isOptional = this.context.maybeUnwrapOptionalOrNullable(header.valueType) != null;
+                    const headerValue = this.addHeaderValue({
+                        wireValue: getWireValue(header.name),
+                        value: go.codeblock(`${headerField}.String()`)
+                    });
+                    if (isOptional) {
+                        writer.writeNewLineIfLastLineNot();
+                        writer.writeLine(`if ${headerField} != nil {`);
+                        writer.indent();
+                        writer.writeNode(headerValue);
+                        writer.newLine();
+                        writer.dedent();
+                        writer.writeLine("}");
+                    } else {
+                        writer.writeNode(headerValue);
+                    }
+                    continue;
+                }
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
                     value: go.codeblock(headerField)
