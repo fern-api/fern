@@ -1,0 +1,4 @@
+- summary: |
+    Use string literal for `this.name` in error classes instead of
+    `this.constructor.name`, which gets mangled by minifiers.
+  type: fix

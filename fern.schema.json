@@ -2335,6 +2335,16 @@
               "type": "null"
             }
           ]
+        },
+        "content-type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

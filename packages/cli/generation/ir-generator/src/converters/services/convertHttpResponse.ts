@@ -122,9 +122,11 @@ export function convertNonStreamHttpResponseBody({
                     v2Examples: undefined
                 });
             } else if (parseRawTextType(responseType) != null) {
+                const contentType = typeof response !== "string" ? response["content-type"] : undefined;
                 return HttpResponseBody.text({
                     docs,
-                    v2Examples: undefined
+                    v2Examples: undefined,
+                    contentType: contentType ?? undefined
                 });
             } else if (parseRawBytesType(responseType) != null) {
                 return HttpResponseBody.bytes({
