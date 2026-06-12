@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.9.39 (Replay 0.18.0) for more reliable
+        customization detection during regeneration.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 66
 - version: 4.10.0
   changelogEntry:
     - summary: |
