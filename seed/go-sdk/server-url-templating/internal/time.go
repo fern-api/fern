@@ -143,6 +143,14 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 	}
 	rfc3339NanoErr := err
 
+	// Fall back to ISO 8601 with fractional seconds, without timezone (assume UTC).
+	parsedTime, err = time.Parse("2006-01-02T15:04:05.999999999", raw)
+	if err == nil {
+		parsedTime = parsedTime.UTC()
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+
 	// Fall back to ISO 8601 without timezone (assume UTC).
 	parsedTime, err = time.Parse("2006-01-02T15:04:05", raw)
 	if err == nil {
