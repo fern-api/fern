@@ -105,12 +105,55 @@ export class GraphQLConverter {
         return true;
     }
 
+    // NOTE: This heuristic treats a type as a namespace (operation-grouping type) when ALL
+    // of its fields accept arguments. This can produce a false positive for regular data
+    // types where every field happens to be parameterized. If that becomes a problem,
+    // introduce an explicit config option (e.g. namespacedRootTypes: [...]) rather than
+    // relying on field-arg counts alone.
     private isNamespaceType(type: GraphQLObjectType): boolean {
         const fields = Object.values(type.getFields());
         if (fields.length === 0) {
             return false;
         }
         return fields.every((f) => f.args.length > 0);
+    }
+
+    // Returns the names of object types that will be consumed as namespace groupings by
+    // convertOperations — i.e. types that appear as the return type of a zero-arg root
+    // field whose own fields all accept arguments. These types must be excluded from the
+    // type registry in collectTypeDefinitions to prevent their fields from showing up
+    // both as object properties and as standalone operations.
+    private collectNamespaceTypeNames(): Set<string> {
+        if (!this.schema) {
+            return new Set();
+        }
+        const namespaceTypeNames = new Set<string>();
+        const rootTypes: GraphQLObjectType[] = [];
+        const queryType = this.schema.getQueryType();
+        if (queryType) {
+            rootTypes.push(queryType);
+        }
+        const mutationType = this.schema.getMutationType();
+        if (mutationType) {
+            rootTypes.push(mutationType);
+        }
+        const subscriptionType = this.schema.getSubscriptionType();
+        if (subscriptionType && this.isActualSubscriptionRootType(subscriptionType)) {
+            rootTypes.push(subscriptionType);
+        }
+        for (const rootType of rootTypes) {
+            for (const field of Object.values(rootType.getFields())) {
+                const returnRawType = this.unwrapNonNull(field.type);
+                if (
+                    returnRawType instanceof GraphQLObjectType &&
+                    field.args.length === 0 &&
+                    this.isNamespaceType(returnRawType)
+                ) {
+                    namespaceTypeNames.add(returnRawType.name);
+                }
+            }
+        }
+        return namespaceTypeNames;
     }
 
     public async convert(): Promise<GraphQLConverterResult> {
@@ -144,6 +187,12 @@ export class GraphQLConverter {
             return;
         }
 
+        // Identify namespace types up-front so we can exclude them below. Namespace types
+        // have their fields registered as standalone operations via convertNamespaceOperations;
+        // registering them as type definitions too would make their fields appear in both
+        // places, causing redundant/confusing output.
+        const namespaceTypeNames = this.collectNamespaceTypeNames();
+
         const typeMap = this.schema.getTypeMap();
         for (const [typeName, type] of Object.entries(typeMap)) {
             // Skip built-in types
@@ -160,6 +209,11 @@ export class GraphQLConverter {
                 type instanceof GraphQLObjectType &&
                 this.isActualSubscriptionRootType(type)
             ) {
+                continue;
+            }
+
+            // Skip namespace types — their fields are promoted to top-level operations.
+            if (type instanceof GraphQLObjectType && namespaceTypeNames.has(typeName)) {
                 continue;
             }
 
@@ -519,13 +573,14 @@ export class GraphQLConverter {
 
     private convertObjectTypeDefinition(type: GraphQLObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties = Object.entries(fields).map(
-            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = Object.entries(fields).map(
+            ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
-                propertyAccess: undefined
+                propertyAccess: undefined,
+                arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
         );
 
@@ -581,13 +636,14 @@ export class GraphQLConverter {
 
     private convertInterfaceAsObject(type: GraphQLInterfaceType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties = Object.entries(fields).map(
-            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = Object.entries(fields).map(
+            ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertOutputType(field.type),
                 description: field.description ?? undefined,
                 availability: undefined,
-                propertyAccess: undefined
+                propertyAccess: undefined,
+                arguments: field.args.length > 0 ? field.args.map((arg) => this.convertArgument(arg)) : undefined
             })
         );
 
@@ -601,8 +657,8 @@ export class GraphQLConverter {
 
     private convertInputObjectTypeDefinition(type: GraphQLInputObjectType): FdrAPI.api.v1.register.TypeShape {
         const fields = type.getFields();
-        const properties = Object.entries(fields).map(
-            ([fieldName, field]): FdrAPI.api.v1.register.ObjectProperty => ({
+        const properties: FdrAPI.api.v1.register.ObjectProperty[] = Object.entries(fields).map(
+            ([fieldName, field]) => ({
                 key: FdrAPI.PropertyKey(fieldName),
                 valueType: this.convertInputType(field.type),
                 description: field.description ?? undefined,
