@@ -11,8 +11,8 @@ $client = new SeedClient(
     ],
 );
 $client->organizations->searchOrganizations(
-    'tenant_id',
     'organization_id',
+    'tenant_id',
     new SearchOrganizationsRequest([
         'limit' => 1,
     ]),

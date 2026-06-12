@@ -14,8 +14,8 @@
 
 ```php
 $client->organizations->getOrganization(
-    'tenant_id',
     'organization_id',
+    'tenant_id',
 );
 ```
 </dd>
@@ -65,9 +65,9 @@ $client->organizations->getOrganization(
 
 ```php
 $client->organizations->getOrganizationUser(
-    'tenant_id',
     'organization_id',
     'user_id',
+    'tenant_id',
 );
 ```
 </dd>
@@ -125,8 +125,8 @@ $client->organizations->getOrganizationUser(
 
 ```php
 $client->organizations->searchOrganizations(
-    'tenant_id',
     'organization_id',
+    'tenant_id',
     new SearchOrganizationsRequest([
         'limit' => 1,
     ]),
@@ -188,8 +188,8 @@ $client->organizations->searchOrganizations(
 
 ```php
 $client->user->getUser(
-    'tenant_id',
     'user_id',
+    'tenant_id',
 );
 ```
 </dd>
@@ -296,8 +296,8 @@ $client->user->createUser(
 
 ```php
 $client->user->updateUser(
-    'tenant_id',
     'user_id',
+    'tenant_id',
     new UpdateUserRequest([
         'body' => new User([
             'name' => 'name',
@@ -364,8 +364,8 @@ $client->user->updateUser(
 
 ```php
 $client->user->searchUsers(
-    'tenant_id',
     'user_id',
+    'tenant_id',
     new SearchUsersRequest([
         'limit' => 1,
     ]),
@@ -440,9 +440,9 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```php
 $client->user->getUserMetadata(
-    'tenant_id',
     'user_id',
     1,
+    'tenant_id',
 );
 ```
 </dd>
@@ -514,10 +514,10 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```php
 $client->user->getUserSpecifics(
-    'tenant_id',
     'user_id',
     1,
     'thought',
+    'tenant_id',
 );
 ```
 </dd>

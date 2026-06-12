@@ -54,6 +54,9 @@ class SeedClient
     private InferredAuthProvider $inferredAuthProvider;
 
     /**
+     * @param ?string $clientId
+     * @param ?string $clientSecret
+     * @param ?string $scope
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -63,6 +66,9 @@ class SeedClient
      * } $options
      */
     public function __construct(
+        ?string $clientId = null,
+        ?string $clientSecret = null,
+        ?string $scope = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -77,6 +83,11 @@ class SeedClient
         $authRawClient = new RawClient(['headers' => []]);
         $authClient = new AuthClient($authRawClient);
         $inferredAuthOptions = [
+            'clientId' => $clientId ?? '',
+            'clientSecret' => $clientSecret ?? '',
+            'audience' => 'https://api.example.com',
+            'grantType' => 'client_credentials',
+            'scope' => $scope ?? '',
         ];
         $this->inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
 

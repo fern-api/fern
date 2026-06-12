@@ -10,7 +10,7 @@ $client = new SeedClient(
     ],
 );
 $client->user->getUserMetadata(
-    'tenant_id',
     'user_id',
     1,
+    'tenant_id',
 );

@@ -29,6 +29,21 @@ class OAuthTokenProvider
     private string $clientSecret;
 
     /**
+     * @var string $scp
+     */
+    private string $scp;
+
+    /**
+     * @var string $entityId
+     */
+    private string $entityId;
+
+    /**
+     * @var string $scope
+     */
+    private string $scope;
+
+    /**
      * @var AuthClient $authClient
      */
     private AuthClient $authClient;
@@ -46,15 +61,24 @@ class OAuthTokenProvider
     /**
      * @param string $clientId The client ID for OAuth authentication.
      * @param string $clientSecret The client secret for OAuth authentication.
+     * @param string $scp
+     * @param string $entityId
+     * @param string $scope
      * @param AuthClient $authClient The client used to retrieve the OAuth token.
      */
     public function __construct(
         string $clientId,
         string $clientSecret,
+        string $scp,
+        string $entityId,
+        string $scope,
         AuthClient $authClient,
     ) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
+        $this->scp = $scp;
+        $this->entityId = $entityId;
+        $this->scope = $scope;
         $this->authClient = $authClient;
         $this->accessToken = null;
         $this->expiresAt = null;
@@ -83,8 +107,11 @@ class OAuthTokenProvider
         $request = new GetTokenRequest([
             'cid' => $this->clientId,
             'csr' => $this->clientSecret,
+            'entityId' => $this->entityId,
             'audience' => 'https://api.example.com',
             'grantType' => 'client_credentials',
+            'scope' => $this->scope,
+            'scp' => $this->scp,
         ]);
 
         $tokenResponse = $this->authClient->getTokenWithClientCredentials($request);

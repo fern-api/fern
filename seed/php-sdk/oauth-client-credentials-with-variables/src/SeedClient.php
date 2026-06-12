@@ -62,6 +62,7 @@ class SeedClient
     /**
      * @param ?string $clientId The client ID for OAuth authentication.
      * @param ?string $clientSecret The client secret for OAuth authentication.
+     * @param ?string $scope
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -73,6 +74,7 @@ class SeedClient
     public function __construct(
         ?string $clientId = null,
         ?string $clientSecret = null,
+        ?string $scope = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -86,7 +88,7 @@ class SeedClient
 
         $authRawClient = new RawClient(['headers' => []]);
         $authClient = new AuthClient($authRawClient);
-        $this->oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
+        $this->oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $scope ?? '', $authClient);
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,

@@ -171,6 +171,9 @@ fixtures:
             - "@php -l tests"
             analyze: echo skip
             hello: echo hello
+allowedFailures:
+  # Wire test: path param request failures unrelated to dynamic snippets.
+  - exhaustive:wire-tests
 scripts:
   - image: fernapi/php-seed
     commands:
@@ -181,18 +184,5 @@ scripts:
         - composer analyze
       test:
         - composer test
-allowedFailures:
-  # Dynamic snippet: default-valued base-path param ordered before request body.
-  - api-wide-base-path-with-default
-  # Wire test: path param request failures unrelated to dynamic snippets.
-  - exhaustive:wire-tests
-  # Dynamic snippet: variable-typed path params not provided in snippet request.
-  - variables
-  - oauth-client-credentials-with-variables
-
-  # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).
-  - trace
-  # OAuth custom properties need non-literal property passthrough to the token request.
-  - oauth-client-credentials-custom
 
 

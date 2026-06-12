@@ -10,6 +10,6 @@ $client = new SeedClient(
     ],
 );
 $client->organizations->getOrganization(
-    'tenant_id',
     'organization_id',
+    'tenant_id',
 );

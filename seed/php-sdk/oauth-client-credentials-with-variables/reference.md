@@ -235,7 +235,9 @@ $client->nested->api->getSomething();
 <dd>
 
 ```php
-$client->service->post();
+$client->service->post(
+    '<endpointParam>',
+);
 ```
 </dd>
 </dl>

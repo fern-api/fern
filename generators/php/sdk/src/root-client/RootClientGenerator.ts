@@ -715,6 +715,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             environmentVariable: oauthConfig.clientSecretEnvVar
                         }
                     ];
+                    for (const prop of this.getNonLiteralOAuthProperties(oauthConfig)) {
+                        params.push({
+                            name: prop.fieldName,
+                            isOptional,
+                            typeReference: this.getAuthParameterTypeReference({
+                                typeReference: STRING_TYPE_REFERENCE,
+                                envVar: undefined,
+                                isOptional
+                            })
+                        });
+                    }
                     return params;
                 }
                 // Fallback to the default bearer token scheme for other OAuth types
@@ -889,7 +900,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const clientIdFallback = oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
         const clientSecretFallback =
             oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
-        writer.writeLine(`(${clientIdFallback}, ${clientSecretFallback}, $authClient);`);
+        const extraParams = this.getNonLiteralOAuthProperties(oauth.configuration);
+        const extraParamArgs = extraParams.map((p) => `$${p.fieldName} ?? ''`).join(", ");
+        const allArgs =
+            extraParamArgs.length > 0
+                ? `${clientIdFallback}, ${clientSecretFallback}, ${extraParamArgs}, $authClient`
+                : `${clientIdFallback}, ${clientSecretFallback}, $authClient`;
+        writer.writeLine(`(${allArgs});`);
         writer.writeLine();
     }
 
@@ -915,7 +932,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         // Extract parameters from the token endpoint request
         const sdkRequest = endpoint.sdkRequest;
-        if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+        if (sdkRequest != null) {
             // Get the request body properties
             const requestBody = endpoint.requestBody;
             if (requestBody != null && requestBody.type === "inlinedRequestBody") {
@@ -933,6 +950,27 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                                 isOptional: isOptional || this.context.isOptional(property.valueType)
                             })
                         });
+                    }
+                }
+            } else if (requestBody != null && requestBody.type === "reference") {
+                if (requestBody.requestBodyType.type === "named") {
+                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(requestBody.requestBodyType.typeId);
+                    if (typeDeclaration.shape.type === "object") {
+                        for (const property of typeDeclaration.shape.properties) {
+                            const literal = this.context.maybeLiteral(property.valueType);
+                            if (literal == null) {
+                                parameters.push({
+                                    name: this.context.getParameterName(property.name),
+                                    docs: property.docs,
+                                    isOptional: isOptional || this.context.isOptional(property.valueType),
+                                    typeReference: this.getAuthParameterTypeReference({
+                                        typeReference: property.valueType,
+                                        envVar: undefined,
+                                        isOptional: isOptional || this.context.isOptional(property.valueType)
+                                    })
+                                });
+                            }
+                        }
                     }
                 }
             }
@@ -1008,7 +1046,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             const endpoint = service.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
             if (endpoint != null) {
                 const sdkRequest = endpoint.sdkRequest;
-                if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+                if (sdkRequest != null) {
                     const requestBody = endpoint.requestBody;
                     if (requestBody != null && requestBody.type === "inlinedRequestBody") {
                         for (const property of requestBody.properties) {
@@ -1025,6 +1063,32 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                                     writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
                                 } else {
                                     writer.writeLine(`'${paramName}' => $${paramName},`);
+                                }
+                            }
+                        }
+                    } else if (requestBody != null && requestBody.type === "reference") {
+                        if (requestBody.requestBodyType.type === "named") {
+                            const typeDeclaration = this.context.getTypeDeclarationOrThrow(
+                                requestBody.requestBodyType.typeId
+                            );
+                            if (typeDeclaration.shape.type === "object") {
+                                for (const property of typeDeclaration.shape.properties) {
+                                    const paramName = this.context.getParameterName(property.name);
+                                    const literal = this.context.maybeLiteral(property.valueType);
+                                    if (literal != null) {
+                                        writer.writeLine(
+                                            `'${paramName}' => ${this.context.getLiteralAsString(literal)},`
+                                        );
+                                    } else {
+                                        const isOptionalParam = constructorParameters.optional.some(
+                                            (p: ConstructorParameter) => p.name === paramName
+                                        );
+                                        if (isOptionalParam) {
+                                            writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
+                                        } else {
+                                            writer.writeLine(`'${paramName}' => $${paramName},`);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1074,6 +1138,33 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             return undefined;
         }
         return { service, endpoint };
+    }
+
+    private getNonLiteralOAuthProperties(oauthConfig: FernIr.OAuthConfiguration): Array<{ fieldName: string }> {
+        if (oauthConfig.type !== "clientCredentials") {
+            return [];
+        }
+        const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
+        const results: Array<{ fieldName: string }> = [];
+
+        if (requestProperties.scopes != null) {
+            const scopesLiteral = this.context.maybeLiteral(requestProperties.scopes.property.valueType);
+            if (scopesLiteral == null) {
+                results.push({
+                    fieldName: this.context.case.camelUnsafe(requestProperties.scopes.property.name)
+                });
+            }
+        }
+
+        for (const customProperty of requestProperties.customProperties ?? []) {
+            const literal = this.context.maybeLiteral(customProperty.property.valueType);
+            if (literal == null) {
+                results.push({
+                    fieldName: this.context.case.camelUnsafe(customProperty.property.name)
+                });
+            }
+        }
+        return results;
     }
 
     private newRootClientFile(class_: php.Class): PhpFile {

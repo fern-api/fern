@@ -572,10 +572,10 @@ use Acme\\AcmeClient;
 
 $client = new AcmeClient();
 $client->user->getUserSpecifics(
-    'my_tenant',
     'my_user',
     7,
     'my_thought',
+    'my_tenant',
 );
 "
 `;

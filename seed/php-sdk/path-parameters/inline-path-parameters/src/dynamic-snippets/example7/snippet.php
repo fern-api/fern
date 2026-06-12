@@ -12,8 +12,8 @@ $client = new SeedClient(
 );
 $client->user->getUserMetadata(
     new GetUserMetadataRequest([
-        'tenantId' => 'tenant_id',
         'userId' => 'user_id',
         'version' => 1,
+        'tenantId' => 'tenant_id',
     ]),
 );

@@ -10,8 +10,8 @@ $client = new SeedClient(
     ],
 );
 $client->user->getUserSpecifics(
-    'tenant_id',
     'user_id',
     1,
     'thought',
+    'tenant_id',
 );
