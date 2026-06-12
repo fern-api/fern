@@ -108,7 +108,7 @@ interface VersionEntry {
     version: string;
     changelogEntry: Array<{ summary: string; type: string }>;
     createdAt: string;
-    irVersion: number;
+    irVersion?: number;
 }
 
 interface UnreleasedChange {
@@ -275,7 +275,11 @@ function getCurrentVersion(versionsFile: string): string {
     return versions[0].version;
 }
 
-function getCurrentIrVersion(versionsFile: string): number {
+/**
+ * Returns the irVersion of the latest entry, or undefined for software whose
+ * versions.yml does not track an IR version (e.g. the generator CLI).
+ */
+function getCurrentIrVersion(versionsFile: string): number | undefined {
     const content = readFileSync(versionsFile, "utf-8");
     const versions = parseYaml(content) as VersionEntry[];
 
@@ -284,19 +288,14 @@ function getCurrentIrVersion(versionsFile: string): number {
         process.exit(1);
     }
 
-    if (!versions[0] || versions[0].irVersion === undefined) {
-        console.error("Error: versions.yml does not contain a valid irVersion entry");
-        process.exit(1);
-    }
-
-    return versions[0].irVersion;
+    return versions[0]?.irVersion;
 }
 
 function updateVersionsFile(
     versionsFile: string,
     newVersion: string,
     changes: UnreleasedChange[],
-    irVersion: number
+    irVersion: number | undefined
 ): void {
     const existingContent = readFileSync(versionsFile, "utf-8");
 
@@ -316,7 +315,7 @@ function updateVersionsFile(
         version: newVersion,
         changelogEntry,
         createdAt: new Date().toISOString().split("T")[0] ?? "",
-        irVersion
+        ...(irVersion !== undefined ? { irVersion } : {})
     };
 
     // Use yaml.stringify() for the new entry with literal block style (|) for multi-line summaries.
@@ -465,8 +464,10 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     const irVersion = irVersionFromChangelog ?? getCurrentIrVersion(versionsFile);
     if (irVersionFromChangelog != null) {
         console.log(`📊 IR version: ${irVersion} (overridden by changelog entry)`);
-    } else {
+    } else if (irVersion !== undefined) {
         console.log(`📊 Current IR version: ${irVersion}`);
+    } else {
+        console.log("📊 No IR version tracked for this software");
     }
 
     // Determine next version

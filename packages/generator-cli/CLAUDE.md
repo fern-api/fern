@@ -101,15 +101,12 @@ Configuration:
 
 ## Versioning & Release Process
 
-### Version bump process (can be one commit)
+### Version bump process
 
-When making changes to generator-cli, update these three files together:
+generator-cli uses the changelog-based release flow (see `.claude/release-versioning.md`). Do **not** hand-edit `packages/generator-cli/versions.yml`:
 
-1. `packages/generator-cli/versions.yml` — Add new version entry (triggers npm publish via CI)
-2. `pnpm-workspace.yaml` — Update the catalog pin (e.g., `"@fern-api/generator-cli": 0.8.1`)
-3. `packages/cli/cli/versions.yml` — Bump CLI version (triggers CLI publish via CI)
-
-Both CI workflows (`publish-generator-cli.yml` and `publish-cli.yml`) trigger from the same push to main.
+1. Add an unreleased changelog file under `packages/generator-cli/changes/unreleased/` (copy `.template.yml`). The `release-software.yml` workflow bumps `versions.yml` automatically when the change lands on main, which triggers npm publish via `publish-generator-cli.yml`.
+2. After the new version is published, update the catalog pin in `pnpm-workspace.yaml` (e.g., `"@fern-api/generator-cli": 0.8.1`) and add a CLI changelog entry under `packages/cli/cli/changes/unreleased/` so the CLI picks up the new version.
 
 ### How generators pick up the change
 

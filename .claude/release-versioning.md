@@ -35,6 +35,7 @@ If a path falls under **`softwareDirectory`**, use the matching **`changelogFold
 | `swift` | `generators/swift` | `generators/swift/sdk/changes/unreleased/` |
 | `typescript` | `generators/typescript` | `generators/typescript/sdk/changes/unreleased/` |
 | `cli-generator` | `generators/cli` | `generators/cli/changes/unreleased/` |
+| `generator-cli` | `packages/generator-cli` | `packages/generator-cli/changes/unreleased/` |
 
 Pick the narrowest matching **`softwareDirectory`** when several could apply (e.g. generator-only work under `generators/python/...` uses the Python generator row, not CLI). If a single PR spans multiple **`softwareDirectory`** trees, add a changelog file in **each** corresponding **`changelogFolder/unreleased/`**.
 

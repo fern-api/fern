@@ -67,6 +67,12 @@
       "versionsFile": "generators/cli/versions.yml",
       "changelogFolder": "generators/cli/changes",
       "softwareDirectory": "generators/cli"
+    },
+    "generator-cli": {
+      "name": "Generator CLI",
+      "versionsFile": "packages/generator-cli/versions.yml",
+      "changelogFolder": "packages/generator-cli/changes",
+      "softwareDirectory": "packages/generator-cli"
     }
   }
 }
