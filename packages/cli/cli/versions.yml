@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.47.5
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer dropping types that are only referenced through a
+        `list`/`map` of a `$ref` when audience filtering is enabled. Array and map
+        aliases now record the referenced named type in `referencedTypes` (matching
+        how object properties already do), so audience reachability no longer prunes
+        the referenced type and leaves a dangling reference. This restores the
+        "Show N variants" UI in docs for discriminated unions referenced via a list
+        (e.g. Cohere's v2 chat `messages` field under an audience filter).
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
 - version: 5.47.4
   changelogEntry:
     - summary: |
