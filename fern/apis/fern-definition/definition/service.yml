@@ -185,6 +185,7 @@ types:
       type: optional<string>
       property: optional<string>
       status-code: optional<integer>
+      content-type: optional<string>
 
   HttpResponseStreamSchema:
     discriminated: false

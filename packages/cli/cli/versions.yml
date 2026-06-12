@@ -1,4 +1,55 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.47.2
+  changelogEntry:
+    - summary: |
+        Stop dropping custom scalars in the GraphQL converter. Custom scalars (e.g. `DateTime`,
+        `URL`, `EmailAddress`) are now emitted as named alias types in the `types` map with a stable
+        id, and references to them point to that id so the type can be linked to in documentation.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.1
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer producing empty discriminated unions when
+        `discriminator.propertyName` is present but `discriminator.mapping` is absent.
+        The importer now infers the mapping from `oneOf`/`anyOf` `$ref` schemas,
+        using `const`/single-element `enum` values on the discriminant property
+        (falling back to the schema name from the `$ref` path). This restores the
+        "Show N variants" UI in docs for specs like Cohere's chat `messages` field.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.47.0
+  changelogEntry:
+    - summary: |
+        Add `page-actions.options.skills` to docs.yml to enable and configure the "Install skills"
+        page action on docs sites. Presence of the key enables the action (an empty object enables it
+        with all defaults); `title`, `description`, `learn-more-url`, `repository`, and
+        `install-command` (string or list, rendered one command per line) customize the modal, and
+        `skills` lists the available skills. If the site also serves a `/.well-known` skills manifest,
+        the served manifest replaces the hand-listed skills.
+      type: feat
+    - summary: |
+        Upload Agent Skills bundles placed under `.well-known/skills/` or `.well-known/agent-skills/`
+        in the docs folder when publishing docs, so Fern-hosted docs sites serve them and
+        `npx skills add https://<docs-domain>` installs them. `fern check` now validates skill
+        bundles: the `index.json` discovery manifest must exist and parse, and each skill's
+        `SKILL.md` frontmatter needs a kebab-case `name` (max 64 characters) matching its parent
+        directory and a non-empty `description` (max 1024 characters).
+      type: feat
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.46.1
+  changelogEntry:
+    - summary: |
+        Bump bundled `@fern-api/replay` (via generator-cli 0.9.38) to 0.18.0: replay
+        detection filters `.fernignore`-protected files before materializing patches,
+        handles trailing-slash patterns like `docs/`, and no longer crashes with an
+        unhandled `write EPIPE` during patch application.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
 - version: 5.46.0
   changelogEntry:
     - summary: |

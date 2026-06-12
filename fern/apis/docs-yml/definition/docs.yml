@@ -464,6 +464,14 @@ types:
           When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.
           The value of this property should be the name of the custom IDE.
           Example: `cursor`
+      skills:
+        type: optional<SkillsPageActionConfig>
+        docs: |
+          Enables the "Install skills" page action and configures its modal. Presence of this key
+          enables the action; omit it and the action is hidden. An empty object (`skills: {}`) is
+          valid and enables the action with all defaults — the right minimal config for sites that
+          serve a `/.well-known` skills manifest, where the docs site generates the
+          `npx skills add https://<domain>` command and fetches the live skill list itself.
 
   CustomPageAction:
     docs: A custom page action that can be configured by the user.
@@ -483,6 +491,59 @@ types:
       default:
         type: optional<boolean>
         docs: Whether this custom action should be the default action.
+
+  SkillsPageActionConfig:
+    docs: |
+      Configures the "Install skills" page action and its modal. Sites that ship agent skills
+      point at where those skills live and how to install them. If the docs site also serves a
+      `/.well-known` skills manifest, the modal replaces the hand-listed `skills` array with the
+      served manifest; `title`, `description`, `learn-more-url`, `repository`, and
+      `install-command` always come from this config.
+    properties:
+      title:
+        type: optional<string>
+        docs: Overrides the modal title.
+      description:
+        type: optional<string>
+        docs: Overrides the modal description/blurb.
+      "learn-more-url":
+        type: optional<string>
+        docs: Optional "Learn more" link shown alongside the description.
+      repository:
+        type: optional<string>
+        docs: Source repository (e.g. GitHub or GitLab) shown as a "View source" button.
+      "install-command":
+        type: optional<SkillsInstallCommand>
+        docs: |
+          Command(s) used to install the skills, rendered verbatim as a copyable block. Providing a
+          custom command disables the modal's per-skill selection. When omitted, the docs site
+          generates `npx skills add https://<domain>` and per-skill selection appends
+          `--skill <name>` flags. A list is rendered as one command per line (multi-step installs).
+      skills:
+        type: optional<list<SkillEntry>>
+        docs: Skills displayed in the modal.
+
+  SkillsInstallCommand:
+    discriminated: false
+    docs: A single install command, or a list of commands rendered one per line.
+    union:
+      - string
+      - list<string>
+
+  SkillEntry:
+    docs: |
+      A single agent skill surfaced in the "Install skills" modal. `name` is the skill identifier
+      (e.g. `fern-docs`); `url` optionally links to its source (a path in the repo, a docs page, etc.).
+    properties:
+      name:
+        type: string
+        docs: The skill identifier.
+      description:
+        type: optional<string>
+        docs: Short description of what the skill does.
+      url:
+        type: optional<string>
+        docs: Optional link to the skill's source.
 
   AIChatConfig:
     properties:

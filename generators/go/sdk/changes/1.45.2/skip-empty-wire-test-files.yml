@@ -1,0 +1,5 @@
+- summary: |
+    Skip generating wire test files when all endpoints in a service are
+    skipped (e.g., file download or bytes request body endpoints). Previously
+    this produced a test file with a missing `require` import.
+  type: fix

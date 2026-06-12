@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.9.39 (Replay 0.18.0) for more reliable
+        customization detection during regeneration.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.72.0
+  changelogEntry:
+    - summary: |
+        Add `serdeLayer` config option as a positive alternative to the `noSerdeLayer` double negative.
+        When both are specified, `serdeLayer` takes precedence.
+      type: feat
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.71.9
+  changelogEntry:
+    - summary: |
+        Fix request body serialization when flattenRequestParameters is enabled with
+        a non-object reference body (e.g., `list<string>`) and header parameters. Previously
+        the generated code used spread destructuring which wrapped the body in an object.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.71.8
+  changelogEntry:
+    - summary: |
+        Rebuild oxlint-tsgolint 0.23.0 from source with Go 1.26.4 to fix
+        CVE-2026-42507 (net/textproto log injection) and CVE-2026-27145
+        (crypto/x509 quadratic hostname verification) in the
+        typescript-sdk-generator container.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
 - version: 3.71.7
   changelogEntry:
     - summary: |

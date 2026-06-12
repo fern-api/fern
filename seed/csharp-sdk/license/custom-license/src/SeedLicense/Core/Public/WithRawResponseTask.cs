@@ -142,3 +142,46 @@ public readonly struct WithRawResponseTask<T>
         }
     }
 }
+
+/// <summary>
+/// A task-like type that wraps Task&lt;RawResponse&gt; and provides dual-mode awaiting for endpoints with no response body:
+/// - Direct await completes with no value (void semantics)
+/// - .WithRawResponse() yields RawResponse (when raw response metadata is needed)
+/// </summary>
+public readonly struct WithRawResponseTask
+{
+    private readonly global::System.Threading.Tasks.Task<RawResponse> _task;
+
+    /// <summary>
+    /// Creates a new WithRawResponseTask wrapping the given task.
+    /// </summary>
+    public WithRawResponseTask(global::System.Threading.Tasks.Task<RawResponse> task)
+    {
+        _task = task;
+    }
+
+    /// <summary>
+    /// Returns the underlying task that yields raw response metadata.
+    /// </summary>
+    public global::System.Threading.Tasks.Task<RawResponse> WithRawResponse() => _task;
+
+    /// <summary>
+    /// Awaiter delegates to the non-generic Task, completing with no value.
+    /// </summary>
+    public TaskAwaiter GetAwaiter() => ((global::System.Threading.Tasks.Task)_task).GetAwaiter();
+
+    /// <summary>
+    /// Configures the awaiter to continue on the captured context or not. The configured awaitable completes with no value.
+    /// </summary>
+    public global::System.Runtime.CompilerServices.ConfiguredTaskAwaitable ConfigureAwait(
+        bool continueOnCapturedContext
+    ) => ((global::System.Threading.Tasks.Task)_task).ConfigureAwait(continueOnCapturedContext);
+
+    /// <summary>
+    /// Implicitly converts WithRawResponseTask to global::System.Threading.Tasks.Task for backward compatibility.
+    /// </summary>
+    public static implicit operator global::System.Threading.Tasks.Task(WithRawResponseTask task)
+    {
+        return task._task;
+    }
+}

@@ -5,4 +5,7 @@ import type * as FernOpenapiIr from "../../../index.js";
 export interface TextResponse
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithStatusCode {}
+        FernOpenapiIr.WithStatusCode {
+    /** The original media type (e.g. text/csv, text/xml). Defaults to text/plain. */
+    contentType: string | undefined;
+}

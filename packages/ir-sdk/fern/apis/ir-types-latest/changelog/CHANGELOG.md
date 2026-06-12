@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.4.0] - 2026-05-14
+
+- Feature: Add optional `contentType` field to `TextResponse`. Preserves the
+  original media type (e.g. `text/csv`, `text/xml`) from OpenAPI specs through
+  the IR so that `fern export` can emit the correct content type instead of
+  always defaulting to `text/plain`.
+
 ## [v67.3.0] - 2026-05-19
 
 - Feature: Add optional `hasWebSocketInTree` field to `Package`. When `true`, indicates

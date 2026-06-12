@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.17.8
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.7
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.6
+  changelogEntry:
+    - summary: |
+        Fix generated sdk_glue.rs missing `http_client` field in ApiClient
+        initializer for flat APIs (no sub-client groups), which caused Rust
+        compilation failures.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 0.17.5
+  changelogEntry:
+    - summary: |
+        Rebuild to pick up rust-sdk 0.40.6 which fixes serde imports in
+        `environment.rs` for multi-URL environments when embedded in the CLI.
+      type: chore
+  createdAt: "2026-06-11"
+  irVersion: 67
 - version: 0.17.4
   changelogEntry:
     - summary: |

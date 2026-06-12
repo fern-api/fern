@@ -1,0 +1,5 @@
+- summary: |
+    Fix text/* content types (e.g. text/csv, text/xml) being silently converted
+    to text/plain during OpenAPI export. The original media type is now preserved
+    through the IR via a new optional `contentType` field on `TextResponse`.
+  type: fix

@@ -3638,6 +3638,7 @@ types:
                 },
               },
               "response": {
+                "content-type": undefined,
                 "docs": "Ok",
                 "status-code": 200,
                 "type": "text",

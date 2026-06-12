@@ -810,12 +810,8 @@
           {
             "key": "webhooksCount",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "Long",
-                "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
-              }
+              "type": "id",
+              "value": "Long"
             },
             "description": "Number of webhooks attached to an Amazon EventSource."
           }
@@ -1003,6 +999,19 @@
       },
       "description": "The Amazon EventSource region."
     },
+    "BigDecimal": {
+      "name": "BigDecimal",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
+    },
     "CancelSubscriptionInput": {
       "name": "CancelSubscriptionInput",
       "shape": {
@@ -1046,12 +1055,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "The date the subscription will be cancelled."
@@ -1674,12 +1679,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "Long",
-                  "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
-                }
+                "type": "id",
+                "value": "Long"
               }
             },
             "description": "The total number of items in the collection."
@@ -2515,6 +2516,19 @@
       },
       "description": "Currency Code."
     },
+    "DateTime": {
+      "name": "DateTime",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "datetime"
+          }
+        }
+      },
+      "description": "ISO-8601 formatted date in UTC"
+    },
     "DeleteEventSourceInput": {
       "name": "DeleteEventSourceInput",
       "shape": {
@@ -2576,6 +2590,19 @@
         ]
       }
     },
+    "Long": {
+      "name": "Long",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "long"
+          }
+        }
+      },
+      "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+    },
     "Money": {
       "name": "Money",
       "shape": {
@@ -2595,12 +2622,8 @@
           {
             "key": "value",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "BigDecimal",
-                "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
-              }
+              "type": "id",
+              "value": "BigDecimal"
             },
             "description": "The amount of money."
           }
@@ -2625,12 +2648,8 @@
           {
             "key": "value",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "BigDecimal",
-                "description": "The `BigDecimal` scalar type represents signed fractional values with arbitrary precision."
-              }
+              "type": "id",
+              "value": "BigDecimal"
             },
             "description": "The monetary amount. Must be a positive decimal number. For example, 10.10 with a currency code of USD represents $10.10."
           }
@@ -3226,12 +3245,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "When the user last logged in."
@@ -3285,12 +3300,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "When was the user last updated."
@@ -3419,12 +3430,8 @@
           {
             "key": "activationDate",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "DateTime",
-                "description": "ISO-8601 formatted date in UTC"
-              }
+              "type": "id",
+              "value": "DateTime"
             },
             "description": "The date when the Subscription becomes active, ending any trial period, and billing the Merchant for the first time."
           },
@@ -3439,12 +3446,8 @@
           {
             "key": "createdAt",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "DateTime",
-                "description": "ISO-8601 formatted date in UTC"
-              }
+              "type": "id",
+              "value": "DateTime"
             },
             "description": "The date the subscription was created."
           },
@@ -3453,12 +3456,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "The end of the current billing interval for the Merchant."
@@ -3504,12 +3503,8 @@
           {
             "key": "updatedAt",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "DateTime",
-                "description": "ISO-8601 formatted date in UTC"
-              }
+              "type": "id",
+              "value": "DateTime"
             },
             "description": "The date the subscription was last updated."
           }
@@ -3699,12 +3694,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "scalar",
-                  "name": "DateTime",
-                  "description": "ISO-8601 formatted date in UTC"
-                }
+                "type": "id",
+                "value": "DateTime"
               }
             },
             "description": "A date for filtering the query."
@@ -3865,12 +3856,8 @@
           {
             "key": "time",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "scalar",
-                "name": "Long",
-                "description": "The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
-              }
+              "type": "id",
+              "value": "Long"
             },
             "description": "The current time."
           }
@@ -4003,6 +3990,20 @@
         ]
       },
       "description": "The type of target."
+    },
+    "UUID": {
+      "name": "UUID",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "description": "The UUID scalar type represents a universally unique identifier."
     },
     "User": {
       "name": "User",

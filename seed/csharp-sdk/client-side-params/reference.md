@@ -496,7 +496,7 @@ await client.Service.UpdateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">DeleteUserAsync</a>(userId)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">DeleteUserAsync</a>(userId) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
