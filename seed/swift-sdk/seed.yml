@@ -136,8 +136,6 @@ allowedFailures:
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference
-  - nullable:no-custom-config
-  - nullable:nullable-as-optional
   - oauth-client-credentials-with-variables
   - query-parameters
   - request-parameters
