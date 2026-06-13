@@ -7,6 +7,7 @@ use Seed\SeedClient;
 use Seed\InlinedRequests\Requests\PostWithObjectBody;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use DateTime;
+use Seed\InlinedRequests\Requests\PostWithArrayBodyAndHeaders;
 
 class InlinedRequestsWireTest extends WireMockTestCase
 {
@@ -56,6 +57,33 @@ class InlinedRequestsWireTest extends WireMockTestCase
             $testId,
             "POST",
             "/req-bodies/object",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testPostWithArrayBodyAndHeaders(): void {
+        $testId = 'inlined_requests.post_with_array_body_and_headers.0';
+        $this->client->inlinedRequests->postWithArrayBodyAndHeaders(
+            new PostWithArrayBodyAndHeaders([
+                'xCustomHeader' => 'X-Custom-Header',
+                'body' => [
+                    'string',
+                    'string',
+                ],
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'inlined_requests.post_with_array_body_and_headers.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/req-bodies/array-body-with-headers",
             null,
             1
         );
