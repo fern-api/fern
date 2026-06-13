@@ -51,3 +51,20 @@ func (c *Client) PostWithObjectBodyandResponse(
 	}
 	return response.Body, nil
 }
+
+// POST with root-level array body and header params
+func (c *Client) PostWithArrayBodyAndHeaders(
+	ctx context.Context,
+	request *fern.PostWithArrayBodyAndHeaders,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.PostWithArrayBodyAndHeaders(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}

@@ -1812,6 +1812,32 @@
       }
     },
     {
+      "id": "0989bd27-188d-4515-9e03-85d554a2df57",
+      "name": "postWithArrayBodyAndHeaders - default",
+      "request": {
+        "urlPathTemplate": "/req-bodies/array-body-with-headers",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "\"string\"",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0989bd27-188d-4515-9e03-85d554a2df57",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "c6e7cc6c-b76f-4860-a9ad-52dc8f55b6e6",
       "name": "postWithNoAuth - default",
       "request": {
@@ -1933,6 +1959,6 @@
     }
   ],
   "meta": {
-    "total": 59
+    "total": 60
   }
 }

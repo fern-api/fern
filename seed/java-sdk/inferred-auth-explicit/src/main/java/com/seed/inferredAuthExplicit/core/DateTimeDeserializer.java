@@ -46,8 +46,7 @@ class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
             String value = parser.getValueAsString();
             TemporalAccessor temporal;
             try {
-                temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(
-                        value, OffsetDateTime::from, LocalDateTime::from);
+                temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(value, OffsetDateTime::from, LocalDateTime::from);
             } catch (DateTimeParseException e) {
                 // Fall back to space-separated format (e.g. "2025-02-15 10:30:00+00:00").
                 temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(

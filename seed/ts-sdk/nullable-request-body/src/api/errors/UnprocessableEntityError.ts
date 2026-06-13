@@ -17,6 +17,6 @@ export class UnprocessableEntityError extends errors.SeedApiError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "UnprocessableEntityError";
     }
 }

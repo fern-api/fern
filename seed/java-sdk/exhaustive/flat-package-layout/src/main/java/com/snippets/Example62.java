@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import java.util.HashMap;
+import com.seed.exhaustive.types.PostWithArrayBodyAndHeaders;
+import java.util.Arrays;
 
 public class Example62 {
     public static void main(String[] args) {
@@ -10,10 +11,10 @@ public class Example62 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.noAuth().postWithNoAuth(new HashMap<String, Object>() {
-            {
-                put("key", "value");
-            }
-        });
+        client.inlinedRequests()
+                .postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders.builder()
+                        .body(Arrays.asList("string", "string"))
+                        .xCustomHeader("X-Custom-Header")
+                        .build());
     }
 }

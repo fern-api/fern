@@ -2916,6 +2916,76 @@ $client->inlinedRequests->postWithObjectBodyandResponse(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;inlinedRequests-&gt;postWithArrayBodyAndHeaders($request) -> ?string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->inlinedRequests->postWithArrayBodyAndHeaders(
+    new PostWithArrayBodyAndHeaders([
+        'xCustomHeader' => 'X-Custom-Header',
+        'body' => [
+            'string',
+            'string',
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$xCustomHeader:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## NoAuth
 <details><summary><code>$client-&gt;noAuth-&gt;postWithNoAuth($request) -> ?bool</code></summary>
 <dl>

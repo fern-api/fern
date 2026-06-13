@@ -30,3 +30,14 @@ def test_inlinedRequests_post_with_object_bodyand_response() -> None:
         ),
     )
     verify_request_count(test_id, "POST", "/req-bodies/object", None, 1)
+
+
+def test_inlinedRequests_post_with_array_body_and_headers() -> None:
+    """Test postWithArrayBodyAndHeaders endpoint with WireMock"""
+    test_id = "inlined_requests.post_with_array_body_and_headers.0"
+    client = get_client(test_id)
+    client.inlined_requests.post_with_array_body_and_headers(
+        x_custom_header="X-Custom-Header",
+        request=["string", "string"],
+    )
+    verify_request_count(test_id, "POST", "/req-bodies/array-body-with-headers", None, 1)

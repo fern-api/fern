@@ -15,6 +15,6 @@ export class BadRequest extends errors.SeedBasicAuthError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "BadRequest";
     }
 }

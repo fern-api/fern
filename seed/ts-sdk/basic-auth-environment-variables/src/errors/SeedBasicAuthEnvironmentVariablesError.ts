@@ -28,7 +28,7 @@ export class SeedBasicAuthEnvironmentVariablesError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedBasicAuthEnvironmentVariablesError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

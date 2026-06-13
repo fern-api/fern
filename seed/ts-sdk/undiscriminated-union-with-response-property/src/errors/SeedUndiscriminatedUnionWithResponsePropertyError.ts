@@ -28,7 +28,7 @@ export class SeedUndiscriminatedUnionWithResponsePropertyError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedUndiscriminatedUnionWithResponsePropertyError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

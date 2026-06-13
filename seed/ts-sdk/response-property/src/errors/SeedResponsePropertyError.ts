@@ -28,7 +28,7 @@ export class SeedResponsePropertyError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedResponsePropertyError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

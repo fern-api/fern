@@ -48,7 +48,7 @@ class BadRequestBody extends errors.SeedExhaustiveError {
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
-        this.name = this.constructor.name;
+        this.name = "BadRequestBody";
     }
 }
 exports.BadRequestBody = BadRequestBody;

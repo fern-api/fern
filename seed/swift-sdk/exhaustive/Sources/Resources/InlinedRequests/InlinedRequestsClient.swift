@@ -19,4 +19,20 @@ public final class InlinedRequestsClient: Sendable {
             responseType: ObjectWithOptionalField.self
         )
     }
+
+    /// POST with root-level array body and header params
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func postWithArrayBodyAndHeaders(xCustomHeader: String? = nil, request: [String], requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/req-bodies/array-body-with-headers",
+            headers: [
+                "X-Custom-Header": xCustomHeader
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
 }

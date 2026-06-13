@@ -17,6 +17,6 @@ export class ErrorWithUnionBody extends errors.SeedExhaustiveError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "ErrorWithUnionBody";
     }
 }

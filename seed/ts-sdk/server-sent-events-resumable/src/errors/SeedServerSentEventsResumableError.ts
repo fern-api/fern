@@ -28,7 +28,7 @@ export class SeedServerSentEventsResumableError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedServerSentEventsResumableError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

@@ -10,7 +10,7 @@ export class SeedOauthClientCredentialsMandatoryAuthTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedOauthClientCredentialsMandatoryAuthTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }
