@@ -12,10 +12,7 @@ public partial class CClient : ICClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.A.C.FooAsync();
-    /// </code></example>
-    public async Task FooAsync(
+    private async Task<RawResponse> FooAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -40,7 +37,12 @@ public partial class CClient : ICClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedApi.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -58,5 +60,16 @@ public partial class CClient : ICClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.A.C.FooAsync();
+    /// </code></example>
+    public WithRawResponseTask FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(FooAsyncCore(options, cancellationToken));
     }
 }

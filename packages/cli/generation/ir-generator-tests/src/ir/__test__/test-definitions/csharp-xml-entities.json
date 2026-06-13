@@ -170,6 +170,7 @@
                     "id": "endpoint_.getTimeZone",
                     "name": "getTimeZone",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as SeedExhaustive from "../../../index.js";
 
@@ -122,6 +122,79 @@ export class InlinedRequestsClient {
             data: {
                 ok: false,
                 error: SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
+     * POST with root-level array body and header params
+     *
+     * @param {SeedExhaustive.PostWithArrayBodyAndHeaders} request
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.inlinedRequests.postWithArrayBodyAndHeaders({
+     *         "X-Custom-Header": "X-Custom-Header",
+     *         body: ["string", "string"]
+     *     })
+     */
+    public postWithArrayBodyAndHeaders(
+        request: SeedExhaustive.PostWithArrayBodyAndHeaders,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<string, SeedExhaustive.inlinedRequests.postWithArrayBodyAndHeaders.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__postWithArrayBodyAndHeaders(request, requestOptions));
+    }
+
+    private async __postWithArrayBodyAndHeaders(
+        request: SeedExhaustive.PostWithArrayBodyAndHeaders,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.inlinedRequests.postWithArrayBodyAndHeaders.Error>>
+    > {
+        const { "X-Custom-Header": xCustomHeader, body: _body } = request;
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-Custom-Header": xCustomHeader }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/req-bodies/array-body-with-headers",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as string,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedExhaustive.inlinedRequests.postWithArrayBodyAndHeaders.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

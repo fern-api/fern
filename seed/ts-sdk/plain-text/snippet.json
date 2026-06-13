@@ -10,6 +10,28 @@
                 "type": "typescript",
                 "client": "import { SeedPlainTextClient } from \"@fern/plain-text\";\n\nconst client = new SeedPlainTextClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getText();\n"
             }
+        },
+        {
+            "id": {
+                "path": "/csv",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getCsv"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPlainTextClient } from \"@fern/plain-text\";\n\nconst client = new SeedPlainTextClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getCsv();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/xml",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getXml"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPlainTextClient } from \"@fern/plain-text\";\n\nconst client = new SeedPlainTextClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.getXml();\n"
+            }
         }
     ],
     "types": {}

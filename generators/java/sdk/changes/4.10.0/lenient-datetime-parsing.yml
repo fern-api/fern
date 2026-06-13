@@ -1,0 +1,5 @@
+- summary: |
+    The Java SDK now accepts space-separated datetime strings (e.g. "2025-02-15 10:30:00+00:00")
+    in addition to standard ISO 8601 format during deserialization. This matches the leniency of
+    the Python and TypeScript SDKs.
+  type: feat

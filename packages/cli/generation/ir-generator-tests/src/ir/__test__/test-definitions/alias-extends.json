@@ -412,6 +412,7 @@
                     "id": "endpoint_.extendedInlineRequestBody",
                     "name": "extendedInlineRequestBody",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

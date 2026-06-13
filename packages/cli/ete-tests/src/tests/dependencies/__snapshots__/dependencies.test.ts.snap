@@ -209,6 +209,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "id": "endpoint_imported.rootEndpoint",
                     "name": "rootEndpoint",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -771,4 +772,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2290425`;
+exports[`dependencies > file dependencies 1`] = `2290767`;

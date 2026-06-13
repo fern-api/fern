@@ -348,6 +348,7 @@
                     "id": "endpoint_.uploadJsonDocument",
                     "name": "uploadJsonDocument",
                     "displayName": "Upload document metadata (JSON) or document file",
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1209,6 +1210,7 @@
                     "id": "endpoint_.uploadPdfDocument",
                     "name": "uploadPdfDocument",
                     "displayName": "Upload document metadata (JSON) or document file",
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

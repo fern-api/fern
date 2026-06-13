@@ -11,10 +11,7 @@ public partial class Ec2Client : IEc2Client
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
-    /// </code></example>
-    public async Task BootInstanceAsync(
+    private async Task<RawResponse> BootInstanceAsyncCore(
         BootInstanceRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -42,7 +39,12 @@ public partial class Ec2Client : IEc2Client
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedMultiUrlEnvironmentNoDefault.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -60,5 +62,17 @@ public partial class Ec2Client : IEc2Client
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "size" });
+    /// </code></example>
+    public WithRawResponseTask BootInstanceAsync(
+        BootInstanceRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(BootInstanceAsyncCore(request, options, cancellationToken));
     }
 }

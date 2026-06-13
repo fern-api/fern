@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.Package.<a href="/src/SeedNurseryApi/Package/PackageClient.cs">TestAsync</a>(TestRequest { ... })</code></summary>
+<details><summary><code>client.Package.<a href="/src/SeedNurseryApi/Package/PackageClient.cs">TestAsync</a>(TestRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

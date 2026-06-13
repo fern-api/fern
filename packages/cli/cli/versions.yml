@@ -1,4 +1,115 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.48.0
+  changelogEntry:
+    - summary: |
+        Add a `--local` flag to `fern docs md generate` that runs the library
+        documentation parsers locally in Docker instead of using Fern's servers.
+        Local generation requires no authentication and operates on `path` inputs
+        (local source); `git` inputs continue to be generated remotely.
+      type: feat
+  createdAt: "2026-06-13"
+  irVersion: 67
+- version: 5.47.6
+  changelogEntry:
+    - summary: |
+        Fix frontmatter values with leading zeros being corrupted during docs publish.
+        `grayMatter.stringify()` in `parseImagePaths` would strip quotes from values
+        like `'001999'` (non-octal digits), causing downstream YAML 1.2 parsers to
+        interpret them as integers and lose leading zeros.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.5
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer dropping types that are only referenced through a
+        `list`/`map` of a `$ref` when audience filtering is enabled. Array and map
+        aliases now record the referenced named type in `referencedTypes` (matching
+        how object properties already do), so audience reachability no longer prunes
+        the referenced type and leaves a dangling reference. This restores the
+        "Show N variants" UI in docs for discriminated unions referenced via a list
+        (e.g. Cohere's v2 chat `messages` field under an audience filter).
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.4
+  changelogEntry:
+    - summary: |
+        Group GraphQL queries by parent field in the sidebar; mutations and subscriptions remain flat. Field path is now included on all GraphQL operations for correct snippet nesting.
+      type: fix
+    - summary: |
+        Include field-level arguments when converting GraphQL object types and interfaces
+        to FDR format. Previously, arguments were only captured for top-level query/mutation
+        fields but not for nested object type fields (e.g., Image.url(width, height, lossy)).
+        Namespace grouping types (object types whose fields are all promoted to top-level
+        operations) are no longer double-registered as plain type definitions.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.3
+  changelogEntry:
+    - summary: |
+        Use string literal for `this.name` in error classes instead of
+        `this.constructor.name`, which gets mangled by minifiers.
+      type: fix
+    - summary: |
+        Fix text/* content types (e.g. text/csv, text/xml) being silently converted
+        to text/plain during OpenAPI export. The original media type is now preserved
+        through the IR via a new optional `contentType` field on `TextResponse`.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.2
+  changelogEntry:
+    - summary: |
+        Stop dropping custom scalars in the GraphQL converter. Custom scalars (e.g. `DateTime`,
+        `URL`, `EmailAddress`) are now emitted as named alias types in the `types` map with a stable
+        id, and references to them point to that id so the type can be linked to in documentation.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 5.47.1
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer producing empty discriminated unions when
+        `discriminator.propertyName` is present but `discriminator.mapping` is absent.
+        The importer now infers the mapping from `oneOf`/`anyOf` `$ref` schemas,
+        using `const`/single-element `enum` values on the discriminant property
+        (falling back to the schema name from the `$ref` path). This restores the
+        "Show N variants" UI in docs for specs like Cohere's chat `messages` field.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.47.0
+  changelogEntry:
+    - summary: |
+        Add `page-actions.options.skills` to docs.yml to enable and configure the "Install skills"
+        page action on docs sites. Presence of the key enables the action (an empty object enables it
+        with all defaults); `title`, `description`, `learn-more-url`, `repository`, and
+        `install-command` (string or list, rendered one command per line) customize the modal, and
+        `skills` lists the available skills. If the site also serves a `/.well-known` skills manifest,
+        the served manifest replaces the hand-listed skills.
+      type: feat
+    - summary: |
+        Upload Agent Skills bundles placed under `.well-known/skills/` or `.well-known/agent-skills/`
+        in the docs folder when publishing docs, so Fern-hosted docs sites serve them and
+        `npx skills add https://<docs-domain>` installs them. `fern check` now validates skill
+        bundles: the `index.json` discovery manifest must exist and parse, and each skill's
+        `SKILL.md` frontmatter needs a kebab-case `name` (max 64 characters) matching its parent
+        directory and a non-empty `description` (max 1024 characters).
+      type: feat
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 5.46.1
+  changelogEntry:
+    - summary: |
+        Bump bundled `@fern-api/replay` (via generator-cli 0.9.38) to 0.18.0: replay
+        detection filters `.fernignore`-protected files before materializing patches,
+        handles trailing-slash patterns like `docs/`, and no longer crashes with an
+        unhandled `write EPIPE` during patch application.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
 - version: 5.46.0
   changelogEntry:
     - summary: |

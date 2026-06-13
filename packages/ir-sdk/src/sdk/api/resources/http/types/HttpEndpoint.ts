@@ -6,6 +6,7 @@ export interface HttpEndpoint extends FernIr.Declaration {
     id: FernIr.EndpointId;
     name: FernIr.EndpointName;
     displayName: string | undefined;
+    subtitle: string | undefined;
     method: FernIr.HttpMethod;
     headers: FernIr.HttpHeader[];
     /** Headers returned in the response */

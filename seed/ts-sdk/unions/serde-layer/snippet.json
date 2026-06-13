@@ -2,7 +2,7 @@
     "endpoints": [
         {
             "id": {
-                "path": "/{id}",
+                "path": "/bigunion/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_bigunion.get"
             },
@@ -13,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/bigunion",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update"
             },
@@ -24,7 +24,7 @@
         },
         {
             "id": {
-                "path": "/many",
+                "path": "/bigunion/many",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update-many"
             },

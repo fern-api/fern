@@ -62,4 +62,90 @@ export class ServiceClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/text");
     }
+
+    /**
+     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getCsv()
+     */
+    public getCsv(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getCsv(requestOptions));
+    }
+
+    private async __getCsv(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "csv",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            responseType: "text",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPlainTextError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/csv");
+    }
+
+    /**
+     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.getXml()
+     */
+    public getXml(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getXml(requestOptions));
+    }
+
+    private async __getXml(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "xml",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            responseType: "text",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as string, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedPlainTextError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/xml");
+    }
 }

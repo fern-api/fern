@@ -3077,6 +3077,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnListOfPrimitives",
                     "name": "getAndReturnListOfPrimitives",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -3323,6 +3324,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnListOfObjects",
                     "name": "getAndReturnListOfObjects",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -3804,6 +3806,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnSetOfPrimitives",
                     "name": "getAndReturnSetOfPrimitives",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -4024,6 +4027,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnSetOfObjects",
                     "name": "getAndReturnSetOfObjects",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -4379,6 +4383,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnMapPrimToPrim",
                     "name": "getAndReturnMapPrimToPrim",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -4682,6 +4687,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject",
                     "name": "getAndReturnMapOfPrimToObject",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -5120,6 +5126,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion",
                     "name": "getAndReturnMapOfPrimToUndiscriminatedUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -5504,6 +5511,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnOptional",
                     "name": "getAndReturnOptional",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -5821,6 +5829,7 @@
                     "id": "endpoint_endpoints/content-type.postJsonPatchContentType",
                     "name": "postJsonPatchContentType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -6493,6 +6502,7 @@
                     "id": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType",
                     "name": "postJsonPatchContentWithCharsetType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -7197,6 +7207,7 @@
                     "id": "endpoint_endpoints/enum.getAndReturnEnum",
                     "name": "getAndReturnEnum",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -7430,6 +7441,7 @@
                     "id": "endpoint_endpoints/http-methods.testGet",
                     "name": "testGet",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -7607,6 +7619,7 @@
                     "id": "endpoint_endpoints/http-methods.testPost",
                     "name": "testPost",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -8641,6 +8654,7 @@
                     "id": "endpoint_endpoints/http-methods.testPut",
                     "name": "testPut",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -9749,6 +9763,7 @@
                     "id": "endpoint_endpoints/http-methods.testPatch",
                     "name": "testPatch",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -11342,6 +11357,7 @@
                     "id": "endpoint_endpoints/http-methods.testDelete",
                     "name": "testDelete",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -11551,6 +11567,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithOptionalField",
                     "name": "getAndReturnWithOptionalField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -13067,6 +13084,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithRequiredField",
                     "name": "getAndReturnWithRequiredField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -13338,6 +13356,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithMapOfMap",
                     "name": "getAndReturnWithMapOfMap",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -13851,6 +13870,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField",
                     "name": "getAndReturnNestedWithOptionalField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -15103,6 +15123,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField",
                     "name": "getAndReturnNestedWithRequiredField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -16874,6 +16895,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList",
                     "name": "getAndReturnNestedWithRequiredFieldAsList",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -19246,6 +19268,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithUnknownField",
                     "name": "getAndReturnWithUnknownField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -19664,6 +19687,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType",
                     "name": "getAndReturnWithDocumentedUnknownType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -19989,6 +20013,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType",
                     "name": "getAndReturnMapOfDocumentedUnknownType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -20386,6 +20411,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields",
                     "name": "getAndReturnWithMixedRequiredAndOptionalFields",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -21235,6 +21261,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject",
                     "name": "getAndReturnWithRequiredNestedObject",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -23520,6 +23547,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString",
                     "name": "getAndReturnWithDatetimeLikeString",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24090,6 +24118,7 @@
                     "id": "endpoint_endpoints/pagination.listItems",
                     "name": "listItems",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24659,6 +24688,7 @@
                     "id": "endpoint_endpoints/params.getWithPath",
                     "name": "getWithPath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24836,6 +24866,7 @@
                     "id": "endpoint_endpoints/params.getWithInlinePath",
                     "name": "getWithInlinePath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25023,6 +25054,7 @@
                     "id": "endpoint_endpoints/params.getWithQuery",
                     "name": "getWithQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25191,6 +25223,7 @@
                     "id": "endpoint_endpoints/params.getWithAllowMultipleQuery",
                     "name": "getWithAllowMultipleQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25359,6 +25392,7 @@
                     "id": "endpoint_endpoints/params.getWithPathAndQuery",
                     "name": "getWithPathAndQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25561,6 +25595,7 @@
                     "id": "endpoint_endpoints/params.getWithInlinePathAndQuery",
                     "name": "getWithInlinePathAndQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25763,6 +25798,7 @@
                     "id": "endpoint_endpoints/params.modifyWithPath",
                     "name": "modifyWithPath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25991,6 +26027,7 @@
                     "id": "endpoint_endpoints/params.modifyWithInlinePath",
                     "name": "modifyWithInlinePath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26206,6 +26243,7 @@
                     "id": "endpoint_endpoints/params.uploadWithPath",
                     "name": "uploadWithPath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26458,6 +26496,7 @@
                     "id": "endpoint_endpoints/params.getWithBooleanPath",
                     "name": "getWithBooleanPath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26631,6 +26670,7 @@
                     "id": "endpoint_endpoints/params.getWithPathAndErrors",
                     "name": "getWithPathAndErrors",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26954,6 +26994,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnString",
                     "name": "getAndReturnString",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27108,6 +27149,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnInt",
                     "name": "getAndReturnInt",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27258,6 +27300,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnLong",
                     "name": "getAndReturnLong",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27408,6 +27451,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnDouble",
                     "name": "getAndReturnDouble",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27558,6 +27602,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnBool",
                     "name": "getAndReturnBool",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27705,6 +27750,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnDatetime",
                     "name": "getAndReturnDatetime",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27845,6 +27891,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnDate",
                     "name": "getAndReturnDate",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27983,6 +28030,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnUUID",
                     "name": "getAndReturnUUID",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -28121,6 +28169,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnBase64",
                     "name": "getAndReturnBase64",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -28291,6 +28340,7 @@
                     "id": "endpoint_endpoints/put.add",
                     "name": "add",
                     "displayName": "Put",
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -29098,6 +29148,7 @@
                     "id": "endpoint_endpoints/union.getAndReturnUnion",
                     "name": "getAndReturnUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -29487,6 +29538,7 @@
                     "id": "endpoint_endpoints/urls.withMixedCase",
                     "name": "withMixedCase",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -29590,6 +29642,7 @@
                     "id": "endpoint_endpoints/urls.noEndingSlash",
                     "name": "noEndingSlash",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -29693,6 +29746,7 @@
                     "id": "endpoint_endpoints/urls.withEndingSlash",
                     "name": "withEndingSlash",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -29796,6 +29850,7 @@
                     "id": "endpoint_endpoints/urls.withUnderscores",
                     "name": "withUnderscores",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -29928,6 +29983,7 @@
                     "id": "endpoint_inlined-requests.postWithObjectBodyandResponse",
                     "name": "postWithObjectBodyandResponse",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -32207,6 +32263,217 @@
                     "responseHeaders": [],
                     "availability": null,
                     "docs": "POST with custom object in request body, response is an object"
+                },
+                {
+                    "id": "endpoint_inlined-requests.postWithArrayBodyAndHeaders",
+                    "name": "postWithArrayBodyAndHeaders",
+                    "displayName": null,
+                    "subtitle": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "POST",
+                    "basePath": null,
+                    "path": {
+                        "head": "/array-body-with-headers",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/req-bodies/array-body-with-headers",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [
+                        {
+                            "name": "X-Custom-Header",
+                            "valueType": {
+                                "_type": "container",
+                                "container": {
+                                    "_type": "optional",
+                                    "optional": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "env": null,
+                            "clientDefault": null,
+                            "defaultValue": null,
+                            "v2Examples": {
+                                "userSpecifiedExamples": {},
+                                "autogeneratedExamples": {}
+                            },
+                            "availability": null,
+                            "docs": null
+                        }
+                    ],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "list",
+                                "list": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "docs": null,
+                        "contentType": null,
+                        "v2Examples": null
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": "PostWithArrayBodyAndHeaders",
+                            "bodyKey": "body",
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": "request",
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "7bbf0688",
+                                "url": "/req-bodies/array-body-with-headers",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "list",
+                                            "list": [
+                                                {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "string"
+                                                },
+                                                {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "string"
+                                                }
+                                            ],
+                                            "itemType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": [
+                                        "string",
+                                        "string"
+                                    ]
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": "POST with root-level array body and header params"
                 }
             ],
             "audiences": null
@@ -32241,6 +32508,7 @@
                     "id": "endpoint_no-auth.postWithNoAuth",
                     "name": "postWithNoAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -32509,6 +32777,7 @@
                     "id": "endpoint_no-req-body.getWithNoRequestBody",
                     "name": "getWithNoRequestBody",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -33427,6 +33696,7 @@
                     "id": "endpoint_no-req-body.postWithNoRequestBody",
                     "name": "postWithNoRequestBody",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -33583,6 +33853,7 @@
                     "id": "endpoint_req-with-headers.getWithCustomHeader",
                     "name": "getWithCustomHeader",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -48869,6 +49140,242 @@
                                 "variable": null
                             }
                         ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_inlined-requests.postWithArrayBodyAndHeaders": {
+                "auth": {
+                    "type": "bearer",
+                    "token": {
+                        "originalName": "token",
+                        "camelCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "token",
+                            "safeName": "token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TOKEN",
+                            "safeName": "TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Token",
+                            "safeName": "Token"
+                        }
+                    }
+                },
+                "declaration": {
+                    "name": {
+                        "originalName": "postWithArrayBodyAndHeaders",
+                        "camelCase": {
+                            "unsafeName": "postWithArrayBodyAndHeaders",
+                            "safeName": "postWithArrayBodyAndHeaders"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_with_array_body_and_headers",
+                            "safeName": "post_with_array_body_and_headers"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_WITH_ARRAY_BODY_AND_HEADERS",
+                            "safeName": "POST_WITH_ARRAY_BODY_AND_HEADERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostWithArrayBodyAndHeaders",
+                            "safeName": "PostWithArrayBodyAndHeaders"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "inlined-requests",
+                                "camelCase": {
+                                    "unsafeName": "inlinedRequests",
+                                    "safeName": "inlinedRequests"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inlined_requests",
+                                    "safeName": "inlined_requests"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INLINED_REQUESTS",
+                                    "safeName": "INLINED_REQUESTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "InlinedRequests",
+                                    "safeName": "InlinedRequests"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "inlined-requests",
+                            "camelCase": {
+                                "unsafeName": "inlinedRequests",
+                                "safeName": "inlinedRequests"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "inlined_requests",
+                                "safeName": "inlined_requests"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INLINED_REQUESTS",
+                                "safeName": "INLINED_REQUESTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "InlinedRequests",
+                                "safeName": "InlinedRequests"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/req-bodies/array-body-with-headers"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "PostWithArrayBodyAndHeaders",
+                            "camelCase": {
+                                "unsafeName": "postWithArrayBodyAndHeaders",
+                                "safeName": "postWithArrayBodyAndHeaders"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "post_with_array_body_and_headers",
+                                "safeName": "post_with_array_body_and_headers"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "POST_WITH_ARRAY_BODY_AND_HEADERS",
+                                "safeName": "POST_WITH_ARRAY_BODY_AND_HEADERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PostWithArrayBodyAndHeaders",
+                                "safeName": "PostWithArrayBodyAndHeaders"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "inlined-requests",
+                                    "camelCase": {
+                                        "unsafeName": "inlinedRequests",
+                                        "safeName": "inlinedRequests"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "inlined_requests",
+                                        "safeName": "inlined_requests"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INLINED_REQUESTS",
+                                        "safeName": "INLINED_REQUESTS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "InlinedRequests",
+                                        "safeName": "InlinedRequests"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "inlined-requests",
+                                "camelCase": {
+                                    "unsafeName": "inlinedRequests",
+                                    "safeName": "inlinedRequests"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inlined_requests",
+                                    "safeName": "inlined_requests"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INLINED_REQUESTS",
+                                    "safeName": "INLINED_REQUESTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "InlinedRequests",
+                                    "safeName": "InlinedRequests"
+                                }
+                            }
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [
+                        {
+                            "name": {
+                                "wireValue": "X-Custom-Header",
+                                "name": {
+                                    "originalName": "X-Custom-Header",
+                                    "camelCase": {
+                                        "unsafeName": "xCustomHeader",
+                                        "safeName": "xCustomHeader"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "x_custom_header",
+                                        "safeName": "x_custom_header"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "X_CUSTOM_HEADER",
+                                        "safeName": "X_CUSTOM_HEADER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "XCustomHeader",
+                                        "safeName": "XCustomHeader"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ],
+                    "body": {
+                        "type": "referenced",
+                        "bodyKey": {
+                            "originalName": "body",
+                            "camelCase": {
+                                "unsafeName": "body",
+                                "safeName": "body"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "body",
+                                "safeName": "body"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BODY",
+                                "safeName": "BODY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Body",
+                                "safeName": "Body"
+                            }
+                        },
+                        "bodyType": {
+                            "type": "typeReference",
+                            "value": {
+                                "type": "list",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        }
                     },
                     "metadata": {
                         "includePathParameters": false,

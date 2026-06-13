@@ -2364,6 +2364,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnListOfPrimitives",
                     "name": "getAndReturnListOfPrimitives",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -2610,6 +2611,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnListOfObjects",
                     "name": "getAndReturnListOfObjects",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -3091,6 +3093,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnSetOfPrimitives",
                     "name": "getAndReturnSetOfPrimitives",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -3311,6 +3314,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnSetOfObjects",
                     "name": "getAndReturnSetOfObjects",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -3666,6 +3670,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnMapPrimToPrim",
                     "name": "getAndReturnMapPrimToPrim",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -3969,6 +3974,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject",
                     "name": "getAndReturnMapOfPrimToObject",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -4407,6 +4413,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion",
                     "name": "getAndReturnMapOfPrimToUndiscriminatedUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -4791,6 +4798,7 @@
                     "id": "endpoint_endpoints/container.getAndReturnOptional",
                     "name": "getAndReturnOptional",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -5108,6 +5116,7 @@
                     "id": "endpoint_endpoints/content-type.postJsonPatchContentType",
                     "name": "postJsonPatchContentType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -5780,6 +5789,7 @@
                     "id": "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType",
                     "name": "postJsonPatchContentWithCharsetType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -6484,6 +6494,7 @@
                     "id": "endpoint_endpoints/duplicate-names-a.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -7506,6 +7517,7 @@
                     "id": "endpoint_endpoints/duplicate-names-a.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -7695,6 +7707,7 @@
                     "id": "endpoint_endpoints/duplicate-names-a.list",
                     "name": "list",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -7872,6 +7885,7 @@
                     "id": "endpoint_endpoints/duplicate-names-b.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -8894,6 +8908,7 @@
                     "id": "endpoint_endpoints/duplicate-names-b.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -9082,6 +9097,7 @@
                     "id": "endpoint_endpoints/duplicate-names-b.list",
                     "name": "list",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -9259,6 +9275,7 @@
                     "id": "endpoint_endpoints/duplicate-names-c.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10281,6 +10298,7 @@
                     "id": "endpoint_endpoints/duplicate-names-c.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10469,6 +10487,7 @@
                     "id": "endpoint_endpoints/duplicate-names-c.list",
                     "name": "list",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10646,6 +10665,7 @@
                     "id": "endpoint_endpoints/enum.getAndReturnEnum",
                     "name": "getAndReturnEnum",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10879,6 +10899,7 @@
                     "id": "endpoint_endpoints/http-methods.testGet",
                     "name": "testGet",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -11056,6 +11077,7 @@
                     "id": "endpoint_endpoints/http-methods.testPost",
                     "name": "testPost",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -12090,6 +12112,7 @@
                     "id": "endpoint_endpoints/http-methods.testPut",
                     "name": "testPut",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -13198,6 +13221,7 @@
                     "id": "endpoint_endpoints/http-methods.testPatch",
                     "name": "testPatch",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -14791,6 +14815,7 @@
                     "id": "endpoint_endpoints/http-methods.testDelete",
                     "name": "testDelete",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -15000,6 +15025,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithOptionalField",
                     "name": "getAndReturnWithOptionalField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -16516,6 +16542,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithRequiredField",
                     "name": "getAndReturnWithRequiredField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -16787,6 +16814,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithMapOfMap",
                     "name": "getAndReturnWithMapOfMap",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -17300,6 +17328,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField",
                     "name": "getAndReturnNestedWithOptionalField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -18552,6 +18581,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField",
                     "name": "getAndReturnNestedWithRequiredField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -20323,6 +20353,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList",
                     "name": "getAndReturnNestedWithRequiredFieldAsList",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -22695,6 +22726,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithUnknownField",
                     "name": "getAndReturnWithUnknownField",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -23113,6 +23145,7 @@
                     "id": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString",
                     "name": "getAndReturnWithDatetimeLikeString",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -23683,6 +23716,7 @@
                     "id": "endpoint_endpoints/pagination.listItems",
                     "name": "listItems",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24252,6 +24286,7 @@
                     "id": "endpoint_endpoints/params.getWithPath",
                     "name": "getWithPath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24429,6 +24464,7 @@
                     "id": "endpoint_endpoints/params.getWithInlinePath",
                     "name": "getWithInlinePath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24616,6 +24652,7 @@
                     "id": "endpoint_endpoints/params.getWithQuery",
                     "name": "getWithQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24784,6 +24821,7 @@
                     "id": "endpoint_endpoints/params.getWithAllowMultipleQuery",
                     "name": "getWithAllowMultipleQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -24952,6 +24990,7 @@
                     "id": "endpoint_endpoints/params.getWithPathAndQuery",
                     "name": "getWithPathAndQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25154,6 +25193,7 @@
                     "id": "endpoint_endpoints/params.getWithInlinePathAndQuery",
                     "name": "getWithInlinePathAndQuery",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25356,6 +25396,7 @@
                     "id": "endpoint_endpoints/params.modifyWithPath",
                     "name": "modifyWithPath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25584,6 +25625,7 @@
                     "id": "endpoint_endpoints/params.modifyWithInlinePath",
                     "name": "modifyWithInlinePath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -25799,6 +25841,7 @@
                     "id": "endpoint_endpoints/params.uploadWithPath",
                     "name": "uploadWithPath",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26083,6 +26126,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnString",
                     "name": "getAndReturnString",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26237,6 +26281,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnInt",
                     "name": "getAndReturnInt",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26387,6 +26432,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnLong",
                     "name": "getAndReturnLong",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26537,6 +26583,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnDouble",
                     "name": "getAndReturnDouble",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26687,6 +26734,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnBool",
                     "name": "getAndReturnBool",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26834,6 +26882,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnDatetime",
                     "name": "getAndReturnDatetime",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -26974,6 +27023,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnDate",
                     "name": "getAndReturnDate",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27112,6 +27162,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnUUID",
                     "name": "getAndReturnUUID",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27250,6 +27301,7 @@
                     "id": "endpoint_endpoints/primitive.getAndReturnBase64",
                     "name": "getAndReturnBase64",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -27420,6 +27472,7 @@
                     "id": "endpoint_endpoints/put.add",
                     "name": "add",
                     "displayName": "Put",
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -28227,6 +28280,7 @@
                     "id": "endpoint_endpoints/union.getAndReturnUnion",
                     "name": "getAndReturnUnion",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -28616,6 +28670,7 @@
                     "id": "endpoint_endpoints/urls.withMixedCase",
                     "name": "withMixedCase",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -28719,6 +28774,7 @@
                     "id": "endpoint_endpoints/urls.noEndingSlash",
                     "name": "noEndingSlash",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -28822,6 +28878,7 @@
                     "id": "endpoint_endpoints/urls.withEndingSlash",
                     "name": "withEndingSlash",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -28925,6 +28982,7 @@
                     "id": "endpoint_endpoints/urls.withUnderscores",
                     "name": "withUnderscores",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -29057,6 +29115,7 @@
                     "id": "endpoint_inlined-requests.postWithObjectBodyandResponse",
                     "name": "postWithObjectBodyandResponse",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -31370,6 +31429,7 @@
                     "id": "endpoint_no-auth.postWithNoAuth",
                     "name": "postWithNoAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -31638,6 +31698,7 @@
                     "id": "endpoint_no-req-body.getWithNoRequestBody",
                     "name": "getWithNoRequestBody",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -32556,6 +32617,7 @@
                     "id": "endpoint_no-req-body.postWithNoRequestBody",
                     "name": "postWithNoRequestBody",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -32712,6 +32774,7 @@
                     "id": "endpoint_req-with-headers.getWithCustomHeader",
                     "name": "getWithCustomHeader",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

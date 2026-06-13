@@ -269,6 +269,7 @@
                     "id": "endpoint_.getExample",
                     "name": "getExample",
                     "displayName": "Get Example",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

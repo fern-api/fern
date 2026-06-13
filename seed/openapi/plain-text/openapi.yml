@@ -12,6 +12,24 @@ paths:
       responses:
         '204':
           description: No content
+  /csv:
+    get:
+      operationId: service_getCsv
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: No content
+  /xml:
+    get:
+      operationId: service_getXml
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '204':
+          description: No content
 components:
   schemas: {}
   securitySchemes: {}

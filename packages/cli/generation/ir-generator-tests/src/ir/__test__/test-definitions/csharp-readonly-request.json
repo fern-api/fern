@@ -314,6 +314,7 @@
                     "id": "endpoint_.batchCreate",
                     "name": "batchCreate",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

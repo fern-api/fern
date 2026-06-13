@@ -8615,6 +8615,7 @@
                     "id": "endpoint_.echo",
                     "name": "echo",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8812,6 +8813,7 @@
                     "id": "endpoint_.createType",
                     "name": "createType",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -9185,6 +9187,7 @@
                     "id": "endpoint_file/notification/service.getException",
                     "name": "getException",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -9670,6 +9673,7 @@
                     "id": "endpoint_file/service.getFile",
                     "name": "getFile",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10143,6 +10147,7 @@
                     "id": "endpoint_health/service.check",
                     "name": "check",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10370,6 +10375,7 @@
                     "id": "endpoint_health/service.ping",
                     "name": "ping",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -10532,6 +10538,7 @@
                     "id": "endpoint_service.getMovie",
                     "name": "getMovie",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -11743,6 +11750,7 @@
                     "id": "endpoint_service.createMovie",
                     "name": "createMovie",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -12880,6 +12888,7 @@
                     "id": "endpoint_service.getMetadata",
                     "name": "getMetadata",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -13542,6 +13551,7 @@
                     "id": "endpoint_service.createBigEntity",
                     "name": "createBigEntity",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -14621,6 +14631,7 @@
                     "id": "endpoint_service.refreshToken",
                     "name": "refreshToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

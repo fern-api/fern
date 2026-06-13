@@ -17,6 +17,31 @@ import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpression
 import { parseMarkdownToTree } from "./parseMarkdownToTree.js";
 import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes.js";
 
+/**
+ * Re-quotes unquoted YAML values that have leading zeros after gray-matter's
+ * stringify pass. js-yaml's dump correctly quotes values that are valid octal
+ * (all digits 0-7, e.g. 001015) but leaves values with non-octal digits (8, 9)
+ * unquoted (e.g. 001999). A downstream YAML 1.2 parser then interprets bare
+ * 001999 as the integer 1999, losing the leading zeros.
+ *
+ * Only applies to the YAML frontmatter block (between --- delimiters), not the
+ * markdown body, to avoid corrupting body content like code fences.
+ */
+function requoteLeadingZeroValues(doc: string): string {
+    const openIdx = doc.indexOf("---\n");
+    if (openIdx !== 0) {
+        return doc;
+    }
+    const closeIdx = doc.indexOf("\n---\n", 4);
+    if (closeIdx === -1) {
+        return doc;
+    }
+    const frontmatter = doc.slice(0, closeIdx);
+    const rest = doc.slice(closeIdx);
+    const fixed = frontmatter.replace(/^(\s*[\w][\w-]*:\s+)(0\d+)\s*$/gm, '$1"$2"');
+    return fixed + rest;
+}
+
 function getLargeFileBytes(): number {
     return parseInt(process.env.FERN_DOCS_LARGE_FILE_BYTES ?? "5000000", 10);
 }
@@ -527,7 +552,10 @@ export function parseImagePaths(
         replacedContent = applyEdits(content, edits);
     }
 
-    return { filepaths: [...filepaths], markdown: grayMatter.stringify(replacedContent, data) };
+    return {
+        filepaths: [...filepaths],
+        markdown: requoteLeadingZeroValues(grayMatter.stringify(replacedContent, data))
+    };
 }
 
 function resolvePath(
@@ -933,7 +961,7 @@ export function replaceImagePathsAndUrls(
         replacedContent = applyEdits(content, edits);
     }
 
-    return grayMatter.stringify(replacedContent, data);
+    return requoteLeadingZeroValues(grayMatter.stringify(replacedContent, data));
 }
 
 function getPosition(
