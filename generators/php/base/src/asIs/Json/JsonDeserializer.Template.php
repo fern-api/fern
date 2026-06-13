@@ -144,6 +144,12 @@ class JsonDeserializer
             return (float) $data;
         }
 
+        // Mirror the float case for int — JSON wire values can arrive as float for decimal/scientific notation.
+        // The round-trip check skips lossy conversions.
+        if ($type === 'int' && is_numeric($data) && (int) $data == $data) {
+            return (int) $data;
+        }
+
         // Handle bools as a special case since gettype($data) returns "boolean" for bool values in PHP.
         if ($type === 'bool' && is_bool($data)) {
             return $data;
