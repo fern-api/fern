@@ -5546,9 +5546,6 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@fern-api/ui-core-utils':
-        specifier: 0.145.12-b50d999d1
-        version: 0.145.12-b50d999d1
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
