@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.49.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-subtitle` OpenAPI extension on endpoints. When set,
+        the subtitle is rendered below the endpoint title in the docs UI.
+      type: feat
+  createdAt: "2026-06-13"
+  irVersion: 67
 - version: 5.48.0
   changelogEntry:
     - summary: |
