@@ -1,0 +1,5 @@
+- summary: |
+    Fix `x-fern-default` (and other extensions) placed in `overrides.yml` being silently
+    applied to the wrong parameter when the override targets a subset of parameters.
+    Override parameter arrays are now merged by `name`+`in` identity instead of by array index.
+  type: fix

@@ -11,7 +11,9 @@ import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.TestGetRequest;
+import com.seed.api.requests.TestGetViaOverridesRequest;
 import com.seed.api.types.TestGetResponse;
+import com.seed.api.types.TestGetViaOverridesResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -68,6 +70,59 @@ public class RawSeedApiClient {
             if (response.isSuccessful()) {
                 return new SeedApiHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TestGetResponse.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<TestGetViaOverridesResponse> testGetViaOverrides(String region) {
+        return testGetViaOverrides(region, TestGetViaOverridesRequest.builder().build());
+    }
+
+    public SeedApiHttpResponse<TestGetViaOverridesResponse> testGetViaOverrides(
+            String region, RequestOptions requestOptions) {
+        return testGetViaOverrides(region, TestGetViaOverridesRequest.builder().build(), requestOptions);
+    }
+
+    public SeedApiHttpResponse<TestGetViaOverridesResponse> testGetViaOverrides(
+            String region, TestGetViaOverridesRequest request) {
+        return testGetViaOverrides(region, request, null);
+    }
+
+    public SeedApiHttpResponse<TestGetViaOverridesResponse> testGetViaOverrides(
+            String region, TestGetViaOverridesRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("test")
+                .addPathSegment(region)
+                .addPathSegments("resource-via-overrides");
+        QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse("100"), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TestGetViaOverridesResponse.class),
+                        response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedApiApiException(

@@ -15,15 +15,40 @@ export function mergeWithOverrides<T extends object>({
     overrides: object;
     allowNullKeys?: string[];
 }): T {
-    const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
-        Array.isArray(obj) && Array.isArray(src)
-            ? src.every((element) => typeof element === "object") && obj.every((element) => typeof element === "object")
-                ? // nested arrays of objects are merged
-                  undefined
-                : // nested arrays of primitives are replaced
-                  [...src]
-            : undefined
-    ) as T;
+    const arrayMergeCustomizer = (obj: unknown, src: unknown): unknown => {
+        if (!Array.isArray(obj) || !Array.isArray(src)) {
+            return undefined;
+        }
+        const allObjObjects = obj.every((element) => typeof element === "object");
+        const allSrcObjects = src.every((element) => typeof element === "object");
+        if (!allObjObjects || !allSrcObjects) {
+            return [...src];
+        }
+        // When all override items have a "name" property, merge by name identity
+        // instead of by array index. This handles OpenAPI parameters arrays where
+        // the override may target a subset of parameters in a different order.
+        if (src.length > 0 && src.every((element) => element != null && "name" in element)) {
+            const result = obj.map((item: Record<string, unknown>) => ({ ...item }));
+            for (const srcItem of src) {
+                const matchIndex = result.findIndex(
+                    (item: Record<string, unknown>) =>
+                        item != null &&
+                        typeof item === "object" &&
+                        item.name === srcItem.name &&
+                        (srcItem.in == null || item.in === srcItem.in)
+                );
+                if (matchIndex !== -1) {
+                    result[matchIndex] = mergeWith({}, result[matchIndex], srcItem, arrayMergeCustomizer);
+                } else {
+                    result.push(srcItem);
+                }
+            }
+            return result;
+        }
+        // Default: merge arrays of objects by index (lodash default behavior)
+        return undefined;
+    };
+    const merged = mergeWith(data, overrides, arrayMergeCustomizer) as T;
     // Remove any nullified values
     const filtered = omitDeepBy(merged, isNull, {
         ancestorKeys: allowNullKeys ?? [],

@@ -23,4 +23,24 @@ describe("SeedApiClient", () => {
         });
         expect(response).toEqual(rawResponseBody);
     });
+
+    test("test_get_via_overrides", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, apiVersion: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/test/region/resource-via-overrides")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.testGetViaOverrides({
+            region: "region",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
 });

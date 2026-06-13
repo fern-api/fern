@@ -1,0 +1,10 @@
+paths:
+  /test/{region}/resource-via-overrides:
+    get:
+      parameters:
+        - name: region
+          x-fern-default: "us-east-1"
+        - name: X-API-Version
+          x-fern-default: "2024-02-08"
+        - name: limit
+          x-fern-default: "100"

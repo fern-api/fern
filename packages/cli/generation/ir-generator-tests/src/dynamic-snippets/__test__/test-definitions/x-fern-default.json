@@ -66,6 +66,72 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_:TestGetViaOverridesResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "TestGetViaOverridesResponse",
+                    "camelCase": {
+                        "unsafeName": "testGetViaOverridesResponse",
+                        "safeName": "testGetViaOverridesResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "test_get_via_overrides_response",
+                        "safeName": "test_get_via_overrides_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TEST_GET_VIA_OVERRIDES_RESPONSE",
+                        "safeName": "TEST_GET_VIA_OVERRIDES_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TestGetViaOverridesResponse",
+                        "safeName": "TestGetViaOverridesResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "message",
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
         }
     },
     "headers": [
@@ -156,6 +222,145 @@
                         "pascalCase": {
                             "unsafeName": "TestGetRequest",
                             "safeName": "TestGetRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "region",
+                                "camelCase": {
+                                    "unsafeName": "region",
+                                    "safeName": "region"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "region",
+                                    "safeName": "region"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REGION",
+                                    "safeName": "REGION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Region",
+                                    "safeName": "Region"
+                                }
+                            },
+                            "wireValue": "region"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "limit",
+                            "name": {
+                                "originalName": "limit",
+                                "camelCase": {
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "limit",
+                                    "safeName": "limit"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LIMIT",
+                                    "safeName": "LIMIT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Limit",
+                                    "safeName": "Limit"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.test_get_via_overrides": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "test_get_via_overrides",
+                    "camelCase": {
+                        "unsafeName": "testGetViaOverrides",
+                        "safeName": "testGetViaOverrides"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "test_get_via_overrides",
+                        "safeName": "test_get_via_overrides"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TEST_GET_VIA_OVERRIDES",
+                        "safeName": "TEST_GET_VIA_OVERRIDES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TestGetViaOverrides",
+                        "safeName": "TestGetViaOverrides"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/test/{region}/resource-via-overrides"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "TestGetViaOverridesRequest",
+                        "camelCase": {
+                            "unsafeName": "testGetViaOverridesRequest",
+                            "safeName": "testGetViaOverridesRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test_get_via_overrides_request",
+                            "safeName": "test_get_via_overrides_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST_GET_VIA_OVERRIDES_REQUEST",
+                            "safeName": "TEST_GET_VIA_OVERRIDES_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TestGetViaOverridesRequest",
+                            "safeName": "TestGetViaOverridesRequest"
                         }
                     },
                     "fernFilepath": {

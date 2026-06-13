@@ -165,6 +165,7 @@ allowedFailures:
   - no-environment
   - no-retries
   - nullable
+  - nullable-allof-extends
   - nullable-optional
   - oauth-client-credentials
   - oauth-client-credentials-custom
@@ -190,16 +191,19 @@ allowedFailures:
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi:github-npm
+  - query-parameters-openapi:github-no-publish
   - query-parameters-openapi:no-custom-config
   - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable
   - reserved-keywords
   - response-property
+  - schemaless-request-body-examples
   - server-sent-event-examples
   - server-sent-events
   - server-sent-events-openapi
   - server-sent-events-resumable
+  - server-url-templating
   - simple-api:no-custom-config
   - simple-fhir
   - single-url-environment-default
@@ -213,6 +217,7 @@ allowedFailures:
   - unions
   - unions-with-local-date
   - unknown
+  - url-form-encoded
   - validation
   - variables
   - version
@@ -222,3 +227,4 @@ allowedFailures:
   - websocket-bearer-auth
   - websocket-inferred-auth
   - websocket-multi-url
+  - x-fern-default

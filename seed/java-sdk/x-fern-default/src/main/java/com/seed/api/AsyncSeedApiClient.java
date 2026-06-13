@@ -6,7 +6,9 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.requests.TestGetRequest;
+import com.seed.api.requests.TestGetViaOverridesRequest;
 import com.seed.api.types.TestGetResponse;
+import com.seed.api.types.TestGetViaOverridesResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncSeedApiClient {
@@ -41,6 +43,27 @@ public class AsyncSeedApiClient {
     public CompletableFuture<TestGetResponse> testGet(
             String region, TestGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.testGet(region, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<TestGetViaOverridesResponse> testGetViaOverrides(String region) {
+        return this.rawClient.testGetViaOverrides(region).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<TestGetViaOverridesResponse> testGetViaOverrides(
+            String region, RequestOptions requestOptions) {
+        return this.rawClient.testGetViaOverrides(region, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<TestGetViaOverridesResponse> testGetViaOverrides(
+            String region, TestGetViaOverridesRequest request) {
+        return this.rawClient.testGetViaOverrides(region, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<TestGetViaOverridesResponse> testGetViaOverrides(
+            String region, TestGetViaOverridesRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .testGetViaOverrides(region, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public static AsyncSeedApiClientBuilder builder() {
