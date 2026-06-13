@@ -75,6 +75,9 @@ secrecy = "0.10"
 serde_qs = "1.1.1"
 sha2 = "0.10"
 thiserror = "2"
+keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service", "vendored"] }
+webbrowser = "1"
+rand = "0.8"
 tokio = { version = "1", features = ["full"] }
 tokio-tungstenite = { version = "0.24", default-features = false, features = ["connect", "handshake"] }
 tokio-util = { version = "0.7", features = ["io"] }

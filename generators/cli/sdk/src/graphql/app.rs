@@ -282,6 +282,10 @@ impl AppContext {
             quiet: self.quiet,
         };
 
+        // Programmatic execution from custom command handlers honors the
+        // default retry policy; there is no `--no-retry` opt-out on this path.
+        let retry_policy = executor::resolve_retry_policy(false);
+
         tokio::runtime::Handle::current()
             .block_on(executor::execute_method(
                 &entry.doc,
@@ -295,6 +299,7 @@ impl AppContext {
                 false,
                 None,
                 &entry.http_config,
+                &retry_policy,
                 false,
             ))
             .map(|_| ())

@@ -44,7 +44,7 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .arg(
             clap::Arg::new("format")
                 .long("format")
-                .help("Output format: json (default), table, yaml, csv")
+                .help("Output format: json, table, yaml, csv. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var.")
                 .value_name("FORMAT")
                 .global(true),
         )

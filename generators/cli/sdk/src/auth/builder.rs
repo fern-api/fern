@@ -192,6 +192,9 @@ fn describe_credential_source(src: &AuthCredentialSource) -> String {
             .map(describe_credential_source)
             .collect::<Vec<_>>()
             .join(" / "),
+        AuthCredentialSource::Keyring { service, account } => {
+            format!("keyring {service}:{account}")
+        }
         AuthCredentialSource::Missing => "(unbound)".to_string(),
     }
 }
