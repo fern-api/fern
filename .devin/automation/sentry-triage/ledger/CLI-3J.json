@@ -1,9 +1,9 @@
 {
   "title": "Windows temp OpenAPI filepath is not relative",
-  "disposition": "keep_sentry",
-  "rationale": "Absolute/Windows path reached a relative-path invariant; needs path normalization or boundary validation fix.",
-  "fixSummary": "—",
-  "prOrIssue": "Keep in Sentry until product fix",
-  "lastAnalyzed": "2026-05-04",
+  "disposition": "shipped",
+  "rationale": "Windows can return an absolute path when relativizing an OpenAPI spec from a different drive than the new workspace; `fern init` now rejects that case with a config error instead of tripping the relative-path invariant.",
+  "fixSummary": "Throw a config error when cross-drive OpenAPI specs cannot be expressed relative to the new workspace.",
+  "prOrIssue": "https://github.com/fern-api/fern/pull/15951",
+  "lastAnalyzed": "2026-05-16",
   "problemSignature": "OpenAPI or workspace path conversion received an absolute path where a relative path was required; path boundary bug until fixed."
 }

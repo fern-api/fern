@@ -1,0 +1,4 @@
+- summary: |
+    Fail `fern init` with a clear config error when Windows cannot express the OpenAPI spec
+    path relative to the generated workspace because the spec is on a different drive.
+  type: fix
