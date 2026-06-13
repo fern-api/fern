@@ -47,6 +47,8 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     // `success=` reflects whether the replay logic itself succeeded (NOT step.success,
     // which stays true on replay crashes so the orchestrator doesn't abort generation).
     const replayLogicSucceeded = result.replayCrashed !== true;
+    // `degraded=` is APPEND-ONLY: the existing keys are frozen on-call grep
+    // keys (see CONTEXT.md in fern-replay) — never rename or reorder them.
     logger.info(
         `[replay] flow=${result.flow ?? "unknown"} detected=${result.patchesDetected ?? 0} ` +
             `applied=${applied} conflicts=${result.patchesWithConflicts ?? 0} ` +
@@ -54,7 +56,8 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
             `content_rebased=${result.patchesContentRebased ?? 0} ` +
             `kept_as_user_owned=${result.patchesKeptAsUserOwned ?? 0} ` +
             `unresolved=${unresolvedCount} unresolved_files=${unresolvedFiles} ` +
-            `warnings=${result.warnings?.length ?? 0} success=${replayLogicSucceeded}`
+            `warnings=${result.warnings?.length ?? 0} success=${replayLogicSucceeded} ` +
+            `degraded=${result.degraded === true}`
     );
 
     if (preserved > 0) {
@@ -117,6 +120,72 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     }
 }
 
+/**
+ * Renders the degraded-run warning block for the TOP of a PR body, or
+ * undefined when the run was healthy.
+ *
+ * Deliberately separate from `formatReplayPrBody`: that function returns
+ * undefined when nothing was preserved and nothing conflicted — exactly the
+ * shape of a degraded run — so a degraded warning routed through it would
+ * never render. This block is composed independently via `composePrBody`.
+ *
+ * Also renders when the replay logic crashed (`replayCrashed === true`):
+ * a crashed run ships a PR with zero replay signal otherwise, which is the
+ * same silent-loss hole.
+ */
+export function formatReplayDegradedBlock(result: ReplayStepResult | undefined): string | undefined {
+    if (result == null || !result.executed) {
+        return undefined;
+    }
+
+    const reasons = result.degradedReasons ?? [];
+    const isDegraded = result.degraded === true || reasons.length > 0;
+    const crashed = result.replayCrashed === true;
+    if (!isDegraded && !crashed) {
+        return undefined;
+    }
+
+    const lines: string[] = [];
+    lines.push(`> [!WARNING]`);
+    lines.push(
+        `> **Customizations may not have been preserved in this update — review the diff before merging.**`
+    );
+    if (reasons.length > 0) {
+        lines.push(`>`);
+        for (const reason of reasons) {
+            lines.push(`> - ${reason.message}`);
+        }
+    } else if (crashed) {
+        lines.push(`>`);
+        const detail = result.errorMessage != null ? ` (${result.errorMessage})` : "";
+        lines.push(`> - Replay did not complete on this run${detail}.`);
+    }
+    lines.push(`>`);
+    lines.push(
+        `> The previous generation was not reachable while this update was prepared. ` +
+            `To verify customizations were carried forward, widen the clone window ` +
+            `(e.g. \`git fetch --unshallow\`) and re-run generation.`
+    );
+    return lines.join("\n");
+}
+
+/**
+ * Pure PR-body composition. The degraded block — when present — sits at the
+ * very top, above the version header; the replay section appends after a
+ * divider. One composition site serves both the create-PR and
+ * update-existing-PR paths in GithubStep.
+ */
+export function composePrBody(parts: { prBody: string; replaySection?: string; degradedBlock?: string }): string {
+    let body = parts.prBody;
+    if (parts.replaySection != null) {
+        body = body + "\n\n---\n\n" + parts.replaySection;
+    }
+    if (parts.degradedBlock != null) {
+        body = parts.degradedBlock + "\n\n---\n\n" + body;
+    }
+    return body;
+}
+
 export function formatReplayPrBody(
     result: ReplayStepResult | undefined,
     options?: { branchName?: string; repoUri?: string }
@@ -158,8 +227,11 @@ export function formatReplayPrBody(
         parts.push(`|------|-------------------|-------------------|`);
         for (const patch of unresolvedPatches) {
             const description = patchDescription(patch);
+            // Surface the patch ID so the permanent-dismiss instruction below
+            // (`fern replay forget <patch-id>`) is actionable from the PR body.
+            const descriptionWithId = patch.patchId ? `${description} (\`${patch.patchId}\`)` : description;
             for (const file of patch.conflictDetails) {
-                parts.push(`| \`${file.file}\` | ${description} | ${formatConflictReason(file.conflictReason)} |`);
+                parts.push(`| \`${file.file}\` | ${descriptionWithId} | ${formatConflictReason(file.conflictReason)} |`);
             }
         }
 
@@ -185,6 +257,9 @@ export function formatReplayPrBody(
         parts.push(`4. Resolve using your editor's merge tools (VS Code, IntelliJ, etc.)`);
         parts.push(`5. Run: \`fern replay resolve\` again to finalize`);
         parts.push(`6. Push your changes\n`);
+        parts.push(
+            `To permanently dismiss a customization instead — keep the generated code, and it will not return on future generations — run: \`fern replay forget <patch-id>\` (patch IDs are shown in the table above).\n`
+        );
         parts.push(`Your resolved customizations will be remembered on future SDK generations.`);
         parts.push(
             `If you merge this PR without resolving, your unresolved customizations will conflict again on the next generation.`

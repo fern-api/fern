@@ -148,26 +148,96 @@ describe("first generation - no lockfile, no prior generation commits", { tags: 
         // Only a user commit — no [fern-generated] commit for bootstrap to anchor on.
         writeFileSync(join(repoPath, "README.md"), "# SDK\n");
         commitAsUser(repoPath, "initial commit");
+
+        // Freshly written generator output, not yet committed — the state the
+        // pipeline is in when replay runs.
+        mkdirSync(join(repoPath, "src"), { recursive: true });
+        writeFileSync(join(repoPath, "src/client.ts"), "export class Client {}\n");
     });
 
     afterAll(async () => {
         await cleanup?.();
     });
 
-    it("returns null report when bootstrap finds no prior generation", async () => {
+    it("falls through to the first-generation flow and seeds the lockfile", async () => {
+        // DELIBERATE contract inversion: this used to return a null report
+        // ("next generate establishes the baseline"), which made every
+        // brand-new repo depend on generation #2's history scan finding the
+        // gen-1 commit — the dependency that broke under a depth-1 clone.
+        // bootstrap still writes nothing when it can't anchor; replayPrepare
+        // now falls through to the engine's first-generation flow instead of
+        // returning null.
         const result = await replayRun({ outputDir: repoPath });
 
-        // bootstrap returned generationCommit:null → replayPrepare returns null →
-        // replayRun returns a null-report result. The next `fern generate` that
-        // creates a [fern-generated] commit will establish the baseline.
-        expect(result.report).toBeNull();
+        expect(result.report).not.toBeNull();
+        expect(result.report?.flow).toBe("first-generation");
+        // bootstrap did not anchor — seeding is the flow's doing, not bootstrap's.
         expect(result.autoBootstrapped).toBe(false);
-        // bootstrapAttempted IS true: we entered the lockfile-missing branch and
-        // tried bootstrap, even though it couldn't anchor.
         expect(result.bootstrapAttempted).toBe(true);
-        expect(result.fernignoreUpdated).toBe(false);
         expect(result.previousGenerationSha).toBeNull();
-        expect(result.currentGenerationSha).toBeNull();
+
+        // The [fern-generated] commit exists and is what the run anchored on.
+        expect(result.currentGenerationSha).not.toBeNull();
+        const headMessages = gitExec(["log", "--format=%s"], repoPath).split("\n");
+        expect(headMessages.some((m) => m.startsWith("[fern-generated]"))).toBe(true);
+
+        // The lockfile was seeded on disk, anchored on the generation commit.
+        expect(existsSync(join(repoPath, ".fern", "replay.lock"))).toBe(true);
+        const lock = new LockfileManager(repoPath).read();
+        expect(lock.current_generation).toBe(result.currentGenerationSha);
+
+        // replayCommitted is derived empirically so it stays truthful across
+        // engine versions: true iff the lock is tracked AND clean. Engines that
+        // predate first-generation lock seeding leave it untracked (false →
+        // GithubStep's commit sweeps it); seeding engines commit it (true →
+        // GithubStep skips its own commit).
+        const lockStatus = gitExec(["status", "--porcelain", "--", ".fern/replay.lock"], repoPath);
+        const lockTracked = gitExec(["ls-files", "--", ".fern/replay.lock"], repoPath);
+        expect(result.replayCommitted).toBe(lockStatus === "" && lockTracked !== "");
+    });
+
+    it("is idempotent: a second run sees the seeded lockfile and skips bootstrap", async () => {
+        const result = await replayRun({ outputDir: repoPath });
+
+        // Lockfile exists now — the bootstrap branch is never entered.
+        expect(result.bootstrapAttempted).toBe(false);
+        expect(result.autoBootstrapped).toBe(false);
+        expect(result.report).not.toBeNull();
+        expect(result.report?.flow).not.toBe("first-generation");
+    });
+});
+
+describe("first generation - kill switch gates seeding", { tags: ["slow", "flaky"] }, () => {
+    let repoPath: string;
+    let cleanup: () => Promise<void>;
+
+    beforeAll(async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        repoPath = tmpDir.path;
+        cleanup = tmpDir.cleanup;
+
+        initRepo(repoPath);
+        writeFileSync(join(repoPath, "README.md"), "# SDK\n");
+        commitAsUser(repoPath, "initial commit");
+    });
+
+    afterAll(async () => {
+        await cleanup?.();
+        delete process.env.FERN_DISABLE_AUTO_BOOTSTRAP;
+    });
+
+    it("FERN_DISABLE_AUTO_BOOTSTRAP=true returns null report and seeds nothing", async () => {
+        process.env.FERN_DISABLE_AUTO_BOOTSTRAP = "true";
+        try {
+            const result = await replayRun({ outputDir: repoPath });
+
+            expect(result.report).toBeNull();
+            expect(result.bootstrapAttempted).toBe(false);
+            expect(result.replayCommitted).toBe(false);
+            expect(existsSync(join(repoPath, ".fern", "replay.lock"))).toBe(false);
+        } finally {
+            delete process.env.FERN_DISABLE_AUTO_BOOTSTRAP;
+        }
     });
 });
 
@@ -212,6 +282,22 @@ describe("first generation - no lockfile, bootstrap throws", { tags: ["slow", "f
         // If bootstrap wrote it before throwing, the catch block must clean up
         // so the next run doesn't pick up a corrupted anchor.
         expect(existsSync(join(repoPath, ".fern", "replay.lock"))).toBe(false);
+    });
+
+    it("a later successful run seeds normally — the throw-path unlink never deletes a seeded lock", async () => {
+        // The cleanup unlink only runs when bootstrap() throws, and that run
+        // returns null without reaching the first-generation flow — so the
+        // unlink and seeding can never coexist in one run. Once the underlying
+        // failure is fixed (here: the directory becomes a real git repo), the
+        // next run seeds.
+        initRepo(repoPath);
+        writeFileSync(join(repoPath, "client.ts"), "export class Client {}\n");
+
+        const result = await replayRun({ outputDir: repoPath });
+
+        expect(result.report).not.toBeNull();
+        expect(result.report?.flow).toBe("first-generation");
+        expect(existsSync(join(repoPath, ".fern", "replay.lock"))).toBe(true);
     });
 });
 

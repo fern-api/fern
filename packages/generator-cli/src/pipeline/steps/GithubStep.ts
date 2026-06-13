@@ -8,7 +8,7 @@ import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
 import { pushSignedCommit } from "../github/pushSignedCommit";
 import type { PipelineLogger } from "../PipelineLogger";
-import { formatReplayPrBody } from "../replay-summary";
+import { composePrBody, formatReplayDegradedBlock, formatReplayPrBody } from "../replay-summary";
 import type {
     AutoVersionStepResult,
     GithubStepConfig,
@@ -235,7 +235,12 @@ export class GithubStep extends BaseStep {
             changelogUrl
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
-        let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
+        // Degraded runs ship loudly, never withheld: the warning block sits at
+        // the TOP of the PR body, above the version header. It is composed
+        // separately from `replaySection` because formatReplayPrBody returns
+        // undefined for the zero-preserved/zero-conflict shape of degraded runs.
+        const degradedBlock = formatReplayDegradedBlock(replayResult);
+        let enrichedBody = composePrBody({ prBody, replaySection, degradedBlock });
         enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config, resolved);
 
         if (isUpdatingExistingPR && existingPR != null) {
@@ -459,10 +464,7 @@ export class GithubStep extends BaseStep {
     }
 
     private deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {
-        if (replayResult == null) {
-            return false;
-        }
-        return replayResult.executed && replayResult.flow != null && replayResult.flow !== "first-generation";
+        return deriveSkipCommit(replayResult);
     }
 
     private deriveReplayConflictInfo(replayResult: ReplayStepResult | undefined):
@@ -611,6 +613,26 @@ export function shouldCheckNoDiff(config: { skipIfNoDiff?: boolean }): boolean {
  */
 export function shouldPushGenerationBaseTag(replayResult: ReplayStepResult | undefined): boolean {
     return (replayResult?.patchesWithConflicts ?? 0) > 0;
+}
+
+/**
+ * Decides whether GithubStep still owes a commit for this run. Replay's
+ * non-first-generation flows always commit (their `[fern-replay]` commit is
+ * load-bearing), so they skip. The first-generation flow skips only when the
+ * run reports the lockfile as actually committed (`replayCommitted === true`,
+ * derived empirically in `replayApply`): engine versions that predate
+ * first-generation lock seeding leave the seeded lock untracked, and skipping
+ * the commit against them would drop the lock from the push entirely.
+ * Exported for testing.
+ */
+export function deriveSkipCommit(replayResult: ReplayStepResult | undefined): boolean {
+    if (replayResult == null || !replayResult.executed) {
+        return false;
+    }
+    if (replayResult.replayCommitted === true) {
+        return true;
+    }
+    return replayResult.flow != null && replayResult.flow !== "first-generation";
 }
 
 /**

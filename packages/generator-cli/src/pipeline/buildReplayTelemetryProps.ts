@@ -111,6 +111,10 @@ export function buildReplayTelemetryProps(input: {
         replay_crashed: replay?.replayCrashed === true,
         auto_bootstrapped: replay?.autoBootstrapped === true,
         bootstrap_attempted: replay?.bootstrapAttempted === true,
+        // flow="first-generation" now spans three realities (seeded lock
+        // committed, kill switch, bootstrap crash) — this disambiguates the
+        // seeded one.
+        replay_committed: replay?.replayCommitted === true,
         pipeline_success: pipelineResult.success,
         pipeline_warnings_count: pipelineResult.warnings?.length ?? 0,
         replay_warnings_count: replay?.warnings?.length ?? 0,
@@ -147,6 +151,12 @@ export function buildReplayTelemetryProps(input: {
         patches_refreshed: replay?.patchesRefreshed ?? 0,
         unresolved_patches_count: unresolvedPatches.length,
         unresolved_conflict_files_count: unresolvedConflictFilesCount,
+        // Degraded channel (append-only props; frozen dashboard keys once shipped).
+        replay_degraded: replay?.degraded === true,
+        replay_degraded_reason_codes:
+            replay?.degradedReasons != null && replay.degradedReasons.length > 0
+                ? replay.degradedReasons.map((reason) => reason.code).join(",")
+                : null,
         conflicts_same_line_edit: conflictBuckets["same-line-edit"],
         conflicts_new_file_both: conflictBuckets["new-file-both"],
         conflicts_base_generation_mismatch: conflictBuckets["base-generation-mismatch"],

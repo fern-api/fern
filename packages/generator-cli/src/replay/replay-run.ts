@@ -1,4 +1,5 @@
 import { bootstrap, type ReplayPreparation, type ReplayReport, ReplayService } from "@fern-api/replay";
+import { execFileSync } from "child_process";
 import { existsSync, unlinkSync } from "fs";
 import { join } from "path";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
@@ -41,6 +42,19 @@ export interface ReplayRunResult {
      * Generation never fails on replay errors — callers should surface this for telemetry/logging only.
      */
     failureReason?: string;
+    /**
+     * True when the replay run left `.fern/replay.lock` COMMITTED (tracked and
+     * clean in git). GithubStep uses this to decide whether it still owns the
+     * commit: when false (engine left the lock untracked/staged, stageOnly, or
+     * the run failed), GithubStep's `git add -A` commit must sweep the lock so
+     * it isn't lost on push.
+     *
+     * Derived empirically from git state rather than from a typed report field:
+     * the pinned `@fern-api/replay` version may predate first-generation lock
+     * seeding, and inferring "committed" from flow alone against an engine that
+     * never committed would drop the lock from the push entirely.
+     */
+    replayCommitted: boolean;
 }
 
 /**
@@ -102,11 +116,16 @@ export interface ReplayPrepareState {
  *
  * If no lockfile exists, runs `bootstrap()` inline to auto-initialize replay — this
  * bakes `fern replay init` into `fern generate` so customers no longer need a
- * separate init step. Returns `null` when (a) the repo has no prior `[fern-generated]`
- * commit to anchor on, or (b) bootstrap throws (logged + cleaned up). Case (a) self-heals
- * once a baseline commit exists; case (b) requires the underlying issue (disk full,
- * permissions) to be resolved before the next run can succeed. The auto-bootstrap
- * branch can be disabled via `FERN_DISABLE_AUTO_BOOTSTRAP=true`.
+ * separate init step. When the repo has no prior `[fern-generated]` commit to anchor
+ * on, bootstrap writes nothing and we fall through to `prepareReplay()`, which selects
+ * the engine's first-generation flow: it creates the `[fern-generated]` commit and
+ * seeds the lockfile anchored on it — so brand-new repos converge at generation one
+ * instead of depending on generation #2's history scan finding the gen-1 commit
+ * (the dependency that broke under a depth-1 clone). A repo with zero commits
+ * (unborn HEAD) skips the bootstrap scan entirely — `git log` would fail — and seeds
+ * the same way. Returns `null` only when bootstrap throws (logged + cleaned up) or
+ * the kill switch is set; the kill switch (`FERN_DISABLE_AUTO_BOOTSTRAP=true`)
+ * deliberately gates first-generation seeding too.
  */
 export async function replayPrepare(
     params: ReplayRunParams,
@@ -127,39 +146,50 @@ export async function replayPrepare(
         // Auto-bootstrap so customers don't need to run `fern replay init` separately.
         // bootstrap() writes the lockfile, .fernignore entries, and .gitattributes;
         // the subsequent prepareReplay commit captures them via `git add -A`.
-        // Brand-new repos with no prior `[fern-generated]` commit skip replay this
-        // run — next generate establishes the baseline. `importHistory: false` is
-        // load-bearing: scanning past patches inline would blow the generate-time
-        // budget, and "track future edits only" is the safe default for opt-out.
+        // Bootstrap is always a clean start anchored on HEAD: replay tracks
+        // customizations committed after this point only.
         bootstrapAttempted = true;
         if (state) {
             state.bootstrapAttempted = true;
         }
-        try {
-            const bootstrapResult = await bootstrap(outputDir, {
-                fernignoreAction: "skip",
-                force: false,
-                importHistory: false
-            });
-            if (bootstrapResult.generationCommit == null) {
+        if (hasUnbornHead(outputDir)) {
+            // A git repo with zero commits (brand-new SDK repo). bootstrap()'s
+            // history scan (`git log`) would throw here, and there is nothing
+            // to anchor on anyway — skip bootstrap entirely and fall through to
+            // prepareReplay(), whose first-generation flow creates the root
+            // [fern-generated] commit and seeds the lock anchored on it.
+        } else {
+            try {
+                const bootstrapResult = await bootstrap(outputDir, {
+                    force: false
+                });
+                // generationCommit == null: brand-new repo with no prior
+                // [fern-generated] commit. Bootstrap stays anchored-or-nothing (a
+                // lock anchored on pre-generation HEAD would corrupt the next run),
+                // so it wrote nothing. Fall through to prepareReplay(): with no
+                // lockfile it selects the first-generation flow, which creates the
+                // [fern-generated] commit and seeds the lock anchored on it.
+                // autoBootstrapped stays false — bootstrap did not anchor; the
+                // flow/replayCommitted fields describe what seeding did instead.
+                if (bootstrapResult.generationCommit != null) {
+                    autoBootstrapped = true;
+                }
+            } catch (error) {
+                logger?.warn("Replay auto-bootstrap failed, continuing without replay: " + String(error));
+                // Bootstrap is not transactional — it may have written the lockfile
+                // before throwing on .fernignore or .gitattributes. Clean up to prevent
+                // a half-initialized state from corrupting the next run (the lockfile
+                // would be anchored on pre-generation HEAD instead of a [fern-generated]
+                // commit, and the next run would skip bootstrap and read the broken anchor).
+                try {
+                    if (existsSync(lockfilePath)) {
+                        unlinkSync(lockfilePath);
+                    }
+                } catch {
+                    // best-effort; corrupt-lockfile resilience handles next run
+                }
                 return null;
             }
-            autoBootstrapped = true;
-        } catch (error) {
-            logger?.warn("Replay auto-bootstrap failed, continuing without replay: " + String(error));
-            // Bootstrap is not transactional — it may have written the lockfile
-            // before throwing on .fernignore or .gitattributes. Clean up to prevent
-            // a half-initialized state from corrupting the next run (the lockfile
-            // would be anchored on pre-generation HEAD instead of a [fern-generated]
-            // commit, and the next run would skip bootstrap and read the broken anchor).
-            try {
-                if (existsSync(lockfilePath)) {
-                    unlinkSync(lockfilePath);
-                }
-            } catch {
-                // best-effort; corrupt-lockfile resilience handles next run
-            }
-            return null;
         }
     }
 
@@ -218,7 +248,8 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
             currentGenerationSha: prepared.currentGenerationSha,
             autoBootstrapped: prepared.autoBootstrapped,
             bootstrapAttempted: prepared.bootstrapAttempted,
-            failureReason: String(error)
+            failureReason: String(error),
+            replayCommitted: false
         };
     }
 
@@ -231,8 +262,103 @@ export async function replayApply(prepared: PreparedReplay, params: ReplayApplyP
         previousGenerationSha: prepared.previousGenerationSha,
         currentGenerationSha: prepared.currentGenerationSha,
         autoBootstrapped: prepared.autoBootstrapped,
-        bootstrapAttempted: prepared.bootstrapAttempted
+        bootstrapAttempted: prepared.bootstrapAttempted,
+        replayCommitted: isLockfileCommitted(prepared.outputDir)
     };
+}
+
+/**
+ * Tolerant reader for the engine's degraded channel. The pinned
+ * `@fern-api/replay` release may predate `ReplayReport.degradedReasons`
+ * (added after 0.18.0), so this walks the report as `unknown` and returns
+ * only well-formed `{ code, message }` entries — `[]` when the field is
+ * absent or malformed. Reason codes are kept as plain strings so future
+ * engine codes pass through without a consumer release.
+ */
+export function readReplayDegraded(report: ReplayReport): Array<{ code: string; message: string }> {
+    const candidate: unknown = report;
+    if (typeof candidate !== "object" || candidate == null) {
+        return [];
+    }
+    if (!("degradedReasons" in candidate)) {
+        return [];
+    }
+    const value: unknown = candidate.degradedReasons;
+    if (!Array.isArray(value)) {
+        return [];
+    }
+    const reasons: Array<{ code: string; message: string }> = [];
+    for (const entry of value) {
+        const candidateEntry: unknown = entry;
+        if (typeof candidateEntry !== "object" || candidateEntry == null) {
+            continue;
+        }
+        if (!("code" in candidateEntry) || !("message" in candidateEntry)) {
+            continue;
+        }
+        const code: unknown = candidateEntry.code;
+        const message: unknown = candidateEntry.message;
+        if (typeof code !== "string" || typeof message !== "string") {
+            continue;
+        }
+        reasons.push({ code, message });
+    }
+    return reasons;
+}
+
+/**
+ * True when `outputDir` is a git work tree whose HEAD has no commits yet
+ * (`git init` just ran — the brand-new SDK repo case). Returns false for
+ * non-git directories so bootstrap() still surfaces those as failures.
+ */
+function hasUnbornHead(outputDir: string): boolean {
+    try {
+        execFileSync("git", ["rev-parse", "--is-inside-work-tree"], {
+            cwd: outputDir,
+            encoding: "utf-8",
+            stdio: "pipe"
+        });
+    } catch {
+        return false;
+    }
+    try {
+        execFileSync("git", ["rev-parse", "--verify", "HEAD"], {
+            cwd: outputDir,
+            encoding: "utf-8",
+            stdio: "pipe"
+        });
+        return false;
+    } catch {
+        return true;
+    }
+}
+
+/**
+ * Empirical "did replay commit the lockfile?" check: the lock is tracked by
+ * git AND clean in the working tree. Untracked (engine versions that leave
+ * the first-gen lock on disk only), staged-but-uncommitted (`stageOnly`), and
+ * missing locks all report false — in those states GithubStep's own commit is
+ * still responsible for sweeping the lock into the pushed branch.
+ */
+function isLockfileCommitted(outputDir: string): boolean {
+    try {
+        const status = execFileSync("git", ["status", "--porcelain", "--", ".fern/replay.lock"], {
+            cwd: outputDir,
+            encoding: "utf-8",
+            stdio: "pipe"
+        }).trim();
+        if (status !== "") {
+            return false;
+        }
+        const tracked = execFileSync("git", ["ls-files", "--", ".fern/replay.lock"], {
+            cwd: outputDir,
+            encoding: "utf-8",
+            stdio: "pipe"
+        }).trim();
+        return tracked !== "";
+    } catch {
+        return false;
+    }
 }
 
 /**
@@ -255,7 +381,8 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             currentGenerationSha: null,
             autoBootstrapped: false,
             bootstrapAttempted: prepareState.bootstrapAttempted,
-            failureReason: error instanceof ReplayPrepareError ? error.reason : String(error)
+            failureReason: error instanceof ReplayPrepareError ? error.reason : String(error),
+            replayCommitted: false
         };
     }
     if (prepared == null) {
@@ -265,7 +392,8 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             previousGenerationSha: null,
             currentGenerationSha: null,
             autoBootstrapped: false,
-            bootstrapAttempted: prepareState.bootstrapAttempted
+            bootstrapAttempted: prepareState.bootstrapAttempted,
+            replayCommitted: false
         };
     }
     return replayApply(prepared, { stageOnly: params.stageOnly, logger: params.logger });

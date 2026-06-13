@@ -331,6 +331,33 @@ describe("formatReplayPrBody", () => {
         expect(dataRows[0]).toContain("a.ts");
         expect(dataRows[1]).toContain("b.ts");
     });
+
+    it("conflict body offers the permanent-dismiss alternative with an actionable patch ID", () => {
+        const body = formatReplayPrBody({
+            executed: true,
+            success: false,
+            patchesApplied: 0,
+            patchesAbsorbed: 0,
+            unresolvedPatches: [
+                {
+                    patchId: "patch-6cf172ea",
+                    patchMessage: "add retry logic",
+                    files: ["src/client.ts"],
+                    conflictDetails: [{ file: "src/client.ts", conflictReason: "same-line-edit" }]
+                }
+            ]
+        });
+        expect(body).toBeDefined();
+        // The alternative instruction names the forget command...
+        expect(body).toContain("permanently dismiss");
+        expect(body).toContain("fern replay forget <patch-id>");
+        // ...and the table surfaces the patch ID so the command is actionable.
+        const lines = body?.split("\n") ?? [];
+        const dataRows = lines.filter((l) => l.startsWith("| `"));
+        expect(dataRows.some((row) => row.includes("patch-6cf172ea"))).toBe(true);
+        // The remembered-on-future-generations promise stays.
+        expect(body).toContain("Your resolved customizations will be remembered on future SDK generations.");
+    });
 });
 
 // ---------------------------------------------------------------------------

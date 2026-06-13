@@ -200,6 +200,15 @@ export interface ReplayStepResult extends StepResult {
      */
     bootstrapAttempted?: boolean;
     flow?: "first-generation" | "no-patches" | "normal-regeneration" | "skip-application";
+    /**
+     * True when the replay run left `.fern/replay.lock` committed (tracked and
+     * clean). Derived empirically from git state in `replayApply` so it stays
+     * truthful across `@fern-api/replay` versions that do or don't commit the
+     * seeded first-generation lock. GithubStep skips its own commit when this
+     * is true even for the first-generation flow; when false/undefined the
+     * GithubStep commit sweeps the lock so it isn't lost on push.
+     */
+    replayCommitted?: boolean;
     patchesDetected?: number;
     patchesApplied?: number;
     patchesWithConflicts?: number;
@@ -229,6 +238,23 @@ export interface ReplayStepResult extends StepResult {
         }>;
     }>;
     warnings?: string[];
+    /**
+     * True when the replay run completed but could not guarantee customizations
+     * were preserved — the previous generation (the baseline) was unreachable
+     * during the run (shallow clone / pruned history). Mirrors the engine
+     * report's `degraded` field; undefined on healthy runs AND on engine
+     * versions that don't emit it yet. Serialized into the pipeline JSON.
+     */
+    degraded?: boolean;
+    /**
+     * Structured reasons for a degraded run. `code` is intentionally widened to
+     * `string` so future engine reason codes pass through without a consumer
+     * release. The same facts also appear as strings in `warnings`.
+     */
+    degradedReasons?: Array<{
+        code: string;
+        message: string;
+    }>;
 }
 
 export interface FernignoreStepResult extends StepResult {
