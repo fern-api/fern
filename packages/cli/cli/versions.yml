@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.48.0
+  changelogEntry:
+    - summary: |
+        Add a `--local` flag to `fern docs md generate` that runs the library
+        documentation parsers locally in Docker instead of using Fern's servers.
+        Local generation requires no authentication and operates on `path` inputs
+        (local source); `git` inputs continue to be generated remotely.
+      type: feat
+  createdAt: "2026-06-13"
+  irVersion: 67
 - version: 5.47.6
   changelogEntry:
     - summary: |
