@@ -1115,9 +1115,25 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField[] {
         const args: php.ConstructorField[] = [];
 
+        // Variable-backed path parameters (e.g. a path param typed by a Fern `variable`) are
+        // required positional arguments on the generated SDK method, but their values are not
+        // provided as explicit snippet path-parameter values. Synthesize a placeholder so the
+        // required argument is still emitted and the snippet type-checks.
+        const values: FernIr.dynamic.Values = { ...(snippet.pathParameters ?? {}) };
+        for (const parameter of namedParameters) {
+            if (
+                parameter.variable != null &&
+                values[parameter.name.wireValue] == null &&
+                parameter.typeReference.type === "primitive" &&
+                parameter.typeReference.value === "STRING"
+            ) {
+                values[parameter.name.wireValue] = `<${parameter.name.wireValue}>`;
+            }
+        }
+
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
-            values: snippet.pathParameters ?? {}
+            values
         });
         for (const parameter of pathParameters) {
             args.push({
