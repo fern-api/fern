@@ -291,7 +291,7 @@ export class ReplayPrepareError extends Error {
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
-        this.name = this.constructor.name;
+        this.name = "ReplayPrepareError";
         this.reason = reason;
     }
 }

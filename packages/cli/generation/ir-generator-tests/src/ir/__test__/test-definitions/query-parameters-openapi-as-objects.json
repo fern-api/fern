@@ -482,6 +482,7 @@
                     "id": "endpoint_.search",
                     "name": "search",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

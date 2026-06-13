@@ -169,7 +169,7 @@ async fn main() {
         ..Default::default()
     };
     let client = UnionsClient::new(config).expect("Failed to build client");
-    client.bigunion.get(&"id".to_string(), None).await;
+    client.union_.get(&"id".to_string(), None).await;
 }
 ```
 </dd>

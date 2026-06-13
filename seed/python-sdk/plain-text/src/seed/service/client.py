@@ -45,6 +45,52 @@ class ServiceClient:
         _response = self._raw_client.get_text(request_options=request_options)
         return _response.data
 
+    def get_csv(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedPlainText
+
+        client = SeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_csv()
+        """
+        _response = self._raw_client.get_csv(request_options=request_options)
+        return _response.data
+
+    def get_xml(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedPlainText
+
+        client = SeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_xml()
+        """
+        _response = self._raw_client.get_xml(request_options=request_options)
+        return _response.data
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -90,4 +136,66 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_text(request_options=request_options)
+        return _response.data
+
+    async def get_csv(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPlainText
+
+        client = AsyncSeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.get_csv()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_csv(request_options=request_options)
+        return _response.data
+
+    async def get_xml(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPlainText
+
+        client = AsyncSeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.get_xml()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_xml(request_options=request_options)
         return _response.data

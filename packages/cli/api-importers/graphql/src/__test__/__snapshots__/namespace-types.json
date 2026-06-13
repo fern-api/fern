@@ -1,0 +1,132 @@
+{
+  "graphqlOperations": {
+    "query_account": {
+      "id": "query_account",
+      "operationType": "QUERY",
+      "name": "account",
+      "description": "Get an account by ID.",
+      "arguments": [
+        {
+          "name": "id",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "optional",
+        "itemType": {
+          "type": "id",
+          "value": "Account"
+        }
+      }
+    },
+    "mutation_create": {
+      "id": "mutation_create",
+      "operationType": "MUTATION",
+      "name": "create",
+      "description": "Create an account.",
+      "fieldPath": [
+        "account"
+      ],
+      "arguments": [
+        {
+          "name": "name",
+          "description": "Display name for the account.",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "name": "email",
+          "description": "Contact email address.",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "id",
+        "value": "Account"
+      }
+    },
+    "mutation_delete": {
+      "id": "mutation_delete",
+      "operationType": "MUTATION",
+      "name": "delete",
+      "description": "Delete an account by ID.",
+      "fieldPath": [
+        "account"
+      ],
+      "arguments": [
+        {
+          "name": "id",
+          "description": "ID of the account to delete.",
+          "type": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "primitive",
+        "value": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "types": {
+    "Account": {
+      "name": "Account",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Unique identifier."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Account name."
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Account email."
+          }
+        ]
+      },
+      "description": "An account in the system."
+    }
+  }
+}

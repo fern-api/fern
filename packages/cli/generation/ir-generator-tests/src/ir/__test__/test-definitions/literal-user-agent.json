@@ -69,6 +69,7 @@
                     "id": "endpoint_.ping",
                     "name": "ping",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

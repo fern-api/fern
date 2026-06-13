@@ -134,6 +134,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
       {
         "auth": false,
@@ -282,6 +283,7 @@
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
     ],
     "graphqlOperations": [],

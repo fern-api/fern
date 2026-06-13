@@ -1975,10 +1975,16 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
         "generate",
         "[Beta] Generate MDX documentation from library source code. Requires 'libraries' config in docs.yml.",
         (yargs) =>
-            yargs.option("library", {
-                type: "string",
-                description: "Name of a specific library defined in docs.yml to generate docs for"
-            }),
+            yargs
+                .option("library", {
+                    type: "string",
+                    description: "Name of a specific library defined in docs.yml to generate docs for"
+                })
+                .option("local", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the library parser(s) locally using Docker instead of Fern's servers"
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern docs md generate"
@@ -1992,7 +1998,8 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             await generateLibraryDocs({
                 project,
                 cliContext,
-                library: argv.library
+                library: argv.library,
+                local: argv.local
             });
         }
     );

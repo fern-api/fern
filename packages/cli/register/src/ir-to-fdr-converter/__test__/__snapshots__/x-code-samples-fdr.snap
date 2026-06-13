@@ -177,6 +177,7 @@ func main() {
           ],
         },
         "slug": undefined,
+        "subtitle": undefined,
       },
     ],
     "graphqlOperations": [],

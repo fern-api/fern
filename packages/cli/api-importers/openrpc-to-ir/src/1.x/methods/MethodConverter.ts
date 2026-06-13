@@ -175,6 +175,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             name: this.context.casingsGenerator.generateName(this.method.name),
             headers: this.headers,
             displayName: this.method.name,
+            subtitle: undefined,
             pathParameters: this.pathParameters,
             queryParameters: this.queryParameters,
             allPathParameters: this.pathParameters,
