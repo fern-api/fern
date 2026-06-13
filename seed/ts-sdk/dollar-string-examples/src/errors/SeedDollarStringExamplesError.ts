@@ -28,7 +28,7 @@ export class SeedDollarStringExamplesError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedDollarStringExamplesError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

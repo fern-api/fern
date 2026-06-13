@@ -17,6 +17,6 @@ export class PlaylistIdNotFoundError extends errors.SeedTraceError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "PlaylistIdNotFoundError";
     }
 }

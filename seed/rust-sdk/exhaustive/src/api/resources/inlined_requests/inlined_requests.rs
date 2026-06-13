@@ -37,4 +37,29 @@ impl InlinedRequestsClient {
             )
             .await
     }
+
+    /// POST with root-level array body and header params
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn post_with_array_body_and_headers(
+        &self,
+        request: &Vec<String>,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/req-bodies/array-body-with-headers",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
 }

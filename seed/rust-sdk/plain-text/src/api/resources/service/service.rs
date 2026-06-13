@@ -17,4 +17,16 @@ impl ServiceClient {
             .execute_request(Method::POST, "text", None, None, options)
             .await
     }
+
+    pub async fn get_csv(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, "csv", None, None, options)
+            .await
+    }
+
+    pub async fn get_xml(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, "xml", None, None, options)
+            .await
+    }
 }

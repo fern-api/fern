@@ -10,7 +10,7 @@ export class SeedDollarStringExamplesTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedDollarStringExamplesTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

@@ -5,4 +5,7 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.no_auth.post_with_no_auth
+client.inlined_requests.post_with_array_body_and_headers(
+  x_custom_header: "X-Custom-Header",
+  body: %w[string string]
+)

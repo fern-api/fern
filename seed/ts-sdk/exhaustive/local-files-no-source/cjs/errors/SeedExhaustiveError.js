@@ -10,7 +10,7 @@ class SeedExhaustiveError extends Error {
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
-        this.name = this.constructor.name;
+        this.name = "SeedExhaustiveError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

@@ -13,9 +13,11 @@ import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.generalerrors.errors.BadRequestBody;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
+import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -96,6 +98,95 @@ public class AsyncRawInlinedRequestsClient {
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new BestApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(new BestException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new BestException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<BestHttpResponse<String>> postWithArrayBodyAndHeaders(List<String> body) {
+        return postWithArrayBodyAndHeaders(
+                PostWithArrayBodyAndHeaders.builder().body(body).build());
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<BestHttpResponse<String>> postWithArrayBodyAndHeaders(
+            List<String> body, RequestOptions requestOptions) {
+        return postWithArrayBodyAndHeaders(
+                PostWithArrayBodyAndHeaders.builder().body(body).build(), requestOptions);
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<BestHttpResponse<String>> postWithArrayBodyAndHeaders(
+            PostWithArrayBodyAndHeaders request) {
+        return postWithArrayBodyAndHeaders(request, null);
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public CompletableFuture<BestHttpResponse<String>> postWithArrayBodyAndHeaders(
+            PostWithArrayBodyAndHeaders request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("req-bodies")
+                .addPathSegments("array-body-with-headers");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json");
+        if (request.getXCustomHeader().isPresent()) {
+            _requestBuilder.addHeader(
+                    "X-Custom-Header", request.getXCustomHeader().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<BestHttpResponse<String>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        future.complete(new BestHttpResponse<>(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
+                        return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new BestApiException(

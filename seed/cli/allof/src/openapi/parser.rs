@@ -371,6 +371,14 @@ struct OpenApiOperation {
     parameters: Vec<OpenApiParamOrRef>,
     #[serde(rename = "requestBody")]
     request_body: Option<OpenApiRequestBody>,
+    /// OpenAPI `responses` map (status code → response object). Only the
+    /// content media types are consumed — we look at the 2xx entries to
+    /// decide whether the operation can return a binary body, which gates
+    /// whether `--output PATH` is surfaced on the CLI command. Status keys
+    /// follow OpenAPI conventions: `"200"`, `"201"`, …, the `"2XX"`
+    /// wildcard, or `"default"` (which we ignore — it's an error fallback).
+    #[serde(default)]
+    responses: HashMap<String, OpenApiResponse>,
     #[serde(default)]
     servers: Vec<OpenApiServer>,
     #[serde(default)]
@@ -579,6 +587,14 @@ struct OpenApiRequestBody {
     content: Option<HashMap<String, OpenApiMediaType>>,
     #[serde(rename = "x-fern-parameter-name")]
     x_fern_parameter_name: Option<String>,
+}
+
+/// The slice of OpenAPI's Response object we care about — only `content`,
+/// the media-type → schema map, since that's what tells us whether the
+/// operation's response is JSON or binary.
+#[derive(Debug, Deserialize)]
+struct OpenApiResponse {
+    content: Option<HashMap<String, OpenApiMediaType>>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -2650,6 +2666,8 @@ pub fn load_openapi_spec_from_value(
                 operation.operation_id.as_deref().unwrap_or("unknown"),
             )?;
 
+            let has_binary_response = response_has_binary_media_type(&operation.responses);
+
             // Mutual exclusivity: an operation that's both streamed and
             // paginated is incoherent — pagination drives a loop of
             // requests against fully-buffered responses, while
@@ -2690,6 +2708,7 @@ pub fn load_openapi_spec_from_value(
                 streaming,
                 retries,
                 audiences,
+                has_binary_response,
                 ..Default::default()
             };
 
@@ -2759,6 +2778,53 @@ type ExtractedRequestBody = (
     HashMap<String, MethodParameter>,
     Vec<MultipartField>,
 );
+
+/// Decide whether any 2xx response declares a non-JSON content media type.
+///
+/// Mirrors the runtime predicate in
+/// `src/openapi/executor.rs:1973-1974` — JSON means `application/json` or
+/// `text/json`; anything else (audio/*, image/*, application/octet-stream,
+/// text/csv, application/pdf, …) is routed to the binary file-writing path
+/// in `handle_binary_response`. We walk only 2xx and `2XX`/`2xx` status
+/// codes — the binary-body affordance is for successful responses, not the
+/// JSON error shapes commonly declared on 4xx/5xx of the same operation
+/// (which is why the mixed-response case still surfaces `--output`).
+///
+/// An empty `responses` map, or one whose 2xx entries have no `content`
+/// block (e.g. `204 No Content`), returns `false` — there's no body to
+/// write, so `--output` would be meaningless.
+fn response_has_binary_media_type(responses: &HashMap<String, OpenApiResponse>) -> bool {
+    for (status, response) in responses {
+        if !is_success_status(status) {
+            continue;
+        }
+        let Some(content) = response.content.as_ref() else {
+            continue;
+        };
+        for media_type in content.keys() {
+            if !is_json_media_type(media_type) {
+                return true;
+            }
+        }
+    }
+    false
+}
+
+fn is_success_status(status: &str) -> bool {
+    // OpenAPI accepts `200`, `201`, ..., and the wildcard `2XX` / `2xx`.
+    // The `default` key is the catch-all (typically errors) — not a 2xx.
+    let s = status.trim();
+    if s.eq_ignore_ascii_case("2XX") {
+        return true;
+    }
+    s.starts_with('2') && s.len() == 3 && s[1..].chars().all(|c| c.is_ascii_digit())
+}
+
+fn is_json_media_type(media_type: &str) -> bool {
+    // Mirror the executor's runtime predicate so the gate aligns with the
+    // path actually taken at request time.
+    media_type.contains("application/json") || media_type.contains("text/json")
+}
 
 /// Returns `(json_schema, binary_body, body_encoding, body_params, multipart_fields)`:
 /// - `json_schema`: a SchemaRef for the JSON request body (if `application/json` is declared).
@@ -3154,6 +3220,102 @@ fn resolve_branch_scalar_type(
     }
 }
 
+/// Maximum depth of `$ref` chain resolution. Prevents infinite loops from
+/// cyclic `$ref` chains (e.g. `A: {$ref: B}`, `B: {$ref: A}`).
+const MAX_REF_CHAIN_DEPTH: u8 = 8;
+
+/// Follow a `$ref` chain through `component_schemas` until reaching a
+/// terminal schema (one without a `$ref`). Returns `None` if the chain
+/// is unresolvable or exceeds `MAX_REF_CHAIN_DEPTH`.
+fn resolve_ref_chain<'a>(
+    schema: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    let mut current = schema;
+    for _ in 0..MAX_REF_CHAIN_DEPTH {
+        match &current.schema_ref {
+            Some(ref_path) => {
+                let name = strip_ref_prefix(ref_path);
+                current = component_schemas.get(&name)?;
+            }
+            None => return Some(current),
+        }
+    }
+    if current.schema_ref.is_none() {
+        return Some(current);
+    }
+    tracing::warn!("$ref chain exceeded {MAX_REF_CHAIN_DEPTH} levels; likely cyclic");
+    None
+}
+
+/// Recognize a `oneOf` / `anyOf` union where one branch is a scalar type `T`
+/// and another is `type: array` with `items.type: T`. This pattern
+/// (e.g. `Addresses: oneOf [string, array<string>]`) should surface as a
+/// repeated flag so the CLI accepts both single values and JSON arrays.
+/// Returns `Some(element_type)` when the union matches, `None` otherwise.
+fn recognize_scalar_or_array_union<'a>(
+    obj: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a str> {
+    let branches: &[OpenApiSchemaObject] = if !obj.one_of.is_empty() {
+        &obj.one_of
+    } else if !obj.any_of.is_empty() {
+        &obj.any_of
+    } else {
+        return None;
+    };
+
+    if branches.len() < 2 {
+        return None;
+    }
+
+    let mut scalar_type: Option<&str> = None;
+    let mut array_item_type: Option<&str> = None;
+
+    for branch in branches {
+        let resolved = if let Some(ref_path) = &branch.schema_ref {
+            let name = strip_ref_prefix(ref_path);
+            component_schemas.get(&name)?
+        } else {
+            branch
+        };
+
+        if is_null_sentinel(resolved) {
+            continue;
+        }
+
+        match resolved.schema_type() {
+            Some("array") => {
+                let item_type = resolved
+                    .items
+                    .as_ref()
+                    .and_then(|it| it.schema_type());
+                match item_type {
+                    Some(t) => {
+                        if array_item_type.is_some() {
+                            return None; // multiple array branches
+                        }
+                        array_item_type = Some(t);
+                    }
+                    None => return None,
+                }
+            }
+            Some(t) if t != "object" => {
+                if scalar_type.is_some() {
+                    return None; // multiple scalar branches
+                }
+                scalar_type = Some(t);
+            }
+            _ => return None,
+        }
+    }
+
+    match (scalar_type, array_item_type) {
+        (Some(s), Some(a)) if s == a => Some(s),
+        _ => None,
+    }
+}
+
 /// Maximum depth of consecutive `allOf` recursion. Cyclic `$ref` chains
 /// (`Foo: {allOf: [{$ref: Foo}, ...]}`) are degenerate but legal; this cap
 /// stops the walk before it explodes. Distinct from `MAX_BODY_DEPTH`,
@@ -3274,9 +3436,12 @@ fn flatten_body_params_prefix(
         };
 
         // $ref property: resolve from component_schemas before checking type.
+        // Follow ref chains (A → B → C) to reach the terminal schema.
         if let Some(ref_path) = &prop.schema_ref {
             let ref_name = strip_ref_prefix(ref_path);
-            if let Some(resolved) = component_schemas.get(&ref_name) {
+            let direct_resolved = component_schemas.get(&ref_name);
+            let resolved = direct_resolved.and_then(|s| resolve_ref_chain(s, component_schemas));
+            if let Some(resolved) = resolved {
                 // Recurse for object-shaped *or* allOf-shaped resolved
                 // schemas — the latter is the inheritance pattern
                 // (`Mixin: {allOf: [Base, extras]}`) Box uses heavily.
@@ -3299,6 +3464,36 @@ fn flatten_body_params_prefix(
                         );
                         continue;
                     }
+                }
+                // Recognize oneOf/anyOf [T, array<T>] unions and emit as a
+                // repeated flag so the executor JSON-parses array inputs
+                // instead of passing them as literal strings.
+                if let Some(element_type) = recognize_scalar_or_array_union(resolved, component_schemas) {
+                    let const_default = const_default_value(resolved);
+                    let has_null_branch = resolved.one_of.iter()
+                        .chain(resolved.any_of.iter())
+                        .any(|b| {
+                            let eff = b.schema_ref.as_ref().and_then(|r| {
+                                component_schemas.get(&strip_ref_prefix(r))
+                            }).unwrap_or(b);
+                            is_null_sentinel(eff)
+                        });
+                    out.insert(
+                        full_key,
+                        MethodParameter {
+                            param_type: Some(element_type.to_string()),
+                            description: prop.description.clone().or_else(|| resolved.description.clone()),
+                            location: Some("body".to_string()),
+                            required: required.contains(name.as_str()) && const_default.is_none(),
+                            format: resolved.format.clone(),
+                            default_value: const_default,
+                            repeated: true,
+                            scalar_or_array: true,
+                            nullable: resolved.is_nullable() || has_null_branch,
+                            ..Default::default()
+                        },
+                    );
+                    continue;
                 }
                 // Non-object ref or empty recursion — emit with resolved type.
                 // Promote nullable-union compositions to a scalar flag
@@ -3357,6 +3552,35 @@ fn flatten_body_params_prefix(
                 );
                 continue;
             }
+        }
+
+        // Recognize inline oneOf/anyOf [T, array<T>] unions.
+        if let Some(element_type) = recognize_scalar_or_array_union(prop, component_schemas) {
+            let const_default = const_default_value(prop);
+            let has_null_branch = prop.one_of.iter()
+                .chain(prop.any_of.iter())
+                .any(|b| {
+                    let eff = b.schema_ref.as_ref().and_then(|r| {
+                        component_schemas.get(&strip_ref_prefix(r))
+                    }).unwrap_or(b);
+                    is_null_sentinel(eff)
+                });
+            out.insert(
+                full_key,
+                MethodParameter {
+                    param_type: Some(element_type.to_string()),
+                    description: prop.description.clone(),
+                    location: Some("body".to_string()),
+                    required: required.contains(name.as_str()) && const_default.is_none(),
+                    format: prop.format.clone(),
+                    default_value: const_default,
+                    repeated: true,
+                    scalar_or_array: true,
+                    nullable: prop.is_nullable() || has_null_branch,
+                    ..Default::default()
+                },
+            );
+            continue;
         }
 
         // Promote nullable-union compositions (`anyOf: [scalar, null]`
@@ -3612,6 +3836,187 @@ paths:
         let binary = send.binary_request_body.as_ref().unwrap();
         assert_eq!(binary.content_type, "text/plain");
         assert_eq!(binary.flag_name, "body");
+    }
+
+    #[test]
+    fn test_has_binary_response_true_for_audio_2xx() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /tts:
+    post:
+      x-fern-sdk-group-name: tts
+      x-fern-sdk-method-name: convert
+      operationId: convertTts
+      responses:
+        "200":
+          description: ok
+          content:
+            audio/mpeg:
+              schema: { type: string, format: binary }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let convert = &doc.resources["tts"].methods["convert"];
+        assert!(
+            convert.has_binary_response,
+            "audio/mpeg 2xx should flip has_binary_response on"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_false_for_json_only_2xx() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /models:
+    get:
+      x-fern-sdk-group-name: models
+      x-fern-sdk-method-name: list
+      operationId: listModels
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema: { type: array, items: { type: object } }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let list = &doc.resources["models"].methods["list"];
+        assert!(
+            !list.has_binary_response,
+            "JSON-only 2xx must NOT flip has_binary_response on"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_mixed_binary_2xx_and_json_4xx() {
+        // The edge case the user called out: a 2xx that returns audio and
+        // a 4xx that returns JSON-shaped errors must still surface --output
+        // because the success path is what writes the file.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /tts:
+    post:
+      x-fern-sdk-group-name: tts
+      x-fern-sdk-method-name: convert
+      operationId: convertTts
+      responses:
+        "200":
+          description: ok
+          content:
+            audio/mpeg:
+              schema: { type: string, format: binary }
+        "422":
+          description: validation error
+          content:
+            application/json:
+              schema: { type: object }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let convert = &doc.resources["tts"].methods["convert"];
+        assert!(
+            convert.has_binary_response,
+            "mixed (audio 2xx + JSON 4xx) must keep --output available"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_false_for_non_json_only_on_4xx() {
+        // Symmetric inverse of the mixed case: a 4xx with a non-JSON shape
+        // does NOT, on its own, make the operation binary — only 2xx
+        // bodies are written via --output.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /models:
+    get:
+      x-fern-sdk-group-name: models
+      x-fern-sdk-method-name: list
+      operationId: listModels
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema: { type: object }
+        "400":
+          description: error
+          content:
+            text/plain:
+              schema: { type: string }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let list = &doc.resources["models"].methods["list"];
+        assert!(
+            !list.has_binary_response,
+            "text/plain on a 4xx must not flip the binary-response gate"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_honors_2xx_wildcard() {
+        // OpenAPI lets specs use a `2XX` wildcard instead of a specific
+        // status code. The gate must treat that the same as `200`/`201`.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /download:
+    get:
+      x-fern-sdk-group-name: files
+      x-fern-sdk-method-name: download
+      operationId: downloadFile
+      responses:
+        "2XX":
+          description: ok
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let dl = &doc.resources["files"].methods["download"];
+        assert!(
+            dl.has_binary_response,
+            "the 2XX wildcard must be treated as a success status"
+        );
+    }
+
+    #[test]
+    fn test_has_binary_response_false_for_empty_responses() {
+        // No declared response media types → can't know, default to false.
+        // The runtime still honors the actual Content-Type when the request
+        // is made, but the help surface shouldn't advertise --output
+        // speculatively for ops that don't declare any body shape.
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /ping:
+    get:
+      x-fern-sdk-group-name: ops
+      x-fern-sdk-method-name: ping
+      operationId: ping
+      responses:
+        "204":
+          description: no content
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        let ping = &doc.resources["ops"].methods["ping"];
+        assert!(
+            !ping.has_binary_response,
+            "204 No Content has no body — --output is meaningless, gate stays off"
+        );
     }
 
     #[test]
@@ -9287,6 +9692,261 @@ paths:
         let mut components = HashMap::new();
         components.insert("Big".to_string(), big);
         assert_eq!(recognize_nullable_union(&obj, &components), None);
+    }
+
+    // -- resolve_ref_chain ----------------------------------------------------
+
+    #[test]
+    fn test_resolve_ref_chain_single_hop() {
+        let schema: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/Foo""##).unwrap();
+        let foo: OpenApiSchemaObject = serde_yaml::from_str("type: string\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("Foo".to_string(), foo);
+        let resolved = resolve_ref_chain(&schema, &components).unwrap();
+        assert_eq!(resolved.schema_type(), Some("string"));
+    }
+
+    #[test]
+    fn test_resolve_ref_chain_multi_hop() {
+        // A -> B -> C (terminal: type: array, items.type: string)
+        let a: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/B""##).unwrap();
+        let b: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/C""##).unwrap();
+        let c: OpenApiSchemaObject =
+            serde_yaml::from_str("type: array\nitems:\n  type: string\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("B".to_string(), b);
+        components.insert("C".to_string(), c);
+        let resolved = resolve_ref_chain(&a, &components).unwrap();
+        assert_eq!(resolved.schema_type(), Some("array"));
+    }
+
+    #[test]
+    fn test_resolve_ref_chain_already_terminal() {
+        let schema: OpenApiSchemaObject = serde_yaml::from_str("type: integer\n").unwrap();
+        let components = HashMap::new();
+        let resolved = resolve_ref_chain(&schema, &components).unwrap();
+        assert_eq!(resolved.schema_type(), Some("integer"));
+    }
+
+    #[test]
+    fn test_resolve_ref_chain_broken_returns_none() {
+        let schema: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/Missing""##).unwrap();
+        let components = HashMap::new();
+        assert!(resolve_ref_chain(&schema, &components).is_none());
+    }
+
+    // -- recognize_scalar_or_array_union ---------------------------------------
+
+    #[test]
+    fn test_scalar_or_array_union_oneof() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("string"));
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_anyof() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            anyOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("string"));
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_with_null() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+              - type: "null"
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("string"));
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_not_matching() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: integer
+            "#,
+        )
+        .unwrap();
+        assert!(recognize_scalar_or_array_union(&obj, &HashMap::new()).is_none());
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_rejects_extra_branches() {
+        // oneOf [string, array<string>, object] must NOT match — the
+        // object branch is not representable as a repeated flag.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+              - type: object
+            "#,
+        )
+        .unwrap();
+        assert!(recognize_scalar_or_array_union(&obj, &HashMap::new()).is_none());
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_rejects_mismatched_array() {
+        // oneOf [string, array<integer>, array<string>] must NOT match —
+        // multiple array branches are ambiguous.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: integer
+              - type: array
+                items:
+                  type: string
+            "#,
+        )
+        .unwrap();
+        assert!(recognize_scalar_or_array_union(&obj, &HashMap::new()).is_none());
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_integer_type() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: integer
+              - type: array
+                items:
+                  type: integer
+            "#,
+        )
+        .unwrap();
+        assert_eq!(recognize_scalar_or_array_union(&obj, &HashMap::new()), Some("integer"));
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_type_mismatch_returns_none() {
+        // oneOf [string, array<integer>] — scalar and array item types differ.
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: integer
+            "#,
+        )
+        .unwrap();
+        assert!(recognize_scalar_or_array_union(&obj, &HashMap::new()).is_none());
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_with_ref() {
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            oneOf:
+              - type: string
+              - $ref: "#/components/schemas/StringArray"
+            "##,
+        )
+        .unwrap();
+        let arr: OpenApiSchemaObject =
+            serde_yaml::from_str("type: array\nitems:\n  type: string\n").unwrap();
+        let mut components = HashMap::new();
+        components.insert("StringArray".to_string(), arr);
+        assert_eq!(recognize_scalar_or_array_union(&obj, &components), Some("string"));
+    }
+
+    #[test]
+    fn test_flatten_body_params_ref_chain_union() {
+        // End-to-end: a body property with $ref -> $ref -> oneOf [string, array<string>]
+        // should produce a repeated string parameter.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r##"
+            type: object
+            required:
+              - to
+            properties:
+              to:
+                $ref: "#/components/schemas/SendMessageTo"
+            "##,
+        )
+        .unwrap();
+        let send_msg_to: OpenApiSchemaObject =
+            serde_yaml::from_str(r##"$ref: "#/components/schemas/Addresses""##).unwrap();
+        let addresses: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert("SendMessageTo".to_string(), send_msg_to);
+        components.insert("Addresses".to_string(), addresses);
+        let params = flatten_body_params_prefix(&schema, &components, 0, "");
+        let to_param = params.get("to").expect("'to' parameter should exist");
+        assert_eq!(to_param.param_type.as_deref(), Some("string"));
+        assert!(to_param.repeated, "'to' should be marked as repeated");
+        assert!(to_param.required, "'to' should be required");
+        assert!(!to_param.nullable, "'to' should not be nullable (no null branch)");
+    }
+
+    #[test]
+    fn test_flatten_body_params_nullable_string_array_union() {
+        // oneOf [string, array<string>, null] → repeated + nullable
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              cc:
+                oneOf:
+                  - type: string
+                  - type: array
+                    items:
+                      type: string
+                  - type: "null"
+            "#,
+        )
+        .unwrap();
+        let components = HashMap::new();
+        let params = flatten_body_params_prefix(&schema, &components, 0, "");
+        let cc_param = params.get("cc").expect("'cc' parameter should exist");
+        assert_eq!(cc_param.param_type.as_deref(), Some("string"));
+        assert!(cc_param.repeated, "'cc' should be marked as repeated");
+        assert!(cc_param.nullable, "'cc' should be nullable (has null branch)");
     }
 
     #[test]

@@ -199,6 +199,11 @@ impl Binding for GraphqlBinding {
         self.inner.auth_bindings = merged;
     }
 
+    fn schema(&self, path: &[String]) -> Result<Option<serde_json::Value>, CliError> {
+        let prepared = self.ensure_prepared()?;
+        Ok(super::help::build_schema(&prepared.doc, path))
+    }
+
     fn build_command(&self) -> Result<clap::Command, CliError> {
         let prepared = self.ensure_prepared()?;
         let cli = commands::build_cli(&prepared.doc);
@@ -219,26 +224,6 @@ impl Binding for GraphqlBinding {
         }
 
         Ok(cli)
-    }
-
-    fn render_json_help(
-        &self,
-        subcommand_path: &[String],
-        out: &mut dyn std::io::Write,
-    ) -> Result<bool, CliError> {
-        let prepared = self.ensure_prepared()?;
-        match super::help::write_json_help(&prepared.doc, subcommand_path, out) {
-            Ok(()) => Ok(true),
-            // "Resource not found" / "Operation not found" means the path
-            // belongs to a different binding — return false so the
-            // dispatch_pipeline loop tries the next one.
-            Err(CliError::Validation(msg))
-                if msg.contains("not found") =>
-            {
-                Ok(false)
-            }
-            Err(e) => Err(e),
-        }
     }
 
     fn dispatch<'a>(

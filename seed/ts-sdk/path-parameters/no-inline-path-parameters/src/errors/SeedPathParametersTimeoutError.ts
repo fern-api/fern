@@ -10,7 +10,7 @@ export class SeedPathParametersTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedPathParametersTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

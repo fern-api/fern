@@ -10,7 +10,7 @@ export class SeedExhaustiveTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedExhaustiveTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

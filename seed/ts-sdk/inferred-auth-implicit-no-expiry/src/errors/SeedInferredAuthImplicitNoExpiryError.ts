@@ -28,7 +28,7 @@ export class SeedInferredAuthImplicitNoExpiryError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedInferredAuthImplicitNoExpiryError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

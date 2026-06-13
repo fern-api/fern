@@ -251,25 +251,31 @@ fn normalize_non_existing(path: &Path) -> Result<PathBuf, CliError> {
     Ok(resolved)
 }
 
-/// Characters to encode in a single URL path segment. Keeps RFC 3986 §2.3
-/// unreserved characters that commonly appear in resource IDs (`-` and `_`)
-/// unencoded; encodes everything else including `.` (dots appear in email-style
-/// calendar IDs and should not carry path semantics).
+/// Characters to encode in a single URL path segment. All RFC 3986 §2.3
+/// unreserved characters (`A-Z a-z 0-9 - . _ ~`) are left unencoded;
+/// everything else is percent-encoded.
 use percent_encoding::{AsciiSet, CONTROLS};
 const PATH_SEGMENT: &AsciiSet = &CONTROLS
     .add(b' ').add(b'!').add(b'"').add(b'#').add(b'$').add(b'%')
     .add(b'&').add(b'\'').add(b'(').add(b')').add(b'*').add(b'+')
-    .add(b',').add(b'.').add(b'/').add(b':').add(b';').add(b'<')
+    .add(b',').add(b'/').add(b':').add(b';').add(b'<')
     .add(b'=').add(b'>').add(b'?').add(b'@').add(b'[').add(b'\\')
-    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}')
-    .add(b'~');
+    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}');
 
 /// Percent-encode a value for use as a single URL path segment (e.g., file ID,
-/// calendar ID, message ID). Hyphens and underscores are left unencoded since
-/// they are unreserved per RFC 3986 and ubiquitous in resource IDs.
+/// calendar ID, message ID). All RFC 3986 §2.3 unreserved characters
+/// (`A-Z a-z 0-9 - . _ ~`) are left unencoded.
 pub fn encode_path_segment(s: &str) -> String {
     use percent_encoding::utf8_percent_encode;
     utf8_percent_encode(s, PATH_SEGMENT).to_string()
+}
+
+/// Returns `true` when `segment` is a WHATWG dot-segment that would be
+/// collapsed by `url::Url::parse()`. Encoding cannot prevent this —
+/// `%2E` and `%2e` are also collapsed — so the caller must reject
+/// rather than encode.
+pub fn is_dot_segment(segment: &str) -> bool {
+    matches!(segment, "." | "..")
 }
 
 /// Percent-encode a value for use in URI path templates where `/` should stay
@@ -294,9 +300,9 @@ pub fn validate_resource_name(s: &str) -> Result<&str, CliError> {
             "Resource name must not be empty".to_string(),
         ));
     }
-    if s.split('/').any(|seg| seg == "..") {
+    if s.split('/').any(|seg| seg == ".." || seg == ".") {
         return Err(CliError::Validation(format!(
-            "Resource name must not contain path traversal ('..') segments: {s}"
+            "Resource name must not contain dot-segments ('.' or '..') : {s}"
         )));
     }
     if s.chars()
@@ -515,10 +521,25 @@ mod tests {
 
     #[test]
     fn test_encode_path_segment_email() {
-        // Calendar IDs are often email addresses
+        // Calendar IDs are often email addresses. `@` is a reserved
+        // character and must be encoded; `.` is unreserved per RFC 3986
+        // §2.3 and must NOT be encoded.
         let encoded = encode_path_segment("user@gmail.com");
-        assert!(!encoded.contains('@'));
-        assert!(!encoded.contains('.'));
+        assert!(!encoded.contains('@'), "@ must be percent-encoded");
+        assert!(encoded.contains('.'), ". is unreserved and must not be encoded");
+        assert_eq!(encoded, "user%40gmail.com");
+    }
+
+    #[test]
+    fn test_encode_path_segment_dot_and_tilde_unreserved() {
+        // `.` and `~` are RFC 3986 §2.3 unreserved characters and must
+        // not be percent-encoded in path segments.
+        assert_eq!(encode_path_segment("file.txt"), "file.txt");
+        assert_eq!(encode_path_segment("user~archive"), "user~archive");
+        assert_eq!(
+            encode_path_segment("codex-test@agentmail.to"),
+            "codex-test%40agentmail.to"
+        );
     }
 
     #[test]
@@ -536,11 +557,34 @@ mod tests {
     }
 
     #[test]
+    fn test_encode_path_segment_dot_segment_guard() {
+        // `.` and `~` pass through unencoded (RFC 3986 §2.3 unreserved).
+        assert_eq!(encode_path_segment("file.txt"), "file.txt");
+        assert_eq!(encode_path_segment("..."), "...");
+        assert_eq!(encode_path_segment(".hidden"), ".hidden");
+        // Bare `.` and `..` also pass through from the encoder — WHATWG
+        // dot-segment rejection must happen at the caller, not here.
+        assert_eq!(encode_path_segment("."), ".");
+        assert_eq!(encode_path_segment(".."), "..");
+    }
+
+    #[test]
+    fn test_is_dot_segment() {
+        assert!(is_dot_segment("."));
+        assert!(is_dot_segment(".."));
+        assert!(!is_dot_segment("..."));
+        assert!(!is_dot_segment(".hidden"));
+        assert!(!is_dot_segment("file.txt"));
+        assert!(!is_dot_segment(""));
+    }
+
+    #[test]
     fn test_encode_path_segment_path_traversal() {
-        // Encoding makes traversal segments harmless
+        // Encoding `/` makes traversal harmless — the path cannot escape
+        // the segment even though `.` is left unencoded (unreserved).
         let encoded = encode_path_segment("../../etc/passwd");
-        assert!(!encoded.contains('/'));
-        assert!(!encoded.contains(".."));
+        assert!(!encoded.contains('/'), "slashes must be encoded");
+        assert_eq!(encoded, "..%2F..%2Fetc%2Fpasswd");
     }
 
     #[test]
@@ -602,6 +646,15 @@ mod tests {
     }
 
     #[test]
+    fn test_validate_resource_name_single_dot() {
+        assert!(validate_resource_name(".").is_err());
+        assert!(validate_resource_name("projects/./topics/t1").is_err());
+        // Dots inside segment names are fine
+        assert!(validate_resource_name("file.txt").is_ok());
+        assert!(validate_resource_name("user@mail.co").is_ok());
+    }
+
+    #[test]
     fn test_validate_resource_name_control_chars() {
         assert!(validate_resource_name("spaces/\0bad").is_err());
         assert!(validate_resource_name("spaces/\nbad").is_err());
@@ -627,7 +680,7 @@ mod tests {
         assert!(err.to_string().contains("must not be empty"));
 
         let err = validate_resource_name("../bad").unwrap_err();
-        assert!(err.to_string().contains("path traversal"));
+        assert!(err.to_string().contains("dot-segment"));
 
         let err = validate_resource_name("bad\0id").unwrap_err();
         assert!(err.to_string().contains("invalid characters"));

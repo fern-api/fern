@@ -46,3 +46,31 @@ func (c *Client) GetText(
 	}
 	return response.Body, nil
 }
+
+func (c *Client) GetCsv(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.GetCsv(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetXML(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.GetXML(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}

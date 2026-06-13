@@ -732,6 +732,19 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/req-bodies/array-body-with-headers",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithArrayBodyAndHeaders"
+            },
+            "snippet": {
+                "sync_client": "from seed import Exhaustive\n\nclient = Exhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_requests.post_with_array_body_and_headers(\n    x_custom_header=\"X-Custom-Header\",\n    request=[\"string\", \"string\"],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncExhaustive\n\nclient = AsyncExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined_requests.post_with_array_body_and_headers(\n        x_custom_header=\"X-Custom-Header\",\n        request=[\"string\", \"string\"],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/no-auth",
                 "method": "POST",
                 "identifier_override": "endpoint_no-auth.postWithNoAuth"

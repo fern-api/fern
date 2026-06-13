@@ -676,6 +676,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/req-bodies/array-body-with-headers",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithArrayBodyAndHeaders"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.InlinedRequests;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.InlinedRequests.PostWithArrayBodyAndHeadersAsync(\n    new PostWithArrayBodyAndHeaders\n    {\n        XCustomHeader = \"X-Custom-Header\",\n        Body = new List<string>() { \"string\", \"string\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/no-auth",
                 "method": "POST",
                 "identifier_override": "endpoint_no-auth.postWithNoAuth"

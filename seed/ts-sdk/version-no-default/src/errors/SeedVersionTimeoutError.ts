@@ -10,7 +10,7 @@ export class SeedVersionTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedVersionTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }
