@@ -8,10 +8,17 @@ import type { PipelineLogger } from "../pipeline/PipelineLogger";
 // Unit-level proof that ReplayStep threads `replayCommitted` from the replay
 // run result onto ReplayStepResult, independent of which @fern-api/replay
 // version is installed (the field is computed by replay-run, mocked here).
-vi.mock("../replay/replay-run", () => ({
-    replayRun: vi.fn(),
-    replayApply: vi.fn()
-}));
+// Partial mock: only the run entry points are stubbed — ReplayStep also
+// imports `readReplayDegraded` from this module, and the real (tolerant)
+// reader must keep running against the mocked reports.
+vi.mock("../replay/replay-run", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("../replay/replay-run")>();
+    return {
+        ...actual,
+        replayRun: vi.fn(),
+        replayApply: vi.fn()
+    };
+});
 
 const mockLogger: PipelineLogger = {
     debug: vi.fn(),
