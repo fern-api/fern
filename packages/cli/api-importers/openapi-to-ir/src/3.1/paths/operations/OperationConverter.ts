@@ -27,6 +27,7 @@ import { AbstractOperationConverter } from "./AbstractOperationConverter.js";
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
         idempotent: boolean | undefined;
+        subtitle: string | undefined;
         idToAuthScheme?: Record<string, FernIr.AuthScheme>;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
         pathLevelServers?: OpenAPIV3_1.ServerObject[];
@@ -60,6 +61,7 @@ export declare namespace OperationConverter {
 
 export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
+    private readonly subtitle: string | undefined;
     private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
     private readonly pathLevelServers?: OpenAPIV3_1.ServerObject[];
@@ -75,6 +77,7 @@ export class OperationConverter extends AbstractOperationConverter {
         path,
         pathItemParameters,
         idempotent,
+        subtitle,
         idToAuthScheme,
         topLevelServers,
         pathLevelServers,
@@ -82,6 +85,7 @@ export class OperationConverter extends AbstractOperationConverter {
     }: OperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path, pathItemParameters });
         this.idempotent = idempotent;
+        this.subtitle = subtitle;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
         this.pathLevelServers = pathLevelServers;
@@ -219,6 +223,7 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const baseEndpoint: OperationConverter.BaseEndpoint = {
             displayName: this.operation.summary,
+            subtitle: this.subtitle,
             method: httpMethod,
             baseUrl,
             v2BaseUrls,

@@ -44,6 +44,7 @@ types:
       id: commons.EndpointId
       name: EndpointName
       displayName: optional<string>
+      subtitle: optional<string>
       method: HttpMethod
       headers: list<HttpHeader>
       responseHeaders:

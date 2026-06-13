@@ -139,6 +139,7 @@
                     "id": "endpoint_property-based-error.ThrowError",
                     "name": "ThrowError",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

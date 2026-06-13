@@ -104,6 +104,7 @@
                     "id": "endpoint_.bulkUpdateTasks",
                     "name": "bulkUpdateTasks",
                     "displayName": "Bulk-update tasks. Query params and body share some property names.",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

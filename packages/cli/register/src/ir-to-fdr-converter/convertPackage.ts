@@ -291,7 +291,8 @@ function convertService(
                 },
                 _other: () => undefined
             }),
-            includeInApiExplorer: irEndpoint.apiPlayground
+            includeInApiExplorer: irEndpoint.apiPlayground,
+            subtitle: irEndpoint.subtitle ?? undefined
         };
         attachUserSpecifiedV2ExamplesMarker(endpoint, irEndpoint);
         endpoints.push(endpoint);

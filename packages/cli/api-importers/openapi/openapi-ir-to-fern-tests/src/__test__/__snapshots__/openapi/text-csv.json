@@ -1,0 +1,71 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "exportCsv": {
+              "auth": undefined,
+              "display-name": "Export CSV",
+              "docs": undefined,
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/export",
+              "response": {
+                "content-type": "text/csv",
+                "docs": "CSV export",
+                "status-code": 200,
+                "type": "text",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    exportCsv:
+      path: /export
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: Export CSV
+      response:
+        docs: CSV export
+        type: text
+        status-code: 200
+        content-type: text/csv
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test text/csv response handling.",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test text/csv response handling.
+",
+  },
+}

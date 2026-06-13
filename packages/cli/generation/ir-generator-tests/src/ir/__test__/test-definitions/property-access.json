@@ -797,6 +797,7 @@
                     "id": "endpoint_.createUser",
                     "name": "createUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

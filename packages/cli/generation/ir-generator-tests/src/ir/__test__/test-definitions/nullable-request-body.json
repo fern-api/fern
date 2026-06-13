@@ -194,6 +194,7 @@
                     "id": "endpoint_testGroup.test_method_name",
                     "name": "test_method_name",
                     "displayName": "Post Nullable Request Body",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

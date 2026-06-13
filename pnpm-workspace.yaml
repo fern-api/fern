@@ -68,7 +68,7 @@ catalog:
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
-  "@fern-api/fdr-sdk": 1.2.32-f5a3d6f517
+  "@fern-api/fdr-sdk": 1.2.33-830bfae69e
   "@fern-api/generator-cli": 0.9.39
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 5.0.0
@@ -270,7 +270,7 @@ overrides:
   minimatch: ">=10.2.3"
   qs: 6.15.2
   url-join: ^4.0.1
-  "@fern-api/fdr-sdk": 1.2.32-f5a3d6f517
+  "@fern-api/fdr-sdk": 1.2.33-830bfae69e
   form-data: ^4.0.4
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.2

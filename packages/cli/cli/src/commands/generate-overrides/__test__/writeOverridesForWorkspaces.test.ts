@@ -52,6 +52,7 @@ function createMinimalEndpoint(overrides: {
         audiences: [],
         path: overrides.path,
         summary: undefined,
+        subtitle: undefined,
         operationId: overrides.operationId ?? undefined,
         tags: overrides.tags ?? [],
         pathParameters: [],
