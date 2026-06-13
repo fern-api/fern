@@ -12,6 +12,7 @@ import {
     Startable,
     TaskAbortSignal,
     TaskContext,
+    TaskFailOptions,
     TaskResult
 } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -84,13 +85,13 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public failAndThrow(message?: string, error?: unknown, _options?: { code?: CliError.Code }): never {
+    public failAndThrow(message?: string, error?: unknown, _options?: TaskFailOptions): never {
         this.failWithoutThrowing(message, error);
         this.finish();
         throw new TaskAbortSignal();
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, _options?: { code?: CliError.Code }): void {
+    public failWithoutThrowing(message?: string, error?: unknown, _options?: TaskFailOptions): void {
         if (message != null) {
             this.lastFailureMessage = message;
         }

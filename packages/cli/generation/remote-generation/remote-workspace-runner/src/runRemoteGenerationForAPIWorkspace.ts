@@ -418,6 +418,7 @@ async function generateOne({
                 generatorName: generatorInvocation.name,
                 errorMessage: interactiveTaskContext.getLastFailureMessage() ?? "Generator failed",
                 durationMs: Date.now() - startedAt,
+                failureSource: "container",
                 outputRepoUrl: getOutputRepoUrl(generatorInvocation),
                 generatorsYmlAbsolutePath,
                 generatorsYmlLineNumber: lineNumber
@@ -439,6 +440,8 @@ async function generateOne({
             generatorName: generatorInvocation.name,
             errorMessage: message,
             durationMs: Date.now() - startedAt,
+            failureSource: "cli",
+            cliError: error,
             outputRepoUrl: getOutputRepoUrl(generatorInvocation),
             generatorsYmlAbsolutePath,
             generatorsYmlLineNumber: lineNumber
@@ -447,7 +450,8 @@ async function generateOne({
         // Pass the error object so resolveErrorCode can extract CliError codes,
         // errno codes, etc. instead of defaulting to InternalError.
         interactiveTaskContext.failWithoutThrowing(message, error, {
-            code: resolveErrorCode(error)
+            code: resolveErrorCode(error),
+            skipErrorReporting: true
         });
     }
 }

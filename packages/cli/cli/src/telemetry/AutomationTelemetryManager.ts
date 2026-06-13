@@ -77,6 +77,9 @@ export class AutomationTelemetryManager {
         if (!isFailureAutomationEventName(event.event) || event.errorCode == null) {
             return undefined;
         }
+        if (event.attributes?.failure_source === "container") {
+            return undefined;
+        }
         return this.reporter.captureException(error, {
             tags: toSentryTags(event, context),
             context: {

@@ -3,9 +3,12 @@ import { TaskAbortSignal } from "@fern-api/task-context";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons.js";
+import { generationRunAttributes } from "../../../telemetry/automationTelemetryAttributes.js";
+import { isAutomationMode } from "../../../telemetry/automationTelemetryContext.js";
+import { AUTOMATION_EVENT_NAMES } from "../../../telemetry/automationTelemetryEvent.js";
 import { parseGeneratorArg } from "../../generate/filterGenerators.js";
 import { generateAPIWorkspaces } from "../../generate/generateAPIWorkspaces.js";
-import { GeneratorRunCollector } from "./GeneratorRunResult.js";
+import { countResults, GeneratorRunCollector } from "./GeneratorRunResult.js";
 import { renderGithubAnnotationsForResults } from "./renderGithubAnnotationsForResults.js";
 import { renderStdoutSummary, writeResults, writeResultsSync } from "./reportGenerateResults.js";
 
@@ -33,7 +36,9 @@ export async function executeAutomationsGenerate({
     options: AutomationsGenerateOptions;
 }): Promise<void> {
     const { generatorName, generatorIndex } = parseGeneratorArg(options.generator);
-    const collector = new GeneratorRunCollector();
+    const collector = new GeneratorRunCollector({
+        emitAutomationEvent: (event, emitOptions) => cliContext.emitAutomationTelemetryEvent(event, emitOptions)
+    });
     const { jsonOutputPath } = options;
 
     // Sentinel: the happy-path finally skips its write if a signal handler already flushed.
@@ -68,6 +73,12 @@ export async function executeAutomationsGenerate({
         await withSuppressedLoggerAnnotations(async () => {
             try {
                 await cliContext.runTask(async () => {
+                    if (isAutomationMode()) {
+                        cliContext.emitAutomationTelemetryEvent({
+                            event: AUTOMATION_EVENT_NAMES.GENERATION_STARTED
+                        });
+                    }
+
                     await generateAPIWorkspaces({
                         project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                             commandLineApiWorkspace: options.api,
@@ -118,6 +129,12 @@ export async function executeAutomationsGenerate({
         // `process.once` self-removes if fired; these are no-ops on the signal path.
         process.off("SIGINT", flushOnSignal);
         process.off("SIGTERM", flushOnSignal);
+        if (isAutomationMode()) {
+            cliContext.emitAutomationTelemetryEvent({
+                event: AUTOMATION_EVENT_NAMES.GENERATION_COMPLETED,
+                attributes: generationRunAttributes(countResults(collector.results()))
+            });
+        }
         if (!outputsFlushed) {
             outputsFlushed = true;
             await reportFinalOutputs({ collector, jsonOutputPath, taskAborted });

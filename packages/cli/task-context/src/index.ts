@@ -10,5 +10,6 @@ export {
     type PosthogEvent,
     type Startable,
     type TaskContext,
+    type TaskFailOptions,
     TaskResult
 } from "./TaskContext.js";

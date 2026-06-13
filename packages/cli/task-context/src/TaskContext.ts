@@ -7,11 +7,16 @@ export interface CaptureExceptionOptions {
     context?: Record<string, Record<string, unknown> | undefined>;
 }
 
+export interface TaskFailOptions {
+    code?: CliError.Code;
+    skipErrorReporting?: boolean;
+}
+
 export interface TaskContext {
     logger: Logger;
     takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
-    failAndThrow: (message?: string, error?: unknown, options?: { code?: CliError.Code }) => never;
-    failWithoutThrowing: (message?: string, error?: unknown, options?: { code?: CliError.Code }) => void;
+    failAndThrow: (message?: string, error?: unknown, options?: TaskFailOptions) => never;
+    failWithoutThrowing: (message?: string, error?: unknown, options?: TaskFailOptions) => void;
     captureException: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
     getResult: () => TaskResult;
     /**

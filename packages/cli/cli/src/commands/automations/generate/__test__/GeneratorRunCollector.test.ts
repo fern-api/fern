@@ -1,6 +1,117 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
+import { AUTOMATION_EVENT_NAMES } from "../../../../telemetry/automationTelemetryEvent.js";
 import { GeneratorRunCollector } from "../GeneratorRunResult.js";
+
+describe("GeneratorRunCollector telemetry", () => {
+    const originalAutomationMode = process.env.FERN_AUTOMATION;
+
+    afterEach(() => {
+        if (originalAutomationMode == null) {
+            delete process.env.FERN_AUTOMATION;
+        } else {
+            process.env.FERN_AUTOMATION = originalAutomationMode;
+        }
+    });
+
+    it("emits generator_completed when automation mode is enabled", () => {
+        process.env.FERN_AUTOMATION = "true";
+        const emitted: unknown[] = [];
+        const collector = new GeneratorRunCollector({
+            emitAutomationEvent: (event) => {
+                emitted.push(event);
+            }
+        });
+
+        collector.recordSuccess({
+            apiName: "foo",
+            groupName: "python-sdk",
+            generatorName: "fernapi/fern-python-sdk",
+            version: "0.1.0",
+            durationMs: 10,
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined,
+            outputRepoUrl: undefined,
+            generatorsYmlAbsolutePath: undefined,
+            generatorsYmlLineNumber: undefined
+        });
+
+        expect(emitted).toHaveLength(1);
+        expect(emitted[0]).toMatchObject({
+            event: AUTOMATION_EVENT_NAMES.GENERATOR_COMPLETED
+        });
+    });
+
+    it("emits generator_failed with cli error options", () => {
+        process.env.FERN_AUTOMATION = "true";
+        const emitted: Array<{ event: string; options?: { error?: unknown } }> = [];
+        const cliError = new Error("network down");
+        const collector = new GeneratorRunCollector({
+            emitAutomationEvent: (event, options) => {
+                emitted.push({ event: event.event, options });
+            }
+        });
+
+        collector.recordFailure({
+            apiName: undefined,
+            groupName: "g",
+            generatorName: "x",
+            errorMessage: "network down",
+            durationMs: 1,
+            failureSource: "cli",
+            cliError,
+            outputRepoUrl: undefined,
+            generatorsYmlAbsolutePath: undefined,
+            generatorsYmlLineNumber: undefined
+        });
+
+        collector.recordSuccess({
+            apiName: undefined,
+            groupName: "g",
+            generatorName: "y",
+            version: "2.0.0",
+            durationMs: 1,
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined,
+            outputRepoUrl: undefined,
+            generatorsYmlAbsolutePath: undefined,
+            generatorsYmlLineNumber: undefined
+        });
+
+        expect(emitted[0]).toMatchObject({
+            event: AUTOMATION_EVENT_NAMES.GENERATOR_FAILED,
+            options: { error: cliError }
+        });
+        expect(emitted.map((entry) => entry.event)).toEqual([
+            AUTOMATION_EVENT_NAMES.GENERATOR_FAILED,
+            AUTOMATION_EVENT_NAMES.GENERATOR_COMPLETED
+        ]);
+    });
+
+    it("does not emit when automation mode is disabled", () => {
+        delete process.env.FERN_AUTOMATION;
+        const emitted: unknown[] = [];
+        const collector = new GeneratorRunCollector({
+            emitAutomationEvent: (event) => {
+                emitted.push(event);
+            }
+        });
+
+        collector.recordSkipped({
+            apiName: undefined,
+            groupName: "g",
+            generatorName: "x",
+            reason: "opted_out",
+            outputRepoUrl: undefined,
+            generatorsYmlAbsolutePath: undefined,
+            generatorsYmlLineNumber: undefined
+        });
+
+        expect(emitted).toHaveLength(0);
+    });
+});
 
 describe("GeneratorRunCollector", () => {
     it("is empty on construction", () => {

@@ -2,6 +2,8 @@ import type { PublishTarget } from "./publishTarget.js";
 
 export type { PublishTarget };
 
+export type GeneratorFailureSource = "container" | "cli";
+
 /**
  * Why a generator was not executed in automation fan-out mode.
  *   - "local_output": output is configured for local-file-system (can't run remotely).
@@ -65,6 +67,9 @@ export interface RemoteGeneratorRunRecorder {
         args: GeneratorRunIdentity & {
             errorMessage: string;
             durationMs: number;
+            failureSource?: GeneratorFailureSource;
+            /** Real error object for CLI-path failures — used for Sentry at emit time only. */
+            cliError?: unknown;
         }
     ): void;
 
