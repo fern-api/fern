@@ -535,6 +535,8 @@ export interface ParsedLibraryConfiguration {
         git: string;
         /** Optional path within the repository to the library source */
         subpath: string | undefined;
+        /** Optional git branch, tag, or commit SHA to check out */
+        branch: string | undefined;
     };
     /** Configuration for the library documentation output */
     output: {

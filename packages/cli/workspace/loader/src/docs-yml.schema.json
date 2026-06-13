@@ -613,6 +613,17 @@
             }
           ],
           "description": "Optional path within the repository to the library source.\nExample: django/core"
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Git branch, tag, or commit SHA to check out.\nDefaults to the repository's default branch when omitted.\nExample: feature/my-fix"
         }
       },
       "required": [
