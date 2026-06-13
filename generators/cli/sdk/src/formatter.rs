@@ -6,6 +6,7 @@
 
 use serde_json::Value;
 use std::fmt::Write;
+use std::io::IsTerminal;
 
 /// Color emission mode.
 ///
@@ -48,14 +49,29 @@ pub struct OutputPipeline {
 impl OutputPipeline {
     /// Build a pipeline from parsed CLI matches.
     ///
+    /// Resolves the output format with this precedence when `--format` is
+    /// **not** passed:
+    ///   1. an explicit `--format` flag (always wins);
+    ///   2. the per-binary `<NAME>_OUTPUT` env var, if set to a valid format
+    ///      (`NAME` is `app_name` uppercased with `-` → `_`, mirroring the
+    ///      `<NAME>_LOG` logging convention);
+    ///   3. a TTY-aware default — `table` when stdout is an interactive
+    ///      terminal, `json` when piped or redirected.
+    ///
+    /// An invalid `<NAME>_OUTPUT` value is ignored (falls through to the
+    /// TTY-aware default), so a stray env var never breaks the CLI.
+    ///
     /// Returns `Err(FormatError::UnknownFormat)` for unrecognised
     /// `--format` values. Callers should map this into their error type
     /// (e.g. `CliError::Validation`).
-    pub fn from_matches(matches: &clap::ArgMatches) -> Result<Self, FormatError> {
+    pub fn from_matches(matches: &clap::ArgMatches, app_name: &str) -> Result<Self, FormatError> {
         let format = match matches.get_one::<String>("format") {
-            Some(s) => OutputFormat::parse(s)
-                .map_err(FormatError::UnknownFormat)?,
-            None => OutputFormat::default(),
+            Some(s) => OutputFormat::parse(s).map_err(FormatError::UnknownFormat)?,
+            None => {
+                let env_var = format!("{}_OUTPUT", app_name.to_uppercase().replace('-', "_"));
+                let env_value = std::env::var(env_var).ok();
+                resolve_default_format(env_value.as_deref(), std::io::stdout().is_terminal())
+            }
         };
         let quiet = matches
             .try_get_one::<bool>("quiet")
@@ -90,6 +106,29 @@ impl OutputPipeline {
         };
         writeln!(out, "{rendered}")?;
         Ok(())
+    }
+}
+
+/// Resolve the default output format when no `--format` flag was passed.
+///
+/// Implements steps 2–3 of the [`OutputPipeline::from_matches`] precedence:
+///   - if `env_value` is a valid format string, use it;
+///   - otherwise fall back to the TTY-aware default — [`OutputFormat::Table`]
+///     when stdout is an interactive terminal, [`OutputFormat::Json`] when
+///     piped or redirected.
+///
+/// An unset or invalid `env_value` is treated identically (ignored), so a
+/// stray `<NAME>_OUTPUT` value never breaks the CLI.
+///
+/// Pure (no IO) so it can be unit-tested by injecting `stdout_is_terminal`.
+fn resolve_default_format(env_value: Option<&str>, stdout_is_terminal: bool) -> OutputFormat {
+    if let Some(parsed) = env_value.and_then(|v| OutputFormat::parse(v).ok()) {
+        return parsed;
+    }
+    if stdout_is_terminal {
+        OutputFormat::Table
+    } else {
+        OutputFormat::Json
     }
 }
 
@@ -869,28 +908,99 @@ mod tests {
     }
 
     #[test]
-    fn pipeline_from_matches_defaults_to_json_auto() {
-        let matches = matches_for(&["test"]);
-        let pipeline = OutputPipeline::from_matches(&matches).unwrap();
-        assert_eq!(pipeline.format, OutputFormat::Json);
-        assert_eq!(pipeline.color_mode, ColorMode::Auto);
-    }
-
-    #[test]
     fn pipeline_from_matches_reads_explicit_format() {
+        // An explicit `--format` flag is honored regardless of TTY / env.
         let matches = matches_for(&["test", "--format", "yaml"]);
-        let pipeline = OutputPipeline::from_matches(&matches).unwrap();
+        let pipeline = OutputPipeline::from_matches(&matches, "test").unwrap();
         assert_eq!(pipeline.format, OutputFormat::Yaml);
+        assert_eq!(pipeline.color_mode, ColorMode::Auto);
     }
 
     #[test]
     fn pipeline_from_matches_rejects_unknown_format() {
         let matches = matches_for(&["test", "--format", "garbage"]);
-        let err = OutputPipeline::from_matches(&matches).unwrap_err();
+        let err = OutputPipeline::from_matches(&matches, "test").unwrap_err();
         assert!(
             matches!(err, FormatError::UnknownFormat(ref s) if s == "garbage"),
             "expected UnknownFormat, got: {err:?}",
         );
+    }
+
+    // -----------------------------------------------------------------------
+    // Default-format precedence: flag > <NAME>_OUTPUT env > TTY-aware default
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn resolve_default_format_no_env_piped_is_json() {
+        // No env override + non-terminal stdout (piped/redirected) → JSON.
+        assert_eq!(resolve_default_format(None, false), OutputFormat::Json);
+    }
+
+    #[test]
+    fn resolve_default_format_no_env_terminal_is_table() {
+        // No env override + interactive terminal → table.
+        assert_eq!(resolve_default_format(None, true), OutputFormat::Table);
+    }
+
+    #[test]
+    fn resolve_default_format_valid_env_wins_over_tty_default() {
+        // A valid env value beats the TTY-aware default in both directions.
+        assert_eq!(
+            resolve_default_format(Some("yaml"), true),
+            OutputFormat::Yaml,
+        );
+        assert_eq!(
+            resolve_default_format(Some("csv"), false),
+            OutputFormat::Csv,
+        );
+    }
+
+    #[test]
+    fn resolve_default_format_env_is_case_insensitive() {
+        assert_eq!(
+            resolve_default_format(Some("TABLE"), false),
+            OutputFormat::Table,
+        );
+    }
+
+    #[test]
+    fn resolve_default_format_invalid_env_falls_back_to_tty_default() {
+        // A bogus env value is ignored — the TTY-aware default applies.
+        assert_eq!(
+            resolve_default_format(Some("garbage"), false),
+            OutputFormat::Json,
+        );
+        assert_eq!(
+            resolve_default_format(Some("garbage"), true),
+            OutputFormat::Table,
+        );
+    }
+
+    #[test]
+    fn resolve_default_format_empty_env_falls_back_to_tty_default() {
+        // An empty env value parses as unknown → TTY default.
+        assert_eq!(resolve_default_format(Some(""), false), OutputFormat::Json);
+    }
+
+    #[test]
+    fn pipeline_from_matches_explicit_flag_beats_env() {
+        // Flag (step 1) wins even when <NAME>_OUTPUT (step 2) is set.
+        std::env::set_var("FMTTEST_FLAGWINS_OUTPUT", "csv");
+        let matches = matches_for(&["test", "--format", "yaml"]);
+        let pipeline = OutputPipeline::from_matches(&matches, "fmttest-flagwins").unwrap();
+        std::env::remove_var("FMTTEST_FLAGWINS_OUTPUT");
+        assert_eq!(pipeline.format, OutputFormat::Yaml);
+    }
+
+    #[test]
+    fn pipeline_from_matches_env_var_name_mirrors_logging_convention() {
+        // `<NAME>_OUTPUT` uppercases the binary name and maps `-` → `_`,
+        // matching the `<NAME>_LOG` convention. No flag → env is consulted.
+        std::env::set_var("MY_CLI_OUTPUT", "yaml");
+        let matches = matches_for(&["test"]);
+        let pipeline = OutputPipeline::from_matches(&matches, "my-cli").unwrap();
+        std::env::remove_var("MY_CLI_OUTPUT");
+        assert_eq!(pipeline.format, OutputFormat::Yaml);
     }
 
     #[test]

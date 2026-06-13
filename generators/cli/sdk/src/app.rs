@@ -105,6 +105,9 @@ pub struct CliApp {
     /// bindings — each binding's spec references schemes by name and
     /// the credential source is looked up from this registry.
     auth_bindings: Vec<(String, SchemeBinding)>,
+    /// Login flows declared for this CLI. Each populates one auth
+    /// scheme's keyring entry on `<bin> auth login`. See ADR-0007.
+    login_flows: Vec<crate::auth::login::DynLoginFlow>,
 }
 
 impl CliApp {
@@ -118,6 +121,7 @@ impl CliApp {
             deferred_ops: Vec::new(),
             cli_commands: Vec::new(),
             auth_bindings: Vec::new(),
+            login_flows: Vec::new(),
         }
     }
 
@@ -166,6 +170,48 @@ impl CliApp {
     /// ```
     pub fn auth(mut self, builder: impl AuthSchemeBuilder) -> Self {
         self.auth_bindings.push(builder.into_binding());
+        self
+    }
+
+    /// Declare a login flow for one of the registered auth schemes.
+    ///
+    /// Generated and hand-written CLIs use this to wire `<bin> auth login`
+    /// to a concrete flow — `DeviceCodeLoginFlow`, `PkceLoginFlow`, or
+    /// `TokenPasteLoginFlow` from [`crate::auth::login`] /
+    /// [`crate::auth::oauth2`]. Exactly one flow per scheme (ADR-0007).
+    ///
+    /// Token-paste via `--with-token` is universally available regardless
+    /// of declared flows; this method only matters when a binary wants
+    /// the OAuth (device-code / PKCE) flow to run automatically.
+    pub fn login_flow(mut self, flow: impl crate::auth::login::LoginFlow + 'static) -> Self {
+        let scheme = flow.scheme_name().to_string();
+        // If the flow declares a request-time auth provider (OAuth flows
+        // do, paste does not), register it as a Custom scheme binding so
+        // the dispatch pipeline uses the OAuth2KeyringProvider on every
+        // API request — refresh-on-expired included.
+        if let Some(provider) = flow.build_auth_provider(&self.name) {
+            // Replace any existing binding for this scheme. The flow's
+            // provider supersedes plain bearer/header on the same name —
+            // but emit a warning so a hand-written CLI that wired both
+            // (e.g. `.auth(BearerAuth::new("X").env("Y")).login_flow(...)`)
+            // discovers the silent replacement instead of debugging a
+            // mysteriously-ignored env var.
+            let prior = self.auth_bindings.len();
+            self.auth_bindings.retain(|(n, _)| n != &scheme);
+            if self.auth_bindings.len() < prior {
+                tracing::warn!(
+                    scheme = %scheme,
+                    cli = %self.name,
+                    "login_flow() replaced a previously-registered auth binding for scheme `{scheme}` — \
+                     any .auth() / .auth_scheme_*() / .auth_provider*() call for that scheme is discarded. \
+                     Move the .login_flow() call before the .auth() call, or drop the .auth() if the login \
+                     flow's request-time provider is what you want."
+                );
+            }
+            self.auth_bindings
+                .push((scheme, crate::auth::builder::SchemeBinding::Custom(provider)));
+        }
+        self.login_flows.push(std::sync::Arc::new(flow));
         self
     }
 
@@ -499,6 +545,12 @@ impl CliApp {
     /// validate that specs don't reference unregistered schemes.
     /// Must be called before `run_inner` / `dispatch_pipeline`.
     fn propagate_root_auth(&mut self) {
+        // Inject a keyring source into every scheme's credential chain
+        // before propagating, so `<bin> auth login` populating the keyring
+        // is visible to the binding-level auth provider without per-binary
+        // wiring (ADR-0008 § precedence).
+        crate::auth::login::inject_keyring_sources(&self.name, &mut self.auth_bindings);
+
         if !self.auth_bindings.is_empty() {
             for binding in &mut self.bindings {
                 binding.set_root_auth(&self.auth_bindings);
@@ -660,7 +712,7 @@ impl CliApp {
             .arg(
                 clap::Arg::new("format")
                     .long("format")
-                    .help("Output format: json (default), table, yaml, csv")
+                    .help("Output format: json, table, yaml, csv. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var.")
                     .value_name("FORMAT")
                     .global(true),
             )
@@ -699,12 +751,14 @@ impl CliApp {
         ]
         .into();
         // Pre-seeded with subcommands that get registered AFTER the binding
-        // merge loop (built-in `completion` and `man`, added below in 1c). If
-        // a binding's spec happens to expose a top-level subcommand by one of
-        // those names, the loop skips it so the built-in wins instead of
-        // tripping clap's duplicate-subcommand panic at parse time.
+        // merge loop (built-in `completion`, `man`, and `auth`, added below
+        // in 1c). If a binding's spec happens to expose a top-level
+        // subcommand by one of those names, the loop skips it so the
+        // built-in wins instead of tripping clap's duplicate-subcommand
+        // panic at parse time. `auth` is the always-grafted framework
+        // surface for `auth login` / `logout` / `status` (ADR-0007).
         let mut seen_subcommand_names: std::collections::HashSet<String> =
-            ["completion".to_string(), "man".to_string()].into();
+            ["completion".to_string(), "man".to_string(), "auth".to_string()].into();
         for (idx, binding) in self.bindings.iter().enumerate() {
             let subcmd = binding.build_command()?;
             // Merge this binding's subcommands into the root. If two bindings
@@ -755,10 +809,15 @@ impl CliApp {
             cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cc.cmd.clone());
         }
 
-        // 1c. Register `completion` and `man` subcommands.
+        // 1c. Register `completion`, `man`, and `auth` subcommands.
+        //
+        // `auth` is always grafted, even on binaries that declare no OAuth
+        // flow — `auth login --with-token` is the universal credential
+        // entry point that ships on every Fern CLI (ADR-0007 § always-graft).
         cli = cli
             .subcommand(crate::completions::completion_command())
-            .subcommand(crate::man::man_command());
+            .subcommand(crate::man::man_command())
+            .subcommand(crate::auth::login::build_auth_command());
 
         // 1d. Apply Tier 1 deferred operations (alias, hide, stability)
         // before completion/man generation so aliases appear in tab-
@@ -839,6 +898,20 @@ impl CliApp {
         // 4. Resolve which binding owns the matched subcommand.
         let (op_path, sub_matches) = resolve_op_path(&matches);
 
+        // 3a. Intercept the always-grafted `auth` subcommand before binding
+        // resolution — it's framework-owned, not spec-owned, and runs
+        // synchronously without touching any binding (ADR-0007 § always-graft).
+        if let Some(("auth", auth_matches)) = matches.subcommand() {
+            crate::auth::login::dispatch_auth(
+                auth_matches,
+                &self.name,
+                &self.auth_bindings,
+                &self.login_flows,
+                out,
+            )?;
+            return Ok(PipelineOutcome::Success);
+        }
+
         // 4a. Check CLI-level custom commands first.
         for cc in &self.cli_commands {
             if let Some(target) = crate::custom_commands::walk_matches_to_custom(
@@ -879,7 +952,7 @@ impl CliApp {
                 let transformed = self.hooks.run_transform_response(value, &op_path).await?;
 
                 // Format and write output.
-                let pipeline = formatter::OutputPipeline::from_matches(&matches)
+                let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
                     .map_err(|e| CliError::Validation(e.to_string()))?;
                 pipeline
                     .emit(out, &transformed, false, true)
@@ -895,7 +968,7 @@ impl CliApp {
                 if self.hooks.has_recover_error() {
                     match self.hooks.run_recover_error(err, &op_path).await {
                         Ok(value) => {
-                            let pipeline = formatter::OutputPipeline::from_matches(&matches)
+                            let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
                                 .map_err(|e| CliError::Validation(e.to_string()))?;
                             pipeline
                                 .emit(out, &value, false, true)
