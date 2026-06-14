@@ -336,7 +336,7 @@ function applyExampleToOperation(operation: any, fernExample: any, spec: OpenAPI
     applyParameterExamples(operation, fernExample["query-parameters"], "query", spec, warn);
     applyParameterExamples(operation, fernExample.headers, "header", spec, warn);
 
-    const requestBody = fernExample.request?.body;
+    const requestBody = fernExample.request;
     if (requestBody !== undefined) {
         applyRequestBodyExample(operation, requestBody, warn);
     }
@@ -360,7 +360,7 @@ function applyMultipleExamplesToOperation(operation: any, fernExamples: any[], s
         applyParameterNamedExamples(operation, fernExample["query-parameters"], "query", exampleName, spec, warn);
         applyParameterNamedExamples(operation, fernExample.headers, "header", exampleName, spec, warn);
 
-        const requestBody = fernExample.request?.body;
+        const requestBody = fernExample.request;
         if (requestBody !== undefined) {
             applyRequestBodyNamedExample(operation, requestBody, exampleName, warn);
         }

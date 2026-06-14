@@ -1,0 +1,5 @@
+- summary: |
+    Fix `fern api enrich` silently dropping flat `request:` bodies from x-fern-examples.
+    The merge step incorrectly read `request.body` instead of `request`, which is the
+    canonical format used by `fern generate` and defined in the ExampleEndpointCallSchema.
+  type: fix

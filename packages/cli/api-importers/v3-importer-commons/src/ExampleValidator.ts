@@ -700,7 +700,7 @@ export class ExampleValidator {
                     examples.push({
                         name: fernExampleObj.name as string | undefined,
                         source: "human",
-                        request: (fernExampleObj.request as { body?: unknown } | undefined)?.body,
+                        request: fernExampleObj.request,
                         response: (fernExampleObj.response as { body?: unknown } | undefined)?.body
                     });
                 }
