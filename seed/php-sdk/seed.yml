@@ -184,8 +184,6 @@ scripts:
 allowedFailures:
   # Dynamic snippet: default-valued base-path param ordered before request body.
   - api-wide-base-path-with-default
-  # Wire test: path param request failures unrelated to dynamic snippets.
-  - exhaustive:wire-tests
 
   # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).
   - trace

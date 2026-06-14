@@ -145,6 +145,7 @@
                     "id": "endpoint_payment.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -360,6 +361,7 @@
                     "id": "endpoint_payment.delete",
                     "name": "delete",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

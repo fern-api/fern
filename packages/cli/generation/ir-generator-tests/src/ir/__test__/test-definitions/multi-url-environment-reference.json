@@ -111,6 +111,7 @@
                     "id": "endpoint_items.listItems",
                     "name": "listItems",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -278,6 +279,7 @@
                     "id": "endpoint_auth.gettoken",
                     "name": "gettoken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -676,6 +678,7 @@
                     "id": "endpoint_files.upload",
                     "name": "upload",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

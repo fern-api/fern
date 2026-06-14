@@ -175,6 +175,7 @@
                     "id": "endpoint_auth.getTokenWithClientCredentials",
                     "name": "getTokenWithClientCredentials",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -649,6 +650,7 @@
                     "id": "endpoint_auth.refreshToken",
                     "name": "refreshToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1194,6 +1196,7 @@
                     "id": "endpoint_nested-no-auth/api.getSomething",
                     "name": "getSomething",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -1296,6 +1299,7 @@
                     "id": "endpoint_nested/api.getSomething",
                     "name": "getSomething",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1399,6 +1403,7 @@
                     "id": "endpoint_simple.getSomething",
                     "name": "getSomething",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

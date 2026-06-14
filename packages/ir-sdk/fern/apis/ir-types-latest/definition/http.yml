@@ -44,6 +44,7 @@ types:
       id: commons.EndpointId
       name: EndpointName
       displayName: optional<string>
+      subtitle: optional<string>
       method: HttpMethod
       headers: list<HttpHeader>
       responseHeaders:
@@ -399,6 +400,10 @@ types:
     extends:
       - commons.WithDocs
       - examples.WithV2Examples
+    properties:
+      contentType:
+        type: optional<string>
+        docs: The original media type (e.g. text/csv, text/xml). Defaults to text/plain when absent.
 
   BytesResponse:
     extends:

@@ -138,6 +138,7 @@
                     }
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
             },
             "shape": {
@@ -359,6 +360,7 @@
                     }
                 },
                 "displayName": null,
+                "subtitle": null,
                 "typeId": "type_errors:UnauthorizedRequestErrorBody",
                 "default": null,
                 "inline": null
@@ -366,6 +368,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "docs": null
         },
         "error_errors:BadRequest": {
@@ -462,6 +465,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "subtitle": null,
             "docs": null
         }
     },
@@ -514,6 +518,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "basePath": {
                 "head": "",
                 "parts": []
@@ -550,6 +555,7 @@
                         }
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -842,6 +848,7 @@
                                                                 }
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                                         },
                                                         "value": {
@@ -925,6 +932,7 @@
                                                     }
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                             }
                                         },
@@ -1034,6 +1042,7 @@
                         }
                     },
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1468,6 +1477,7 @@
                                                                 }
                                                             },
                                                             "displayName": null,
+                                                            "subtitle": null,
                                                             "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                                         },
                                                         "value": {
@@ -1551,6 +1561,7 @@
                                                     }
                                                 },
                                                 "displayName": null,
+                                                "subtitle": null,
                                                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
                                             }
                                         },
@@ -2145,6 +2156,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     {
@@ -2219,6 +2231,7 @@
                 }
             },
             "displayName": null,
+            "subtitle": null,
             "fernFilepath": {
                 "allParts": [
                     {
