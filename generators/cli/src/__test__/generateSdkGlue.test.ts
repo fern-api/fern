@@ -147,6 +147,9 @@ describe("resolveClientTreeFromIr", () => {
         const result = resolveClientTreeFromIr(irInfo);
         expect(result.subClients).toHaveLength(1);
         const agents = result.subClients[0];
+        if (agents == null) {
+            throw new Error("expected agents sub-client");
+        }
         expect(agents.typeName).toBe("AgentsClient");
         expect(agents.fieldName).toBe("agents");
         expect(agents.modulePath).toEqual(["agents"]);
