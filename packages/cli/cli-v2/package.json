@@ -30,6 +30,8 @@
     "dist:bin": "node build.compile.mjs",
     "dist:bin:local": "node build.compile.mjs --target=local",
     "dist:cli:dev": "node build.dev.mjs",
+    "dist:npm": "node build.npm.mjs",
+    "dist:release": "pnpm dist:cli:dev && pnpm dist:bin && pnpm dist:npm",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",

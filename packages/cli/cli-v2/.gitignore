@@ -1,1 +1,2 @@
 *.bun-build
+dist/
