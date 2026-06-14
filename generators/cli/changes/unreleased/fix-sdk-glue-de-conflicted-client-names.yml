@@ -1,0 +1,7 @@
+- summary: |
+    Fix sdk_glue.rs generation for de-conflicted client struct names
+    (e.g. SimpleClient2, PoolsClient3). Client names are now derived
+    from the Fern IR using the same SymbolRegistry de-confliction logic
+    as the Rust SDK generator, replacing the fragile regex-based parsing
+    of generated Rust source files.
+  type: fix

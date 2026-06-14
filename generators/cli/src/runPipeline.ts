@@ -14,7 +14,7 @@ import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
 import type { SubClientField } from "./generateSdkGlue.js";
 import { generateSdkGlue } from "./generateSdkGlue.js";
 import { deriveBinaryName } from "./identity.js";
-import type { IrSummary } from "./ir.js";
+import type { IrSummary, SdkGlueIrInfo } from "./ir.js";
 import { patchCargoLockForSdk, patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
@@ -44,11 +44,13 @@ export async function runPipeline(args: {
     ir: IrSummary;
     /** Path to the IR JSON file for embedded types codegen. */
     irFilepath?: string;
+    /** Pre-parsed IR data for SDK glue client tree resolution. */
+    sdkGlueIrInfo?: SdkGlueIrInfo;
     outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
     specsDir?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, irFilepath, sdkGlueIrInfo, outputConfig, sdkTemplateDir, specsDir } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -125,9 +127,12 @@ export async function runPipeline(args: {
 
     // Generate the SDK glue module (sdk_client + block_on) that bridges
     // the CLI's AppContext to the co-generated SDK client.
+    // Client names are derived from the IR (not regex-parsed from
+    // generated Rust source) so de-conflicted names like
+    // `SimpleClient2` are resolved correctly.
     let subClients: SubClientField[] = [];
-    if (sdkCrateName != null) {
-        subClients = await generateSdkGlue({ outputDir, binaryName, sdkCrateName });
+    if (sdkCrateName != null && sdkGlueIrInfo != null) {
+        subClients = await generateSdkGlue({ outputDir, binaryName, sdkCrateName, irInfo: sdkGlueIrInfo });
     }
 
     // Generate agent skills (.agents/skills/ + .claude symlink) so coding

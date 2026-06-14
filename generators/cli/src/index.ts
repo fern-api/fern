@@ -15,7 +15,14 @@ export { emitReadme } from "./emitReadme.js";
 export { emitReference } from "./emitReference.js";
 export { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
-export { type IrSummary, readIrSummary } from "./ir.js";
+export {
+    type IrSummary,
+    type ParsedIr,
+    type SdkGlueIrInfo,
+    type SdkGlueSubpackageInfo,
+    readIr,
+    readIrSummary
+} from "./ir.js";
 export { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "./patchCargoToml.js";
 export { applyDistWorkspacePatch, patchDistWorkspaceToml, stripNpmInstaller } from "./patchDistWorkspace.js";
 export {
