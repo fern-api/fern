@@ -184,8 +184,6 @@ scripts:
 allowedFailures:
   # Dynamic snippet: default-valued base-path param ordered before request body.
   - api-wide-base-path-with-default
-  # Wire test: path param request failures unrelated to dynamic snippets.
-  - exhaustive:wire-tests
   # Dynamic snippet: variable-typed path params not provided in snippet request.
   - variables
   - oauth-client-credentials-with-variables
