@@ -3,7 +3,6 @@ import Foundation
 public enum UndiscriminatedLiteral: Codable, Hashable, Sendable {
     case bool(Bool)
     case ending(Ending)
-    case jsonValue(JSONValue)
     case string(String)
     case value(Value)
 
@@ -13,8 +12,6 @@ public enum UndiscriminatedLiteral: Codable, Hashable, Sendable {
             self = .bool(value)
         } else if let value = try? container.decode(Ending.self) {
             self = .ending(value)
-        } else if let value = try? container.decode(JSONValue.self) {
-            self = .jsonValue(value)
         } else if let value = try? container.decode(String.self) {
             self = .string(value)
         } else if let value = try? container.decode(Value.self) {
@@ -33,8 +30,6 @@ public enum UndiscriminatedLiteral: Codable, Hashable, Sendable {
         case .bool(let value):
             try container.encode(value)
         case .ending(let value):
-            try container.encode(value)
-        case .jsonValue(let value):
             try container.encode(value)
         case .string(let value):
             try container.encode(value)

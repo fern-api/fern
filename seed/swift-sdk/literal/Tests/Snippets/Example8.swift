@@ -9,6 +9,7 @@ enum Example8 {
             prompt: .youAreAHelpfulAssistant,
             query: "What is the weather today",
             stream: false,
+            ending: .ending,
             context: .youreSuperWise,
             containerObject: ContainerObject(
                 nestedObjects: [
