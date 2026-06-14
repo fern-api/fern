@@ -259,10 +259,15 @@ export class DynamicTypeLiteralMapper {
                     if (record == null) {
                         return swift.Expression.nop();
                     }
-                    // For single-property union variants, the wrapped value is always
-                    // serialized under the "value" key (see the generated union's CodingKeys),
-                    // not under the discriminant value's wire name.
-                    const propertyKey = "value";
+                    // A single-property variant wraps its value under the variant's property
+                    // wire key (the union's CodingKeys raw value), which defaults to "value" but
+                    // can be customized via `key:` and is not exposed on the dynamic IR. The
+                    // discriminant has already been stripped from the record, so exclude any
+                    // inherited base properties to isolate the wrapped value's key.
+                    const basePropertyKeys = new Set(
+                        (unionVariant.properties ?? []).map((property) => property.name.wireValue)
+                    );
+                    const propertyKey = Object.keys(record).find((key) => !basePropertyKeys.has(key)) ?? "value";
                     const converted = this.convert({
                         fromSymbol,
                         typeReference: unionVariant.typeReference,
