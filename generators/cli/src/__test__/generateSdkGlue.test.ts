@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { SdkGlueIrInfo } from "../ir.js";
 import { resolveClientTreeFromIr } from "../generateSdkGlue.js";
+import type { SdkGlueIrInfo } from "../ir.js";
 
 /**
  * Tests for the IR-based client tree resolution that replaced regex
@@ -146,7 +146,7 @@ describe("resolveClientTreeFromIr", () => {
 
         const result = resolveClientTreeFromIr(irInfo);
         expect(result.subClients).toHaveLength(1);
-        const agents = result.subClients[0]!;
+        const agents = result.subClients[0];
         expect(agents.typeName).toBe("AgentsClient");
         expect(agents.fieldName).toBe("agents");
         expect(agents.modulePath).toEqual(["agents"]);

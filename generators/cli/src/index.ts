@@ -18,10 +18,10 @@ export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } f
 export {
     type IrSummary,
     type ParsedIr,
-    type SdkGlueIrInfo,
-    type SdkGlueSubpackageInfo,
     readIr,
-    readIrSummary
+    readIrSummary,
+    type SdkGlueIrInfo,
+    type SdkGlueSubpackageInfo
 } from "./ir.js";
 export { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "./patchCargoToml.js";
 export { applyDistWorkspacePatch, patchDistWorkspaceToml, stripNpmInstaller } from "./patchDistWorkspace.js";
