@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getText</a>(requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getText</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
