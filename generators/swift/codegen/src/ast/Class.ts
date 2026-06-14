@@ -2,6 +2,7 @@ import { escapeReservedKeyword } from "../syntax/index.js";
 import { AccessLevel } from "./AccessLevel.js";
 import { AstNode, Writer } from "./core/index.js";
 import { DocComment } from "./DocComment.js";
+import { EnumWithRawValues } from "./EnumWithRawValues.js";
 import { Initializer } from "./Initializer.js";
 import { Method } from "./Method.js";
 import { Property } from "./Property.js";
@@ -16,6 +17,7 @@ export declare namespace Class {
         properties: Property[];
         initializers?: Initializer[];
         methods?: Method[];
+        nestedTypes?: EnumWithRawValues[];
         docs?: DocComment;
     }
 }
@@ -28,6 +30,7 @@ export class Class extends AstNode {
     public readonly properties: Property[];
     public readonly initializers: Initializer[];
     public readonly methods: Method[];
+    public readonly nestedTypes: EnumWithRawValues[];
     public readonly docs?: DocComment;
 
     public constructor({
@@ -38,6 +41,7 @@ export class Class extends AstNode {
         properties,
         initializers,
         methods,
+        nestedTypes,
         docs
     }: Class.Args) {
         super();
@@ -48,6 +52,7 @@ export class Class extends AstNode {
         this.properties = properties;
         this.initializers = initializers ?? [];
         this.methods = methods ?? [];
+        this.nestedTypes = nestedTypes ?? [];
         this.docs = docs;
     }
 
@@ -95,6 +100,16 @@ export class Class extends AstNode {
                     writer.newLine();
                 }
                 method.write(writer);
+                writer.newLine();
+            });
+        }
+        if (this.nestedTypes.length > 0) {
+            writer.newLine();
+            this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
+                if (nestedTypeIdx > 0) {
+                    writer.newLine();
+                }
+                nestedType.write(writer);
                 writer.newLine();
             });
         }

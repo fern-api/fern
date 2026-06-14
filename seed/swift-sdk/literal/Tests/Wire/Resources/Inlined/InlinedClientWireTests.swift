@@ -23,7 +23,7 @@ import Literal
         let expectedResponse = SendResponse(
             message: "The weather is sunny",
             status: 200,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.inlined.send(
             request: .init(
@@ -65,7 +65,7 @@ import Literal
         let expectedResponse = SendResponse(
             message: "message",
             status: 1,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.inlined.send(
             request: .init(
