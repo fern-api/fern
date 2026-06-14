@@ -341,11 +341,7 @@ export class DynamicTypeLiteralMapper {
                     }
                     return swift.functionArgument({
                         label: sanitizeSwiftIdentifier(typeInstance.name.name.camelCase.unsafeName),
-                        value: this.convert({
-                            fromSymbol,
-                            typeReference: typeInstance.typeReference,
-                            value: typeInstance.value
-                        })
+                        value: expression
                     });
                 })
                 .filter((argument) => argument != null),
