@@ -33,6 +33,8 @@ class SeedOauthClientCredentials:
     client_secret : str
         The client secret used for authentication.
 
+    scp : str
+    entity_id : str
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -98,6 +100,8 @@ class SeedOauthClientCredentials:
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
+        scp: str,
+        entity_id: str,
     ): ...
     @typing.overload
     def __init__(
@@ -119,6 +123,8 @@ class SeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
+        scp: typing.Optional[str] = None,
+        entity_id: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
@@ -146,9 +152,15 @@ class SeedOauthClientCredentials:
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
+            if scp is None:
+                raise ApiError(body="The 'scp' parameter is required when using 'client_id' and 'client_secret'")
+            if entity_id is None:
+                raise ApiError(body="The 'entity_id' parameter is required when using 'client_id' and 'client_secret'")
             oauth_token_provider = OAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scp=scp,
+                entity_id=entity_id,
                 client_wrapper=SyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
@@ -251,6 +263,8 @@ class AsyncSeedOauthClientCredentials:
     client_secret : str
         The client secret used for authentication.
 
+    scp : str
+    entity_id : str
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -316,6 +330,8 @@ class AsyncSeedOauthClientCredentials:
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
+        scp: str,
+        entity_id: str,
     ): ...
     @typing.overload
     def __init__(
@@ -337,6 +353,8 @@ class AsyncSeedOauthClientCredentials:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
+        scp: typing.Optional[str] = None,
+        entity_id: typing.Optional[str] = None,
         token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
@@ -362,9 +380,15 @@ class AsyncSeedOauthClientCredentials:
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
+            if scp is None:
+                raise ApiError(body="The 'scp' parameter is required when using 'client_id' and 'client_secret'")
+            if entity_id is None:
+                raise ApiError(body="The 'entity_id' parameter is required when using 'client_id' and 'client_secret'")
             oauth_token_provider = AsyncOAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
+                scp=scp,
+                entity_id=entity_id,
                 client_wrapper=AsyncClientWrapper(
                     base_url=base_url,
                     headers=headers,
