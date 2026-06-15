@@ -274,4 +274,5 @@ overrides:
   form-data: ^4.0.4
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.2
+  esbuild: ^0.28.1
   yauzl: ^3.2.1
