@@ -189,9 +189,6 @@ allowedFailures:
   # is an additive IR change that must ship via the separate IR-publish flow before the
   # generator can consume it. Tracked separately; left here until the IR change lands.
   - api-wide-base-path-with-default
-  # Dynamic snippet: variable-typed path params not provided in snippet request.
-  - variables
-  - oauth-client-credentials-with-variables
 
   # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).
   - trace
