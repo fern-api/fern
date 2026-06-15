@@ -501,4 +501,3 @@ scripts:
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
   - examples:legacy-wire-tests
-  - oauth-client-credentials-custom
