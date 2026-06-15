@@ -1,0 +1,10 @@
+- summary: |
+    Fixed pagination for endpoints whose results property is a named alias to a
+    list or set (e.g. `results: $response.data` where `data` is a `UserList`
+    alias). Previously v1 generation aborted with "unsupported pagination
+    results type", and once that was resolved the generated pager used the alias
+    itself as the page element type, producing code that did not compile. The
+    results element type is now resolved through alias indirection (and
+    optional/nullable wrappers) in both generators, so the pager's element type
+    matches the endpoint's returned page type.
+  type: fix

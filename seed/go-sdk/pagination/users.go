@@ -65,6 +65,53 @@ func (l *ListUsernamesWithOptionalResponseRequest) SetStartingAfter(startingAfte
 }
 
 var (
+	listUsersAliasedDataRequestFieldPage          = big.NewInt(1 << 0)
+	listUsersAliasedDataRequestFieldPerPage       = big.NewInt(1 << 1)
+	listUsersAliasedDataRequestFieldStartingAfter = big.NewInt(1 << 2)
+)
+
+type ListUsersAliasedDataRequest struct {
+	// Defaults to first page
+	Page *int `json:"-" url:"page,omitempty"`
+	// Defaults to per page
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersAliasedDataRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listUsersAliasedDataRequestFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataRequest) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUsersAliasedDataRequestFieldPerPage)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsersAliasedDataRequestFieldStartingAfter)
+}
+
+var (
 	listUsersBodyCursorPaginationRequestFieldPagination = big.NewInt(1 << 0)
 )
 
@@ -604,6 +651,139 @@ func (l *ListUsersTopLevelBodyCursorPaginationRequest) MarshalJSON() ([]byte, er
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
 	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	listUsersAliasedDataPaginationResponseFieldHasNextPage = big.NewInt(1 << 0)
+	listUsersAliasedDataPaginationResponseFieldPage        = big.NewInt(1 << 1)
+	listUsersAliasedDataPaginationResponseFieldTotalCount  = big.NewInt(1 << 2)
+	listUsersAliasedDataPaginationResponseFieldData        = big.NewInt(1 << 3)
+)
+
+type ListUsersAliasedDataPaginationResponse struct {
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
+	// The totall number of /users
+	TotalCount int      `json:"total_count" url:"total_count"`
+	Data       UserList `json:"data" url:"data"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetHasNextPage() *bool {
+	if l == nil {
+		return nil
+	}
+	return l.HasNextPage
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetPage() *Page {
+	if l == nil {
+		return nil
+	}
+	return l.Page
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetData() UserList {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetHasNextPage sets the HasNextPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetHasNextPage(hasNextPage *bool) {
+	l.HasNextPage = hasNextPage
+	l.require(listUsersAliasedDataPaginationResponseFieldHasNextPage)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetPage(page *Page) {
+	l.Page = page
+	l.require(listUsersAliasedDataPaginationResponseFieldPage)
+}
+
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetTotalCount(totalCount int) {
+	l.TotalCount = totalCount
+	l.require(listUsersAliasedDataPaginationResponseFieldTotalCount)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersAliasedDataPaginationResponse) SetData(data UserList) {
+	l.Data = data
+	l.require(listUsersAliasedDataPaginationResponseFieldData)
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersAliasedDataPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersAliasedDataPaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersAliasedDataPaginationResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersAliasedDataPaginationResponse) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
 }
 
 var (
@@ -1563,12 +1743,12 @@ func (p *Page) String() string {
 
 var (
 	userFieldName = big.NewInt(1 << 0)
-	userFieldId   = big.NewInt(1 << 1)
+	userFieldID   = big.NewInt(1 << 1)
 )
 
 type User struct {
 	Name string `json:"name" url:"name"`
-	Id   int    `json:"id" url:"id"`
+	ID   int    `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1584,11 +1764,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() int {
+func (u *User) GetID() int {
 	if u == nil {
 		return 0
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -1612,11 +1792,11 @@ func (u *User) SetName(name string) {
 	u.require(userFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id int) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id int) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -1660,6 +1840,9 @@ func (u *User) String() string {
 	}
 	return fmt.Sprintf("%#v", u)
 }
+
+// A type alias for a list of users
+type UserList = []*User
 
 var (
 	userListContainerFieldUsers = big.NewInt(1 << 0)
