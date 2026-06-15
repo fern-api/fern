@@ -1,0 +1,5 @@
+- summary: |
+    Fix empty objects serializing as `[]` (JSON array) instead of `{}` (JSON object).
+    When all properties on a `JsonSerializableType` are null/unset, `json_encode`
+    now correctly produces `{}` both at the top level and for nested objects.
+  type: fix

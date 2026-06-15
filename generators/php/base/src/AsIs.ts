@@ -49,6 +49,7 @@ export enum AsIsFiles {
     AdditionalPropertiesTest = "Json/AdditionalPropertiesTest.Template.php",
     DateArrayTest = "Json/DateArrayTest.Template.php",
     EmptyArrayTest = "Json/EmptyArrayTest.Template.php",
+    EmptyObjectTest = "Json/EmptyObjectTest.Template.php",
     EnumTest = "Json/EnumTest.Template.php",
     ExhaustiveTest = "Json/ExhaustiveTest.Template.php",
     InvalidTest = "Json/InvalidTest.Template.php",
