@@ -7,7 +7,7 @@ public partial interface IServiceClient
     /// <summary>
     /// This endpoint checks the health of a resource.
     /// </summary>
-    Task CheckAsync(
+    WithRawResponseTask CheckAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

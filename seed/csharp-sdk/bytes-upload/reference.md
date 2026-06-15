@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedBytesUpload/Service/ServiceClient.cs">UploadAsync</a>(Stream { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedBytesUpload/Service/ServiceClient.cs">UploadAsync</a>(Stream { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ await client.Service.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("[bytes
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedBytesUpload/Service/ServiceClient.cs">UploadWithQueryParamsAsync</a>(UploadWithQueryParamsRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedBytesUpload/Service/ServiceClient.cs">UploadWithQueryParamsAsync</a>(UploadWithQueryParamsRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

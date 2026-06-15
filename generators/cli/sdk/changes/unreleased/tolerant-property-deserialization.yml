@@ -1,0 +1,6 @@
+- summary: |
+    Tolerate malformed property entries in OpenAPI schemas where the value is a
+    YAML/JSON array instead of a schema object (e.g. ElevenLabs 3.1 spec emits
+    `"state": [{"x-fern-type-name": "…"}]`). Previously this caused a fatal
+    parse error; now the entry is silently dropped so the rest of the spec loads.
+  type: fix

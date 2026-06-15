@@ -1,4 +1,5 @@
 import { GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
@@ -22,17 +23,48 @@ import {
 import { BUILD_ERROR_RS } from "@fern-api/rust-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
+/** How `from_response` reads a field's value out of the parsed JSON error body. */
+type ExtractionKind = "string" | "u64" | "json";
+
+interface ResolvedErrorField {
+    /** Rust field name (snake_case). */
+    name: string;
+    /** JSON key the value is read from (wire name). */
+    wireName: string;
+    /** Rust type of the variant field. */
+    type: Type;
+    extractionKind: ExtractionKind;
+    /** For `extractionKind === "json"`: the Rust type to deserialize into. */
+    jsonType?: string;
+    /** True when the field's Rust type only resolves with the crate prelude in scope. */
+    requiresPrelude?: boolean;
+}
+
 export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     public generateErrorRs(): string {
-        const errorModule = new Module({
-            useStatements: [
+        const useStatements = [
+            new UseStatement({
+                path: "thiserror",
+                items: ["Error"]
+            })
+        ];
+
+        // Error variants whose body fields reference named (non-primitive) types
+        // emit those types by bare name (e.g. `ErrorResponseDetail`) and
+        // deserialize them with `serde_json::from_value`. Bring every generated
+        // type into scope via the crate prelude so those references resolve.
+        if (this.requiresPreludeImport()) {
+            useStatements.push(
                 new UseStatement({
-                    path: "thiserror",
-                    items: ["Error"]
+                    path: "crate::prelude::*"
                 })
-            ],
+            );
+        }
+
+        const errorModule = new Module({
+            useStatements,
             enums: [this.buildErrorEnum()],
             implBlocks: [this.buildErrorImpl()]
         });
@@ -144,37 +176,136 @@ export class ErrorGenerator {
      * hardcoded status-code fields otherwise. Returns fields with both the Rust field
      * name (snake_case) and the JSON wire name (camelCase from the spec).
      */
-    private resolveErrorFields(errorDeclaration: FernIr.ErrorDeclaration): Array<{
-        name: string;
-        wireName: string;
-        type: Type;
-        extractionKind: "string" | "u64";
-    }> {
+    private resolveErrorFields(errorDeclaration: FernIr.ErrorDeclaration): ResolvedErrorField[] {
         if (errorDeclaration.type?.type === "named") {
             const typeDecl = this.context.ir.types[errorDeclaration.type.typeId];
             if (typeDecl?.shape.type === "object") {
                 return typeDecl.shape.properties
                     .filter((p) => getWireValue(p.name) !== "message")
-                    .map((p) => {
-                        const isAlreadyOptional =
-                            p.valueType.type === "container" &&
-                            (p.valueType.container.type === "optional" || p.valueType.container.type === "nullable");
-                        const rustType = generateRustTypeForTypeReference(p.valueType, this.context);
-                        return {
-                            name: this.context.case.snakeSafe(p.name),
-                            wireName: getWireValue(p.name),
-                            type: isAlreadyOptional ? rustType : Type.option(rustType),
-                            extractionKind: this.isU64TypeReference(p.valueType) ? ("u64" as const) : ("string" as const)
-                        };
-                    });
+                    .map((p) => this.resolveNamedBodyField(p));
             }
         }
         return this.getStatusCodeFields(errorDeclaration.statusCode).map(({ name, wireName, type }) => ({
             name,
             wireName,
             type,
-            extractionKind: (name === "retry_after_seconds" ? "u64" : "string") as "string" | "u64"
+            extractionKind: (name === "retry_after_seconds" ? "u64" : "string") as ExtractionKind
         }));
+    }
+
+    /**
+     * Resolves a single property of a named error-body type into a variant field.
+     *
+     * The field is always `Option<_>`: both the parse-failure path and the no-body
+     * fallback construct the variant with `None`, so a required property still needs
+     * an optional field. The extraction kind selects how `from_response` reads the
+     * value back out of the parsed JSON so it matches the field's Rust type:
+     *   - `string` / `u64`: read directly via `Value::as_str` / `Value::as_u64`
+     *   - `json`: deserialize the value into its Rust type via `serde_json::from_value`,
+     *     which is the only option that works for named (non-primitive) and other
+     *     primitive types (e.g. `i64`, `bool`). Without it the generated code would
+     *     try to read, say, an `i64` field via `as_str()` and fail to compile.
+     */
+    private resolveNamedBodyField(property: FernIr.ObjectProperty): ResolvedErrorField {
+        const innerTypeReference = this.dereferenceOptional(property.valueType);
+        const innerType = generateRustTypeForTypeReference(innerTypeReference, this.context);
+        const field = {
+            name: this.context.case.snakeSafe(property.name),
+            wireName: getWireValue(property.name),
+            type: Type.option(innerType)
+        };
+        if (this.isStringTypeReference(innerTypeReference)) {
+            return { ...field, extractionKind: "string" };
+        }
+        if (this.isU64TypeReference(innerTypeReference)) {
+            return { ...field, extractionKind: "u64" };
+        }
+        return {
+            ...field,
+            extractionKind: "json",
+            jsonType: innerType.toString(),
+            requiresPrelude: this.typeReferenceNeedsPrelude(innerTypeReference)
+        };
+    }
+
+    /**
+     * True when the field's Rust type names an identifier that only resolves with the
+     * crate prelude in scope: named types and `HashMap`/`HashSet` (re-exported via
+     * `crate::api::*` / `std::collections`), and the `chrono`/`uuid` types behind the
+     * date and uuid primitives. Built-in primitives (`i64`, `bool`, `String`, `Vec`)
+     * and the fully-qualified `serde_json::Value` / `num_bigint::BigInt` resolve without it.
+     */
+    private typeReferenceNeedsPrelude(typeRef: FernIr.TypeReference): boolean {
+        switch (typeRef.type) {
+            case "named":
+                return true;
+            case "container":
+                return typeRef.container._visit({
+                    list: (inner) => this.typeReferenceNeedsPrelude(inner),
+                    optional: (inner) => this.typeReferenceNeedsPrelude(inner),
+                    nullable: (inner) => this.typeReferenceNeedsPrelude(inner),
+                    map: () => true,
+                    set: () => true,
+                    literal: () => false,
+                    _other: () => false
+                });
+            case "primitive":
+                return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+                    date: () => true,
+                    dateTime: () => true,
+                    dateTimeRfc2822: () => true,
+                    uuid: () => true,
+                    integer: () => false,
+                    long: () => false,
+                    uint: () => false,
+                    uint64: () => false,
+                    float: () => false,
+                    double: () => false,
+                    boolean: () => false,
+                    string: () => false,
+                    base64: () => false,
+                    bigInteger: () => false,
+                    _other: () => false
+                });
+            case "unknown":
+                return false;
+            default:
+                return assertNever(typeRef);
+        }
+    }
+
+    /** Strips `optional`/`nullable` container wrappers to reach the underlying type. */
+    private dereferenceOptional(typeRef: FernIr.TypeReference): FernIr.TypeReference {
+        if (typeRef.type === "container") {
+            if (typeRef.container.type === "optional") {
+                return this.dereferenceOptional(typeRef.container.optional);
+            }
+            if (typeRef.container.type === "nullable") {
+                return this.dereferenceOptional(typeRef.container.nullable);
+            }
+        }
+        return typeRef;
+    }
+
+    private isStringTypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "STRING";
+        }
+        if (typeRef.type === "container" && typeRef.container.type === "optional") {
+            return this.isStringTypeReference(typeRef.container.optional);
+        }
+        return false;
+    }
+
+    /**
+     * True when any error variant has a body field whose Rust type only resolves
+     * with the crate prelude in scope (named types, `HashMap`/`HashSet`), which
+     * `generateErrorRs` then imports.
+     */
+    private requiresPreludeImport(): boolean {
+        return Object.values(this.context.ir.errors).some((errorDeclaration) =>
+            this.resolveErrorFields(errorDeclaration).some((field) => field.requiresPrelude === true)
+        );
     }
 
     private isU64TypeReference(typeRef: FernIr.TypeReference): boolean {
@@ -327,11 +458,9 @@ export class ErrorGenerator {
 
     private buildSuccessConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
         const fields = this.resolveErrorFields(errorDeclaration);
-        const fieldAssignments = fields.map(({ name, wireName, extractionKind }) => ({
-            name,
-            value: extractionKind === "u64"
-                ? this.buildU64FieldExtraction(wireName)
-                : this.buildStringFieldExtraction(wireName)
+        const fieldAssignments = fields.map((field) => ({
+            name: field.name,
+            value: this.buildFieldExtraction(field)
         }));
 
         return Expression.structConstruction(`Self::${errorName}`, [
@@ -453,16 +582,17 @@ export class ErrorGenerator {
         if (!firstError) {
             throw GeneratorError.internalError("Unexpected: errors array should not be empty");
         }
-        const fields = this.buildDynamicFieldAssignments(firstError);
 
-        // Create match arms for each error type
+        // Each variant must be constructed with its OWN body fields — errors that
+        // share a status code can have different body shapes, so the field set is
+        // derived per error rather than reused from the first one.
         const matchArms = errors.map((error) => {
             const errorName = this.getErrorVariantName(error);
             return MatchArm.withExpression(
                 Pattern.some(Pattern.literal(errorName)),
                 Expression.structConstruction(`Self::${errorName}`, [
                     { name: "message", value: Expression.variable("message") },
-                    ...fields
+                    ...this.buildDynamicFieldAssignments(error)
                 ])
             );
         });
@@ -474,7 +604,7 @@ export class ErrorGenerator {
                 Pattern.wildcard(),
                 Expression.structConstruction(`Self::${fallbackName}`, [
                     { name: "message", value: Expression.variable("message") },
-                    ...fields
+                    ...this.buildDynamicFieldAssignments(firstError)
                 ])
             )
         );
@@ -484,12 +614,23 @@ export class ErrorGenerator {
     }
 
     private buildDynamicFieldAssignments(errorDeclaration: FernIr.ErrorDeclaration): Expression.FieldAssignment[] {
-        return this.resolveErrorFields(errorDeclaration).map(({ name, wireName, extractionKind }) => ({
-            name,
-            value: extractionKind === "u64"
-                ? this.buildU64FieldExtraction(wireName)
-                : this.buildStringFieldExtraction(wireName)
+        return this.resolveErrorFields(errorDeclaration).map((field) => ({
+            name: field.name,
+            value: this.buildFieldExtraction(field)
         }));
+    }
+
+    private buildFieldExtraction(field: ResolvedErrorField): Expression {
+        switch (field.extractionKind) {
+            case "string":
+                return this.buildStringFieldExtraction(field.wireName);
+            case "u64":
+                return this.buildU64FieldExtraction(field.wireName);
+            case "json":
+                return this.buildJsonFieldExtraction(field.wireName, field.jsonType ?? "serde_json::Value");
+            default:
+                return assertNever(field.extractionKind);
+        }
     }
 
     private buildStringFieldExtraction(fieldName: string): Expression {
@@ -517,6 +658,23 @@ export class ErrorGenerator {
                 args: [Expression.literal(fieldName)]
             }),
             Expression.closure([{ name: "v" }], Expression.raw("v.as_u64()"))
+        );
+    }
+
+    /**
+     * Deserializes the JSON value at `fieldName` directly into `rustType` via
+     * `serde_json::from_value`, yielding `Option<rustType>` (the closure returns
+     * `None` on a type mismatch). Used for named and non-string/non-u64 primitive
+     * fields, whose Rust types `as_str()`/`as_u64()` cannot produce.
+     */
+    private buildJsonFieldExtraction(fieldName: string, rustType: string): Expression {
+        return Expression.andThen(
+            Expression.methodCall({
+                target: Expression.variable("parsed"),
+                method: "get",
+                args: [Expression.literal(fieldName)]
+            }),
+            Expression.closure([{ name: "v" }], Expression.raw(`serde_json::from_value::<${rustType}>(v.clone()).ok()`))
         );
     }
 

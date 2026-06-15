@@ -2,7 +2,7 @@ namespace SeedExtends;
 
 public partial interface ISeedExtendsClient
 {
-    Task ExtendedInlineRequestBodyAsync(
+    WithRawResponseTask ExtendedInlineRequestBodyAsync(
         Inlined request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

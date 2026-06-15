@@ -8,7 +8,7 @@ public partial interface IPaymentClient
         CancellationToken cancellationToken = default
     );
 
-    Task DeleteAsync(
+    WithRawResponseTask DeleteAsync(
         string paymentId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

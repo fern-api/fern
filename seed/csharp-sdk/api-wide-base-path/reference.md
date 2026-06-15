@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedApiWideBasePath/Service/ServiceClient.cs">PostAsync</a>(pathParam, serviceParam, endpointParam, resourceParam)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApiWideBasePath/Service/ServiceClient.cs">PostAsync</a>(pathParam, serviceParam, endpointParam, resourceParam) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

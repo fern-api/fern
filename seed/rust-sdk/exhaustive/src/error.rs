@@ -1,3 +1,4 @@
+use crate::prelude::*;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -86,24 +87,102 @@ impl ApiError {
                         let error_type = parsed.get("error_type").and_then(|v| v.as_str());
                         return match error_type {
                             Some("BadRequestBody") => Self::BadRequestBody { message: message },
-                            Some("ErrorWithEnumBody") => {
-                                Self::ErrorWithEnumBody { message: message }
-                            }
+                            Some("ErrorWithEnumBody") => Self::ErrorWithEnumBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
                             Some("ObjectWithOptionalFieldError") => {
-                                Self::ObjectWithOptionalFieldError { message: message }
+                                Self::ObjectWithOptionalFieldError {
+                                    message: message,
+                                    string: parsed
+                                        .get("string")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    integer: parsed.get("integer").and_then(|v| {
+                                        serde_json::from_value::<i64>(v.clone()).ok()
+                                    }),
+                                    long: parsed.get("long").and_then(|v| {
+                                        serde_json::from_value::<i64>(v.clone()).ok()
+                                    }),
+                                    double: parsed.get("double").and_then(|v| {
+                                        serde_json::from_value::<f64>(v.clone()).ok()
+                                    }),
+                                    bool_: parsed.get("bool").and_then(|v| {
+                                        serde_json::from_value::<bool>(v.clone()).ok()
+                                    }),
+                                    datetime: parsed.get("datetime").and_then(|v| {
+                                        serde_json::from_value::<DateTime<FixedOffset>>(v.clone())
+                                            .ok()
+                                    }),
+                                    date: parsed.get("date").and_then(|v| {
+                                        serde_json::from_value::<NaiveDate>(v.clone()).ok()
+                                    }),
+                                    uuid: parsed.get("uuid").and_then(|v| {
+                                        serde_json::from_value::<Uuid>(v.clone()).ok()
+                                    }),
+                                    base64: parsed.get("base64").and_then(|v| {
+                                        serde_json::from_value::<Vec<u8>>(v.clone()).ok()
+                                    }),
+                                    list: parsed.get("list").and_then(|v| {
+                                        serde_json::from_value::<Vec<String>>(v.clone()).ok()
+                                    }),
+                                    set: parsed.get("set").and_then(|v| {
+                                        serde_json::from_value::<HashSet<String>>(v.clone()).ok()
+                                    }),
+                                    map: parsed.get("map").and_then(|v| {
+                                        serde_json::from_value::<HashMap<i64, String>>(v.clone())
+                                            .ok()
+                                    }),
+                                    bigint: parsed.get("bigint").and_then(|v| {
+                                        serde_json::from_value::<num_bigint::BigInt>(v.clone()).ok()
+                                    }),
+                                }
                             }
                             Some("ObjectWithRequiredFieldError") => {
-                                Self::ObjectWithRequiredFieldError { message: message }
+                                Self::ObjectWithRequiredFieldError {
+                                    message: message,
+                                    string: parsed
+                                        .get("string")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                }
                             }
                             Some("NestedObjectWithOptionalFieldError") => {
-                                Self::NestedObjectWithOptionalFieldError { message: message }
+                                Self::NestedObjectWithOptionalFieldError {
+                                    message: message,
+                                    string: parsed
+                                        .get("string")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    nested_object: parsed.get("NestedObject").and_then(|v| {
+                                        serde_json::from_value::<ObjectWithOptionalField>(v.clone())
+                                            .ok()
+                                    }),
+                                }
                             }
                             Some("NestedObjectWithRequiredFieldError") => {
-                                Self::NestedObjectWithRequiredFieldError { message: message }
+                                Self::NestedObjectWithRequiredFieldError {
+                                    message: message,
+                                    string: parsed
+                                        .get("string")
+                                        .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                    nested_object: parsed.get("NestedObject").and_then(|v| {
+                                        serde_json::from_value::<ObjectWithOptionalField>(v.clone())
+                                            .ok()
+                                    }),
+                                }
                             }
-                            Some("ErrorWithUnionBody") => {
-                                Self::ErrorWithUnionBody { message: message }
-                            }
+                            Some("ErrorWithUnionBody") => Self::ErrorWithUnionBody {
+                                message: message,
+                                field: parsed
+                                    .get("field")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                                details: parsed
+                                    .get("details")
+                                    .and_then(|v| v.as_str().map(|s| s.to_string())),
+                            },
                             _ => Self::BadRequestBody { message: message },
                         };
                     }

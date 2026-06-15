@@ -498,6 +498,7 @@
                     "id": "endpoint_userService.Create",
                     "name": "Create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

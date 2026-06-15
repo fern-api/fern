@@ -11,18 +11,7 @@ public partial class HeadersClient : IHeadersClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Headers.SendAsync(
-    ///     new SendEnumAsHeaderRequest
-    ///     {
-    ///         Operand = Operand.GreaterThan,
-    ///         MaybeOperand = Operand.GreaterThan,
-    ///         OperandOrColor = Color.Red,
-    ///         MaybeOperandOrColor = null,
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task SendAsync(
+    private async Task<RawResponse> SendAsyncCore(
         SendEnumAsHeaderRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -52,7 +41,12 @@ public partial class HeadersClient : IHeadersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedEnum.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -61,8 +55,34 @@ public partial class HeadersClient : IHeadersClient
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedEnum.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Headers.SendAsync(
+    ///     new SendEnumAsHeaderRequest
+    ///     {
+    ///         Operand = Operand.GreaterThan,
+    ///         MaybeOperand = Operand.GreaterThan,
+    ///         OperandOrColor = Color.Red,
+    ///         MaybeOperandOrColor = null,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask SendAsync(
+        SendEnumAsHeaderRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(SendAsyncCore(request, options, cancellationToken));
     }
 }

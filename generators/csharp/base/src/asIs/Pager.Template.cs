@@ -213,7 +213,7 @@ internal sealed class OffsetPager<TRequest, TRequestOptions, TResponse, TOffset,
         var response = wrappedResponse.Data;
         var items = getItems(response);
         var page = items is not null
-            ? new Page<TItem>(items, response, wrappedResponse.RawResponse.StatusCode, wrappedResponse.RawResponse.Headers)
+            ? new Page<TItem>(items, response, wrappedResponse.RawResponse.StatusCode, wrappedResponse.RawResponse.Headers, wrappedResponse.RawResponse.Url)
             : Page<TItem>.Empty;
         var offset = getOffset(request);
         var hasNextPage = getHasNextPage?.Invoke(response) ?? items?.Count > 0;
@@ -447,7 +447,7 @@ internal sealed class CursorPager<TRequest, TRequestOptions, TResponse, TCursor,
             var response = wrappedResponse.Data;
             var items = getItems(response);
             var page = items is not null
-                ? new Page<TItem>(items, response, wrappedResponse.RawResponse.StatusCode, wrappedResponse.RawResponse.Headers)
+                ? new Page<TItem>(items, response, wrappedResponse.RawResponse.StatusCode, wrappedResponse.RawResponse.Headers, wrappedResponse.RawResponse.Url)
                 : Page<TItem>.Empty;
             var cursor = getNextCursor(response);
             var hasNextPage = cursor switch

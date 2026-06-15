@@ -6,8 +6,16 @@ namespace SeedExhaustive.Types;
 /// This exception type will be thrown for any non-2XX API responses.
 /// </summary>
 [Serializable]
-public class NestedObjectWithOptionalFieldError(NestedObjectWithOptionalField body)
-    : SeedExhaustiveApiException("NestedObjectWithOptionalFieldError", 400, body)
+public class NestedObjectWithOptionalFieldError(
+    NestedObjectWithOptionalField body,
+    SeedExhaustive.RawResponse? rawResponse = null
+)
+    : SeedExhaustiveApiException(
+        "NestedObjectWithOptionalFieldError",
+        400,
+        body,
+        rawResponse: rawResponse
+    )
 {
     /// <summary>
     /// The body of the response that triggered the exception.

@@ -10,7 +10,7 @@ public final class BigunionClient: Sendable {
     public func get(id: String, requestOptions: RequestOptions? = nil) async throws -> BigUnion {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/\(id)",
+            path: "/bigunion/\(id)",
             requestOptions: requestOptions,
             responseType: BigUnion.self
         )
@@ -19,7 +19,7 @@ public final class BigunionClient: Sendable {
     public func update(request: BigUnion, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .patch,
-            path: "/",
+            path: "/bigunion",
             body: request,
             requestOptions: requestOptions,
             responseType: Bool.self
@@ -29,7 +29,7 @@ public final class BigunionClient: Sendable {
     public func updateMany(request: [BigUnion], requestOptions: RequestOptions? = nil) async throws -> [String: Bool] {
         return try await httpClient.performRequest(
             method: .patch,
-            path: "/many",
+            path: "/bigunion/many",
             body: request,
             requestOptions: requestOptions,
             responseType: [String: Bool].self

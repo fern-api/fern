@@ -7,7 +7,8 @@ public class SeedEnumApiException(
     string message,
     int statusCode,
     object body,
-    Exception? innerException = null
+    Exception? innerException = null,
+    SeedEnum.RawResponse? rawResponse = null
 ) : SeedEnumException(message, innerException)
 {
     /// <summary>
@@ -19,4 +20,9 @@ public class SeedEnumApiException(
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
+
+    /// <summary>
+    /// The raw HTTP response (status code, URL, headers) that triggered the exception, if available.
+    /// </summary>
+    public SeedEnum.RawResponse? RawResponse => rawResponse;
 }

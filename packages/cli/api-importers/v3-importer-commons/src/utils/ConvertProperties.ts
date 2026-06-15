@@ -171,7 +171,7 @@ function maybeGetFernTypeNameExtension(
     return fernTypeNameConverter.convert();
 }
 
-function collectNamedTypeIdsFromTypeReference(typeReference: TypeReference, referencedTypes: Set<string>): void {
+export function collectNamedTypeIdsFromTypeReference(typeReference: TypeReference, referencedTypes: Set<string>): void {
     switch (typeReference.type) {
         case "named":
             referencedTypes.add(typeReference.typeId);

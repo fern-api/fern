@@ -63,7 +63,7 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
                 return new WithRawResponse<TimeZoneModel>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedCsharpXmlEntities.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -77,7 +77,13 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedCsharpXmlEntities.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -88,7 +94,13 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
             throw new SeedCsharpXmlEntitiesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedCsharpXmlEntities.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

@@ -124,6 +124,7 @@
                     "id": "endpoint_retries.getUsers",
                     "name": "getUsers",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

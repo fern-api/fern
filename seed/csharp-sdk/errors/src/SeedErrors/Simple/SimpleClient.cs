@@ -48,7 +48,7 @@ public partial class SimpleClient : ISimpleClient
                 return new WithRawResponse<FooResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedErrors.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -62,7 +62,13 @@ public partial class SimpleClient : ISimpleClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedErrors.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -75,12 +81,40 @@ public partial class SimpleClient : ISimpleClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new BadRequestError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 500:
                         throw new InternalServerError(
-                            JsonUtils.Deserialize<ErrorBody>(responseBody)
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                 }
             }
@@ -91,7 +125,13 @@ public partial class SimpleClient : ISimpleClient
             throw new SeedErrorsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedErrors.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -132,7 +172,7 @@ public partial class SimpleClient : ISimpleClient
                 return new WithRawResponse<FooResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedErrors.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -146,7 +186,13 @@ public partial class SimpleClient : ISimpleClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedErrors.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -159,13 +205,53 @@ public partial class SimpleClient : ISimpleClient
                 switch (response.StatusCode)
                 {
                     case 429:
-                        throw new FooTooMuch(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new FooTooMuch(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 500:
-                        throw new FooTooLittle(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new FooTooLittle(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new BadRequestError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -175,7 +261,13 @@ public partial class SimpleClient : ISimpleClient
             throw new SeedErrorsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedErrors.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -216,7 +308,7 @@ public partial class SimpleClient : ISimpleClient
                 return new WithRawResponse<FooResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedErrors.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -230,7 +322,13 @@ public partial class SimpleClient : ISimpleClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedErrors.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -243,13 +341,53 @@ public partial class SimpleClient : ISimpleClient
                 switch (response.StatusCode)
                 {
                     case 429:
-                        throw new FooTooMuch(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new FooTooMuch(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 500:
-                        throw new FooTooLittle(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new FooTooLittle(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new NotFoundError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                     case 400:
-                        throw new BadRequestError(JsonUtils.Deserialize<ErrorBody>(responseBody));
+                        throw new BadRequestError(
+                            JsonUtils.Deserialize<ErrorBody>(responseBody),
+                            rawResponse: new SeedErrors.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
                 }
             }
             catch (JsonException)
@@ -259,7 +397,13 @@ public partial class SimpleClient : ISimpleClient
             throw new SeedErrorsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedErrors.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

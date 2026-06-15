@@ -22,7 +22,7 @@ exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with body
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "BadRequestError";
     }
 }
 "
@@ -41,7 +41,7 @@ exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with cust
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "NotFoundError";
     }
 }
 "
@@ -61,7 +61,7 @@ exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with name
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "BadRequestError";
     }
 }
 "
@@ -81,7 +81,7 @@ exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with opti
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "BadRequestError";
     }
 }
 "
@@ -100,7 +100,7 @@ exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class without b
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "BadRequestError";
     }
 }
 "

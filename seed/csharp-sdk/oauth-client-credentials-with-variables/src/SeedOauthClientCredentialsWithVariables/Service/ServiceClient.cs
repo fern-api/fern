@@ -11,10 +11,7 @@ public partial class ServiceClient : IServiceClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Service.PostAsync("endpointParam");
-    /// </code></example>
-    public async Task PostAsync(
+    private async Task<RawResponse> PostAsyncCore(
         string endpointParam,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -44,7 +41,12 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedOauthClientCredentialsWithVariables.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -53,8 +55,26 @@ public partial class ServiceClient : IServiceClient
             throw new SeedOauthClientCredentialsWithVariablesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedOauthClientCredentialsWithVariables.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Service.PostAsync("endpointParam");
+    /// </code></example>
+    public WithRawResponseTask PostAsync(
+        string endpointParam,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(PostAsyncCore(endpointParam, options, cancellationToken));
     }
 }

@@ -1,0 +1,7 @@
+- summary: |
+    Add OIDC support for PyPI publishing in local generation. When
+    `token: OIDC` is configured for a PyPI output, the CLI now detects
+    the OIDC credential and propagates it through both the GitHub publish
+    info and the publish config so the Python generator can activate its
+    OIDC trusted-publisher workflow.
+  type: feat

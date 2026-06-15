@@ -163,6 +163,7 @@ export function convertHttpService({
                 id: "",
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
+                subtitle: endpoint.subtitle,
                 auth:
                     typeof endpoint.auth === "boolean"
                         ? endpoint.auth

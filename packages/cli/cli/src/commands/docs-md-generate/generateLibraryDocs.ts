@@ -12,17 +12,26 @@ export interface GenerateLibraryDocsOptions {
     cliContext: CliContext;
     /** If specified, only generate docs for this library */
     library: string | undefined;
+    /** Run the parser(s) locally in Docker instead of using Fern's servers. */
+    local: boolean;
 }
 
 /**
  * Generate library documentation from source code.
  *
- * Loads the docs workspace, authenticates with FDR, and delegates to the
- * shared orchestrator in `@fern-api/library-docs-generator` which starts
- * server-side parsing, polls for completion, downloads the resulting IR
- * from S3, and runs the local MDX generator.
+ * Loads the docs workspace and delegates to the shared orchestrator in
+ * `@fern-api/library-docs-generator`. By default it authenticates with FDR,
+ * starts server-side parsing, polls for completion, downloads the resulting IR
+ * from S3, and runs the local MDX generator. With `local`, it skips
+ * authentication and runs the parser Docker images directly on the user's
+ * machine.
  */
-export async function generateLibraryDocs({ project, cliContext, library }: GenerateLibraryDocsOptions): Promise<void> {
+export async function generateLibraryDocs({
+    project,
+    cliContext,
+    library,
+    local
+}: GenerateLibraryDocsOptions): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
 
     if (docsWorkspace == null) {
@@ -52,15 +61,19 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
         return;
     }
 
-    const token: FernToken | null = await cliContext.runTask(async (context) => {
-        return askToLogin(context);
-    });
-
-    if (token == null) {
-        cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.", undefined, {
-            code: CliError.Code.AuthError
+    let tokenValue: string | undefined;
+    if (!local) {
+        const token: FernToken | null = await cliContext.runTask(async (context) => {
+            return askToLogin(context);
         });
-        return;
+
+        if (token == null) {
+            cliContext.failAndThrow("Failed to authenticate. Please run 'fern login' first.", undefined, {
+                code: CliError.Code.AuthError
+            });
+            return;
+        }
+        tokenValue = token.value;
     }
 
     await cliContext.runTask(async (context) => {
@@ -69,8 +82,9 @@ export async function generateLibraryDocs({ project, cliContext, library }: Gene
             library,
             docsDirectoryPath: docsWorkspace.absoluteFilePath,
             orgId: project.config.organization,
-            tokenValue: token.value,
-            context
+            tokenValue,
+            context,
+            local
         });
 
         if (successful > 0) {

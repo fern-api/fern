@@ -7,7 +7,8 @@ public class SeedContentTypesApiException(
     string message,
     int statusCode,
     object body,
-    Exception? innerException = null
+    Exception? innerException = null,
+    SeedContentTypes.RawResponse? rawResponse = null
 ) : SeedContentTypesException(message, innerException)
 {
     /// <summary>
@@ -19,4 +20,9 @@ public class SeedContentTypesApiException(
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body => body;
+
+    /// <summary>
+    /// The raw HTTP response (status code, URL, headers) that triggered the exception, if available.
+    /// </summary>
+    public SeedContentTypes.RawResponse? RawResponse => rawResponse;
 }

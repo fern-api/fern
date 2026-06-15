@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 
+import { resolveNoSerdeLayer } from "../custom-config/TypescriptCustomConfigSchema.js";
 import { AstNode, Writer } from "./core/index.js";
 
 type InternalTypeLiteral =
@@ -108,7 +109,7 @@ export class TypeLiteral extends AstNode {
     }
 
     public write(writer: Writer): void {
-        const noSerdeLayer = !!writer.customConfig?.noSerdeLayer;
+        const noSerdeLayer = resolveNoSerdeLayer(writer.customConfig);
         const useBigInt = !!writer.customConfig?.useBigInt;
         switch (this.internalType.type) {
             case "array": {

@@ -485,7 +485,6 @@ type UserOrAdminDiscriminated struct {
 	Normal string
 	Read   string
 	Write  string
-	Normal string
 	Foo    *Foo
 	User   *User
 	Admin  *Admin
@@ -522,13 +521,6 @@ func (u *UserOrAdminDiscriminated) GetWrite() string {
 	return u.Write
 }
 
-func (u *UserOrAdminDiscriminated) GetNormal() string {
-	if u == nil {
-		return ""
-	}
-	return u.Normal
-}
-
 func (u *UserOrAdminDiscriminated) GetFoo() *Foo {
 	if u == nil {
 		return nil
@@ -563,7 +555,6 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 		Normal string `json:"normal" url:"normal"`
 		Read   string `json:"read" url:"read"`
 		Write  string `json:"write" url:"write"`
-		Normal string `json:"normal"`
 		Foo    *Foo   `json:"foo"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
@@ -573,7 +564,6 @@ func (u *UserOrAdminDiscriminated) UnmarshalJSON(data []byte) error {
 	u.Normal = unmarshaler.Normal
 	u.Read = unmarshaler.Read
 	u.Write = unmarshaler.Write
-	u.Normal = unmarshaler.Normal
 	u.Foo = unmarshaler.Foo
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", u)
@@ -617,7 +607,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal string `json:"normal" url:"normal"`
 			Read   string `json:"read" url:"read"`
 			Write  string `json:"write" url:"write"`
-			Normal string `json:"normal"`
 			Foo    *Foo   `json:"foo"`
 			Admin  *Admin `json:"admin"`
 		}{
@@ -625,7 +614,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal: u.Normal,
 			Read:   u.Read,
 			Write:  u.Write,
-			Normal: u.Normal,
 			Foo:    u.Foo,
 			Admin:  u.Admin,
 		}
@@ -637,7 +625,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal string      `json:"normal" url:"normal"`
 			Read   string      `json:"read" url:"read"`
 			Write  string      `json:"write" url:"write"`
-			Normal string      `json:"normal"`
 			Foo    *Foo        `json:"foo"`
 			Empty  interface{} `json:"empty,omitempty"`
 		}{
@@ -645,7 +632,6 @@ func (u UserOrAdminDiscriminated) MarshalJSON() ([]byte, error) {
 			Normal: u.Normal,
 			Read:   u.Read,
 			Write:  u.Write,
-			Normal: u.Normal,
 			Foo:    u.Foo,
 			Empty:  u.Empty,
 		}

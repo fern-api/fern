@@ -15,8 +15,8 @@ name: Create PRs to Remediate vulns
 #      creates a PR if actionable vulnerabilities are found.
 #
 # TOKEN REQUIREMENTS:
-# - FERN_GITHUB_TOKEN: PAT with `security_events` scope for Dependabot alerts
-# - GITHUB_TOKEN: Default token for creating branches and PRs
+# - GITHUB_TOKEN: Default token with vulnerability-alerts:read for Dependabot alerts,
+#   and contents:write for creating branches and PRs
 # - DEVIN_AI_PR_BOT_SLACK_TOKEN: For Slack notifications to Devin AI
 # ============================================================
 
@@ -55,14 +55,13 @@ jobs:
         env:
           ALERTS_FILE: ${{ runner.temp }}/dependabot-alerts.json
         with:
-          github-token: ${{ secrets.FERN_GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const alertsFile = process.env.ALERTS_FILE;
 
-            // Fetch all open Dependabot alerts using FERN_GITHUB_TOKEN
+            // Fetch all open Dependabot alerts using the workflow's GITHUB_TOKEN
             let alerts = [];
             try {
               const response = await github.rest.dependabot.listAlertsForRepo({
@@ -73,12 +72,12 @@ jobs:
               });
               alerts = response.data;
             } catch (error) {
-              if (error.status === 403) {
+              if (error.status === 403 || error.status === 404) {
                 console.log('ERROR: Unable to access Dependabot alerts. This is likely because:');
-                console.log('1. The FERN_GITHUB_TOKEN secret is not set, OR');
-                console.log('2. The token does not have the required `security_events` scope');
+                console.log('1. Dependabot alerts are not enabled for this repository, OR');
+                console.log('2. The GITHUB_TOKEN does not have the required `vulnerability-alerts: read` permission');
                 console.log('');
-                console.log('To fix: Ensure FERN_GITHUB_TOKEN is a PAT (classic) with `security_events` scope');
+                console.log('To fix: Enable Dependabot alerts in repo settings or ensure the workflow has appropriate permissions');
                 fs.writeFileSync(alertsFile, '[]');
                 core.setOutput('alerts_count', '0');
                 return;

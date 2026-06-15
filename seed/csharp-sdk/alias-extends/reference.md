@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedAliasExtends/SeedAliasExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(InlinedChildRequest { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedAliasExtends/SeedAliasExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(InlinedChildRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

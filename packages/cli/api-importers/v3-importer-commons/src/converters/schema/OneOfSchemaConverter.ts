@@ -177,6 +177,57 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
+    /**
+     * When `discriminator.mapping` is absent, infers the mapping from the `oneOf`/`anyOf` $ref schemas.
+     *
+     * Per the OpenAPI 3.x spec, if no mapping is provided the discriminant values are derived from
+     * the schema names in the $ref paths. We also check the resolved schema's discriminant property
+     * for `const` or single-element `enum` values, which take precedence over the schema name.
+     */
+    private inferDiscriminatorMapping(discriminantProperty: string): Record<string, string> {
+        const subSchemas = this.schema.oneOf ?? this.schema.anyOf ?? [];
+        const mapping: Record<string, string> = {};
+
+        for (const subSchema of subSchemas) {
+            if (!this.context.isReferenceObject(subSchema)) {
+                continue;
+            }
+            const ref = subSchema.$ref;
+            const schemaName = ref.split("/").pop();
+            if (schemaName == null) {
+                continue;
+            }
+
+            // Check the resolved schema's discriminant property for const/enum values
+            const resolved = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                reference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+
+            let discriminantValue = schemaName;
+            if (resolved.resolved) {
+                const discriminantPropSchema = resolved.value.properties?.[discriminantProperty];
+                if (discriminantPropSchema != null && !this.context.isReferenceObject(discriminantPropSchema)) {
+                    const constValue = (discriminantPropSchema as Record<string, unknown>).const;
+                    if (typeof constValue === "string") {
+                        discriminantValue = constValue;
+                    } else if (
+                        discriminantPropSchema.enum != null &&
+                        discriminantPropSchema.enum.length === 1 &&
+                        typeof discriminantPropSchema.enum[0] === "string"
+                    ) {
+                        discriminantValue = discriminantPropSchema.enum[0];
+                    }
+                }
+            }
+
+            mapping[discriminantValue] = ref;
+        }
+
+        return mapping;
+    }
+
     private convertAsDiscriminatedUnion(): OneOfSchemaConverter.Output | undefined {
         if (this.schema.discriminator == null) {
             return undefined;
@@ -187,7 +238,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
         let referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
-        for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
+        const effectiveMapping =
+            this.schema.discriminator.mapping ?? this.inferDiscriminatorMapping(discriminantProperty);
+
+        for (const [discriminant, reference] of Object.entries(effectiveMapping)) {
             const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
             const breadcrumbs = [...this.breadcrumbs, "discriminator", "mapping", discriminant];
 

@@ -804,7 +804,7 @@ func (s *StreamEvent) validate() error {
 }
 
 type StreamEventContextProtocol struct {
-	Event      string
+	EventType  string
 	Completion *CompletionEvent
 	Error      *ErrorEvent
 	Event      *EventEvent
@@ -812,11 +812,11 @@ type StreamEventContextProtocol struct {
 	rawJSON json.RawMessage
 }
 
-func (s *StreamEventContextProtocol) GetEvent() string {
+func (s *StreamEventContextProtocol) GetEventType() string {
 	if s == nil {
 		return ""
 	}
-	return s.Event
+	return s.EventType
 }
 
 func (s *StreamEventContextProtocol) GetCompletion() *CompletionEvent {
@@ -842,16 +842,16 @@ func (s *StreamEventContextProtocol) GetEvent() *EventEvent {
 
 func (s *StreamEventContextProtocol) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Event string `json:"event"`
+		EventType string `json:"event"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	s.Event = unmarshaler.Event
-	if unmarshaler.Event == "" {
+	s.EventType = unmarshaler.EventType
+	if unmarshaler.EventType == "" {
 		return fmt.Errorf("%T did not include discriminant event", s)
 	}
-	switch unmarshaler.Event {
+	switch unmarshaler.EventType {
 	case "completion":
 		value := new(CompletionEvent)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -928,24 +928,24 @@ func (s *StreamEventContextProtocol) validate() error {
 		fields = append(fields, "event")
 	}
 	if len(fields) == 0 {
-		if s.Event != "" {
+		if s.EventType != "" {
 			if len(s.rawJSON) > 0 {
 				return nil
 			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.EventType)
 		}
 		return fmt.Errorf("type %T is empty", s)
 	}
 	if len(fields) > 1 {
 		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
 	}
-	if s.Event != "" {
+	if s.EventType != "" {
 		field := fields[0]
-		if s.Event != field {
+		if s.EventType != field {
 			return fmt.Errorf(
 				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
 				s,
-				s.Event,
+				s.EventType,
 				s,
 			)
 		}
