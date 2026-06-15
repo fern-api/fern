@@ -22,17 +22,17 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         smartCasing: false
     });
 
-    // Detect service name collisions across different proto packages.
-    // When the same bare service name exists in multiple packages, we need to
-    // split the package into group parts so generators produce distinct SDK accessors.
-    const duplicateServiceNames = detectDuplicateServiceNames(req);
+    // Detect packages that have service name collisions with other packages.
+    // All services in affected packages get split group parts so generators
+    // produce distinct SDK accessors with a consistent subpackage hierarchy.
+    const packagesWithDuplicates = detectPackagesWithDuplicateServices(req);
 
     for (const protoFile of req.protoFile) {
         const protoFileConverter = new ProtofileConverter({
             context: new ProtofileConverterContext({
                 codeGeneratorRequest: req,
                 spec: protoFile,
-                duplicateServiceNames,
+                packagesWithDuplicates,
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 settings: {} as any,
                 errorCollector: new ErrorCollector({
@@ -85,11 +85,12 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
 }
 
 /**
- * Scans all proto files in the request and returns the set of bare service names
- * that appear in more than one proto package. These services need package-based
- * disambiguation in the generated SDK to avoid naming collisions.
+ * Scans all proto files in the request and returns the set of proto packages
+ * that contain at least one service whose bare name collides with a service in
+ * another package. All services in these packages use package-split group parts
+ * to ensure a consistent subpackage hierarchy.
  */
-export function detectDuplicateServiceNames(req: CodeGeneratorRequest): Set<string> {
+export function detectPackagesWithDuplicateServices(req: CodeGeneratorRequest): Set<string> {
     const serviceNameToPackages = new Map<string, Set<string>>();
     for (const protoFile of req.protoFile) {
         for (const service of protoFile.service) {
@@ -101,13 +102,15 @@ export function detectDuplicateServiceNames(req: CodeGeneratorRequest): Set<stri
             }
         }
     }
-    const duplicates = new Set<string>();
-    for (const [name, packages] of serviceNameToPackages) {
+    const affectedPackages = new Set<string>();
+    for (const [_, packages] of serviceNameToPackages) {
         if (packages.size > 1) {
-            duplicates.add(name);
+            for (const pkg of packages) {
+                affectedPackages.add(pkg);
+            }
         }
     }
-    return duplicates;
+    return affectedPackages;
 }
 
 function getPrintableFromMessage(message: DescMessage): Printable {

@@ -58,10 +58,11 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
         const convertedRequestBody = this.convertRequestBody();
         const convertedResponseBody = this.convertResponseBody();
 
-        // When a service name exists in multiple proto packages, split the package
-        // into individual parts so generators produce distinct SDK accessors
-        // (e.g., client.nominal.registry.v1.registryService vs client.nominal.registry.v2.registryService).
-        const group = this.context.duplicateServiceNames.has(this.serviceName)
+        // When this package has service name collisions with another package,
+        // split the package into individual parts so ALL services in the package
+        // get a consistent subpackage hierarchy and generators produce distinct
+        // SDK accessors (e.g., client.nominal.registry.v1.registryService).
+        const group = this.context.packagesWithDuplicates.has(packageName)
             ? [...packageName.split("."), this.serviceName]
             : [packageName, this.serviceName];
 
