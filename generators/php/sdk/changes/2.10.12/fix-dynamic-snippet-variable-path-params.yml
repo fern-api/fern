@@ -1,0 +1,7 @@
+- summary: |
+    Fix dynamic snippets to emit required variable-typed path parameters. A path
+    parameter typed by a Fern `variable` is a required argument on the generated
+    SDK method but is not provided as an explicit snippet value, so the snippet
+    previously omitted it and failed to type-check. The generator now synthesizes
+    a placeholder value for these parameters so the required argument is emitted.
+  type: fix

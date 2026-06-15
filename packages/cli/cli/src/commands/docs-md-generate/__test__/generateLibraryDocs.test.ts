@@ -68,7 +68,8 @@ describe("generateLibraryDocs", () => {
             generateLibraryDocs({
                 project: project as unknown as GenerateLibraryDocsOptions["project"],
                 cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-                library: undefined
+                library: undefined,
+                local: false
             })
         ).rejects.toThrow("No docs workspace found");
     });
@@ -81,7 +82,8 @@ describe("generateLibraryDocs", () => {
             generateLibraryDocs({
                 project: project as unknown as GenerateLibraryDocsOptions["project"],
                 cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-                library: undefined
+                library: undefined,
+                local: false
             })
         ).rejects.toThrow("No libraries configured");
     });
@@ -97,7 +99,8 @@ describe("generateLibraryDocs", () => {
             generateLibraryDocs({
                 project: project as unknown as GenerateLibraryDocsOptions["project"],
                 cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-                library: undefined
+                library: undefined,
+                local: false
             })
         ).rejects.toThrow("Failed to authenticate");
     });
@@ -113,7 +116,8 @@ describe("generateLibraryDocs", () => {
         await generateLibraryDocs({
             project: project as unknown as GenerateLibraryDocsOptions["project"],
             cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
-            library: "my-sdk"
+            library: "my-sdk",
+            local: false
         });
 
         expect(runLibraryDocsGeneration).toHaveBeenCalledTimes(1);
@@ -123,5 +127,28 @@ describe("generateLibraryDocs", () => {
         expect(call.orgId).toBe("test-org");
         expect(call.tokenValue).toBe("tok-xyz");
         expect(call.docsDirectoryPath).toBe("/home/user/project/fern");
+    });
+
+    it("local mode: skips authentication and delegates with local: true and no token", async () => {
+        const ctx = makeCliContext();
+        const project = makeProject({
+            libraries: { "my-sdk": { input: { path: "./src" }, output: { path: "./d" }, lang: "python" } }
+        });
+        (askToLogin as Mock).mockReset();
+        (runLibraryDocsGeneration as Mock).mockReset();
+        (runLibraryDocsGeneration as Mock).mockResolvedValue({ successful: 1 });
+
+        await generateLibraryDocs({
+            project: project as unknown as GenerateLibraryDocsOptions["project"],
+            cliContext: ctx as unknown as GenerateLibraryDocsOptions["cliContext"],
+            library: undefined,
+            local: true
+        });
+
+        expect(askToLogin).not.toHaveBeenCalled();
+        expect(runLibraryDocsGeneration).toHaveBeenCalledTimes(1);
+        const call = (runLibraryDocsGeneration as Mock).mock.calls[0]?.[0];
+        expect(call.local).toBe(true);
+        expect(call.tokenValue).toBeUndefined();
     });
 });

@@ -622,6 +622,17 @@
         },
         {
             "id": {
+                "path": "/req-bodies/array-body-with-headers",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithArrayBodyAndHeaders"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlinedRequests.postWithArrayBodyAndHeaders({\n    xCustomHeader: \"X-Custom-Header\",\n    body: [\"string\", \"string\"]\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/no-auth",
                 "method": "POST",
                 "identifier_override": "endpoint_no-auth.postWithNoAuth"

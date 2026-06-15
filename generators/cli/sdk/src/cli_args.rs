@@ -28,47 +28,26 @@ pub fn resolve_base_url_override(
     Ok(base_url_flag.or(base_url_env_var))
 }
 
-/// Returns true when raw args contain both a help flag and `--format json`.
+/// True when raw args contain the `--schema` flag.
 ///
-/// Triggered before clap parses so agents can request machine-readable help via
-/// `--help --format json` without clap intercepting.
-pub fn wants_json_help(args: &[String]) -> bool {
-    let has_help = args.iter().any(|a| a == "--help" || a == "-h");
-    let has_json_format = args.iter().enumerate().any(|(i, a)| {
-        a.eq_ignore_ascii_case("--format=json")
-            || (a == "--format"
-                && args.get(i + 1).map(|s| s.to_lowercase() == "json") == Some(true))
-    });
-    has_help && has_json_format
+/// `--schema` is the agent-facing machine-readable counterpart to `--help`:
+/// wherever a user could type `--help` for prose, they can type `--schema` for
+/// the same scope rendered as JSON. The flag is sniffed pre-clap because
+/// clap would otherwise demand required args for the matched leaf
+/// subcommand before our intercept runs.
+pub fn wants_schema(args: &[String]) -> bool {
+    args.iter().any(|a| a == "--schema")
 }
 
-/// Extracts the subcommand path from raw args (non-flag tokens after the binary
-/// name). Skips global flags (and their values) that may appear before the
-/// subcommand, so they don't terminate the `take_while(!starts_with('-'))`
-/// scan that follows.
+/// Extracts the subcommand path from raw args — the leading non-flag tokens
+/// after the binary name, stopping at the first flag.
 ///
-/// Currently elided global flags: `--format <VALUE>` (and its `--format=VALUE`
-/// equals form).
-///
-/// `["box", "users", "get", "--help", "--format", "json"]` → `["users", "get"]`
+/// `["box", "users", "get", "--schema"]` → `["users", "get"]`
+/// `["box", "--schema"]` → `[]`
+/// `["box", "users", "get", "--user-id", "X", "--schema"]` → `["users", "get"]`
 pub fn extract_subcommand_path(args: &[String]) -> Vec<String> {
-    let mut skip_next = false;
     args.iter()
         .skip(1) // skip binary name
-        .filter(|a| {
-            if skip_next {
-                skip_next = false;
-                return false;
-            }
-            if a.as_str() == "--format" {
-                skip_next = true;
-                return false;
-            }
-            if a.starts_with("--format=") {
-                return false;
-            }
-            true
-        })
         .take_while(|a| !a.starts_with('-'))
         .cloned()
         .collect()
@@ -202,77 +181,51 @@ mod tests {
     }
 
     #[test]
-    fn test_wants_json_help_space_separated() {
-        assert!(wants_json_help(&args(&[
-            "linear", "issues", "--help", "--format", "json",
-        ])));
+    fn test_wants_schema_present() {
+        assert!(wants_schema(&args(&["cli", "--schema"])));
+        assert!(wants_schema(&args(&["cli", "users", "--schema"])));
+        assert!(wants_schema(&args(&["cli", "users", "get", "--user-id", "X", "--schema"])));
     }
 
     #[test]
-    fn test_wants_json_help_equals() {
-        assert!(wants_json_help(&args(&["linear", "--help", "--format=json"])));
-    }
-
-    #[test]
-    fn test_wants_json_help_short_flag() {
-        assert!(wants_json_help(&args(&["linear", "-h", "--format", "json"])));
-    }
-
-    #[test]
-    fn test_wants_json_help_case_insensitive() {
-        assert!(wants_json_help(&args(&[
-            "linear", "--help", "--format", "JSON",
-        ])));
-        assert!(wants_json_help(&args(&["linear", "--help", "--format=JSON"])));
-    }
-
-    #[test]
-    fn test_no_json_help_without_format() {
-        assert!(!wants_json_help(&args(&["linear", "--help"])));
-    }
-
-    #[test]
-    fn test_no_json_help_without_help_flag() {
-        assert!(!wants_json_help(&args(&[
-            "linear", "issues", "get", "--format", "json",
-        ])));
-    }
-
-    #[test]
-    fn test_extract_subcommand_path() {
-        assert_eq!(
-            extract_subcommand_path(&args(&[
-                "linear", "issues", "get", "--help", "--format", "json",
-            ])),
-            vec!["issues", "get"],
-        );
+    fn test_wants_schema_absent() {
+        assert!(!wants_schema(&args(&["cli"])));
+        assert!(!wants_schema(&args(&["cli", "users", "--help"])));
+        assert!(!wants_schema(&args(&["cli", "--specification"])));
     }
 
     #[test]
     fn test_extract_subcommand_path_root() {
         assert_eq!(
-            extract_subcommand_path(&args(&["linear", "--help", "--format", "json"])),
+            extract_subcommand_path(&args(&["cli", "--schema"])),
             Vec::<String>::new(),
         );
     }
 
     #[test]
-    fn test_extract_subcommand_path_format_before_subcommand() {
+    fn test_extract_subcommand_path_one_segment() {
         assert_eq!(
-            extract_subcommand_path(&args(&[
-                "linear", "--format", "json", "issues", "--help",
-            ])),
-            vec!["issues"],
+            extract_subcommand_path(&args(&["cli", "users", "--schema"])),
+            vec!["users"],
         );
     }
 
     #[test]
-    fn test_extract_subcommand_path_format_equals_before_subcommand() {
+    fn test_extract_subcommand_path_multi_segment() {
         assert_eq!(
-            extract_subcommand_path(&args(&[
-                "linear", "--format=json", "issues", "get", "--help",
-            ])),
-            vec!["issues", "get"],
+            extract_subcommand_path(&args(&["cli", "users", "get", "--schema"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_stops_at_first_flag() {
+        // Anything starting with `-` is treated as a flag and terminates path
+        // extraction — including flags that consume values like `--user-id X`.
+        // The flag's value (`X`) is not in the path either.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "users", "get", "--user-id", "X", "--schema"])),
+            vec!["users", "get"],
         );
     }
 

@@ -74,6 +74,7 @@
               "pagination": undefined,
               "path": "/csv-only",
               "response": {
+                "content-type": "text/csv",
                 "docs": "Ids in textual format, one id per line.",
                 "status-code": 200,
                 "type": "text",
@@ -311,6 +312,7 @@ service:
         docs: Ids in textual format, one id per line.
         type: text
         status-code: 200
+        content-type: text/csv
     getItems:
       path: /items
       method: GET

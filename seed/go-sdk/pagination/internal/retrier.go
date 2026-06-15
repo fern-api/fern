@@ -28,6 +28,26 @@ func WithMaxAttempts(attempts uint) RetryOption {
 	}
 }
 
+// WithDisableRetries disables retry attempts entirely. The request is issued
+// exactly once. Distinct from WithMaxAttempts(0), which falls through to the
+// default.
+func WithDisableRetries() RetryOption {
+	return func(opts *retryOptions) {
+		opts.disabled = true
+	}
+}
+
+func buildRetryOptions(maxAttempts uint, disableRetries bool) []RetryOption {
+	var opts []RetryOption
+	if maxAttempts > 0 {
+		opts = append(opts, WithMaxAttempts(maxAttempts))
+	}
+	if disableRetries {
+		opts = append(opts, WithDisableRetries())
+	}
+	return opts
+}
+
 // Retrier retries failed requests a configurable number of times with an
 // exponential back-off between each retry.
 type Retrier struct {
@@ -66,6 +86,9 @@ func (r *Retrier) Run(
 	maxRetryAttempts := r.attempts
 	if options.attempts > 0 {
 		maxRetryAttempts = options.attempts
+	}
+	if options.disabled {
+		maxRetryAttempts = 1
 	}
 	var (
 		retryAttempt  uint
@@ -236,4 +259,5 @@ func (r *Retrier) addSymmetricJitter(delay time.Duration) (time.Duration, error)
 
 type retryOptions struct {
 	attempts uint
+	disabled bool
 }

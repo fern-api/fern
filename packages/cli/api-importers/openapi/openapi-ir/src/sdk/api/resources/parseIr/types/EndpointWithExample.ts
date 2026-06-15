@@ -25,6 +25,11 @@ export interface EndpointWithExample
      */
     path: string;
     summary: string | undefined;
+    /**
+     * A short subtitle for the endpoint, populated from `x-fern-subtitle`.
+     * Rendered below the endpoint title in the docs UI.
+     */
+    subtitle: string | undefined;
     operationId: string | undefined;
     tags: FernOpenapiIr.TagId[];
     pathParameters: FernOpenapiIr.PathParameterWithExample[];

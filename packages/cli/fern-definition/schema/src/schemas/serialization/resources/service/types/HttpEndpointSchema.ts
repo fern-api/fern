@@ -30,6 +30,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
         auth: HttpEndpointAuth.optional(),
         idempotent: core.serialization.boolean().optional(),
+        subtitle: core.serialization.string().optional(),
         "stream-condition": core.serialization.string().optional(),
         request: HttpRequest.optional(),
         response: HttpResponseSchema.optional(),
@@ -53,6 +54,7 @@ export declare namespace HttpEndpointSchema {
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
         auth?: HttpEndpointAuth.Raw | null;
         idempotent?: boolean | null;
+        subtitle?: string | null;
         "stream-condition"?: string | null;
         request?: HttpRequest.Raw | null;
         response?: HttpResponseSchema.Raw | null;

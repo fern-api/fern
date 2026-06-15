@@ -287,6 +287,7 @@
                     "id": "endpoint_telemetry.getTelemetryData",
                     "name": "getTelemetryData",
                     "displayName": "Collect telemetry data",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

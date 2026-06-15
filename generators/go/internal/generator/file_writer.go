@@ -95,6 +95,11 @@ type fileWriter struct {
 	// EncodeQueryValues method generated; populated by generateModelTypes.
 	queryReachableUnions map[common.TypeId]struct{}
 
+	// headerReachableUnions is the set of undiscriminated union TypeIds that
+	// may be sent as request headers. Only unions in this set get a String
+	// method generated; populated by generateModelTypes.
+	headerReachableUnions map[common.TypeId]struct{}
+
 	buffer *bytes.Buffer
 
 	// testData collects information about types that need getter/setter tests

@@ -52,7 +52,7 @@ import UndiscriminatedUnions
             Key.keyType(
                 .value
             ): "exampleValue", 
-            Key.jsonValue(
+            Key.default(
                 .default
             ): "exampleDefault"
         ]

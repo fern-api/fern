@@ -273,6 +273,7 @@
                     "id": "endpoint_.telemetry",
                     "name": "telemetry",
                     "displayName": "Collect telemetry data",
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

@@ -316,6 +316,43 @@ the listed risk materializes). Listed in rough priority order.
   invisible to seed tests (which only validate generated output, not
   dev-only files). A manifest violation surfaces at the source.
 
+### D-AA. `--schema` as a global flag, not a verb
+
+- **Where documented today:** [FER-11050](https://linear.app/buildwithfern/issue/FER-11050); [PR #169](https://github.com/fern-api/cli-sdk/pull/169); [`ARCHITECTURE.md` §8.19](../ARCHITECTURE.md#819-schema-global-flag--machine-readable-surface).
+- **Driver:** The original design (`<bin> introspect [path]`) was a
+  top-level subcommand. After grilling, the team chose a flag instead:
+  `--schema` mirrors `--help` exactly, slots into every scope without
+  precedence rules, and doesn't collide with specs that have a `schema`
+  resource tag (e.g. Okta's `schema` resource). A verb would have
+  needed special routing rules or would have blocked that namespace.
+- **Reversal note:** Supersedes `--help --format json` (removed, no
+  deprecation alias) and the intermediate `introspect` subcommand design
+  (never released outside the branch).
+- **Implementation:** `Binding::schema(&[String]) -> Result<Option<Value>,
+  CliError>` trait method. Pre-parse intercept in `early_intercept.rs`.
+  Multi-binding aggregation: empty path → all bindings contribute; non-empty
+  path → first owner wins. Per-binding errors log and continue.
+- **Why this should be promoted:** This is the universal agent contract
+  for every generated CLI. Agents should prefer `--schema` over `--help`.
+  Changing the flag name or semantics would break every downstream
+  agent integration.
+
+### D-AB. Global-header per-op collision: per-op param wins, global flag scoped away
+
+- **Where documented today:** [FER-11145](https://linear.app/buildwithfern/issue/FER-11145); [PR #180](https://github.com/fern-api/cli-sdk/pull/180); [`ARCHITECTURE.md` §8.20](../ARCHITECTURE.md#820-global-header-collision-scoping).
+- **Driver:** Channel 3's CLI migration requires `x-fern-global-headers`
+  with `env` fallback, but their `products retrieve` endpoint also
+  declares same-named query params (`--country`, `--language`). clap
+  panics when two args share a long name. The per-op param must win
+  (already documented in `discovery.rs`), so the runtime now enforces it
+  by registering the global flag per-command on non-colliding leaves only.
+- **Implementation:** `decorate_command` collision detection; `try_get_one`
+  (previously `get_one`) in `resolve_global_header_value`. Three tests
+  in `src/openapi/app.rs`.
+- **Why this should be promoted:** Any customer with overlapping
+  global-header + per-op parameter names depends on this precedence rule.
+  Changing it would re-introduce the panic.
+
 ---
 
 ## How to write a new ADR
