@@ -499,3 +499,9 @@ scripts:
         - poetry run pytest -rP .
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
+allowedFailures:
+  # Legacy wire tests issue real HTTP requests against a mock server that the
+  # seed scripts no longer start (the `fern test` wrapper was removed in #6624).
+  # Generation/compilation is still exercised, but the pytest step is allowed to
+  # fail because there is no server backing the generated example assertions.
+  - examples:legacy-wire-tests
