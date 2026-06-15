@@ -160,7 +160,7 @@ catalog:
   domhandler: ^5.0.3
   endent: ^2.1.0
   es-toolkit: ^1.45.1
-  esbuild: ^0.27.3
+  esbuild: ^0.28.1
   esbuild-plugin-polyfill-node: ^0.3.0
   eslint: ^9.26.0
   estree-walker: ^3.0.3
@@ -274,4 +274,5 @@ overrides:
   form-data: ^4.0.4
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.2
+  esbuild: ^0.28.1
   yauzl: ^3.2.1
