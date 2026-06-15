@@ -78,8 +78,8 @@ abstract class JsonSerializableType implements \JsonSerializable
                 $value = JsonSerializer::serializeArray($value, $arrayType);
             }
 
-            // Handle object
-            if (is_object($value)) {
+            // Handle object (skip stdClass which is already a serialized representation)
+            if (is_object($value) && !($value instanceof \stdClass)) {
                 $value = JsonSerializer::serializeObject($value);
             }
 

@@ -8,11 +8,7 @@ use Seed\Core\Json\JsonSerializableType;
 
 class EmptyObjectChild extends JsonSerializableType
 {
-    /**
-     * @param array{} $values
-     */
     public function __construct(
-        array $values = [],
     ) {
     }
 }
