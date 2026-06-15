@@ -908,7 +908,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return [...this.parsedSingleUnionTypes, this.unknownSingleUnionType];
     }
 
-    private getEffectiveBaseProperties(context: Context): FernIr.ObjectProperty[] {
+    public getEffectiveBaseProperties(context: Context): FernIr.ObjectProperty[] {
         const suppressed = this.getInheritedPropertyNamesSharedByAllVariants(context);
         if (suppressed.size === 0) {
             return this.baseProperties;
