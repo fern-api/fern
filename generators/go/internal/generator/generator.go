@@ -155,6 +155,7 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 
 func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode, rootClientInstantiation *ast.AssignStmt, rootPackageName string) ([]*File, []*GeneratedClient, error) {
 	queryReachableUnions := collectQueryReachableUnions(ir)
+	headerReachableUnions := collectHeaderReachableUnions(ir)
 	fileInfoToTypes, err := fileInfoToTypes(
 		rootPackageName,
 		ir.Types,
@@ -192,6 +193,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.coordinator,
 		)
 		writer.queryReachableUnions = queryReachableUnions
+		writer.headerReachableUnions = headerReachableUnions
 		for _, typeToGenerate := range typesToGenerate {
 			switch {
 			case typeToGenerate.TypeDeclaration != nil:
@@ -2127,14 +2129,31 @@ func collectQueryReachableUnions(ir *fernir.IntermediateRepresentation) map[comm
 	for _, service := range ir.Services {
 		for _, endpoint := range service.Endpoints {
 			for _, queryParameter := range endpoint.QueryParameters {
-				walkQueryReachableType(queryParameter.ValueType, ir.Types, reachable, visited)
+				walkReachableUnionType(queryParameter.ValueType, ir.Types, reachable, visited)
 			}
 		}
 	}
 	return reachable
 }
 
-func walkQueryReachableType(
+// collectHeaderReachableUnions returns the set of undiscriminated union TypeIds
+// that are reachable from a request header position. Endpoint headers are
+// serialized to a string when added to the http.Header, so we generate a String
+// method on the unions that may actually be sent as headers.
+func collectHeaderReachableUnions(ir *fernir.IntermediateRepresentation) map[common.TypeId]struct{} {
+	reachable := make(map[common.TypeId]struct{})
+	visited := make(map[common.TypeId]struct{})
+	for _, service := range ir.Services {
+		for _, endpoint := range service.Endpoints {
+			for _, header := range endpoint.Headers {
+				walkReachableUnionType(header.ValueType, ir.Types, reachable, visited)
+			}
+		}
+	}
+	return reachable
+}
+
+func walkReachableUnionType(
 	typeReference *fernir.TypeReference,
 	types map[common.TypeId]*fernir.TypeDeclaration,
 	reachable map[common.TypeId]struct{},
@@ -2146,13 +2165,13 @@ func walkQueryReachableType(
 	if container := typeReference.Container; container != nil {
 		switch {
 		case container.List != nil:
-			walkQueryReachableType(container.List, types, reachable, visited)
+			walkReachableUnionType(container.List, types, reachable, visited)
 		case container.Set != nil:
-			walkQueryReachableType(container.Set, types, reachable, visited)
+			walkReachableUnionType(container.Set, types, reachable, visited)
 		case container.Optional != nil:
-			walkQueryReachableType(container.Optional, types, reachable, visited)
+			walkReachableUnionType(container.Optional, types, reachable, visited)
 		case container.Nullable != nil:
-			walkQueryReachableType(container.Nullable, types, reachable, visited)
+			walkReachableUnionType(container.Nullable, types, reachable, visited)
 		}
 		return
 	}
@@ -2172,6 +2191,6 @@ func walkQueryReachableType(
 	case declaration.Shape.UndiscriminatedUnion != nil:
 		reachable[named.TypeId] = struct{}{}
 	case declaration.Shape.Alias != nil:
-		walkQueryReachableType(declaration.Shape.Alias.AliasOf, types, reachable, visited)
+		walkReachableUnionType(declaration.Shape.Alias.AliasOf, types, reachable, visited)
 	}
 }
