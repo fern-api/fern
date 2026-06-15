@@ -1,7 +1,7 @@
 - summary: |
     Fix proto/gRPC SDK generation to disambiguate services with the same bare name
     across different proto packages. When duplicate service names are detected
-    (e.g., `nominal.registry.v1.RegistryService` and `nominal.registry.v2.RegistryService`),
+    (e.g., `acme.platform.v1.PlatformService` and `acme.platform.v2.PlatformService`),
     the proto package is now split into individual group parts so generators produce
     distinct SDK accessors instead of colliding on the bare service name.
   type: fix

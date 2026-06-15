@@ -39,12 +39,12 @@ describe("detectPackagesWithDuplicateServices", () => {
 
     it("returns both packages when a service name appears in multiple packages", () => {
         const req = makeRequest([
-            { package: "nominal.registry.v1", services: ["RegistryService"] },
-            { package: "nominal.registry.v2", services: ["RegistryService"] }
+            { package: "acme.platform.v1", services: ["PlatformService"] },
+            { package: "acme.platform.v2", services: ["PlatformService"] }
         ]);
         const result = detectPackagesWithDuplicateServices(req);
-        expect(result.has("nominal.registry.v1")).toBe(true);
-        expect(result.has("nominal.registry.v2")).toBe(true);
+        expect(result.has("acme.platform.v1")).toBe(true);
+        expect(result.has("acme.platform.v2")).toBe(true);
         expect(result.size).toBe(2);
     });
 
@@ -82,13 +82,13 @@ describe("detectPackagesWithDuplicateServices", () => {
 
     it("marks entire package even if only one of its services collides", () => {
         const req = makeRequest([
-            { package: "nominal.registry.v2", services: ["RegistryService", "AnalyticsService"] },
-            { package: "nominal.registry.v1", services: ["RegistryService"] }
+            { package: "acme.platform.v2", services: ["PlatformService", "AnalyticsService"] },
+            { package: "acme.platform.v1", services: ["PlatformService"] }
         ]);
         const result = detectPackagesWithDuplicateServices(req);
-        // Both packages are affected because RegistryService collides
-        expect(result.has("nominal.registry.v1")).toBe(true);
-        expect(result.has("nominal.registry.v2")).toBe(true);
+        // Both packages are affected because PlatformService collides
+        expect(result.has("acme.platform.v1")).toBe(true);
+        expect(result.has("acme.platform.v2")).toBe(true);
         expect(result.size).toBe(2);
     });
 });

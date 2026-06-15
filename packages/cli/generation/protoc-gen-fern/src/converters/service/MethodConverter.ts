@@ -61,7 +61,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
         // When this package has service name collisions with another package,
         // split the package into individual parts so ALL services in the package
         // get a consistent subpackage hierarchy and generators produce distinct
-        // SDK accessors (e.g., client.nominal.registry.v1.registryService).
+        // SDK accessors (e.g., client.acme.platform.v1.platformService).
         const group = this.context.packagesWithDuplicates.has(packageName)
             ? [...packageName.split("."), this.serviceName]
             : [packageName, this.serviceName];
