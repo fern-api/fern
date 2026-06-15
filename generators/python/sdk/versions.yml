@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.16
+  changelogEntry:
+    - summary: |
+        Fix discriminated union snippet generation to include base properties (e.g. extra, tags)
+        inherited from the union's base type. Also fix conftest generation to skip non-string
+        constructor parameters like headers from os.getenv() wrapping.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 5.14.15
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.9.39 (Replay 0.18.0) for more reliable
+        customization detection during regeneration.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
 - version: 5.14.14
   changelogEntry:
     - summary: |

@@ -4,6 +4,7 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { CustomPageAction } from "./CustomPageAction.js";
+import { SkillsPageActionConfig } from "./SkillsPageActionConfig.js";
 
 export const PageActionOptions: core.serialization.ObjectSchema<
     serializers.PageActionOptions.Raw,
@@ -18,6 +19,7 @@ export const PageActionOptions: core.serialization.ObjectSchema<
     cursor: core.serialization.boolean().optional(),
     vscode: core.serialization.boolean().optional(),
     custom: core.serialization.list(CustomPageAction).optional(),
+    skills: SkillsPageActionConfig.optional(),
 });
 
 export declare namespace PageActionOptions {
@@ -31,5 +33,6 @@ export declare namespace PageActionOptions {
         cursor?: boolean | null;
         vscode?: boolean | null;
         custom?: CustomPageAction.Raw[] | null;
+        skills?: SkillsPageActionConfig.Raw | null;
     }
 }

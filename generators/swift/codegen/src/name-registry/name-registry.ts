@@ -413,6 +413,16 @@ export class NameRegistry {
         return existingSymbol;
     }
 
+    public getNestedLiteralEnumSymbol(
+        parentSymbol: swift.Symbol | string,
+        literalValue: string
+    ): swift.Symbol | undefined {
+        const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        const enumsByLiteralValue =
+            this.nestedLiteralEnumSymbolsByParentSymbolId.get(parentSymbolId) ?? new Map<string, swift.Symbol>();
+        return enumsByLiteralValue.get(literalValue);
+    }
+
     public getAllNestedLiteralEnumSymbolsOrThrow(parentSymbol: swift.Symbol | string): {
         symbol: swift.Symbol;
         literalValue: string;

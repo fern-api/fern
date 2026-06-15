@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Type: Codable, Hashable, Sendable {
+public enum `Type`: Codable, Hashable, Sendable {
     case basicType(BasicType)
     case complexType(ComplexType)
 

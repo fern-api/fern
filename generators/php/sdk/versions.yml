@@ -1,4 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.12
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to emit required variable-typed path parameters. A path
+        parameter typed by a Fern `variable` is a required argument on the generated
+        SDK method but is not provided as an explicit snippet value, so the snippet
+        previously omitted it and failed to type-check. The generator now synthesizes
+        a placeholder value for these parameters so the required argument is emitted.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 66
+- version: 2.10.11
+  changelogEntry:
+    - summary: |
+        Serialize boolean path parameters as "true"/"false" instead of relying on PHP's
+        string coercion (which renders them as "1"/""), producing valid URLs.
+      type: fix
+    - summary: |
+        Skip bytes request body endpoints when generating wire tests, matching the WireMock
+        stub generator which omits them. Previously the generated test called an endpoint with
+        no matching stub and failed.
+      type: fix
+  createdAt: "2026-06-14"
+  irVersion: 66
+- version: 2.10.10
+  changelogEntry:
+    - summary: |
+        Fix the generated OAuth and inferred-auth token providers to construct the typed token request
+        object when the token endpoint uses a referenced (non-inlined) request body. Previously the
+        provider passed an associative array to the token endpoint method, which expects the typed
+        request, causing PHPStan failures.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 66
 - version: 2.10.9
   changelogEntry:
     - summary: |

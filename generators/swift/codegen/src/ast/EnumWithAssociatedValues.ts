@@ -1,4 +1,4 @@
-import { isReservedKeyword } from "../syntax/index.js";
+import { escapeReservedKeyword } from "../syntax/index.js";
 import { AccessLevel } from "./AccessLevel.js";
 import { AstNode, Writer } from "./core/index.js";
 import { DocComment } from "./DocComment.js";
@@ -74,7 +74,7 @@ export class EnumWithAssociatedValues extends AstNode {
         if (this.indirect) {
             writer.write("indirect ");
         }
-        writer.write(`enum ${this.name}`);
+        writer.write(`enum ${escapeReservedKeyword(this.name)}`);
         this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");
@@ -91,11 +91,7 @@ export class EnumWithAssociatedValues extends AstNode {
                 case_.docs.write(writer);
             }
             writer.write("case ");
-            if (isReservedKeyword(case_.unsafeName)) {
-                writer.write(`\`${case_.unsafeName}\``);
-            } else {
-                writer.write(case_.unsafeName);
-            }
+            writer.write(escapeReservedKeyword(case_.unsafeName));
             if (case_.associatedValue != null) {
                 writer.write("(");
                 case_.associatedValue.forEach((type, index) => {

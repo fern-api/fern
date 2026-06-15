@@ -11,4 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->post();
+$client->service->post(
+    '<endpointParam>',
+);

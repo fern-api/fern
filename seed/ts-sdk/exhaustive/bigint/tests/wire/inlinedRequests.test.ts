@@ -133,4 +133,27 @@ describe("InlinedRequestsClient", () => {
             });
         }).rejects.toThrow(SeedExhaustive.BadRequestBody);
     });
+
+    test("postWithArrayBodyAndHeaders", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = ["string", "string"];
+        const rawResponseBody = "string";
+
+        server
+            .mockEndpoint()
+            .post("/req-bodies/array-body-with-headers")
+            .header("X-Custom-Header", "X-Custom-Header")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inlinedRequests.postWithArrayBodyAndHeaders({
+            "X-Custom-Header": "X-Custom-Header",
+            body: ["string", "string"],
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
 });
