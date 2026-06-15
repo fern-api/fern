@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.45.4
+  changelogEntry:
+    - summary: |
+        Fix generated Go failing to compile when an undiscriminated union is sent as
+        a request header. Such unions now generate a `String()` method (fmt.Stringer)
+        and the client serializes the header via that method, instead of passing the
+        union struct where a string is expected.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 66
 - version: 1.45.3
   changelogEntry:
     - summary: |
