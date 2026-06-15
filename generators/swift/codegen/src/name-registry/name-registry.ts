@@ -448,8 +448,11 @@ export class NameRegistry {
         variants: UndiscriminatedUnionVariant[];
     }) {
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
+        // Preserve the declaration order of the union members. Decoding attempts are emitted in
+        // this order, and Fern decodes undiscriminated unions by trying members in declaration
+        // order; sorting (e.g. alphabetically) would, for example, try `double` before `int` and
+        // decode an integral JSON number as a `Double`.
         const distinctVariants = uniqWith(variants, (a, b) => a.caseName === b.caseName);
-        distinctVariants.sort((a, b) => a.caseName.localeCompare(b.caseName));
         this.undiscriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, distinctVariants);
         return distinctVariants;
     }

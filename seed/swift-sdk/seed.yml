@@ -136,8 +136,6 @@ allowedFailures:
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference
-  - nullable:no-custom-config
-  - nullable:nullable-as-optional
   - oauth-client-credentials-with-variables
   - query-parameters
   - request-parameters
@@ -145,8 +143,6 @@ allowedFailures:
   - streaming-parameter
   - trace
   - undiscriminated-unions
-  # Java-specific fixture for LocalDate support
-  - unions-with-local-date
   # Server URL templating not yet supported in Swift SDK
   - server-sent-events-openapi
   - server-url-templating
