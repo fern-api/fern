@@ -1198,7 +1198,18 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			} else {
 				t.writer.P(fmt.Sprintf("if %s.typ == %q || %s != %s {", receiver, member.field, field, member.zeroValue))
 			}
-			t.writer.P(`return fmt.Sprintf("%v", `, field, ")")
+			if member.date != nil {
+				// Format date/datetime values using standard layouts so that
+				// HTTP header consumers receive RFC 3339 / ISO 8601 strings
+				// rather than Go's default time.Time.String() representation.
+				if member.date.IsDateTime {
+					t.writer.P(fmt.Sprintf("return %s.Format(time.RFC3339)", field))
+				} else {
+					t.writer.P(fmt.Sprintf(`return %s.Format("2006-01-02")`, field))
+				}
+			} else {
+				t.writer.P(`return fmt.Sprintf("%v", `, field, ")")
+			}
 			t.writer.P("}")
 		}
 		t.writer.P(`return ""`)
