@@ -69,7 +69,7 @@ class UnionPropertyTest extends TestCase
     public function testWithNull(): void
     {
         $expectedJson = JsonEncoder::encode(
-            [],
+            new \stdClass(),
         );
 
         $object = UnionProperty::fromJson($expectedJson);
