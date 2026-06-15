@@ -346,19 +346,20 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
         base_property_snippets = self._get_base_property_snippets()
 
         def write_union(writer: AST.NodeWriter) -> None:
+            writer.write_node(AST.Expression(union_class_reference))
+            writer.write("(")
             if union_value is not None:
-                writer.write_node(AST.Expression(union_class_reference))
-                writer.write("(")
                 writer.write("value=")
                 writer.write_node(union_value)
                 for bp_snippet in base_property_snippets:
                     writer.write(", ")
                     writer.write_node(bp_snippet)
-                writer.write(")")
             else:
-                writer.write_node(AST.Expression(union_class_reference))
-                writer.write("(")
-                writer.write(")")
+                for i, bp_snippet in enumerate(base_property_snippets):
+                    if i > 0:
+                        writer.write(", ")
+                    writer.write_node(bp_snippet)
+            writer.write(")")
 
         return AST.Expression(AST.CodeWriter(write_union))
 

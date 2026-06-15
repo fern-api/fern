@@ -121,8 +121,20 @@ class SnippetTestFactory:
             kwargs=[(env, os_get) for env in generated_environment.args],
         )
 
-    # Parameters that are not string-typed and cannot be wrapped with os.getenv(...)
-    _NON_ENVVAR_PARAMS = {"base_url", "environment", "_token_getter_override", "headers"}
+    # Parameters whose types are not str (or Optional[str]) and must not be
+    # wrapped in os.getenv(). "base_url" and "environment" are handled
+    # separately; "_token_getter_override" gets its own lambda treatment.
+    _NON_ENVVAR_PARAMS = {
+        "base_url",
+        "environment",
+        "_token_getter_override",
+        "headers",
+        "timeout",
+        "max_retries",
+        "follow_redirects",
+        "httpx_client",
+        "logging",
+    }
 
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
         non_url_params = [
