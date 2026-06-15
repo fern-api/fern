@@ -328,7 +328,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
     private getDevDependencies(): Record<string, string> {
         return {
             ...this.getCommonDevDependencies(),
-            esbuild: "~0.24.2"
+            esbuild: "~0.28.1"
         };
     }
 }
