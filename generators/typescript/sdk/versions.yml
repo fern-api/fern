@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.3
+  changelogEntry:
+    - summary: |
+        Bump esbuild from ~0.24.2 to ~0.28.1 to fix GHSA-gv7w-rqvm-qjhr (missing binary integrity verification).
+      type: chore
+  createdAt: "2026-06-15"
+  irVersion: 67
 - version: 3.72.2
   changelogEntry:
     - summary: |
