@@ -6,6 +6,7 @@ import httpx
 import pytest
 
 from core_utilities.shared.http_sse import (
+    MAX_LINE_SIZE,
     EventSource,
     ServerSentEvent,
     SSEError,
@@ -923,3 +924,118 @@ class TestSSEError:
         error = SSEError(message)
 
         assert str(error) == message
+
+
+class TestMaxLineSize:
+    """Test the MAX_LINE_SIZE guard against unbounded buffer growth (GHSA-7w2x-r9r4-7v8r)."""
+
+    def test_sync_oversized_line_raises(self) -> None:
+        """A stream of non-newline bytes exceeding MAX_LINE_SIZE raises SSEError."""
+        oversized_chunk = b"x" * (MAX_LINE_SIZE + 1)
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [oversized_chunk]
+
+        event_source = EventSource(response)
+        with pytest.raises(SSEError, match="exceeded maximum size"):
+            list(event_source.iter_sse())
+
+    def test_sync_oversized_across_multiple_chunks_raises(self) -> None:
+        """Buffer accumulated across many small chunks still triggers the guard."""
+        chunk_size = 4096
+        num_chunks = (MAX_LINE_SIZE // chunk_size) + 2
+        chunks = [b"A" * chunk_size for _ in range(num_chunks)]
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = chunks
+
+        event_source = EventSource(response)
+        with pytest.raises(SSEError, match="exceeded maximum size"):
+            list(event_source.iter_sse())
+
+    def test_sync_line_exactly_at_limit_passes(self) -> None:
+        """A line of exactly MAX_LINE_SIZE characters (terminated by newline) parses fine."""
+        line = "data: " + "y" * (MAX_LINE_SIZE - len("data: ")) + "\n\n"
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [line.encode("utf-8")]
+
+        event_source = EventSource(response)
+        events = list(event_source.iter_sse())
+        assert len(events) == 1
+
+    def test_sync_normal_stream_still_parses(self) -> None:
+        """Normal SSE streams with reasonable line lengths parse correctly."""
+        sse_stream = "event: ping\ndata: hello world\nid: 1\n\nevent: pong\ndata: goodbye\n\n"
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [sse_stream.encode("utf-8")]
+
+        event_source = EventSource(response)
+        events = list(event_source.iter_sse())
+
+        assert len(events) == 2
+        assert events[0].event == "ping"
+        assert events[0].data == "hello world"
+        assert events[1].event == "pong"
+        assert events[1].data == "goodbye"
+
+    def test_sync_oversized_trailing_buffer_raises(self) -> None:
+        """Oversized trailing data after stream close also triggers the guard."""
+        # First chunk has a valid event, second is an oversized trailing buffer
+        valid_event = b"data: ok\n\n"
+        oversized_trailing = b"x" * (MAX_LINE_SIZE + 1)
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+        response.iter_bytes.return_value = [valid_event, oversized_trailing]
+
+        event_source = EventSource(response)
+        with pytest.raises(SSEError, match="exceeded maximum size"):
+            list(event_source.iter_sse())
+
+    @pytest.mark.asyncio
+    async def test_async_oversized_line_raises(self) -> None:
+        """Async variant: non-newline bytes exceeding MAX_LINE_SIZE raises SSEError."""
+        oversized_chunk = b"x" * (MAX_LINE_SIZE + 1)
+
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield oversized_chunk
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        with pytest.raises(SSEError, match="exceeded maximum size"):
+            events = []
+            async for event in event_source.aiter_sse():
+                events.append(event)
+
+    @pytest.mark.asyncio
+    async def test_async_normal_stream_still_parses(self) -> None:
+        """Async variant: normal SSE streams parse correctly."""
+        response = Mock()
+        response.headers = {"content-type": "text/event-stream"}
+
+        async def mock_aiter_bytes() -> AsyncIterator[bytes]:
+            yield b"event: ping\ndata: hello\n\n"
+            yield b"event: pong\ndata: world\n\n"
+
+        response.aiter_bytes = mock_aiter_bytes
+
+        event_source = EventSource(response)
+        events = []
+        async for event in event_source.aiter_sse():
+            events.append(event)
+
+        assert len(events) == 2
+        assert events[0].event == "ping"
+        assert events[0].data == "hello"
+        assert events[1].event == "pong"
+        assert events[1].data == "world"

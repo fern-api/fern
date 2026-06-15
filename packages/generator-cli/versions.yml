@@ -1,6 +1,40 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Re-release of 0.9.38 (whose publish failed due to a malformed versions.yml in git
+        history). Carries the `@fern-api/replay` 0.18.0 bump: `.fernignore`-aware
+        customization detection, trailing-slash pattern support, and the EPIPE crash fix.
+      type: chore
+  createdAt: "2026-06-11"
+  version: 0.9.39
+
+- changelogEntry:
+    - summary: |
+        Bump `@fern-api/replay` to 0.18.0. Replay customization detection now filters
+        `.fernignore`-protected files before materializing patch content (commits touching
+        only protected paths skip `git format-patch` entirely), correctly handles
+        gitignore-style trailing-slash patterns like `docs/`, and no longer crashes with an
+        unhandled `write EPIPE` when git exits before consuming stdin during patch
+        application. Fixes multi-minute replay runs on repos with large generated
+        directories (e.g. typedoc output).
+      type: fix
+  createdAt: "2026-06-10"
+  version: 0.9.38
+
+- changelogEntry:
+    - summary: |
+        AutoVersionStep no longer requires Replay to be enabled. When Replay is
+        not available, the step falls back to diffing HEAD vs the working tree
+        (`git diff HEAD`) and still rewrites magic version placeholders
+        (`0.0.0-fern-placeholder`, `0.0.0.dev0`, etc.) with a real computed
+        semver. This fixes autorelease producing SDKs with placeholder versions
+        for orgs that have not opted into Replay.
+      type: fix
+  createdAt: "2026-06-10"
+  version: 0.9.37
+
+- changelogEntry:
+    - summary: |
         AutoVersionStep now calls the hosted FAI service (`/sdks/analyze-commit-diff`) using
         `fernToken` when no BAML `ai` config is supplied — the remote-generation (fiddle)
         path. Previously the step required `ai` and always fell back to a blind PATCH bump

@@ -7,13 +7,14 @@ import { CliError, type TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import { generateCpp } from "./CppDocsGenerator.js";
+import { runLocalParser } from "./LocalParserRunner.js";
 import { generate } from "./PythonDocsGenerator.js";
 import type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
 
 const POLL_INTERVAL_MS = 3000;
 const POLL_TIMEOUT_MS = 3 * 60 * 1000; // 3 minutes
 
-type LibraryLanguage = "PYTHON" | "CPP";
+export type LibraryLanguage = "PYTHON" | "CPP";
 
 /**
  * Lightweight client interface for the library docs endpoints.
@@ -119,9 +120,13 @@ export type StepWrapper = <T>(opts: { message: string; operation: () => Promise<
 const defaultWrapStep: StepWrapper = ({ operation }) => operation();
 
 /**
- * Iterates over the configured libraries, calling the FDR library-docs
- * endpoints to start generation, polling for completion, downloading the
- * resulting IR, and running the local MDX generator.
+ * Iterates over the configured libraries, producing the library-docs IR and
+ * running the local MDX generator for each.
+ *
+ * By default the IR is produced remotely via the FDR library-docs endpoints
+ * (start generation, poll for completion, download the resulting IR). When
+ * `local` is set, the parser Docker images are run directly on the user's
+ * machine and no network calls or authentication are required.
  *
  * All libraries are attempted (via `Promise.allSettled`) so a single failure
  * does not abort generation for the remaining ones. If any library failed,
@@ -135,18 +140,21 @@ export async function runLibraryDocsGeneration({
     orgId,
     tokenValue,
     context,
-    wrapStep = defaultWrapStep
+    wrapStep = defaultWrapStep,
+    local = false
 }: {
     libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration | undefined>;
     /** Optional library name to filter to a single entry. */
     library?: string;
-    /** Absolute path of the directory containing docs.yml — used to resolve output paths. */
+    /** Absolute path of the directory containing docs.yml — used to resolve input/output paths. */
     docsDirectoryPath: AbsoluteFilePath;
     orgId: string;
-    /** The raw bearer token value. */
-    tokenValue: string;
+    /** The raw bearer token value. Required unless `local` is set. */
+    tokenValue?: string;
     context: TaskContext;
     wrapStep?: StepWrapper;
+    /** Run parser Docker images locally instead of using Fern's servers. */
+    local?: boolean;
 }): Promise<{ successful: number }> {
     if (Object.keys(libraries).length === 0) {
         throw new CliError({
@@ -167,19 +175,25 @@ export async function runLibraryDocsGeneration({
     }
 
     const librariesToGenerate = library != null ? { [library]: libraries[library] } : libraries;
-    const client = createLibraryDocsClient({ token: tokenValue });
+
+    let client: LibraryDocsClient | undefined;
+    if (!local) {
+        if (tokenValue == null) {
+            throw new CliError({
+                message:
+                    "Authentication is required for remote library docs generation.\n\n" +
+                    "  Run 'fern login', or pass --local to parse libraries locally with Docker.",
+                code: CliError.Code.AuthError
+            });
+        }
+        client = createLibraryDocsClient({ token: tokenValue });
+    }
 
     const results = await Promise.allSettled(
         Object.entries(librariesToGenerate).map(async ([name, config]) => {
             if (config == null) {
                 throw new CliError({
                     message: `Library '${name}': missing configuration`,
-                    code: CliError.Code.ConfigError
-                });
-            }
-            if (!isGitLibraryInput(config.input)) {
-                throw new CliError({
-                    message: `Library '${name}': 'path' input is not yet supported. Please use 'git' input.`,
                     code: CliError.Code.ConfigError
                 });
             }
@@ -190,25 +204,25 @@ export async function runLibraryDocsGeneration({
                 config,
                 docsDirectoryPath,
                 orgId,
-                wrapStep
+                wrapStep,
+                local
             });
         })
     );
 
     const failures = results.filter((r): r is PromiseRejectedResult => r.status === "rejected");
-    for (const failure of failures) {
-        context.logger.error(chalk.red(extractErrorMessage(failure.reason)));
-    }
 
-    const firstFailure = failures[0];
-    if (firstFailure != null) {
-        // Surface the first specific failure so the caller exits with a useful message.
-        const reason = firstFailure.reason;
-        if (reason instanceof CliError) {
-            throw reason;
+    if (failures.length > 0) {
+        // Surface failures exactly once: the CLI's task handler prints the thrown
+        // CliError, so logging here as well would double-print each message. A single
+        // failure is re-thrown as-is (preserving its error code); multiple failures are
+        // combined into one message.
+        const soleReason = failures.length === 1 ? failures[0]?.reason : undefined;
+        if (soleReason instanceof CliError) {
+            throw soleReason;
         }
         throw new CliError({
-            message: extractErrorMessage(reason),
+            message: failures.map((failure) => extractErrorMessage(failure.reason)).join("\n"),
             code: CliError.Code.InternalError
         });
     }
@@ -223,18 +237,19 @@ async function generateSingleLibrary({
     config,
     docsDirectoryPath,
     orgId,
-    wrapStep
+    wrapStep,
+    local
 }: {
-    client: LibraryDocsClient;
+    client: LibraryDocsClient | undefined;
     context: TaskContext;
     name: string;
     config: docsYml.RawSchemas.LibraryConfiguration;
     docsDirectoryPath: AbsoluteFilePath;
     orgId: string;
     wrapStep: StepWrapper;
+    local: boolean;
 }): Promise<void> {
     const resolvedOutputPath = resolve(docsDirectoryPath, config.output.path);
-    const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
 
     if (config.config?.doxyfile != null && config.lang !== "cpp") {
         throw new CliError({
@@ -266,28 +281,19 @@ async function generateSingleLibrary({
         });
     }
 
-    const jobId = await wrapStep({
-        message: `Library '${name}': starting generation from ${gitInput.git}`,
-        operation: () =>
-            startGeneration(client, {
-                name,
-                orgId,
-                githubUrl: gitInput.git,
-                language,
-                packagePath: gitInput.subpath,
-                doxyfileContent
-            })
-    });
-
-    await wrapStep({
-        message: `Library '${name}': generating documentation`,
-        operation: () => pollForCompletion(client, jobId, name)
-    });
-
-    const ir = await wrapStep({
-        message: `Library '${name}': downloading generated IR`,
-        operation: () => downloadIr(client, jobId, name, language)
-    });
+    let ir: unknown;
+    if (local) {
+        ir = await generateIrLocally({ context, name, config, docsDirectoryPath, language, doxyfileContent, wrapStep });
+    } else if (client != null) {
+        ir = await generateIrRemotely({ client, name, config, language, orgId, doxyfileContent, wrapStep });
+    } else {
+        // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
+        // path), but keeps the nullable `client` honest without a non-null assertion.
+        throw new CliError({
+            message: `Library '${name}': authentication is required for remote generation. Re-run with --local or run 'fern login'.`,
+            code: CliError.Code.AuthError
+        });
+    }
 
     if (language === "CPP") {
         const cppIr = ir as CppLibraryDocsIr;
@@ -316,6 +322,105 @@ async function generateSingleLibrary({
             chalk.green(`Library '${name}': generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`)
         );
     }
+}
+
+/**
+ * Produces the library-docs IR via the FDR endpoints: start generation, poll
+ * for completion, and download the resulting IR.
+ */
+async function generateIrRemotely({
+    client,
+    name,
+    config,
+    language,
+    orgId,
+    doxyfileContent,
+    wrapStep
+}: {
+    client: LibraryDocsClient;
+    name: string;
+    config: docsYml.RawSchemas.LibraryConfiguration;
+    language: LibraryLanguage;
+    orgId: string;
+    doxyfileContent: string | undefined;
+    wrapStep: StepWrapper;
+}): Promise<unknown> {
+    if (!isGitLibraryInput(config.input)) {
+        throw new CliError({
+            message: `Library '${name}': 'path' input requires the --local flag. Use 'git' input for remote generation.`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    const gitInput = config.input;
+
+    const jobId = await wrapStep({
+        message: `Library '${name}': starting generation from ${gitInput.git}`,
+        operation: () =>
+            startGeneration(client, {
+                name,
+                orgId,
+                githubUrl: gitInput.git,
+                language,
+                packagePath: gitInput.subpath,
+                doxyfileContent
+            })
+    });
+
+    await wrapStep({
+        message: `Library '${name}': generating documentation`,
+        operation: () => pollForCompletion(client, jobId, name)
+    });
+
+    return wrapStep({
+        message: `Library '${name}': downloading generated IR`,
+        operation: () => downloadIr(client, jobId, name, language)
+    });
+}
+
+/**
+ * Produces the library-docs IR by running the parser Docker image locally on a
+ * `path` input. The source path is resolved relative to the docs directory and
+ * mounted into the container.
+ *
+ * `--local` deliberately does NOT clone `git` inputs: cloning an attacker-
+ * controlled repository (or git URL) on the user's machine / CI runner is a
+ * code-execution risk, and the point of `--local` is to stay offline. `git`
+ * inputs are handled remotely (server-side) instead.
+ */
+async function generateIrLocally({
+    context,
+    name,
+    config,
+    docsDirectoryPath,
+    language,
+    doxyfileContent,
+    wrapStep
+}: {
+    context: TaskContext;
+    name: string;
+    config: docsYml.RawSchemas.LibraryConfiguration;
+    docsDirectoryPath: AbsoluteFilePath;
+    language: LibraryLanguage;
+    doxyfileContent: string | undefined;
+    wrapStep: StepWrapper;
+}): Promise<unknown> {
+    if (isGitLibraryInput(config.input)) {
+        throw new CliError({
+            message:
+                `Library '${name}': 'git' inputs are generated remotely, not with --local. ` +
+                `For --local, use a 'path' input pointing at a local checkout of the library.`,
+            code: CliError.Code.ConfigError
+        });
+    }
+
+    const sourcePath = resolve(docsDirectoryPath, config.input.path);
+
+    const ir = await wrapStep({
+        message: `Library '${name}': parsing library source locally`,
+        operation: () => runLocalParser({ context, sourcePath, language, config: { doxyfileContent } })
+    });
+    validateLibraryIr(ir, language, name);
+    return ir;
 }
 
 async function startGeneration(
@@ -423,6 +528,17 @@ async function downloadIr(
     const irWrapper = (await irFetchResponse.json()) as { ir?: unknown };
     const ir = irWrapper.ir;
 
+    validateLibraryIr(ir, language, libraryName);
+
+    return ir;
+}
+
+/**
+ * Asserts that a parsed IR has the root node expected for its language. Shared
+ * by the remote (downloaded) and local (parser-produced) paths so both surface
+ * the same actionable error before the MDX generator runs.
+ */
+function validateLibraryIr(ir: unknown, language: LibraryLanguage, libraryName: string): void {
     if (ir == null) {
         throw new CliError({
             message: `IR is empty for library '${libraryName}'`,
@@ -443,6 +559,4 @@ async function downloadIr(
             code: CliError.Code.InternalError
         });
     }
-
-    return ir;
 }

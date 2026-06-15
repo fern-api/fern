@@ -165,7 +165,7 @@ client.bigunion().updateMany(
 <dd>
 
 ```java
-client.bigunion().get("id");
+client.union().get("id");
 ```
 </dd>
 </dl>

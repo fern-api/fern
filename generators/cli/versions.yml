@@ -1,4 +1,55 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.17.8
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.7
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.6
+  changelogEntry:
+    - summary: |
+        Fix generated sdk_glue.rs missing `http_client` field in ApiClient
+        initializer for flat APIs (no sub-client groups), which caused Rust
+        compilation failures.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 0.17.5
+  changelogEntry:
+    - summary: |
+        Rebuild to pick up rust-sdk 0.40.6 which fixes serde imports in
+        `environment.rs` for multi-URL environments when embedded in the CLI.
+      type: chore
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 0.17.4
+  changelogEntry:
+    - summary: |
+        API-key (`header`) auth schemes now emit a `--api-key` CLI flag in
+        addition to the environment variable. The generated binding uses a
+        credential-source chain (`.source(AuthCredentialSource::any([cli,
+        env]))`) so the flag is tried first, falling back to the env var.
+        Previously the flag was env-only with no way to pass the key inline.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 0.17.3
+  changelogEntry:
+    - summary: |
+        Rebuild embedded SDK generation to pick up rust-sdk 0.40.5 error.rs
+        codegen fix — named/non-primitive error body fields now emit correct
+        imports and use serde_json::from_value() instead of as_str().
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
 - version: 0.17.2
   changelogEntry:
     - summary: |

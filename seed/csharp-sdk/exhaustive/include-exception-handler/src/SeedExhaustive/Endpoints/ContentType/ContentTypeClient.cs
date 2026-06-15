@@ -21,33 +21,13 @@ public partial class ContentTypeClient : IContentTypeClient
         }
     }
 
-    /// <example><code>
-    /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
-    ///     new ObjectWithOptionalField
-    ///     {
-    ///         String = "string",
-    ///         Integer = 1,
-    ///         Long = 1000000,
-    ///         Double = 1.1,
-    ///         Bool = true,
-    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         Date = new DateOnly(2023, 1, 15),
-    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///         Base64 = "SGVsbG8gd29ybGQh",
-    ///         List = new List&lt;string&gt;() { "list", "list" },
-    ///         Set = new HashSet&lt;string&gt;() { "set" },
-    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
-    ///         Bigint = "1000000",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task PostJsonPatchContentTypeAsync(
+    private async Task<RawResponse> PostJsonPatchContentTypeAsyncCore(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        await _client
+        return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
@@ -72,7 +52,12 @@ public partial class ContentTypeClient : IContentTypeClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    return;
+                    return new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    };
                 }
                 {
                     var responseBody = await response
@@ -94,33 +79,13 @@ public partial class ContentTypeClient : IContentTypeClient
             .ConfigureAwait(false);
     }
 
-    /// <example><code>
-    /// await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
-    ///     new ObjectWithOptionalField
-    ///     {
-    ///         String = "string",
-    ///         Integer = 1,
-    ///         Long = 1000000,
-    ///         Double = 1.1,
-    ///         Bool = true,
-    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         Date = new DateOnly(2023, 1, 15),
-    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///         Base64 = "SGVsbG8gd29ybGQh",
-    ///         List = new List&lt;string&gt;() { "list", "list" },
-    ///         Set = new HashSet&lt;string&gt;() { "set" },
-    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
-    ///         Bigint = "1000000",
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task PostJsonPatchContentWithCharsetTypeAsync(
+    private async Task<RawResponse> PostJsonPatchContentWithCharsetTypeAsyncCore(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        await _client
+        return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
@@ -145,7 +110,12 @@ public partial class ContentTypeClient : IContentTypeClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    return;
+                    return new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    };
                 }
                 {
                     var responseBody = await response
@@ -165,5 +135,67 @@ public partial class ContentTypeClient : IContentTypeClient
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
+    ///     new ObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         Integer = 1,
+    ///         Long = 1000000,
+    ///         Double = 1.1,
+    ///         Bool = true,
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List&lt;string&gt;() { "list", "list" },
+    ///         Set = new HashSet&lt;string&gt;() { "set" },
+    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///         Bigint = "1000000",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask PostJsonPatchContentTypeAsync(
+        ObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            PostJsonPatchContentTypeAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
+    ///     new ObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         Integer = 1,
+    ///         Long = 1000000,
+    ///         Double = 1.1,
+    ///         Bool = true,
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List&lt;string&gt;() { "list", "list" },
+    ///         Set = new HashSet&lt;string&gt;() { "set" },
+    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///         Bigint = "1000000",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask PostJsonPatchContentWithCharsetTypeAsync(
+        ObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            PostJsonPatchContentWithCharsetTypeAsyncCore(request, options, cancellationToken)
+        );
     }
 }

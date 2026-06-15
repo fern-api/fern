@@ -275,6 +275,7 @@ urllib3 = ">=2.6.3,<3.0.0"
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
+norecursedirs = [ "src" ]
 markers = [
     "aiohttp: tests that require httpx_aiohttp to be installed",
 ]

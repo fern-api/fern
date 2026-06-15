@@ -1,3 +1,4 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { readdir } from "fs/promises";
@@ -37,4 +38,61 @@ describe("GraphQLConverter", async () => {
             );
         }, 30_000);
     }
+});
+
+describe("GraphQLConverter custom scalars", () => {
+    const BASIC_SCHEMA = join(FIXTURES_DIR, RelativeFilePath.of("basic"), RelativeFilePath.of("schema.graphql"));
+
+    it("emits every custom scalar as a named type in the types map", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: BASIC_SCHEMA
+        });
+
+        const { types } = await converter.convert();
+
+        // Each custom scalar in the schema must appear as a named type so the frontend can
+        // anchor to it. Built-in scalars (String, Int, ...) are intentionally not emitted.
+        const customScalars = ["DateTime", "Date", "Email", "URL", "UUID", "JSON", "Upload", "BigInt", "Decimal"];
+        for (const scalarName of customScalars) {
+            const definition = types[FdrAPI.TypeId(scalarName)];
+            expect(definition, `expected custom scalar "${scalarName}" to be emitted`).toBeDefined();
+            expect(definition?.name).toBe(scalarName);
+            expect(definition?.shape.type).toBe("alias");
+        }
+
+        for (const builtInScalar of ["String", "Int", "Float", "Boolean", "ID"]) {
+            expect(types[FdrAPI.TypeId(builtInScalar)]).toBeUndefined();
+        }
+    });
+
+    it("references custom scalars by their stable id", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: BASIC_SCHEMA
+        });
+
+        const { types } = await converter.convert();
+
+        const user = types[FdrAPI.TypeId("User")];
+        expect(user?.shape.type).toBe("object");
+        if (user?.shape.type !== "object") {
+            throw new Error("expected User to be an object type");
+        }
+        const createdAt = user.shape.properties.find((property) => property.key === "createdAt");
+        expect(createdAt?.valueType).toEqual({ type: "id", value: FdrAPI.TypeId("DateTime"), default: undefined });
+    });
+
+    it("namespaces custom scalar ids", async () => {
+        const converter = new GraphQLConverter({
+            context: createMockTaskContext(),
+            filePath: BASIC_SCHEMA,
+            namespace: "myapi"
+        });
+
+        const { types } = await converter.convert();
+
+        expect(types[FdrAPI.TypeId("myapi_DateTime")]).toBeDefined();
+        expect(types[FdrAPI.TypeId("DateTime")]).toBeUndefined();
+    });
 });

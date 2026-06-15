@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.35.11
+  changelogEntry:
+    - summary: |
+        Fixed several Swift code generation bugs around identifier and string escaping:
+        - Enum raw values are now escaped as raw Swift string content rather than being
+          JSON-encoded, fixing invalid literals (e.g. unterminated strings and bogus escapes).
+        - Reserved keywords used as type names, enum/case names, property names, and type
+          references are now backtick-escaped (e.g. `Type`), and identifiers that start with
+          a digit are sanitized (e.g. `3D` -> `_3D`).
+        - String-typed literals that are not registered as nested literal enums (such as
+          endpoint header/query literals) now fall back to `JSONValue` instead of crashing
+          generation.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 66
 - version: 0.35.10
   changelogEntry:
     - summary: |

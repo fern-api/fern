@@ -6,7 +6,7 @@ public partial interface IUserClient
     /// Retrieve a user.
     /// This endpoint is used to retrieve a user.
     /// </summary>
-    Task GetUserAsync(
+    WithRawResponseTask GetUserAsync(
         string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

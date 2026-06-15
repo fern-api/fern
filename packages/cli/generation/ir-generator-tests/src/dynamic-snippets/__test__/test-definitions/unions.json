@@ -11141,7 +11141,7 @@
             },
             "location": {
                 "method": "GET",
-                "path": "/{id}"
+                "path": "/bigunion/{id}"
             },
             "request": {
                 "type": "body",
@@ -11252,7 +11252,7 @@
             },
             "location": {
                 "method": "PATCH",
-                "path": "/"
+                "path": "/bigunion"
             },
             "request": {
                 "type": "body",
@@ -11338,7 +11338,7 @@
             },
             "location": {
                 "method": "PATCH",
-                "path": "/many"
+                "path": "/bigunion/many"
             },
             "request": {
                 "type": "body",

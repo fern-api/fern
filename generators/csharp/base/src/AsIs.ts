@@ -46,6 +46,7 @@ export const AsIsFiles = {
     StreamRequest: "StreamRequest.Template.cs",
     WithRawResponse: "WithRawResponse.Template.cs",
     WithRawResponseTask: "WithRawResponseTask.Template.cs",
+    WithRawResponseStream: "WithRawResponseStream.Template.cs",
     WebSockets: {
         AsyncLock: "WebSockets/AsyncLock.Template.cs",
         Closed: "WebSockets/Closed.Template.cs",

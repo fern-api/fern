@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedAlias/SeedAliasClient.cs">GetAsync</a>(typeId)</code></summary>
+<details><summary><code>client.<a href="/src/SeedAlias/SeedAliasClient.cs">GetAsync</a>(typeId) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

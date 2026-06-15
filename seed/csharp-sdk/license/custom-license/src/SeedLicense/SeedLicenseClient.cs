@@ -28,10 +28,7 @@ public partial class SeedLicenseClient : ISeedLicenseClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.GetAsync();
-    /// </code></example>
-    public async Task GetAsync(
+    private async Task<RawResponse> GetAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -56,7 +53,12 @@ public partial class SeedLicenseClient : ISeedLicenseClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedLicense.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -74,5 +76,16 @@ public partial class SeedLicenseClient : ISeedLicenseClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.GetAsync();
+    /// </code></example>
+    public WithRawResponseTask GetAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(GetAsyncCore(options, cancellationToken));
     }
 }

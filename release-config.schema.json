@@ -25,6 +25,11 @@
           "softwareDirectory": {
             "type": "string",
             "description": "Path to software directory - changes here require changelog entries (defaults to same directory as versions.yml)"
+          },
+          "propagatesTo": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Other software keys whose unreleased changelog should receive a propagated entry when this software is released. Used when one product embeds another (e.g. Rust SDK → CLI Generator)."
           }
         },
         "required": ["name", "versionsFile"]

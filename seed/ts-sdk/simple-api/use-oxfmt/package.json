@@ -68,7 +68,7 @@
         "@biomejs/biome": "2.4.10",
         "@types/node": "^20.0.0",
         "msw": "2.11.2",
-        "oxfmt": "0.48.0",
+        "oxfmt": "0.54.0",
         "ts-loader": "^9.5.4",
         "typescript": "~5.9.3",
         "vitest": "^4.1.1",

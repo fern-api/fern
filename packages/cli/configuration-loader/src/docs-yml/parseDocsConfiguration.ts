@@ -437,8 +437,30 @@ function convertPageActions(
             vscode: pageActions.options?.vscode ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
-            )
+            ),
+            skills: convertSkillsPageAction(pageActions.options?.skills)
         }
+    };
+}
+
+function convertSkillsPageAction(
+    skills: docsYml.RawSchemas.SkillsPageActionConfig | undefined
+): CjsFdrSdk.docs.v1.commons.PageActionOptions["skills"] {
+    // presence of the key (even as an empty object) enables the "Install skills" page action
+    if (skills == null) {
+        return undefined;
+    }
+    return {
+        title: skills.title,
+        description: skills.description,
+        learnMoreUrl: skills.learnMoreUrl,
+        repository: skills.repository,
+        installCommand: skills.installCommand,
+        skills: skills.skills?.map((skill) => ({
+            name: skill.name,
+            description: skill.description,
+            url: skill.url
+        }))
     };
 }
 

@@ -28,10 +28,7 @@ public partial class SeedAliasClient : ISeedAliasClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example><code>
-    /// await client.GetAsync("typeId");
-    /// </code></example>
-    public async Task GetAsync(
+    private async Task<RawResponse> GetAsyncCore(
         string typeId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -57,7 +54,12 @@ public partial class SeedAliasClient : ISeedAliasClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedAlias.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -75,5 +77,17 @@ public partial class SeedAliasClient : ISeedAliasClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.GetAsync("typeId");
+    /// </code></example>
+    public WithRawResponseTask GetAsync(
+        string typeId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(GetAsyncCore(typeId, options, cancellationToken));
     }
 }

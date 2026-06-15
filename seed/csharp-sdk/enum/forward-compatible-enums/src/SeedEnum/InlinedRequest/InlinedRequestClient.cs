@@ -11,12 +11,7 @@ public partial class InlinedRequestClient : IInlinedRequestClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.InlinedRequest.SendAsync(
-    ///     new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
-    /// );
-    /// </code></example>
-    public async Task SendAsync(
+    private async Task<RawResponse> SendAsyncCore(
         SendEnumInlinedRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -43,7 +38,12 @@ public partial class InlinedRequestClient : IInlinedRequestClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedEnum.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -61,5 +61,19 @@ public partial class InlinedRequestClient : IInlinedRequestClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.InlinedRequest.SendAsync(
+    ///     new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask SendAsync(
+        SendEnumInlinedRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(SendAsyncCore(request, options, cancellationToken));
     }
 }

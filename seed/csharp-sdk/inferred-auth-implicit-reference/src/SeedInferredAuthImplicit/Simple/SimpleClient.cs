@@ -11,10 +11,7 @@ public partial class SimpleClient : ISimpleClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Simple.GetSomethingAsync();
-    /// </code></example>
-    public async Task GetSomethingAsync(
+    private async Task<RawResponse> GetSomethingAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -39,7 +36,12 @@ public partial class SimpleClient : ISimpleClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedInferredAuthImplicit.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -57,5 +59,16 @@ public partial class SimpleClient : ISimpleClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Simple.GetSomethingAsync();
+    /// </code></example>
+    public WithRawResponseTask GetSomethingAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(GetSomethingAsyncCore(options, cancellationToken));
     }
 }

@@ -119,8 +119,8 @@ These modules sit above both protocol paths. They are imported by
 | [`src/validate.rs`](../../src/validate.rs) | LLM-adversarial input validation: path traversal, control-char rejection, percent-encoding for URL path segments, resource-name validators. |
 | [`src/error.rs`](../../src/error.rs) | `CliError` + JSON-on-stdout error contract. `<cli> errors` subcommand prints the table ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518)). |
 | [`src/logging.rs`](../../src/logging.rs) | Org-scoped `tracing` setup. `<NAME>_LOG` for stderr filter; `<NAME>_LOG_FILE` for JSON-line file with daily rotation. Off by default. |
-| [`src/cli_args.rs`](../../src/cli_args.rs), [`src/early_intercept.rs`](../../src/early_intercept.rs) | Shared CLI helpers — version flag, `--base-url`, JSON-help detection, pre-parse interception for special subcommands (`completion`, `man`, `errors`, `generate-skills`). |
-| [`src/custom_commands.rs`](../../src/custom_commands.rs) | Registry + dispatch for `.command(...)` / `.command_under(...)` extensions a binary author can attach. |
+| [`src/cli_args.rs`](../../src/cli_args.rs), [`src/early_intercept.rs`](../../src/early_intercept.rs) | Shared CLI helpers — version flag, `--base-url`, `--schema` (machine-readable surface for agents — [FER-11050](https://linear.app/buildwithfern/issue/FER-11050), [PR #169](https://github.com/fern-api/cli-sdk/pull/169)), pre-parse interception for special subcommands (`completion`, `man`, `errors`, `generate-skills`). |
+| [`src/custom_commands.rs`](../../src/custom_commands.rs) | Registry + dispatch for `.command(...)` / `.command_under(...)` / `.command_typed(...)` / `.command_under_typed(...)` extensions a binary author can attach. Typed variants enforce compile-time arg↔handler agreement via `#[derive(clap::Args)]` ([FER-11009](https://linear.app/buildwithfern/issue/FER-11009), [PR #175](https://github.com/fern-api/cli-sdk/pull/175)). |
 | [`src/sdk_executor.rs`](../../src/sdk_executor.rs) | `CliExecutor` — implements the generated SDK's `RequestExecutor` trait, routing SDK-originated HTTP requests through the CLI's transport stack (same `HttpConfig`, `DynAuthProvider`, retry logic, global headers). ADR-0001 compliant. `block_on()` helper for sync→async bridging; `SdkError → CliError` error bridge. ([FER-11027](https://linear.app/buildwithfern/issue/FER-11027), [PR #168](https://github.com/fern-api/cli-sdk/pull/168).) |
 | [`src/completions.rs`](../../src/completions.rs), [`src/man.rs`](../../src/man.rs) | `clap_complete` shell completions + `clap_mangen` man pages. Wired into both OpenAPI and GraphQL CLIs ([FER-10519](https://linear.app/buildwithfern/issue/FER-10519)). |
 
@@ -131,7 +131,7 @@ See [`diagrams/04-component-openapi.mmd`](./diagrams/04-component-openapi.mmd).
 | Module | Responsibility |
 |---|---|
 | `parser.rs` | OpenAPI YAML → internal `RestDescription`. Handles 3.0 and 3.1 ([FER-10528](https://linear.app/buildwithfern/issue/FER-10528); [PR #70](https://github.com/fern-api/cli-sdk/pull/70)). Lowers all `x-fern-*` extensions, form-urlencoded bodies, and `oneOf`/`anyOf`/`allOf` composition. `allOf` branches flattened consumer-side via `merge_all_of_properties` ([ADR-0004](./decisions/0004-all-of-flattening-into-per-field-flags.md)); nullable-union (`oneOf: [T, null]`) promoted to null sentinel ([ADR-0005](./decisions/0005-nullable-union-promotion-via-composition.md)). Emits object-shorthand flags for nested body properties ([PR #59](https://github.com/fern-api/cli-sdk/pull/59)). |
-| `discovery.rs` | Internal representation: `RestDescription`, `RestMethod`, schemas, security, pagination metadata. `BodyEncoding` enum (`Json` \| `FormUrlEncoded` \| `Multipart`) selects per-operation wire format. |
+| `discovery.rs` | Internal representation: `RestDescription`, `RestMethod`, schemas, security, pagination metadata. `BodyEncoding` enum (`Json` \| `FormUrlEncoded` \| `Multipart`) selects per-operation wire format. `has_binary_response` field gates `--output` flag registration ([PR #184](https://github.com/fern-api/cli-sdk/pull/184)). |
 | `overlay.rs` | OpenAPI Overlay v1.0.0 + Fern-overrides deep merge. Applied pre-parse. |
 | `commands.rs` | Recursive `clap::Command` builder. Walks `x-fern-sdk-group-name` (list) → nested subcommands; `x-fern-sdk-method-name` → leaf command. |
 | `executor.rs` | HTTP request construction, response handling, schema validation, retry executor (`x-fern-retries`), pagination, streaming (`x-fern-streaming`), idempotency (`x-fern-idempotent`). Supports JSON, form-urlencoded, and multipart/form-data body encoding ([FER-10700](https://linear.app/buildwithfern/issue/FER-10700), [FER-10727](https://linear.app/buildwithfern/issue/FER-10727), `BodyEncoding` enum). Full OpenAPI parameter style serialization across query/path/header locations ([FER-10569](https://linear.app/buildwithfern/issue/FER-10569), [§8.14](#814-parameter-style-serialization)). File/binary response handling: stdout streaming (`--output -`), Content-Disposition filename hint, audio/video MIME mapping, symlink/hardlink/FIFO safety ([FER-10871](https://linear.app/buildwithfern/issue/FER-10871), [§8.15](#815-file-binary-response-handling)). Mutually-exclusive body input validation ([§8.16](#816-body-input-mode-mutual-exclusivity)). |
@@ -171,9 +171,15 @@ See [`diagrams/06-runtime-request.mmd`](./diagrams/06-runtime-request.mmd).
 3. **Command tree build.** `commands.rs` walks the spec and builds a
    `clap::Command` tree.
 4. **Early intercept.** `early_intercept.rs` checks for `completion`,
-   `man`, `errors`, `generate-skills` subcommands and short-circuits
-   without auth/network. `--quiet` suppresses stdout on success
-   ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518)).
+   `man`, `errors`, `generate-skills` subcommands **and the `--schema`
+   global flag** and short-circuits without auth/network. `--schema` is
+   sniffed from raw argv before clap parses (same pre-parse pattern as
+   `--help`) so it works even on commands with required args.
+   `--quiet` suppresses stdout on success
+   ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518));
+   `--schema` replaces the previous `--help --format json` overload
+   ([FER-11050](https://linear.app/buildwithfern/issue/FER-11050),
+   [PR #169](https://github.com/fern-api/cli-sdk/pull/169)).
 5. **Arg parse.** `clap` matches args against the dynamic tree.
 6. **Auth resolution.** `compose.rs` walks the operation's `security:` (an
    OR of ANDs); first requirement all bound providers can satisfy wins;
@@ -334,6 +340,15 @@ A binary attaches custom commands via `.command(cmd, handler)` or
 `.command_under(...)`. Handlers receive `&clap::ArgMatches` and an
 `&AppContext` exposing `execute(group, method, params, body)`.
 
+**Typed custom commands** ([FER-11009](https://linear.app/buildwithfern/issue/FER-11009),
+[PR #175](https://github.com/fern-api/cli-sdk/pull/175)):
+`command_typed(name, about, handler)` / `command_under_typed(path, name, about, handler)`
+accept a handler `fn(A, &C) -> Result<(), CliError>` where `A: clap::Args`.
+The `#[derive(clap::Args)]` struct *is* the arg declaration — referencing an
+undeclared/renamed arg is a compile error, not a runtime panic. The `&dyn Any`
+downcast to `&C` is internal; callers see only their typed context.
+Backward-compatible: existing untyped API remains.
+
 The **multi-binding extension surface** landed in [PR #69](https://github.com/fern-api/cli-sdk/pull/69):
 
 - `CliApp::binding(name)` attaches an OpenAPI or GraphQL spec as a named
@@ -451,7 +466,13 @@ The OpenAPI executor handles non-JSON response bodies end-to-end
 - **MIME dispatch:** `is_media_type` + `mime_to_extension` map Content-Type
   to file extension. Covers `audio/*`, `video/*`, `image/*`,
   `application/pdf`, `application/octet-stream`, etc.
-- **`--output PATH`:** Write response body to the given path.
+- **`--output PATH`:** Write response body to the given path. **Gated at
+  parse time** on `RestMethod::has_binary_response`: the flag is only
+  registered on operations whose 2xx response declares a non-JSON content
+  type. JSON-only operations no longer show `-o, --output` in `--help`,
+  eliminating the silent no-op trap
+  ([FER-11191](https://linear.app/buildwithfern/issue/FER-11191),
+  [PR #184](https://github.com/fern-api/cli-sdk/pull/184)).
 - **`--output -`:** Stream raw bytes to stdout (no JSON wrapper, no
   metadata), making the output pipeable to downstream programs.
 - **Content-Disposition:** RFC 6266 `filename` + RFC 5987 `filename*`
@@ -533,6 +554,50 @@ null sentinel from ADR-0003.
 
 Both lowerings run in `parser.rs` (flag emission) and `executor.rs`
 (body validation), independently per D-A isolation.
+
+### 8.19 `--schema` global flag — machine-readable surface
+
+`--schema` ([FER-11050](https://linear.app/buildwithfern/issue/FER-11050),
+[PR #169](https://github.com/fern-api/cli-sdk/pull/169)) is the
+agent-facing counterpart to `--help`. Every generated CLI exposes it at
+every scope:
+
+```
+<bin> --schema                  # aggregated catalog (all bindings)
+<bin> <resource> --schema       # operations in one group
+<bin> <resource> <method> --schema  # full schema for one operation
+```
+
+Implementation notes:
+- **Flag, not verb.** The choice to use a global flag (not a top-level
+  `introspect` subcommand) mirrors `--help` exactly, slots into every
+  scope without precedence rules, and avoids a namespace collision with
+  specs that have a `schema` resource tag ([D-AA](./decisions/INDEX.md#d-aa-schema-as-a-global-flag-not-a-verb)).
+- **Pre-parse intercept.** Sniffed from raw argv before clap runs
+  (bypasses required-arg validation).
+- **Multi-binding aggregation.** `Binding::schema(&[String]) ->
+  Result<Option<Value>, CliError>` — empty path means every binding
+  contributes; first binding to own a non-empty path wins. Per-binding
+  errors log via `tracing::warn!` and the walk continues.
+- **Replaces `--help --format json`.** The previous overload is removed
+  with no deprecation alias.
+
+### 8.20 Global-header collision scoping
+
+When `x-fern-global-headers` declares a flag whose long name collides
+with an operation's own parameter, the global flag is **dropped from that
+command** and the per-operation parameter wins
+([FER-11145](https://linear.app/buildwithfern/issue/FER-11145),
+[PR #180](https://github.com/fern-api/cli-sdk/pull/180)). On
+non-colliding sibling commands the global header remains registered
+as `global(true)`. `resolve_global_header_value` uses `try_get_one`
+(previously `get_one`) since the flag may be absent on specific leaves.
+
+This codifies the precedence rule already documented in `discovery.rs`:
+*"Operations may opt out of sending the header by declaring a same-named
+per-operation parameter, which takes precedence."* The prior behavior
+was a runtime clap panic when clap encountered two args sharing a long
+name.
 
 ### 8.10 SKILL.md generation
 

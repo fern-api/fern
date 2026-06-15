@@ -2,7 +2,7 @@ namespace SeedApiWideBasePath;
 
 public partial interface IServiceClient
 {
-    Task PostAsync(
+    WithRawResponseTask PostAsync(
         string pathParam,
         string serviceParam,
         int endpointParam,

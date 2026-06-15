@@ -3,6 +3,7 @@ import { AstNode } from "../core/index.js";
 import { Writer } from "../core/Writer.js";
 import { ClassReference } from "../types/ClassReference.js";
 import { Type } from "../types/IType.js";
+import { Annotation } from "./Annotation.js";
 
 export declare namespace Parameter {
     interface Args {
@@ -16,6 +17,8 @@ export declare namespace Parameter {
         initializer?: string;
         ref?: boolean;
         out?: boolean;
+        /* Attributes applied to the parameter (e.g. [EnumeratorCancellation]) */
+        annotations?: Annotation[];
     }
 }
 
@@ -26,8 +29,9 @@ export class Parameter extends AstNode {
     public readonly type: Type;
     private readonly ref: boolean;
     private readonly out: boolean;
+    private readonly annotations: Annotation[];
 
-    constructor({ name, type, docs, initializer, ref, out }: Parameter.Args, generation: Generation) {
+    constructor({ name, type, docs, initializer, ref, out, annotations }: Parameter.Args, generation: Generation) {
         super(generation);
         this.name = name;
         this.type = type;
@@ -35,9 +39,14 @@ export class Parameter extends AstNode {
         this.initializer = initializer;
         this.ref = ref ?? false;
         this.out = out ?? false;
+        this.annotations = annotations ?? [];
     }
 
     public write(writer: Writer): void {
+        for (const annotation of this.annotations) {
+            writer.writeNode(annotation);
+            writer.write(" ");
+        }
         if (this.ref) {
             writer.write("ref ");
         }

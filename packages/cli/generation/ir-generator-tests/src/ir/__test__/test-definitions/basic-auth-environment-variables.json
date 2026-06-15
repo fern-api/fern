@@ -175,6 +175,7 @@
                     "id": "endpoint_basic-auth.getWithBasicAuth",
                     "name": "getWithBasicAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -373,6 +374,7 @@
                     "id": "endpoint_basic-auth.postWithBasicAuth",
                     "name": "postWithBasicAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

@@ -1,3 +1,4 @@
+import { escapeReservedKeyword } from "../syntax/index.js";
 import { AccessLevel } from "./AccessLevel.js";
 import { AstNode, Writer } from "./core/index.js";
 import { DocComment } from "./DocComment.js";
@@ -61,7 +62,7 @@ export class Class extends AstNode {
         if (this.final) {
             writer.write("final ");
         }
-        writer.write(`class ${this.name}`);
+        writer.write(`class ${escapeReservedKeyword(this.name)}`);
         this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");

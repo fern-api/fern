@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(PatchProxyRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(PatchProxyRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ await client.Service.PatchAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchComplexAsync</a>(id, PatchComplexRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchComplexAsync</a>(id, PatchComplexRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ await client.Service.PatchComplexAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">NamedPatchWithMixedAsync</a>(id, NamedMixedPatchRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">NamedPatchWithMixedAsync</a>(id, NamedMixedPatchRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -205,7 +205,7 @@ await client.Service.NamedPatchWithMixedAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">OptionalMergePatchTestAsync</a>(OptionalMergePatchRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">OptionalMergePatchTestAsync</a>(OptionalMergePatchRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -271,7 +271,7 @@ await client.Service.OptionalMergePatchTestAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, RegularPatchRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, RegularPatchRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

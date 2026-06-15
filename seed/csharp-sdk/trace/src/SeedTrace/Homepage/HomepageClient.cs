@@ -88,23 +88,7 @@ public partial class HomepageClient : IHomepageClient
         }
     }
 
-    /// <example><code>
-    /// await client.Homepage.GetHomepageProblemsAsync();
-    /// </code></example>
-    public WithRawResponseTask<IEnumerable<string>> GetHomepageProblemsAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return new WithRawResponseTask<IEnumerable<string>>(
-            GetHomepageProblemsAsyncCore(options, cancellationToken)
-        );
-    }
-
-    /// <example><code>
-    /// await client.Homepage.SetHomepageProblemsAsync(new List&lt;string&gt;() { "string", "string" });
-    /// </code></example>
-    public async Task SetHomepageProblemsAsync(
+    private async Task<RawResponse> SetHomepageProblemsAsyncCore(
         IEnumerable<string> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -131,7 +115,12 @@ public partial class HomepageClient : IHomepageClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -149,5 +138,32 @@ public partial class HomepageClient : IHomepageClient
                 }
             );
         }
+    }
+
+    /// <example><code>
+    /// await client.Homepage.GetHomepageProblemsAsync();
+    /// </code></example>
+    public WithRawResponseTask<IEnumerable<string>> GetHomepageProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<IEnumerable<string>>(
+            GetHomepageProblemsAsyncCore(options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Homepage.SetHomepageProblemsAsync(new List&lt;string&gt;() { "string", "string" });
+    /// </code></example>
+    public WithRawResponseTask SetHomepageProblemsAsync(
+        IEnumerable<string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            SetHomepageProblemsAsyncCore(request, options, cancellationToken)
+        );
     }
 }

@@ -17,7 +17,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
 import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { getEndpointReturnType, getStreamElementType, isStreamingEndpoint } from "../utils/getEndpointReturnType.js";
 import { RawClient } from "./RawClient.js";
 
 export declare namespace EndpointGenerator {
@@ -141,14 +141,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const return_ = getEndpointReturnType({ context: this.context, endpoint });
         const snippet = this.getHttpMethodSnippet({ endpoint });
 
-        // WithRawResponseTask methods use a different pattern:
-        // - Public method is non-async and returns WithRawResponseTask<T>
+        // WithRawResponseTask / WithRawResponseStream methods use a different pattern:
+        // - Public method is non-async and returns the wrapper directly
         // - Private "Core" method is async and contains the actual implementation
+        // - For streaming, an additional private "Body" iterator method yields the parsed chunks
         // - No exception handler wrapping (Core method handles it)
-        const isWithRawResponseTask = return_ != null && "name" in return_ && return_.name === "WithRawResponseTask";
+        const isWithRawResponseWrapper =
+            return_ != null &&
+            "name" in return_ &&
+            (return_.name === "WithRawResponseTask" || return_.name === "WithRawResponseStream");
 
         const body = this.csharp.codeblock((writer) => {
-            if (isWithRawResponseTask) {
+            if (isWithRawResponseWrapper) {
                 this.writeWithRawResponseTaskMethodBody(
                     endpointSignatureInfo,
                     writer,
@@ -171,16 +175,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const publicMethod = cls.addMethod({
             name: this.getUnpagedEndpointMethodName(endpoint),
             access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
-            isAsync: !isWithRawResponseTask,
+            isAsync: !isWithRawResponseWrapper,
             parameters,
             summary: endpoint.docs,
             return_,
-            body: isWithRawResponseTask ? body : this.wrapWithExceptionHandler({ body, returnType: return_ }),
+            body: isWithRawResponseWrapper ? body : this.wrapWithExceptionHandler({ body, returnType: return_ }),
             codeExample: snippet?.endpointCall
         });
 
-        // For WithRawResponseTask methods, add a private async overload that does the actual work
-        if (isWithRawResponseTask) {
+        // For wrapper-returning methods, add a private async overload that does the actual work
+        if (isWithRawResponseWrapper) {
             this.addWithRawResponseTaskCoreMethod(
                 cls,
                 endpointSignatureInfo,
@@ -189,6 +193,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 rawClientReference,
                 parameters
             );
+            if (isStreamingEndpoint(endpoint)) {
+                this.addStreamBodyIteratorMethod(cls, endpoint);
+            }
         }
 
         return publicMethod;
@@ -262,15 +269,36 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string,
         parameters: ast.Parameter[]
     ) {
-        const baseType = this.getBaseResponseType(endpoint);
-        // For async methods, we don't wrap in Task<> because the C# compiler does that automatically
-        const asyncReturnType = baseType
-            ? this.csharp.classReference({
-                  name: "WithRawResponse",
-                  namespace: this.namespaces.root,
-                  generics: [baseType]
-              })
-            : undefined;
+        // For async methods, we don't wrap in Task<> because the C# compiler does that automatically.
+        // Three shapes:
+        // - Streaming -> WithRawResponse<IAsyncEnumerable<T>>
+        // - Void (no body, non-HEAD) -> RawResponse (no Data field; non-generic wrapper)
+        // - Everything else -> WithRawResponse<T> with T = base response type
+        let asyncReturnType: ast.Type | undefined;
+        if (isStreamingEndpoint(endpoint)) {
+            const elementType = getStreamElementType(this.context, endpoint);
+            if (elementType != null) {
+                asyncReturnType = this.csharp.classReference({
+                    name: "WithRawResponse",
+                    namespace: this.namespaces.root,
+                    generics: [this.System.Collections.Generic.IAsyncEnumerable(elementType)]
+                });
+            }
+        } else if (endpoint.response?.body == null && endpoint.method !== FernIr.HttpMethod.Head) {
+            asyncReturnType = this.csharp.classReference({
+                name: "RawResponse",
+                namespace: this.namespaces.root
+            });
+        } else {
+            const baseType = this.getBaseResponseType(endpoint);
+            asyncReturnType = baseType
+                ? this.csharp.classReference({
+                      name: "WithRawResponse",
+                      namespace: this.namespaces.root,
+                      generics: [baseType]
+                  })
+                : undefined;
+        }
 
         const body = this.csharp.codeblock((writer) => {
             const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
@@ -331,10 +359,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint: HttpEndpoint,
         rawClientReference: string
     ) {
-        // Generate synchronous method that returns WithRawResponseTask<T>
-        // It calls a private async "Core" method that does the actual work
-
-        // Return WithRawResponseTask<T> wrapping call to private Core method
+        // Generate synchronous method that returns the wrapper (WithRawResponseTask / WithRawResponseStream).
+        // It calls a private async "Core" method that does the actual work.
         writer.write("return new ");
         const returnType = getEndpointReturnType({ context: this.context, endpoint });
         if (returnType) {
@@ -351,7 +377,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         allParams.push(this.names.parameters.cancellationToken);
 
         writer.write(allParams.join(", "));
-        writer.writeTextStatement("));");
+        // Streaming wrapper takes the SDK call's cancellation token as a second constructor arg
+        // so it can be linked with any token provided via `.WithCancellation(...)` on the enumerator.
+        if (isStreamingEndpoint(endpoint)) {
+            writer.writeTextStatement(`), ${this.names.parameters.cancellationToken})`);
+        } else {
+            writer.writeTextStatement("))");
+        }
     }
 
     private writeWithRawResponseSuccessAndErrorHandling(endpoint: HttpEndpoint, writer: Writer) {
@@ -462,9 +494,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(";");
                 },
                 bytes: () => this.context.logger.error("Bytes not supported"),
-                streaming: () => this.context.logger.error("Streaming not supported with WithRawResponseTask"),
-                streamParameter: () =>
-                    this.context.logger.error("Stream parameter not supported with WithRawResponseTask"),
+                streaming: () => this.writeStreamingWithRawResponseReturn(endpoint, writer),
+                streamParameter: () => this.writeStreamingWithRawResponseReturn(endpoint, writer),
                 _other: () => undefined
             });
         } else if (endpoint.method === FernIr.HttpMethod.Head) {
@@ -484,6 +515,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             this.writeRawResponseInit(writer);
             writer.popScope(); // Close WithRawResponse{}
             writer.writeTextStatement(";");
+        } else {
+            // Void endpoint (no response body, not HEAD): return RawResponse directly.
+            this.writeVoidWithRawResponseReturn(writer);
         }
 
         writer.popScope();
@@ -531,6 +565,244 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         this.writeRawResponseInit(writer);
         writer.writeTextStatement(")");
         writer.popScope();
+    }
+
+    private getStreamBodyMethodName(endpoint: HttpEndpoint): string {
+        return this.getUnpagedEndpointMethodName(endpoint) + "Body";
+    }
+
+    /**
+     * Emits the `return new WithRawResponse<IAsyncEnumerable<T>>() { Data = <BodyMethod>(...), RawResponse = ... };`
+     * statement used by streaming endpoint Core methods.
+     */
+    private writeStreamingWithRawResponseReturn(endpoint: HttpEndpoint, writer: Writer) {
+        const elementType = getStreamElementType(this.context, endpoint);
+        if (elementType == null) {
+            this.context.logger.error("Streaming endpoint missing element type");
+            return;
+        }
+        writer.write("return new ");
+        writer.writeNode(
+            this.csharp.classReference({
+                name: "WithRawResponse",
+                namespace: this.context.namespaces.root,
+                generics: [this.System.Collections.Generic.IAsyncEnumerable(elementType)]
+            })
+        );
+        writer.writeLine("()");
+        writer.pushScope();
+        writer.writeLine(
+            `Data = ${this.getStreamBodyMethodName(endpoint)}(${this.names.variables.response}, ${this.names.parameters.cancellationToken}),`
+        );
+        writer.write("RawResponse = ");
+        this.writeRawResponseInit(writer);
+        writer.popScope(); // Close WithRawResponse{}
+        writer.writeTextStatement(";");
+    }
+
+    /**
+     * Emits `return new RawResponse() { ... };` for void-returning endpoint Core methods.
+     */
+    private writeVoidWithRawResponseReturn(writer: Writer) {
+        writer.write("return ");
+        this.writeRawResponseInit(writer);
+        writer.writeTextStatement(";");
+    }
+
+    /**
+     * Emits a private async iterator method that yields the parsed elements from the streaming response body.
+     * Called from the Core method's WithRawResponse construction as `Data = <method>(response, cancellationToken)`.
+     */
+    private addStreamBodyIteratorMethod(cls: ast.Class, endpoint: HttpEndpoint) {
+        const elementType = getStreamElementType(this.context, endpoint);
+        if (elementType == null) {
+            return;
+        }
+        const returnType = this.System.Collections.Generic.IAsyncEnumerable(elementType);
+        const responseParameter = this.csharp.parameter({
+            type: this.csharp.classReference({
+                name: "ApiResponse",
+                namespace: this.context.namespaces.core
+            }),
+            name: this.names.variables.response
+        });
+        const cancellationTokenParameter = this.csharp.parameter({
+            type: this.System.Threading.CancellationToken,
+            name: this.names.parameters.cancellationToken,
+            initializer: "default",
+            annotations: [
+                this.csharp.annotation({
+                    reference: this.csharp.classReference({
+                        name: "EnumeratorCancellation",
+                        namespace: "System.Runtime.CompilerServices"
+                    })
+                })
+            ]
+        });
+        const body = this.csharp.codeblock((writer) => {
+            this.writeStreamingIteratorBody(endpoint, writer);
+        });
+        cls.addMethod({
+            name: this.getStreamBodyMethodName(endpoint),
+            access: ast.Access.Private,
+            isAsync: true,
+            parameters: [responseParameter, cancellationTokenParameter],
+            return_: returnType,
+            body: this.wrapWithExceptionHandler({ body, returnType })
+        });
+    }
+
+    /**
+     * Emits the iterator-body content (no status-code check) for a streaming endpoint.
+     * Mirrors the per-shape emit from `getEndpointSuccessResponseStatements`, but assumes
+     * the response variable is in scope and that status has already been verified by the Core method.
+     */
+    private writeStreamingIteratorBody(endpoint: HttpEndpoint, writer: Writer) {
+        const body = endpoint.response?.body;
+        if (body == null) {
+            return;
+        }
+        const context = this.context;
+        const names = this.names;
+
+        function readLineLoopOpen() {
+            writer.writeTextStatement(`string? line`);
+            writer.write(`using var reader = `);
+            writer.write(
+                context.System.IO.StreamReader.new({
+                    arguments_: [
+                        context.csharp.codeblock(`await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()`)
+                    ]
+                })
+            );
+            writer.writeTextStatement(";");
+            writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))");
+            writer.pushScope();
+        }
+
+        function deserializeJsonChunk(
+            payloadType: ast.Type,
+            jsonUtils: ast.ClassReference,
+            exceptionClass: ast.ClassReference,
+            jsonString: string,
+            yieldResult: boolean
+        ) {
+            if (is.OneOf.OneOf(payloadType)) {
+                for (const each of payloadType.generics) {
+                    writer.pushScope();
+                    writer.write(`if(`, jsonUtils, `.TryDeserialize(`, jsonString, `, out `, each, `? result))`);
+                    writer.pushScope();
+                    if (yieldResult) {
+                        writer.write("yield ");
+                    }
+                    writer.writeTextStatement(`return result!`);
+                    writer.popScope();
+                    writer.popScope();
+                }
+                return;
+            }
+
+            writer.writeStatement(payloadType.asOptional(), `result`);
+            writer.writeLine("try");
+            writer.pushScope();
+            writer.write("result = ");
+            writer.writeNode(jsonUtils);
+            writer.write(".Deserialize<");
+            writer.writeNode(payloadType);
+            writer.writeTextStatement(`>(${jsonString})`);
+            writer.popScope();
+            if (context.generation.settings.redactResponseBodyOnError) {
+                writer.write("catch (", context.System.Text.Json.JsonException, " e)");
+                writer.writeLine("");
+                writer.pushScope();
+                writer.writeStatement("throw new ", exceptionClass, `("Failed to deserialize streaming response", e)`);
+                writer.popScope();
+            } else {
+                writer.write("catch (", context.System.Text.Json.JsonException, ")");
+                writer.writeLine("");
+                writer.pushScope();
+                writer.writeStatement(
+                    "throw new ",
+                    exceptionClass,
+                    `($"Unable to deserialize JSON response '`,
+                    jsonString,
+                    `'")`
+                );
+                writer.popScope();
+            }
+            if (yieldResult) {
+                writer.write("yield ");
+            }
+            writer.writeTextStatement(`return result!`);
+        }
+
+        function handleStreamingValue(value: FernIr.StreamingResponse) {
+            value._visit({
+                json: (jsonChunk) => {
+                    readLineLoopOpen();
+                    const payloadType = context.csharpTypeMapper.convert({
+                        reference: jsonChunk.payload
+                    });
+                    deserializeJsonChunk(
+                        payloadType,
+                        context.generation.Types.JsonUtils,
+                        context.generation.Types.BaseException,
+                        "line",
+                        true
+                    );
+                    writer.popScope(); // close while
+                },
+                text: () => {
+                    readLineLoopOpen();
+                    writer.writeLine("if(!string.IsNullOrEmpty(line))");
+                    writer.pushScope();
+                    writer.writeTextStatement("yield return line");
+                    writer.popScope();
+                    writer.popScope(); // close while
+                },
+                sse: (sseChunk) => {
+                    const payloadType = context.csharpTypeMapper.convert({
+                        reference: sseChunk.payload
+                    });
+                    writer.write(`await foreach (var item in `);
+                    writer.writeNode(context.System.Net.ServerSentEvents.SseParser);
+                    writer.writeLine(
+                        `.Create(await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()).EnumerateAsync(${names.parameters.cancellationToken}))`
+                    );
+                    writer.pushScope();
+                    writer.writeLine("if( !string.IsNullOrEmpty(item.Data))");
+                    writer.pushScope();
+                    if (sseChunk.terminator) {
+                        writer.writeLine(`if( item.Data == "${sseChunk.terminator}")`);
+                        writer.pushScope();
+                        writer.writeTextStatement("break");
+                        writer.popScope();
+                    }
+                    deserializeJsonChunk(
+                        payloadType,
+                        context.generation.Types.JsonUtils,
+                        context.generation.Types.BaseException,
+                        "item.Data",
+                        true
+                    );
+                    writer.popScope(); // close if data non-empty
+                    writer.popScope(); // close await foreach
+                },
+                _other: () => {
+                    writer.writeTextStatement("yield break");
+                }
+            });
+        }
+
+        body._visit({
+            streaming: (ref) => handleStreamingValue(ref),
+            streamParameter: (ref) => handleStreamingValue(ref.streamResponse),
+            fileDownload: () => undefined,
+            json: () => undefined,
+            text: () => undefined,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
     }
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock | undefined {
@@ -629,177 +901,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         const body = endpoint.response.body;
-        const context = this.context;
-        const names = this.names;
-
-        function handleStreaming(writer: Writer) {
-            return (value: FernIr.StreamingResponse) => {
-                function readLineFromResponse() {
-                    writer.writeLine(`if (${names.variables.response}.StatusCode is >= 200 and < 400)`);
-                    writer.pushScope();
-
-                    writer.writeTextStatement(`string? line`);
-                    writer.write(`using var reader = `);
-                    writer.write(
-                        context.System.IO.StreamReader.new({
-                            arguments_: [
-                                context.csharp.codeblock(
-                                    `await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()`
-                                )
-                            ]
-                        })
-                    );
-                    writer.writeTextStatement(";");
-                    writer.writeLine("while (!string.IsNullOrEmpty(line = await reader.ReadLineAsync()))");
-                    writer.pushScope();
-                }
-
-                function deserializeJsonChunk(
-                    payloadType: ast.Type,
-                    jsonUtils: ast.ClassReference,
-                    exceptionClass: ast.ClassReference,
-                    jsonString: string,
-                    yieldResult: boolean
-                ) {
-                    if (is.OneOf.OneOf(payloadType)) {
-                        // we have to tear this apart and figure out which one to deserialize
-                        // based on the union type?
-                        for (const each of payloadType.generics) {
-                            writer.pushScope();
-                            writer.write(
-                                `if(`,
-                                jsonUtils,
-                                `.TryDeserialize(`,
-                                jsonString,
-                                `, out `,
-                                each,
-                                `? result))`
-                            );
-                            writer.pushScope();
-
-                            if (yieldResult) {
-                                writer.write("yield ");
-                            }
-
-                            writer.writeTextStatement(`return result!`);
-                            writer.popScope();
-                            writer.popScope();
-                        }
-                        return;
-                    }
-
-                    writer.writeStatement(payloadType.asOptional(), `result`);
-                    writer.writeLine("try");
-                    writer.pushScope();
-
-                    writer.write("result = ");
-                    writer.writeNode(jsonUtils);
-                    writer.write(".Deserialize<");
-                    writer.writeNode(payloadType);
-                    writer.writeTextStatement(`>(${jsonString})`);
-                    writer.popScope();
-                    if (context.generation.settings.redactResponseBodyOnError) {
-                        writer.write("catch (", context.System.Text.Json.JsonException, " e)");
-                        writer.writeLine("");
-                        writer.pushScope();
-                        writer.writeStatement(
-                            "throw new ",
-                            exceptionClass,
-                            `("Failed to deserialize streaming response", e)`
-                        );
-                        writer.popScope();
-                    } else {
-                        writer.write("catch (", context.System.Text.Json.JsonException, ")");
-                        writer.writeLine("");
-                        writer.pushScope();
-                        writer.writeStatement(
-                            "throw new ",
-                            exceptionClass,
-                            `($"Unable to deserialize JSON response '`,
-                            jsonString,
-                            `'")`
-                        );
-                        writer.popScope();
-                    }
-                }
-
-                value._visit({
-                    json: (jsonChunk) => {
-                        readLineFromResponse();
-                        const payloadType = context.csharpTypeMapper.convert({
-                            reference: jsonChunk.payload
-                        });
-                        deserializeJsonChunk(
-                            payloadType,
-                            context.generation.Types.JsonUtils,
-                            context.generation.Types.BaseException,
-                            "line",
-                            true
-                        );
-                        writer.popScope();
-                        writer.writeTextStatement("yield break");
-                        writer.popScope();
-                    },
-                    text: () => {
-                        readLineFromResponse();
-                        writer.writeLine("if(!string.IsNullOrEmpty(line))");
-                        writer.pushScope();
-                        writer.writeTextStatement("yield return line");
-                        writer.popScope();
-
-                        writer.popScope();
-                        writer.writeTextStatement("yield break");
-                        writer.popScope();
-                    },
-                    sse: (sseChunk) => {
-                        const payloadType = context.csharpTypeMapper.convert({
-                            reference: sseChunk.payload
-                        });
-                        writer.writeLine(`if (${names.variables.response}.StatusCode is >= 200 and < 400)`);
-                        writer.pushScope();
-
-                        writer.write(`await foreach (var item in `);
-                        writer.writeNode(context.System.Net.ServerSentEvents.SseParser);
-                        writer.writeLine(
-                            `.Create(await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()).EnumerateAsync(cancellationToken))`
-                        );
-                        writer.pushScope();
-
-                        writer.writeLine("if( !string.IsNullOrEmpty(item.Data))");
-                        writer.pushScope();
-
-                        if (sseChunk.terminator) {
-                            writer.writeLine(`if( item.Data == "${sseChunk.terminator}")`);
-                            writer.pushScope();
-                            writer.writeTextStatement("break");
-                            writer.popScope();
-                        }
-
-                        deserializeJsonChunk(
-                            payloadType,
-                            context.generation.Types.JsonUtils,
-                            context.generation.Types.BaseException,
-                            "item.Data",
-                            true
-                        );
-
-                        writer.popScope();
-                        writer.popScope();
-                        writer.writeTextStatement("yield break");
-
-                        writer.popScope();
-                    },
-                    _other: () => {
-                        writer.write('/* "Other" Streaming not currently implemented */');
-                    }
-                });
-            };
-        }
 
         return this.csharp.codeblock((writer) => {
             body._visit({
-                streamParameter: (ref) => {
-                    return handleStreaming(writer)(ref.streamResponse);
+                streamParameter: () => {
+                    // Streaming endpoints route through the new 3-method emit (Core + Body)
+                    // in writeWithRawResponseTaskMethodBody, never through this legacy path.
+                    this.context.logger.error("Streaming endpoint reached legacy success-response emit");
                 },
                 fileDownload: (value) => {
                     writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
@@ -911,7 +1019,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                     writer.writeLine();
                 },
-                streaming: (ref) => handleStreaming(writer)(ref),
+                streaming: () => {
+                    // Streaming endpoints route through the new 3-method emit (Core + Body)
+                    // in writeWithRawResponseTaskMethodBody, never through this legacy path.
+                    this.context.logger.error("Streaming endpoint reached legacy success-response emit");
+                },
                 text: () => {
                     writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
                     writer.pushScope();

@@ -126,12 +126,23 @@ export abstract class AbstractEndpointGenerator {
         pathParameter: FernIr.PathParameter;
         includePathParametersInEndpointSignature: boolean;
     }): string {
-        if (sdkRequest == null || includePathParametersInEndpointSignature) {
-            return `$${this.context.getPropertyName(pathParameter.name)}`;
+        const reference =
+            sdkRequest == null || includePathParametersInEndpointSignature
+                ? `$${this.context.getPropertyName(pathParameter.name)}`
+                : this.context.accessRequestProperty({
+                      requestParameterName: sdkRequest.requestParameterName,
+                      propertyName: pathParameter.name
+                  });
+        if (this.isBooleanPathParameter(pathParameter)) {
+            // PHP coerces a bool to "1"/"" when interpolated into a string, so a boolean path
+            // parameter must be rendered explicitly as "true"/"false" to produce a valid URL.
+            return `${reference} ? 'true' : 'false'`;
         }
-        return this.context.accessRequestProperty({
-            requestParameterName: sdkRequest.requestParameterName,
-            propertyName: pathParameter.name
-        });
+        return reference;
+    }
+
+    private isBooleanPathParameter(pathParameter: FernIr.PathParameter): boolean {
+        const dereferenced = this.context.dereferenceOptional(pathParameter.valueType);
+        return dereferenced.type === "primitive" && dereferenced.primitive.v1 === FernIr.PrimitiveTypeV1.Boolean;
     }
 }
