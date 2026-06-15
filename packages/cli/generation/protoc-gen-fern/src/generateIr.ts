@@ -22,11 +22,17 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
         smartCasing: false
     });
 
+    // Detect service name collisions across different proto packages.
+    // When the same bare service name exists in multiple packages, we need to
+    // split the package into group parts so generators produce distinct SDK accessors.
+    const duplicateServiceNames = detectDuplicateServiceNames(req);
+
     for (const protoFile of req.protoFile) {
         const protoFileConverter = new ProtofileConverter({
             context: new ProtofileConverterContext({
                 codeGeneratorRequest: req,
                 spec: protoFile,
+                duplicateServiceNames,
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 settings: {} as any,
                 errorCollector: new ErrorCollector({
@@ -76,6 +82,32 @@ export function generateIr({ req, options }: { req: CodeGeneratorRequest; option
             content: JSON.stringify(serializedIr.errors, null, 2)
         };
     }
+}
+
+/**
+ * Scans all proto files in the request and returns the set of bare service names
+ * that appear in more than one proto package. These services need package-based
+ * disambiguation in the generated SDK to avoid naming collisions.
+ */
+export function detectDuplicateServiceNames(req: CodeGeneratorRequest): Set<string> {
+    const serviceNameToPackages = new Map<string, Set<string>>();
+    for (const protoFile of req.protoFile) {
+        for (const service of protoFile.service) {
+            const existing = serviceNameToPackages.get(service.name);
+            if (existing != null) {
+                existing.add(protoFile.package);
+            } else {
+                serviceNameToPackages.set(service.name, new Set([protoFile.package]));
+            }
+        }
+    }
+    const duplicates = new Set<string>();
+    for (const [name, packages] of serviceNameToPackages) {
+        if (packages.size > 1) {
+            duplicates.add(name);
+        }
+    }
+    return duplicates;
 }
 
 function getPrintableFromMessage(message: DescMessage): Printable {

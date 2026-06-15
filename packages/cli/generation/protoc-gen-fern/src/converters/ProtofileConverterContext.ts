@@ -10,6 +10,7 @@ export declare namespace ProtofileConverterContext {
     export interface Args extends Spec.Args<FileDescriptorProto> {
         comments: Record<PathStarterValues, CommentNode>;
         codeGeneratorRequest: CodeGeneratorRequest;
+        duplicateServiceNames?: Set<string>;
     }
 }
 
@@ -19,11 +20,13 @@ export declare namespace ProtofileConverterContext {
 export class ProtofileConverterContext extends AbstractConverterContext<FileDescriptorProto> {
     private readonly comments: Record<PathStarterValues, CommentNode>;
     private readonly codeGeneratorRequest: CodeGeneratorRequest;
+    public readonly duplicateServiceNames: Set<string>;
 
-    constructor({ comments, codeGeneratorRequest, ...rest }: ProtofileConverterContext.Args) {
+    constructor({ comments, codeGeneratorRequest, duplicateServiceNames, ...rest }: ProtofileConverterContext.Args) {
         super(rest);
         this.comments = comments;
         this.codeGeneratorRequest = codeGeneratorRequest;
+        this.duplicateServiceNames = duplicateServiceNames ?? new Set();
     }
 
     public resolveTypeIdToProtoFile(
