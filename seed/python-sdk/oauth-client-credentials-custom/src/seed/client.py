@@ -152,8 +152,10 @@ class SeedOauthClientCredentials:
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
-            assert scp is not None
-            assert entity_id is not None
+            if scp is None:
+                raise ApiError(body="The 'scp' parameter is required when using 'client_id' and 'client_secret'")
+            if entity_id is None:
+                raise ApiError(body="The 'entity_id' parameter is required when using 'client_id' and 'client_secret'")
             oauth_token_provider = OAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,
@@ -378,8 +380,10 @@ class AsyncSeedOauthClientCredentials:
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
-            assert scp is not None
-            assert entity_id is not None
+            if scp is None:
+                raise ApiError(body="The 'scp' parameter is required when using 'client_id' and 'client_secret'")
+            if entity_id is None:
+                raise ApiError(body="The 'entity_id' parameter is required when using 'client_id' and 'client_secret'")
             oauth_token_provider = AsyncOAuthTokenProvider(
                 client_id=client_id,
                 client_secret=client_secret,

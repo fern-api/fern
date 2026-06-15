@@ -1367,12 +1367,24 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         # elif client_id is not None and client_secret is not None:
         writer.write_line("elif client_id is not None and client_secret is not None:")
         with writer.indent():
-            # Narrow additional OAuth params from Optional[str] to str
+            # Require additional OAuth params (narrows Optional[str] to str)
             if self._oauth_scheme is not None:
                 override_oauth_config = self._oauth_scheme.configuration.get_as_union()
                 if override_oauth_config.type == "clientCredentials":
                     for extra_name in self._get_additional_oauth_param_names(override_oauth_config):
-                        writer.write_line(f"assert {extra_name} is not None")
+                        writer.write_line(f"if {extra_name} is None:")
+                        with writer.indent():
+                            writer.write("raise ")
+                            writer.write_node(
+                                self._context.core_utilities.instantiate_api_error(
+                                    headers=None,
+                                    status_code=None,
+                                    body=AST.Expression(
+                                        f"\"The '{extra_name}' parameter is required when using 'client_id' and 'client_secret'\""
+                                    ),
+                                )
+                            )
+                            writer.write_newline_if_last_line_not()
             # OAuth client credentials mode
             oauth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
                 client_wrapper_generator=client_wrapper_generator,

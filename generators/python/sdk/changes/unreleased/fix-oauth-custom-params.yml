@@ -3,3 +3,8 @@
     for custom OAuth endpoints, and pass additional required parameters (scopes, custom properties)
     through the client constructor to the token provider.
   type: fix
+- summary: |
+    Enforce required additional OAuth parameters with an explicit runtime check that raises
+    an `ApiError` instead of `assert`, so the validation is not stripped under Python's
+    optimized mode (`-O`).
+  type: fix
