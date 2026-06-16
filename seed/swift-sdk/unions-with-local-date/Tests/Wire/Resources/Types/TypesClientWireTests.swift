@@ -91,7 +91,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.date(
-
+                CalendarDate("1994-01-01")!
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -114,7 +114,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.datetime(
-
+                try! Date("1994-01-01T01:01:01Z", strategy: .iso8601)
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

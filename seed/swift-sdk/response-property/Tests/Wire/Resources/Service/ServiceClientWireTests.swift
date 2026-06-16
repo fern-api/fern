@@ -26,14 +26,14 @@ import ResponseProperty
             urlSession: stub.urlSession
         )
         let expectedResponse = Response(
-            data: Movie(
-                id: "id",
-                name: "name"
-            ),
             metadata: [
                 "metadata": "metadata"
             ],
-            docs: "docs"
+            docs: "docs",
+            data: Movie(
+                id: "id",
+                name: "name"
+            )
         )
         let response = try await client.service.getMovie(
             request: "string",
@@ -65,14 +65,14 @@ import ResponseProperty
             urlSession: stub.urlSession
         )
         let expectedResponse = Response(
-            data: Movie(
-                id: "id",
-                name: "name"
-            ),
             metadata: [
                 "metadata": "metadata"
             ],
-            docs: "docs"
+            docs: "docs",
+            data: Movie(
+                id: "id",
+                name: "name"
+            )
         )
         let response = try await client.service.getMovieDocs(
             request: "string",
@@ -129,14 +129,14 @@ import ResponseProperty
             urlSession: stub.urlSession
         )
         let expectedResponse = Response(
-            data: Movie(
-                id: "id",
-                name: "name"
-            ),
             metadata: [
                 "metadata": "metadata"
             ],
-            docs: "docs"
+            docs: "docs",
+            data: Movie(
+                id: "id",
+                name: "name"
+            )
         )
         let response = try await client.service.getMovieMetadata(
             request: "string",
@@ -168,14 +168,14 @@ import ResponseProperty
             urlSession: stub.urlSession
         )
         let expectedResponse = Optional(Response(
-            data: Movie(
-                id: "id",
-                name: "name"
-            ),
             metadata: [
                 "metadata": "metadata"
             ],
-            docs: "docs"
+            docs: "docs",
+            data: Movie(
+                id: "id",
+                name: "name"
+            )
         ))
         let response = try await client.service.getOptionalMovie(
             request: "string",

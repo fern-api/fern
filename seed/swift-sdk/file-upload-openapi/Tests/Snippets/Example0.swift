@@ -6,8 +6,8 @@ enum Example0 {
         let client = ApiClient(baseURL: "https://api.fern.com")
 
         _ = try await client.fileUploadExample.uploadFile(request: .init(
-            file: .init(data: Data("".utf8)),
-            name: "name"
+            name: "name",
+            file: .init(data: Data("".utf8))
         ))
     }
 }

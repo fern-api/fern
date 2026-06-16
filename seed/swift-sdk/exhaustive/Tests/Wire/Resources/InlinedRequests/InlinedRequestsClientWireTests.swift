@@ -102,6 +102,7 @@ import Exhaustive
         )
         let expectedResponse = "string"
         let response = try await client.inlinedRequests.postWithArrayBodyAndHeaders(
+            xCustomHeader: "X-Custom-Header",
             request: [
                 "string",
                 "string"

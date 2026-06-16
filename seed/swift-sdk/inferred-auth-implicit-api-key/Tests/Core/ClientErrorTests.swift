@@ -19,7 +19,10 @@ import Testing
         )
 
         do {
-            _ = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.auth.getToken(
+                apiKey: "api_key",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as InferredAuthImplicitApiKeyError {
@@ -49,7 +52,10 @@ import Testing
         )
 
         do {
-            _ = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.auth.getToken(
+                apiKey: "api_key",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as InferredAuthImplicitApiKeyError {
@@ -79,7 +85,10 @@ import Testing
         )
 
         do {
-            _ = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.auth.getToken(
+                apiKey: "api_key",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as InferredAuthImplicitApiKeyError {
@@ -111,7 +120,10 @@ import Testing
         )
 
         do {
-            _ = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.auth.getToken(
+                apiKey: "api_key",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as InferredAuthImplicitApiKeyError {
@@ -141,7 +153,10 @@ import Testing
         )
 
         do {
-            _ = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.auth.getToken(
+                apiKey: "api_key",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as InferredAuthImplicitApiKeyError {
@@ -173,7 +188,10 @@ import Testing
         )
 
         do {
-            _ = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.auth.getToken(
+                apiKey: "api_key",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as InferredAuthImplicitApiKeyError {
@@ -203,7 +221,10 @@ import Testing
         )
 
         do {
-            _ = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.auth.getToken(
+                apiKey: "api_key",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as InferredAuthImplicitApiKeyError {

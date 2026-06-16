@@ -27,10 +27,10 @@ import Trace
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         ),
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         )
                     ]
                 ),
@@ -69,15 +69,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     ),
                     TestCaseWithExpectedResult(
@@ -85,15 +85,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     )
                 ],
@@ -130,10 +130,10 @@ import Trace
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         ),
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         )
                     ]
                 ),
@@ -172,15 +172,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     ),
                     TestCaseWithExpectedResult(
@@ -188,15 +188,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     )
                 ],

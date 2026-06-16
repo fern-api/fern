@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getText</a>(requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getText</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getCsv</a>(requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getCsv</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -98,7 +98,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getXml</a>(requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getXml</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
