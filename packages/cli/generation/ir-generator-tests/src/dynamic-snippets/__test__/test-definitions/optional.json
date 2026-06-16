@@ -96,7 +96,8 @@
                         "value": "STRING"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 }
             ],
             "extends": null,
@@ -200,7 +201,8 @@
                         }
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 }
             ],
             "extends": null,
@@ -301,7 +303,8 @@
                         "value": "BOOLEAN"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 }
             ],
             "extends": null,
@@ -595,7 +598,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": false
                     },
                     {
                         "name": {
@@ -625,7 +629,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": false
                     }
                 ],
                 "body": {

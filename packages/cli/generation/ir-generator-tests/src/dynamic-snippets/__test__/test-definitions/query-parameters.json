@@ -96,7 +96,8 @@
                         "value": "STRING"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 },
                 {
                     "name": {
@@ -129,7 +130,8 @@
                         }
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 }
             ],
             "extends": null,
@@ -230,7 +232,8 @@
                         "value": "STRING"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 },
                 {
                     "name": {
@@ -260,7 +263,8 @@
                         "value": "type_user:User"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 }
             ],
             "extends": null,
@@ -435,7 +439,8 @@
                             "value": "INTEGER"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -465,7 +470,8 @@
                             "value": "UUID"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -495,7 +501,8 @@
                             "value": "DATE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -525,7 +532,8 @@
                             "value": "DATE_TIME"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -555,7 +563,8 @@
                             "value": "BASE_64"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -585,7 +594,8 @@
                             "value": "type_user:User"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -618,7 +628,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -651,7 +662,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -688,7 +700,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -721,7 +734,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -751,7 +765,8 @@
                             "value": "type_user:NestedUser"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -784,7 +799,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -817,7 +833,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -850,7 +867,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "headers": [],

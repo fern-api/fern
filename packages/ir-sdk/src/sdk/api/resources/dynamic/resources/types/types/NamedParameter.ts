@@ -8,4 +8,10 @@ export interface NamedParameter {
     propertyAccess: FernIr.dynamic.ObjectPropertyAccess | undefined;
     /** If set, this parameter references a variable defined at the client level */
     variable: string | undefined;
+    /**
+     * If true, this parameter has a client-side default value and is therefore
+     * optional in the generated SDK. Generators that order optional arguments
+     * after required ones (e.g. PHP) use this to place the argument correctly.
+     */
+    clientDefault: boolean | undefined;
 }

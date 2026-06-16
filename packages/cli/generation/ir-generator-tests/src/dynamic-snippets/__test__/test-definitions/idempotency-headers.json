@@ -308,7 +308,8 @@
                                 "value": "INTEGER"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         },
                         {
                             "name": {
@@ -338,7 +339,8 @@
                                 "value": "type_payment:Currency"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         }
                     ]
                 },
@@ -474,7 +476,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": false
                     }
                 ],
                 "body": null

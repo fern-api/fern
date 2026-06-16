@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.6.0] - 2026-06-16
+
+- Feature: Add optional `clientDefault` boolean field to the dynamic IR
+  `NamedParameter`. When `true`, the parameter has a client-side default value
+  and is therefore optional in the generated SDK. Generators that order optional
+  arguments after required ones (e.g. PHP) use this to place path-parameter
+  arguments correctly in dynamic snippets. Defaults to `undefined` for backward
+  compatibility.
+
+
 ## [v67.5.0] - 2026-06-12
 
 - Feature: Add optional `subtitle` field to `HttpEndpoint`. Populated from the

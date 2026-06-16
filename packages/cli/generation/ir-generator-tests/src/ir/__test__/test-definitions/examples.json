@@ -15118,7 +15118,8 @@
                             "value": "type_:Type"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -15148,7 +15149,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -15178,7 +15180,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -15413,7 +15416,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -15443,7 +15447,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -15693,7 +15698,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -15733,7 +15739,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -15766,7 +15773,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -16425,7 +16433,8 @@
                             "value": "type_types:MovieId"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16458,7 +16467,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16488,7 +16498,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16518,7 +16529,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16548,7 +16560,8 @@
                             "value": "DOUBLE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16581,7 +16594,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16611,7 +16625,8 @@
                             "value": "type_commons/types:Tag"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16644,7 +16659,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16680,7 +16696,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16710,7 +16727,8 @@
                             "value": "LONG"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -16892,7 +16910,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -16922,7 +16941,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -17023,7 +17043,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17053,7 +17074,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -17154,7 +17176,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17184,7 +17207,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -17285,7 +17309,8 @@
                             "value": "type_types:MovieId"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17318,7 +17343,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17348,7 +17374,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17378,7 +17405,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17408,7 +17436,8 @@
                             "value": "DOUBLE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17441,7 +17470,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17471,7 +17501,8 @@
                             "value": "type_commons/types:Tag"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17504,7 +17535,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17540,7 +17572,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17570,7 +17603,8 @@
                             "value": "LONG"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17603,7 +17637,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": [
@@ -17706,7 +17741,8 @@
                             "value": "UUID"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17736,7 +17772,8 @@
                             "value": "DATE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17766,7 +17803,8 @@
                             "value": "DATE_TIME"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -17867,7 +17905,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -17897,7 +17936,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -17998,7 +18038,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -18034,7 +18075,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -18070,7 +18112,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -18171,7 +18214,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -18207,7 +18251,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -18243,7 +18288,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -18350,7 +18396,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -18509,7 +18556,8 @@
                                     }
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -18542,7 +18590,8 @@
                                     }
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             }
                         ]
                     },
@@ -18610,7 +18659,8 @@
                                     }
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -18643,7 +18693,8 @@
                                     }
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             }
                         ]
                     }
@@ -18888,7 +18939,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -18918,7 +18970,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -18948,7 +19001,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19184,7 +19238,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -19214,7 +19269,8 @@
                             "value": "type_types:MigrationStatus"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19314,7 +19370,8 @@
                             "type": "unknown"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19414,7 +19471,8 @@
                             "type": "unknown"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -19447,7 +19505,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19548,7 +19607,8 @@
                             "value": "type_:Type"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19800,7 +19860,8 @@
                             "value": "type_:Type"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -19830,7 +19891,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19934,7 +19996,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -19967,7 +20030,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20000,7 +20064,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20033,7 +20098,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20066,7 +20132,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20099,7 +20166,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20132,7 +20200,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20165,7 +20234,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20198,7 +20268,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20231,7 +20302,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20264,7 +20336,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20297,7 +20370,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -20330,7 +20404,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -20431,7 +20506,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -20532,7 +20608,8 @@
                             "value": "INTEGER"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -20878,7 +20955,8 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": false
                         }
                     ],
                     "body": null
@@ -21152,7 +21230,8 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": false
                         }
                     ],
                     "queryParameters": [],
@@ -21185,7 +21264,8 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         }
                     ],
                     "body": null,
@@ -21360,7 +21440,8 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": false
                         }
                     ],
                     "body": null
@@ -21632,7 +21713,8 @@
                                 "value": "type_types:MovieId"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": false
                         }
                     ],
                     "body": null
@@ -21939,7 +22021,8 @@
                                 }
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         },
                         {
                             "name": {
@@ -21975,7 +22058,8 @@
                                 }
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         }
                     ],
                     "headers": [
@@ -22007,7 +22091,8 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         }
                     ],
                     "body": null,

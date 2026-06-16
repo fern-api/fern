@@ -320,7 +320,8 @@
                         "value": "DOUBLE"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 },
                 {
                     "name": {
@@ -350,7 +351,8 @@
                         "value": "INTEGER"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 },
                 {
                     "name": {
@@ -380,7 +382,8 @@
                         "value": "STRING"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 },
                 {
                     "name": {
@@ -410,7 +413,8 @@
                         "value": "type_:Shape"
                     },
                     "propertyAccess": null,
-                    "variable": null
+                    "variable": null,
+                    "clientDefault": null
                 }
             ],
             "extends": null,
@@ -513,7 +517,8 @@
                                 "value": "DOUBLE"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         },
                         {
                             "name": {
@@ -543,7 +548,8 @@
                                 "value": "INTEGER"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         },
                         {
                             "name": {
@@ -573,7 +579,8 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         },
                         {
                             "name": {
@@ -603,7 +610,8 @@
                                 "value": "type_:Shape"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         }
                     ]
                 },
@@ -707,7 +715,8 @@
                             "value": "DOUBLE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -737,7 +746,8 @@
                             "value": "INTEGER"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -767,7 +777,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "headers": [],

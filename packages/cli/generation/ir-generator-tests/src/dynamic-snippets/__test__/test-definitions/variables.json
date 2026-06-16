@@ -104,7 +104,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": "rootVariable"
+                        "variable": "rootVariable",
+                        "clientDefault": false
                     }
                 ],
                 "body": null

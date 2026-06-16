@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Populate the new `clientDefault` boolean on dynamic IR `NamedParameter` when
+    a path parameter has a client-side default value. Generators that order
+    optional arguments after required ones (e.g. PHP) use this to place
+    path-parameter arguments correctly in dynamic snippets.
+  type: internal

@@ -10,6 +10,12 @@ types:
       variable:
         docs: If set, this parameter references a variable defined at the client level
         type: optional<string>
+      clientDefault:
+        docs: |
+          If true, this parameter has a client-side default value and is therefore
+          optional in the generated SDK. Generators that order optional arguments
+          after required ones (e.g. PHP) use this to place the argument correctly.
+        type: optional<boolean>
 
   NamedType:
     docs: |

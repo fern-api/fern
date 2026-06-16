@@ -361,7 +361,8 @@ export class DynamicSnippetsConverter {
                         name: this.inflateNameAndWireValue(property.name),
                         typeReference: this.convertTypeReference(property.valueType),
                         propertyAccess: property.propertyAccess,
-                        variable: undefined
+                        variable: undefined,
+                        clientDefault: undefined
                     });
                 default:
                     assertNever(property);
@@ -401,7 +402,8 @@ export class DynamicSnippetsConverter {
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
             propertyAccess: undefined,
-            variable: pathParameter.variable
+            variable: pathParameter.variable,
+            clientDefault: pathParameter.clientDefault != null
         }));
     }
 
@@ -414,7 +416,8 @@ export class DynamicSnippetsConverter {
             name: this.inflateNameAndWireValue(property.name),
             typeReference: this.convertTypeReference(property.valueType),
             propertyAccess: property.propertyAccess,
-            variable: undefined
+            variable: undefined,
+            clientDefault: undefined
         }));
     }
 
@@ -427,7 +430,8 @@ export class DynamicSnippetsConverter {
             name: this.inflateNameAndWireValue(parameter.name),
             typeReference: this.convertTypeReference(parameter.valueType),
             propertyAccess: undefined,
-            variable: undefined
+            variable: undefined,
+            clientDefault: undefined
         }));
     }
 
@@ -446,7 +450,8 @@ export class DynamicSnippetsConverter {
                 name: this.inflateNameAndWireValue(queryParameter.name),
                 typeReference,
                 propertyAccess: undefined,
-                variable: undefined
+                variable: undefined,
+                clientDefault: undefined
             });
         }
         return parameters;
@@ -752,7 +757,8 @@ export class DynamicSnippetsConverter {
                         name: this.inflateNameAndWireValue(scheme.name),
                         typeReference: this.convertTypeReference(scheme.valueType),
                         propertyAccess: undefined,
-                        variable: undefined
+                        variable: undefined,
+                        clientDefault: undefined
                     }
                 });
             case "oauth":
@@ -823,7 +829,8 @@ export class DynamicSnippetsConverter {
                     name: this.inflateNameAndWireValue(header.name),
                     typeReference: this.convertTypeReference(header.valueType),
                     propertyAccess: undefined,
-                    variable: undefined
+                    variable: undefined,
+                    clientDefault: undefined
                 });
             }
         }
@@ -837,7 +844,8 @@ export class DynamicSnippetsConverter {
                         name: this.inflateNameAndWireValue(property.name),
                         typeReference: this.convertTypeReference(property.valueType),
                         propertyAccess: undefined,
-                        variable: undefined
+                        variable: undefined,
+                        clientDefault: undefined
                     });
                 }
             }
