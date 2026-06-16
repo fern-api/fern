@@ -166,7 +166,7 @@ export class DynamicTypeLiteralMapper {
             case "object":
                 return this.convertObject({ object_: named, value });
             case "undiscriminatedUnion":
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
+                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value, as });
             default:
                 assertNever(named);
         }
@@ -585,14 +585,17 @@ export class DynamicTypeLiteralMapper {
 
     private convertUndiscriminatedUnion({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): php.TypeLiteral {
         const result = this.findMatchingUndiscriminatedUnionType({
             undiscriminatedUnion,
-            value
+            value,
+            as
         });
         if (result == null) {
             return php.TypeLiteral.nop();
@@ -602,15 +605,17 @@ export class DynamicTypeLiteralMapper {
 
     private findMatchingUndiscriminatedUnionType({
         undiscriminatedUnion,
-        value
+        value,
+        as
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): php.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             const errorsBefore = this.context.errors.size();
             try {
-                const result = this.convert({ typeReference, value });
+                const result = this.convert({ typeReference, value, as });
                 if (php.TypeLiteral.isNop(result)) {
                     this.context.errors.truncate(errorsBefore);
                     continue;
