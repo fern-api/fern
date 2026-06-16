@@ -1,4 +1,72 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.35.13
+  changelogEntry:
+    - summary: |
+        Fixed argument ordering in generated wire tests and snippets so they match
+        the order in which the corresponding Swift types declare their memberwise
+        initializer parameters. Example object properties were previously emitted in
+        the example's authoring order, and file-upload fields were grouped by kind
+        (files before body properties), both of which could produce arguments in the
+        wrong positional order and fail to compile. Wire-test response objects are
+        now reordered to match the generated struct's declaration order, and
+        file-upload request snippets preserve the original schema declaration order.
+      type: fix
+    - summary: |
+        Fixed inline literal query parameters so they are typed correctly in the
+        generated client method instead of falling back to the placeholder
+        `JSONValue`. A boolean literal now maps to `Bool` and a string literal maps
+        to a dedicated literal enum nested on the owning client. Previously the
+        parameter was typed as `JSONValue` while the generated snippets and wire
+        tests emitted the literal enum case, causing a type mismatch that failed to
+        compile.
+      type: fix
+    - summary: |
+        Fixed endpoints that return a `text/plain` response so the generated method
+        returns `String` instead of the placeholder `JSONValue`. The HTTP client
+        already decodes a `String` response type from the raw UTF-8 body, so the
+        generated wire tests now compile and pass (previously `response == "string"`
+        failed because the response was typed as `JSONValue`).
+      type: fix
+    - summary: |
+        Fixed generated snippets and wire tests for single-property discriminated
+        union variants. The wrapped value is serialized under the variant's property
+        wire key (the union's CodingKeys raw value), but the snippet/wire-test
+        generator was reading it from the discriminant's wire name, so variants whose
+        discriminant differed from that key (e.g. a `date` or `datetime` case) emitted
+        an empty enum case like `UnionWithTime.date()` that failed to compile. The
+        value is now read from the correct property key, including variants that
+        customize it via `key:`.
+      type: fix
+    - summary: |
+        Preserve the declaration order of undiscriminated union members in generated
+        code. Members were previously sorted alphabetically, which reordered the
+        decoding attempts emitted in the `Decodable` initializer. For a union
+        containing both `int` and `double`, this tried `Double` before `Int` and
+        decoded integral JSON numbers (e.g. `1`) as a `Double` (`1.0`), so wire tests
+        failed to round-trip. Members are now decoded in declaration order, matching
+        Fern's undiscriminated union semantics.
+      type: fix
+    - summary: |
+        Fixed generated wire tests to include extra (additional) properties in the
+        expected response object for types whose schema permits them. The decoded
+        response captures any undeclared JSON keys into `additionalProperties`, but
+        the expected response object previously omitted them, so the equality
+        assertion failed. Plain object responses now populate `additionalProperties`
+        the same way undiscriminated-union responses already did.
+      type: fix
+    - summary: |
+        Fixed generated wire tests and snippets so that they pass endpoint header
+        arguments to the endpoint method. The endpoint method call previously emitted
+        only path, query, and body arguments, omitting required header parameters
+        (e.g. `X-API-Version`), which produced calls missing required arguments that
+        failed to compile. Headers are now rendered between the path and query
+        arguments to match the generated method signature, filtered to the
+        String-typed headers the SDK surfaces as parameters. The String-type filter
+        resolves through type aliases, so a header typed as an alias of String is
+        emitted just like the SDK declares it.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 66
 - version: 0.35.12
   changelogEntry:
     - summary: |
