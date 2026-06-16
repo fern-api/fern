@@ -58,7 +58,7 @@ trustPolicyExclude:
 blockExoticSubdeps: true
 
 catalog:
-  "@babel/core": ^7.29.0
+  "@babel/core": ^7.29.6
   "@babel/preset-env": ^7.29.5
   "@babel/preset-typescript": ^7.28.5
   "@biomejs/biome": 2.4.10
@@ -257,7 +257,7 @@ catalog:
   vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
-  ws: ^8.20.1
+  ws: ^8.21.0
   xml2js: ^0.6.2
   yaml: ^2.8.3
   yauzl: ^3.2.1
@@ -276,3 +276,4 @@ overrides:
   vite: ^7.3.5
   esbuild: ^0.28.1
   yauzl: ^3.2.1
+  "@opentelemetry/core": ">=2.8.0"
