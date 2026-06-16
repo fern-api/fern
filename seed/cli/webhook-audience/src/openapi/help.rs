@@ -1,50 +1,34 @@
-//! JSON help output — renders `--help --format json` as a machine-readable
-//! schema. When an agent passes both `--help` (or `-h`) and `--format json`,
-//! the pipeline intercepts before clap parses and calls [`render_json_help`].
+//! Spec output — renders the CLI's command surface as a machine-readable
+//! JSON document. Backs the `--schema` global flag, which is the agent-facing
+//! counterpart to `--help`: wherever a user could type `--help` for prose,
+//! they can type `--schema` for the same scope rendered as JSON.
 
 use serde_json::{json, Map, Value};
 
-use crate::error::CliError;
 use crate::openapi::discovery::{RestDescription, RestMethod, RestResource};
 
-/// Renders JSON help for the given subcommand path and prints it to stdout.
-#[cfg(test)]
-pub(crate) fn render_json_help(doc: &RestDescription, path: &[String]) -> Result<(), CliError> {
-    write_json_help(doc, path, &mut std::io::stdout())
-}
-
-/// Writer-parameterized variant of [`render_json_help`].
-pub(crate) fn write_json_help(
-    doc: &RestDescription,
-    path: &[String],
-    out: &mut dyn std::io::Write,
-) -> Result<(), CliError> {
-    let output = match path.len() {
-        0 => list_all_operations(doc),
-        1 => list_resource_operations(doc, &path[0])?,
+/// Build the spec document for the given subcommand path.
+///
+/// Returns `Some(value)` when the path resolves in this doc and `None` when it
+/// doesn't (so a multi-binding caller can try the next binding). Empty path
+/// always returns `Some(_)` — every binding contributes its full operation
+/// list to the aggregate root view.
+pub(crate) fn build_schema(doc: &RestDescription, path: &[String]) -> Option<Value> {
+    match path.len() {
+        0 => Some(list_all_operations(doc)),
+        1 => list_resource_operations(doc, &path[0]),
         _ => {
             // Try treating last element as a method name first.
             // If that fails, the full path may resolve to a nested sub-resource — list its ops.
-            let resource_path: Vec<&str> = path[..path.len() - 1].iter().map(|s| s.as_str()).collect();
+            let resource_path: Vec<&str> =
+                path[..path.len() - 1].iter().map(|s| s.as_str()).collect();
             let method_name = path[path.len() - 1].as_str();
-            match operation_schema(doc, &resource_path, method_name) {
-                Ok(schema) => schema,
-                Err(_) => {
-                    let full_path: Vec<&str> = path.iter().map(|s| s.as_str()).collect();
-                    list_nested_resource_operations(doc, &full_path)?
-                }
-            }
+            operation_schema(doc, &resource_path, method_name).or_else(|| {
+                let full_path: Vec<&str> = path.iter().map(|s| s.as_str()).collect();
+                list_nested_resource_operations(doc, &full_path)
+            })
         }
-    };
-
-    writeln!(
-        out,
-        "{}",
-        serde_json::to_string_pretty(&output)
-            .map_err(|e| CliError::Validation(format!("Failed to serialize help: {e}")))?
-    )
-    .map_err(|e| CliError::Other(e.into()))?;
-    Ok(())
+    }
 }
 
 fn list_all_operations(doc: &RestDescription) -> Value {
@@ -86,63 +70,35 @@ fn render_sdk_variables(
         .collect()
 }
 
-fn list_resource_operations(doc: &RestDescription, resource: &str) -> Result<Value, CliError> {
-    let res = doc
-        .resources
-        .get(resource)
-        .ok_or_else(|| CliError::Validation(format!("Resource not found: {resource}")))?;
+fn list_resource_operations(doc: &RestDescription, resource: &str) -> Option<Value> {
+    let res = doc.resources.get(resource)?;
     let mut ops: Vec<Value> = Vec::new();
     collect_resource_ops(res, &[resource], &mut ops);
-    Ok(json!(ops))
+    Some(json!(ops))
 }
 
-fn list_nested_resource_operations(doc: &RestDescription, path: &[&str]) -> Result<Value, CliError> {
-    let first = path.first().ok_or_else(|| {
-        CliError::Validation("No resource specified".to_string())
-    })?;
-    let mut res = doc
-        .resources
-        .get(*first)
-        .ok_or_else(|| CliError::Validation(format!("Resource not found: {first}")))?;
+fn list_nested_resource_operations(doc: &RestDescription, path: &[&str]) -> Option<Value> {
+    let first = path.first()?;
+    let mut res = doc.resources.get(*first)?;
     for segment in &path[1..] {
-        res = res
-            .resources
-            .get(*segment)
-            .ok_or_else(|| CliError::Validation(format!("Resource not found: {segment}")))?;
+        res = res.resources.get(*segment)?;
     }
     let mut ops: Vec<Value> = Vec::new();
     collect_resource_ops(res, path, &mut ops);
-    Ok(json!(ops))
+    Some(json!(ops))
 }
 
-fn operation_schema(doc: &RestDescription, resource_path: &[&str], method_name: &str) -> Result<Value, CliError> {
-    let first = resource_path.first().ok_or_else(|| {
-        CliError::Validation("No resource specified".to_string())
-    })?;
-
-    let mut res = doc
-        .resources
-        .get(*first)
-        .ok_or_else(|| CliError::Validation(format!("Resource not found: {first}")))?;
-
+fn operation_schema(doc: &RestDescription, resource_path: &[&str], method_name: &str) -> Option<Value> {
+    let first = resource_path.first()?;
+    let mut res = doc.resources.get(*first)?;
     for segment in &resource_path[1..] {
-        res = res
-            .resources
-            .get(*segment)
-            .ok_or_else(|| CliError::Validation(format!("Resource not found: {segment}")))?;
+        res = res.resources.get(*segment)?;
     }
-
-    let method = res.methods.get(method_name).ok_or_else(|| {
-        CliError::Validation(format!(
-            "Operation not found: {} {method_name}",
-            resource_path.join(" ")
-        ))
-    })?;
-
-    Ok(build_schema(resource_path, method_name, method))
+    let method = res.methods.get(method_name)?;
+    Some(build_operation_schema(resource_path, method_name, method))
 }
 
-fn build_schema(resource_path: &[&str], method_name: &str, method: &RestMethod) -> Value {
+fn build_operation_schema(resource_path: &[&str], method_name: &str, method: &RestMethod) -> Value {
     let mut properties: Map<String, Value> = Map::new();
     let mut required: Vec<String> = Vec::new();
 
@@ -150,11 +106,32 @@ fn build_schema(resource_path: &[&str], method_name: &str, method: &RestMethod) 
     param_names.sort();
     for name in param_names {
         let param = &method.parameters[name];
-        let mut prop = json!({
-            "type": param.param_type.as_deref().unwrap_or("string"),
-            "description": param.description.as_deref().unwrap_or(""),
-            "location": param.location.as_deref().unwrap_or("query"),
-        });
+        let element_type = param.param_type.as_deref().unwrap_or("string");
+        let mut prop = if param.scalar_or_array {
+            // oneOf [string, array<string>]: single value is scalar, multiple
+            // values become an array.
+            json!({
+                "oneOf": [
+                    { "type": element_type },
+                    { "type": "array", "items": { "type": element_type } },
+                ],
+                "description": param.description.as_deref().unwrap_or(""),
+                "location": param.location.as_deref().unwrap_or("query"),
+            })
+        } else if param.repeated {
+            json!({
+                "type": "array",
+                "items": { "type": element_type },
+                "description": param.description.as_deref().unwrap_or(""),
+                "location": param.location.as_deref().unwrap_or("query"),
+            })
+        } else {
+            json!({
+                "type": element_type,
+                "description": param.description.as_deref().unwrap_or(""),
+                "location": param.location.as_deref().unwrap_or("query"),
+            })
+        };
         if let Some(enums) = &param.enum_values {
             prop["enum"] = json!(enums);
             // When `x-fern-enum` overrides are present, expose the
@@ -317,7 +294,7 @@ mod tests {
 
     #[test]
     fn test_variable_bound_param_annotated_and_not_required_in_per_op_schema() {
-        // JSON help is the machine-readable contract for LLM agents. A
+        // The --schema output is the machine-readable contract for LLM agents. A
         // variable-bound path parameter must NOT appear in the per-op
         // `required` array (there is no per-op flag for it), and the
         // property MUST carry enough metadata for an agent to resolve it
@@ -353,7 +330,7 @@ mod tests {
             parameters: params,
             ..Default::default()
         };
-        let schema = build_schema(&["zones"], "get", &method);
+        let schema = build_operation_schema(&["zones"], "get", &method);
         let required = schema["parameters"]["required"].as_array().unwrap();
         assert!(
             !required.iter().any(|v| v == "gardenId"),
@@ -407,12 +384,12 @@ mod tests {
         let output = list_all_operations(&doc);
         assert!(
             output.is_array(),
-            "root JSON help must stay a bare array when no sdk_variables are declared",
+            "root --schema output must stay a bare array when no sdk_variables are declared",
         );
     }
 
     #[test]
-    fn test_render_json_help_nested_sub_resource_listing() {
+    fn test_render_schema_nested_sub_resource_listing() {
         // path.len() == 2 where last element is a sub-resource, not a method
         let mut nested_methods = std::collections::HashMap::new();
         nested_methods.insert(
@@ -446,8 +423,8 @@ mod tests {
         };
 
         let path: Vec<String> = vec!["organizations".into(), "memberships".into()];
-        let result = render_json_help(&doc, &path);
-        assert!(result.is_ok(), "sub-resource path should list operations, not error");
+        let result = build_schema(&doc, &path);
+        assert!(result.is_some(), "sub-resource path should list operations, not be None");
     }
 
     #[test]
@@ -490,7 +467,7 @@ mod tests {
     }
 
     #[test]
-    fn test_render_json_help_dispatches_nested_path() {
+    fn test_render_schema_dispatches_nested_path() {
         let mut nested_methods = std::collections::HashMap::new();
         nested_methods.insert(
             "get-membership".to_string(),
@@ -523,8 +500,81 @@ mod tests {
         };
 
         let path: Vec<String> = vec!["organizations".into(), "memberships".into(), "get-membership".into()];
-        // Should not error — previously would pass "memberships" as method name
-        let result = render_json_help(&doc, &path);
-        assert!(result.is_ok(), "nested path should resolve correctly");
+        // Should resolve as the leaf operation, not be misrouted via "memberships" as method name.
+        let result = build_schema(&doc, &path);
+        assert!(result.is_some(), "nested path should resolve correctly");
+    }
+
+    #[test]
+    fn test_repeated_param_rendered_as_array_in_schema() {
+        let mut params = HashMap::new();
+        params.insert(
+            "tags".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some("Tags".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "subject".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some("Subject line".to_string()),
+                location: Some("body".to_string()),
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "/messages/send".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["messages"], "send", &method);
+        let props = &schema["parameters"]["properties"];
+
+        // Pure array param: type is array with items.
+        assert_eq!(props["tags"]["type"], "array");
+        assert_eq!(props["tags"]["items"]["type"], "string");
+
+        // Scalar param: plain type.
+        assert_eq!(props["subject"]["type"], "string");
+        assert!(props["subject"]["items"].is_null());
+    }
+
+    #[test]
+    fn test_scalar_or_array_union_rendered_as_oneof_in_schema() {
+        let mut params = HashMap::new();
+        params.insert(
+            "to".to_string(),
+            MethodParameter {
+                param_type: Some("string".to_string()),
+                description: Some("Recipient addresses".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "/messages/send".to_string(),
+            parameters: params,
+            ..Default::default()
+        };
+        let schema = build_operation_schema(&["messages"], "send", &method);
+        let props = &schema["parameters"]["properties"];
+
+        // Union param: oneOf [string, array<string>].
+        assert!(props["to"]["type"].is_null(), "should not have top-level type");
+        let one_of = props["to"]["oneOf"].as_array().unwrap();
+        assert_eq!(one_of.len(), 2);
+        assert_eq!(one_of[0]["type"], "string");
+        assert_eq!(one_of[1]["type"], "array");
+        assert_eq!(one_of[1]["items"]["type"], "string");
+        assert_eq!(props["to"]["description"], "Recipient addresses");
     }
 }

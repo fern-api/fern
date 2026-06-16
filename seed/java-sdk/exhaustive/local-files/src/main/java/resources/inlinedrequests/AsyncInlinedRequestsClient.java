@@ -6,8 +6,11 @@ package com.fern.sdk.resources.inlinedrequests;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;
 import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import java.lang.String;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncInlinedRequestsClient {
@@ -41,5 +44,36 @@ public class AsyncInlinedRequestsClient {
   public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
       PostWithObjectBody request, RequestOptions requestOptions) {
     return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with root-level array body and header params
+   */
+  public CompletableFuture<String> postWithArrayBodyAndHeaders(List<String> body) {
+    return this.rawClient.postWithArrayBodyAndHeaders(body).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with root-level array body and header params
+   */
+  public CompletableFuture<String> postWithArrayBodyAndHeaders(List<String> body,
+      RequestOptions requestOptions) {
+    return this.rawClient.postWithArrayBodyAndHeaders(body, requestOptions).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with root-level array body and header params
+   */
+  public CompletableFuture<String> postWithArrayBodyAndHeaders(
+      PostWithArrayBodyAndHeaders request) {
+    return this.rawClient.postWithArrayBodyAndHeaders(request).thenApply(response -> response.body());
+  }
+
+  /**
+   * POST with root-level array body and header params
+   */
+  public CompletableFuture<String> postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders request,
+      RequestOptions requestOptions) {
+    return this.rawClient.postWithArrayBodyAndHeaders(request, requestOptions).thenApply(response -> response.body());
   }
 }

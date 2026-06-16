@@ -15,4 +15,22 @@ public final class ServiceClient: Sendable {
             responseType: JSONValue.self
         )
     }
+
+    public func getCsv(requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/csv",
+            requestOptions: requestOptions,
+            responseType: JSONValue.self
+        )
+    }
+
+    public func getXml(requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/xml",
+            requestOptions: requestOptions,
+            responseType: JSONValue.self
+        )
+    }
 }

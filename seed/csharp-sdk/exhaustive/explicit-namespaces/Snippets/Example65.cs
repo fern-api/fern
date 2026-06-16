@@ -10,7 +10,7 @@ public partial class Examples
             }
         );
 
-        await client.NoReqBody.PostWithNoRequestBodyAsync();
+        await client.NoReqBody.GetWithNoRequestBodyAsync();
     }
 
 }
