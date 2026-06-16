@@ -1,0 +1,8 @@
+- summary: |
+    Fix compile errors in generated Go SDKs where the v2/ TypeScript client and
+    its generated tests referenced types in their original package after the v1
+    generator had relocated those leaf types into the shared common package to
+    break an import cycle. The v1 generator now records the relocations in a
+    sidecar that the v2 generator reads, so both generators agree on where each
+    relocated type lives.
+  type: fix
