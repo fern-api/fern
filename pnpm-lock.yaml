@@ -568,8 +568,8 @@ catalogs:
       specifier: ^4.0.0
       version: 4.0.0
     ws:
-      specifier: ^8.20.1
-      version: 8.20.1
+      specifier: ^8.21.0
+      version: 8.21.0
     xml2js:
       specifier: ^0.6.2
       version: 0.6.2
@@ -4607,7 +4607,7 @@ importers:
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.5(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
       ws:
         specifier: 'catalog:'
-        version: 8.20.1
+        version: 8.21.0
       yaml:
         specifier: 'catalog:'
         version: 2.8.3
@@ -5456,7 +5456,7 @@ importers:
         version: 2.3.1
       ws:
         specifier: 'catalog:'
-        version: 8.20.1
+        version: 8.21.0
       xml2js:
         specifier: 'catalog:'
         version: 0.6.2
@@ -15276,8 +15276,8 @@ packages:
     resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  ws@8.20.1:
-    resolution: {integrity: sha512-It4dO0K5v//JtTXuPkfEOaI3uUN87iYPnqo/ZzqCoG3g8uhA66QUMs/SrM0YK7/NAu+r4LMh/9dq2A7k+rHs+w==}
+  ws@8.21.0:
+    resolution: {integrity: sha512-Vsp28b7DRcimFQvrqu2Wek3z1iYxDCWqHYB8Qsnk/S4RfaCQzPGPyBNuVjJV3cd6UiKtUtp6sNM77gWvzcCH+g==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -21672,7 +21672,7 @@ snapshots:
       devtools-protocol: 0.0.1581282
       typed-query-selector: 2.12.1
       webdriver-bidi-protocol: 0.4.1
-      ws: 8.20.1
+      ws: 8.21.0
     transitivePeerDependencies:
       - bare-abort-controller
       - bare-buffer
@@ -23126,7 +23126,7 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 4.1.0
 
-  ws@8.20.1: {}
+  ws@8.21.0: {}
 
   wsl-utils@0.3.1:
     dependencies:
