@@ -273,6 +273,6 @@ overrides:
   "@fern-api/fdr-sdk": 1.2.33-830bfae69e
   form-data: ^4.0.4
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
-  vite: ^7.3.2
+  vite: ^7.3.5
   esbuild: ^0.28.1
   yauzl: ^3.2.1
