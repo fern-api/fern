@@ -591,7 +591,7 @@ overrides:
   qs: 6.15.2
   url-join: ^4.0.1
   '@fern-api/fdr-sdk': 1.2.33-830bfae69e
-  form-data: ^4.0.4
+  form-data: ^4.0.6
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.3.5
   esbuild: ^0.28.1
@@ -6375,8 +6375,8 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       form-data:
-        specifier: ^4.0.4
-        version: 4.0.5
+        specifier: ^4.0.6
+        version: 4.0.6
       image-size:
         specifier: 'catalog:'
         version: 1.2.1
@@ -12342,8 +12342,8 @@ packages:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
 
-  form-data@4.0.5:
-    resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
+  form-data@4.0.6:
+    resolution: {integrity: sha512-vKatAh4SlVfgbv+YtmhiRjhEMJsYpsG1Y2rMQtR+SVSbytsSD1YGzDIcrAJmdFec88u/+VoGmxnl+80gL1tRCQ==}
     engines: {node: '>= 6'}
 
   formatly@0.3.0:
@@ -12540,6 +12540,10 @@ packages:
 
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
+    engines: {node: '>= 0.4'}
+
+  hasown@2.0.4:
+    resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
     engines: {node: '>= 0.4'}
 
   hast-util-embedded@3.0.0:
@@ -16487,7 +16491,7 @@ snapshots:
       es-toolkit: 1.45.1
       escape-string-regexp: 5.0.0
       fast-deep-equal: 3.1.3
-      form-data: 4.0.5
+      form-data: 4.0.6
       httpsnippet-lite: 3.0.5
       js-base64: 3.7.7
       node-fetch: 2.7.0
@@ -16536,7 +16540,7 @@ snapshots:
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     dependencies:
-      form-data: 4.0.5
+      form-data: 4.0.6
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.15.2
@@ -16548,7 +16552,7 @@ snapshots:
 
   '@fern-fern/generator-cli-sdk@0.1.8':
     dependencies:
-      form-data: 4.0.5
+      form-data: 4.0.6
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.15.2
@@ -16558,7 +16562,7 @@ snapshots:
 
   '@fern-fern/generator-cli-sdk@0.5.3':
     dependencies:
-      form-data: 4.0.5
+      form-data: 4.0.6
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.15.2
@@ -16568,7 +16572,7 @@ snapshots:
 
   '@fern-fern/generator-exec-sdk@0.0.1167':
     dependencies:
-      form-data: 4.0.5
+      form-data: 4.0.6
       node-fetch: 2.7.0
       qs: 6.15.2
       url-join: 4.0.1
@@ -16577,7 +16581,7 @@ snapshots:
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     dependencies:
-      form-data: 4.0.5
+      form-data: 4.0.6
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -17956,7 +17960,7 @@ snapshots:
   '@types/node-fetch@2.6.13':
     dependencies:
       '@types/node': 22.19.17
-      form-data: 4.0.5
+      form-data: 4.0.6
 
   '@types/node@22.19.17':
     dependencies:
@@ -18324,7 +18328,7 @@ snapshots:
   axios@1.16.0:
     dependencies:
       follow-redirects: 1.16.0
-      form-data: 4.0.5
+      form-data: 4.0.6
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
@@ -19489,12 +19493,12 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
-  form-data@4.0.5:
+  form-data@4.0.6:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       es-set-tostringtag: 2.1.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       mime-types: 2.1.35
 
   formatly@0.3.0:
@@ -19684,6 +19688,10 @@ snapshots:
       hookified: 1.15.1
 
   hasown@2.0.2:
+    dependencies:
+      function-bind: 1.1.2
+
+  hasown@2.0.4:
     dependencies:
       function-bind: 1.1.2
 
