@@ -1852,7 +1852,8 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": false
             }
           ],
           "queryParameters": [],
@@ -2093,7 +2094,8 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": false
             }
           ],
           "queryParameters": [],

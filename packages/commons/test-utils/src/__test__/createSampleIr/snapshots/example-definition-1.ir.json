@@ -96,6 +96,7 @@
         "extends": undefined,
         "properties": [
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -127,6 +128,7 @@
             "variable": undefined,
           },
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -158,6 +160,7 @@
             "variable": undefined,
           },
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -193,6 +196,7 @@
             "variable": undefined,
           },
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -224,6 +228,7 @@
             "variable": undefined,
           },
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -255,6 +260,7 @@
             "variable": undefined,
           },
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -358,6 +364,7 @@
         "extends": undefined,
         "properties": [
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -389,6 +396,7 @@
             "variable": undefined,
           },
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {
@@ -420,6 +428,7 @@
             "variable": undefined,
           },
           {
+            "clientDefault": undefined,
             "name": {
               "name": {
                 "camelCase": {

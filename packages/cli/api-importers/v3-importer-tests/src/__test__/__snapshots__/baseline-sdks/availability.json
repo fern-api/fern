@@ -1547,7 +1547,8 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": false
             },
             {
               "name": {
@@ -1575,7 +1576,8 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": false
             },
             {
               "name": {
@@ -1603,7 +1605,8 @@
               "typeReference": {
                 "value": "type_:DeprecatedParam",
                 "type": "named"
-              }
+              },
+              "clientDefault": false
             },
             {
               "name": {
@@ -1631,7 +1634,8 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": false
             }
           ],
           "queryParameters": [

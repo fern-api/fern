@@ -1527,7 +1527,8 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": false
             }
           ],
           "queryParameters": [],

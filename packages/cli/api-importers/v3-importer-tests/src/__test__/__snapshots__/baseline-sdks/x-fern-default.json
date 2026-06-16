@@ -525,7 +525,8 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": true
             }
           ],
           "queryParameters": [

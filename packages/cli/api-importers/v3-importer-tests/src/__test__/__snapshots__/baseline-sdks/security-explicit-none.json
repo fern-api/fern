@@ -465,7 +465,8 @@
               "typeReference": {
                 "value": "INTEGER",
                 "type": "primitive"
-              }
+              },
+              "clientDefault": false
             }
           ],
           "queryParameters": [],
