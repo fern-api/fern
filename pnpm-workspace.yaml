@@ -276,3 +276,4 @@ overrides:
   vite: ^7.3.2
   esbuild: ^0.28.1
   yauzl: ^3.2.1
+  "@opentelemetry/core": ">=2.8.0"
