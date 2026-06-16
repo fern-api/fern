@@ -169,7 +169,7 @@ catalog:
   fast-levenshtein: ^3.0.0
   file-type: ^21.3.4
   find-up: ^6.3.0
-  form-data: 4.0.4
+  form-data: 4.0.6
   fs-extra: ^11.3.4
   glob: ^11.1.0
   graphql: ^16.13.2
@@ -271,7 +271,7 @@ overrides:
   qs: 6.15.2
   url-join: ^4.0.1
   "@fern-api/fdr-sdk": 1.2.33-830bfae69e
-  form-data: ^4.0.4
+  form-data: ^4.0.6
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.2
   esbuild: ^0.28.1
