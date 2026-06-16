@@ -75,17 +75,15 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
             }
             const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties
                 .filter((baseProperty) => baseProperty.name != null)
-                .map(
-                    (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
-                        return {
-                            key: FdrCjsSdk.PropertyKey(getWireValue(baseProperty.name)),
-                            valueType: convertTypeReference(baseProperty.valueType, baseProperty.defaultValue),
-                            availability: convertIrAvailability(baseProperty.availability),
-                            description: baseProperty.docs,
-                            propertyAccess: baseProperty.propertyAccess
-                        };
-                    }
-                );
+                .map((baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
+                    return {
+                        key: FdrCjsSdk.PropertyKey(getWireValue(baseProperty.name)),
+                        valueType: convertTypeReference(baseProperty.valueType, baseProperty.defaultValue),
+                        availability: convertIrAvailability(baseProperty.availability),
+                        description: baseProperty.docs,
+                        propertyAccess: baseProperty.propertyAccess
+                    };
+                });
             return {
                 type: "discriminatedUnion",
                 discriminant: getWireValue(union.discriminant),
@@ -97,9 +95,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                             discriminantValue: getWireValue(variant.discriminantValue),
                             displayName: variant.displayName,
                             availability:
-                                variant.availability != null
-                                    ? convertIrAvailability(variant.availability)
-                                    : undefined,
+                                variant.availability != null ? convertIrAvailability(variant.availability) : undefined,
                             additionalProperties:
                                 Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
                                     variant.shape,
