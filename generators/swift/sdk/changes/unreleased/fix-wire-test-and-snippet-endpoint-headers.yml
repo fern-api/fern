@@ -7,5 +7,7 @@
     (e.g. `X-API-Version`), which produced calls missing required arguments that
     failed to compile. Headers are now rendered between the path and query
     arguments to match the generated method signature, filtered to the
-    String-typed headers the SDK surfaces as parameters.
+    String-typed headers the SDK surfaces as parameters. The String-type filter
+    resolves through type aliases, so a header typed as an alias of String is
+    emitted just like the SDK declares it.
   type: fix

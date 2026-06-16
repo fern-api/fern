@@ -545,7 +545,11 @@ export class EndpointSnippetGenerator {
                 // The generated SDK only surfaces String-typed headers as endpoint
                 // method parameters; non-String and literal headers are set
                 // automatically, so the snippet must omit them to match the signature.
-                const swiftType = this.context.getSwiftTypeReferenceFromScope(parameter.typeReference, moduleSymbol);
+                // Resolve through type aliases first so that a header typed as an
+                // alias of String (which the SDK treats as a String parameter) is
+                // still emitted here.
+                const resolvedTypeReference = this.resolveAliasTypeReference(parameter.typeReference);
+                const swiftType = this.context.getSwiftTypeReferenceFromScope(resolvedTypeReference, moduleSymbol);
                 return referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
             })
             .map((parameter) => {
@@ -558,6 +562,16 @@ export class EndpointSnippetGenerator {
                     })
                 });
             });
+    }
+
+    private resolveAliasTypeReference(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+        if (typeReference.type === "named") {
+            const namedType = this.context.ir.types[typeReference.value];
+            if (namedType != null && namedType.type === "alias") {
+                return this.resolveAliasTypeReference(namedType.typeReference);
+            }
+        }
+        return typeReference;
     }
 
     private getFilePropertyInfo({
