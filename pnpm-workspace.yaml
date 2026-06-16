@@ -233,7 +233,7 @@ catalog:
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.13
+  tar: ^7.5.16
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3
@@ -273,7 +273,7 @@ overrides:
   "@fern-api/fdr-sdk": 1.2.33-830bfae69e
   form-data: ^4.0.4
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
-  vite: ^7.3.2
+  vite: ^7.3.5
   esbuild: ^0.28.1
   ws: ^8.21.0
   yauzl: ^3.2.1
