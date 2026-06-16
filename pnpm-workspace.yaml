@@ -275,5 +275,4 @@ overrides:
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.5
   esbuild: ^0.28.1
-  ws: ^8.21.0
   yauzl: ^3.2.1
