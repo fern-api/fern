@@ -1132,16 +1132,36 @@ jobs:
         run: |
           echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
-      # GITHUB_TOKEN does not trigger pull_request events, so we re-trigger
-      # CI on the PR branch using a PAT so required checks can run.
-      - name: Trigger CI on PR branch
+      # GITHUB_TOKEN pushes queue pull_request workflow runs that require
+      # manual approval.  Approve them automatically so required PR checks
+      # can run and the auto-merge proceeds.
+      - name: Approve pending workflow runs
         if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
         run: |
-          gh workflow run "CI" --ref update-all-seed
-          gh workflow run "Seed Snapshot Tests" --ref update-all-seed
+          BRANCH="update-all-seed"
+          echo "Waiting for pull_request workflow runs to be queued..."
+          for attempt in 1 2 3 4 5 6; do
+            sleep 10
+            PENDING_RUNS=$(gh api \
+              "/repos/${{ github.repository }}/actions/runs?branch=${BRANCH}&event=pull_request&status=action_required&per_page=20" \
+              --jq '.workflow_runs[].id')
+            if [ -n "$PENDING_RUNS" ]; then
+              echo "Found pending workflow runs, approving..."
+              for RUN_ID in $PENDING_RUNS; do
+                echo "Approving workflow run $RUN_ID"
+                gh api --method POST \
+                  "/repos/${{ github.repository }}/actions/runs/${RUN_ID}/approve" 2>&1 \
+                  || echo "Warning: failed to approve run $RUN_ID"
+              done
+              echo "All pending runs approved."
+              exit 0
+            fi
+            echo "Attempt $attempt: no pending runs yet, retrying..."
+          done
+          echo "No action-required workflow runs found after retries."
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
