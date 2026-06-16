@@ -505,8 +505,8 @@ catalogs:
       specifier: 7.0.8
       version: 7.0.8
     tar:
-      specifier: ^7.5.13
-      version: 7.5.13
+      specifier: ^7.5.16
+      version: 7.5.16
     terminal-link:
       specifier: ^3.0.0
       version: 3.0.0
@@ -4585,7 +4585,7 @@ importers:
         version: 7.7.4
       tar:
         specifier: 'catalog:'
-        version: 7.5.13
+        version: 7.5.16
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -6212,7 +6212,7 @@ importers:
         version: 7.7.4
       tar:
         specifier: 'catalog:'
-        version: 7.5.13
+        version: 7.5.16
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -7154,7 +7154,7 @@ importers:
         version: 7.0.8
       tar:
         specifier: 'catalog:'
-        version: 7.5.13
+        version: 7.5.16
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -14714,8 +14714,8 @@ packages:
   tar-stream@3.1.8:
     resolution: {integrity: sha512-U6QpVRyCGHva435KoNWy9PRoi2IFYCgtEhq9nmrPPpbRacPs9IH4aJ3gbrFC8dPcXvdSZ4XXfXT5Fshbp2MtlQ==}
 
-  tar@7.5.13:
-    resolution: {integrity: sha512-tOG/7GyXpFevhXVh8jOPJrmtRpOTsYqUIkVdVooZYJS/z8WhfQUX8RJILmeuJNinGAMSu1veBr4asSHFt5/hng==}
+  tar@7.5.16:
+    resolution: {integrity: sha512-56adEpPMouktRlBLXiaYFFzZ/3+JXa8P9n7WbR+ibIjtviN55mEaOkiysCnPnWm+7kkui1Dn8J9l+g6zV8731w==}
     engines: {node: '>=18'}
 
   teex@1.0.1:
@@ -22609,7 +22609,7 @@ snapshots:
       - bare-buffer
       - react-native-b4a
 
-  tar@7.5.13:
+  tar@7.5.16:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
