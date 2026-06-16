@@ -58,7 +58,7 @@ trustPolicyExclude:
 blockExoticSubdeps: true
 
 catalog:
-  "@babel/core": ^7.29.0
+  "@babel/core": ^7.29.6
   "@babel/preset-env": ^7.29.5
   "@babel/preset-typescript": ^7.28.5
   "@biomejs/biome": 2.4.10
