@@ -586,7 +586,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                             "value": "type_commons:AppId"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -616,7 +617,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": [
@@ -790,7 +792,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                             "value": "type_commons:AppId"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -1275,7 +1278,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                     "value": "STRING"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "type": "file",
@@ -1352,7 +1356,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                     "value": "INTEGER"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             }
                         ]
                     },
@@ -17273,7 +17278,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -17376,7 +17382,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -18274,7 +18281,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                             "value": "type_:RootString"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -18304,7 +18312,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                             "value": "type_package:PackageString"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19590,7 +19599,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19691,7 +19701,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -19792,7 +19803,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -19822,7 +19834,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "value": "type_service:Movie"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": [
@@ -20811,7 +20824,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -20911,7 +20925,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                             "type": "unknown"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -20950,7 +20965,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 },
                 "propertyAccess": null,
-                "variable": null
+                "variable": null,
+                "clientDefault": null
             }
         ],
         "endpoints": {
@@ -21070,7 +21086,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "value": "STRING"
                 },
                 "propertyAccess": null,
-                "variable": null
+                "variable": null,
+                "clientDefault": false
             }
         ],
         "environments": null,
@@ -22722,7 +22739,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -22894,7 +22912,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -22927,7 +22946,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -22966,7 +22986,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 },
                 "propertyAccess": null,
-                "variable": null
+                "variable": null,
+                "clientDefault": null
             }
         ],
         "endpoints": {
@@ -23086,7 +23107,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "value": "STRING"
                 },
                 "propertyAccess": null,
-                "variable": null
+                "variable": null,
+                "clientDefault": false
             }
         ],
         "environments": null,
@@ -28682,7 +28704,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -28783,7 +28806,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -28978,7 +29002,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -29008,7 +29033,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "type_director:Age"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -29541,7 +29567,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "type_imdb:MovieId"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -29571,7 +29598,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -29601,7 +29629,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "DOUBLE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -29702,7 +29731,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -29735,7 +29765,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -29836,7 +29867,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "type_director:Director"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -30208,7 +30240,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "unknown"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -30309,7 +30342,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -30342,7 +30376,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -30375,7 +30410,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": [
@@ -30416,7 +30452,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 },
                 "propertyAccess": null,
-                "variable": null
+                "variable": null,
+                "clientDefault": null
             }
         ],
         "endpoints": {
@@ -30757,7 +30794,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "value": "type_imdb:MovieId"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": false
                         }
                     ],
                     "queryParameters": [
@@ -30792,7 +30830,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 }
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         }
                     ],
                     "headers": [],
@@ -30908,7 +30947,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "value": "type_imdb:MovieId"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": false
                         }
                     ],
                     "body": null
@@ -30948,7 +30988,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "value": "STRING"
                 },
                 "propertyAccess": null,
-                "variable": null
+                "variable": null,
+                "clientDefault": false
             }
         ],
         "environments": null,
@@ -31683,7 +31724,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                     "value": "BOOLEAN"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             }
                         ]
                     },
@@ -32368,7 +32410,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                                 "value": "type_commons:StringAlias"
                             },
                             "propertyAccess": null,
-                            "variable": "my-variable"
+                            "variable": "my-variable",
+                            "clientDefault": false
                         }
                     ],
                     "body": null
@@ -32408,7 +32451,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "value": "type_commons:StringAlias"
                 },
                 "propertyAccess": null,
-                "variable": "my-variable"
+                "variable": "my-variable",
+                "clientDefault": false
             }
         ],
         "environments": null,
@@ -33233,7 +33277,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -33263,7 +33308,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -33364,7 +33410,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -33394,7 +33441,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "DOUBLE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -33495,7 +33543,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -33525,7 +33574,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "DOUBLE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -33555,7 +33605,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -33656,7 +33707,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -33686,7 +33738,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             "value": "DOUBLE"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -33719,7 +33772,8 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
