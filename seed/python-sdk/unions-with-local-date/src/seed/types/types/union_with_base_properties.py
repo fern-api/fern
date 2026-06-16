@@ -15,7 +15,7 @@ class Base(UniversalBaseModel):
     --------
     from seed.types import UnionWithBaseProperties_Integer
 
-    UnionWithBaseProperties_Integer(value=5)
+    UnionWithBaseProperties_Integer(value=5, id="id")
     """
 
     id: str
@@ -62,7 +62,7 @@ class UnionWithBaseProperties_Foo(Base):
     --------
     from seed.types import UnionWithBaseProperties_Integer
 
-    UnionWithBaseProperties_Integer(value=5)
+    UnionWithBaseProperties_Integer(value=5, id="id")
     """
 
     type: typing.Literal["foo"] = "foo"
@@ -81,7 +81,7 @@ class UnionWithBaseProperties_Foo(Base):
 """
 from seed.types import UnionWithBaseProperties_Integer
 
-UnionWithBaseProperties_Integer(value=5)
+UnionWithBaseProperties_Integer(value=5, id="id")
 """
 UnionWithBaseProperties = typing_extensions.Annotated[
     typing.Union[UnionWithBaseProperties_Integer, UnionWithBaseProperties_String, UnionWithBaseProperties_Foo],

@@ -351,6 +351,11 @@ impl Binding for OpenApiBinding {
         Ok(())
     }
 
+    fn schema(&self, path: &[String]) -> Result<Option<serde_json::Value>, CliError> {
+        let prepared = self.ensure_prepared()?;
+        Ok(super::help::build_schema(&prepared.doc, path))
+    }
+
     fn build_command(&self) -> Result<clap::Command, CliError> {
         let prepared = self.ensure_prepared()?;
         let cli = commands::build_cli(&prepared.doc)
@@ -372,26 +377,6 @@ impl Binding for OpenApiBinding {
         }
 
         Ok(cli)
-    }
-
-    fn render_json_help(
-        &self,
-        subcommand_path: &[String],
-        out: &mut dyn std::io::Write,
-    ) -> Result<bool, CliError> {
-        let prepared = self.ensure_prepared()?;
-        match super::help::write_json_help(&prepared.doc, subcommand_path, out) {
-            Ok(()) => Ok(true),
-            // "Resource not found" / "Operation not found" means the path
-            // belongs to a different binding — return false so the
-            // dispatch_pipeline loop tries the next one.
-            Err(CliError::Validation(msg))
-                if msg.contains("not found") =>
-            {
-                Ok(false)
-            }
-            Err(e) => Err(e),
-        }
     }
 
     fn dispatch<'a>(
@@ -492,13 +477,20 @@ impl Binding for OpenApiBinding {
                         .map(|s| s.as_str())
                 });
 
-            // Validate binary body path for dangerous characters.
+            // Validate binary body path for dangerous characters. Validate the
+            // SAME string the executor will use as the file path — for plain
+            // and `@`-prefixed values that's the input with the optional `@`
+            // stripped; for the `\@<REST>` escape that's the literal `@<REST>`
+            // produced by `strip_or_escape_at`. Unlike the multipart and
+            // JSON-shorthand sites, the binary-body escape still opens a file
+            // (see `BinaryBodySource::parse` → `File(...)`), so path-shape
+            // validation must apply in both branches. FER-10436.
             if let Some(path_str) = binary_body_path {
-                let stripped = path_str.strip_prefix('@').unwrap_or(path_str);
-                if stripped != "-" {
+                let stripped = executor::strip_or_escape_at(path_str);
+                if stripped.as_ref() != "-" {
                     let flag = method.binary_request_body.as_ref()
                         .map(|b| b.flag_name.as_str()).unwrap_or("file");
-                    crate::output::reject_dangerous_chars(stripped, &format!("--{flag}"))?;
+                    crate::output::reject_dangerous_chars(stripped.as_ref(), &format!("--{flag}"))?;
                 }
             }
 

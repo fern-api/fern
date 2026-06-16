@@ -8,8 +8,9 @@ enum Example62 {
             token: "<token>"
         )
 
-        _ = try await client.noAuth.postWithNoAuth(request: .object([
-            "key": .string("value")
-        ]))
+        _ = try await client.inlinedRequests.postWithArrayBodyAndHeaders(request: [
+            "string",
+            "string"
+        ])
     }
 }
