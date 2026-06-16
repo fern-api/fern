@@ -62,8 +62,8 @@ ruff = "==0.11.5"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
-norecursedirs = [ "src" ]
 asyncio_mode = "auto"
+norecursedirs = [ "src" ]
 markers = [
     "aiohttp: tests that require httpx_aiohttp to be installed",
 ]

@@ -35,6 +35,7 @@ class Shape(UniversalRootModel):
 
     Shape_Circle(
         radius=5.0,
+        id="example",
     )
     """
 

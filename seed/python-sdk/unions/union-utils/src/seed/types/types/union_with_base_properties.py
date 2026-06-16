@@ -42,7 +42,7 @@ class UnionWithBaseProperties(UniversalRootModel):
     --------
     from seed.types import UnionWithBaseProperties_Integer
 
-    UnionWithBaseProperties_Integer(value=5)
+    UnionWithBaseProperties_Integer(value=5, id="id")
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

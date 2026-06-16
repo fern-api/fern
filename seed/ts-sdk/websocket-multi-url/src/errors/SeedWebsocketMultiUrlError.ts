@@ -28,7 +28,7 @@ export class SeedWebsocketMultiUrlError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedWebsocketMultiUrlError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

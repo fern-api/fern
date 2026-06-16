@@ -10,7 +10,7 @@ export class AcmeRequestTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "AcmeRequestTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

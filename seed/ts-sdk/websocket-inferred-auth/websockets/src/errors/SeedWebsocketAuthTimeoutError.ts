@@ -10,7 +10,7 @@ export class SeedWebsocketAuthTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedWebsocketAuthTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

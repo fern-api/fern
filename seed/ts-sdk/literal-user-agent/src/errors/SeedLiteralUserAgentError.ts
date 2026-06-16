@@ -28,7 +28,7 @@ export class SeedLiteralUserAgentError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedLiteralUserAgentError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
