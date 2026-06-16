@@ -187,7 +187,7 @@ export class EndpointMethodGenerator {
             json: (resp) =>
                 this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(resp.responseBodyType, this.parentClassSymbol),
             fileDownload: () => this.referencer.referenceFoundationType("Data"),
-            text: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle text responses
+            text: () => this.referencer.referenceSwiftType("String"),
             bytes: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
             streaming: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle streaming responses
             streamParameter: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle stream parameter responses

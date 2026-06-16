@@ -23,13 +23,14 @@ import Literal
         let expectedResponse = SendResponse(
             message: "The weather is sunny",
             status: 200,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.reference.send(
             request: SendRequest(
                 prompt: .youAreAHelpfulAssistant,
                 query: "What is the weather today",
                 stream: false,
+                ending: .ending,
                 context: .youreSuperWise,
                 containerObject: ContainerObject(
                     nestedObjects: [
@@ -66,7 +67,7 @@ import Literal
         let expectedResponse = SendResponse(
             message: "message",
             status: 1,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.reference.send(
             request: SendRequest(

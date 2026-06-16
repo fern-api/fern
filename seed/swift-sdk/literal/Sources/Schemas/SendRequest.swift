@@ -3,7 +3,7 @@ import Foundation
 public struct SendRequest: Codable, Hashable, Sendable {
     public let prompt: YouAreAHelpfulAssistant
     public let query: String
-    public let stream: JSONValue
+    public let stream: Bool
     public let ending: Ending
     public let context: SomeLiteral
     public let maybeContext: SomeLiteral?
@@ -14,7 +14,7 @@ public struct SendRequest: Codable, Hashable, Sendable {
     public init(
         prompt: YouAreAHelpfulAssistant,
         query: String,
-        stream: JSONValue,
+        stream: Bool,
         ending: Ending,
         context: SomeLiteral,
         maybeContext: SomeLiteral? = nil,
@@ -35,7 +35,7 @@ public struct SendRequest: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.prompt = try container.decode(YouAreAHelpfulAssistant.self, forKey: .prompt)
         self.query = try container.decode(String.self, forKey: .query)
-        self.stream = try container.decode(JSONValue.self, forKey: .stream)
+        self.stream = try container.decode(Bool.self, forKey: .stream)
         self.ending = try container.decode(Ending.self, forKey: .ending)
         self.context = try container.decode(SomeLiteral.self, forKey: .context)
         self.maybeContext = try container.decodeIfPresent(SomeLiteral.self, forKey: .maybeContext)

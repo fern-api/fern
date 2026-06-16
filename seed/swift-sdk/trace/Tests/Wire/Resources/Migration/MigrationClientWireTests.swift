@@ -36,7 +36,10 @@ import Trace
                 status: .running
             )
         ]
-        let response = try await client.migration.getAttemptedMigrations(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.migration.getAttemptedMigrations(
+            adminKeyHeader: "admin-key-header",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }
