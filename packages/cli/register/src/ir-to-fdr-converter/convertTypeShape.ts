@@ -42,69 +42,113 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
             };
         },
         union: (union) => {
-            const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties.map(
-                (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
-                    return {
-                        key: FdrCjsSdk.PropertyKey(getWireValue(baseProperty.name)),
-                        valueType: convertTypeReference(baseProperty.valueType, baseProperty.defaultValue),
-                        availability: convertIrAvailability(baseProperty.availability),
-                        description: baseProperty.docs,
-                        propertyAccess: baseProperty.propertyAccess
-                    };
-                }
-            );
+            if (union.discriminant == null) {
+                return {
+                    type: "undiscriminatedUnion",
+                    variants: union.types
+                        .map((variant): FdrCjsSdk.api.v1.register.UndiscriminatedUnionVariant | undefined => {
+                            const typeRef = Ir.types.SingleUnionTypeProperties._visit<
+                                FdrCjsSdk.api.v1.register.TypeReference | undefined
+                            >(variant.shape, {
+                                samePropertiesAsObject: (extension) => ({
+                                    type: "id",
+                                    value: FdrCjsSdk.TypeId(extension.typeId),
+                                    default: undefined
+                                }),
+                                singleProperty: (singleProperty) => convertTypeReference(singleProperty.type),
+                                noProperties: () => undefined,
+                                _other: () => undefined
+                            });
+                            if (typeRef == null) {
+                                return undefined;
+                            }
+                            return {
+                                typeName: undefined,
+                                description: variant.docs ?? undefined,
+                                type: typeRef,
+                                availability: undefined,
+                                displayName: variant.displayName
+                            };
+                        })
+                        .filter((v): v is FdrCjsSdk.api.v1.register.UndiscriminatedUnionVariant => v != null)
+                };
+            }
+            const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties
+                .filter((baseProperty) => baseProperty.name != null)
+                .map(
+                    (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
+                        return {
+                            key: FdrCjsSdk.PropertyKey(getWireValue(baseProperty.name)),
+                            valueType: convertTypeReference(baseProperty.valueType, baseProperty.defaultValue),
+                            availability: convertIrAvailability(baseProperty.availability),
+                            description: baseProperty.docs,
+                            propertyAccess: baseProperty.propertyAccess
+                        };
+                    }
+                );
             return {
                 type: "discriminatedUnion",
                 discriminant: getWireValue(union.discriminant),
-                variants: union.types.map((variant): FdrCjsSdk.api.v1.register.DiscriminatedUnionVariant => {
-                    return {
-                        description: variant.docs ?? undefined,
-                        discriminantValue: getWireValue(variant.discriminantValue),
-                        displayName: variant.displayName,
-                        availability:
-                            variant.availability != null ? convertIrAvailability(variant.availability) : undefined,
-                        additionalProperties:
-                            Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
-                                variant.shape,
-                                {
-                                    samePropertiesAsObject: (extension) => ({
-                                        extends: [FdrCjsSdk.TypeId(extension.typeId)],
-                                        properties: baseProperties,
-                                        // TODO: add support for extra properties in discriminated union
-                                        extraProperties: undefined
-                                    }),
-                                    singleProperty: (singleProperty) => ({
-                                        extends: [],
-                                        properties: [
-                                            {
-                                                key: FdrCjsSdk.PropertyKey(getWireValue(singleProperty.name)),
-                                                valueType: convertTypeReference(singleProperty.type),
-                                                description: undefined,
-                                                availability: undefined,
-                                                propertyAccess: undefined
-                                            },
-                                            ...baseProperties
-                                        ],
-                                        // TODO: add support for extra properties in discriminated union
-                                        extraProperties: undefined
-                                    }),
-                                    noProperties: () => ({
-                                        extends: [],
-                                        properties: baseProperties,
-                                        // TODO: add support for extra properties in discriminated union
-                                        extraProperties: undefined
-                                    }),
-                                    _other: () => {
-                                        throw new CliError({
-                                            message:
-                                                "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType,
-                                            code: CliError.Code.InternalError
-                                        });
+                variants: union.types
+                    .filter((variant) => variant.discriminantValue != null)
+                    .map((variant): FdrCjsSdk.api.v1.register.DiscriminatedUnionVariant => {
+                        return {
+                            description: variant.docs ?? undefined,
+                            discriminantValue: getWireValue(variant.discriminantValue),
+                            displayName: variant.displayName,
+                            availability:
+                                variant.availability != null
+                                    ? convertIrAvailability(variant.availability)
+                                    : undefined,
+                            additionalProperties:
+                                Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
+                                    variant.shape,
+                                    {
+                                        samePropertiesAsObject: (extension) => ({
+                                            extends: [FdrCjsSdk.TypeId(extension.typeId)],
+                                            properties: baseProperties,
+                                            // TODO: add support for extra properties in discriminated union
+                                            extraProperties: undefined
+                                        }),
+                                        singleProperty: (singleProperty) => ({
+                                            extends: [],
+                                            properties: [
+                                                ...(singleProperty.name != null
+                                                    ? [
+                                                          {
+                                                              key: FdrCjsSdk.PropertyKey(
+                                                                  getWireValue(singleProperty.name)
+                                                              ),
+                                                              valueType: convertTypeReference(singleProperty.type),
+                                                              description: undefined,
+                                                              availability: undefined,
+                                                              propertyAccess: undefined
+                                                          }
+                                                      ]
+                                                    : []),
+                                                ...baseProperties
+                                            ],
+                                            // TODO: add support for extra properties in discriminated union
+                                            extraProperties: undefined
+                                        }),
+                                        noProperties: () => ({
+                                            extends: [],
+                                            properties: baseProperties,
+                                            // TODO: add support for extra properties in discriminated union
+                                            extraProperties: undefined
+                                        }),
+                                        _other: () => {
+                                            throw new CliError({
+                                                message:
+                                                    "Unknown SingleUnionTypeProperties: " +
+                                                    variant.shape.propertiesType,
+                                                code: CliError.Code.InternalError
+                                            });
+                                        }
                                     }
-                                }
-                            )
-                    };
-                })
+                                )
+                        };
+                    })
             };
         },
         undiscriminatedUnion: (union) => {

@@ -1,0 +1,5 @@
+- summary: |
+    Fix crash in `fern docs dev` when an IR union type has an undefined discriminant.
+    The IR-to-FDR type converter now gracefully falls back to an undiscriminated union
+    representation instead of throwing `Cannot read properties of undefined (reading 'wireValue')`.
+  type: fix
