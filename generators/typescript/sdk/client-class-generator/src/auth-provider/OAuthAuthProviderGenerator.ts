@@ -125,6 +125,16 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
               ])
             : clientSecretSupplier;
 
+        const additionalProperties: OptionalKind<PropertySignatureStructure>[] = this.getAdditionalTokenRequestProperties(
+            requestProperties,
+            context
+        ).map((property) => ({
+            kind: StructureKind.PropertySignature,
+            name: getPropertyKey(property.name),
+            hasQuestionToken: false,
+            type: getTextOfTsNode(property.type)
+        }));
+
         return [
             {
                 kind: StructureKind.PropertySignature,
@@ -137,7 +147,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 name: getPropertyKey(CLIENT_SECRET_VAR_NAME),
                 hasQuestionToken: clientSecretIsOptional,
                 type: getTextOfTsNode(clientSecretPropertyType)
-            }
+            },
+            ...additionalProperties
         ];
     }
 
@@ -247,6 +258,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const endpointName = this.getName(endpoint.name, context);
 
         const customPropertyAssignments = this.getCustomPropertyAssignments(requestProperties, endpoint, context);
+        const additionalPropertyAssignments = this.getAdditionalRequestPropertyAssignments(requestProperties, context);
 
         const accessTokenProperty = context.type.generateGetterForResponsePropertyAsString({
             property: responseProperties.accessToken,
@@ -350,7 +362,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 const clientSecret = await this.clientSecretSupplier(${ENDPOINT_METADATA_ARG_NAME});
                 const tokenResponse = await this.${AUTH_CLIENT_FIELD_NAME}.${endpointName}({
                     ${clientIdProperty}: clientId,
-                    ${clientSecretProperty}: clientSecret,${customPropertyAssignments}
+                    ${clientSecretProperty}: clientSecret,${customPropertyAssignments}${additionalPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
                 this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
@@ -369,7 +381,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 const clientSecret = await this.clientSecretSupplier(${ENDPOINT_METADATA_ARG_NAME});
                 const tokenResponse = await this.${AUTH_CLIENT_FIELD_NAME}.${endpointName}({
                     ${clientIdProperty}: clientId,
-                    ${clientSecretProperty}: clientSecret,${customPropertyAssignments}
+                    ${clientSecretProperty}: clientSecret,${customPropertyAssignments}${additionalPropertyAssignments}
                 });
                 ${neverThrowErrorHandler}
                 this.${ACCESS_TOKEN_FIELD_NAME} = ${accessTokenProperty};
@@ -896,6 +908,48 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return assignments.join("");
     }
 
+    /**
+     * Non-literal, required request properties (the scopes mapping and any custom
+     * properties) that the OAuth flow cannot synthesize. These are surfaced as
+     * client-credentials options so the user supplies them, and forwarded to the
+     * token endpoint request. Literal custom properties are injected by the
+     * generated client method, and optional ones can be omitted.
+     */
+    private getAdditionalTokenRequestProperties(
+        requestProperties: FernIr.OAuthAccessTokenRequestProperties,
+        context: FileContext
+    ): Array<{ name: string; type: ts.TypeNode }> {
+        const additionalProperties: FernIr.RequestProperty[] = [];
+        if (requestProperties.scopes != null) {
+            additionalProperties.push(requestProperties.scopes);
+        }
+        for (const customProperty of requestProperties.customProperties ?? []) {
+            const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            if (isLiteral || context.type.isOptional(customProperty.property.valueType)) {
+                continue;
+            }
+            additionalProperties.push(customProperty);
+        }
+        return additionalProperties.map((requestProperty) => ({
+            name: this.getName(requestProperty.property.name, context),
+            type: context.type.getReferenceToType(requestProperty.property.valueType).typeNodeWithoutUndefined
+        }));
+    }
+
+    private getAdditionalRequestPropertyAssignments(
+        requestProperties: FernIr.OAuthAccessTokenRequestProperties,
+        context: FileContext
+    ): string {
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+        return this.getAdditionalTokenRequestProperties(requestProperties, context)
+            .map(
+                (property) =>
+                    `\n                    ${getPropertyKey(property.name)}: this.${OPTIONS_FIELD_NAME}${wrapperAccess}[${JSON.stringify(property.name)}],`
+            )
+            .join("");
+    }
+
     private getName(name: FernIr.Name | FernIr.NameAndWireValue | string, context: FileContext): string {
         if (this.includeSerdeLayer) {
             return context.case.camelUnsafe(name);
@@ -936,12 +990,19 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientIdQuestion = clientIdIsOptional ? "?" : "";
         const clientSecretQuestion = clientSecretIsOptional ? "?" : "";
 
+        const additionalProps = this.getAdditionalTokenRequestProperties(
+            oauthConfig.tokenEndpoint.requestProperties,
+            context
+        )
+            .map((property) => `; ${getPropertyKey(property.name)}: ${getTextOfTsNode(property.type)}`)
+            .join("");
+
         const wrappedClientCredsProps = this.keepIfWrapper(
-            `[WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType} };`
+            `[WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType}${additionalProps} };`
         );
         const inlinedClientCredsProps =
             wrappedClientCredsProps ||
-            `[CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType}`;
+            `[CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType}${additionalProps}`;
         const clientCredsType = `{\n        ${inlinedClientCredsProps}\n    }`;
 
         // Token override is always required (no env var support for token override)
