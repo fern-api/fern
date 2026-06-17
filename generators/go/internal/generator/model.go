@@ -1804,6 +1804,13 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 		return nil
 	}
 
+	// If the inner type is a named alias that already resolves to optional/nullable,
+	// don't add another pointer (e.g. avoid **time.Time for nullable date aliases).
+	if isOptionalType(optionalOrNullable, c.types) {
+		c.value = value
+		return nil
+	}
+
 	if !(isTypeReferencePointerRequired(optionalOrNullable)) {
 		c.value = value
 		return nil

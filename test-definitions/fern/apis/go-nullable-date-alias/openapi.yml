@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: go-nullable-date-alias
+  version: ""
+paths:
+  /reports:
+    post:
+      operationId: reports_create
+      tags:
+        - Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Report"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Report"
+components:
+  schemas:
+    ISO8601DateNullable:
+      type: string
+      format: date
+      nullable: true
+      description: A date in YYYY-MM-DD format, or null.
+    ISO8601DateTimeNullable:
+      type: string
+      format: date-time
+      nullable: true
+      description: A date-time in ISO 8601 format, or null.
+    NullableString:
+      type: string
+      nullable: true
+      description: A string value, or null.
+    Report:
+      type: object
+      properties:
+        id:
+          type: string
+        fraud_date:
+          $ref: "#/components/schemas/ISO8601DateNullable"
+        created_at:
+          $ref: "#/components/schemas/ISO8601DateTimeNullable"
+        memo:
+          $ref: "#/components/schemas/NullableString"
+        inline_date:
+          type: string
+          format: date
+          nullable: true
+        inline_datetime:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - fraud_date
+        - created_at
+        - memo
+        - inline_date
+        - inline_datetime

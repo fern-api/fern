@@ -1,0 +1,8 @@
+- summary: |
+    Fix double-pointer generation for nullable type aliases referenced via $ref.
+    When a nullable date/datetime/string type was defined as a shared component
+    schema and referenced via $ref, the generated Go code produced double
+    pointers (e.g. **time.Time) that failed to compile. The generator now
+    detects that the underlying alias already resolves to a pointer type and
+    skips adding a redundant pointer.
+  type: fix
