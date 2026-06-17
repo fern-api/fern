@@ -4,7 +4,7 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/base-generator";
-import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
+import { assertDefined, assertNever, entries, noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     BaseSwiftCustomConfigSchema,
@@ -32,6 +32,7 @@ export abstract class AbstractSwiftGeneratorContext<
     private readonly indirectPropertiesMapping: Map<FernIr.TypeId, Set<string>>;
     private readonly schemaTypeIdBySymbolId: Map<string, FernIr.TypeId>;
     private readonly recursiveTypeIdsForSwiftEnums: Set<FernIr.TypeId>;
+    private nonStringMapKeyTypeIds?: Set<FernIr.TypeId>;
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -264,6 +265,76 @@ export abstract class AbstractSwiftGeneratorContext<
         const typeDeclaration = this.ir.types[typeId];
         assertDefined(typeDeclaration, `Type declaration with the id '${typeId}' not found`);
         return typeDeclaration;
+    }
+
+    /**
+     * Returns the set of schema type IDs that are used as the key type of a map and
+     * are represented in Swift as an `enum` (raw values) or an undiscriminated union
+     * (enum with associated values). Swift's `Dictionary` only encodes/decodes as a
+     * JSON object when its key is `String`/`Int` or conforms to `CodingKeyRepresentable`,
+     * so these key types need that conformance in order to round-trip correctly.
+     */
+    public getSchemaTypeIdsUsedAsNonStringMapKeys(): Set<FernIr.TypeId> {
+        if (this.nonStringMapKeyTypeIds == null) {
+            const candidateTypeIds = new Set<FernIr.TypeId>();
+            const visitTypeReference = (typeReference: FernIr.TypeReference): void => {
+                typeReference._visit({
+                    container: (ct) => {
+                        ct._visit({
+                            map: (mt) => {
+                                if (mt.keyType.type === "named") {
+                                    candidateTypeIds.add(mt.keyType.typeId);
+                                }
+                                visitTypeReference(mt.keyType);
+                                visitTypeReference(mt.valueType);
+                            },
+                            list: (lt) => visitTypeReference(lt),
+                            set: (st) => visitTypeReference(st),
+                            optional: (ot) => visitTypeReference(ot),
+                            nullable: (nt) => visitTypeReference(nt),
+                            literal: noop,
+                            _other: noop
+                        });
+                    },
+                    named: noop,
+                    primitive: noop,
+                    unknown: noop,
+                    _other: noop
+                });
+            };
+            Object.values(this.ir.types).forEach((typeDeclaration) => {
+                typeDeclaration.shape._visit({
+                    alias: (atd) => visitTypeReference(atd.aliasOf),
+                    object: (otd) => {
+                        [...(otd.extendedProperties ?? []), ...otd.properties].forEach((property) => {
+                            visitTypeReference(property.valueType);
+                        });
+                    },
+                    union: (utd) => {
+                        utd.types.forEach((type) => {
+                            type.shape._visit({
+                                noProperties: noop,
+                                samePropertiesAsObject: noop,
+                                singleProperty: (p) => visitTypeReference(p.type),
+                                _other: noop
+                            });
+                        });
+                    },
+                    undiscriminatedUnion: (uutd) => {
+                        uutd.members.forEach((member) => visitTypeReference(member.type));
+                    },
+                    enum: noop,
+                    _other: noop
+                });
+            });
+            this.nonStringMapKeyTypeIds = new Set(
+                [...candidateTypeIds].filter((typeId) => {
+                    const shapeType = this.ir.types[typeId]?.shape.type;
+                    return shapeType === "enum" || shapeType === "undiscriminatedUnion";
+                })
+            );
+        }
+        return this.nonStringMapKeyTypeIds;
     }
 
     public getPropertiesOfDiscriminatedUnionVariant(typeId: FernIr.TypeId): FernIr.ObjectProperty[] {
