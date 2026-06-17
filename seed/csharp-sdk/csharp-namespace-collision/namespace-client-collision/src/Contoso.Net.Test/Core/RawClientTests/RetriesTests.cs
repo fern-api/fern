@@ -118,7 +118,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new StreamRequest
+        var request = new global::Contoso.Net.Core.StreamRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
