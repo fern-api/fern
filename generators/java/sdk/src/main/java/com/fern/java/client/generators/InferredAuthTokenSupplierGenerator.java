@@ -308,12 +308,14 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Returns the object's own properties followed by its extended (inherited) properties, matching the order in which
-     * the model generator stages them in the builder.
+     * Returns the object's extended (inherited) properties followed by its own properties, matching the order in which
+     * the model generator stages them in the builder (see {@code ObjectTypeSpecGenerator}, which adds interface
+     * properties before the type's own properties).
      */
     private List<ObjectProperty> resolvedObjectProperties(ObjectTypeDeclaration objectDeclaration) {
-        List<ObjectProperty> resolved = new ArrayList<>(objectDeclaration.getProperties());
+        List<ObjectProperty> resolved = new ArrayList<>();
         objectDeclaration.getExtendedProperties().stream().flatMap(List::stream).forEach(resolved::add);
+        resolved.addAll(objectDeclaration.getProperties());
         return resolved;
     }
 

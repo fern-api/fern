@@ -1654,10 +1654,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         private List<ObjectProperty> resolvedObjectProperties(ObjectTypeDeclaration objectDeclaration) {
-            List<ObjectProperty> resolved = new ArrayList<>(objectDeclaration.getProperties());
+            List<ObjectProperty> resolved = new ArrayList<>();
             objectDeclaration.getExtendedProperties().stream()
                     .flatMap(List::stream)
                     .forEach(resolved::add);
+            resolved.addAll(objectDeclaration.getProperties());
             return resolved;
         }
 
