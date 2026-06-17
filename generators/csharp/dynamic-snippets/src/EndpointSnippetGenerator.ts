@@ -7,6 +7,9 @@ import { Config } from "./Config.js";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
+// The C# SDK names the request body parameter "request" by default for body requests.
+const REQUEST_PARAMETER_NAME = "request";
+
 export class EndpointSnippetGenerator extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
@@ -545,7 +548,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.Literal[] {
+    }): (ast.Literal | ast.CodeBlock)[] {
         switch (endpoint.request.type) {
             case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
@@ -787,24 +790,62 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.Literal[] {
-        const args: ast.Literal[] = [];
+    }): (ast.Literal | ast.CodeBlock)[] {
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
-            );
-        }
+        const pathParameterArgs = this.getPathParameterArguments({ namedParameters: pathParameters, snippet });
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
-        }
+        const bodyArg =
+            request.body != null
+                ? this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
+                : undefined;
         this.context.errors.unscope();
 
+        // A path parameter that is optional in the generated signature (e.g. one with a client default)
+        // is placed after the request body, while required path parameters come before it. The dynamic IR
+        // does not carry this optionality, so when a body request also has path parameters we emit named
+        // arguments to make the call compile regardless of the parameter ordering in the signature.
+        if (pathParameterArgs.length > 0 && bodyArg != null) {
+            return [
+                ...pathParameterArgs.map((arg) => this.namedArgument({ name: arg.name, value: arg.value })),
+                this.namedArgument({ name: REQUEST_PARAMETER_NAME, value: bodyArg })
+            ];
+        }
+
+        const args: (ast.Literal | ast.CodeBlock)[] = pathParameterArgs.map((arg) => arg.value);
+        if (bodyArg != null) {
+            args.push(bodyArg);
+        }
         return args;
+    }
+
+    private getPathParameterArguments({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): { name: string; value: ast.Literal }[] {
+        const pathParameters = this.context.associateByWireValueOrDefault({
+            parameters: namedParameters,
+            values: snippet.pathParameters ?? {}
+        });
+        return pathParameters.map((parameter) => ({
+            name: this.context.getParameterName(parameter.name.name),
+            value: this.context.dynamicLiteralMapper.convert({
+                ...parameter,
+                fallbackToDefault: parameter.name.wireValue
+            })
+        }));
+    }
+
+    private namedArgument({ name, value }: { name: string; value: ast.AstNode }): ast.CodeBlock {
+        return this.csharp.codeblock((writer) => {
+            writer.write(`${name}: `);
+            writer.writeNode(value);
+        });
     }
 
     private getBodyRequestArg({
