@@ -24,6 +24,50 @@
         }
       }
     },
+    "query_inventory": {
+      "id": "query_inventory",
+      "operationType": "QUERY",
+      "name": "inventory",
+      "description": "Inventory namespace — returns a namespace type with no args.\nA parent operation should be created for the landing page.",
+      "returnType": {
+        "type": "id",
+        "value": "InventoryQueries"
+      }
+    },
+    "query_locations": {
+      "id": "query_locations",
+      "operationType": "QUERY",
+      "name": "locations",
+      "description": "Get locations by code.",
+      "fieldPath": [
+        "inventory"
+      ],
+      "arguments": [
+        {
+          "name": "codes",
+          "description": "Filter by location codes.",
+          "type": {
+            "type": "optional",
+            "itemType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "list",
+        "itemType": {
+          "type": "id",
+          "value": "InventoryLocation"
+        }
+      }
+    },
     "mutation_create": {
       "id": "mutation_create",
       "operationType": "MUTATION",
@@ -128,6 +172,36 @@
       },
       "description": "An account in the system."
     },
+    "InventoryLocation": {
+      "name": "InventoryLocation",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "code",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Location code."
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            },
+            "description": "Location name."
+          }
+        ]
+      },
+      "description": "An inventory location."
+    },
     "AccountMutations": {
       "name": "AccountMutations",
       "shape": {
@@ -189,6 +263,45 @@
         ]
       },
       "description": "Namespace grouping for account mutations.\nAll fields have arguments — this makes it a namespace type."
+    },
+    "InventoryQueries": {
+      "name": "InventoryQueries",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "locations",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "InventoryLocation"
+              }
+            },
+            "description": "Get locations by code.",
+            "arguments": [
+              {
+                "name": "codes",
+                "description": "Filter by location codes.",
+                "type": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Namespace grouping for inventory queries.\nAll fields have arguments — this makes it a namespace type.\nA parent operation should be created since the root Query field has no arguments."
     }
   }
 }

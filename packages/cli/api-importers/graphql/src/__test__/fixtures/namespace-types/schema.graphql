@@ -2,6 +2,10 @@
 # AccountMutations has all fields with arguments, so it qualifies as a namespace type.
 # Its fields should be promoted to top-level operations and AccountMutations itself
 # should NOT appear in the types registry.
+#
+# InventoryQueries also qualifies as a namespace type (all fields have arguments).
+# Since it's returned from a root Query field with no arguments, a parent operation
+# should be created for the landing page to show the namespace type's own fields.
 
 """
 An account in the system.
@@ -21,6 +25,21 @@ type Account {
   Account email.
   """
   email: String!
+}
+
+"""
+An inventory location.
+"""
+type InventoryLocation {
+  """
+  Location code.
+  """
+  code: String!
+
+  """
+  Location name.
+  """
+  name: String!
 }
 
 """
@@ -48,6 +67,21 @@ type AccountMutations {
   ): Boolean!
 }
 
+"""
+Namespace grouping for inventory queries.
+All fields have arguments — this makes it a namespace type.
+A parent operation should be created since the root Query field has no arguments.
+"""
+type InventoryQueries {
+  """
+  Get locations by code.
+  """
+  locations(
+    """Filter by location codes."""
+    codes: [String!]
+  ): [InventoryLocation!]!
+}
+
 type Mutation {
   """
   Account-related mutations (namespace — no args on this field).
@@ -60,4 +94,10 @@ type Query {
   Get an account by ID.
   """
   account(id: ID!): Account
+
+  """
+  Inventory namespace — returns a namespace type with no args.
+  A parent operation should be created for the landing page.
+  """
+  inventory: InventoryQueries!
 }
