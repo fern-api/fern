@@ -18,10 +18,6 @@ export function getLiteralValueForHeader(
                 return literal.boolean;
             case "string":
                 return literal.string;
-            case "integer":
-            case "double":
-            case "list":
-                return undefined;
             default:
                 assertNeverNoThrow(literal);
                 return undefined;
@@ -37,7 +33,7 @@ export function getLiteralValueForHeader(
  */
 export function getClientDefaultValue(
     clientDefault: FernIr.Literal | undefined
-): string | boolean | number | unknown[] | undefined {
+): string | boolean | undefined {
     if (clientDefault == null) {
         return undefined;
     }
@@ -46,12 +42,6 @@ export function getClientDefaultValue(
             return clientDefault.boolean;
         case "string":
             return clientDefault.string;
-        case "integer":
-            return clientDefault.integer;
-        case "double":
-            return clientDefault.double;
-        case "list":
-            return clientDefault.list;
         default:
             assertNeverNoThrow(clientDefault);
             return undefined;
