@@ -36,7 +36,7 @@ export class GeneratorError extends Error {
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
-        this.name = this.constructor.name;
+        this.name = "GeneratorError";
 
         this.code = code;
     }

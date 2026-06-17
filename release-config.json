@@ -47,7 +47,8 @@
       "name": "Rust SDK Generator",
       "versionsFile": "generators/rust/sdk/versions.yml",
       "changelogFolder": "generators/rust/sdk/changes",
-      "softwareDirectory": "generators/rust"
+      "softwareDirectory": "generators/rust",
+      "propagatesTo": ["cli-generator"]
     },
     "swift": {
       "name": "Swift SDK Generator",
@@ -66,6 +67,12 @@
       "versionsFile": "generators/cli/versions.yml",
       "changelogFolder": "generators/cli/changes",
       "softwareDirectory": "generators/cli"
+    },
+    "generator-cli": {
+      "name": "Generator CLI",
+      "versionsFile": "packages/generator-cli/versions.yml",
+      "changelogFolder": "packages/generator-cli/changes",
+      "softwareDirectory": "packages/generator-cli"
     }
   }
 }

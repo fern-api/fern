@@ -15,6 +15,18 @@ export declare namespace runContainer {
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
+        /**
+         * When true, always pull the image before running (`docker run --pull always`)
+         * rather than only when it is absent locally. Use for mutable tags like
+         * `latest`; leave unset for immutable, version-pinned images.
+         */
+        pull?: boolean;
+        /**
+         * Force a specific platform (`docker run --platform <value>`, e.g. `linux/amd64`).
+         * Use when an image is published for only one architecture and must run under
+         * emulation on other hosts. Leave unset to use the host-native platform.
+         */
+        platform?: string;
         /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
         signal?: AbortSignal;
     }
@@ -34,6 +46,8 @@ export async function runContainer({
     writeLogsToFile = true,
     removeAfterCompletion = false,
     runner,
+    pull = false,
+    platform,
     signal
 }: runContainer.Args): Promise<void> {
     const tryRun = () =>
@@ -47,6 +61,8 @@ export async function runContainer({
             removeAfterCompletion,
             writeLogsToFile,
             runner,
+            pull,
+            platform,
             signal
         });
     try {
@@ -99,6 +115,8 @@ async function tryRunContainer({
     removeAfterCompletion,
     writeLogsToFile,
     runner,
+    pull = false,
+    platform,
     signal
 }: {
     logger: Logger;
@@ -110,6 +128,8 @@ async function tryRunContainer({
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
+    pull?: boolean;
+    platform?: string;
     signal?: AbortSignal;
 }): Promise<void> {
     if (process.env["FERN_STACK_TRACK"]) {
@@ -119,6 +139,8 @@ async function tryRunContainer({
         "run",
         "--user",
         "root",
+        ...(pull ? ["--pull", "always"] : []),
+        ...(platform != null ? ["--platform", platform] : []),
         ...binds.flatMap((bind) => ["-v", bind]),
         ...Object.entries(envVars).flatMap(([key, value]) => ["-e", `${key}=\"${value}\"`]),
         ...Object.entries(ports).flatMap(([hostPort, containerPort]) => ["-p", `${hostPort}:${containerPort}`]),

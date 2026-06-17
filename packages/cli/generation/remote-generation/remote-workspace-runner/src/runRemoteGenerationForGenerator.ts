@@ -489,44 +489,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     exampleStyle: undefined
 };
 
-export function buildSnippetsConfigForSdk({
-    language,
-    packageName,
-    version
-}: {
-    language: generatorsYml.GenerationLanguage | undefined;
-    packageName: string | undefined;
-    version: string | undefined;
-}): FdrAPI.api.v1.register.SnippetsConfig {
-    if (language == null || packageName == null) {
-        return {};
-    }
-
-    const resolvedVersion = resolveVersionFallback(version);
-    switch (language) {
-        case "typescript":
-            return { typescriptSdk: { package: packageName, version: resolvedVersion } };
-        case "python":
-            return { pythonSdk: { package: packageName, version: resolvedVersion } };
-        case "java":
-            return { javaSdk: { coordinate: packageName, version: resolvedVersion } };
-        case "ruby":
-            return { rubySdk: { gem: packageName, version: resolvedVersion } };
-        case "go":
-            return { goSdk: { githubRepo: packageName, version: resolvedVersion } };
-        case "csharp":
-            return { csharpSdk: { package: packageName, version: resolvedVersion } };
-        case "php":
-            return { phpSdk: { package: packageName, version: resolvedVersion } };
-        case "swift":
-            return { swiftSdk: { package: packageName, version: resolvedVersion } };
-        case "rust":
-            return { rustSdk: { package: packageName, version: resolvedVersion } };
-        default:
-            return {};
-    }
-}
-
 async function uploadDynamicIRForSdkGeneration({
     fdr,
     organization,

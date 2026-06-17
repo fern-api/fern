@@ -142,6 +142,9 @@ fixtures:
     - outputFolder: multiple-exports
       customConfig:
         generateSubpackageExports: true
+    - outputFolder: flatten-request-parameters
+      customConfig:
+        flattenRequestParameters: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null

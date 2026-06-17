@@ -22,6 +22,68 @@ rather than user-facing changes.
 
 ## [Unreleased]
 
+### 2026-06-08 → 2026-06-11
+
+**6 merged PRs** in window · **4 with architectural impact** · **2 new implicit decisions** surfaced (D-AA, D-AB) · **0 reversals** · **1 out-of-band signal**
+
+> [source: Linear] FER-11050 (Done), FER-11009 (Done), FER-11145 (Done), FER-11191 (Done) · [source: Slack] #project-cli-generator — Contentful CLI onboarding discussion (contentful/contentful-cli-next repo creation) · [source: Notion] No new pages matching window FER-IDs
+
+#### Shape changes
+
+- **`--schema` global flag replaces `--help --format json` (PR #169,
+  FER-11050, D-AA).** New `Binding::schema(&[String]) -> Result<Option<Value>>`
+  trait method, pre-parse intercepted from raw argv (same as `--help`).
+  Multi-binding aggregation: empty path → all bindings contribute; non-empty
+  path → first-owner-wins. Removes the `--help --format json` overload and
+  the intermediate `introspect` subcommand with no deprecation alias.
+  Touches `src/app.rs`, `src/openapi/app.rs`, `src/early_intercept.rs`.
+  Sources: [FER-11050](https://linear.app/buildwithfern/issue/FER-11050),
+  [PR #169](https://github.com/fern-api/cli-sdk/pull/169).
+
+- **`--output` flag gated on `has_binary_response` (PR #184,
+  FER-11191).** New `RestMethod::has_binary_response` field set at parse
+  time (`true` iff ≥1 2xx response declares non-JSON content type).
+  `-o, --output` is registered only on qualifying operations, eliminating
+  the silent no-op where JSON-only ops accepted but ignored the flag.
+  Mixed-response ops (binary 2xx + JSON 4xx) keep it.
+  Touches `src/openapi/parser.rs`, `src/openapi/commands.rs`,
+  `src/openapi/discovery.rs`.
+  Sources: [FER-11191](https://linear.app/buildwithfern/issue/FER-11191),
+  [PR #184](https://github.com/fern-api/cli-sdk/pull/184).
+
+#### Cross-cutting concept changes
+
+- **Compile-time typed custom commands (PR #175, FER-11009).**
+  `command_typed(name, about, handler)` / `command_under_typed(…)` accept
+  `fn(A, &C) -> Result<(), CliError>` where `A: clap::Args`. The
+  `#[derive(clap::Args)]` struct *is* the arg declaration — an undeclared
+  or renamed arg is a compile error. Internal `&dyn Any` downcast,
+  backward-compatible (existing untyped API unchanged).
+  Touches `src/app.rs` (+119), `src/openapi/app.rs` (+251).
+  Sources: [FER-11009](https://linear.app/buildwithfern/issue/FER-11009),
+  [PR #175](https://github.com/fern-api/cli-sdk/pull/175).
+
+- **Global-header collision scoping (PR #180, FER-11145, D-AB).**
+  `decorate_command` detects when `x-fern-global-headers` long name
+  collides with a per-op param; drops the global flag from that leaf,
+  registers per-command on non-colliding siblings. Per-op param wins.
+  `resolve_global_header_value` → `try_get_one` (previously `get_one`).
+  Unblocks Channel 3's CLI migration.
+  Touches `src/openapi/app.rs`.
+  Sources: [FER-11145](https://linear.app/buildwithfern/issue/FER-11145),
+  [PR #180](https://github.com/fern-api/cli-sdk/pull/180).
+
+#### Out-of-band signals
+
+- **Contentful CLI customer onboarding (no corresponding cli-sdk PR).**
+  Ethan Ozelius created `contentful/contentful-cli-next` and requested
+  `fern-support` role as maintainer. Discussion in #project-cli-generator
+  indicates active customer engagement. No architectural change yet — the
+  CLI binary already exists in this repo (`src/bin/contentful/`).
+  Sources: [Slack #project-cli-generator](https://buildwithfern.slack.com/archives/C0B2EM4Q3TN/p1781137204106579).
+
+---
+
 ### 2026-06-03 → 2026-06-08
 
 **6 merged PRs** in window · **3 with architectural impact** · **2 new implicit decisions** surfaced (D-Y, D-Z) · **2 new formal ADRs** (ADR-0004, ADR-0005) · **0 reversals** · **2 out-of-band signals**
@@ -615,6 +677,6 @@ see [`automation/README.md`](./automation/README.md) for activation
 steps. Manual invocation works today via the `devin run` command in
 that file.
 
-<!-- last-run: 2026-06-08T01:01:00Z -->
+<!-- last-run: 2026-06-11T01:00:00Z -->
 <!-- The marker above is consumed by the automation playbook to compute
      the next run's window. Each successful run updates it. -->

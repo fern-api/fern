@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Carry the configured favicon path into the docs ledger config so the
-    favicon renders on ledger-published sites. The favicon is now treated as
-    a config-referenced file (like the logo) and resolved from S3 at its real
-    extension (.svg/.png/.ico) instead of being dropped.
-  type: feat

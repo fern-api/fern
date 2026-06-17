@@ -347,8 +347,14 @@ function convertResolvedResponse({
 
         if (mimeType.isText() && !mediaType.includes("event-stream")) {
             const textPlainSchema = mediaObject.schema;
+            const contentType = !mimeType.isPlainText() ? mediaType : undefined;
             if (textPlainSchema == null) {
-                return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });
+                return ResponseWithExample.text({
+                    description: resolvedResponse.description,
+                    source,
+                    statusCode,
+                    contentType
+                });
             }
             const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
                 ? context.resolveSchemaReference(textPlainSchema)
@@ -356,7 +362,12 @@ function convertResolvedResponse({
             if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
                 return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
             }
-            return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });
+            return ResponseWithExample.text({
+                description: resolvedResponse.description,
+                source,
+                statusCode,
+                contentType
+            });
         }
     }
 

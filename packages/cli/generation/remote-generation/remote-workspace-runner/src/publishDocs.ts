@@ -63,7 +63,6 @@ import { basename } from "path";
 import terminalLink from "terminal-link";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
-import { mapDocsDefinitionToLegacyFileIds } from "./mapDocsDefinitionToLegacyFileIds.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
@@ -324,12 +323,9 @@ export async function publishDocs({
         // translate DocsConfig's FileId-based references (e.g. colorsV3.dark.logo)
         // into LedgerConfig path strings.
         //
-        // Populated by the uploadFiles callback below:
-        //   - ledger mode: identity map (fullPath → fullPath)
-        //   - dual/legacy: both the legacy UUID FileId and the canonical
-        //     sanitizedPath resolve to the ledger fullPath.
+        // Populated by the uploadFiles callback below in ledger mode as an
+        // identity map (fullPath → fullPath).
         const ledgerFileIdToPath = new Map<string, string>();
-        const legacyFilePathToId = new Map<string, string>();
 
         const readApiDefinitionsById = new Map<string, APIV1Read.ApiDefinition>();
         const captureReadApiDefinition = (definition: APIV1Write.ApiDefinition, apiDefinitionId: string): void => {
@@ -618,22 +614,6 @@ export async function publishDocs({
                 const hashNonImageTime = performance.now() - hashNonImageStart;
                 context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
-                const canonicalizeUploadedFilesForResolver = (uploadedFiles: UploadedFile[]): UploadedFile[] => {
-                    return uploadedFiles.map((uploaded) => {
-                        const sanitizedPath = filesMap.get(uploaded.absoluteFilePath)?.sanitizedPath;
-                        if (sanitizedPath == null) {
-                            return uploaded;
-                        }
-                        legacyFilePathToId.set(sanitizedPath, uploaded.fileId);
-                        ledgerFileIdToPath.set(uploaded.fileId, sanitizedPath);
-                        ledgerFileIdToPath.set(sanitizedPath, sanitizedPath);
-                        return {
-                            ...uploaded,
-                            fileId: sanitizedPath
-                        };
-                    });
-                };
-
                 // ── Ledger-only path ─────────────────────────────────────
                 // In ledger mode we do NOT call fdr.docs.v2.write.startDocsRegister
                 // / startDocsPreviewRegister. The legacy V2 register mints fresh
@@ -720,14 +700,11 @@ export async function publishDocs({
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
                         }
                     }
-                    const uploadedFiles = convertToFilePathPairs(
+                    return convertToFilePathPairs(
                         startDocsRegisterResponse.uploadUrls,
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    return deployMode !== "legacy"
-                        ? canonicalizeUploadedFilesForResolver(uploadedFiles)
-                        : uploadedFiles;
                 } else {
                     let startDocsRegisterResponse;
                     try {
@@ -779,14 +756,11 @@ export async function publishDocs({
                             context.logger.info("No files to upload (all up to date)");
                         }
                     }
-                    const uploadedFiles = convertToFilePathPairs(
+                    return convertToFilePathPairs(
                         startDocsRegisterResponse.uploadUrls,
                         docsWorkspace.absoluteFilePath,
                         sanitizedToAbsoluteMap
                     );
-                    return deployMode !== "legacy"
-                        ? canonicalizeUploadedFilesForResolver(uploadedFiles)
-                        : uploadedFiles;
                 }
             },
             registerApi: registerApiToFdr,
@@ -828,97 +802,99 @@ export async function publishDocs({
             });
         }
 
-        // ── Legacy publish path ──────────────────────────────────────
-        if (deployMode !== "ledger" && docsRegistrationId != null) {
+        // ── Build ledger git provenance ──
+        const ledgerGit: DocsPublishGitInput | undefined =
+            ciSource?.repo != null && ciSource?.branch != null
+                ? {
+                      repoUrl: normalizeRepoUrlToHttps(ciSource.repo, ciSource.type),
+                      branch: ciSource.branch,
+                      commitSha: ciSource.commitSha
+                  }
+                : undefined;
+
+        // ── Publish helpers ──────────────────────────────────────────
+        const runLegacyPublish = async (): Promise<void> => {
+            if (docsRegistrationId == null) {
+                return;
+            }
             context.logger.info("Publishing docs to FDR...");
             const publishStart = performance.now();
-            try {
-                const legacyDocsDefinition = mapDocsDefinitionToLegacyFileIds({
+            await fdr.docs.v2.write.finishDocsRegister({
+                docsRegistrationId,
+                docsDefinition,
+                excludeApis,
+                ...(isBasepathAware && !preview && { basepathAware: true })
+            });
+            const publishTime = performance.now() - publishStart;
+            context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+        };
+
+        const runLedgerPublish = async (): Promise<void> => {
+            if (preview) {
+                const previewResult = await publishDocsViaLedgerPreview({
                     docsDefinition,
-                    pathToFileId: legacyFilePathToId
+                    organization,
+                    basePath,
+                    previewId: previewId != null ? sanitizePreviewId(previewId) : previewId,
+                    git: ledgerGit,
+                    token: token.value,
+                    fdrOrigin,
+                    headers,
+                    context,
+                    apiDefinitions: apiDefinitionCollector,
+                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                    filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
+                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    resolver
                 });
-                await fdr.docs.v2.write.finishDocsRegister({
-                    docsRegistrationId,
-                    docsDefinition: legacyDocsDefinition,
-                    excludeApis,
-                    ...(isBasepathAware && !preview && { basepathAware: true })
+                if (deployMode === "ledger") {
+                    urlToOutput = previewResult.previewUrl;
+                }
+                context.logger.info(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
+            } else {
+                const ledgerResult = await publishDocsViaLedger({
+                    docsDefinition,
+                    organization,
+                    domain,
+                    basepath: basePath,
+                    previewId,
+                    customDomains,
+                    git: ledgerGit,
+                    token: token.value,
+                    fdrOrigin,
+                    headers,
+                    context,
+                    apiDefinitions: apiDefinitionCollector,
+                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                    filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
+                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    resolver
                 });
+                context.logger.info(
+                    `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
+                );
+            }
+        };
+
+        // ── Execute publish path ─────────────────────────────────────
+        // Each publish writes exactly one artifact — legacy or ledger — and
+        // the read path is determined by the artifact type itself. A failure
+        // of the selected path is a hard failure: the docs were not updated.
+        if (deployMode === "ledger") {
+            try {
+                await runLedgerPublish();
+            } catch (error) {
+                return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
+                    code: CliError.Code.NetworkError
+                });
+            }
+        } else if (docsRegistrationId != null) {
+            try {
+                await runLegacyPublish();
             } catch (error) {
                 return context.failAndThrow("Failed to publish docs to " + domain, error, {
                     code: CliError.Code.NetworkError
                 });
-            }
-            const publishTime = performance.now() - publishStart;
-            context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
-        }
-
-        // ── Ledger publish path (dual-write or ledger-only) ──────────
-        if (deployMode === "dual" || deployMode === "ledger") {
-            // Build structured git provenance from the CI environment (ADR 0011).
-            // The X-CI-Source header is still sent for other telemetry sinks; this
-            // puts the same data into the DocsPublishInput so the ledger persists it.
-            const ledgerGit: DocsPublishGitInput | undefined =
-                ciSource?.repo != null && ciSource?.branch != null
-                    ? {
-                          repoUrl: normalizeRepoUrlToHttps(ciSource.repo, ciSource.type),
-                          branch: ciSource.branch,
-                          commitSha: ciSource.commitSha
-                      }
-                    : undefined;
-
-            try {
-                if (preview) {
-                    const previewResult = await publishDocsViaLedgerPreview({
-                        docsDefinition,
-                        organization,
-                        basePath,
-                        previewId: previewId != null ? sanitizePreviewId(previewId) : previewId,
-                        git: ledgerGit,
-                        token: token.value,
-                        fdrOrigin,
-                        headers,
-                        context,
-                        apiDefinitions: apiDefinitionCollector,
-                        fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                        filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
-                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
-                        resolver
-                    });
-                    if (deployMode === "ledger") {
-                        urlToOutput = previewResult.previewUrl;
-                    }
-                    context.logger.info(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
-                } else {
-                    const ledgerResult = await publishDocsViaLedger({
-                        docsDefinition,
-                        organization,
-                        domain,
-                        basepath: basePath,
-                        previewId,
-                        customDomains,
-                        git: ledgerGit,
-                        token: token.value,
-                        fdrOrigin,
-                        headers,
-                        context,
-                        apiDefinitions: apiDefinitionCollector,
-                        fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
-                        filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
-                        fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
-                        resolver
-                    });
-                    context.logger.info(
-                        `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
-                    );
-                }
-            } catch (error) {
-                if (deployMode === "ledger") {
-                    return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
-                        code: CliError.Code.NetworkError
-                    });
-                }
-                // In dual-write mode, ledger failure is non-fatal — legacy already succeeded.
-                context.logger.warn(`[ledger] Dual-write failed (non-fatal): ${String(error)}`);
             }
         }
 
@@ -957,13 +933,8 @@ export async function publishDocs({
         }
 
         // Register translated page content for each configured locale via the V2 endpoint.
-        // In ledger-only mode, translations are handled by publishDocsViaLedger (above),
-        // so this block only runs for legacy and dual-write modes.
-        // In dual mode, translations are intentionally published through BOTH the V2
-        // endpoint (here) and the ledger finishTranslation endpoint (inside
-        // publishDocsViaLedger above). This ensures migration parity — both stores
-        // receive identical translated content until the ledger path is promoted to
-        // sole owner.
+        // In ledger mode, translations are handled by publishDocsViaLedger (above),
+        // so this block only runs for the legacy mode.
         // In preview mode, register translations against the preview URL (not the production domain)
         // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
@@ -1163,12 +1134,6 @@ export async function publishDocs({
                                 navbarLinks: translatedNavbarLinks
                             }
                         };
-                        // In dual mode, canonicalization replaced fileIds with sanitizedPaths.
-                        // Remap back to legacy UUID FileIds before the V2 translations POST.
-                        const remappedTranslatedDefinition = mapDocsDefinitionToLegacyFileIds({
-                            docsDefinition: translatedDefinition,
-                            pathToFileId: legacyFilePathToId
-                        });
                         const pageCount = Object.keys(localePages).length;
                         context.logger.debug(
                             `Sending translation for locale "${locale}" (${pageCount} page${pageCount === 1 ? "" : "s"})`
@@ -1191,7 +1156,7 @@ export async function publishDocs({
                                 customDomains: preview ? [] : customDomains,
                                 orgId: organization,
                                 locale,
-                                docsDefinition: remappedTranslatedDefinition
+                                docsDefinition: translatedDefinition
                             })
                         });
                         if (!translationResponse.ok) {

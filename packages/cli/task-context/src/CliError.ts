@@ -9,7 +9,7 @@ export class CliError extends Error {
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
-        this.name = this.constructor.name;
+        this.name = "CliError";
 
         this.code = code;
         this.docsLink = docsLink;

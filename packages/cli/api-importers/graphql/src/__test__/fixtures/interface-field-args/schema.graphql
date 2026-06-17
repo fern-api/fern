@@ -1,0 +1,55 @@
+# GraphQL schema to test field-level arguments on interface types with no implementations.
+# convertInterfaceAsObject is used when an interface has zero implementing types;
+# this fixture ensures those field arguments are included in the output.
+
+"""
+Supported image formats.
+"""
+enum ImageFormat {
+  WEBP
+  JPEG
+  PNG
+}
+
+"""
+An image source interface with no implementing types.
+Some fields have arguments to exercise argument capture on orphaned interfaces.
+"""
+interface ImageSource {
+  """
+  URL of the image, optionally resized.
+  """
+  url(
+    """Width in pixels."""
+    width: Int
+
+    """Height in pixels."""
+    height: Int
+
+    """Use lossy compression."""
+    lossy: Boolean
+  ): String!
+
+  """
+  Alt text for the image. No arguments.
+  """
+  altText: String
+
+  """
+  Thumbnail URL with format options.
+  """
+  thumbnail(
+    """Image format."""
+    format: ImageFormat!
+
+    """Quality percentage (1-100)."""
+    quality: Int
+  ): String!
+}
+
+type Query {
+  """
+  Get an image source by ID.
+  """
+  imageSource(id: ID!): ImageSource
+}

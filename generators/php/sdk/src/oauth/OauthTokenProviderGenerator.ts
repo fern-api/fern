@@ -294,6 +294,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
         }
+        const requestBody = this.tokenEndpoint.requestBody;
+        if (requestBody != null && requestBody.type === "reference") {
+            const internalType = this.context.phpTypeMapper
+                .convert({ reference: requestBody.requestBodyType })
+                .underlyingType().internalType;
+            if (internalType.type === "reference") {
+                return internalType.value;
+            }
+        }
         return undefined;
     }
 

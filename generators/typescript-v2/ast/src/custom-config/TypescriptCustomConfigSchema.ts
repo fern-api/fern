@@ -78,6 +78,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // namespaceExport is kept for backwards compatibility
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
+    serdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
@@ -112,3 +113,14 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
+
+/**
+ * Resolves the effective noSerdeLayer value from config.
+ * `serdeLayer` takes precedence over `noSerdeLayer` when set.
+ */
+export function resolveNoSerdeLayer(config: TypescriptCustomConfigSchema | undefined): boolean {
+    if (config?.serdeLayer != null) {
+        return !config.serdeLayer;
+    }
+    return !!config?.noSerdeLayer;
+}
