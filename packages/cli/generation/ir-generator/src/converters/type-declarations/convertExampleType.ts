@@ -468,7 +468,9 @@ export function convertTypeReferenceExample({
                         );
                     case "list":
                         return ExampleTypeReferenceShape.container(
-                            ExampleContainer.literal({ literal: ExamplePrimitive.string({ original: JSON.stringify(literal.list) }) })
+                            ExampleContainer.literal({
+                                literal: ExamplePrimitive.string({ original: JSON.stringify(literal.list) })
+                            })
                         );
                     default:
                         assertNever(literal);
