@@ -1,13 +1,12 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-rust-sdk",
-  "generatorVersion": "local",
+  "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": true
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
+  "invokedBy": "manual",
   "requestedVersion": "0.0.1",
-  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }
