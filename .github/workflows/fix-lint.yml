@@ -53,28 +53,11 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "fix(lint): auto-fix lint issues"
           title: "fix(lint): auto-fix lint issues"
           branch: automated-lint-fixes
           delete-branch: true
-
-      # GITHUB_TOKEN does not trigger pull_request events, so we re-trigger
-      # CI on the PR branch using a PAT so required checks can run.
-      - name: Trigger CI on PR branch
-        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
-        run: |
-          gh workflow run "CI" --ref automated-lint-fixes
-
-      # Give the dispatched workflow time to register check runs on the PR
-      # before the auto-approve action starts polling.
-      - name: Wait for CI checks to register
-        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
-        shell: bash
-        run: sleep 60
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
@@ -88,7 +71,7 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
         uses: ./.github/actions/auto-approve
         with:
-          approver-gh-token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
+          approver-gh-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           enforced-checks: lint
           enforce-checks: "true"

@@ -5,8 +5,10 @@ package com.seed.exhaustive.resources.inlinedrequests;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
+import java.util.List;
 
 public class InlinedRequestsClient {
     protected final ClientOptions clientOptions;
@@ -39,6 +41,36 @@ public class InlinedRequestsClient {
             PostWithObjectBody request, RequestOptions requestOptions) {
         return this.rawClient
                 .postWithObjectBodyandResponse(request, requestOptions)
+                .body();
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public String postWithArrayBodyAndHeaders(List<String> body) {
+        return this.rawClient.postWithArrayBodyAndHeaders(body).body();
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public String postWithArrayBodyAndHeaders(List<String> body, RequestOptions requestOptions) {
+        return this.rawClient.postWithArrayBodyAndHeaders(body, requestOptions).body();
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public String postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders request) {
+        return this.rawClient.postWithArrayBodyAndHeaders(request).body();
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public String postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders request, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithArrayBodyAndHeaders(request, requestOptions)
                 .body();
     }
 }

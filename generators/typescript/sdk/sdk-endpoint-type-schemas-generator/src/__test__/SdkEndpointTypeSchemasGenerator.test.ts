@@ -86,6 +86,7 @@ function createMockFileContext() {
                         getReferenceTo: () => ts.factory.createTypeReferenceNode("ErrorUnion"),
                         discriminant: "errorName",
                         visitPropertyName: "_visit",
+                        getEffectiveBaseProperties: () => [],
                         getBasePropertyKey: (key: string) => key,
                         buildFromExistingValue: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
                         buildUnknown: ({ existingValue }: { existingValue: ts.Expression }) => existingValue

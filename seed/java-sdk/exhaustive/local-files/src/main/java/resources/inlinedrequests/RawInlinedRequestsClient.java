@@ -14,11 +14,15 @@ import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
 import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;
 import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
+import java.lang.Exception;
 import java.lang.Object;
+import java.lang.RuntimeException;
 import java.lang.String;
+import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -93,4 +97,74 @@ public class RawInlinedRequestsClient {
         throw new SeedExhaustiveException("Network error executing HTTP request", e);
       }
     }
-  }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public SeedExhaustiveHttpResponse<String> postWithArrayBodyAndHeaders(List<String> body) {
+      return postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders.builder().body(body).build());
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public SeedExhaustiveHttpResponse<String> postWithArrayBodyAndHeaders(List<String> body,
+        RequestOptions requestOptions) {
+      return postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders.builder().body(body).build(), requestOptions);
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public SeedExhaustiveHttpResponse<String> postWithArrayBodyAndHeaders(
+        PostWithArrayBodyAndHeaders request) {
+      return postWithArrayBodyAndHeaders(request,null);
+    }
+
+    /**
+     * POST with root-level array body and header params
+     */
+    public SeedExhaustiveHttpResponse<String> postWithArrayBodyAndHeaders(
+        PostWithArrayBodyAndHeaders request, RequestOptions requestOptions) {
+      HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+        .addPathSegments("req-bodies")
+        .addPathSegments("array-body-with-headers");if (requestOptions != null) {
+          requestOptions.getQueryParameters().forEach((_key, _value) -> {
+            httpUrl.addQueryParameter(_key, _value);
+          } );
+        }
+        RequestBody body;
+        try {
+          body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        }
+        catch(Exception e) {
+          throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+          .url(httpUrl.build())
+          .method("POST", body)
+          .headers(Headers.of(clientOptions.headers(requestOptions)))
+          .addHeader("Content-Type", "application/json")
+          .addHeader("Accept", "application/json");
+        if (request.getXCustomHeader().isPresent()) {
+          _requestBuilder.addHeader("X-Custom-Header", request.getXCustomHeader().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+          client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+          ResponseBody responseBody = response.body();
+          String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+          if (response.isSuccessful()) {
+            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+          }
+          Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        }
+        catch (IOException e) {
+          throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        }
+      }
+    }

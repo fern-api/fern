@@ -6,7 +6,7 @@ import Exhaustive
     @Test func getAndReturnListOfPrimitives1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   "string",
@@ -37,7 +37,7 @@ import Exhaustive
     @Test func getAndReturnListOfObjects1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -80,7 +80,7 @@ import Exhaustive
     @Test func getAndReturnSetOfPrimitives1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   "string"
@@ -101,7 +101,7 @@ import Exhaustive
     @Test func getAndReturnSetOfObjects1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -124,7 +124,7 @@ import Exhaustive
     @Test func getAndReturnMapPrimToPrim1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string"
@@ -152,7 +152,7 @@ import Exhaustive
     @Test func getAndReturnMapOfPrimToObject1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": {
@@ -186,7 +186,7 @@ import Exhaustive
     @Test func getAndReturnMapOfPrimToUndiscriminatedUnion1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": 1.1
@@ -218,7 +218,7 @@ import Exhaustive
     @Test func getAndReturnOptional1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string"

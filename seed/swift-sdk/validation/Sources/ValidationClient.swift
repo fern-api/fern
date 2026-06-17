@@ -53,17 +53,17 @@ public final class ValidationClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func create(request: Requests.CreateRequest, requestOptions: RequestOptions? = nil) async throws -> Type {
+    public func create(request: Requests.CreateRequest, requestOptions: RequestOptions? = nil) async throws -> `Type` {
         return try await httpClient.performRequest(
             method: .post,
             path: "/create",
             body: request,
             requestOptions: requestOptions,
-            responseType: Type.self
+            responseType: `Type`.self
         )
     }
 
-    public func get(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> Type {
+    public func get(decimal: Swift.Double, even: Int, name: String, requestOptions: RequestOptions? = nil) async throws -> `Type` {
         return try await httpClient.performRequest(
             method: .get,
             path: "/",
@@ -73,7 +73,7 @@ public final class ValidationClient: Sendable {
                 "name": .string(name)
             ],
             requestOptions: requestOptions,
-            responseType: Type.self
+            responseType: `Type`.self
         )
     }
 }

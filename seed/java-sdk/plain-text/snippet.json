@@ -12,6 +12,32 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.plainText.SeedPlainTextClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPlainTextClient client = SeedPlainTextClient\n            .builder()\n            .build();\n\n        client.service().getText();\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.plainText.SeedPlainTextClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPlainTextClient client = SeedPlainTextClient\n            .builder()\n            .build();\n\n        client.service().getText();\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/csv",
+                "identifier_override": "endpoint_service.getCsv"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.plainText.SeedPlainTextClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPlainTextClient client = SeedPlainTextClient\n            .builder()\n            .build();\n\n        client.service().getCsv();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.plainText.SeedPlainTextClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPlainTextClient client = SeedPlainTextClient\n            .builder()\n            .build();\n\n        client.service().getCsv();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "34d92e75",
+            "id": {
+                "method": "GET",
+                "path": "/xml",
+                "identifier_override": "endpoint_service.getXml"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.plainText.SeedPlainTextClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPlainTextClient client = SeedPlainTextClient\n            .builder()\n            .build();\n\n        client.service().getXml();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.plainText.SeedPlainTextClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPlainTextClient client = SeedPlainTextClient\n            .builder()\n            .build();\n\n        client.service().getXml();\n    }\n}\n"
+            }
         }
     ],
     "types": {}

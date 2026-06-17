@@ -36,6 +36,20 @@ const (
 
 	// defaultExportedClientName is the default name for the generated client.
 	defaultExportedClientName = "Client"
+
+	// typeRelocationsFileSuffix is appended to the IR filepath to produce the
+	// path of the sidecar file that records the type locations relocated by
+	// cycle-breaking. The go-v2 SDK generator reads this file so that it
+	// references the relocated types from the same package v1 declares them in.
+	typeRelocationsFileSuffix = ".relocations.json"
+
+	// typeRelocationsOutputFilepathEnvVar names an environment variable that,
+	// when set, points to an additional host-readable path where the
+	// cycle-breaking relocations are written. The Fern CLI's local generation
+	// runner sets this so its host-side dynamic snippet test generator can
+	// apply the same relocations before emitting snippets. It is never set by
+	// remote (Fiddle) generation, so production output is unaffected.
+	typeRelocationsOutputFilepathEnvVar = "FERN_TYPE_RELOCATIONS_OUTPUT_FILEPATH"
 )
 
 // Mode is an enum for different generator modes (i.e. types, client, etc).
@@ -155,6 +169,7 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 
 func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode, rootClientInstantiation *ast.AssignStmt, rootPackageName string) ([]*File, []*GeneratedClient, error) {
 	queryReachableUnions := collectQueryReachableUnions(ir)
+	headerReachableUnions := collectHeaderReachableUnions(ir)
 	fileInfoToTypes, err := fileInfoToTypes(
 		rootPackageName,
 		ir.Types,
@@ -192,6 +207,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.coordinator,
 		)
 		writer.queryReachableUnions = queryReachableUnions
+		writer.headerReachableUnions = headerReachableUnions
 		for _, typeToGenerate := range typesToGenerate {
 			switch {
 			case typeToGenerate.TypeDeclaration != nil:
@@ -256,6 +272,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		return nil, err
 	}
 	if cycleInfo != nil {
+		relocations := make(map[common.TypeId]*common.FernFilepath, len(cycleInfo.LeafTypes))
 		for _, leafType := range cycleInfo.LeafTypes {
 			// Update every leaf type's FernFilepath so that the rest of
 			// the types reference it from the appropriate location.
@@ -282,6 +299,15 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			newFernFilepath.AllParts = append(newFernFilepath.AllParts, commonPackageElement)
 
 			replaceFilepathForTypeInIR(ir, typeDecl.Name.TypeId, newFernFilepath)
+			relocations[typeDecl.Name.TypeId] = newFernFilepath
+		}
+		// The go-v2 SDK generator runs as a subprocess against the same IR file
+		// but does not perform cycle-breaking itself. Persist the relocated type
+		// locations so that go-v2 references the moved types from the same
+		// package that v1 declares them in (otherwise its generated client code
+		// references undefined symbols).
+		if err := g.writeTypeRelocations(relocations); err != nil {
+			return nil, err
 		}
 	}
 	// First determine what types will be generated so that we can determine whether or not there will
@@ -774,9 +800,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 
-	for _, file := range files {
-		fmt.Printf("v1 output file %s\n", file.Path)
-	}
 	return files, nil
 }
 
@@ -1092,6 +1115,38 @@ func (g *Generator) generateReadme(
 			Usage:        usage,
 		},
 	)
+}
+
+// writeTypeRelocations persists the type locations relocated by cycle-breaking
+// to a sidecar file next to the IR. The go-v2 SDK generator runs as a separate
+// subprocess against the same IR but does not perform cycle-breaking itself, so
+// without this it would reference the relocated types from their original
+// (pre-relocation) packages and produce undefined symbols.
+func (g *Generator) writeTypeRelocations(relocations map[common.TypeId]*common.FernFilepath) error {
+	if len(relocations) == 0 {
+		return nil
+	}
+	data, err := json.Marshal(relocations)
+	if err != nil {
+		return fmt.Errorf("failed to marshal type relocations: %w", err)
+	}
+	// Sidecar next to the IR, read by the go-v2 SDK generator running as a
+	// subprocess against the same IR file inside this container.
+	if g.config.IRFilepath != "" {
+		if err := os.WriteFile(g.config.IRFilepath+typeRelocationsFileSuffix, data, 0644); err != nil {
+			return fmt.Errorf("failed to write type relocations: %w", err)
+		}
+	}
+	// When the Fern CLI's local generation runner asks for it, also write the
+	// relocations to a host-readable path so the host-side dynamic snippet test
+	// generator can apply them before emitting snippets. The CLI deletes this
+	// file before copying generated output, so it never reaches the SDK.
+	if outputFilepath := os.Getenv(typeRelocationsOutputFilepathEnvVar); outputFilepath != "" {
+		if err := os.WriteFile(outputFilepath, data, 0644); err != nil {
+			return fmt.Errorf("failed to write type relocations to %s: %w", outputFilepath, err)
+		}
+	}
+	return nil
 }
 
 // readIR reads the *IntermediateRepresentation from the given filename.
@@ -2127,14 +2182,31 @@ func collectQueryReachableUnions(ir *fernir.IntermediateRepresentation) map[comm
 	for _, service := range ir.Services {
 		for _, endpoint := range service.Endpoints {
 			for _, queryParameter := range endpoint.QueryParameters {
-				walkQueryReachableType(queryParameter.ValueType, ir.Types, reachable, visited)
+				walkReachableUnionType(queryParameter.ValueType, ir.Types, reachable, visited)
 			}
 		}
 	}
 	return reachable
 }
 
-func walkQueryReachableType(
+// collectHeaderReachableUnions returns the set of undiscriminated union TypeIds
+// that are reachable from a request header position. Endpoint headers are
+// serialized to a string when added to the http.Header, so we generate a String
+// method on the unions that may actually be sent as headers.
+func collectHeaderReachableUnions(ir *fernir.IntermediateRepresentation) map[common.TypeId]struct{} {
+	reachable := make(map[common.TypeId]struct{})
+	visited := make(map[common.TypeId]struct{})
+	for _, service := range ir.Services {
+		for _, endpoint := range service.Endpoints {
+			for _, header := range endpoint.Headers {
+				walkReachableUnionType(header.ValueType, ir.Types, reachable, visited)
+			}
+		}
+	}
+	return reachable
+}
+
+func walkReachableUnionType(
 	typeReference *fernir.TypeReference,
 	types map[common.TypeId]*fernir.TypeDeclaration,
 	reachable map[common.TypeId]struct{},
@@ -2146,13 +2218,13 @@ func walkQueryReachableType(
 	if container := typeReference.Container; container != nil {
 		switch {
 		case container.List != nil:
-			walkQueryReachableType(container.List, types, reachable, visited)
+			walkReachableUnionType(container.List, types, reachable, visited)
 		case container.Set != nil:
-			walkQueryReachableType(container.Set, types, reachable, visited)
+			walkReachableUnionType(container.Set, types, reachable, visited)
 		case container.Optional != nil:
-			walkQueryReachableType(container.Optional, types, reachable, visited)
+			walkReachableUnionType(container.Optional, types, reachable, visited)
 		case container.Nullable != nil:
-			walkQueryReachableType(container.Nullable, types, reachable, visited)
+			walkReachableUnionType(container.Nullable, types, reachable, visited)
 		}
 		return
 	}
@@ -2172,6 +2244,6 @@ func walkQueryReachableType(
 	case declaration.Shape.UndiscriminatedUnion != nil:
 		reachable[named.TypeId] = struct{}{}
 	case declaration.Shape.Alias != nil:
-		walkQueryReachableType(declaration.Shape.Alias.AliasOf, types, reachable, visited)
+		walkReachableUnionType(declaration.Shape.Alias.AliasOf, types, reachable, visited)
 	}
 }

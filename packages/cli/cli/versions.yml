@@ -1,4 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.49.3
+  changelogEntry:
+    - summary: |
+        When a generator breaks an import cycle by relocating types into a shared
+        package, the local generation runner now applies those relocations to the IR
+        that powers host-side dynamic snippet test generation. This keeps the
+        generated dynamic snippets referencing each relocated type from the same
+        package the generator declares it in, fixing undefined-symbol compile errors
+        in the Go SDK's dynamic snippet tests.
+      type: fix
+  createdAt: "2026-06-17"
+  irVersion: 67
+- version: 5.49.2
+  changelogEntry:
+    - summary: |
+        `infer-discriminated-union-base-properties` now lifts properties that every variant inherits via a shared `allOf $ref` parent. Previously these were dropped to protect TypeScript's `_Base` from colliding with the real parent interface, which left Go and C# unions missing common fields like `id`, `name`, and `display_name`.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 5.49.1
+  changelogEntry:
+    - summary: |
+        Library docs generator now writes module overview pages as `index.mdx` inside their
+        directory (e.g. `adapters/index.mdx`) instead of as sibling files (`adapters.mdx`),
+        eliminating duplicate entries in the sidebar for library autodocs output.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 5.49.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-subtitle` OpenAPI extension on endpoints. When set,
+        the subtitle is rendered below the endpoint title in the docs UI.
+      type: feat
+  createdAt: "2026-06-13"
+  irVersion: 67
 - version: 5.48.0
   changelogEntry:
     - summary: |

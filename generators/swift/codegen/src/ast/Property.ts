@@ -1,4 +1,4 @@
-import { isReservedKeyword } from "../syntax/index.js";
+import { escapeReservedKeyword } from "../syntax/index.js";
 import { AccessLevel } from "./AccessLevel.js";
 import { AstNode, Writer } from "./core/index.js";
 import { DeclarationType } from "./DeclarationType.js";
@@ -63,11 +63,7 @@ export class Property extends AstNode {
         }
         writer.write(this.declarationType);
         writer.write(" ");
-        if (isReservedKeyword(this.unsafeName)) {
-            writer.write(`\`${this.unsafeName}\``);
-        } else {
-            writer.write(this.unsafeName);
-        }
+        writer.write(escapeReservedKeyword(this.unsafeName));
         writer.write(": ");
         this.type.write(writer);
         if (this.defaultValue != null) {

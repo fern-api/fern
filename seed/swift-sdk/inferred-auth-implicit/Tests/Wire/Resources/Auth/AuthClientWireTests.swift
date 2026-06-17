@@ -6,7 +6,7 @@ import InferredAuthImplicit
     @Test func getTokenWithClientCredentials1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",
@@ -26,6 +26,7 @@ import InferredAuthImplicit
             refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getTokenWithClientCredentials(
+            xApiKey: "X-Api-Key",
             request: .init(
                 clientId: "client_id",
                 clientSecret: "client_secret",
@@ -41,7 +42,7 @@ import InferredAuthImplicit
     @Test func refreshToken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",
@@ -61,6 +62,7 @@ import InferredAuthImplicit
             refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.refreshToken(
+            xApiKey: "X-Api-Key",
             request: .init(
                 clientId: "client_id",
                 clientSecret: "client_secret",

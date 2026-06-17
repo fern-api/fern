@@ -7,12 +7,30 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getText(requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+    public func getText(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/text",
             requestOptions: requestOptions,
-            responseType: JSONValue.self
+            responseType: String.self
+        )
+    }
+
+    public func getCsv(requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/csv",
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
+    public func getXml(requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/xml",
+            requestOptions: requestOptions,
+            responseType: String.self
         )
     }
 }

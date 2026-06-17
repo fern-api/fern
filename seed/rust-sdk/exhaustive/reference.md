@@ -3141,6 +3141,61 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.inlined_requests.<a href="/src/api/resources/inlined_requests/client.rs">post_with_array_body_and_headers</a>(request: Vec&lt;String&gt;) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .inlined_requests
+        .post_with_array_body_and_headers(
+            &vec!["string".to_string(), "string".to_string()],
+            Some(RequestOptions::new().additional_header("X-Custom-Header", "X-Custom-Header")),
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## NoAuth
 <details><summary><code>client.no_auth.<a href="/src/api/resources/no_auth/client.rs">post_with_no_auth</a>(request: serde_json::Value) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>

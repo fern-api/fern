@@ -557,14 +557,91 @@ impl CliApp {
             return Ok(PipelineOutcome::HelpShown);
         }
 
-        // 0b. Intercept `--help --format json` before clap parses.
-        if crate::cli_args::wants_json_help(&str_args) {
+        // 0b. Intercept the `--schema` global flag — the agent-facing
+        // machine-readable counterpart to `--help`. Done before clap parses
+        // so paths with required args still emit their spec without tripping
+        // clap's required-arg validation (mirrors how `--help` is handled).
+        //
+        // Each binding's contribution is fetched via `Binding::schema(&path)`.
+        // Empty path: aggregate across all bindings (operations concatenated,
+        // sdkVariables unioned, root shape preserved). Non-empty path: first
+        // binding to own the path wins. A real `Err` from one binding is
+        // logged and the walk continues — one broken spec cannot mask its
+        // sibling's surface.
+        if crate::cli_args::wants_schema(&str_args) {
             let path = crate::cli_args::extract_subcommand_path(&str_args);
+
+            if path.is_empty() {
+                let mut sdk_vars: Vec<serde_json::Value> = Vec::new();
+                let mut ops: Vec<serde_json::Value> = Vec::new();
+                let mut any_sdk_vars = false;
+                for binding in &self.bindings {
+                    match binding.schema(&path) {
+                        Ok(Some(serde_json::Value::Array(arr))) => ops.extend(arr),
+                        Ok(Some(serde_json::Value::Object(obj))) => {
+                            if let Some(serde_json::Value::Array(vs)) =
+                                obj.get("sdkVariables")
+                            {
+                                any_sdk_vars = true;
+                                sdk_vars.extend(vs.iter().cloned());
+                            }
+                            if let Some(serde_json::Value::Array(os)) =
+                                obj.get("operations")
+                            {
+                                ops.extend(os.iter().cloned());
+                            }
+                        }
+                        Ok(Some(other)) => ops.push(other),
+                        Ok(None) => {}
+                        Err(e) => tracing::warn!(
+                            "--schema: binding `{}` errored: {e}",
+                            binding.name()
+                        ),
+                    }
+                }
+                let output = if any_sdk_vars {
+                    serde_json::json!({
+                        "sdkVariables": sdk_vars,
+                        "operations": ops,
+                    })
+                } else {
+                    serde_json::Value::Array(ops)
+                };
+                writeln!(
+                    out,
+                    "{}",
+                    serde_json::to_string_pretty(&output).map_err(|e| {
+                        CliError::Validation(format!("Failed to serialize spec: {e}"))
+                    })?
+                )
+                .map_err(|e| CliError::Other(e.into()))?;
+                return Ok(PipelineOutcome::Success);
+            }
+
             for binding in &self.bindings {
-                if binding.render_json_help(&path, out)? {
-                    return Ok(PipelineOutcome::HelpShown);
+                match binding.schema(&path) {
+                    Ok(Some(value)) => {
+                        writeln!(
+                            out,
+                            "{}",
+                            serde_json::to_string_pretty(&value).map_err(|e| {
+                                CliError::Validation(format!("Failed to serialize spec: {e}"))
+                            })?
+                        )
+                        .map_err(|e| CliError::Other(e.into()))?;
+                        return Ok(PipelineOutcome::Success);
+                    }
+                    Ok(None) => {}
+                    Err(e) => tracing::warn!(
+                        "--schema: binding `{}` errored: {e}",
+                        binding.name()
+                    ),
                 }
             }
+            return Err(CliError::Discovery(format!(
+                "--schema: no binding contains path `{}`",
+                path.join(" ")
+            )));
         }
 
         // 1. Build merged command tree from all bindings.
@@ -593,6 +670,17 @@ impl CliApp {
                     .help("Override the API base URL (e.g. for testing against a mock server)")
                     .value_name("URL")
                     .global(true),
+            )
+            // Discoverability only — the `--schema` flag is intercepted before
+            // clap parses (see step 0b above). Registering it here makes it
+            // appear in `--help` output so users / agents discover it
+            // alongside `--help`.
+            .arg(
+                clap::Arg::new("schema")
+                    .long("schema")
+                    .help("Print machine-readable JSON schema for this scope (agent-facing counterpart to --help)")
+                    .action(clap::ArgAction::SetTrue)
+                    .global(true),
             );
 
         // Collect each binding's subtree commands, global args, and help
@@ -605,18 +693,31 @@ impl CliApp {
         let mut seen_arg_ids: std::collections::HashSet<String> = [
             "format".to_string(),
             "base-url".to_string(),
+            "schema".to_string(),
             "help".to_string(),
             "version".to_string(),
         ]
         .into();
+        // Pre-seeded with subcommands that get registered AFTER the binding
+        // merge loop (built-in `completion` and `man`, added below in 1c). If
+        // a binding's spec happens to expose a top-level subcommand by one of
+        // those names, the loop skips it so the built-in wins instead of
+        // tripping clap's duplicate-subcommand panic at parse time.
+        let mut seen_subcommand_names: std::collections::HashSet<String> =
+            ["completion".to_string(), "man".to_string()].into();
         for (idx, binding) in self.bindings.iter().enumerate() {
             let subcmd = binding.build_command()?;
-            // Record which top-level subcommand names belong to which binding.
-            for sub in subcmd.get_subcommands() {
-                binding_commands.push((idx, vec![sub.get_name().to_string()]));
-            }
-            // Merge this binding's subcommands into the root.
+            // Merge this binding's subcommands into the root. If two bindings
+            // contribute a subcommand with the same name, only the first
+            // wins — clap panics on duplicate names, and the path-based
+            // resolver in `resolve_binding_for_path` already disambiguates by
+            // which binding owns the path.
             for sub in subcmd.get_subcommands().cloned() {
+                let name = sub.get_name().to_string();
+                if !seen_subcommand_names.insert(name.clone()) {
+                    continue;
+                }
+                binding_commands.push((idx, vec![name]));
                 cli = cli.subcommand(sub);
             }
             // Merge binding-level global args (server vars, SDK vars,

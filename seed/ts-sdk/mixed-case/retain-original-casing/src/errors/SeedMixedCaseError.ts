@@ -28,7 +28,7 @@ export class SeedMixedCaseError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedMixedCaseError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

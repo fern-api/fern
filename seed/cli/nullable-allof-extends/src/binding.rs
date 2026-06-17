@@ -57,15 +57,29 @@ pub trait Binding: Send + Sync {
         op_path: &'a [String],
     ) -> BoxFuture<'a, Result<DispatchResult, CliError>>;
 
-    /// Render `--help --format json` for this binding. Returns `true`
-    /// if the binding handled the request (caller should exit 0),
-    /// `false` if the binding does not support JSON help.
-    fn render_json_help(
-        &self,
-        _subcommand_path: &[String],
-        _out: &mut dyn std::io::Write,
-    ) -> Result<bool, CliError> {
-        Ok(false)
+    /// Build this binding's contribution to the `--schema` flag for the given
+    /// subcommand path. `--schema` is the agent-facing machine-readable
+    /// counterpart to `--help`: wherever a user could type `--help` for prose,
+    /// they can type `--schema` for the same scope rendered as JSON.
+    ///
+    /// Returns:
+    ///
+    /// - `Ok(Some(value))` — this binding owns the path; `value` is the JSON
+    ///   to emit (path-scoped) or aggregate (empty path).
+    /// - `Ok(None)` — this binding does not own the path; the caller will try
+    ///   the next binding.
+    /// - `Err(_)` — a real failure (e.g. the binding's spec failed to
+    ///   prepare). The caller logs and continues to the next binding so one
+    ///   broken binding cannot block schema output for the others.
+    ///
+    /// `path.is_empty()` is the "list everything I contribute" case. The
+    /// caller concatenates the array contributions across all bindings, so
+    /// multi-binding CLIs (e.g. REST + GraphQL) get a unified root view.
+    ///
+    /// Default: `Ok(None)`. Bindings that expose a discoverable surface
+    /// override this.
+    fn schema(&self, _path: &[String]) -> Result<Option<serde_json::Value>, CliError> {
+        Ok(None)
     }
 
     /// Return a type-erased binding context for use by CLI-level custom

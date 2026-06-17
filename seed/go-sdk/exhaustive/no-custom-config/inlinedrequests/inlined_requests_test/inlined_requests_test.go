@@ -152,3 +152,34 @@ func TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock(
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestInlinedRequestsPostWithObjectBodyandResponseWithWireMock", "POST", "/req-bodies/object", nil, 1)
 }
+
+func TestInlinedRequestsPostWithArrayBodyAndHeadersWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.PostWithArrayBodyAndHeaders{
+		XCustomHeader: fern.String(
+			"X-Custom-Header",
+		),
+		Body: []string{
+			"string",
+			"string",
+		},
+	}
+	_, invocationErr := client.InlinedRequests.PostWithArrayBodyAndHeaders(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestInlinedRequestsPostWithArrayBodyAndHeadersWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestInlinedRequestsPostWithArrayBodyAndHeadersWithWireMock", "POST", "/req-bodies/array-body-with-headers", nil, 1)
+}

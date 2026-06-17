@@ -1109,7 +1109,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
           commit-message: "chore(seed): update all seed snapshots"
           title: "chore(seed): update all seed snapshots"
           branch: update-all-seed
@@ -1132,17 +1132,6 @@ jobs:
         run: |
           echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
-      # GITHUB_TOKEN does not trigger pull_request events, so we re-trigger
-      # CI on the PR branch using a PAT so required checks can run.
-      - name: Trigger CI on PR branch
-        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
-        run: |
-          gh workflow run "CI" --ref update-all-seed
-          gh workflow run "Seed Snapshot Tests" --ref update-all-seed
-
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
         uses: peter-evans/enable-pull-request-automerge@v3
@@ -1155,5 +1144,5 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
         uses: ./.github/actions/auto-approve
         with:
-          approver-gh-token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
+          approver-gh-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
