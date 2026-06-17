@@ -2,13 +2,15 @@ import { describe, it, expect } from "vitest";
 import webpack from "webpack";
 import path from "path";
 import fs from "fs";
-import os from "os";
 
 const PKG_ROOT = path.resolve(__dirname, "../../..");
 
 function bundle(entryCode: string): Promise<number> {
     return new Promise((resolve, reject) => {
-        const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "tree-shake-test-"));
+        // Create the temporary entry inside the package's `src` directory so that it
+        // falls under the `rootDir`/`include` of the SDK's tsconfig (which ts-loader
+        // uses). Writing it to the OS temp dir trips TS6059 ("not under rootDir").
+        const tmpDir = fs.mkdtempSync(path.join(PKG_ROOT, "src", "tree-shake-test-"));
         const entryFile = path.join(tmpDir, "entry.ts");
         fs.writeFileSync(entryFile, entryCode);
 
