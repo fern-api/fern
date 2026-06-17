@@ -62,7 +62,19 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
      * non-IAsyncEnumerable return type.
      */
     private hasPaginationEnabled(): boolean {
-        return this.context.config.generatePaginatedClients === true && this.endpoint.pagination != null;
+        if (this.context.config.generatePaginatedClients !== true) {
+            return false;
+        }
+        const pagination = this.endpoint.pagination;
+        if (pagination == null) {
+            return false;
+        }
+        // uri/path pagination is not generated as a pager in C#; these endpoints are emitted as
+        // regular unpaged methods, so the test must not iterate them with `await foreach`.
+        if (pagination.type === "uri" || pagination.type === "path") {
+            return false;
+        }
+        return true;
     }
 
     private getServiceNamespaceSegments(): string[] {

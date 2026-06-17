@@ -1,4 +1,4 @@
-import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
+import { GeneratorError } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -77,10 +77,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     break;
                 case "uri":
                 case "path":
-                    this.context.logger.warn(
-                        `Skipping endpoint '${getOriginalName(endpoint.name)}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                    throw GeneratorError.internalError(
+                        `'${endpoint.pagination.type}' pagination is not supported in C# and should have been treated as unpaged.`
                     );
-                    return;
                 default:
                     assertNever(endpoint.pagination);
             }
