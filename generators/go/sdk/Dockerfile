@@ -26,6 +26,11 @@ RUN set -eux; \
             tar -xzf "${TARBALL}" -C "${nested}" --strip-components=1; \
         fi; \
     done; \
+    # Patch tar to 7.5.16 (pinned) to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh.
+    TARBALL="$(npm pack tar@7.5.16 --silent)"; \
+    rm -rf "${NPM_NM:?}/tar"; \
+    mkdir -p "${NPM_NM}/tar"; \
+    tar -xzf "${TARBALL}" -C "${NPM_NM}/tar" --strip-components=1; \
     cd / && rm -rf /tmp/pkg-fix /root/.npm
 
 COPY generators/go-v2/sdk/dist/ /dist/

@@ -187,7 +187,7 @@ try await main()
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="/Sources/Resources/Query/QueryClient.swift">send</a>(prompt: JSONValue, optionalPrompt: JSONValue?, aliasPrompt: AliasToPrompt, aliasOptionalPrompt: AliasToPrompt?, query: String, stream: JSONValue, optionalStream: JSONValue?, aliasStream: AliasToStream, aliasOptionalStream: AliasToStream?, requestOptions: RequestOptions?) -> SendResponse</code></summary>
+<details><summary><code>client.query.<a href="/Sources/Resources/Query/QueryClient.swift">send</a>(prompt: JSONValue, optionalPrompt: JSONValue?, aliasPrompt: AliasToPrompt, aliasOptionalPrompt: AliasToPrompt?, query: String, stream: Bool, optionalStream: Bool?, aliasStream: AliasToStream, aliasOptionalStream: AliasToStream?, requestOptions: RequestOptions?) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -274,7 +274,7 @@ try await main()
 <dl>
 <dd>
 
-**stream:** `JSONValue` 
+**stream:** `Bool` 
     
 </dd>
 </dl>
@@ -282,7 +282,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalStream:** `JSONValue?` 
+**optionalStream:** `Bool?` 
     
 </dd>
 </dl>
@@ -342,6 +342,7 @@ private func main() async throws {
         prompt: .youAreAHelpfulAssistant,
         query: "What is the weather today",
         stream: false,
+        ending: .ending,
         context: .youreSuperWise,
         containerObject: ContainerObject(
             nestedObjects: [

@@ -58,7 +58,7 @@ trustPolicyExclude:
 blockExoticSubdeps: true
 
 catalog:
-  "@babel/core": ^7.29.0
+  "@babel/core": ^7.29.6
   "@babel/preset-env": ^7.29.5
   "@babel/preset-typescript": ^7.28.5
   "@biomejs/biome": 2.4.10
@@ -169,7 +169,7 @@ catalog:
   fast-levenshtein: ^3.0.0
   file-type: ^21.3.4
   find-up: ^6.3.0
-  form-data: 4.0.4
+  form-data: 4.0.6
   fs-extra: ^11.3.4
   glob: ^11.1.0
   graphql: ^16.13.2
@@ -180,7 +180,7 @@ catalog:
   husky: ^9.1.7
   image-size: ^1.2.1
   is-ci: ^3.0.1
-  js-yaml: ^4.1.1
+  js-yaml: ^4.2.0
   js-yaml-source-map: ^0.2.2
   json-schema: ^0.4.0
   json-stream-stringify: ^3.1.4
@@ -233,7 +233,7 @@ catalog:
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.13
+  tar: ^7.5.16
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3
@@ -257,7 +257,7 @@ catalog:
   vitest: 4.1.4
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0
-  ws: ^8.20.1
+  ws: ^8.21.0
   xml2js: ^0.6.2
   yaml: ^2.8.3
   yauzl: ^3.2.1
@@ -271,8 +271,9 @@ overrides:
   qs: 6.15.2
   url-join: ^4.0.1
   "@fern-api/fdr-sdk": 1.2.33-830bfae69e
-  form-data: ^4.0.4
+  form-data: ^4.0.6
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
-  vite: ^7.3.2
+  vite: ^7.3.5
   esbuild: ^0.28.1
   yauzl: ^3.2.1
+  "@opentelemetry/core": ">=2.8.0"

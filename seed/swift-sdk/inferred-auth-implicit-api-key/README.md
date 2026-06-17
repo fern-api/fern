@@ -53,7 +53,7 @@ import InferredAuthImplicitApiKey
 private func main() async throws {
     let client = InferredAuthImplicitApiKeyClient()
 
-    _ = try await client.auth.getToken()
+    _ = try await client.auth.getToken(apiKey: "api_key")
 }
 
 try await main()

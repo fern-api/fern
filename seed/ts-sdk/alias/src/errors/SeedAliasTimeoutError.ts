@@ -10,7 +10,7 @@ export class SeedAliasTimeoutError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedAliasTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

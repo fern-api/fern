@@ -8,5 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.no_req_body.post_with_no_request_body(None).await;
+    client.no_req_body.get_with_no_request_body(None).await;
 }

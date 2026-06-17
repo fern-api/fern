@@ -574,6 +574,17 @@
         },
         {
             "id": {
+                "path": "/req-bodies/array-body-with-headers",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithArrayBodyAndHeaders"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/exhaustive/fern\"\n\tfernclient \"github.com/exhaustive/fern/client\"\n\toption \"github.com/exhaustive/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.InlinedRequests.PostWithArrayBodyAndHeaders(\n\tcontext.TODO(),\n\t\u0026fern.PostWithArrayBodyAndHeaders{\n\t\tXCustomHeader: fern.String(\n\t\t\t\"X-Custom-Header\",\n\t\t),\n\t\tBody: []string{\n\t\t\t\"string\",\n\t\t\t\"string\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/req-bodies/object",
                 "method": "POST",
                 "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"

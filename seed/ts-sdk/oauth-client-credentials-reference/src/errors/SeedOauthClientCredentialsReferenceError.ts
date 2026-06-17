@@ -28,7 +28,7 @@ export class SeedOauthClientCredentialsReferenceError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedOauthClientCredentialsReferenceError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

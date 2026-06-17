@@ -64,6 +64,14 @@ class SnippetTestFactory:
 
     def _return_expression(self, returned_expression: AST.ClassInstantiation) -> AST.CodeWriter:
         def return_writer(writer: AST.NodeWriter) -> None:
+            # Legacy wire tests issue real HTTP requests, so they can only run when a
+            # mock server URL is configured. Skip them when it is absent rather than
+            # failing with a connection error.
+            writer.write_line(f'if os.getenv("{self.TEST_URL_ENVVAR}") is None:')
+            with writer.indent():
+                writer.write_line(
+                    f'pytest.skip("{self.TEST_URL_ENVVAR} is not set; skipping wire test (no mock server available)")'
+                )
             writer.write("return ")
             writer.write_node(returned_expression)
             writer.write_newline_if_last_line_not()
@@ -230,7 +238,40 @@ class SnippetTestFactory:
         source_file.add_expression(AST.Expression(async_function_declaration))
         # Maybe add `validate_json` function to this file as an assertion utility
 
+        self._add_aiohttp_skip_hook(source_file)
+
         self._project.write_source_file(source_file=source_file, filepath=utilities_filepath, include_src_root=False)
+
+    def _add_aiohttp_skip_hook(self, source_file: SourceFile) -> None:
+        # This conftest overrides the SDK's default tests/conftest.py, so it must
+        # re-declare the hook that auto-skips @pytest.mark.aiohttp tests when the
+        # optional httpx_aiohttp dependency is not installed.
+        def hook_writer(writer: AST.NodeWriter) -> None:
+            writer.write_line("def _has_httpx_aiohttp() -> bool:")
+            with writer.indent():
+                writer.write_line("try:")
+                with writer.indent():
+                    writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]  # noqa: F401")
+                    writer.write_line("")
+                    writer.write_line("return True")
+                writer.write_line("except ImportError:")
+                with writer.indent():
+                    writer.write_line("return False")
+            writer.write_line("")
+            writer.write_line("")
+            writer.write_line("def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:")
+            with writer.indent():
+                writer.write_line("if _has_httpx_aiohttp():")
+                with writer.indent():
+                    writer.write_line("return")
+                writer.write_line('skip_aiohttp = pytest.mark.skip(reason="httpx_aiohttp not installed")')
+                writer.write_line("for item in items:")
+                with writer.indent():
+                    writer.write_line('if "aiohttp" in item.keywords:')
+                    with writer.indent():
+                        writer.write_line("item.add_marker(skip_aiohttp)")
+
+        source_file.add_expression(AST.Expression(AST.CodeWriter(hook_writer)))
 
     def _get_filepath_for_fern_filepath(self, fern_filepath: ir_types.FernFilepath) -> Filepath:
         directories: Tuple[Filepath.DirectoryFilepathPart, ...] = (

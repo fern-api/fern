@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.20
+  changelogEntry:
+    - summary: |
+        Bump the Python SDK generator container's base image from `python:3.13.7-slim`
+        to `python:3.13.14-slim` to pull in CPython security fixes, clearing
+        CVE-2025-13836, CVE-2026-3644, and CVE-2026-4224 (plus several lower-severity
+        CPython advisories).
+      type: chore
+  createdAt: "2026-06-17"
+  irVersion: 67
+- version: 5.14.19
+  changelogEntry:
+    - summary: |
+        Bump aiohttp lower bound from >=3.14.0 to >=3.14.1 to fix CVE-2026-54274.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 5.14.18
+  changelogEntry:
+    - summary: |
+        Fixed the generated legacy wire test `conftest.py` so the test suite no longer fails when
+        no mock server is configured. The client fixtures now skip wire tests when `TESTS_BASE_URL`
+        is unset (instead of issuing requests to an invalid URL), and the conftest re-declares the
+        hook that auto-skips `@pytest.mark.aiohttp` tests when the optional `httpx_aiohttp`
+        dependency is not installed.
+      type: fix
+  createdAt: "2026-06-15"
+  irVersion: 67
 - version: 5.14.17
   changelogEntry:
     - summary: |

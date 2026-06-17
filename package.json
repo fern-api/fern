@@ -139,6 +139,11 @@
     "nanoid": "3.3.8",
     "yaml": "2.8.3"
   },
+  "pnpm": {
+    "overrides": {
+      "js-yaml@4.1.1": "4.2.0"
+    }
+  },
   "workspaces": [
     "packages/**",
     "generators/**",

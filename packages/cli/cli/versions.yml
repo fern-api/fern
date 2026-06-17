@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.49.2
+  changelogEntry:
+    - summary: |
+        `infer-discriminated-union-base-properties` now lifts properties that every variant inherits via a shared `allOf $ref` parent. Previously these were dropped to protect TypeScript's `_Base` from colliding with the real parent interface, which left Go and C# unions missing common fields like `id`, `name`, and `display_name`.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 67
 - version: 5.49.1
   changelogEntry:
     - summary: |

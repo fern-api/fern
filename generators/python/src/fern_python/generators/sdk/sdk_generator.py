@@ -151,7 +151,7 @@ class SdkGenerator(AbstractGenerator):
             dependency=AST.Dependency(name="httpx-aiohttp", version="0.1.8", optional=True, python=">=3.10")
         )
         project.add_dependency(
-            dependency=AST.Dependency(name="aiohttp", version=">=3.14.0,<4", optional=True, python=">=3.10")
+            dependency=AST.Dependency(name="aiohttp", version=">=3.14.1,<4", optional=True, python=">=3.10")
         )
 
         for dep, bas_dep_value in custom_config.extra_dev_dependencies.items():

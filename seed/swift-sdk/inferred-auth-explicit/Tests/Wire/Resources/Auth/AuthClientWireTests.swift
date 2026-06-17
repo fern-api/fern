@@ -26,6 +26,7 @@ import InferredAuthExplicit
             refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.getTokenWithClientCredentials(
+            xApiKey: "X-Api-Key",
             request: .init(
                 clientId: "client_id",
                 clientSecret: "client_secret",
@@ -61,6 +62,7 @@ import InferredAuthExplicit
             refreshToken: Optional("refresh_token")
         )
         let response = try await client.auth.refreshToken(
+            xApiKey: "X-Api-Key",
             request: .init(
                 clientId: "client_id",
                 clientSecret: "client_secret",
