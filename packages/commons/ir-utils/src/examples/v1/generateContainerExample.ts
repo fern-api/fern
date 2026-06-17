@@ -64,9 +64,7 @@ export function generateContainerExample({
                         string: (value) => ExamplePrimitive.string({ original: value }),
                         integer: (value) => ExamplePrimitive.integer(value),
                         double: (value) => ExamplePrimitive.double(value),
-                        list: () => {
-                            throw new Error("List literals cannot be represented as ExamplePrimitive");
-                        },
+                        list: (value) => ExamplePrimitive.string({ original: JSON.stringify(value) }),
                         _other: () => {
                             throw new Error("Encountered unknown literal type");
                         }
@@ -226,9 +224,7 @@ export function generateEmptyContainerExample({
                         string: (value) => ExamplePrimitive.string({ original: value }),
                         integer: (value) => ExamplePrimitive.integer(value),
                         double: (value) => ExamplePrimitive.double(value),
-                        list: () => {
-                            throw new Error("List literals cannot be represented as ExamplePrimitive");
-                        },
+                        list: (value) => ExamplePrimitive.string({ original: JSON.stringify(value) }),
                         _other: () => {
                             throw new Error("Encountered unknown literal type");
                         }

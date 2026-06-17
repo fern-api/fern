@@ -497,6 +497,24 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
                         const: val
                     };
                 },
+                integer: (val) => {
+                    return {
+                        type: "integer",
+                        const: val
+                    };
+                },
+                double: (val) => {
+                    return {
+                        type: "number",
+                        const: val
+                    };
+                },
+                list: (val) => {
+                    return {
+                        type: "array",
+                        const: val
+                    };
+                },
                 _other: () => ({})
             });
         },
