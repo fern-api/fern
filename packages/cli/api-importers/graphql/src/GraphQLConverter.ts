@@ -124,43 +124,6 @@ export class GraphQLConverter {
         return fields.every((f) => f.args.length > 0);
     }
 
-    // Returns the names of object types that will be consumed as namespace groupings by
-    // convertOperations — i.e. types that appear as the return type of a zero-arg root
-    // field whose own fields all accept arguments. These types must be excluded from the
-    // type registry in collectTypeDefinitions to prevent their fields from showing up
-    // both as object properties and as standalone operations.
-    private collectNamespaceTypeNames(): Set<string> {
-        if (!this.schema) {
-            return new Set();
-        }
-        const namespaceTypeNames = new Set<string>();
-        const rootTypes: GraphQLObjectType[] = [];
-        const queryType = this.schema.getQueryType();
-        if (queryType) {
-            rootTypes.push(queryType);
-        }
-        const mutationType = this.schema.getMutationType();
-        if (mutationType) {
-            rootTypes.push(mutationType);
-        }
-        const subscriptionType = this.schema.getSubscriptionType();
-        if (subscriptionType && this.isActualSubscriptionRootType(subscriptionType)) {
-            rootTypes.push(subscriptionType);
-        }
-        for (const rootType of rootTypes) {
-            for (const field of Object.values(rootType.getFields())) {
-                const returnRawType = this.unwrapNonNull(field.type);
-                if (
-                    returnRawType instanceof GraphQLObjectType &&
-                    field.args.length === 0 &&
-                    this.isNamespaceType(returnRawType)
-                ) {
-                    namespaceTypeNames.add(returnRawType.name);
-                }
-            }
-        }
-        return namespaceTypeNames;
-    }
 
     public async convert(): Promise<GraphQLConverterResult> {
         const sdlContent = await readFile(this.filePath, "utf-8");
@@ -217,12 +180,6 @@ export class GraphQLConverter {
             return;
         }
 
-        // Identify namespace types up-front so we can exclude them below. Namespace types
-        // have their fields registered as standalone operations via convertNamespaceOperations;
-        // registering them as type definitions too would make their fields appear in both
-        // places, causing redundant/confusing output.
-        const namespaceTypeNames = this.collectNamespaceTypeNames();
-
         const typeMap = this.schema.getTypeMap();
         for (const [typeName, type] of Object.entries(typeMap)) {
             // Skip built-in types
@@ -239,11 +196,6 @@ export class GraphQLConverter {
                 type instanceof GraphQLObjectType &&
                 this.isActualSubscriptionRootType(type)
             ) {
-                continue;
-            }
-
-            // Skip namespace types — their fields are promoted to top-level operations.
-            if (type instanceof GraphQLObjectType && namespaceTypeNames.has(typeName)) {
                 continue;
             }
 
@@ -350,6 +302,16 @@ export class GraphQLConverter {
                 field.args.length === 0 &&
                 this.isNamespaceType(returnRawType)
             ) {
+                // Create a parent operation for queries so the page can show
+                // the namespace type's own fields instead of the first child's schema.
+                if (operationType === "QUERY") {
+                    const parentFlatId = `${operationType.toLowerCase()}_${fieldName}`;
+                    pending.push({
+                        flatId: parentFlatId,
+                        namespacedId: parentFlatId,
+                        operation: this.convertField(field, fieldName, operationType)
+                    });
+                }
                 this.convertNamespaceOperations(returnRawType, operationType, pending, [fieldName]);
             } else {
                 const flatId = `${operationType.toLowerCase()}_${fieldName}`;

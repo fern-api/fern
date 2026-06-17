@@ -127,6 +127,68 @@
         ]
       },
       "description": "An account in the system."
+    },
+    "AccountMutations": {
+      "name": "AccountMutations",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "create",
+            "valueType": {
+              "type": "id",
+              "value": "Account"
+            },
+            "description": "Create an account.",
+            "arguments": [
+              {
+                "name": "name",
+                "description": "Display name for the account.",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "name": "email",
+                "description": "Contact email address.",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "key": "delete",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            },
+            "description": "Delete an account by ID.",
+            "arguments": [
+              {
+                "name": "id",
+                "description": "ID of the account to delete.",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Namespace grouping for account mutations.\nAll fields have arguments — this makes it a namespace type."
     }
   }
 }
