@@ -397,7 +397,6 @@ allowedFailures:
   - oauth-client-credentials-custom
   - request-parameters
   - streaming-parameter
-  - inferred-auth-implicit-reference
 
   # Generated raw client / publish fixtures fail to compile in CI
   # (e.g. endpoint-security-auth's RawUserClient "cannot find symbol").
