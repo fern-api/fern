@@ -31,7 +31,7 @@ public final class UserClient: Sendable {
         )
     }
 
-    public func createUsernameOptional(request: Nullable<CreateUsernameBodyOptionalProperties>?, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func createUsernameOptional(request: Nullable<CreateUsernameBodyOptionalProperties>? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/user/username-optional",

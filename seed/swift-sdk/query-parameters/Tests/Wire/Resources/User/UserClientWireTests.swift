@@ -6,7 +6,7 @@ import QueryParameters
     @Test func getUsername1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",

@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.45.5
+  changelogEntry:
+    - summary: |
+        Fix compile errors in generated Go SDKs where the v2/ TypeScript client,
+        its generated tests, and the generated dynamic snippet tests referenced
+        types in their original package after the v1 generator had relocated those
+        leaf types into the shared common package to break an import cycle. The v1
+        generator now records the relocations in a sidecar that the v2 generator
+        reads, and also writes them to a host-readable file (when the Fern CLI asks
+        for it) so the CLI's dynamic snippet test generator references the relocated
+        types from the same package too.
+      type: fix
+  createdAt: "2026-06-17"
+  irVersion: 66
 - version: 1.45.4
   changelogEntry:
     - summary: |

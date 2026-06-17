@@ -6,7 +6,7 @@ import MixedFileDirectory
     @Test func getMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",

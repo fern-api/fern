@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.49.3
+  changelogEntry:
+    - summary: |
+        When a generator breaks an import cycle by relocating types into a shared
+        package, the local generation runner now applies those relocations to the IR
+        that powers host-side dynamic snippet test generation. This keeps the
+        generated dynamic snippets referencing each relocated type from the same
+        package the generator declares it in, fixing undefined-symbol compile errors
+        in the Go SDK's dynamic snippet tests.
+      type: fix
+  createdAt: "2026-06-17"
+  irVersion: 67
 - version: 5.49.2
   changelogEntry:
     - summary: |
