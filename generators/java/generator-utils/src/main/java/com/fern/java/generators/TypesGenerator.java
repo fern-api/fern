@@ -18,7 +18,10 @@ package com.fern.java.generators;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.errors.ErrorDeclaration;
+import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.ResolvedTypeReference;
+import com.fern.ir.model.types.ShapeType;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
@@ -126,9 +129,7 @@ public final class TypesGenerator {
         return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), typeId -> {
             TypeDeclaration typeDeclaration =
                     generatorContext.getTypeDeclarations().get(typeId);
-            ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration
-                    .getShape()
-                    .getObject()
+            ObjectTypeDeclaration objectTypeDeclaration = resolveExtendedObject(typeDeclaration, generatorContext)
                     .orElseThrow(() -> new IllegalStateException("Non-objects cannot be extended. Fix type "
                             + typeDeclaration.getName().getName() + " located in file"
                             + typeDeclaration.getName().getFernFilepath()));
@@ -136,6 +137,29 @@ public final class TypesGenerator {
                     new InterfaceGenerator(generatorContext, typeDeclaration.getName(), objectTypeDeclaration);
             return interfaceGenerator.generateFile();
         }));
+    }
+
+    /**
+     * Resolves the {@link ObjectTypeDeclaration} that should back the interface generated for an extended type. The
+     * type is usually an object directly, but it may also be an alias whose resolved type is an object (e.g.
+     * {@code AliasType: Parent} extended by another type). In that case we follow the alias to its underlying object
+     * declaration so a correct interface can still be generated.
+     */
+    private static Optional<ObjectTypeDeclaration> resolveExtendedObject(
+            TypeDeclaration typeDeclaration, AbstractGeneratorContext<?, ?> generatorContext) {
+        if (typeDeclaration.getShape().getObject().isPresent()) {
+            return typeDeclaration.getShape().getObject();
+        }
+        return typeDeclaration
+                .getShape()
+                .getAlias()
+                .map(AliasTypeDeclaration::getResolvedType)
+                .flatMap(ResolvedTypeReference::getNamed)
+                .filter(named -> named.getShape() == ShapeType.OBJECT)
+                .map(named -> generatorContext
+                        .getTypeDeclarations()
+                        .get(named.getName().getTypeId()))
+                .flatMap(resolvedDeclaration -> resolvedDeclaration.getShape().getObject());
     }
 
     public static final class Result {

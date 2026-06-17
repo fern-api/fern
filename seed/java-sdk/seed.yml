@@ -383,9 +383,6 @@ scripts:
       - ./gradlew compileJava spotlessCheck
 
 allowedFailures:
-  # Extending an alias (that resolves to an object) is not yet supported by the
-  # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
-  - alias-extends
   - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
