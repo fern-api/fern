@@ -100,46 +100,62 @@ public class PaginationPathUtils {
         List<EnrichedCursorPathSetter> result = new ArrayList<>();
 
         List<EnrichedCursorPathItem> enrichedItems = new ArrayList<>();
+        // Tracked by position rather than by name: a path may navigate through repeated property
+        // names (e.g. b.c.b), so keying by name would collapse distinct types onto each other.
+        List<TypeReference> referencesByIndex = new ArrayList<>();
         Optional<com.fern.ir.model.types.TypeReference> curr =
                 getPropertyTypeFromRequest(httpEndpoint, propertyPath.get(0), generatorContext);
-        Map<Name, TypeReference> referencesByName = new HashMap<>();
-        curr.map(curr_ -> referencesByName.put(propertyPath.get(0), curr_));
 
-        curr.flatMap(curr_ -> enriched(propertyPath.get(0), curr_)).ifPresent(enrichedItems::add);
+        if (curr.isPresent()) {
+            Optional<EnrichedCursorPathItem> enrichedItem = enriched(propertyPath.get(0), curr.get());
+            if (enrichedItem.isPresent()) {
+                enrichedItems.add(enrichedItem.get());
+                referencesByIndex.add(curr.get());
+            }
+        }
 
         for (Name name : propertyPath.subList(1, propertyPath.size())) {
             if (curr.isEmpty()) {
                 break;
             }
             curr = getPropertyFromProperty(curr.get(), name, generatorContext);
-            curr.map(curr_ -> referencesByName.put(name, curr_));
-            curr.flatMap(curr_ -> enriched(name, curr_)).ifPresent(enrichedItems::add);
+            if (curr.isPresent()) {
+                Optional<EnrichedCursorPathItem> enrichedItem = enriched(name, curr.get());
+                if (enrichedItem.isPresent()) {
+                    enrichedItems.add(enrichedItem.get());
+                    referencesByIndex.add(curr.get());
+                }
+            }
         }
+
+        List<String> variableNames = computeUniqueVariableNames(enrichedItems);
 
         List<CodeBlock> getters = new ArrayList<>();
         getters.add(CodeBlock.builder().add("$L", requestParameterSpecName).build());
         CodeBlock getter = getters.get(0);
         boolean optional = false;
-        String prevName = requestParameterSpecName;
+        // The receiver type of the next method reference in the getter chain is the (unboxed) type
+        // of the previously navigated path item. Method references are only emitted once an optional
+        // item has been seen, so a concrete type is always available by the time this is used.
+        TypeName prevType = null;
 
         Map<EnrichedCursorPathItem, Boolean> gettersAreOptional = new HashMap<>();
 
-        for (EnrichedCursorPathItem enriched : enrichedItems) {
+        for (int i = 0; i < enrichedItems.size(); i++) {
+            EnrichedCursorPathItem enriched = enrichedItems.get(i);
             if (optional) {
-                // TODO(ajgateno): Make sure we're using the actual getter names the same way
-                //  they're obtained in the object generator.
                 if (enriched.optional()) {
                     getter = getter.toBuilder()
                             .add(
-                                    ".flatMap($L::get$L)",
-                                    prevName,
+                                    ".flatMap($T::get$L)",
+                                    prevType,
                                     enriched.name().getPascalCase().getSafeName())
                             .build();
                 } else {
                     getter = getter.toBuilder()
                             .add(
-                                    ".map($L::get$L)",
-                                    prevName,
+                                    ".map($T::get$L)",
+                                    prevType,
                                     enriched.name().getPascalCase().getSafeName())
                             .build();
                 }
@@ -151,9 +167,8 @@ public class PaginationPathUtils {
             getters.add(getter);
             optional = optional || enriched.optional();
             gettersAreOptional.put(enriched, optional);
-            // TODO(ajgateno): Ensure this is always the type name; could probably add it to the
-            //  EnrichedCursorPathItem
-            prevName = enriched.name().getPascalCase().getSafeName();
+            prevType =
+                    unboxedTypeName(generatorContext, referencesByIndex.get(i)).orElse(null);
         }
 
         List<EnrichedCursorPathGetter> enrichedGetters = new ArrayList<>();
@@ -164,16 +179,17 @@ public class PaginationPathUtils {
                 previous = Optional.of(enrichedGetters.get(enrichedGetters.size() - 1));
             }
 
-            com.fern.ir.model.types.TypeReference typeReference = referencesByName.get(
-                    enrichedItems.get(enrichedItems.size() - 1 - i).name());
+            int itemIndex = enrichedItems.size() - 1 - i;
+            com.fern.ir.model.types.TypeReference typeReference = referencesByIndex.get(itemIndex);
 
             enrichedGetters.add(EnrichedCursorPathGetter.builder()
-                    .pathItem(enrichedItems.get(enrichedItems.size() - 1 - i))
+                    .pathItem(enrichedItems.get(itemIndex))
                     .getter(getters.get(getters.size() - 1 - i))
                     // TODO(ajgateno) handle empty
                     .typeName(unboxedTypeName(generatorContext, typeReference).get())
+                    .variableName(variableNames.get(itemIndex))
                     .previous(previous)
-                    .optional(gettersAreOptional.get(enrichedItems.get(enrichedItems.size() - 1 - i)))
+                    .optional(gettersAreOptional.get(enrichedItems.get(itemIndex)))
                     .build());
         }
 
@@ -187,27 +203,27 @@ public class PaginationPathUtils {
                             .add(
                                     "$T $L = ",
                                     ParameterizedTypeName.get(ClassName.get(Optional.class), enrichedGetter.typeName()),
-                                    enrichedGetter.propertyName())
+                                    enrichedGetter.variableName())
                             .add(
                                     "$L.map(($T $L) -> ",
                                     enrichedGetter.getter(),
                                     enrichedGetter.typeName(),
-                                    enrichedGetter.propertyName() + "_")
+                                    enrichedGetter.variableName() + "_")
                             .add(
                                     "$T.builder().from($L).$L($L).build()",
                                     enrichedGetter.typeName(),
-                                    enrichedGetter.propertyName() + "_",
+                                    enrichedGetter.variableName() + "_",
                                     propertyOverrideOnRequest,
                                     propertyOverrideValueOnRequest)
                             .add(")")
                             .build());
                 } else {
                     builder.setter(CodeBlock.builder()
-                            .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.propertyName())
+                            .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.variableName())
                             .add(
                                     "$T.builder().from($L).$L($L).build()",
                                     enrichedGetter.typeName(),
-                                    enrichedGetter.typeName(),
+                                    enrichedGetter.getter(),
                                     propertyOverrideOnRequest,
                                     propertyOverrideValueOnRequest)
                             .build());
@@ -220,40 +236,40 @@ public class PaginationPathUtils {
                                         "$T $L = ",
                                         ParameterizedTypeName.get(
                                                 ClassName.get(Optional.class), enrichedGetter.typeName()),
-                                        enrichedGetter.propertyName())
+                                        enrichedGetter.variableName())
                                 .add(
                                         "$L.flatMap(($T $L) -> ",
-                                        enrichedGetter.previous().get().propertyName(),
+                                        enrichedGetter.previous().get().variableName(),
                                         enrichedGetter.previous().get().typeName(),
-                                        enrichedGetter.previous().get().propertyName() + "_")
+                                        enrichedGetter.previous().get().variableName() + "_")
                                 .add(
                                         "$L.map(($T $L) -> ",
                                         enrichedGetter.getter(),
                                         enrichedGetter.typeName(),
-                                        enrichedGetter.propertyName() + "_")
+                                        enrichedGetter.variableName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),
-                                        enrichedGetter.propertyName() + "_",
+                                        enrichedGetter.variableName() + "_",
                                         enrichedGetter.previous().get().propertyName(),
-                                        enrichedGetter.previous().get().propertyName() + "_")
+                                        enrichedGetter.previous().get().variableName() + "_")
                                 .add(")")
                                 .add(")")
                                 .build());
                     } else {
                         builder.setter(CodeBlock.builder()
-                                .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.propertyName())
+                                .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.variableName())
                                 .add(
                                         "$L.map(($T $L) -> ",
-                                        enrichedGetter.previous().get().propertyName(),
+                                        enrichedGetter.previous().get().variableName(),
                                         enrichedGetter.previous().get().typeName(),
-                                        enrichedGetter.previous().get().propertyName() + "_")
+                                        enrichedGetter.previous().get().variableName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),
                                         enrichedGetter.getter(),
                                         enrichedGetter.previous().get().propertyName(),
-                                        enrichedGetter.previous().get().propertyName() + "_")
+                                        enrichedGetter.previous().get().variableName() + "_")
                                 .add(")")
                                 .build());
                     }
@@ -264,29 +280,29 @@ public class PaginationPathUtils {
                                         "$T $L = ",
                                         ParameterizedTypeName.get(
                                                 ClassName.get(Optional.class), enrichedGetter.typeName()),
-                                        enrichedGetter.propertyName())
+                                        enrichedGetter.variableName())
                                 .add(
                                         "$L.map(($T $L) -> ",
                                         enrichedGetter.getter(),
                                         enrichedGetter.typeName(),
-                                        enrichedGetter.propertyName() + "_")
+                                        enrichedGetter.variableName() + "_")
                                 .add(
                                         "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),
-                                        enrichedGetter.propertyName() + "_",
+                                        enrichedGetter.variableName() + "_",
                                         enrichedGetter.previous().get().propertyName(),
-                                        enrichedGetter.previous().get().propertyName())
+                                        enrichedGetter.previous().get().variableName())
                                 .add(")")
                                 .build());
                     } else {
                         builder.setter(CodeBlock.builder()
-                                .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.propertyName())
+                                .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.variableName())
                                 .add(
                                         "$T.builder().from($L).$L($L).build())",
                                         enrichedGetter.typeName(),
                                         enrichedGetter.getter(),
                                         enrichedGetter.previous().get().propertyName(),
-                                        enrichedGetter.previous().get().propertyName())
+                                        enrichedGetter.previous().get().variableName())
                                 .build());
                     }
                 }
@@ -295,6 +311,23 @@ public class PaginationPathUtils {
             result.add(builder.build());
         }
 
+        return result;
+    }
+
+    // Produces a unique local variable name for each path item. Items whose camelCase property
+    // name is unique within the path keep that name (preserving existing output); items whose name
+    // is repeated (e.g. b.c.b) are suffixed with their position to avoid duplicate declarations.
+    private static List<String> computeUniqueVariableNames(List<EnrichedCursorPathItem> enrichedItems) {
+        Map<String, Integer> counts = new HashMap<>();
+        for (EnrichedCursorPathItem item : enrichedItems) {
+            String base = item.name().getCamelCase().getSafeName();
+            counts.merge(base, 1, Integer::sum);
+        }
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < enrichedItems.size(); i++) {
+            String base = enrichedItems.get(i).name().getCamelCase().getSafeName();
+            result.add(counts.get(base) > 1 ? base + i : base);
+        }
         return result;
     }
 

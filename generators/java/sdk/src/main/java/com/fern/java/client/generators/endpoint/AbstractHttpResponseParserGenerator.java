@@ -1539,7 +1539,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     EnrichedCursorPathGetter propertyOverrideGetter =
                             setters.get(setters.size() - 1).getter();
                     propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                    propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
+                    propertyOverrideValueOnRequest = propertyOverrideGetter.variableName();
 
                     if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
                         propertyOverrideValueOnRequest += ".get()";
@@ -1824,7 +1824,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     EnrichedCursorPathGetter propertyOverrideGetter =
                             setters.get(setters.size() - 1).getter();
                     propertyOverrideOnRequest = propertyOverrideGetter.propertyName();
-                    propertyOverrideValueOnRequest = propertyOverrideGetter.propertyName();
+                    propertyOverrideValueOnRequest = propertyOverrideGetter.variableName();
 
                     if (!propertyOverrideGetter.pathItem().optional() && propertyOverrideGetter.optional()) {
                         propertyOverrideValueOnRequest += ".get()";
