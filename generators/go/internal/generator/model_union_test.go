@@ -18,7 +18,14 @@ func nameAndWireValue(pascal string) *common.NameAndWireValue {
 }
 
 func objectProperty(pascal string) *ir.ObjectProperty {
-	return &ir.ObjectProperty{Name: nameAndWireValue(pascal)}
+	return &ir.ObjectProperty{Name: nameAndWireValue(pascal), ValueType: &ir.TypeReference{}}
+}
+
+func literalObjectProperty(pascal string) *ir.ObjectProperty {
+	return &ir.ObjectProperty{
+		Name:      nameAndWireValue(pascal),
+		ValueType: &ir.TypeReference{Container: &ir.ContainerType{Literal: &ir.Literal{Type: "string", String: pascal}}},
+	}
 }
 
 func objectTypeDeclaration(properties ...string) *ir.TypeDeclaration {
@@ -88,6 +95,36 @@ func TestUnionInheritedBasePropertyNames(t *testing.T) {
 		}
 		if got := tv.unionInheritedBasePropertyNames(union); len(got) != 0 {
 			t.Errorf("expected empty result, got %v", got)
+		}
+	})
+
+	t.Run("never suppresses literal base properties even when carried by every variant", func(t *testing.T) {
+		// A literal property keeps its own `<Name>()` getter (no `Get` prefix) on both
+		// the union and each variant. Suppressing it would emit a delegating
+		// `Get<Name>()` that calls the variant's non-existent `Get<Name>()` and fail to
+		// compile, so literals must stay on the normal path.
+		litTv := &typeVisitor{
+			dedupeUnionBaseProperties: true,
+			writer: &fileWriter{
+				types: map[common.TypeId]*ir.TypeDeclaration{
+					"A": objectTypeDeclaration("Name", "Kind"),
+					"B": objectTypeDeclaration("Name", "Kind"),
+				},
+			},
+		}
+		union := &ir.UnionTypeDeclaration{
+			BaseProperties: []*ir.ObjectProperty{objectProperty("Name"), literalObjectProperty("Kind")},
+			Types: []*ir.SingleUnionType{
+				samePropertiesAsObjectVariant("A"),
+				samePropertiesAsObjectVariant("B"),
+			},
+		}
+		got := litTv.unionInheritedBasePropertyNames(union)
+		if _, ok := got["Name"]; !ok {
+			t.Errorf("expected non-literal common property Name to be suppressed")
+		}
+		if _, ok := got["Kind"]; ok {
+			t.Errorf("did not expect literal property Kind to be suppressed")
 		}
 	})
 

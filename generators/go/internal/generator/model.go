@@ -1721,6 +1721,14 @@ func (t *typeVisitor) unionInheritedBasePropertyNames(union *ir.UnionTypeDeclara
 	}
 	inherited := make(map[string]struct{})
 	for _, property := range union.BaseProperties {
+		// Literal base properties keep their normal handling: they are emitted as the
+		// union's own unexported literal field plus a `<Name>()` getter (no `Get`
+		// prefix). Suppressing them here would instead emit a `Get<Name>()` getter that
+		// delegates to the variant, but a variant's literal getter is also `<Name>()`,
+		// so the delegating call would not compile. Leave literals out of the set.
+		if isLiteralType(property.ValueType, t.writer.types) {
+			continue
+		}
 		name := goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)
 		if _, ok := carriedByAllVariants[name]; ok {
 			inherited[name] = struct{}{}
