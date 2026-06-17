@@ -419,8 +419,6 @@ fixtures:
       outputFolder: redact-response-body-on-error
 allowedFailures:
   - api-wide-base-path-with-default
-  - enum:forward-compatible-enums
-  - enum:plain-enums
   - examples:no-custom-config
   - examples:readme-config
   - imdb:exported-client-class-name
