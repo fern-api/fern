@@ -6,7 +6,7 @@ import OauthClientCredentials
     @Test func getTokenWithClientCredentials1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",
@@ -43,7 +43,7 @@ import OauthClientCredentials
     @Test func refreshToken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",

@@ -6,7 +6,7 @@ import ResponseProperty
     @Test func getMovie1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": {
@@ -45,7 +45,7 @@ import ResponseProperty
     @Test func getMovieDocs1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": {
@@ -84,7 +84,7 @@ import ResponseProperty
     @Test func getMovieName1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": "data"
@@ -109,7 +109,7 @@ import ResponseProperty
     @Test func getMovieMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": {
@@ -148,7 +148,7 @@ import ResponseProperty
     @Test func getOptionalMovie1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": {
@@ -187,7 +187,7 @@ import ResponseProperty
     @Test func getOptionalMovieDocs1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "docs": "docs"
@@ -212,7 +212,7 @@ import ResponseProperty
     @Test func getOptionalMovieName1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "data": "data"
