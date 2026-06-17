@@ -2,7 +2,9 @@
 FROM node:24.16-trixie-slim AS node
 
 # Stage 2: Base Python image with dependencies
-FROM python:3.13.7-slim AS python-base
+# Pinned to the latest 3.13 patch release to pull in CPython security fixes
+# (e.g. CVE-2025-13836, CVE-2026-3644, CVE-2026-4224).
+FROM python:3.13.14-slim AS python-base
 
 # Copy Node.js and npm from the node stage
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
