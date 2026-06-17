@@ -105,6 +105,20 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getUnsafeName();
 
         List<Map.Entry<String, String>> customPropertiesWithNames = new ArrayList<>();
+        // The scopes request property (if mapped) is a required property on the token request and
+        // must be set on the staged builder, ordered before the remaining custom properties.
+        if (requestProperties.getScopes().isPresent()
+                && !isLiteralProperty(requestProperties.getScopes().get())) {
+            String scopesPropName = NameUtils.toName(requestProperties
+                            .getScopes()
+                            .get()
+                            .getProperty()
+                            .visit(new RequestPropertyToNameVisitor())
+                            .getName())
+                    .getCamelCase()
+                    .getUnsafeName();
+            customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(scopesPropName, scopesPropName));
+        }
         if (requestProperties.getCustomProperties().isPresent()) {
             for (RequestProperty customProp :
                     requestProperties.getCustomProperties().get()) {
