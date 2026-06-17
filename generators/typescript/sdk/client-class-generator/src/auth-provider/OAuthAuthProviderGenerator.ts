@@ -125,15 +125,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
               ])
             : clientSecretSupplier;
 
-        const additionalProperties: OptionalKind<PropertySignatureStructure>[] = this.getAdditionalTokenRequestProperties(
-            requestProperties,
-            context
-        ).map((property) => ({
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(property.name),
-            hasQuestionToken: false,
-            type: getTextOfTsNode(property.type)
-        }));
+        const additionalProperties: OptionalKind<PropertySignatureStructure>[] =
+            this.getAdditionalTokenRequestProperties(requestProperties, context).map((property) => ({
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(property.name),
+                hasQuestionToken: false,
+                type: getTextOfTsNode(property.type)
+            }));
 
         return [
             {
