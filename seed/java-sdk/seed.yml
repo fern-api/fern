@@ -395,7 +395,6 @@ allowedFailures:
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials-custom
-  - request-parameters
   - inferred-auth-implicit-reference
 
   # Generated raw client / publish fixtures fail to compile in CI
