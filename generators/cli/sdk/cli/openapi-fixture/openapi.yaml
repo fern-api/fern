@@ -1111,16 +1111,26 @@ paths:
                   type: string
                   description: A normal text field
       responses:
+        # Mixed-response shape: 2xx is binary so the builtin --output flag
+        # is registered (which is what makes the multipart field `output`
+        # a real collision to guard against), while the 4xx returns the
+        # usual JSON error envelope. Exercises the gating logic for
+        # operations that aren't pure-JSON.
         "201":
           description: Created
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "422":
+          description: Validation error
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: string
-                  output:
+                  error:
                     type: string
 
   # --- messages (form-urlencoded) ---

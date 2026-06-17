@@ -75,7 +75,7 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "CustomApiError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
@@ -128,7 +128,7 @@ exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "ApiError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
@@ -180,7 +180,7 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "TimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }
@@ -200,7 +200,7 @@ exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "CustomTimeoutError";
         if (opts?.cause != null) {
             this.cause = opts.cause;
         }

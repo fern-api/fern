@@ -111,6 +111,7 @@
                     "id": "endpoint_service.hello",
                     "name": "hello",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

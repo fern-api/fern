@@ -1,0 +1,6 @@
+- summary: |
+    Fix frontmatter values with leading zeros being corrupted during docs publish.
+    `grayMatter.stringify()` in `parseImagePaths` would strip quotes from values
+    like `'001999'` (non-octal digits), causing downstream YAML 1.2 parsers to
+    interpret them as integers and lose leading zeros.
+  type: fix

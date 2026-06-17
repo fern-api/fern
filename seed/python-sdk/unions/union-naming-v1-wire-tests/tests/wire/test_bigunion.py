@@ -12,7 +12,7 @@ def test_bigunion_get() -> None:
     client.bigunion.get(
         id="id",
     )
-    verify_request_count(test_id, "GET", "/id", None, 1)
+    verify_request_count(test_id, "GET", "/bigunion/id", None, 1)
 
 
 def test_bigunion_update() -> None:
@@ -27,7 +27,7 @@ def test_bigunion_update() -> None:
             value="value",
         ),
     )
-    verify_request_count(test_id, "PATCH", "/", None, 1)
+    verify_request_count(test_id, "PATCH", "/bigunion", None, 1)
 
 
 def test_bigunion_update_many() -> None:
@@ -50,4 +50,4 @@ def test_bigunion_update_many() -> None:
             ),
         ],
     )
-    verify_request_count(test_id, "PATCH", "/many", None, 1)
+    verify_request_count(test_id, "PATCH", "/bigunion/many", None, 1)

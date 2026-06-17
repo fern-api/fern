@@ -822,6 +822,7 @@
                     "id": "endpoint_.create",
                     "name": "create",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

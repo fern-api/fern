@@ -80,6 +80,7 @@
                     "id": "endpoint_service.getWithBearerToken",
                     "name": "getWithBearerToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

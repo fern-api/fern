@@ -34,6 +34,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             id: EndpointId,
             name: EndpointName,
             displayName: core.serialization.string().optional(),
+            subtitle: core.serialization.string().optional(),
             method: HttpMethod,
             headers: core.serialization.list(HttpHeader),
             responseHeaders: core.serialization.list(HttpHeader).optional(),
@@ -71,6 +72,7 @@ export declare namespace HttpEndpoint {
         id: EndpointId.Raw;
         name: EndpointName.Raw;
         displayName?: string | null;
+        subtitle?: string | null;
         method: HttpMethod.Raw;
         headers: HttpHeader.Raw[];
         responseHeaders?: HttpHeader.Raw[] | null;
