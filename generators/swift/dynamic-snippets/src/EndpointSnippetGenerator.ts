@@ -739,7 +739,12 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.RequestBody);
         if (request.body != null) {
-            args.push(this.getEndpointMethodBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+            const bodyArg = this.getEndpointMethodBodyRequestArg({ body: request.body, value: snippet.requestBody });
+            // Omit the body argument entirely when it has no literal (e.g. an absent optional
+            // request body), rather than emitting `request: ` with an empty value.
+            if (!bodyArg.value.isNop()) {
+                args.push(bodyArg);
+            }
         }
         this.context.errors.unscope();
 
@@ -761,6 +766,11 @@ export class EndpointSnippetGenerator {
                     value: this.getBytesBodyRequestArg({ value })
                 });
             case "typeReference":
+                // An absent optional request body produces no literal, so the `request`
+                // argument is omitted entirely rather than emitting an empty initializer.
+                if (body.value.type === "optional" && value == null) {
+                    return swift.functionArgument({ label: "request", value: swift.Expression.nop() });
+                }
                 return swift.functionArgument({
                     label: "request",
                     value: this.context.dynamicTypeLiteralMapper.convert({

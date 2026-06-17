@@ -6,7 +6,7 @@ import MultiLineDocs
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",

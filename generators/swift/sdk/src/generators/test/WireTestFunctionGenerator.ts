@@ -93,7 +93,7 @@ export class WireTestFunctionGenerator {
                                 swift.functionArgument({
                                     label: "body",
                                     value: swift.Expression.structInitialization({
-                                        unsafeName: "Data",
+                                        unsafeName: "Foundation.Data",
                                         arguments_: [
                                             swift.functionArgument({
                                                 value: swift.Expression.memberAccess({

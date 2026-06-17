@@ -190,7 +190,4 @@ allowedFailures:
   # generator can consume it. Tracked separately; left here until the IR change lands.
   - api-wide-base-path-with-default
 
-  # PHPDoc unresolvable enum-as-map-key type + dynamic snippet errors (unrelated to union serialization).
-  - trace
-
 

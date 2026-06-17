@@ -6,7 +6,7 @@ import Trace
     @Test func createPlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "playlist_id": "playlist_id",
@@ -53,7 +53,7 @@ import Trace
     @Test func getPlaylists1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -116,7 +116,7 @@ import Trace
     @Test func getPlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "playlist_id": "playlist_id",
@@ -155,7 +155,7 @@ import Trace
     @Test func updatePlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "playlist_id": "playlist_id",

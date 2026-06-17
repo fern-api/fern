@@ -6,7 +6,7 @@ import Exhaustive
     @Test func postWithObjectBodyandResponse1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -89,7 +89,7 @@ import Exhaustive
     @Test func postWithArrayBodyAndHeaders1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8

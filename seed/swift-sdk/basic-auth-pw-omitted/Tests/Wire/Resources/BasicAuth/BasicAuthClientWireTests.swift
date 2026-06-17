@@ -6,7 +6,7 @@ import BasicAuthPwOmitted
     @Test func getWithBasicAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -26,7 +26,7 @@ import BasicAuthPwOmitted
     @Test func getWithBasicAuth2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -46,7 +46,7 @@ import BasicAuthPwOmitted
     @Test func postWithBasicAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -71,7 +71,7 @@ import BasicAuthPwOmitted
     @Test func postWithBasicAuth2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8

@@ -6,7 +6,7 @@ import Exhaustive
     @Test func getWithPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -28,7 +28,7 @@ import Exhaustive
     @Test func getWithInlinePath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -50,7 +50,7 @@ import Exhaustive
     @Test func modifyWithPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -73,7 +73,7 @@ import Exhaustive
     @Test func modifyWithInlinePath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -96,7 +96,7 @@ import Exhaustive
     @Test func uploadWithPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "uploaded"
@@ -123,7 +123,7 @@ import Exhaustive
     @Test func getWithBooleanPath1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -145,7 +145,7 @@ import Exhaustive
     @Test func getWithPathAndErrors1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
