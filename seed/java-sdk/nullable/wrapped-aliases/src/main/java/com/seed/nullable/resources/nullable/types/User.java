@@ -226,6 +226,8 @@ public final class User {
 
         _FinalStage metadata(Nullable<Metadata> metadata);
 
+        _FinalStage email(Email email);
+
         _FinalStage email(Nullable<Email> email);
 
         _FinalStage numbers(Optional<List<Integer>> numbers);
@@ -252,6 +254,8 @@ public final class User {
         private Optional<Map<String, Object>> strings = Optional.empty();
 
         private Optional<List<Integer>> numbers = Optional.empty();
+
+        private Email email;
 
         private Optional<Metadata> metadata = Optional.empty();
 
@@ -354,6 +358,12 @@ public final class User {
             } else {
                 this.email = email.get();
             }
+            return this;
+        }
+
+        @JsonSetter(value = "email", nulls = Nulls.SKIP)
+        public _FinalStage email(Email email) {
+            this.email = email;
             return this;
         }
 

@@ -868,6 +868,17 @@ public final class BuilderGenerator {
             boolean implsOverride) {
         FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec;
 
+        implFieldConsumer.accept(FieldSpec.builder(fieldSpec.type, fieldSpec.name, Modifier.PRIVATE)
+                .build());
+
+        interfaceSetterConsumer.accept(getDefaultSetter(enrichedObjectProperty, stageClassName, false)
+                .addModifiers(Modifier.ABSTRACT)
+                .build());
+        implSetterConsumer.accept(getDefaultSetterForImpl(enrichedObjectProperty, stageClassName, implsOverride)
+                .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
+                .addStatement("return this")
+                .build());
+
         interfaceSetterConsumer.accept(createNullableItemTypeNameSetter(
                         enrichedObjectProperty,
                         nullableClassName,
