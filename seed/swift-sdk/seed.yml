@@ -128,15 +128,11 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - audiences
-  - enum
   - exhaustive
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference
   - oauth-client-credentials-with-variables
-  - query-parameters
-  - request-parameters
   - streaming
   - streaming-parameter
   - trace

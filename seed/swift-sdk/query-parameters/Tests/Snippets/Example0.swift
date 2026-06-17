@@ -55,7 +55,19 @@ enum Example0 {
                     "tags",
                     "tags"
                 ]
-            )
+            ),
+            excludeUser: [
+                User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                )
+            ],
+            filter: [
+                "filter"
+            ]
         )
     }
 }
