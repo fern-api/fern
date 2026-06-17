@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Wrap `optional(nullable(T))` request bodies in `Optional.of(...)` in generated dynamic snippets and wire tests so they match the generated `Optional<T>` method signature and compile.
+  type: fix

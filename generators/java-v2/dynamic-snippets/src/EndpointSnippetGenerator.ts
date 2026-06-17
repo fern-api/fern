@@ -665,8 +665,18 @@ export class EndpointSnippetGenerator {
                         }
                     }
 
+                    // For optional(nullable(T)) request bodies that are not collapsed into
+                    // OptionalNullable, the SDK method signature is Optional<T>. Converting the
+                    // nullable wrapper directly yields a bare value literal, which the outer
+                    // Optional.of(...) wrap below would discard via the "avoid double optional"
+                    // guard. Strip the nullable so we convert T and wrap exactly once.
+                    const innerTypeReference =
+                        !isCollapsedOptionalNullable && body.value.value.type === "nullable"
+                            ? body.value.value.value
+                            : body.value.value;
+
                     const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
-                        typeReference: body.value.value,
+                        typeReference: innerTypeReference,
                         value,
                         as: "request",
                         isCollapsedOptionalNullable
