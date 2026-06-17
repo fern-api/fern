@@ -566,10 +566,20 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const args: ast.Literal[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
+        const includePathParametersInWrappedRequest = this.context.includePathParametersInWrappedRequest({
+            request,
+            inlinePathParameters: this.settings.shouldInlinePathParameters
+        });
         const pathParameterFields: ast.ConstructorField[] = [];
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
+            pathParameterFields.push(
+                ...this.getPathParameters({
+                    namedParameters: pathParameters,
+                    snippet,
+                    asPositionalArguments: !includePathParametersInWrappedRequest
+                })
+            );
         }
         this.context.errors.unscope();
 
@@ -578,12 +588,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (
-            !this.context.includePathParametersInWrappedRequest({
-                request,
-                inlinePathParameters: this.settings.shouldInlinePathParameters
-            })
-        ) {
+        if (!includePathParametersInWrappedRequest) {
             args.push(...pathParameterFields.map((field) => field.value));
         }
         // For now, the C# SDK always requires the inlined request parameter.
@@ -591,12 +596,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             this.getInlinedRequestArg({
                 request,
                 snippet,
-                pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                    request,
-                    inlinePathParameters: this.settings.shouldInlinePathParameters
-                })
-                    ? pathParameterFields
-                    : [],
+                pathParameterFields: includePathParametersInWrappedRequest ? pathParameterFields : [],
                 filePropertyInfo
             })
         );
@@ -793,7 +793,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
             args.push(
-                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
+                ...this.getPathParameters({
+                    namedParameters: pathParameters,
+                    snippet,
+                    asPositionalArguments: true
+                }).map((field) => field.value)
             );
         }
         this.context.errors.unscope();
@@ -859,10 +863,14 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
     private getPathParameters({
         namedParameters,
-        snippet
+        snippet,
+        asPositionalArguments = false
     }: {
         namedParameters: FernIr.dynamic.NamedParameter[];
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        // Path parameters passed as positional method arguments remain required even when
+        // `generateLiterals` is enabled, so literal values must still be emitted for them.
+        asPositionalArguments?: boolean;
     }): ast.ConstructorField[] {
         const args: ast.ConstructorField[] = [];
         const pathParameters = this.context.associateByWireValueOrDefault({
@@ -874,7 +882,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 name: this.context.getPropertyName(parameter.name.name),
                 value: this.context.dynamicLiteralMapper.convert({
                     ...parameter,
-                    fallbackToDefault: parameter.name.wireValue
+                    fallbackToDefault: parameter.name.wireValue,
+                    forceLiteral: asPositionalArguments
                 })
             });
         }
