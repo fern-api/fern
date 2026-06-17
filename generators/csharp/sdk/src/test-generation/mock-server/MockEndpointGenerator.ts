@@ -13,6 +13,7 @@ type TypeId = FernIr.TypeId;
 type TypeReference = FernIr.TypeReference;
 
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody.js";
+import { normalizePathSlashes } from "../../endpoint/utils/normalizePath.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace TestClass {
@@ -91,7 +92,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${example.url || "/"}")`);
+                writer.write(`.WithPath("${normalizePathSlashes(example.url || "/")}")`);
 
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
