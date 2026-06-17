@@ -11,7 +11,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 RUN set -eux; \
     NPM_NM=/usr/local/lib/node_modules/npm/node_modules; \
     mkdir -p /tmp/pkg-fix && cd /tmp/pkg-fix; \
-    for pkg in ip-address brace-expansion picomatch tar; do \
+    for pkg in ip-address brace-expansion picomatch; do \
         TARBALL="$(npm pack "${pkg}@latest" --silent)"; \
         rm -rf "${NPM_NM:?}/${pkg}"; \
         mkdir -p "${NPM_NM}/${pkg}"; \
@@ -26,6 +26,11 @@ RUN set -eux; \
             tar -xzf "${TARBALL}" -C "${nested}" --strip-components=1; \
         fi; \
     done; \
+    # Patch tar to 7.5.16 (pinned) to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh.
+    TARBALL="$(npm pack tar@7.5.16 --silent)"; \
+    rm -rf "${NPM_NM:?}/tar"; \
+    mkdir -p "${NPM_NM}/tar"; \
+    tar -xzf "${TARBALL}" -C "${NPM_NM}/tar" --strip-components=1; \
     cd / && rm -rf /tmp/pkg-fix /root/.npm
 
 COPY generators/go-v2/sdk/dist/ /dist/
