@@ -1,7 +1,3 @@
-[project]
-name = "fern_python-reserved-keyword-subpackages"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_python-reserved-keyword-subpackages"
 version = "0.0.1"

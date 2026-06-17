@@ -1,7 +1,3 @@
-[project]
-name = "fern_websocket-inferred-auth"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_websocket-inferred-auth"
 version = "0.0.1"

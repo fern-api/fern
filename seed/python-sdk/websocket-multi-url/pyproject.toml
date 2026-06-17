@@ -1,7 +1,3 @@
-[project]
-name = "fern_websocket-multi-url"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_websocket-multi-url"
 version = "0.0.1"

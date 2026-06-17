@@ -48,7 +48,6 @@ class PyProjectToml:
         user_defined_toml: Optional[str] = None,
         mypy_exclude: Optional[List[str]] = None,
     ):
-        self._name = name
         self._poetry_block = PyProjectToml.PoetryBlock(
             name=name,
             version=version,
@@ -81,11 +80,7 @@ class PyProjectToml:
             PyProjectToml.PluginConfigurationBlock(mypy_exclude=self._mypy_exclude),
             PyProjectToml.BuildSystemBlock(),
         ]
-        content = f"""[project]
-name = "{self._name}"
-dynamic = ["version"]
-
-"""
+        content = ""
 
         for block in blocks:
             content += block.to_string()

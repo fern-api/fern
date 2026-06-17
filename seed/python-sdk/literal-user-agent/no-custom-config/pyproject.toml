@@ -1,7 +1,3 @@
-[project]
-name = "fern_literal-user-agent"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_literal-user-agent"
 version = "0.0.1"

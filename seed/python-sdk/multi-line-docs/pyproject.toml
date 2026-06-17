@@ -1,7 +1,3 @@
-[project]
-name = "fern_multi-line-docs"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_multi-line-docs"
 version = "0.0.1"

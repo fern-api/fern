@@ -1,7 +1,3 @@
-[project]
-name = "fern_cross-package-type-names"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_cross-package-type-names"
 version = "0.0.1"

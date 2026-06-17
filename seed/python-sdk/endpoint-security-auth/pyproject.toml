@@ -1,7 +1,3 @@
-[project]
-name = "fern_endpoint-security-auth"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_endpoint-security-auth"
 version = "0.0.1"

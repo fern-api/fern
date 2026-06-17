@@ -1,7 +1,3 @@
-[project]
-name = "fern_openapi-subtitle"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_openapi-subtitle"
 version = "0.0.1"

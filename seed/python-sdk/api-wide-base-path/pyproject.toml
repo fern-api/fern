@@ -1,7 +1,3 @@
-[project]
-name = "fern_api-wide-base-path"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_api-wide-base-path"
 version = "0.0.1"

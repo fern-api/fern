@@ -1,7 +1,3 @@
-[project]
-name = "fern_accept-header"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_accept-header"
 version = "0.0.1"

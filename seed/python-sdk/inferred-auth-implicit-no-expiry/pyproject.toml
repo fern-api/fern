@@ -1,7 +1,3 @@
-[project]
-name = "fern_inferred-auth-implicit-no-expiry"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_inferred-auth-implicit-no-expiry"
 version = "0.0.1"

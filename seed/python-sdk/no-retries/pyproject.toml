@@ -1,7 +1,3 @@
-[project]
-name = "fern_no-retries"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_no-retries"
 version = "0.0.1"

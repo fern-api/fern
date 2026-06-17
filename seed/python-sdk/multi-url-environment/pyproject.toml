@@ -1,7 +1,3 @@
-[project]
-name = "fern_multi-url-environment"
-dynamic = ["version"]
-
 [tool.poetry]
 name = "fern_multi-url-environment"
 version = "0.0.1"

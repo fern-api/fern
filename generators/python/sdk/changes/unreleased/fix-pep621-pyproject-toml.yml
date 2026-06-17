@@ -1,0 +1,8 @@
+- summary: |
+    Remove the vestigial `[project]` table from the generated `pyproject.toml`.
+    The partial PEP 621 table (containing only `name` and `dynamic`) caused
+    source/git installs to fail with PEP 621-aware build frontends (uv, recent
+    pip) on older generator versions that lacked `dynamic = ["version"]`.
+    Removing `[project]` entirely lets `poetry-core` fully own all metadata via
+    `[tool.poetry]`, which is compatible with all build tools.
+  type: fix
