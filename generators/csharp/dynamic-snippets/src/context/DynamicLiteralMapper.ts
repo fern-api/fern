@@ -83,13 +83,15 @@ export class DynamicLiteralMapper extends WithGeneration {
                 return this.convert({
                     typeReference: args.typeReference.value,
                     value: args.value,
-                    as: args.as
+                    as: args.as,
+                    forceLiteral: args.forceLiteral
                 });
             case "optional":
                 return this.convert({
                     typeReference: args.typeReference.value,
                     value: args.value,
-                    as: args.as
+                    as: args.as,
+                    forceLiteral: args.forceLiteral
                 });
             case "primitive":
                 return this.convertPrimitive({
