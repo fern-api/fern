@@ -131,7 +131,10 @@ export async function runPipeline(args: {
     // generated Rust source) so de-conflicted names like
     // `SimpleClient2` are resolved correctly.
     let subClients: SubClientField[] = [];
-    if (sdkCrateName != null && sdkGlueIrInfo != null) {
+    if (sdkCrateName != null) {
+        if (sdkGlueIrInfo == null) {
+            throw new Error("sdkGlueIrInfo is required when SDK crate generation is enabled");
+        }
         subClients = await generateSdkGlue({ outputDir, binaryName, sdkCrateName, irInfo: sdkGlueIrInfo });
     }
 
