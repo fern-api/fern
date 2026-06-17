@@ -404,7 +404,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         type: memberType,
                         get: true,
                         set: false,
-                        initializer: this.csharp.codeblock("new {}")
+                        initializer: this.csharp.codeblock("null")
                     });
                 } else {
                     unionTypeClass.addConstructor({
@@ -663,7 +663,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     switch (type.shape.propertiesType) {
                         case "noProperties":
                             writer.writeNode(csharp.string_({ string: getWireValue(type.discriminantValue) }));
-                            writer.writeLine(" => new {},");
+                            writer.writeLine(" => null,");
                             break;
                         case "samePropertiesAsObject":
                             generateSerializeUnionMember();
@@ -857,7 +857,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     ): [FernIr.SingleUnionType, ast.Type] {
         switch (type.shape.propertiesType) {
             case "noProperties":
-                return [type, this.Primitive.object];
+                // Property-less members carry no value; represent it as a nullable object
+                // so it round-trips as null (an empty object cannot be compared structurally).
+                return [type, this.Primitive.object.asOptional()];
             case "samePropertiesAsObject":
                 return [type, context.csharpTypeMapper.convertToClassReference(type.shape, { fullyQualified: true })];
             case "singleProperty":

@@ -67,15 +67,15 @@ public record Exception
             : throw new global::System.Exception("Exception.Type is not 'generic'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'timeout', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'timeout'.</exception>
-    public object AsTimeout() =>
+    public object? AsTimeout() =>
         IsTimeout ? Value! : throw new global::System.Exception("Exception.Type is not 'timeout'");
 
     public T Match<T>(
         Func<SeedExamples.ExceptionInfo, T> onGeneric,
-        Func<object, T> onTimeout,
+        Func<object?, T> onTimeout,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -89,7 +89,7 @@ public record Exception
 
     public void Visit(
         Action<SeedExamples.ExceptionInfo> onGeneric,
-        Action<object> onTimeout,
+        Action<object?> onTimeout,
         Action<string, object?> onUnknown_
     )
     {
@@ -122,7 +122,7 @@ public record Exception
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsTimeout(out object? value)
     {
@@ -183,7 +183,7 @@ public record Exception
                 "generic" => jsonWithoutDiscriminator.Deserialize<SeedExamples.ExceptionInfo?>(
                     options
                 ) ?? throw new JsonException("Failed to deserialize SeedExamples.ExceptionInfo"),
-                "timeout" => new { },
+                "timeout" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new Exception(discriminator, value);
@@ -253,8 +253,8 @@ public record Exception
     [Serializable]
     public record Timeout
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

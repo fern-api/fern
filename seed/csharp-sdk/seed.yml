@@ -429,7 +429,5 @@ allowedFailures:
   - oauth-client-credentials-custom
   - package-yml
   - pagination-uri-path
-  - unions:no-custom-config
-  - unions-with-local-date
   - server-sent-event-examples
   - server-sent-events-openapi
