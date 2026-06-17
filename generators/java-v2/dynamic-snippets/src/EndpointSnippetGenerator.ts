@@ -957,7 +957,11 @@ export class EndpointSnippetGenerator {
         filePropertyInfo: FilePropertyInfo;
     }): java.BuilderParameter[] {
         if (this.context.shouldInlineFileProperties()) {
-            return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+            // Body properties are emitted before file properties so that required body
+            // properties (which come earlier in a staged builder) are supplied before the
+            // file setters. The file fields already carry a placeholder value for missing
+            // examples (see FilePropertyMapper), so they are never filtered out here.
+            return [...filePropertyInfo.bodyPropertyFields, ...filePropertyInfo.fileFields];
         }
         return filePropertyInfo.bodyPropertyFields;
     }

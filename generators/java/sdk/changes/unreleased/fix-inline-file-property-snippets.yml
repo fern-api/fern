@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix dynamic snippet generation for inline file-upload request bodies. The generated
+    snippet now supplies a typed `(File) null` placeholder for file properties (so staged
+    builders with a required file have a `build()`), and emits body properties before file
+    properties so required body fields are set first.
+  type: fix

@@ -64,6 +64,9 @@ export class FilePropertyMapper {
     }): java.TypeLiteral {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
+            if (this.context.shouldInlineFileProperties()) {
+                return this.context.getInlineFilePropertyPlaceholder();
+            }
             return java.TypeLiteral.nop();
         }
         return java.TypeLiteral.reference(this.context.getFileStreamFromString(fileValue));
@@ -78,6 +81,9 @@ export class FilePropertyMapper {
     }): java.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
+            if (this.context.shouldInlineFileProperties()) {
+                return this.context.getInlineFileArrayPropertyPlaceholder();
+            }
             return java.TypeLiteral.nop();
         }
         for (const fileValue of fileValues) {

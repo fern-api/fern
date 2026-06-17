@@ -57,6 +57,7 @@ package com.example.usage;
 
 import com.seed.fileUpload.SeedFileUploadClient;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
+import java.io.File;
 
 public class Example {
     public static void main(String[] args) {
@@ -67,6 +68,9 @@ public class Example {
         client.service().justFile(
             JustFileRequest
                 .builder()
+                .file(
+                    (File) null
+                )
                 .build()
         );
     }

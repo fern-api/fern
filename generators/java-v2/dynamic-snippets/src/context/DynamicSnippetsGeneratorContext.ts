@@ -223,6 +223,49 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getFileClassReference(): java.ClassReference {
+        return java.classReference({
+            name: "File",
+            packageName: "java.io"
+        });
+    }
+
+    public getListClassReference(): java.ClassReference {
+        return java.classReference({
+            name: "List",
+            packageName: "java.util"
+        });
+    }
+
+    /**
+     * When an inline file property has no example value, we still need to supply a
+     * positional argument to the staged builder (the file is often required, so the
+     * builder has no `build()` until it is provided). We emit a typed `null` so the
+     * value is assignable to both the required `File` setter and the optional
+     * `Optional<File>`/`File` overloads without ambiguity.
+     */
+    public getInlineFilePropertyPlaceholder(): java.TypeLiteral {
+        return java.TypeLiteral.reference(
+            java.codeblock((writer) => {
+                writer.write("(");
+                writer.writeNode(this.getFileClassReference());
+                writer.write(") null");
+            })
+        );
+    }
+
+    public getInlineFileArrayPropertyPlaceholder(): java.TypeLiteral {
+        return java.TypeLiteral.reference(
+            java.codeblock((writer) => {
+                writer.write("(");
+                writer.writeNode(this.getListClassReference());
+                writer.write("<");
+                writer.writeNode(this.getFileClassReference());
+                writer.write(">) null");
+            })
+        );
+    }
+
     public isPrimitive(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
             case "primitive":
