@@ -349,7 +349,7 @@ export class WireTestFunctionGenerator {
                             })
                             .filter((arg): arg is swift.FunctionArgument => arg != null);
                         const additionalPropertiesArg = this.buildAdditionalPropertiesArg({
-                            jsonExample: exampleTypeRef.jsonExample,
+                            exampleTypeRef,
                             declaredWireNames: new Set(exampleObjectType.properties.map((p) => getWireValue(p.name)))
                         });
                         if (additionalPropertiesArg != null) {
@@ -392,7 +392,7 @@ export class WireTestFunctionGenerator {
                                     })
                                     .filter((arg): arg is swift.FunctionArgument => arg != null);
                                 const additionalPropertiesArg = this.buildAdditionalPropertiesArg({
-                                    jsonExample: exampleTypeRef.jsonExample,
+                                    exampleTypeRef,
                                     declaredWireNames: new Set(
                                         exampleObjectTypeWithId.object.properties.map((p) => getWireValue(p.name))
                                     )
@@ -465,17 +465,23 @@ export class WireTestFunctionGenerator {
      * must include them too or the equality assertion fails. Returns `null` when
      * the example has no undeclared keys (so objects without extra properties are
      * left untouched).
+     *
+     * The wire JSON is derived from `buildJsonFromExampleTypeReference` — the same
+     * source used to render the stub response body — so the extra-property values
+     * here stay in sync with the body by construction (rather than reading the
+     * IR's `jsonExample` projection, which can drift from the typed shape).
      */
     private buildAdditionalPropertiesArg({
-        jsonExample,
+        exampleTypeRef,
         declaredWireNames
     }: {
-        jsonExample: unknown;
+        exampleTypeRef: FernIr.ExampleTypeReference;
         declaredWireNames: Set<string>;
     }): swift.FunctionArgument | null {
+        const wireJson = buildJsonFromExampleTypeReference(exampleTypeRef);
         const jsonObj =
-            jsonExample != null && typeof jsonExample === "object" && !Array.isArray(jsonExample)
-                ? (jsonExample as Record<string, unknown>)
+            wireJson != null && typeof wireJson === "object" && !Array.isArray(wireJson)
+                ? (wireJson as Record<string, unknown>)
                 : {};
         const extraEntries = Object.entries(jsonObj).filter(([key]) => !declaredWireNames.has(key));
         if (extraEntries.length === 0) {
