@@ -964,8 +964,11 @@ public abstract class AbstractEndpointWriter {
             if (httpEndpoint.getRequestBody().isPresent()) {
                 isOptional = httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
             }
-            if (!httpEndpoint.getHeaders().isEmpty() && isOptional) {
-                isOptional = httpEndpoint.getHeaders().stream().allMatch(httpHeader -> httpHeader
+            List<HttpHeader> wrapperHeaders = Stream.concat(
+                            httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
+                    .collect(Collectors.toList());
+            if (!wrapperHeaders.isEmpty() && isOptional) {
+                isOptional = wrapperHeaders.stream().allMatch(httpHeader -> httpHeader
                         .getValueType()
                         .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             }
