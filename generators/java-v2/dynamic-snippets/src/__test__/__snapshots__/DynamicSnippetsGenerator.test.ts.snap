@@ -346,7 +346,9 @@ import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.core.FileStream;
 import com.acme.acme.types.MyRequest;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -360,6 +362,12 @@ client.service().post(
         )
         .fileList(
             new FileStream(ByteArrayInputStream("First".getBytes(StandardCharsets.UTF_8)))
+        )
+        .maybeFile(
+            (File) null
+        )
+        .maybeFileList(
+            (List<File>) null
         )
         .build()
 );
