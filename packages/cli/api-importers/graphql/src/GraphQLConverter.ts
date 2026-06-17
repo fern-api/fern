@@ -124,7 +124,6 @@ export class GraphQLConverter {
         return fields.every((f) => f.args.length > 0);
     }
 
-
     public async convert(): Promise<GraphQLConverterResult> {
         const sdlContent = await readFile(this.filePath, "utf-8");
         this.schema = buildSchema(sdlContent);
