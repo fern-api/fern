@@ -114,14 +114,19 @@ export class EndpointMethodGenerator {
 
         if (endpoint.requestBody) {
             if (endpoint.requestBody.type === "reference") {
+                const requestBodySwiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                    endpoint.requestBody.requestBodyType,
+                    this.parentClassSymbol
+                );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
-                            endpoint.requestBody.requestBodyType,
-                            this.parentClassSymbol
-                        ),
+                        type: requestBodySwiftType,
+                        defaultValue:
+                            requestBodySwiftType.variant.type === "optional"
+                                ? swift.Expression.rawValue("nil")
+                                : undefined,
                         docsContent: endpoint.requestBody.docs
                     })
                 );
