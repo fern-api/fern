@@ -72,7 +72,10 @@ function buildClientNameRegistry(caseConverter: CaseConverter, irInfo: SdkGlueIr
     const rootClientName = `${caseConverter.pascalSafe(irInfo.apiName)}Client`;
     registry.registerSymbol("root", [rootClientName]);
 
-    // Register ALL subpackage clients (matches Rust SDK generator order).
+    // Register ALL subpackage clients in Object.entries() insertion order — this
+    // matches the Rust SDK generator's registerAllFilenames() (Priority 4) at
+    // AbstractRustGeneratorContext.ts:824, which also iterates Object.entries(ir.subpackages).
+    // Both parse the same serialized IR JSON, so insertion order is deterministic.
     for (const [subpackageId, subpackage] of Object.entries(irInfo.subpackages)) {
         const baseClientName = `${caseConverter.pascalSafe(subpackage.name)}Client`;
         registry.registerSymbol(subpackageId, [baseClientName]);
@@ -103,13 +106,9 @@ function buildClientTree(
             continue;
         }
 
-        // Only include subpackages that contribute client struct fields.
+        // Only include subpackages that contribute client struct fields
+        // (matches ClientGeneratorContext.getSubClients() filter).
         if (subpackage.service == null && !subpackage.hasEndpointsInTree) {
-            continue;
-        }
-
-        // Skip WebSocket-only subpackages (websocket channel but no HTTP service and no endpoints in tree).
-        if (subpackage.websocket != null && subpackage.service == null && !subpackage.hasEndpointsInTree) {
             continue;
         }
 

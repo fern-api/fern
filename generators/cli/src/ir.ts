@@ -30,7 +30,6 @@ export interface SdkGlueSubpackageInfo {
     subpackages: FernIr.SubpackageId[];
     service: FernIr.ServiceId | undefined;
     hasEndpointsInTree: boolean;
-    websocket: FernIr.WebSocketChannelId | undefined;
 }
 
 /**
@@ -100,8 +99,7 @@ export async function readIr(irFilepath: string): Promise<ParsedIr> {
             name: subpackage.name,
             subpackages: subpackage.subpackages,
             service: subpackage.service ?? undefined,
-            hasEndpointsInTree: subpackage.hasEndpointsInTree,
-            websocket: subpackage.websocket ?? undefined
+            hasEndpointsInTree: subpackage.hasEndpointsInTree
         };
     }
 

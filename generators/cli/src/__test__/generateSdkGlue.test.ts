@@ -22,15 +22,13 @@ describe("resolveClientTreeFromIr", () => {
                     name: "pets",
                     subpackages: [],
                     service: "svc_pets",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 },
                 sub_owners: {
                     name: "owners",
                     subpackages: [],
                     service: "svc_owners",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 }
             },
             casingsConfig: undefined
@@ -60,15 +58,13 @@ describe("resolveClientTreeFromIr", () => {
                     name: "simple",
                     subpackages: [],
                     service: "svc_a",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 },
                 sub_b: {
                     name: "simple",
                     subpackages: [],
                     service: "svc_b",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 }
             },
             casingsConfig: undefined
@@ -93,22 +89,19 @@ describe("resolveClientTreeFromIr", () => {
                     name: "pools",
                     subpackages: [],
                     service: "svc_1",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 },
                 sub_2: {
                     name: "pools",
                     subpackages: [],
                     service: "svc_2",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 },
                 sub_3: {
                     name: "pools",
                     subpackages: [],
                     service: "svc_3",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 }
             },
             casingsConfig: undefined
@@ -130,15 +123,13 @@ describe("resolveClientTreeFromIr", () => {
                     name: "agents",
                     subpackages: ["sub_drive"],
                     service: "svc_agents",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 },
                 sub_drive: {
                     name: "drive",
                     subpackages: [],
                     service: "svc_drive",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 }
             },
             casingsConfig: undefined
@@ -170,15 +161,13 @@ describe("resolveClientTreeFromIr", () => {
                     name: "active",
                     subpackages: [],
                     service: "svc_active",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 },
                 sub_empty: {
                     name: "empty",
                     subpackages: [],
                     service: undefined,
-                    hasEndpointsInTree: false,
-                    websocket: undefined
+                    hasEndpointsInTree: false
                 }
             },
             casingsConfig: undefined
@@ -204,22 +193,19 @@ describe("resolveClientTreeFromIr", () => {
                     name: "simple",
                     subpackages: [],
                     service: "svc_a",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 },
                 sub_empty: {
                     name: "simple",
                     subpackages: [],
                     service: undefined,
-                    hasEndpointsInTree: false,
-                    websocket: undefined
+                    hasEndpointsInTree: false
                 },
                 sub_last: {
                     name: "simple",
                     subpackages: [],
                     service: "svc_last",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 }
             },
             casingsConfig: undefined
@@ -261,8 +247,7 @@ describe("resolveClientTreeFromIr", () => {
                     name: "myapi",
                     subpackages: [],
                     service: "svc_myapi",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 }
             },
             casingsConfig: undefined
@@ -299,8 +284,7 @@ describe("resolveClientTreeFromIr", () => {
                     },
                     subpackages: [],
                     service: "svc_coins",
-                    hasEndpointsInTree: true,
-                    websocket: undefined
+                    hasEndpointsInTree: true
                 }
             },
             casingsConfig: undefined
