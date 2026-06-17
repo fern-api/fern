@@ -138,7 +138,6 @@ allowedFailures:
   - query-parameters
   - request-parameters
   - streaming
-  - streaming-parameter
   - trace
   - undiscriminated-unions
   # Server URL templating not yet supported in Swift SDK
