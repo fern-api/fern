@@ -22,15 +22,23 @@ try await main()
 `;
 
 exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "queryParameters"
-    ],
-    "message": "Expected array but got: string"
-  }
-]"
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient(token: "<YOUR_API_KEY>")
+
+    _ = try await client.service.getMetadata(
+        xAPIVersion: "0.0.1",
+        shallow: false,
+        tag: [
+            "development"
+        ]
+    )
+}
+
+try await main()
+"
 `;
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
@@ -161,7 +169,8 @@ private func main() async throws {
         ],
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
