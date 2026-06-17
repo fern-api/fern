@@ -92,11 +92,14 @@ fixtures:
       outputFolder: custom-client-class-name
       readmeConfig:
         exampleStyle: minimal
+    # local_files mode emits source-only output (no Gradle project/wrapper),
+    # so the gradle compile/spotless scripts can't run against it.
     - customConfig:
         inline-path-parameters: true
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
+      skipScripts: true
     - customConfig:
         inline-path-parameters: true
         enable-public-constructors: true
@@ -390,7 +393,6 @@ allowedFailures:
   - examples:inline-file-properties
   - examples:no-custom-config
   - examples:readme-config
-  - exhaustive:local-files
   - java-inline-types:no-wrapped-aliases
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
