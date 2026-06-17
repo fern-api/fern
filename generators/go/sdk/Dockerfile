@@ -11,7 +11,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 RUN set -eux; \
     NPM_NM=/usr/local/lib/node_modules/npm/node_modules; \
     mkdir -p /tmp/pkg-fix && cd /tmp/pkg-fix; \
-    for pkg in ip-address brace-expansion picomatch; do \
+    for pkg in ip-address brace-expansion picomatch tar; do \
         TARBALL="$(npm pack "${pkg}@latest" --silent)"; \
         rm -rf "${NPM_NM:?}/${pkg}"; \
         mkdir -p "${NPM_NM}/${pkg}"; \
