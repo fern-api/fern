@@ -855,22 +855,25 @@ export class EndpointSnippetGenerator {
         }));
         this.context.errors.unscope();
 
+        const requestClassReference = java.classReference({
+            name: this.context.getClassName(request.declaration.name),
+            packageName: this.context.getRequestsPackageName(request.declaration.fernFilepath)
+        });
+
         this.context.errors.scope(Scope.RequestBody);
         const requestBodyFields =
             request.body != null
                 ? this.getInlinedRequestBodyBuilderParameters({
                       body: request.body,
                       value: snippet.requestBody,
-                      filePropertyInfo
+                      filePropertyInfo,
+                      enclosing: requestClassReference
                   })
                 : [];
         this.context.errors.unscope();
 
         return java.TypeLiteral.builder({
-            classReference: java.classReference({
-                name: this.context.getClassName(request.declaration.name),
-                packageName: this.context.getRequestsPackageName(request.declaration.fernFilepath)
-            }),
+            classReference: requestClassReference,
             parameters: [...pathParameterFields, ...headerFields, ...queryParameterFields, ...requestBodyFields]
         });
     }
@@ -933,15 +936,21 @@ export class EndpointSnippetGenerator {
     private getInlinedRequestBodyBuilderParameters({
         body,
         value,
-        filePropertyInfo
+        filePropertyInfo,
+        enclosing
     }: {
         body: FernIr.dynamic.InlinedRequestBody;
         value: unknown;
         filePropertyInfo: FilePropertyInfo;
+        enclosing: java.ClassReference;
     }): java.BuilderParameter[] {
         switch (body.type) {
             case "properties":
-                return this.getInlinedRequestBodyPropertyBuilderParameters({ parameters: body.value, value });
+                return this.getInlinedRequestBodyPropertyBuilderParameters({
+                    parameters: body.value,
+                    value,
+                    enclosing
+                });
             case "referenced":
                 return [this.getReferencedRequestBodyPropertyBuilderParameter({ body, value })];
             case "fileUpload":
@@ -998,10 +1007,12 @@ export class EndpointSnippetGenerator {
 
     private getInlinedRequestBodyPropertyBuilderParameters({
         parameters,
-        value
+        value,
+        enclosing
     }: {
         parameters: FernIr.dynamic.NamedParameter[];
         value: unknown;
+        enclosing: java.ClassReference;
     }): java.BuilderParameter[] {
         const bodyProperties = this.context.associateByWireValue({
             parameters,
@@ -1011,12 +1022,23 @@ export class EndpointSnippetGenerator {
             (parameter) => !this.context.isDirectLiteral(parameter.typeReference)
         );
         const sortedProperties = this.context.sortTypeInstancesByRequiredFirst(filteredProperties, parameters);
+        const reservedNames = new Set<string>([...enclosing.enclosingClasses, enclosing.name]);
+        const siblingPropertyNames = new Set<string>(
+            parameters.map((parameter) => this.context.getClassName(parameter.name.name))
+        );
         return sortedProperties.map((parameter) => ({
             name: this.context.getMethodName(parameter.name.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
                 typeReference: parameter.typeReference,
                 value: parameter.value,
-                as: "request"
+                as: "request",
+                nestedClassReference: this.context.dynamicTypeLiteralMapper.resolveInlineNestedClassReference({
+                    enclosing,
+                    baseName: this.context.getClassName(parameter.name.name),
+                    typeReference: parameter.typeReference,
+                    reservedNames,
+                    siblingPropertyNames
+                })
             })
         }));
     }
