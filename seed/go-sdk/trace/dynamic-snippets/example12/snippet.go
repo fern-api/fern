@@ -5,6 +5,7 @@ import (
 
     fern "github.com/trace/fern"
     client "github.com/trace/fern/client"
+    common "github.com/trace/fern/common"
     option "github.com/trace/fern/option"
 )
 
@@ -28,7 +29,7 @@ func do() {
         ),
         Body: &fern.PlaylistCreateRequest{
             Name: "name",
-            Problems: []fern.ProblemID{
+            Problems: []common.ProblemID{
                 "problems",
                 "problems",
             },

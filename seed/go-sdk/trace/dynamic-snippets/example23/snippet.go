@@ -5,6 +5,7 @@ import (
 
     fern "github.com/trace/fern"
     client "github.com/trace/fern/client"
+    common "github.com/trace/fern/common"
     option "github.com/trace/fern/option"
 )
 
@@ -20,19 +21,19 @@ func do() {
     request := &fern.GetDefaultStarterFilesRequest{
         InputParams: []*fern.VariableTypeAndName{
             &fern.VariableTypeAndName{
-                VariableType: &fern.VariableType{
+                VariableType: &common.VariableType{
                     IntegerType: "integerType",
                 },
                 Name: "name",
             },
             &fern.VariableTypeAndName{
-                VariableType: &fern.VariableType{
+                VariableType: &common.VariableType{
                     IntegerType: "integerType",
                 },
                 Name: "name",
             },
         },
-        OutputType: &fern.VariableType{
+        OutputType: &common.VariableType{
             IntegerType: "integerType",
         },
         MethodName: "methodName",

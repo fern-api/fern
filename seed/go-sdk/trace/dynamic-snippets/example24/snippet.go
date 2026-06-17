@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
-    fern "github.com/trace/fern"
     client "github.com/trace/fern/client"
+    common "github.com/trace/fern/common"
     option "github.com/trace/fern/option"
 )
 
@@ -19,6 +19,6 @@ func do() {
     )
     client.Submission.CreateExecutionSession(
         context.TODO(),
-        fern.LanguageJava.Ptr(),
+        common.LanguageJava.Ptr(),
     )
 }

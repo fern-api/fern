@@ -5,6 +5,7 @@ import (
 
     fern "github.com/trace/fern"
     client "github.com/trace/fern/client"
+    common "github.com/trace/fern/common"
     option "github.com/trace/fern/option"
 )
 
@@ -19,14 +20,14 @@ func do() {
     )
     request := &fern.CreateProblemRequest{
         ProblemName: "problemName",
-        ProblemDescription: &fern.ProblemDescription{
-            Boards: []*fern.ProblemDescriptionBoard{
-                &fern.ProblemDescriptionBoard{},
-                &fern.ProblemDescriptionBoard{},
+        ProblemDescription: &common.ProblemDescription{
+            Boards: []*common.ProblemDescriptionBoard{
+                &common.ProblemDescriptionBoard{},
+                &common.ProblemDescriptionBoard{},
             },
         },
-        Files: map[fern.Language]*fern.ProblemFiles{
-            fern.LanguageJava: &fern.ProblemFiles{
+        Files: map[common.Language]*fern.ProblemFiles{
+            common.LanguageJava: &fern.ProblemFiles{
                 SolutionFile: &fern.FileInfo{
                     Filename: "filename",
                     Contents: "contents",
@@ -45,41 +46,41 @@ func do() {
         },
         InputParams: []*fern.VariableTypeAndName{
             &fern.VariableTypeAndName{
-                VariableType: &fern.VariableType{
+                VariableType: &common.VariableType{
                     IntegerType: "integerType",
                 },
                 Name: "name",
             },
             &fern.VariableTypeAndName{
-                VariableType: &fern.VariableType{
+                VariableType: &common.VariableType{
                     IntegerType: "integerType",
                 },
                 Name: "name",
             },
         },
-        OutputType: &fern.VariableType{
+        OutputType: &common.VariableType{
             IntegerType: "integerType",
         },
         Testcases: []*fern.TestCaseWithExpectedResult{
             &fern.TestCaseWithExpectedResult{
                 TestCase: &fern.TestCase{
                     ID: "id",
-                    Params: []*fern.VariableValue{
-                        &fern.VariableValue{},
-                        &fern.VariableValue{},
+                    Params: []*common.VariableValue{
+                        &common.VariableValue{},
+                        &common.VariableValue{},
                     },
                 },
-                ExpectedResult: &fern.VariableValue{},
+                ExpectedResult: &common.VariableValue{},
             },
             &fern.TestCaseWithExpectedResult{
                 TestCase: &fern.TestCase{
                     ID: "id",
-                    Params: []*fern.VariableValue{
-                        &fern.VariableValue{},
-                        &fern.VariableValue{},
+                    Params: []*common.VariableValue{
+                        &common.VariableValue{},
+                        &common.VariableValue{},
                     },
                 },
-                ExpectedResult: &fern.VariableValue{},
+                ExpectedResult: &common.VariableValue{},
             },
         },
         MethodName: "methodName",

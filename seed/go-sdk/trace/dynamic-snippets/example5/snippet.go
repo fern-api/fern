@@ -6,6 +6,7 @@ import (
     uuid "github.com/google/uuid"
     fern "github.com/trace/fern"
     client "github.com/trace/fern/client"
+    common "github.com/trace/fern/common"
     option "github.com/trace/fern/option"
 )
 
@@ -21,9 +22,9 @@ func do() {
     request := &fern.StoreTracedTestCaseRequest{
         Result: &fern.TestCaseResultWithStdout{
             Result: &fern.TestCaseResult{
-                ExpectedResult: &fern.VariableValue{},
+                ExpectedResult: &common.VariableValue{},
                 ActualResult: &fern.ActualResult{
-                    Value: &fern.VariableValue{},
+                    Value: &common.VariableValue{},
                 },
                 Passed: true,
             },

@@ -42,6 +42,14 @@ const (
 	// cycle-breaking. The go-v2 SDK generator reads this file so that it
 	// references the relocated types from the same package v1 declares them in.
 	typeRelocationsFileSuffix = ".relocations.json"
+
+	// typeRelocationsOutputFilepathEnvVar names an environment variable that,
+	// when set, points to an additional host-readable path where the
+	// cycle-breaking relocations are written. The Fern CLI's local generation
+	// runner sets this so its host-side dynamic snippet test generator can
+	// apply the same relocations before emitting snippets. It is never set by
+	// remote (Fiddle) generation, so production output is unaffected.
+	typeRelocationsOutputFilepathEnvVar = "FERN_TYPE_RELOCATIONS_OUTPUT_FILEPATH"
 )
 
 // Mode is an enum for different generator modes (i.e. types, client, etc).
@@ -1115,15 +1123,28 @@ func (g *Generator) generateReadme(
 // without this it would reference the relocated types from their original
 // (pre-relocation) packages and produce undefined symbols.
 func (g *Generator) writeTypeRelocations(relocations map[common.TypeId]*common.FernFilepath) error {
-	if len(relocations) == 0 || g.config.IRFilepath == "" {
+	if len(relocations) == 0 {
 		return nil
 	}
 	data, err := json.Marshal(relocations)
 	if err != nil {
 		return fmt.Errorf("failed to marshal type relocations: %w", err)
 	}
-	if err := os.WriteFile(g.config.IRFilepath+typeRelocationsFileSuffix, data, 0644); err != nil {
-		return fmt.Errorf("failed to write type relocations: %w", err)
+	// Sidecar next to the IR, read by the go-v2 SDK generator running as a
+	// subprocess against the same IR file inside this container.
+	if g.config.IRFilepath != "" {
+		if err := os.WriteFile(g.config.IRFilepath+typeRelocationsFileSuffix, data, 0644); err != nil {
+			return fmt.Errorf("failed to write type relocations: %w", err)
+		}
+	}
+	// When the Fern CLI's local generation runner asks for it, also write the
+	// relocations to a host-readable path so the host-side dynamic snippet test
+	// generator can apply them before emitting snippets. The CLI deletes this
+	// file before copying generated output, so it never reaches the SDK.
+	if outputFilepath := os.Getenv(typeRelocationsOutputFilepathEnvVar); outputFilepath != "" {
+		if err := os.WriteFile(outputFilepath, data, 0644); err != nil {
+			return fmt.Errorf("failed to write type relocations to %s: %w", outputFilepath, err)
+		}
 	}
 	return nil
 }
