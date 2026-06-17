@@ -8,6 +8,10 @@ enum Example3 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.container.getAndReturnSetOfObjects()
+        _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: .array([
+            .object([
+                "string": .string("string")
+            ])
+        ]))
     }
 }

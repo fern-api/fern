@@ -128,7 +128,6 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - exhaustive
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference
