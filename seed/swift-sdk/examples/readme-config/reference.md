@@ -881,9 +881,7 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.service.refreshToken(request: RefreshTokenRequest(
-
-    ))
+    _ = try await client.service.refreshToken()
 }
 
 try await main()

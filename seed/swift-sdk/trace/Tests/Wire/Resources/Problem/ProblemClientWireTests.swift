@@ -6,7 +6,7 @@ import Trace
     @Test func createProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "success",
@@ -107,7 +107,7 @@ import Trace
     @Test func updateProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "problemVersion": 1
@@ -210,7 +210,7 @@ import Trace
     @Test func getDefaultStarterFiles1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "files": {

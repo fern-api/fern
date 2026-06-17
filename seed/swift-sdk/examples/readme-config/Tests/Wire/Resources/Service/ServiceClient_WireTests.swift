@@ -6,7 +6,7 @@ import Examples
     @Test func getMovie1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "movie-c06a4ad7",
@@ -72,7 +72,7 @@ import Examples
     @Test func getMovie2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -126,7 +126,7 @@ import Examples
     @Test func createMovie1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 movie-c06a4ad7
                 """#.utf8
@@ -169,7 +169,7 @@ import Examples
     @Test func createMovie2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -206,7 +206,7 @@ import Examples
     @Test func getMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "html",
@@ -240,7 +240,7 @@ import Examples
     @Test func getMetadata2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "html",
@@ -272,7 +272,7 @@ import Examples
     @Test func createBigEntity1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "response": {

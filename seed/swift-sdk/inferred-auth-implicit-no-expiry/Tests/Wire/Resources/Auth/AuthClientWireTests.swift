@@ -6,7 +6,7 @@ import InferredAuthImplicitNoExpiry
     @Test func getTokenWithClientCredentials1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",
@@ -40,7 +40,7 @@ import InferredAuthImplicitNoExpiry
     @Test func refreshToken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",

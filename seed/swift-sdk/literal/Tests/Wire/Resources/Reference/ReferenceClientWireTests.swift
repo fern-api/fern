@@ -6,7 +6,7 @@ import Literal
     @Test func send1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "message": "The weather is sunny",
@@ -50,7 +50,7 @@ import Literal
     @Test func send2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "message": "message",
