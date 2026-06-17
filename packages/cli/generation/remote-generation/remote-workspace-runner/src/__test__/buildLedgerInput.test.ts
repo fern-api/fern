@@ -141,6 +141,34 @@ describe("buildLedgerInput", () => {
         });
     });
 
+    it("carries the favicon FileId through to the LedgerConfig as a fullPath (any extension)", () => {
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                favicon: "docs/assets/favicon.svg"
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map(),
+            // Identity map: fileId === sanitizedPath in the current FDR flow.
+            fileIdToPath: new Map([["docs/assets/favicon.svg", "docs/assets/favicon.svg"]])
+        });
+
+        expect(localeEntry.config?.favicon).toBe("docs/assets/favicon.svg");
+    });
+
+    it("omits the favicon from LedgerConfig when absent in DocsConfig", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.config?.favicon).toBeUndefined();
+    });
+
     it("drops a logo ImageRef when the file is not measured (no width/height in manifest)", () => {
         const docsDefinition = {
             pages: {},
@@ -409,5 +437,38 @@ describe("buildLedgerInput", () => {
 
         expect(localeEntry.git).toEqual(git);
         expect(localeEntry.git?.commitSha).toBeUndefined();
+    });
+
+    // ── integrations mapping ──────────────────────────────────────────
+
+    it("maps integrations.intercom into LedgerConfig (context7 excluded)", () => {
+        const docsDefinition = {
+            pages: {},
+            config: {
+                root: MINIMAL_ROOT,
+                integrations: {
+                    intercom: "app_abc123",
+                    context7: "file-id-for-context7"
+                }
+            }
+        } as unknown as Parameters<typeof buildLedgerInput>[0]["docsDefinition"];
+
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.config?.integrations).toEqual({
+            intercom: "app_abc123"
+        });
+    });
+
+    it("omits integrations from LedgerConfig when absent in DocsConfig", () => {
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition: makeDocsDefinition(),
+            apiDefinitions: new Map()
+        });
+
+        expect(localeEntry.config?.integrations).toBeUndefined();
     });
 });
