@@ -792,9 +792,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 
-	for _, file := range files {
-		fmt.Printf("v1 output file %s\n", file.Path)
-	}
 	return files, nil
 }
 
