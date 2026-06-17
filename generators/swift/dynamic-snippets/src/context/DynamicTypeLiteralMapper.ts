@@ -59,7 +59,11 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: typeReference.value, value: value, as });
             case "set":
-                return swift.Expression.nop();
+                // The Swift SDK represents `set` types as `JSONValue` (there is no
+                // dedicated Set type in the generated code), so render the value the
+                // same way an `unknown`/`JSONValue` value is rendered to match the
+                // generated signature.
+                return value === undefined ? swift.Expression.nop() : this.convertUnknown(value);
             case "unknown":
                 return this.convertUnknown(value);
             default:
