@@ -88,8 +88,8 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
     rm tar-7.5.16.tgz
 
-# pnpm 10.33.3 bundles patched picomatch, brace-expansion, tar, and ip-address.
-RUN npm install -g pnpm@10.33.3 --force
+# pnpm 10.34.3 bundles patched picomatch, brace-expansion, tar (7.5.16), and ip-address.
+RUN npm install -g pnpm@10.34.3 --force
 RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.9.3 \
   prettier@3.8.1 \

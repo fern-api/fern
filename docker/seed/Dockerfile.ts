@@ -78,8 +78,9 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
     rm tar-7.5.16.tgz
 
-RUN npm install -g pnpm@10.33.3 --force
-RUN corepack prepare pnpm@10.33.3
+# pnpm 10.34.3 bundles tar 7.5.16, clearing GHSA-vmf3-w455-68vh from pnpm's vendored copy.
+RUN npm install -g pnpm@10.34.3 --force
+RUN corepack prepare pnpm@10.34.3
 RUN npm install -g yarn@1.22.22 --force
 RUN corepack prepare yarn@1.22.22
 
