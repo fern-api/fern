@@ -103,6 +103,22 @@ RUN pnpm add -g typescript@~5.9.3 \
   msw@2.12.14 \
   vitest@^4.1.1
 
+# Sweep ALL remaining copies of tar < 7.5.16 that were pulled in as
+# transitive dependencies by globally-installed packages (webpack, vitest,
+# msw, etc.) to fully clear CVE-2026-53655 / GHSA-vmf3-w455-68vh.
+RUN set -eux; \
+    cd /tmp && TARBALL="$(npm pack tar@7.5.16 --silent)" && \
+    find / -path '*/node_modules/tar/package.json' ! -path '/tmp/*' -print0 2>/dev/null | \
+    xargs -0 -I{} sh -c ' \
+      pkg_dir="$(dirname "$1")"; \
+      ver="$(node -p "try{JSON.parse(require(\"fs\").readFileSync(\"$1\")).version}catch(e){\"\"}")" ; \
+      if [ -n "$ver" ] && [ "$ver" != "7.5.16" ]; then \
+        echo "Patching tar $ver -> 7.5.16 at $pkg_dir"; \
+        rm -rf "$pkg_dir"/* && \
+        tar -xzf /tmp/'"$TARBALL"' --strip-components=1 -C "$pkg_dir"; \
+      fi' _ {} && \
+    rm -f /tmp/"$TARBALL"
+
 # Replace the prebuilt @oxlint-tsgolint/linux-* binary with the locally
 # rebuilt one so it embeds the patched Go stdlib.
 COPY --from=tsgolint-rebuild /out/tsgolint /tmp/tsgolint-rebuilt
