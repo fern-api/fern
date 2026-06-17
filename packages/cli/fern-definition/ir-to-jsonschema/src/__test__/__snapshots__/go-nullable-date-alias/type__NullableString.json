@@ -1,0 +1,12 @@
+{
+  "oneOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "A string value, or null.",
+  "definitions": {}
+}
