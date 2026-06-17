@@ -10,8 +10,14 @@ export function convertDefaultToLiteral(defaultValue: unknown): Literal | undefi
     if (typeof defaultValue === "boolean") {
         return Literal.boolean(defaultValue);
     }
-    // Non-string/non-boolean defaults (e.g., numbers) are not representable as
-    // Literal values and are already captured in the type's validation/default
-    // metadata, so we silently skip them here.
+    if (typeof defaultValue === "number") {
+        if (Number.isInteger(defaultValue)) {
+            return Literal.integer(defaultValue);
+        }
+        return Literal.double(defaultValue);
+    }
+    if (Array.isArray(defaultValue)) {
+        return Literal.list(defaultValue);
+    }
     return undefined;
 }

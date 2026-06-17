@@ -2,7 +2,12 @@
 
 import * as FernIr from "../../../index.js";
 
-export type Literal = FernIr.Literal.String | FernIr.Literal.Boolean;
+export type Literal =
+    | FernIr.Literal.String
+    | FernIr.Literal.Boolean
+    | FernIr.Literal.Integer
+    | FernIr.Literal.Double
+    | FernIr.Literal.List;
 
 export namespace Literal {
     export interface String extends _Utils {
@@ -15,6 +20,21 @@ export namespace Literal {
         boolean: boolean;
     }
 
+    export interface Integer extends _Utils {
+        type: "integer";
+        integer: number;
+    }
+
+    export interface Double extends _Utils {
+        type: "double";
+        double: number;
+    }
+
+    export interface List extends _Utils {
+        type: "list";
+        list: unknown[];
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Literal._Visitor<_Result>) => _Result;
     }
@@ -22,6 +42,9 @@ export namespace Literal {
     export interface _Visitor<_Result> {
         string: (value: string) => _Result;
         boolean: (value: boolean) => _Result;
+        integer: (value: number) => _Result;
+        double: (value: number) => _Result;
+        list: (value: unknown[]) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -47,12 +70,48 @@ export const Literal = {
         };
     },
 
+    integer: (value: number): FernIr.Literal.Integer => {
+        return {
+            integer: value,
+            type: "integer",
+            _visit: function <_Result>(this: FernIr.Literal.Integer, visitor: FernIr.Literal._Visitor<_Result>) {
+                return FernIr.Literal._visit(this, visitor);
+            },
+        };
+    },
+
+    double: (value: number): FernIr.Literal.Double => {
+        return {
+            double: value,
+            type: "double",
+            _visit: function <_Result>(this: FernIr.Literal.Double, visitor: FernIr.Literal._Visitor<_Result>) {
+                return FernIr.Literal._visit(this, visitor);
+            },
+        };
+    },
+
+    list: (value: unknown[]): FernIr.Literal.List => {
+        return {
+            list: value,
+            type: "list",
+            _visit: function <_Result>(this: FernIr.Literal.List, visitor: FernIr.Literal._Visitor<_Result>) {
+                return FernIr.Literal._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.Literal, visitor: FernIr.Literal._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "string":
                 return visitor.string(value.string);
             case "boolean":
                 return visitor.boolean(value.boolean);
+            case "integer":
+                return visitor.integer(value.integer);
+            case "double":
+                return visitor.double(value.double);
+            case "list":
+                return visitor.list(value.list);
             default:
                 return visitor._other(value);
         }

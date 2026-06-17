@@ -62,6 +62,11 @@ export function generateContainerExample({
                     literal: containerType.literal._visit<ExamplePrimitive>({
                         boolean: (value) => ExamplePrimitive.boolean(value),
                         string: (value) => ExamplePrimitive.string({ original: value }),
+                        integer: (value) => ExamplePrimitive.integer(value),
+                        double: (value) => ExamplePrimitive.double(value),
+                        list: () => {
+                            throw new Error("List literals cannot be represented as ExamplePrimitive");
+                        },
                         _other: () => {
                             throw new Error("Encountered unknown literal type");
                         }
@@ -70,6 +75,9 @@ export function generateContainerExample({
                 jsonExample: containerType.literal._visit<unknown>({
                     boolean: (value) => value,
                     string: (value) => value,
+                    integer: (value) => value,
+                    double: (value) => value,
+                    list: (value) => value,
                     _other: () => {
                         throw new Error("Encountered unknown literal type");
                     }
@@ -216,6 +224,11 @@ export function generateEmptyContainerExample({
                     literal: containerType.literal._visit<ExamplePrimitive>({
                         boolean: (value) => ExamplePrimitive.boolean(value),
                         string: (value) => ExamplePrimitive.string({ original: value }),
+                        integer: (value) => ExamplePrimitive.integer(value),
+                        double: (value) => ExamplePrimitive.double(value),
+                        list: () => {
+                            throw new Error("List literals cannot be represented as ExamplePrimitive");
+                        },
                         _other: () => {
                             throw new Error("Encountered unknown literal type");
                         }
@@ -224,6 +237,9 @@ export function generateEmptyContainerExample({
                 jsonExample: containerType.literal._visit<unknown>({
                     boolean: (value) => value,
                     string: (value) => value,
+                    integer: (value) => value,
+                    double: (value) => value,
+                    list: (value) => value,
                     _other: () => {
                         throw new Error("Encountered unknown literal type");
                     }

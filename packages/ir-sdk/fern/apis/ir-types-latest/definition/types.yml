@@ -428,6 +428,15 @@ types:
       boolean:
         type: boolean
         key: boolean
+      integer:
+        type: long
+        key: integer
+      double:
+        type: double
+        key: double
+      list:
+        type: list<unknown>
+        key: list
 
   # examples
 

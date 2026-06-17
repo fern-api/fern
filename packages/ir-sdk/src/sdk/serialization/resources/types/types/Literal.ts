@@ -12,6 +12,15 @@ export const Literal: core.serialization.Schema<serializers.Literal.Raw, FernIr.
         boolean: core.serialization.object({
             boolean: core.serialization.boolean(),
         }),
+        integer: core.serialization.object({
+            integer: core.serialization.number(),
+        }),
+        double: core.serialization.object({
+            double: core.serialization.number(),
+        }),
+        list: core.serialization.object({
+            list: core.serialization.list(core.serialization.unknown()),
+        }),
     })
     .transform<FernIr.Literal>({
         transform: (value) => {
@@ -20,6 +29,12 @@ export const Literal: core.serialization.Schema<serializers.Literal.Raw, FernIr.
                     return FernIr.Literal.string(value.string);
                 case "boolean":
                     return FernIr.Literal.boolean(value.boolean);
+                case "integer":
+                    return FernIr.Literal.integer(value.integer);
+                case "double":
+                    return FernIr.Literal.double(value.double);
+                case "list":
+                    return FernIr.Literal.list(value.list);
                 default:
                     return value as FernIr.Literal;
             }
@@ -28,7 +43,7 @@ export const Literal: core.serialization.Schema<serializers.Literal.Raw, FernIr.
     });
 
 export declare namespace Literal {
-    export type Raw = Literal.String | Literal.Boolean;
+    export type Raw = Literal.String | Literal.Boolean | Literal.Integer | Literal.Double | Literal.List;
 
     export interface String {
         type: "string";
@@ -38,5 +53,20 @@ export declare namespace Literal {
     export interface Boolean {
         type: "boolean";
         boolean: boolean;
+    }
+
+    export interface Integer {
+        type: "integer";
+        integer: number;
+    }
+
+    export interface Double {
+        type: "double";
+        double: number;
+    }
+
+    export interface List {
+        type: "list";
+        list: unknown[];
     }
 }

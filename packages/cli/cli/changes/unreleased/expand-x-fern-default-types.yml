@@ -1,0 +1,5 @@
+- summary: |
+    Expand `x-fern-default` OpenAPI extension to support integer, double, and
+    array values in addition to string and boolean. When present on a parameter,
+    the default value is sent in generated SDKs when the user doesn't provide one.
+  type: feat

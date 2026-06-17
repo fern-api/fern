@@ -202,6 +202,33 @@ export function convertTypeReference(
                                 }
                             };
                         },
+                        integer: (integerLiteral) => {
+                            return {
+                                type: "literal",
+                                value: {
+                                    type: "stringLiteral",
+                                    value: integerLiteral.toString()
+                                }
+                            };
+                        },
+                        double: (doubleLiteral) => {
+                            return {
+                                type: "literal",
+                                value: {
+                                    type: "stringLiteral",
+                                    value: doubleLiteral.toString()
+                                }
+                            };
+                        },
+                        list: (listLiteral) => {
+                            return {
+                                type: "literal",
+                                value: {
+                                    type: "stringLiteral",
+                                    value: JSON.stringify(listLiteral)
+                                }
+                            };
+                        },
                         _other: () => {
                             throw new CliError({
                                 message: "Unknown literal type: " + literal.type,

@@ -153,6 +153,9 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                         literal._visit<FernIr.Literal>({
                             string: (value) => FernIr.Literal.string(value),
                             boolean: (value) => FernIr.Literal.boolean(value),
+                            integer: (value) => FernIr.Literal.integer(value),
+                            double: (value) => FernIr.Literal.double(value),
+                            list: (value) => FernIr.Literal.list(value),
                             _other: () => {
                                 throw new CliError({
                                     message: "Unexpected literal type",

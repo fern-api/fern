@@ -357,6 +357,24 @@ export function getSchemaFromFernType({
                     value: literal._visit<LiteralSchemaValue>({
                         string: (value) => LiteralSchemaValue.string(value),
                         boolean: (value) => LiteralSchemaValue.boolean(value),
+                        integer: () => {
+                            throw new CliError({
+                                message: "Integer literal types are not supported in x-fern-type",
+                                code: CliError.Code.InternalError
+                            });
+                        },
+                        double: () => {
+                            throw new CliError({
+                                message: "Double literal types are not supported in x-fern-type",
+                                code: CliError.Code.InternalError
+                            });
+                        },
+                        list: () => {
+                            throw new CliError({
+                                message: "List literal types are not supported in x-fern-type",
+                                code: CliError.Code.InternalError
+                            });
+                        },
                         _other: () => {
                             throw new CliError({
                                 message: "Unexpected literal type",

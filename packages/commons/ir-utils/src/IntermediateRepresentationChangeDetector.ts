@@ -1162,6 +1162,21 @@ export class IntermediateRepresentationChangeDetector {
                     return from.string === to.string;
                 }
                 break;
+            case "integer":
+                if (to.type === "integer") {
+                    return from.integer === to.integer;
+                }
+                break;
+            case "double":
+                if (to.type === "double") {
+                    return from.double === to.double;
+                }
+                break;
+            case "list":
+                if (to.type === "list") {
+                    return JSON.stringify(from.list) === JSON.stringify(to.list);
+                }
+                break;
             default:
                 assertNever(from);
         }

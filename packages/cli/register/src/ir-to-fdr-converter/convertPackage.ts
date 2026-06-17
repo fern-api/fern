@@ -997,6 +997,9 @@ function convertV2HttpEndpointExample({
             return header.valueType.container.literal._visit({
                 boolean: (val: boolean) => `${val}`,
                 string: (val: string) => val,
+                integer: (val: number) => `${val}`,
+                double: (val: number) => `${val}`,
+                list: (val: unknown[]) => JSON.stringify(val),
                 _other: () => undefined
             });
         }
@@ -1011,6 +1014,9 @@ function convertV2HttpEndpointExample({
             return header.valueType.container.optional.container.literal._visit({
                 boolean: (val: boolean) => `${val}`,
                 string: (val: string) => val,
+                integer: (val: number) => `${val}`,
+                double: (val: number) => `${val}`,
+                list: (val: unknown[]) => JSON.stringify(val),
                 _other: () => undefined
             });
         }
@@ -1202,6 +1208,9 @@ function convertHttpEndpointExample({
                 value = header.valueType.container.literal._visit<string | undefined>({
                     boolean: (val) => `${val}`,
                     string: (val) => val,
+                    integer: (val) => `${val}`,
+                    double: (val) => `${val}`,
+                    list: (val) => JSON.stringify(val),
                     _other: () => undefined
                 });
             }
@@ -1215,6 +1224,9 @@ function convertHttpEndpointExample({
                 value = header.valueType.container.optional.container.literal._visit<string | undefined>({
                     boolean: (val) => `${val}`,
                     string: (val) => val,
+                    integer: (val) => `${val}`,
+                    double: (val) => `${val}`,
+                    list: (val) => JSON.stringify(val),
                     _other: () => undefined
                 });
             }

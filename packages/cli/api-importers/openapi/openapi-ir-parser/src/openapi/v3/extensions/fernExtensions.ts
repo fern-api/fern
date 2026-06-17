@@ -582,7 +582,7 @@ export const FernOpenAPIExtension = {
      * When present, the parameter becomes optional in the generated SDK, and the
      * default value is sent when the user doesn't provide one.
      *
-     * Supports string and boolean literal values.
+     * Supports string, boolean, integer, double, and array values.
      *
      * Example usage:
      *   parameters:
@@ -591,6 +591,18 @@ export const FernOpenAPIExtension = {
      *       schema:
      *         type: string
      *       x-fern-default: "2024-02-08"
+     *     - name: limit
+     *       in: query
+     *       schema:
+     *         type: integer
+     *       x-fern-default: 100
+     *     - name: tags
+     *       in: query
+     *       schema:
+     *         type: array
+     *         items:
+     *           type: string
+     *       x-fern-default: ["default"]
      */
     FERN_DEFAULT: "x-fern-default"
 } as const;

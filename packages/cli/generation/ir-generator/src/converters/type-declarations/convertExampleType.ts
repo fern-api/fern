@@ -458,6 +458,18 @@ export function convertTypeReferenceExample({
                                 })
                             })
                         );
+                    case "integer":
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal({ literal: ExamplePrimitive.integer(literal.integer) })
+                        );
+                    case "double":
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal({ literal: ExamplePrimitive.double(literal.double) })
+                        );
+                    case "list":
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal({ literal: ExamplePrimitive.string({ original: JSON.stringify(literal.list) }) })
+                        );
                     default:
                         assertNever(literal);
                 }

@@ -78,7 +78,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                           ) ?? defaultType)
                         : defaultType
             };
-            if (typeof header.clientDefault === "string" || typeof header.clientDefault === "boolean") {
+            if (header.clientDefault != null) {
                 schema["client-default"] = header.clientDefault;
             }
         }

@@ -715,6 +715,12 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.LiteralType.boolean(literal.boolean);
             case "string":
                 return DynamicSnippets.LiteralType.string(literal.string);
+            case "integer":
+                return DynamicSnippets.LiteralType.string(literal.integer.toString());
+            case "double":
+                return DynamicSnippets.LiteralType.string(literal.double.toString());
+            case "list":
+                return DynamicSnippets.LiteralType.string(JSON.stringify(literal.list));
             default:
                 assertNever(literal);
         }

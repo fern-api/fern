@@ -558,6 +558,9 @@ function getTitleForResolvedType(resolvedType: ResolvedType): string {
                     return `literal<${resolvedType.container.literal._visit<string>({
                         boolean: (v) => v.toString(),
                         string: (v) => v,
+                        integer: (v) => v.toString(),
+                        double: (v) => v.toString(),
+                        list: (v) => JSON.stringify(v),
                         _other: (v) => v.type
                     })}>`;
                 case "map":

@@ -250,6 +250,21 @@ export function validateTypeReferenceExample({
                             (e) => e === expectedLiteral.string || areMediaTypesCompatible(expectedLiteral.string, e),
                             `"${expectedLiteral.string}"`
                         )(example);
+                    case "integer":
+                        return createValidator(
+                            (e) => e === expectedLiteral.integer,
+                            expectedLiteral.integer.toString()
+                        )(example);
+                    case "double":
+                        return createValidator(
+                            (e) => e === expectedLiteral.double,
+                            expectedLiteral.double.toString()
+                        )(example);
+                    case "list":
+                        return createValidator(
+                            (e) => JSON.stringify(e) === JSON.stringify(expectedLiteral.list),
+                            JSON.stringify(expectedLiteral.list)
+                        )(example);
                     default:
                         assertNever(expectedLiteral);
                 }
@@ -569,6 +584,12 @@ function areLiteralTypesEquivalent({ expected, actual }: { expected: Literal; ac
             return actual.type === "boolean" ? expected.boolean === actual.boolean : false;
         case "string":
             return actual.type === "string" ? expected.string === actual.string : false;
+        case "integer":
+            return actual.type === "integer" ? expected.integer === actual.integer : false;
+        case "double":
+            return actual.type === "double" ? expected.double === actual.double : false;
+        case "list":
+            return actual.type === "list" ? JSON.stringify(expected.list) === JSON.stringify(actual.list) : false;
         default:
             assertNever(expected);
     }

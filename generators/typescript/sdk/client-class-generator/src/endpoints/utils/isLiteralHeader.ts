@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 
@@ -18,8 +18,13 @@ export function getLiteralValueForHeader(
                 return literal.boolean;
             case "string":
                 return literal.string;
+            case "integer":
+            case "double":
+            case "list":
+                return undefined;
             default:
-                assertNever(literal);
+                assertNeverNoThrow(literal);
+                return undefined;
         }
     } else {
         return undefined;
@@ -27,10 +32,12 @@ export function getLiteralValueForHeader(
 }
 
 /**
- * Extracts the client default value from a Literal union (string | boolean).
+ * Extracts the client default value from a Literal union.
  * Used for headers, query parameters, and path parameters with `clientDefault`.
  */
-export function getClientDefaultValue(clientDefault: FernIr.Literal | undefined): string | boolean | undefined {
+export function getClientDefaultValue(
+    clientDefault: FernIr.Literal | undefined
+): string | boolean | number | unknown[] | undefined {
     if (clientDefault == null) {
         return undefined;
     }
@@ -39,7 +46,14 @@ export function getClientDefaultValue(clientDefault: FernIr.Literal | undefined)
             return clientDefault.boolean;
         case "string":
             return clientDefault.string;
+        case "integer":
+            return clientDefault.integer;
+        case "double":
+            return clientDefault.double;
+        case "list":
+            return clientDefault.list;
         default:
-            assertNever(clientDefault);
+            assertNeverNoThrow(clientDefault);
+            return undefined;
     }
 }

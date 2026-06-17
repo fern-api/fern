@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.6.0] - 2026-06-17
+
+- Feature: Expand `Literal` union with `integer`, `double`, and `list` variants.
+  This allows `clientDefault` on path/query/header parameters to carry numeric
+  and array values from the `x-fern-default` OpenAPI extension, not just strings
+  and booleans.
+
 ## [v67.5.0] - 2026-06-12
 
 - Feature: Add optional `subtitle` field to `HttpEndpoint`. Populated from the

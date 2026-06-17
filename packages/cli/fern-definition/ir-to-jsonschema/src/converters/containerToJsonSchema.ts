@@ -65,6 +65,18 @@ export function convertContainerToJsonSchema({
                     return {
                         const: container.literal.boolean
                     };
+                case "integer":
+                    return {
+                        const: container.literal.integer
+                    };
+                case "double":
+                    return {
+                        const: container.literal.double
+                    };
+                case "list":
+                    return {
+                        const: container.literal.list
+                    };
                 default:
                     assertNever(container.literal);
             }
