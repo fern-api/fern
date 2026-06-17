@@ -86,10 +86,11 @@ export class PostGenerationPipeline {
 
         // FernignoreStep restores .fernignore-protected files after replay
         // (or before GithubStep's commitAllChanges in non-replay mode).
-        // Always enabled when a GitHub step is present — the step no-ops
-        // when there is no .fernignore file or no matching files.
-        if (config.github?.enabled) {
-            this.steps.push(new FernignoreStep(config.outputDir, this.logger));
+        // Enabled when a GitHub step is present and not explicitly disabled
+        // via config. The step no-ops when there is no .fernignore file or
+        // no matching files.
+        if (config.github?.enabled && config.fernignore?.enabled !== false) {
+            this.steps.push(new FernignoreStep(config.outputDir, this.logger, config.fernignore));
         }
 
         // VerificationStep runs after replay and before GithubStep so a failing

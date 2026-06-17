@@ -3,7 +3,8 @@ import { execFileSync } from "child_process";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
-import type { FernignoreStepResult, PipelineContext } from "../types";
+import type { PipelineLogger } from "../PipelineLogger";
+import type { FernignoreStepConfig, FernignoreStepResult, PipelineContext } from "../types";
 import { BaseStep } from "./BaseStep";
 
 /**
@@ -25,14 +26,25 @@ import { BaseStep } from "./BaseStep";
 export class FernignoreStep extends BaseStep {
     readonly name = "fernignore";
 
+    constructor(
+        outputDir: string,
+        logger: PipelineLogger,
+        private readonly config?: FernignoreStepConfig
+    ) {
+        super(outputDir, logger);
+    }
+
     async execute(context: PipelineContext): Promise<FernignoreStepResult> {
-        const fernignorePath = join(this.outputDir, ".fernignore");
-        if (!existsSync(fernignorePath)) {
-            this.logger.debug("No .fernignore file found — skipping");
+        if (this.config?.enabled === false) {
+            this.logger.debug("FernignoreStep disabled via config — skipping");
             return { executed: true, success: true, pathsPreserved: [] };
         }
 
-        const fernignoreContent = readFileSync(fernignorePath, "utf-8");
+        const fernignoreContent = this.resolveFernignoreContent();
+        if (fernignoreContent == null) {
+            return { executed: true, success: true, pathsPreserved: [] };
+        }
+
         const patterns = fernignoreContent
             .split("\n")
             .map((line) => line.trim())
@@ -59,13 +71,20 @@ export class FernignoreStep extends BaseStep {
             restoreSource = "HEAD";
         }
 
-        // List all tracked files at HEAD to match against fernignore patterns.
+        // List tracked files at both HEAD (current state) and restoreSource
+        // (pre-generation state). The union ensures we catch fernignored files
+        // that the generator deleted (absent from HEAD) as well as files it
+        // overwrote (present at HEAD).
         const trackedOutput = this.git(["ls-tree", "-r", "HEAD", "--name-only"]);
         const trackedFiles = trackedOutput != null ? trackedOutput.split("\n").filter(Boolean) : [];
+        const restoreSourceOutput =
+            restoreSource !== "HEAD" ? this.git(["ls-tree", "-r", restoreSource, "--name-only"]) : null;
+        const restoreSourceFiles = restoreSourceOutput != null ? restoreSourceOutput.split("\n").filter(Boolean) : [];
+        const allCandidateFiles = [...new Set([...trackedFiles, ...restoreSourceFiles])];
 
-        const matchingFiles = expandFernignorePatterns(fernignoreContent, trackedFiles);
+        const matchingFiles = expandFernignorePatterns(fernignoreContent, allCandidateFiles);
         if (matchingFiles.length === 0) {
-            this.logger.debug("No tracked files match .fernignore patterns — skipping");
+            this.logger.debug("No files match .fernignore patterns — skipping");
             return { executed: true, success: true, pathsPreserved: [] };
         }
 
@@ -122,6 +141,18 @@ export class FernignoreStep extends BaseStep {
         }
 
         return { executed: true, success: true, pathsPreserved: preservedPaths };
+    }
+
+    private resolveFernignoreContent(): string | null {
+        if (this.config?.customContents != null) {
+            return this.config.customContents;
+        }
+        const fernignorePath = join(this.outputDir, ".fernignore");
+        if (!existsSync(fernignorePath)) {
+            this.logger.debug("No .fernignore file found — skipping");
+            return null;
+        }
+        return readFileSync(fernignorePath, "utf-8");
     }
 
     private hasStagedChanges(): boolean {
