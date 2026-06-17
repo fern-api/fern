@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Re-enable seed test coverage for the endpoint-security-auth, exhaustive
-    publish-to/signed_publish, and pagination-custom fixtures, which now
-    generate and compile cleanly.
+    Generate Java 8 compatible endpoint security metadata. The EndpointMetadata
+    class and raw clients no longer emit Java 9+ List.of()/Map.of() calls, so
+    SDKs with per-endpoint security requirements compile under Java 8.
   type: fix

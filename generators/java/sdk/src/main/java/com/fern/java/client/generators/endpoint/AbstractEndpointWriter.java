@@ -1235,7 +1235,7 @@ public abstract class AbstractEndpointWriter {
         }
 
         CodeBlock.Builder securityListBuilder = CodeBlock.builder();
-        securityListBuilder.add("new $T($T.asList(", endpointMetadataClassName, java.util.Arrays.class);
+        securityListBuilder.add("$T.of(", endpointMetadataClassName);
 
         List<HttpEndpointSecurityItem> securityItems = endpoint.getSecurity().get();
         boolean firstItem = true;
@@ -1247,7 +1247,7 @@ public abstract class AbstractEndpointWriter {
 
             Map<AuthSchemeKey, List<AuthScope>> schemeMap = item.get();
 
-            securityListBuilder.add("$T.of(", java.util.Map.class);
+            securityListBuilder.add("$T.requirement(", endpointMetadataClassName);
             boolean firstScheme = true;
             for (Map.Entry<AuthSchemeKey, List<AuthScope>> entry : schemeMap.entrySet()) {
                 if (!firstScheme) {
@@ -1258,20 +1258,15 @@ public abstract class AbstractEndpointWriter {
                 String schemeKey = entry.getKey().get();
                 List<AuthScope> scopes = entry.getValue();
 
-                securityListBuilder.add("$S, $T.of(", schemeKey, java.util.List.class);
-                boolean firstScope = true;
+                securityListBuilder.add("$T.scheme($S", endpointMetadataClassName, schemeKey);
                 for (AuthScope scope : scopes) {
-                    if (!firstScope) {
-                        securityListBuilder.add(", ");
-                    }
-                    firstScope = false;
-                    securityListBuilder.add("$S", scope.get());
+                    securityListBuilder.add(", $S", scope.get());
                 }
                 securityListBuilder.add(")");
             }
             securityListBuilder.add(")");
         }
-        securityListBuilder.add("))");
+        securityListBuilder.add(")");
 
         return securityListBuilder.build();
     }

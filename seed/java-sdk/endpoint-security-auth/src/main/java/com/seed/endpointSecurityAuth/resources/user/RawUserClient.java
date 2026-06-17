@@ -13,7 +13,6 @@ import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthException;
 import com.seed.endpointSecurityAuth.core.SeedEndpointSecurityAuthHttpResponse;
 import com.seed.endpointSecurityAuth.resources.user.types.User;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Bearer", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("Bearer")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -86,7 +86,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("ApiKey", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("ApiKey")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -128,7 +129,7 @@ public class RawUserClient {
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
         _headers.putAll(clientOptions.getAuthHeaders(
-                new EndpointMetadata(Arrays.asList(Map.of("OAuth", List.of("read-only"))))));
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("OAuth", "read-only")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -169,7 +170,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("Basic", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("Basic")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -210,8 +212,8 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(
-                clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of("InferredAuth", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(
+                EndpointMetadata.of(EndpointMetadata.requirement(EndpointMetadata.scheme("InferredAuth")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -252,12 +254,12 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(
-                Map.of("Bearer", List.of()),
-                Map.of("ApiKey", List.of()),
-                Map.of("OAuth", List.of("read-only")),
-                Map.of("Basic", List.of()),
-                Map.of("InferredAuth", List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.of(
+                EndpointMetadata.requirement(EndpointMetadata.scheme("Bearer")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("ApiKey")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("OAuth", "read-only")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("Basic")),
+                EndpointMetadata.requirement(EndpointMetadata.scheme("InferredAuth")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -298,17 +300,12 @@ public class RawUserClient {
             });
         }
         Map<String, String> _headers = new HashMap<>(clientOptions.headers(requestOptions));
-        _headers.putAll(clientOptions.getAuthHeaders(new EndpointMetadata(Arrays.asList(Map.of(
-                "Bearer",
-                List.of(),
-                "ApiKey",
-                List.of(),
-                "OAuth",
-                List.of("read-only"),
-                "Basic",
-                List.of(),
-                "InferredAuth",
-                List.of())))));
+        _headers.putAll(clientOptions.getAuthHeaders(EndpointMetadata.of(EndpointMetadata.requirement(
+                EndpointMetadata.scheme("Bearer"),
+                EndpointMetadata.scheme("ApiKey"),
+                EndpointMetadata.scheme("OAuth", "read-only"),
+                EndpointMetadata.scheme("Basic"),
+                EndpointMetadata.scheme("InferredAuth")))));
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

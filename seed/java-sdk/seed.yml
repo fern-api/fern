@@ -399,6 +399,13 @@ allowedFailures:
   - streaming-parameter
   - inferred-auth-implicit-reference
 
+  # The generated publish build.gradle applies the
+  # cl.franciscosolis.sonatype-central-upload plugin, which requires a JVM 11+
+  # runtime. Seed CI compiles generated SDKs with a Java 8 JVM, so Gradle cannot
+  # resolve the plugin classpath and the project fails to configure.
+  - exhaustive:publish-to
+  - exhaustive:signed_publish
+
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - java-inline-types:inline
