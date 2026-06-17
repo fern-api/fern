@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.35.14
+  changelogEntry:
+    - summary: |
+        Fully qualify `Foundation.Data` in the generated HTTP client and test
+        templates. When an API defined a type named `Data`, the generated
+        top-level `Data` type shadowed `Foundation.Data` in those templates, so the
+        request-body builder and stub helpers resolved to the wrong type and failed
+        to compile. The remaining bare `Data` references now use `Foundation.Data`,
+        matching the convention already used elsewhere in the runtime.
+      type: fix
+    - summary: |
+        Default an optional referenced request body to `nil` in the generated client
+        method, and omit the `request` argument from snippets and wire tests when an
+        example provides no body. Previously the parameter had no default value while
+        snippets emitted an empty initializer for the wrapped type, so endpoints with
+        an absent optional request body failed to compile.
+      type: fix
+  createdAt: "2026-06-17"
+  irVersion: 66
 - version: 0.35.13
   changelogEntry:
     - summary: |
