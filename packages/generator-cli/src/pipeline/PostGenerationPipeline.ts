@@ -4,6 +4,7 @@ import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 import { AutoVersionStep } from "./steps/AutoVersionStep";
 import { BaseStep } from "./steps/BaseStep";
+import { FernignoreStep } from "./steps/FernignoreStep";
 import { GenerationCommitStep } from "./steps/GenerationCommitStep";
 import { GithubStep } from "./steps/GithubStep";
 import { ReplayStep } from "./steps/ReplayStep";
@@ -83,10 +84,13 @@ export class PostGenerationPipeline {
             );
         }
 
-        // Phase 2: FernignoreStep (not implemented yet)
-        // if (config.fernignore?.enabled) {
-        //   this.steps.push(new FernignoreStep(config.outputDir, this.logger));
-        // }
+        // FernignoreStep restores .fernignore-protected files after replay
+        // (or before GithubStep's commitAllChanges in non-replay mode).
+        // Always enabled when a GitHub step is present — the step no-ops
+        // when there is no .fernignore file or no matching files.
+        if (config.github?.enabled) {
+            this.steps.push(new FernignoreStep(config.outputDir, this.logger));
+        }
 
         // VerificationStep runs after replay and before GithubStep so a failing
         // verify aborts the pipeline before we open a PR. Wired only when the
@@ -152,6 +156,7 @@ export class PostGenerationPipeline {
                     pipelineContext.previousStepResults.autoVersion = stepResult as AutoVersionStepResult;
                 } else if (step.name === "fernignore") {
                     result.steps.fernignore = stepResult as FernignoreStepResult;
+                    pipelineContext.previousStepResults.fernignore = stepResult as FernignoreStepResult;
                 } else if (step.name === "verify") {
                     const verifyResult = stepResult as VerificationStepResult;
                     result.steps.verify = verifyResult;

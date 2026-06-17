@@ -1,0 +1,7 @@
+- summary: |
+    Implement FernignoreStep in the post-generation pipeline to preserve
+    `.fernignore`-protected files during SDK regeneration. Previously, the
+    pipeline placeholder threw an error, causing files listed in `.fernignore`
+    to be overwritten with duplicate generated code. The step now restores
+    fernignored files to their pre-generation state after replay commits.
+  type: fix

@@ -41,7 +41,7 @@ Thin, typed wrappers re-exported from `src/api.ts`. Modules: `generate-readme.ts
 
 Sequential step orchestration. `PostGenerationPipeline` instantiates enabled steps from `PipelineConfig` and runs them in order.
 
-**Step execution order**: ReplayStep → (FernignoreStep, Phase 2 placeholder) → VerificationStep (opt-in) → GithubStep
+**Step execution order**: GenerationCommitStep → AutoVersionStep → ReplayStep → FernignoreStep → VerificationStep (opt-in) → GithubStep
 
 ### Key Files
 
@@ -50,7 +50,7 @@ Pipeline core:
 - `src/pipeline/types.ts` — All pipeline interfaces
 - `src/pipeline/steps/ReplayStep.ts` — Thin wrapper around `replayRun()`
 - `src/pipeline/steps/GithubStep.ts` — Commit/push/PR/conflict visualization
-- `src/pipeline/steps/FernignoreStep.ts` — Phase 2 placeholder (not yet implemented)
+- `src/pipeline/steps/FernignoreStep.ts` — Restores `.fernignore`-protected files after replay commits (or before GithubStep in non-replay mode)
 - `src/pipeline/steps/VerificationStep.ts` — Opt-in step that runs `.fern/verify.sh` inside a `{generatorImage}-validator:{version}` container; failure aborts the pipeline before GithubStep
 - `src/pipeline/replay-summary.ts` — PR body formatting, conflict reason mapping
 

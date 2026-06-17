@@ -4,7 +4,7 @@ export interface PipelineConfig {
     // Step configs (optional, modular)
     replay?: ReplayStepConfig;
     autoVersion?: AutoVersionStepConfig;
-    fernignore?: FernignoreStepConfig; // PHASE 2: not implemented yet
+    fernignore?: FernignoreStepConfig;
     verify?: VerifyStepConfig;
     github?: GithubStepConfig;
 
