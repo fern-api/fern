@@ -21,6 +21,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     private readonly classReference: ast.ClassReference;
     private readonly exampleGenerator: ExampleGenerator;
     private readonly unionMemberTypeMap: Map<FernIr.SingleUnionType, ast.Type>;
+    private discriminantPropertyName: string | undefined;
 
     constructor(
         context: ModelGeneratorContext,
@@ -69,6 +70,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             get: "public",
             set: "internal"
         });
+        this.discriminantPropertyName = discriminant.name;
 
         const value = class_.addField({
             enclosingType: class_,
@@ -491,7 +493,13 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     }
 
     private getUnionTypeClassReferenceByTypeName(type: string): ast.ClassReference {
-        const name = ["Value", "Type"].includes(type) ? `${type}Inner` : type;
+        // A nested union-type class cannot share a name with a member of the enclosing union
+        // (e.g. the discriminant property or the `Value` property), otherwise C# emits CS0102.
+        const reservedNames = ["Value", "Type"];
+        if (this.discriminantPropertyName != null) {
+            reservedNames.push(this.discriminantPropertyName);
+        }
+        const name = reservedNames.includes(type) ? `${type}Inner` : type;
         return this.csharp.classReference({
             enclosingType: this.classReference,
             name
