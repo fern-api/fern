@@ -14,18 +14,18 @@ public class Example2 {
                 .updateUser(
                         "userId",
                         UpdateUserRequest.builder()
+                                .username("username")
                                 .email(OptionalNullable.of("email"))
+                                .phone("phone")
                                 .address(OptionalNullable.of(Address.builder()
                                         .street("street")
                                         .zipCode("zipCode")
-                                        .country(OptionalNullable.of("country"))
-                                        .city("city")
+                                        .city(OptionalNullable.of("city"))
                                         .state("state")
-                                        .buildingId("buildingId")
+                                        .country(OptionalNullable.of("country"))
+                                        .buildingId(OptionalNullable.of("buildingId"))
                                         .tenantId("tenantId")
                                         .build()))
-                                .username("username")
-                                .phone("phone")
                                 .build());
     }
 }

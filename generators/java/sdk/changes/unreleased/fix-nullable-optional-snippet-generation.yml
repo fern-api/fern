@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed nullable/optional handling in generated code examples so the
+    `use-nullable-annotation` and `collapse-optional-nullable` configurations
+    compile cleanly. Nullable and optional properties are now ordered after
+    required properties in staged builder calls (regardless of how their values
+    render), and a spurious `@Override` is no longer emitted on the default
+    builder's nullable setter.
+  type: fix

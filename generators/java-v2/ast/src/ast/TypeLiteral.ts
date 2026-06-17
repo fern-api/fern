@@ -49,6 +49,11 @@ interface Builder {
 export interface BuilderParameter {
     name: string;
     value: TypeLiteral;
+    // Optional schema-based hint indicating whether the property is optional/nullable (and thus
+    // non-required in a staged builder). When provided, this takes precedence over inferring
+    // optionality from the rendered value, which can be misleading (e.g. a nullable field may
+    // render as a bare value or as OptionalNullable depending on config).
+    isOptional?: boolean;
 }
 
 interface Bytes {
@@ -526,12 +531,12 @@ export class TypeLiteral extends AstNode {
     }
 
     public orderBuilderParameters(parameters: java.BuilderParameter[]): java.BuilderParameter[] {
-        const hasRequiredFields = parameters.some((p) => !p.value.isOptional() && !this.isCollection(p.value));
+        const hasRequiredFields = parameters.some((p) => !this.isParameterOptional(p) && !this.isCollection(p.value));
 
         if (!hasRequiredFields) {
             return parameters.sort((a, b) => {
-                const aIsOptional = a.value.isOptional();
-                const bIsOptional = b.value.isOptional();
+                const aIsOptional = this.isParameterOptional(a);
+                const bIsOptional = this.isParameterOptional(b);
 
                 if (aIsOptional && !bIsOptional) {
                     return 1;
@@ -545,8 +550,8 @@ export class TypeLiteral extends AstNode {
         }
 
         return parameters.sort((a, b) => {
-            const aIsNonRequired = this.isNonRequired(a.value);
-            const bIsNonRequired = this.isNonRequired(b.value);
+            const aIsNonRequired = this.isNonRequiredParameter(a);
+            const bIsNonRequired = this.isNonRequiredParameter(b);
 
             if (aIsNonRequired && !bIsNonRequired) {
                 return 1;
@@ -564,8 +569,12 @@ export class TypeLiteral extends AstNode {
         return internalType === "list" || internalType === "set" || internalType === "map";
     }
 
-    private isNonRequired(value: TypeLiteral): boolean {
-        return value.isOptional() || this.isCollection(value);
+    private isParameterOptional(parameter: java.BuilderParameter): boolean {
+        return parameter.isOptional ?? parameter.value.isOptional();
+    }
+
+    private isNonRequiredParameter(parameter: java.BuilderParameter): boolean {
+        return this.isParameterOptional(parameter) || this.isCollection(parameter.value);
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {
