@@ -205,7 +205,10 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.file.service.getFile(filename: "file.txt")
+    _ = try await client.file.service.getFile(
+        filename: "file.txt",
+        xFileApiVersion: "0.0.2"
+    )
 }
 
 try await main()
@@ -541,7 +544,10 @@ import Examples
 private func main() async throws {
     let client = ExamplesClient(token: "<token>")
 
-    _ = try await client.service.getMetadata(shallow: false)
+    _ = try await client.service.getMetadata(
+        xApiVersion: "0.0.1",
+        shallow: false
+    )
 }
 
 try await main()
@@ -648,7 +654,7 @@ private func main() async throws {
             name: "name"
         ),
         metadata: MetadataType.html(
-
+            "metadata"
         ),
         commonMetadata: Metadata(
             id: "id",
@@ -667,7 +673,7 @@ private func main() async throws {
             )
         ),
         data: Data.string(
-
+            "data"
         ),
         migration: Migration(
             name: "name",
@@ -681,7 +687,7 @@ private func main() async throws {
             )
         ),
         test: Test.and(
-
+            true
         ),
         node: Node(
             name: "name",

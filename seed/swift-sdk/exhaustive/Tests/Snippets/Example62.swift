@@ -8,9 +8,12 @@ enum Example62 {
             token: "<token>"
         )
 
-        _ = try await client.inlinedRequests.postWithArrayBodyAndHeaders(request: [
-            "string",
-            "string"
-        ])
+        _ = try await client.inlinedRequests.postWithArrayBodyAndHeaders(
+            xCustomHeader: "X-Custom-Header",
+            request: [
+                "string",
+                "string"
+            ]
+        )
     }
 }

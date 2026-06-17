@@ -205,16 +205,7 @@ export class WireTestFunctionGenerator {
                         return literalContainer.literal._visit({
                             string: (val) =>
                                 swift.Expression.enumCaseShorthand(LiteralEnum.generateEnumCaseLabel(val.original)),
-                            boolean: (val) =>
-                                swift.Expression.methodCall({
-                                    target: swift.Expression.reference("JSONValue"),
-                                    methodName: "bool",
-                                    arguments_: [
-                                        swift.functionArgument({
-                                            value: swift.Expression.boolLiteral(val)
-                                        })
-                                    ]
-                                }),
+                            boolean: (val) => swift.Expression.boolLiteral(val),
                             integer: () => swift.Expression.nop(),
                             uint: () => swift.Expression.nop(),
                             uint64: () => swift.Expression.nop(),
@@ -338,24 +329,35 @@ export class WireTestFunctionGenerator {
                         );
                     },
                     object: (exampleObjectType) => {
+                        const propertyArgs: swift.FunctionArgument[] = this.orderExamplePropertiesByDeclaration(
+                            typeId,
+                            exampleObjectType.properties
+                        )
+                            .map((property) => {
+                                if (
+                                    property.value.shape.type === "container" &&
+                                    property.value.shape.container.type === "optional" &&
+                                    property.value.shape.container.optional == null
+                                ) {
+                                    return null;
+                                }
+                                const exampleResponse = this.generateExampleResponse(property.value, fromScope);
+                                return swift.functionArgument({
+                                    label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
+                                    value: exampleResponse
+                                });
+                            })
+                            .filter((arg): arg is swift.FunctionArgument => arg != null);
+                        const additionalPropertiesArg = this.buildAdditionalPropertiesArg({
+                            exampleTypeRef,
+                            declaredWireNames: new Set(exampleObjectType.properties.map((p) => getWireValue(p.name)))
+                        });
+                        if (additionalPropertiesArg != null) {
+                            propertyArgs.push(additionalPropertiesArg);
+                        }
                         return swift.Expression.structInitialization({
                             unsafeName: symbol.name,
-                            arguments_: this.orderExamplePropertiesByDeclaration(typeId, exampleObjectType.properties)
-                                .map((property) => {
-                                    if (
-                                        property.value.shape.type === "container" &&
-                                        property.value.shape.container.type === "optional" &&
-                                        property.value.shape.container.optional == null
-                                    ) {
-                                        return null;
-                                    }
-                                    const exampleResponse = this.generateExampleResponse(property.value, fromScope);
-                                    return swift.functionArgument({
-                                        label: this.sdkGeneratorContext.caseConverter.camelUnsafe(property.name),
-                                        value: exampleResponse
-                                    });
-                                })
-                                .filter((arg) => arg != null),
+                            arguments_: propertyArgs,
                             multiline: true
                         });
                     },
@@ -370,18 +372,6 @@ export class WireTestFunctionGenerator {
                                     memberName: caseName
                                 }),
                             samePropertiesAsObject: (exampleObjectTypeWithId) => {
-                                const declaredWireNames = new Set(
-                                    exampleObjectTypeWithId.object.properties.map((p) => getWireValue(p.name))
-                                );
-                                const jsonObj =
-                                    exampleTypeRef.jsonExample != null &&
-                                    typeof exampleTypeRef.jsonExample === "object" &&
-                                    !Array.isArray(exampleTypeRef.jsonExample)
-                                        ? (exampleTypeRef.jsonExample as Record<string, unknown>)
-                                        : {};
-                                const extraEntries = Object.entries(jsonObj).filter(
-                                    ([key]) => !declaredWireNames.has(key)
-                                );
                                 const propertyArgs: swift.FunctionArgument[] = this.orderExamplePropertiesByDeclaration(
                                     exampleObjectTypeWithId.typeId,
                                     exampleObjectTypeWithId.object.properties
@@ -401,19 +391,14 @@ export class WireTestFunctionGenerator {
                                         });
                                     })
                                     .filter((arg): arg is swift.FunctionArgument => arg != null);
-                                if (extraEntries.length > 0) {
-                                    propertyArgs.push(
-                                        swift.functionArgument({
-                                            label: "additionalProperties",
-                                            value: swift.Expression.dictionaryLiteral({
-                                                entries: extraEntries.map(([key, value]) => [
-                                                    swift.Expression.escapedStringLiteral(key),
-                                                    this.generateUnknownExampleResponse(value)
-                                                ]),
-                                                multiline: true
-                                            })
-                                        })
-                                    );
+                                const additionalPropertiesArg = this.buildAdditionalPropertiesArg({
+                                    exampleTypeRef,
+                                    declaredWireNames: new Set(
+                                        exampleObjectTypeWithId.object.properties.map((p) => getWireValue(p.name))
+                                    )
+                                });
+                                if (additionalPropertiesArg != null) {
+                                    propertyArgs.push(additionalPropertiesArg);
                                 }
                                 return swift.Expression.methodCall({
                                     target: swift.Expression.reference(symbol.name),
@@ -474,6 +459,47 @@ export class WireTestFunctionGenerator {
     }
 
     /**
+     * Builds the `additionalProperties` argument for an object whose schema
+     * permits extra properties. The decoded response captures any JSON keys not
+     * declared on the type into `additionalProperties`, so the expected response
+     * must include them too or the equality assertion fails. Returns `null` when
+     * the example has no undeclared keys (so objects without extra properties are
+     * left untouched).
+     *
+     * The wire JSON is derived from `buildJsonFromExampleTypeReference` — the same
+     * source used to render the stub response body — so the extra-property values
+     * here stay in sync with the body by construction (rather than reading the
+     * IR's `jsonExample` projection, which can drift from the typed shape).
+     */
+    private buildAdditionalPropertiesArg({
+        exampleTypeRef,
+        declaredWireNames
+    }: {
+        exampleTypeRef: FernIr.ExampleTypeReference;
+        declaredWireNames: Set<string>;
+    }): swift.FunctionArgument | null {
+        const wireJson = buildJsonFromExampleTypeReference(exampleTypeRef);
+        const jsonObj =
+            wireJson != null && typeof wireJson === "object" && !Array.isArray(wireJson)
+                ? (wireJson as Record<string, unknown>)
+                : {};
+        const extraEntries = Object.entries(jsonObj).filter(([key]) => !declaredWireNames.has(key));
+        if (extraEntries.length === 0) {
+            return null;
+        }
+        return swift.functionArgument({
+            label: "additionalProperties",
+            value: swift.Expression.dictionaryLiteral({
+                entries: extraEntries.map(([key, value]) => [
+                    swift.Expression.escapedStringLiteral(key),
+                    this.generateUnknownExampleResponse(value)
+                ]),
+                multiline: true
+            })
+        });
+    }
+
+    /**
      * Reorders example object properties to match the order the generated Swift
      * struct declares them in its memberwise initializer, which is
      * `[...extendedProperties, ...properties]`. Example properties are otherwise
@@ -530,7 +556,7 @@ export class WireTestFunctionGenerator {
                                     .createReferencer(fromScope)
                                     .referenceType(literalEnumSymbol);
                             },
-                            boolean: () => this.referencer.referenceAsIsType("JSONValue"),
+                            boolean: () => this.referencer.referenceSwiftType("Bool"),
                             integer: () => this.referencer.referenceAsIsType("JSONValue"),
                             uint: () => this.referencer.referenceAsIsType("JSONValue"),
                             uint64: () => this.referencer.referenceAsIsType("JSONValue"),

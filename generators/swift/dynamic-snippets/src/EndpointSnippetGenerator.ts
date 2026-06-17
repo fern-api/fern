@@ -404,6 +404,19 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
         args.push(...pathParameterFields);
 
+        // The generated SDK declares endpoint headers as method parameters after the
+        // path parameters and before the query parameters, so emit them here to keep
+        // the rendered argument order aligned with the method signature.
+        this.context.errors.scope(Scope.Headers);
+        const headerParameterFields: swift.FunctionArgument[] = [];
+        if (request.headers != null) {
+            headerParameterFields.push(
+                ...this.getEndpointMethodHeaderParameters({ namedParameters: request.headers, snippet })
+            );
+        }
+        this.context.errors.unscope();
+        args.push(...headerParameterFields);
+
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameterFields: swift.FunctionArgument[] = [];
         if (request.queryParameters != null) {
@@ -512,6 +525,53 @@ export class EndpointSnippetGenerator {
                     })
                 });
             });
+    }
+
+    private getEndpointMethodHeaderParameters({
+        namedParameters,
+        snippet
+    }: {
+        namedParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): swift.FunctionArgument[] {
+        const moduleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const referencer = this.context.createReferencer(moduleSymbol);
+        return this.context
+            .getExampleObjectProperties({
+                parameters: namedParameters,
+                snippetObject: snippet.headers ?? {}
+            })
+            .filter((parameter) => {
+                // The generated SDK only surfaces String-typed headers as endpoint
+                // method parameters; non-String and literal headers are set
+                // automatically, so the snippet must omit them to match the signature.
+                // Resolve through type aliases first so that a header typed as an
+                // alias of String (which the SDK treats as a String parameter) is
+                // still emitted here.
+                const resolvedTypeReference = this.resolveAliasTypeReference(parameter.typeReference);
+                const swiftType = this.context.getSwiftTypeReferenceFromScope(resolvedTypeReference, moduleSymbol);
+                return referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
+            })
+            .map((parameter) => {
+                return swift.functionArgument({
+                    label: parameter.name.name.camelCase.unsafeName,
+                    value: this.context.dynamicTypeLiteralMapper.convert({
+                        fromSymbol: moduleSymbol,
+                        typeReference: parameter.typeReference,
+                        value: parameter.value
+                    })
+                });
+            });
+    }
+
+    private resolveAliasTypeReference(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+        if (typeReference.type === "named") {
+            const namedType = this.context.ir.types[typeReference.value];
+            if (namedType != null && namedType.type === "alias") {
+                return this.resolveAliasTypeReference(namedType.typeReference);
+            }
+        }
+        return typeReference;
     }
 
     private getFilePropertyInfo({

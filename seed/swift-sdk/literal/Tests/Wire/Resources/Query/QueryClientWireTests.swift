@@ -23,7 +23,7 @@ import Literal
         let expectedResponse = SendResponse(
             message: "The weather is sunny",
             status: 200,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.query.send(
             prompt: .youAreAHelpfulAssistant,
@@ -60,7 +60,7 @@ import Literal
         let expectedResponse = SendResponse(
             message: "message",
             status: 1,
-            success: JSONValue.bool(true)
+            success: true
         )
         let response = try await client.query.send(
             prompt: .youAreAHelpfulAssistant,
