@@ -14,6 +14,11 @@ export declare namespace DynamicTypeLiteralMapper {
         // Set to true when we've detected a nested optional+nullable type that should
         // collapse into OptionalNullable<T> (only relevant when collapse-optional-nullable is enabled).
         isCollapsedOptionalNullable?: boolean;
+        // When the value resolves to an inline named type that v1 emits as a nested class, this is
+        // the class reference to use instead of the top-level declaration name (e.g. the nested
+        // `PostRootRequest.Bar` rather than the standalone `RequestTypeInlineType1`). Propagated
+        // through container wrappers (optional/nullable/list/set/map value) to the inner named type.
+        nestedClassReference?: java.ClassReference;
     }
 
     // Identifies what the type is being converted as, which sometimes influences how
@@ -94,11 +99,21 @@ export class DynamicTypeLiteralMapper {
         }
         switch (args.typeReference.type) {
             case "list":
-                return this.convertList({ list: args.typeReference.value, value: args.value, as: args.as });
+                return this.convertList({
+                    list: args.typeReference.value,
+                    value: args.value,
+                    as: args.as,
+                    nestedClassReference: args.nestedClassReference
+                });
             case "literal":
                 return this.convertLiteral({ literal: args.typeReference.value, value: args.value });
             case "map":
-                return this.convertMap({ map: args.typeReference, value: args.value, as: args.as });
+                return this.convertMap({
+                    map: args.typeReference,
+                    value: args.value,
+                    as: args.as,
+                    nestedClassReference: args.nestedClassReference
+                });
             case "named": {
                 const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
                 if (named == null) {
@@ -108,7 +123,8 @@ export class DynamicTypeLiteralMapper {
                     named,
                     value: args.value,
                     as: args.as,
-                    inUndiscriminatedUnion: args.inUndiscriminatedUnion
+                    inUndiscriminatedUnion: args.inUndiscriminatedUnion,
+                    nestedClassReference: args.nestedClassReference
                 });
             }
             case "nullable":
@@ -157,12 +173,17 @@ export class DynamicTypeLiteralMapper {
                         value: args.value,
                         as: args.as,
                         inUndiscriminatedUnion: args.inUndiscriminatedUnion,
-                        isCollapsedOptionalNullable: true
+                        isCollapsedOptionalNullable: true,
+                        nestedClassReference: args.nestedClassReference
                     });
                 }
 
                 if (inner.type === "list") {
-                    const listLiteral = this.convertList({ list: inner.value, value: args.value });
+                    const listLiteral = this.convertList({
+                        list: inner.value,
+                        value: args.value,
+                        nestedClassReference: args.nestedClassReference
+                    });
                     return this.wrapNullableOrOptionalValue({
                         value: listLiteral,
                         wrapperType,
@@ -175,7 +196,8 @@ export class DynamicTypeLiteralMapper {
                     typeReference: inner,
                     value: args.value,
                     as: args.as,
-                    inUndiscriminatedUnion: args.inUndiscriminatedUnion
+                    inUndiscriminatedUnion: args.inUndiscriminatedUnion,
+                    nestedClassReference: args.nestedClassReference
                 });
                 // TODO(amckinney): The Java generator produces Map<T, Optional<U>> whenever the value is an optional.
                 //
@@ -193,7 +215,12 @@ export class DynamicTypeLiteralMapper {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
-                return this.convertSet({ set: args.typeReference.value, value: args.value, as: args.as });
+                return this.convertSet({
+                    set: args.typeReference.value,
+                    value: args.value,
+                    as: args.as,
+                    nestedClassReference: args.nestedClassReference
+                });
             case "unknown":
                 return this.convertUnknown({ value: args.value });
             default:
@@ -204,11 +231,13 @@ export class DynamicTypeLiteralMapper {
     private convertList({
         list,
         value,
-        as
+        as,
+        nestedClassReference
     }: {
         list: FernIr.dynamic.TypeReference;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        nestedClassReference?: java.ClassReference;
     }): java.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
@@ -226,7 +255,12 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope({ index });
                 try {
                     if (isItemOptional && (list.type === "optional" || list.type === "nullable")) {
-                        const itemValue = this.convert({ typeReference: list.value, value: v, as });
+                        const itemValue = this.convert({
+                            typeReference: list.value,
+                            value: v,
+                            as,
+                            nestedClassReference
+                        });
                         return this.wrapNullableOrOptionalValue({
                             value: itemValue,
                             wrapperType: list.type,
@@ -234,7 +268,7 @@ export class DynamicTypeLiteralMapper {
                             propagatedCollapse: false
                         });
                     }
-                    return this.convert({ typeReference: list, value: v, as });
+                    return this.convert({ typeReference: list, value: v, as, nestedClassReference });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -273,11 +307,13 @@ export class DynamicTypeLiteralMapper {
     private convertSet({
         set,
         value,
-        as
+        as,
+        nestedClassReference
     }: {
         set: FernIr.dynamic.TypeReference;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        nestedClassReference?: java.ClassReference;
     }): java.TypeLiteral {
         if (!Array.isArray(value)) {
             this.context.errors.add({
@@ -291,7 +327,7 @@ export class DynamicTypeLiteralMapper {
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convert({ typeReference: set, value: v, as });
+                    return this.convert({ typeReference: set, value: v, as, nestedClassReference });
                 } finally {
                     this.context.errors.unscope();
                 }
@@ -302,11 +338,13 @@ export class DynamicTypeLiteralMapper {
     private convertMap({
         map,
         value,
-        as
+        as,
+        nestedClassReference
     }: {
         map: FernIr.dynamic.MapType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        nestedClassReference?: java.ClassReference;
     }): java.TypeLiteral {
         if (typeof value !== "object" || value == null) {
             this.context.errors.add({
@@ -326,7 +364,8 @@ export class DynamicTypeLiteralMapper {
                         value: this.convert({
                             typeReference: map.value,
                             value,
-                            as: "mapValue"
+                            as: "mapValue",
+                            nestedClassReference
                         })
                     };
                 } finally {
@@ -340,12 +379,14 @@ export class DynamicTypeLiteralMapper {
         named,
         value,
         as,
-        inUndiscriminatedUnion
+        inUndiscriminatedUnion,
+        nestedClassReference
     }: {
         named: FernIr.dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
         inUndiscriminatedUnion?: boolean;
+        nestedClassReference?: java.ClassReference;
     }): java.TypeLiteral {
         switch (named.type) {
             case "alias":
@@ -358,29 +399,43 @@ export class DynamicTypeLiteralMapper {
                     });
                     return java.TypeLiteral.reference(
                         java.invokeMethod({
-                            on: this.context.getJavaClassReferenceFromDeclaration({
-                                declaration: named.declaration
-                            }),
+                            on:
+                                nestedClassReference ??
+                                this.context.getJavaClassReferenceFromDeclaration({
+                                    declaration: named.declaration
+                                }),
                             method: "of",
                             arguments_: [convertedValue]
                         })
                     );
                 }
-                return this.convert({ typeReference: named.typeReference, value, as, inUndiscriminatedUnion });
+                return this.convert({
+                    typeReference: named.typeReference,
+                    value,
+                    as,
+                    inUndiscriminatedUnion,
+                    nestedClassReference
+                });
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
                     discriminatedUnion: named,
                     value,
-                    as
+                    as,
+                    nestedClassReference
                 });
             case "enum":
-                return this.convertEnum({ enum_: named, value });
+                return this.convertEnum({ enum_: named, value, nestedClassReference });
             case "object":
-                return this.convertObject({ object_: named, value, as, inUndiscriminatedUnion });
+                return this.convertObject({ object_: named, value, as, inUndiscriminatedUnion, nestedClassReference });
             case "undiscriminatedUnion":
                 // Don't pass inUndiscriminatedUnion here - we're AT the undiscriminated union level,
                 // not within it. The flag should only apply to the variants within the union.
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value, as });
+                return this.convertUndiscriminatedUnion({
+                    undiscriminatedUnion: named,
+                    value,
+                    as,
+                    nestedClassReference
+                });
             default:
                 assertNever(named);
         }
@@ -389,15 +444,19 @@ export class DynamicTypeLiteralMapper {
     private convertDiscriminatedUnion({
         discriminatedUnion,
         value,
-        as
+        as,
+        nestedClassReference
     }: {
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        nestedClassReference?: java.ClassReference;
     }): java.TypeLiteral {
-        const classReference = this.context.getJavaClassReferenceFromDeclaration({
-            declaration: discriminatedUnion.declaration
-        });
+        const classReference =
+            nestedClassReference ??
+            this.context.getJavaClassReferenceFromDeclaration({
+                declaration: discriminatedUnion.declaration
+            });
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
             discriminatedUnion,
             value
@@ -406,6 +465,15 @@ export class DynamicTypeLiteralMapper {
             return java.TypeLiteral.nop();
         }
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        // v1 emits a variant's inline type as a class nested within the union, named after the
+        // variant's discriminant value (see UnionGenerator). Mirror that here so snippet literals
+        // reference the real nested class rather than the standalone top-level name.
+        const reservedNames = new Set<string>([...classReference.enclosingClasses, classReference.name]);
+        const siblingDiscriminantNames = new Set<string>(
+            Object.values(discriminatedUnion.types).map((variant) =>
+                this.context.getClassName(variant.discriminantValue.name)
+            )
+        );
         switch (unionVariant.type) {
             case "samePropertiesAsObject": {
                 const named = this.context.resolveNamedType({
@@ -414,11 +482,25 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return java.TypeLiteral.nop();
                 }
+                const variantNestedClassReference = this.resolveInlineNestedClassReference({
+                    enclosing: classReference,
+                    baseName: this.context.getClassName(unionVariant.discriminantValue.name),
+                    typeReference: { type: "named", value: unionVariant.typeId },
+                    reservedNames,
+                    siblingPropertyNames: siblingDiscriminantNames
+                });
                 return java.TypeLiteral.reference(
                     java.invokeMethod({
                         on: classReference,
                         method: this.context.getPropertyName(unionVariant.discriminantValue.name),
-                        arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value, as })]
+                        arguments_: [
+                            this.convertNamed({
+                                named,
+                                value: discriminatedUnionTypeInstance.value,
+                                as,
+                                nestedClassReference: variantNestedClassReference
+                            })
+                        ]
                     })
                 );
             }
@@ -431,6 +513,13 @@ export class DynamicTypeLiteralMapper {
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
                     // For primitive union variants, the property key is always "value"
                     const propertyKey = "value";
+                    const variantNestedClassReference = this.resolveInlineNestedClassReference({
+                        enclosing: classReference,
+                        baseName: this.context.getClassName(unionVariant.discriminantValue.name),
+                        typeReference: unionVariant.typeReference,
+                        reservedNames,
+                        siblingPropertyNames: siblingDiscriminantNames
+                    });
                     return java.TypeLiteral.reference(
                         java.invokeMethod({
                             on: classReference,
@@ -439,7 +528,8 @@ export class DynamicTypeLiteralMapper {
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
                                     value: record[propertyKey],
-                                    as
+                                    as,
+                                    nestedClassReference: variantNestedClassReference
                                 })
                             ]
                         })
@@ -465,13 +555,20 @@ export class DynamicTypeLiteralMapper {
         object_,
         value,
         as,
-        inUndiscriminatedUnion
+        inUndiscriminatedUnion,
+        nestedClassReference
     }: {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
         inUndiscriminatedUnion?: boolean;
+        nestedClassReference?: java.ClassReference;
     }): java.TypeLiteral {
+        const classReference =
+            nestedClassReference ??
+            this.context.getJavaClassReferenceFromDeclaration({
+                declaration: object_.declaration
+            });
         const valueRecord = this.context.getRecord(value) ?? {};
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
@@ -518,6 +615,10 @@ export class DynamicTypeLiteralMapper {
             as === "request"
                 ? properties.filter((property) => !this.context.isDirectLiteral(property.typeReference))
                 : properties;
+        const reservedNames = new Set<string>([...classReference.enclosingClasses, classReference.name]);
+        const siblingPropertyNames = new Set<string>(
+            object_.properties.map((property) => this.context.getClassName(property.name.name))
+        );
         const builderParameters: java.BuilderParameter[] = [];
         for (const property of filteredProperties) {
             this.context.errors.scope(property.name.wireValue);
@@ -526,7 +627,14 @@ export class DynamicTypeLiteralMapper {
                     typeReference: property.typeReference,
                     value: property.value,
                     as,
-                    inUndiscriminatedUnion
+                    inUndiscriminatedUnion,
+                    nestedClassReference: this.resolveInlineNestedClassReference({
+                        enclosing: classReference,
+                        baseName: this.context.getClassName(property.name.name),
+                        typeReference: property.typeReference,
+                        reservedNames,
+                        siblingPropertyNames
+                    })
                 });
                 // If a required property converts to nop (e.g., invalid enum value for the wrong
                 // union variant), throw to reject this variant during undiscriminated union matching.
@@ -561,11 +669,171 @@ export class DynamicTypeLiteralMapper {
             }
         }
         return java.TypeLiteral.builder({
-            classReference: this.context.getJavaClassReferenceFromDeclaration({
-                declaration: object_.declaration
-            }),
+            classReference,
             parameters: builderParameters
         });
+    }
+
+    /**
+     * Mirrors the v1 generator's inline-type naming (see ObjectGenerator / InlineTypeIdResolver):
+     * when a property's type resolves to an inline named type, v1 emits it as a class nested within
+     * the enclosing object. This walks the property's type reference (descending through container
+     * wrappers, applying the same name suffixes as v1) and, if it terminates in an inline named type,
+     * returns the nested class reference to use. Returns undefined for non-inline types, which fall
+     * back to the standalone top-level class name.
+     */
+    public resolveInlineNestedClassReference({
+        enclosing,
+        baseName,
+        typeReference,
+        reservedNames,
+        siblingPropertyNames
+    }: {
+        enclosing: java.ClassReference;
+        baseName: string;
+        typeReference: FernIr.dynamic.TypeReference;
+        reservedNames: Set<string>;
+        siblingPropertyNames: Set<string>;
+    }): java.ClassReference | undefined {
+        if (!this.context.enableInlineTypes()) {
+            return undefined;
+        }
+        switch (typeReference.type) {
+            case "optional":
+            case "nullable":
+                return this.resolveInlineNestedClassReference({
+                    enclosing,
+                    baseName,
+                    typeReference: typeReference.value,
+                    reservedNames,
+                    siblingPropertyNames
+                });
+            case "list":
+            case "set":
+                return this.resolveInlineNestedClassReference({
+                    enclosing,
+                    baseName: `${baseName}Item`,
+                    typeReference: typeReference.value,
+                    reservedNames,
+                    siblingPropertyNames
+                });
+            case "map":
+                return this.resolveInlineNestedClassReference({
+                    enclosing,
+                    baseName: `${baseName}Value`,
+                    typeReference: typeReference.value,
+                    reservedNames,
+                    siblingPropertyNames
+                });
+            case "named": {
+                const typeId = typeReference.value;
+                const named = this.context.resolveNamedType({ typeId });
+                if (named == null) {
+                    return undefined;
+                }
+                // When aliases are not wrapped, v1 resolves through the alias to the underlying
+                // type, so descend to find the terminal (potentially inline) type.
+                if (named.type === "alias" && !this.context.wrappedAliases()) {
+                    return this.resolveInlineNestedClassReference({
+                        enclosing,
+                        baseName,
+                        typeReference: named.typeReference,
+                        reservedNames,
+                        siblingPropertyNames
+                    });
+                }
+                if (!this.context.isInlineType(typeId)) {
+                    return undefined;
+                }
+                let name = baseName;
+                while (reservedNames.has(name) || (siblingPropertyNames.has(name) && name !== baseName)) {
+                    name = `${name}_`;
+                }
+                reservedNames.add(name);
+                return this.context.getNestedInlineClassReference({ enclosing, name });
+            }
+            case "primitive":
+            case "literal":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    /**
+     * Resolves the nested class reference for an inline member of an undiscriminated union.
+     * Unlike object properties and discriminated-union variants (whose nested name is derived
+     * from the property/discriminant name), v1 names an undiscriminated union's inline members
+     * after the member type's own name, with the union's name stripped as a prefix (see
+     * UndiscriminatedUnionGenerator). Descends through container wrappers to the terminal named
+     * type.
+     */
+    private resolveUndiscriminatedInlineNestedClassReference({
+        enclosing,
+        typeReference,
+        reservedNames,
+        unionPrefix
+    }: {
+        enclosing: java.ClassReference;
+        typeReference: FernIr.dynamic.TypeReference;
+        reservedNames: Set<string>;
+        unionPrefix: string;
+    }): java.ClassReference | undefined {
+        if (!this.context.enableInlineTypes()) {
+            return undefined;
+        }
+        switch (typeReference.type) {
+            case "optional":
+            case "nullable":
+            case "list":
+            case "set":
+                return this.resolveUndiscriminatedInlineNestedClassReference({
+                    enclosing,
+                    typeReference: typeReference.value,
+                    reservedNames,
+                    unionPrefix
+                });
+            case "map":
+                return this.resolveUndiscriminatedInlineNestedClassReference({
+                    enclosing,
+                    typeReference: typeReference.value,
+                    reservedNames,
+                    unionPrefix
+                });
+            case "named": {
+                const typeId = typeReference.value;
+                const named = this.context.resolveNamedType({ typeId });
+                if (named == null) {
+                    return undefined;
+                }
+                if (named.type === "alias" && !this.context.wrappedAliases()) {
+                    return this.resolveUndiscriminatedInlineNestedClassReference({
+                        enclosing,
+                        typeReference: named.typeReference,
+                        reservedNames,
+                        unionPrefix
+                    });
+                }
+                if (!this.context.isInlineType(typeId)) {
+                    return undefined;
+                }
+                let name = this.context.getClassName(named.declaration.name);
+                if (name.startsWith(unionPrefix) && name !== unionPrefix) {
+                    name = name.substring(unionPrefix.length);
+                }
+                while (reservedNames.has(name)) {
+                    name = `${name}_`;
+                }
+                return this.context.getNestedInlineClassReference({ enclosing, name });
+            }
+            case "primitive":
+            case "literal":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
     }
 
     /**
@@ -696,15 +964,25 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): java.TypeLiteral {
+    private convertEnum({
+        enum_,
+        value,
+        nestedClassReference
+    }: {
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+        nestedClassReference?: java.ClassReference;
+    }): java.TypeLiteral {
         const name = this.getEnumValueName({ enum_, value });
         if (name == null) {
             return java.TypeLiteral.nop();
         }
         return java.TypeLiteral.enum_({
-            classReference: this.context.getJavaClassReferenceFromDeclaration({
-                declaration: enum_.declaration
-            }),
+            classReference:
+                nestedClassReference ??
+                this.context.getJavaClassReferenceFromDeclaration({
+                    declaration: enum_.declaration
+                }),
             value: name
         });
     }
@@ -731,40 +1009,34 @@ export class DynamicTypeLiteralMapper {
     private convertUndiscriminatedUnion({
         undiscriminatedUnion,
         value,
-        as
+        as,
+        nestedClassReference
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        nestedClassReference?: java.ClassReference;
     }): java.TypeLiteral {
+        const classReference =
+            nestedClassReference ??
+            this.context.getJavaClassReferenceFromDeclaration({
+                declaration: undiscriminatedUnion.declaration
+            });
         const result = this.findMatchingUndiscriminatedUnionType({
             undiscriminatedUnion,
             value,
-            as
+            as,
+            enclosing: classReference
         });
         if (result == null) {
             return java.TypeLiteral.nop();
         }
-        if (this.context.isPrimitive(result.valueTypeReference)) {
-            // Primitive types overload the 'of' method rather than
-            // defining a separate method from the type.
-            return java.TypeLiteral.reference(
-                java.invokeMethod({
-                    on: this.context.getJavaClassReferenceFromDeclaration({
-                        declaration: undiscriminatedUnion.declaration
-                    }),
-                    method: "of",
-                    arguments_: [result.typeInstantiation]
-                })
-            );
-        }
-        // Use simple 'of' method name for consistency across all union factory methods
-        // This matches the Java SDK's generated code pattern
+        // Use simple 'of' method name for consistency across all union factory methods.
+        // Primitive types overload 'of' rather than defining a separate method, but the
+        // generated call is identical, so this matches the Java SDK's generated code pattern.
         return java.TypeLiteral.reference(
             java.invokeMethod({
-                on: this.context.getJavaClassReferenceFromDeclaration({
-                    declaration: undiscriminatedUnion.declaration
-                }),
+                on: classReference,
                 method: "of",
                 arguments_: [result.typeInstantiation]
             })
@@ -774,12 +1046,19 @@ export class DynamicTypeLiteralMapper {
     private findMatchingUndiscriminatedUnionType({
         undiscriminatedUnion,
         value,
-        as
+        as,
+        enclosing
     }: {
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
+        enclosing: java.ClassReference;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: java.TypeLiteral } | undefined {
+        // v1 emits an undiscriminated union's inline members as classes nested within the union,
+        // named after the member type (with the union's name stripped as a prefix). Mirror that so
+        // snippet literals reference the real nested class rather than the standalone top-level name.
+        const reservedNames = new Set<string>([...enclosing.enclosingClasses, enclosing.name]);
+        const unionPrefix = this.context.getClassName(undiscriminatedUnion.declaration.name);
         for (const typeReference of undiscriminatedUnion.types) {
             const errorsBefore = this.context.errors.size();
             try {
@@ -787,7 +1066,13 @@ export class DynamicTypeLiteralMapper {
                     typeReference,
                     value,
                     as,
-                    inUndiscriminatedUnion: true
+                    inUndiscriminatedUnion: true,
+                    nestedClassReference: this.resolveUndiscriminatedInlineNestedClassReference({
+                        enclosing,
+                        typeReference,
+                        reservedNames: new Set(reservedNames),
+                        unionPrefix
+                    })
                 });
 
                 if (java.TypeLiteral.isNop(typeInstantiation) || this.context.errors.size() > errorsBefore) {

@@ -391,7 +391,6 @@ allowedFailures:
   - examples:no-custom-config
   - examples:readme-config
   - exhaustive:local-files
-  - java-inline-types:no-wrapped-aliases
   - oauth-client-credentials-custom
   - inferred-auth-implicit-reference
 
@@ -404,8 +403,6 @@ allowedFailures:
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
-  - java-inline-types:inline
-  - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - pagination-custom
 
