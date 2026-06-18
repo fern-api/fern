@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.50.2
+  changelogEntry:
+    - summary: |
+        Add retry with exponential backoff to registerApiDefinition during docs
+        publish. Large docs sites (e.g. 30+ API versions) could hit transient
+        connection aborts from FDR; the CLI now retries up to 3 times with
+        1 s / 2 s / 4 s delays before failing.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 67
 - version: 5.50.1
   changelogEntry:
     - summary: |
