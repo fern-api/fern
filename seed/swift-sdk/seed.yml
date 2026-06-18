@@ -137,7 +137,6 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - query-parameters
   - request-parameters
-  - streaming-parameter
   - trace
   - undiscriminated-unions
   # Server URL templating not yet supported in Swift SDK

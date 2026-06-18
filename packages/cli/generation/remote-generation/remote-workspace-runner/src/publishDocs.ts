@@ -31,6 +31,7 @@ import {
     FdrClient,
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
+import type { DocsPublishGitInput, FileManifestEntry } from "@fern-api/fdr-sdk/orpc-client";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIRUpload = APIV1Write.DynamicIRUpload;
@@ -58,9 +59,14 @@ import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
+import { basename } from "path";
 import terminalLink from "terminal-link";
+import { getDocsDeployMode } from "./docsDeployMode.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
+import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
+import { publishDocsViaLedger } from "./publishDocsLedger.js";
+import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -132,6 +138,17 @@ export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): R
     // Replace ../ segments with _dot_dot_/ to prevent HTTP client normalization issues
     // that cause S3 signature mismatches when paths contain parent directory references
     return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
+}
+
+/**
+ * Read a file once and return its bytes + sha256 hash. Avoids the double-read
+ * we'd otherwise do for files that need both hashing (legacy register) and
+ * inclusion in the ledger CAS blob map (publishDocsViaLedger).
+ */
+async function readAndHashFile(absoluteFilePath: AbsoluteFilePath | string): Promise<{ buffer: Buffer; hash: string }> {
+    const buffer = await readFile(absoluteFilePath);
+    const hash = createHash("sha256").update(new Uint8Array(buffer)).digest("hex");
+    return { buffer, hash };
 }
 
 interface CISource {
@@ -225,6 +242,11 @@ export async function publishDocs({
     });
     const authConfig = { type: "public" as const };
 
+    const deployMode = getDocsDeployMode();
+    if (deployMode !== "legacy") {
+        context.logger.info(`Docs deploy mode: ${deployMode}`);
+    }
+
     if (excludeApis) {
         context.logger.debug(
             "Experimental flag 'exclude-apis' is enabled - API references will be excluded from S3 upload"
@@ -284,6 +306,27 @@ export async function publishDocs({
         // Read-form API definitions captured during registration, keyed by FDR
         // apiDefinitionId, used to localize sidebar (navigation) titles. Only populated
         // when translations are configured, to avoid extra conversion on normal publishes.
+        // Collect API definitions (keyed by FDR definition ID) for the ledger manifest.
+        const apiDefinitionCollector = new Map<string, APIV1Write.ApiDefinition>();
+
+        // Collect per-file manifest entries for the ledger publish.
+        // The manifest is keyed by `sanitizedPath` (fern-host-relative file path),
+        // which matches the `fullPath` used by the FDR register handler when
+        // routing fileManifest entries to file artifacts.
+        //
+        // File content is NOT kept in memory. Instead, ledgerFilePaths maps
+        // each content hash to the file's absolute path so that uploadMissingBlobs
+        // can re-read only the files the server actually needs.
+        const ledgerFileManifest: Record<string, FileManifestEntry> = {};
+        const ledgerFilePaths = new Map<string, AbsoluteFilePath>();
+        // FileId → fullPath lookup used by mapDocsConfigToLedgerConfig to
+        // translate DocsConfig's FileId-based references (e.g. colorsV3.dark.logo)
+        // into LedgerConfig path strings.
+        //
+        // Populated by the uploadFiles callback below in ledger mode as an
+        // identity map (fullPath → fullPath).
+        const ledgerFileIdToPath = new Map<string, string>();
+
         const readApiDefinitionsById = new Map<string, APIV1Read.ApiDefinition>();
         const captureReadApiDefinition = (definition: APIV1Write.ApiDefinition, apiDefinitionId: string): void => {
             if (!buildTranslatedApiDefinitions) {
@@ -446,6 +489,7 @@ export async function publishDocs({
             }
 
             captureReadApiDefinition(apiDefinition, response.apiDefinitionId);
+            apiDefinitionCollector.set(response.apiDefinitionId, apiDefinition);
             return response.apiDefinitionId;
         };
 
@@ -499,6 +543,22 @@ export async function publishDocs({
                         }
 
                         const sanitizedPath = filePath.sanitizedPath;
+                        const { buffer, hash } = await readAndHashFile(filePath.absoluteFilePath);
+
+                        // Populate the ledger file manifest entry for this image.
+                        // mediaType is guaranteed non-false here because the file passed
+                        // the mime.lookup filter upstream; fall back defensively anyway.
+                        const contentType = mime.lookup(filePath.absoluteFilePath) || "application/octet-stream";
+                        ledgerFileManifest[sanitizedPath] = {
+                            hash,
+                            contentType,
+                            contentLength: buffer.byteLength,
+                            filename: basename(filePath.sanitizedPath),
+                            width: image.width,
+                            height: image.height
+                        };
+                        ledgerFilePaths.set(hash, filePath.absoluteFilePath);
+
                         const obj = {
                             filePath: CjsFdrSdk.docs.v1.write.FilePath(
                                 convertToFernHostRelativeFilePath(sanitizedPath)
@@ -507,7 +567,7 @@ export async function publishDocs({
                             height: image.height,
                             blurDataUrl: image.blurDataUrl,
                             alt: undefined,
-                            fileHash: await calculateFileHash(filePath.absoluteFilePath)
+                            fileHash: hash
                         } as DocsV2Write.ImageFilePath;
                         return obj;
                     }
@@ -531,16 +591,70 @@ export async function publishDocs({
                     HASH_CONCURRENCY,
                     nonImageFiles,
                     async (file) => {
+                        const { buffer, hash } = await readAndHashFile(file.absoluteFilePath);
+
+                        // Populate the ledger file manifest entry for this non-image file.
+                        const contentType = mime.lookup(file.absoluteFilePath) || "application/octet-stream";
+                        ledgerFileManifest[file.sanitizedPath] = {
+                            hash,
+                            contentType,
+                            contentLength: buffer.byteLength,
+                            filename: basename(file.sanitizedPath)
+                        };
+                        ledgerFilePaths.set(hash, file.absoluteFilePath);
+
                         return {
                             path: CjsFdrSdk.docs.v1.write.FilePath(
                                 convertToFernHostRelativeFilePath(file.sanitizedPath)
                             ),
-                            fileHash: await calculateFileHash(file.absoluteFilePath)
+                            fileHash: hash
                         };
                     }
                 );
                 const hashNonImageTime = performance.now() - hashNonImageStart;
                 context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
+
+                // ── Ledger-only path ─────────────────────────────────────
+                // In ledger mode we do NOT call fdr.docs.v2.write.startDocsRegister
+                // / startDocsPreviewRegister. The legacy V2 register mints fresh
+                // FileId UUIDs per request even for byte-identical inputs, which
+                // then leak into the substituted markdown (via
+                // replaceImagePathsAndUrls below) and rotate the deployment hash
+                // on every publish — defeating the ledger's deployment-level dedup.
+                //
+                // Instead, we synthesize UploadedFile entries whose `fileId` is
+                // the file's sanitized fern-host-relative path. The resolver
+                // substitutes `file:<sanitizedPath>` into the markdown, which:
+                //   - is byte-identical across publishes of byte-identical
+                //     inputs (sanitizedPath is deterministic), so pages dedup
+                //     at the CAS layer; and
+                //   - resolves directly through the existing path-keyed ledger
+                //     reader endpoints (`fileArtifact`/`fileMetadata`, both
+                //     keyed on `fullPath` ≡ sanitizedPath) — no new server-
+                //     side resolver is needed.
+                //
+                // File bytes are uploaded later by the ledger missing-blobs
+                // step in publishDocsViaLedger / publishDocsViaLedgerPreview;
+                // they do not need a separate V2 upload round-trip.
+                if (deployMode === "ledger") {
+                    const uploadedFiles: UploadedFile[] = [];
+                    for (const file of filesWithSanitizedPaths) {
+                        const manifestEntry = ledgerFileManifest[file.sanitizedPath];
+                        if (manifestEntry == null) {
+                            continue;
+                        }
+                        ledgerFileIdToPath.set(file.sanitizedPath, file.sanitizedPath);
+                        uploadedFiles.push({
+                            relativeFilePath: file.relativeFilePath,
+                            absoluteFilePath: file.absoluteFilePath,
+                            fileId: file.sanitizedPath
+                        });
+                    }
+                    context.logger.debug(
+                        `[ledger] Skipping V2 startDocsRegister; resolved ${uploadedFiles.length} files by sanitizedPath`
+                    );
+                    return uploadedFiles;
+                }
 
                 if (preview) {
                     let startDocsRegisterResponse;
@@ -681,30 +795,108 @@ export async function publishDocs({
             `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
         );
 
-        if (docsRegistrationId == null) {
+        if (docsRegistrationId == null && deployMode !== "ledger") {
             doUnlock();
             return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.", {
                 code: CliError.Code.InternalError
             });
         }
 
-        context.logger.info("Publishing docs to FDR...");
-        const publishStart = performance.now();
-        try {
+        // ── Build ledger git provenance ──
+        const ledgerGit: DocsPublishGitInput | undefined =
+            ciSource?.repo != null && ciSource?.branch != null
+                ? {
+                      repoUrl: normalizeRepoUrlToHttps(ciSource.repo, ciSource.type),
+                      branch: ciSource.branch,
+                      commitSha: ciSource.commitSha
+                  }
+                : undefined;
+
+        // ── Publish helpers ──────────────────────────────────────────
+        const runLegacyPublish = async (): Promise<void> => {
+            if (docsRegistrationId == null) {
+                return;
+            }
+            context.logger.info("Publishing docs to FDR...");
+            const publishStart = performance.now();
             await fdr.docs.v2.write.finishDocsRegister({
                 docsRegistrationId,
                 docsDefinition,
                 excludeApis,
                 ...(isBasepathAware && !preview && { basepathAware: true })
             });
-        } catch (error) {
-            return context.failAndThrow("Failed to publish docs to " + domain, error, {
-                code: CliError.Code.NetworkError
-            });
-        }
+            const publishTime = performance.now() - publishStart;
+            context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+        };
 
-        const publishTime = performance.now() - publishStart;
-        context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+        const runLedgerPublish = async (): Promise<void> => {
+            if (preview) {
+                const previewResult = await publishDocsViaLedgerPreview({
+                    docsDefinition,
+                    organization,
+                    basePath,
+                    previewId: previewId != null ? sanitizePreviewId(previewId) : previewId,
+                    git: ledgerGit,
+                    token: token.value,
+                    fdrOrigin,
+                    headers,
+                    context,
+                    apiDefinitions: apiDefinitionCollector,
+                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                    filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
+                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    resolver
+                });
+                if (deployMode === "ledger") {
+                    urlToOutput = previewResult.previewUrl;
+                }
+                context.logger.info(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
+            } else {
+                const ledgerResult = await publishDocsViaLedger({
+                    docsDefinition,
+                    organization,
+                    domain,
+                    basepath: basePath,
+                    previewId,
+                    customDomains,
+                    git: ledgerGit,
+                    token: token.value,
+                    fdrOrigin,
+                    headers,
+                    context,
+                    apiDefinitions: apiDefinitionCollector,
+                    fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
+                    filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
+                    fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    resolver
+                });
+                context.logger.info(
+                    `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
+                );
+            }
+        };
+
+        // ── Execute publish path ─────────────────────────────────────
+        // Each publish writes exactly one artifact — legacy or ledger — and
+        // the read path is determined by the artifact type itself. A failure
+        // of the selected path is a hard failure: the docs were not updated.
+        if (deployMode === "ledger") {
+            try {
+                await runLedgerPublish();
+            } catch (error) {
+                return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
+                    code: CliError.Code.NetworkError
+                });
+            }
+        } else if (docsRegistrationId != null) {
+            try {
+                await runLegacyPublish();
+            } catch (error) {
+                return context.failAndThrow("Failed to publish docs to " + domain, error, {
+                    code: CliError.Code.NetworkError
+                });
+            }
+        }
 
         // Register the translated API definitions for each locale. FDR keys API content
         // by apiDefinitionId, so each translated definition gets its own content-addressed
@@ -740,13 +932,15 @@ export async function publishDocs({
             }
         }
 
-        // Register translated page content for each configured locale.
+        // Register translated page content for each configured locale via the V2 endpoint.
+        // In ledger mode, translations are handled by publishDocsViaLedger (above),
+        // so this block only runs for the legacy mode.
         // In preview mode, register translations against the preview URL (not the production domain)
         // so that translated docs are visible in preview without overwriting production translations.
         const translationPages = resolver.getTranslationPages();
         const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
         const translationDomain = preview ? urlToOutput : domain;
-        if (translationPages != null && Object.keys(translationPages).length > 0) {
+        if (deployMode !== "ledger" && translationPages != null && Object.keys(translationPages).length > 0) {
             context.logger.info(`Registering translations for ${Object.keys(translationPages).length} locale(s)...`);
             await Promise.all(
                 Object.entries(translationPages).map(async ([locale, localePages]) => {

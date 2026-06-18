@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.35.15
+  changelogEntry:
+    - summary: |
+        Fix endpoints with a stream-parameter response generating a `JSONValue` return
+        type, which broke generated wire tests that compared the result against the
+        concrete response model. The Swift SDK does not yet implement response
+        streaming, so these endpoints are now generated against their non-streaming
+        response shape (e.g. the declared JSON response model).
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
 - version: 0.35.14
   changelogEntry:
     - summary: |
