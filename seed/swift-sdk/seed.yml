@@ -132,11 +132,8 @@ allowedFailures:
   - multi-url-environment-no-default
   - multi-url-environment-reference
   - oauth-client-credentials-with-variables
-  - streaming
-  - streaming-parameter
   - trace
   - undiscriminated-unions
   # Server URL templating not yet supported in Swift SDK
-  - server-sent-events-openapi
   - server-url-templating
   - variables
