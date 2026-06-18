@@ -407,6 +407,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.customConfig?.["inline-file-properties"] ?? false;
     }
 
+    public usesNullableAnnotation(): boolean {
+        return this.customConfig?.["use-nullable-annotation"] === true;
+    }
+
+    public usesOptionalNullable(): boolean {
+        return this.customConfig?.["collapse-optional-nullable"] === true;
+    }
+
     private getPackageNameSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {
         return fernFilepath.packagePath.map((segment: FernIr.dynamic.Name) => this.getPackageNameSegment(segment));
     }
