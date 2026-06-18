@@ -26,6 +26,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "use-default-request-parameter-values": z.boolean().optional(),
     "enable-wire-tests": z.boolean().default(false),
     "collapse-optional-nullable": z.boolean().optional(),
+    "use-nullable-annotation": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
     "offset-semantics": z.enum(["item-index", "page-index"]).optional(),
