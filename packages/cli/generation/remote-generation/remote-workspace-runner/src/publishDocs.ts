@@ -67,6 +67,7 @@ import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
+import { retryWithBackoff } from "./retryWithBackoff.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
@@ -452,37 +453,26 @@ export async function publishDocs({
             const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
 
             let response;
-            let lastError: unknown;
-
-            for (let attempt = 0; attempt <= REGISTER_MAX_RETRIES; attempt++) {
-                try {
-                    response = await fdr.api.register.registerApiDefinition({
-                        orgId: CjsFdrSdk.OrgId(organization),
-                        apiId: CjsFdrSdk.ApiId(effectiveApiName),
-                        definition: apiDefinition,
-                        dynamicIRs: dynamicIRsByLanguage
-                    });
-                    break;
-                } catch (error) {
-                    lastError = error;
-                    if (!isTransientError(error) || attempt >= REGISTER_MAX_RETRIES) {
-                        break;
-                    }
-                    const jitter = 1 + (Math.random() - 0.5) * REGISTER_JITTER_FACTOR;
-                    const delayMs = Math.round(REGISTER_BASE_DELAY_MS * 2 ** attempt * jitter);
-                    context.logger.warn(
-                        `registerApiDefinition failed for ${effectiveApiName} ` +
-                            `(attempt ${attempt + 1}/${REGISTER_MAX_RETRIES + 1}), retrying in ${delayMs}ms...`
-                    );
-                    await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
-                }
-            }
-
-            if (response == null) {
-                const errorDetails = extractErrorDetails(lastError);
+            try {
+                response = await retryWithBackoff({
+                    fn: () =>
+                        fdr.api.register.registerApiDefinition({
+                            orgId: CjsFdrSdk.OrgId(organization),
+                            apiId: CjsFdrSdk.ApiId(effectiveApiName),
+                            definition: apiDefinition,
+                            dynamicIRs: dynamicIRsByLanguage
+                        }),
+                    maxRetries: REGISTER_MAX_RETRIES,
+                    baseDelayMs: REGISTER_BASE_DELAY_MS,
+                    jitterFactor: REGISTER_JITTER_FACTOR,
+                    isRetryable: isTransientError,
+                    logger: context.logger,
+                    label: `registerApiDefinition failed for ${effectiveApiName}`
+                });
+            } catch (error) {
+                const errorDetails = extractErrorDetails(error);
                 context.logger.error(
-                    `FDR registerApiDefinition failed after ${REGISTER_MAX_RETRIES + 1} attempts. ` +
-                        `Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                    `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
                 );
                 if (apiName != null) {
                     return context.failAndThrow(
