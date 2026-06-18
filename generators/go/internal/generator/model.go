@@ -1791,6 +1791,18 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 		return nil
 	}
 
+	// A named alias whose underlying type is nullable is already rendered as a
+	// pointer in its alias definition (e.g. `type Foo = *string` or
+	// `type Foo = *time.Time`). Wrapping it in any number of optional/nullable
+	// layers must not add a second pointer, otherwise we emit an invalid double
+	// pointer (e.g. **string) that doesn't match the single pointer produced
+	// elsewhere (setters, snippets, and the date marshal/unmarshal helpers). This
+	// also covers nested shapes like optional<nullable<named>>.
+	if resolvesToPointerNamedAlias(optionalOrNullable, c.types, c.scope, c.baseImportPath, c.importPath) {
+		c.value = value
+		return nil
+	}
+
 	// Collapse optional<nullable<...>> or nullable<optional<...>> into a single optional<...>.
 	// We can assume there aren't arbitrary depth nestings. The node being visited is optional or nullable, so we
 	// only need to check if its container is optional or nullable.
@@ -2519,6 +2531,59 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool, types map[common.Ty
 		return maybeDate(optionalOrNullableContainer, true, types)
 	}
 	return nil
+}
+
+// isPointerNamedAlias reports whether the given type reference is a named alias
+// whose Go representation is already a pointer (e.g. `type Foo = *string` or
+// `type Foo = *time.Time`). These arise from nullable component schemas referenced
+// via `$ref`. Because the pointer is baked into the alias definition, callers that
+// wrap such an alias in an optional must not add a second pointer, which would
+// otherwise produce an invalid double pointer (e.g. **string) that doesn't match
+// the single pointer produced elsewhere (setters, snippets, and the date
+// marshal/unmarshal helpers). Alias chains are resolved recursively.
+//
+// Note: this intentionally only covers pointer-bodied aliases. Aliases to nil-able
+// containers (slices/maps) have a separate, pre-existing v1<->v2 disagreement about
+// whether the optional should add a pointer, and are left untouched here.
+func isPointerNamedAlias(
+	typeReference *ir.TypeReference,
+	types map[common.TypeId]*ir.TypeDeclaration,
+	scope *gospec.Scope,
+	baseImportPath string,
+	importPath string,
+) bool {
+	if typeReference == nil || typeReference.Named == nil {
+		return false
+	}
+	typeDeclaration := types[typeReference.Named.TypeId]
+	if typeDeclaration == nil || typeDeclaration.Shape.Alias == nil {
+		return false
+	}
+	aliasOf := typeDeclaration.Shape.Alias.AliasOf
+	if isPointerNamedAlias(aliasOf, types, scope, baseImportPath, importPath) {
+		return true
+	}
+	return strings.HasPrefix(typeReferenceToGoType(aliasOf, types, scope, baseImportPath, importPath, false), "*")
+}
+
+// resolvesToPointerNamedAlias reports whether the given type reference is a
+// pointer-bodied named alias (see isPointerNamedAlias), drilling through any
+// optional/nullable wrapper layers. This handles nested shapes such as
+// optional<nullable<named>> where the named alias is the innermost type.
+func resolvesToPointerNamedAlias(
+	typeReference *ir.TypeReference,
+	types map[common.TypeId]*ir.TypeDeclaration,
+	scope *gospec.Scope,
+	baseImportPath string,
+	importPath string,
+) bool {
+	if isPointerNamedAlias(typeReference, types, scope, baseImportPath, importPath) {
+		return true
+	}
+	if inner := getOptionalOrNullableContainer(typeReference); inner != nil {
+		return resolvesToPointerNamedAlias(inner, types, scope, baseImportPath, importPath)
+	}
+	return false
 }
 
 // maybeFormatStructTag returns the layout struct tag for [optional] date types.

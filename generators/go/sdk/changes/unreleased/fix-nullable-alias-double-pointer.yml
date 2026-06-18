@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated Go SDKs failing to compile when a nullable type defined via a
+    shared component schema (`$ref`) is used as an optional property. Such a schema
+    is rendered as a pointer alias (e.g. `type Foo = *string` or `type Foo =
+    *time.Time`), and the optional wrapper was adding a second pointer, producing an
+    invalid double pointer (e.g. `**string`) that did not match the single-pointer
+    setters, getters, and date marshal/unmarshal helpers. The optional wrapper now
+    leaves the pointer baked into the alias intact, including for nested shapes like
+    `optional<nullable<named>>`.
+  type: fix
