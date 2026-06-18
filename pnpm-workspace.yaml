@@ -277,3 +277,6 @@ overrides:
   esbuild: ^0.28.1
   yauzl: ^3.2.1
   "@opentelemetry/core": ">=2.8.0"
+  js-yaml: ">=4.2.0"
+patchedDependencies:
+  gray-matter@4.0.3: patches/gray-matter@4.0.3.patch
