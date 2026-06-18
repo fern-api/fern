@@ -232,7 +232,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             java.codeblock((writer) => {
                 writer.write("new ");
                 writer.writeNode(this.getFileStreamClassReference());
-                writer.write("(");
+                writer.write("(new ");
                 writer.writeNode(this.getByteArrayInputStreamClassReference());
                 writer.write("(");
                 writer.writeNode(java.TypeLiteral.string(content));
@@ -241,6 +241,25 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 writer.write(".UTF_8)))");
             })
         );
+    }
+
+    public getJavaIoFileFromString(content: string): java.TypeLiteral {
+        return java.TypeLiteral.reference(
+            java.codeblock((writer) => {
+                writer.write("new ");
+                writer.writeNode(this.getJavaIoFileClassReference());
+                writer.write("(");
+                writer.writeNode(java.TypeLiteral.string(content));
+                writer.write(")");
+            })
+        );
+    }
+
+    public getJavaIoFileClassReference(): java.ClassReference {
+        return java.classReference({
+            name: "File",
+            packageName: "java.io"
+        });
     }
 
     public getFileStreamClassReference(): java.ClassReference {
@@ -446,6 +465,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public shouldInlineFileProperties(): boolean {
         return this.customConfig?.["inline-file-properties"] ?? false;
+    }
+
+    public usesNullableAnnotation(): boolean {
+        return this.customConfig?.["use-nullable-annotation"] === true;
+    }
+
+    public usesOptionalNullable(): boolean {
+        return this.customConfig?.["collapse-optional-nullable"] === true;
     }
 
     private getPackageNameSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {

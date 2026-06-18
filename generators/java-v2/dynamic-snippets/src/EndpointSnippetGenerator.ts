@@ -688,8 +688,18 @@ export class EndpointSnippetGenerator {
                     if (isCollapsedOptionalNullable) {
                         return this.context.getOptionalNullableOf(convertedValue);
                     } else {
+                        // The generated client method accepts the body as a single Optional<T>
+                        // argument and therefore requires an explicit Optional.of(...). When the
+                        // body nests optional/nullable (e.g. optional<nullable<T>>), converting
+                        // body.value.value yields an Optional literal that renders without
+                        // Optional.of(...), and wrapping it again is deduped away. Convert the
+                        // fully unwrapped type so the explicit Optional.of(...) is preserved.
                         return java.TypeLiteral.optional({
-                            value: convertedValue,
+                            value: this.context.dynamicTypeLiteralMapper.convert({
+                                typeReference: stripOptionalAndNullable(body.value),
+                                value,
+                                as: "request"
+                            }),
                             useOf: true
                         });
                     }
@@ -966,7 +976,11 @@ export class EndpointSnippetGenerator {
         filePropertyInfo: FilePropertyInfo;
     }): java.BuilderParameter[] {
         if (this.context.shouldInlineFileProperties()) {
-            return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+            // Body properties are emitted before file properties so that the snippet's builder call
+            // follows the generated staged-builder order. The dynamic IR does not expose whether a
+            // file is optional, so file builder parameters carry a concrete (non-optional) value and
+            // would otherwise be treated as required and ordered ahead of a required body property.
+            return [...filePropertyInfo.bodyPropertyFields, ...filePropertyInfo.fileFields];
         }
         return filePropertyInfo.bodyPropertyFields;
     }

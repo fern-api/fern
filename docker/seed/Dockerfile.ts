@@ -24,7 +24,7 @@ RUN git config --global user.email "build@example.com" && \
     CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
     ls -la /out/tsgolint
 
-FROM node:24.16.0-trixie-slim
+FROM node:24.17.0-trixie-slim
 
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
