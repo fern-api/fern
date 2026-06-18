@@ -73,6 +73,10 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
+const REGISTER_MAX_RETRIES = 3;
+const REGISTER_BASE_DELAY_MS = 1_000;
+const REGISTER_JITTER_FACTOR = 0.5;
+
 /**
  * Sanitizes a preview ID to be valid in a DNS subdomain label.
  * This MUST match the sanitizePreviewId in generateDocsWorkspace.ts and the
@@ -445,8 +449,7 @@ export async function publishDocs({
                 }
             }
 
-            const REGISTER_MAX_RETRIES = 3;
-            const REGISTER_BASE_DELAY_MS = 1_000;
+            const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
 
             let response;
             let lastError: unknown;
@@ -455,21 +458,23 @@ export async function publishDocs({
                 try {
                     response = await fdr.api.register.registerApiDefinition({
                         orgId: CjsFdrSdk.OrgId(organization),
-                        apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
+                        apiId: CjsFdrSdk.ApiId(effectiveApiName),
                         definition: apiDefinition,
                         dynamicIRs: dynamicIRsByLanguage
                     });
                     break;
                 } catch (error) {
                     lastError = error;
-                    if (attempt < REGISTER_MAX_RETRIES) {
-                        const delayMs = REGISTER_BASE_DELAY_MS * 2 ** attempt;
-                        context.logger.warn(
-                            `registerApiDefinition failed for ${apiName ?? "unknown"} ` +
-                                `(attempt ${attempt + 1}/${REGISTER_MAX_RETRIES + 1}), retrying in ${delayMs}ms...`
-                        );
-                        await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
+                    if (!isTransientError(error) || attempt >= REGISTER_MAX_RETRIES) {
+                        break;
                     }
+                    const jitter = 1 + (Math.random() - 0.5) * REGISTER_JITTER_FACTOR;
+                    const delayMs = Math.round(REGISTER_BASE_DELAY_MS * 2 ** attempt * jitter);
+                    context.logger.warn(
+                        `registerApiDefinition failed for ${effectiveApiName} ` +
+                            `(attempt ${attempt + 1}/${REGISTER_MAX_RETRIES + 1}), retrying in ${delayMs}ms...`
+                    );
+                    await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
                 }
             }
 
@@ -1994,6 +1999,22 @@ function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string
         requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
         styleInstructions
     };
+}
+
+/**
+ * Returns true when the error looks transient and is worth retrying
+ * (no HTTP status, 429, or 5xx). Fails fast on client errors like
+ * 400 (bad request), 401 (auth), 403 (forbidden).
+ */
+function isTransientError(error: unknown): boolean {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+    const status = (errorObj?.statusCode ?? content?.statusCode) as number | undefined;
+
+    if (status == null) {
+        return true;
+    }
+    return status === 429 || status >= 500;
 }
 
 /**
