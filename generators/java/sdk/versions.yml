@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.5
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation for the `use-nullable-annotation` and
+        `collapse-optional-nullable` configurations.
+
+        - Dynamic snippets now honor these config flags when emitting nullable and
+          optional values, so a nullable property rendered as a raw (non-`Optional`)
+          value no longer produces type mismatches such as
+          `Email cannot be converted to Nullable<Email>`.
+        - Staged-builder method calls in snippets are now ordered correctly: required
+          stages first, then the final-stage (optional, nullable, and collection)
+          properties. Collections (`list`/`set`/`map`) are treated as final-stage
+          properties to match v1's staged builders.
+        - Builder setters on the default (non-staged) builder no longer emit a
+          spurious `@Override` annotation, which previously failed to compile for
+          nullable request properties (e.g. `FilterByRoleRequest`).
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
 - version: 4.10.4
   changelogEntry:
     - summary: |
