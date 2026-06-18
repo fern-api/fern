@@ -6,7 +6,7 @@ import Trace
     @Test func getLightweightProblems1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -59,7 +59,7 @@ import Trace
     @Test func getProblems1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -1172,7 +1172,7 @@ import Trace
     @Test func getLatestProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "problemId": "problemId",
@@ -1742,7 +1742,7 @@ import Trace
     @Test func getProblemVersion1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "problemId": "problemId",

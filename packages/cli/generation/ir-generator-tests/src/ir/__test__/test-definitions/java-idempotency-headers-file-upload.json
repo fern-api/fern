@@ -101,6 +101,7 @@
                     "id": "endpoint_service.upload",
                     "name": "upload",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

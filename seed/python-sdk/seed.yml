@@ -499,8 +499,3 @@ scripts:
         - poetry run pytest -rP .
         - poetry install --extras aiohttp
         - poetry run pytest -rP -n auto -m aiohttp .
-allowedFailures:
-  - examples:legacy-wire-tests
-  - oauth-client-credentials-custom
-  - unions:union-naming-v1-wire-tests
-

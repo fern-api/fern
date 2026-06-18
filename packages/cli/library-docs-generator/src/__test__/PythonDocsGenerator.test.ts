@@ -109,7 +109,7 @@ describe("generate()", () => {
         expect(result.navigation).toEqual([]);
     });
 
-    it("rootPageId uses slug + root module name", () => {
+    it("rootPageId uses slug + root module name for leaf root", () => {
         const ir = makeIr(
             makeModule({
                 name: "nemo_rl",
@@ -121,6 +121,27 @@ describe("generate()", () => {
         const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Ref" });
 
         expect(result.rootPageId).toBe("reference/python/nemo_rl.mdx");
+    });
+
+    it("rootPageId uses index.mdx when root has submodules", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "nemo_rl",
+                path: "nemo_rl",
+                functions: [makeFunction({ name: "f", path: "nemo_rl.f" })],
+                submodules: [
+                    makeModule({
+                        name: "utils",
+                        path: "nemo_rl.utils",
+                        functions: [makeFunction({ name: "g", path: "nemo_rl.utils.g" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "reference/python", title: "Ref" });
+
+        expect(result.rootPageId).toBe("reference/python/nemo_rl/index.mdx");
     });
 
     it("writes files to correct directory structure", () => {
@@ -142,7 +163,7 @@ describe("generate()", () => {
         const result = generate({ ir, outputDir: tmpDir, slug: "docs", title: "Pkg" });
 
         expect(result.pageCount).toBe(2);
-        expect(existsSync(join(tmpDir, "docs/pkg.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "docs/pkg/index.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "docs/pkg/sub.mdx"))).toBe(true);
     });
 
@@ -212,7 +233,7 @@ describe("generate()", () => {
         );
 
         generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
-        const content = readFileSync(join(tmpDir, "ref/pkg.mdx"), "utf-8");
+        const content = readFileSync(join(tmpDir, "ref/pkg/index.mdx"), "utf-8");
 
         expect(content).toContain("## Package Contents");
     });
@@ -352,9 +373,53 @@ describe("generate()", () => {
 
         // 4 pages: a (submodules), b (submodules), c (submodules), deep (content)
         expect(result.pageCount).toBe(4);
-        expect(existsSync(join(tmpDir, "ref/a.mdx"))).toBe(true);
-        expect(existsSync(join(tmpDir, "ref/a/b.mdx"))).toBe(true);
-        expect(existsSync(join(tmpDir, "ref/a/b/c.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/b/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/b/c/index.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "ref/a/b/c/deep.mdx"))).toBe(true);
+    });
+
+    it("writes index.mdx for modules with submodules, plain .mdx for leaf modules", () => {
+        const ir = makeIr(
+            makeModule({
+                name: "pkg",
+                path: "pkg",
+                functions: [makeFunction({ name: "f", path: "pkg.f" })],
+                submodules: [
+                    makeModule({
+                        name: "adapters",
+                        path: "pkg.adapters",
+                        functions: [makeFunction({ name: "g", path: "pkg.adapters.g" })],
+                        submodules: [
+                            makeModule({
+                                name: "openai",
+                                path: "pkg.adapters.openai",
+                                classes: [makeClass({ name: "Client", path: "pkg.adapters.openai.Client" })]
+                            })
+                        ]
+                    }),
+                    makeModule({
+                        name: "utils",
+                        path: "pkg.utils",
+                        functions: [makeFunction({ name: "h", path: "pkg.utils.h" })]
+                    })
+                ]
+            })
+        );
+
+        const result = generate({ ir, outputDir: tmpDir, slug: "ref", title: "Pkg" });
+
+        // Root (has submodules) → index.mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/index.mdx"))).toBe(true);
+        // adapters (has submodules) → index.mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/adapters/index.mdx"))).toBe(true);
+        // openai (leaf) → plain .mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/adapters/openai.mdx"))).toBe(true);
+        // utils (leaf) → plain .mdx
+        expect(existsSync(join(tmpDir, "ref/pkg/utils.mdx"))).toBe(true);
+
+        // Sibling files should NOT exist
+        expect(existsSync(join(tmpDir, "ref/pkg.mdx"))).toBe(false);
+        expect(existsSync(join(tmpDir, "ref/pkg/adapters.mdx"))).toBe(false);
     });
 });

@@ -45,6 +45,7 @@ types:
       path-parameters: optional<map<string, HttpPathParameterSchema>>
       auth: optional<HttpEndpointAuth>
       idempotent: optional<boolean>
+      subtitle: optional<string>
       stream-condition: optional<string>
       request: optional<HttpRequest>
       response: optional<HttpResponseSchema>
@@ -185,6 +186,7 @@ types:
       type: optional<string>
       property: optional<string>
       status-code: optional<integer>
+      content-type: optional<string>
 
   HttpResponseStreamSchema:
     discriminated: false

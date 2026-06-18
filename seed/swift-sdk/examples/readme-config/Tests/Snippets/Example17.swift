@@ -8,6 +8,9 @@ enum Example17 {
             token: "<token>"
         )
 
-        _ = try await client.service.getMetadata(shallow: false)
+        _ = try await client.service.getMetadata(
+            xApiVersion: "0.0.1",
+            shallow: false
+        )
     }
 }

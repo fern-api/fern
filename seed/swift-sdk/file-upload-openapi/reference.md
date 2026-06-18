@@ -34,8 +34,8 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.fileUploadExample.uploadFile(request: .init(
-        file: .init(data: Data("".utf8)),
-        name: "name"
+        name: "name",
+        file: .init(data: Data("".utf8))
     ))
 }
 

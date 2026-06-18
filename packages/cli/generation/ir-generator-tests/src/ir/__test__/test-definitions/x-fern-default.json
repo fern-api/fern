@@ -140,6 +140,7 @@
                     "id": "endpoint_.test_get",
                     "name": "test_get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

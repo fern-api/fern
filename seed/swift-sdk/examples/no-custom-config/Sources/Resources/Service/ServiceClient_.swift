@@ -52,7 +52,7 @@ public final class ServiceClient_: Sendable {
         )
     }
 
-    public func refreshToken(request: RefreshTokenRequest?, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func refreshToken(request: RefreshTokenRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/refresh-token",

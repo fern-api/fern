@@ -8,8 +8,6 @@ enum Example20 {
             token: "<token>"
         )
 
-        _ = try await client.service.refreshToken(request: RefreshTokenRequest(
-
-        ))
+        _ = try await client.service.refreshToken()
     }
 }

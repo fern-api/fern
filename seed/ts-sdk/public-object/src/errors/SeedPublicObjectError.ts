@@ -28,7 +28,7 @@ export class SeedPublicObjectError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedPublicObjectError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

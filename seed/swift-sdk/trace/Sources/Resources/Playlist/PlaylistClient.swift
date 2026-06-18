@@ -61,7 +61,7 @@ public final class PlaylistClient: Sendable {
     /// Updates a playlist
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func updatePlaylist(serviceParam: String, playlistId: String, request: UpdatePlaylistRequest?, requestOptions: RequestOptions? = nil) async throws -> Playlist? {
+    public func updatePlaylist(serviceParam: String, playlistId: String, request: UpdatePlaylistRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> Playlist? {
         return try await httpClient.performRequest(
             method: .put,
             path: "/v2/playlist/\(serviceParam)/\(playlistId)",

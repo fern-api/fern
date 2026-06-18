@@ -1,0 +1,63 @@
+# GraphQL schema to test namespace type handling.
+# AccountMutations has all fields with arguments, so it qualifies as a namespace type.
+# Its fields should be promoted to top-level operations and AccountMutations itself
+# should NOT appear in the types registry.
+
+"""
+An account in the system.
+"""
+type Account {
+  """
+  Unique identifier.
+  """
+  id: ID!
+
+  """
+  Account name.
+  """
+  name: String!
+
+  """
+  Account email.
+  """
+  email: String!
+}
+
+"""
+Namespace grouping for account mutations.
+All fields have arguments — this makes it a namespace type.
+"""
+type AccountMutations {
+  """
+  Create an account.
+  """
+  create(
+    """Display name for the account."""
+    name: String!
+
+    """Contact email address."""
+    email: String!
+  ): Account!
+
+  """
+  Delete an account by ID.
+  """
+  delete(
+    """ID of the account to delete."""
+    id: ID!
+  ): Boolean!
+}
+
+type Mutation {
+  """
+  Account-related mutations (namespace — no args on this field).
+  """
+  account: AccountMutations!
+}
+
+type Query {
+  """
+  Get an account by ID.
+  """
+  account(id: ID!): Account
+}

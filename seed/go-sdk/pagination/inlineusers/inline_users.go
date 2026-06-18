@@ -1219,12 +1219,12 @@ func (p *Page) String() string {
 
 var (
 	userFieldName = big.NewInt(1 << 0)
-	userFieldId   = big.NewInt(1 << 1)
+	userFieldID   = big.NewInt(1 << 1)
 )
 
 type User struct {
 	Name string `json:"name" url:"name"`
-	Id   int    `json:"id" url:"id"`
+	ID   int    `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1240,11 +1240,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() int {
+func (u *User) GetID() int {
 	if u == nil {
 		return 0
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
@@ -1268,11 +1268,11 @@ func (u *User) SetName(name string) {
 	u.require(userFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id int) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id int) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {

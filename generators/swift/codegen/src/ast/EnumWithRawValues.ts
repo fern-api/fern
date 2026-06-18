@@ -1,4 +1,4 @@
-import { escapeSwiftStringLiteral, isReservedKeyword } from "../syntax/index.js";
+import { escapeReservedKeyword, escapeSwiftStringLiteralContent } from "../syntax/index.js";
 import { AccessLevel } from "./AccessLevel.js";
 import { AstNode, Writer } from "./core/index.js";
 import { DocComment } from "./DocComment.js";
@@ -44,7 +44,7 @@ export class EnumWithRawValues extends AstNode {
             writer.write(this.accessLevel);
             writer.write(" ");
         }
-        writer.write(`enum ${this.name}`);
+        writer.write(`enum ${escapeReservedKeyword(this.name)}`);
         this.conformances.forEach((conformance, index) => {
             if (index === 0) {
                 writer.write(": ");
@@ -65,14 +65,10 @@ export class EnumWithRawValues extends AstNode {
                 case_.docs.write(writer);
             }
             writer.write("case ");
-            if (isReservedKeyword(case_.unsafeName)) {
-                writer.write(`\`${case_.unsafeName}\``);
-            } else {
-                writer.write(case_.unsafeName);
-            }
+            writer.write(escapeReservedKeyword(case_.unsafeName));
             if (case_.rawValue !== case_.unsafeName) {
                 writer.write(" = ");
-                writer.write(`"${escapeSwiftStringLiteral(case_.rawValue)}"`);
+                writer.write(`"${escapeSwiftStringLiteralContent(case_.rawValue)}"`);
             }
             writer.newLine();
         });

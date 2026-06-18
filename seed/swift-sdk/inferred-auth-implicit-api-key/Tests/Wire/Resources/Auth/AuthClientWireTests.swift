@@ -6,7 +6,7 @@ import InferredAuthImplicitApiKey
     @Test func getToken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "access_token": "access_token",
@@ -27,7 +27,10 @@ import InferredAuthImplicitApiKey
             expiresIn: 1,
             scope: Optional("scope")
         )
-        let response = try await client.auth.getToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.auth.getToken(
+            apiKey: "api_key",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

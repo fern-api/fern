@@ -28,7 +28,7 @@ export class SeedNullableOptionalError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "SeedNullableOptionalError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

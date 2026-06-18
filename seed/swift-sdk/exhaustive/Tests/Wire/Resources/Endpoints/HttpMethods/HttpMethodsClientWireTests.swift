@@ -6,7 +6,7 @@ import Exhaustive
     @Test func testGet1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -28,7 +28,7 @@ import Exhaustive
     @Test func testPost1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -92,7 +92,7 @@ import Exhaustive
     @Test func testPut1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -157,7 +157,7 @@ import Exhaustive
     @Test func testPatch1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -237,7 +237,7 @@ import Exhaustive
     @Test func testDelete1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8

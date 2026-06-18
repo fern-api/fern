@@ -15,11 +15,11 @@ enum Example5 {
                 result: TestCaseResultWithStdout(
                     result: TestCaseResult(
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         ),
                         actualResult: ActualResult.value(
                             VariableValue.integerValue(
-
+                                1
                             )
                         ),
                         passed: true
@@ -31,7 +31,7 @@ enum Example5 {
                         submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                         lineNumber: 1,
                         returnValue: DebugVariableValue.integerValue(
-
+                            1
                         ),
                         expressionLocation: ExpressionLocation(
                             start: 1,
@@ -46,14 +46,14 @@ enum Example5 {
                                     Scope(
                                         variables: [
                                             "variables": DebugVariableValue.integerValue(
-
+                                                1
                                             )
                                         ]
                                     ),
                                     Scope(
                                         variables: [
                                             "variables": DebugVariableValue.integerValue(
-
+                                                1
                                             )
                                         ]
                                     )
@@ -66,7 +66,7 @@ enum Example5 {
                         submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                         lineNumber: 1,
                         returnValue: DebugVariableValue.integerValue(
-
+                            1
                         ),
                         expressionLocation: ExpressionLocation(
                             start: 1,
@@ -81,14 +81,14 @@ enum Example5 {
                                     Scope(
                                         variables: [
                                             "variables": DebugVariableValue.integerValue(
-
+                                                1
                                             )
                                         ]
                                     ),
                                     Scope(
                                         variables: [
                                             "variables": DebugVariableValue.integerValue(
-
+                                                1
                                             )
                                         ]
                                     )

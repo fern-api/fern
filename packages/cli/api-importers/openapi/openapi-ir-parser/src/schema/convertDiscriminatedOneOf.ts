@@ -354,11 +354,12 @@ export function wrapDiscriminatedOneOf({
  * union's top level are excluded. This lets SDKs expose shared fields directly on
  * the union type instead of forcing a cast to a concrete variant.
  *
- * Properties that every variant already inherits through a shared `allOf $ref` parent
- * are also excluded: the parent schema is the single source of truth, and re-emitting
- * those properties on the union forces some generators (e.g. TypeScript) to declare a
- * synthesized base interface alongside the real parent, which can collide when the two
- * disagree on optionality.
+ * Properties that every variant inherits via a shared `allOf $ref` parent are also
+ * lifted: SDKs without structural typing (Go, C#, etc.) can only expose what the IR
+ * declares on the union itself, so omitting them would force a cast even when every
+ * variant truly has the property. Generators that synthesize a base interface
+ * alongside the real parent (e.g. TypeScript) are responsible for suppressing the
+ * duplicate at generation time to avoid TS2320 collisions.
  */
 function inferCommonPropertiesFromVariants({
     variants,
@@ -387,13 +388,6 @@ function inferCommonPropertiesFromVariants({
     if (firstVariantProps == null) {
         return [];
     }
-    const inheritedFromSharedParent = getPropertyNamesInheritedFromSharedAllOfRefParents({
-        variants,
-        context,
-        breadcrumbs,
-        source,
-        namespace
-    });
     const variantRequiredSets = variants.map((variant) =>
         getAllRequiredPropertyNames({ schema: variant, context, visited: new Set() })
     );
@@ -403,9 +397,6 @@ function inferCommonPropertiesFromVariants({
             continue;
         }
         if (existingPropertyNames.has(propertyName)) {
-            continue;
-        }
-        if (inheritedFromSharedParent.has(propertyName)) {
             continue;
         }
         let presentInAll = true;
@@ -473,103 +464,6 @@ function getAllRequiredPropertyNames({
         const childRequired = getAllRequiredPropertyNames({ schema: allOfElement, context, visited });
         for (const name of childRequired) {
             result.add(name);
-        }
-    }
-    return result;
-}
-
-/**
- * Walks each variant's `allOf` chain (following `$ref`s transitively) and returns the set
- * of property names that come from `$ref` parents shared by *every* variant. These are the
- * properties each variant already inherits from a common ancestor — re-declaring them on
- * the union would cause the structural duplication described above.
- */
-function getPropertyNamesInheritedFromSharedAllOfRefParents({
-    variants,
-    context,
-    breadcrumbs,
-    source,
-    namespace
-}: {
-    variants: Array<OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
-    context: SchemaParserContext;
-    breadcrumbs: string[];
-    source: Source;
-    namespace: string | undefined;
-}): Set<string> {
-    if (variants.length === 0) {
-        return new Set();
-    }
-    const refsPerVariant = variants.map((variant) =>
-        collectTransitiveAllOfRefs({ schema: variant, context, visited: new Set() })
-    );
-    const firstSet = refsPerVariant[0];
-    if (firstSet == null || firstSet.size === 0) {
-        return new Set();
-    }
-    const inherited = new Set<string>();
-    for (const [refKey, refObject] of firstSet) {
-        const sharedAcrossAllVariants = refsPerVariant.every((s) => s.has(refKey));
-        if (!sharedAcrossAllVariants) {
-            continue;
-        }
-        const parentProperties = getAllProperties({
-            schema: refObject,
-            context,
-            breadcrumbs,
-            source,
-            namespace
-        });
-        for (const propertyName of Object.keys(parentProperties)) {
-            inherited.add(propertyName);
-        }
-    }
-    return inherited;
-}
-
-/**
- * Returns a map of `$ref` URI -> the `ReferenceObject` that points to it, for every
- * `$ref` reachable via `allOf` from the given schema (transitively). Inline `allOf`
- * elements are recursed into so a deeply-nested `$ref` still surfaces.
- */
-function collectTransitiveAllOfRefs({
-    schema,
-    context,
-    visited
-}: {
-    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-    context: SchemaParserContext;
-    visited: Set<string>;
-}): Map<string, OpenAPIV3.ReferenceObject> {
-    const result = new Map<string, OpenAPIV3.ReferenceObject>();
-    let resolved: OpenAPIV3.SchemaObject;
-    if (isReferenceObject(schema)) {
-        if (visited.has(schema.$ref)) {
-            return result;
-        }
-        visited.add(schema.$ref);
-        resolved = context.resolveSchemaReference(schema);
-    } else {
-        resolved = schema;
-    }
-    for (const allOfElement of resolved.allOf ?? []) {
-        if (isReferenceObject(allOfElement)) {
-            if (!result.has(allOfElement.$ref)) {
-                result.set(allOfElement.$ref, allOfElement);
-            }
-            const nested = collectTransitiveAllOfRefs({ schema: allOfElement, context, visited });
-            for (const [k, v] of nested) {
-                if (!result.has(k)) {
-                    result.set(k, v);
-                }
-            }
-        } else {
-            const nested = collectTransitiveAllOfRefs({ schema: allOfElement, context, visited });
-            for (const [k, v] of nested) {
-                if (!result.has(k)) {
-                    result.set(k, v);
-                }
-            }
         }
     }
     return result;

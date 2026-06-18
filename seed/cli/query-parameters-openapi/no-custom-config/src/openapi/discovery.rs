@@ -323,7 +323,7 @@ impl Availability {
     /// Lowercase wire identifier matching the canonical Fern spelling
     /// (`alpha`, `beta`, `pre-release`, `preview`, `generally-available`,
     /// `deprecated`, `legacy`). Used for the `availability` field
-    /// surfaced in JSON help output.
+    /// surfaced in `--schema` output.
     pub fn as_str(self) -> &'static str {
         match self {
             Availability::Alpha => "alpha",
@@ -684,6 +684,14 @@ pub struct RestMethod {
     /// parser, never round-tripped through `RestMethod` serialization.
     #[serde(default, skip)]
     pub audiences: Vec<String>,
+    /// `true` when at least one `2xx` (or `2XX` wildcard) response declares
+    /// a content media type that is not JSON. Used at command-build time to
+    /// gate the `-o, --output PATH` flag: it's only meaningful for ops that
+    /// can return a binary body (audio, octet-stream, image, etc.) and
+    /// silently no-ops on pure-JSON ops, so the help surface hides it where
+    /// it would do nothing. Empty `responses` block → `false`.
+    #[serde(default, skip)]
+    pub has_binary_response: bool,
 }
 
 /// Per-operation pagination configuration, resolved from the
@@ -933,6 +941,11 @@ pub struct MethodParameter {
     pub enum_descriptions: Option<Vec<String>>,
     #[serde(default)]
     pub repeated: bool,
+    /// True for `oneOf/anyOf [string, array<string>]` unions where a single
+    /// value should be sent as a scalar string, not wrapped in a length-1
+    /// array. Pure `type: array` params leave this `false`.
+    #[serde(default)]
+    pub scalar_or_array: bool,
     pub minimum: Option<String>,
     pub maximum: Option<String>,
     #[serde(default)]

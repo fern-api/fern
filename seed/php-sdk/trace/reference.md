@@ -94,7 +94,7 @@ $client->admin->sendTestSubmissionUpdate(
     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     new TestSubmissionUpdate([
         'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-        'updateInfo' => TestSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission->value),
+        'updateInfo' => TestSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission),
     ]),
 );
 ```
@@ -199,7 +199,7 @@ $client->admin->sendWorkspaceSubmissionUpdate(
     'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     new WorkspaceSubmissionUpdate([
         'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-        'updateInfo' => WorkspaceSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission->value),
+        'updateInfo' => WorkspaceSubmissionUpdateInfo::running(RunningSubmissionState::QueueingSubmission),
     ]),
 );
 ```

@@ -42,6 +42,7 @@ public class AsyncRawBigunionClient {
     public CompletableFuture<SeedUnionsHttpResponse<BigUnion>> get(String id, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("bigunion")
                 .addPathSegment(id);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -91,9 +92,9 @@ public class AsyncRawBigunionClient {
     }
 
     public CompletableFuture<SeedUnionsHttpResponse<Boolean>> update(BigUnion request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("bigunion");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -153,6 +154,7 @@ public class AsyncRawBigunionClient {
             List<BigUnion> request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("bigunion")
                 .addPathSegments("many");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {

@@ -139,6 +139,10 @@ export function buildEndpoint({
         convertedEndpoint["display-name"] = endpoint.summary;
     }
 
+    if (endpoint.subtitle != null) {
+        convertedEndpoint["subtitle"] = endpoint.subtitle;
+    }
+
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
     const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
     const authHeaderName = context.builder.getAuthHeaderName();
@@ -293,7 +297,8 @@ export function buildEndpoint({
                 convertedEndpoint.response = {
                     docs: textResponse.description ?? undefined,
                     type: "text",
-                    "status-code": textResponse.statusCode
+                    "status-code": textResponse.statusCode,
+                    "content-type": textResponse.contentType ?? undefined
                 };
             },
             _other: () => {

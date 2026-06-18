@@ -143,6 +143,14 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 	}
 	rfc3339NanoErr := err
 
+	// Fall back to ISO 8601 with fractional seconds, without timezone (assume UTC).
+	parsedTime, err = time.Parse("2006-01-02T15:04:05.999999999", raw)
+	if err == nil {
+		parsedTime = parsedTime.UTC()
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+
 	// Fall back to ISO 8601 without timezone (assume UTC).
 	parsedTime, err = time.Parse("2006-01-02T15:04:05", raw)
 	if err == nil {
@@ -151,6 +159,38 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 	iso8601Err := err
+
+	// Fall back to space-separated datetime with fractional seconds and timezone offset.
+	parsedTime, err = time.Parse("2006-01-02 15:04:05.999999999Z07:00", raw)
+	if err == nil {
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+
+	// Fall back to space-separated datetime with timezone offset (e.g. "2025-02-15 10:30:00+00:00").
+	parsedTime, err = time.Parse("2006-01-02 15:04:05Z07:00", raw)
+	if err == nil {
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+	spaceTzErr := err
+
+	// Fall back to space-separated datetime with fractional seconds, no timezone (assume UTC).
+	parsedTime, err = time.Parse("2006-01-02 15:04:05.999999999", raw)
+	if err == nil {
+		parsedTime = parsedTime.UTC()
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+
+	// Fall back to space-separated datetime without timezone (assume UTC).
+	parsedTime, err = time.Parse("2006-01-02 15:04:05", raw)
+	if err == nil {
+		parsedTime = parsedTime.UTC()
+		*d = DateTime{t: &parsedTime}
+		return nil
+	}
+	spaceNoTzErr := err
 
 	// Fall back to date-only format.
 	parsedTime, err = time.Parse("2006-01-02", raw)
@@ -161,5 +201,5 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 	}
 	dateOnlyErr := err
 
-	return fmt.Errorf("unable to parse datetime string %q: tried RFC3339Nano (%v), ISO8601 (%v), date-only (%v)", raw, rfc3339NanoErr, iso8601Err, dateOnlyErr)
+	return fmt.Errorf("unable to parse datetime string %q: tried RFC3339Nano (%v), ISO8601 (%v), space-separated with tz (%v), space-separated (%v), date-only (%v)", raw, rfc3339NanoErr, iso8601Err, spaceTzErr, spaceNoTzErr, dateOnlyErr)
 }

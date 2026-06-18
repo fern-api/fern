@@ -2355,6 +2355,16 @@
               "type": "null"
             }
           ]
+        },
+        "content-type": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -3077,6 +3087,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
