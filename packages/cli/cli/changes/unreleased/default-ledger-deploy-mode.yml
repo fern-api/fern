@@ -1,3 +1,7 @@
 - summary: |
-    Default docs deploy mode is now "ledger". Set FERN_DOCS_DEPLOY_MODE=legacy to opt in to the legacy flow.
+    Default docs deploy mode is now "ledger" for faster, incremental docs
+    deployments. To take advantage of this, bump the `version` field in your
+    `fern/fern.config.json` to this release or later — the CLI auto-redirects
+    to the pinned version, so older pins will not pick up the new default.
+    Set `FERN_DOCS_DEPLOY_MODE=legacy` to opt back in to the legacy flow.
   type: feat
