@@ -393,8 +393,6 @@ allowedFailures:
   - exhaustive:local-files
   - java-inline-types:no-wrapped-aliases
   - oauth-client-credentials-custom
-  - request-parameters
-  - streaming-parameter
   - inferred-auth-implicit-reference
 
   # Generated raw client / publish fixtures fail to compile in CI
@@ -415,10 +413,6 @@ allowedFailures:
 
   # Bug with how java-sdk creates nightly balanced files
   - java-pagination-deep-cursor-path
-
-  # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
-  - file-upload:inline-file-properties
-
 
   # Optional wire tests have snippet generation bug with optional(nullable(T))
   # Snippet generator doesn't wrap value in Optional.of() for optional request bodies

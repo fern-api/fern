@@ -1065,9 +1065,7 @@ public final class BuilderGenerator {
                     enrichedProperty.enrichedObjectProperty.docs().get()));
         }
 
-        if (isOverridden) {
-            interfaceSetterConsumer.accept(interfaceSetter.build());
-        }
+        interfaceSetterConsumer.accept(interfaceSetter.build());
 
         MethodSpec.Builder implSetter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
@@ -1130,9 +1128,7 @@ public final class BuilderGenerator {
                     enrichedProperty.enrichedObjectProperty.docs().get()));
         }
 
-        if (isOverridden) {
-            interfaceSetterConsumer.accept(interfaceSetter.build());
-        }
+        interfaceSetterConsumer.accept(interfaceSetter.build());
 
         MethodSpec.Builder implSetter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)

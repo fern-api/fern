@@ -36,10 +36,32 @@ export class DynamicTypeMapper {
                 }
                 return this.convertNamed({ named });
             }
-            case "optional":
-                return this.convertOptional({ optional: args.typeReference });
-            case "nullable":
-                return this.convertNullable({ nullable: args.typeReference });
+            case "optional": {
+                const inner = args.typeReference.value;
+                // collapse-optional-nullable: optional<nullable<X>> / optional<optional<X>> collapse to OptionalNullable<X>.
+                if (this.context.usesOptionalNullable() && (inner.type === "nullable" || inner.type === "optional")) {
+                    return java.Type.generic(this.context.getOptionalNullableClassReference(), [
+                        this.convert({ typeReference: inner.value })
+                    ]);
+                }
+                return java.Type.optional(this.convert({ typeReference: inner }));
+            }
+            case "nullable": {
+                const inner = args.typeReference.value;
+                // use-nullable-annotation: nullable<X> is rendered as the raw type X (annotated `@Nullable`).
+                if (this.context.usesNullableAnnotation()) {
+                    return this.convert({ typeReference: inner });
+                }
+                // collapse-optional-nullable: nullable<X> is rendered as OptionalNullable<X>;
+                // nullable<optional<X>> / nullable<nullable<X>> collapse into a single OptionalNullable<X>.
+                if (this.context.usesOptionalNullable()) {
+                    const collapsed = inner.type === "optional" || inner.type === "nullable" ? inner.value : inner;
+                    return java.Type.generic(this.context.getOptionalNullableClassReference(), [
+                        this.convert({ typeReference: collapsed })
+                    ]);
+                }
+                return java.Type.optional(this.convert({ typeReference: inner }));
+            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
@@ -49,45 +71,6 @@ export class DynamicTypeMapper {
             default:
                 assertNever(args.typeReference);
         }
-    }
-
-    private usesOptionalNullable(): boolean {
-        return this.context.customConfig?.["collapse-optional-nullable"] === true;
-    }
-
-    private shouldUseNullableAnnotation(): boolean {
-        return this.context.customConfig?.["use-nullable-annotation"] === true;
-    }
-
-    private optionalNullableOf(inner: FernIr.dynamic.TypeReference): java.Type {
-        return java.Type.generic(this.context.getOptionalNullableClassReference(), [
-            this.convert({ typeReference: inner })
-        ]);
-    }
-
-    private convertNullable({ nullable }: { nullable: FernIr.dynamic.TypeReference.Nullable }): java.Type {
-        const inner = nullable.value;
-        if (this.usesOptionalNullable()) {
-            // nullable<optional<U>> / nullable<nullable<U>> collapse into a single OptionalNullable<U>.
-            if (inner.type === "optional" || inner.type === "nullable") {
-                return this.optionalNullableOf(inner.value);
-            }
-            return this.optionalNullableOf(inner);
-        }
-        if (this.shouldUseNullableAnnotation()) {
-            // nullable<T> is represented as a bare (possibly @Nullable-annotated) T.
-            return this.convert({ typeReference: inner });
-        }
-        return java.Type.optional(this.convert({ typeReference: inner }));
-    }
-
-    private convertOptional({ optional }: { optional: FernIr.dynamic.TypeReference.Optional }): java.Type {
-        const inner = optional.value;
-        // optional<nullable<U>> / optional<optional<U>> collapse into a single OptionalNullable<U>.
-        if (this.usesOptionalNullable() && (inner.type === "nullable" || inner.type === "optional")) {
-            return this.optionalNullableOf(inner.value);
-        }
-        return java.Type.optional(this.convert({ typeReference: inner }));
     }
 
     private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): java.Type {

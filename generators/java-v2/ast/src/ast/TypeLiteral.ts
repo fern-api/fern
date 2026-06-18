@@ -49,11 +49,13 @@ interface Builder {
 export interface BuilderParameter {
     name: string;
     value: TypeLiteral;
-    // Optional schema-based hint indicating whether the property is optional/nullable (and thus
-    // non-required in a staged builder). When provided, this takes precedence over inferring
-    // optionality from the rendered value, which can be misleading (e.g. a nullable field may
-    // render as a bare value or as OptionalNullable depending on config).
-    isOptional?: boolean;
+    /**
+     * Whether this property is a required stage in the generated staged builder. When set, it takes
+     * precedence over inferring required-ness from the emitted value. This matters because a nullable
+     * property may be emitted as a raw (non-Optional) value yet still belong on the builder's final
+     * stage rather than the required staged chain.
+     */
+    isRequired?: boolean;
 }
 
 interface Bytes {
@@ -531,12 +533,12 @@ export class TypeLiteral extends AstNode {
     }
 
     public orderBuilderParameters(parameters: java.BuilderParameter[]): java.BuilderParameter[] {
-        const hasRequiredFields = parameters.some((p) => !this.isParameterOptional(p) && !this.isCollection(p.value));
+        const hasRequiredFields = parameters.some((p) => this.isRequiredBuilderParameter(p));
 
         if (!hasRequiredFields) {
             return parameters.sort((a, b) => {
-                const aIsOptional = this.isParameterOptional(a);
-                const bIsOptional = this.isParameterOptional(b);
+                const aIsOptional = a.value.isOptional();
+                const bIsOptional = b.value.isOptional();
 
                 if (aIsOptional && !bIsOptional) {
                     return 1;
@@ -550,8 +552,8 @@ export class TypeLiteral extends AstNode {
         }
 
         return parameters.sort((a, b) => {
-            const aIsNonRequired = this.isNonRequiredParameter(a);
-            const bIsNonRequired = this.isNonRequiredParameter(b);
+            const aIsNonRequired = !this.isRequiredBuilderParameter(a);
+            const bIsNonRequired = !this.isRequiredBuilderParameter(b);
 
             if (aIsNonRequired && !bIsNonRequired) {
                 return 1;
@@ -569,12 +571,15 @@ export class TypeLiteral extends AstNode {
         return internalType === "list" || internalType === "set" || internalType === "map";
     }
 
-    private isParameterOptional(parameter: java.BuilderParameter): boolean {
-        return parameter.isOptional ?? parameter.value.isOptional();
+    private isRequiredBuilderParameter(parameter: java.BuilderParameter): boolean {
+        if (parameter.isRequired != null) {
+            return parameter.isRequired;
+        }
+        return !this.isNonRequired(parameter.value);
     }
 
-    private isNonRequiredParameter(parameter: java.BuilderParameter): boolean {
-        return this.isParameterOptional(parameter) || this.isCollection(parameter.value);
+    private isNonRequired(value: TypeLiteral): boolean {
+        return value.isOptional() || this.isCollection(value);
     }
 
     private writeClass({ writer, class_: class_ }: { writer: Writer; class_: Class_ }): void {

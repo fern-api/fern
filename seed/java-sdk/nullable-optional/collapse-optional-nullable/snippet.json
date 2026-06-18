@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "ddd19a7",
+            "example_identifier": "4e7589e7",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "c4dc6872",
+            "example_identifier": "40eb8372",
             "id": {
                 "method": "POST",
                 "path": "/api/users",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "5779d2ad",
+            "example_identifier": "5e92705d",
             "id": {
                 "method": "PATCH",
                 "path": "/api/users/{userId}",
@@ -35,12 +35,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.nullableOptional.SeedNullableOptionalClient;\nimport com.seed.nullableOptional.core.OptionalNullable;\nimport com.seed.nullableOptional.resources.nullableoptional.types.Address;\nimport com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableOptionalClient client = SeedNullableOptionalClient\n            .builder()\n            .build();\n\n        client.nullableOptional().updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .username(\"username\")\n                .email(\n                    OptionalNullable.of(\"email\")\n                )\n                .phone(\"phone\")\n                .address(\n                    OptionalNullable.of(\n                        Address\n                            .builder()\n                            .street(\"street\")\n                            .zipCode(\"zipCode\")\n                            .city(\n                                OptionalNullable.of(\"city\")\n                            )\n                            .state(\"state\")\n                            .country(\n                                OptionalNullable.of(\"country\")\n                            )\n                            .buildingId(\n                                OptionalNullable.of(\"buildingId\")\n                            )\n                            .tenantId(\"tenantId\")\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.nullableOptional.SeedNullableOptionalClient;\nimport com.seed.nullableOptional.core.OptionalNullable;\nimport com.seed.nullableOptional.resources.nullableoptional.types.Address;\nimport com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableOptionalClient client = SeedNullableOptionalClient\n            .builder()\n            .build();\n\n        client.nullableOptional().updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .username(\"username\")\n                .email(\n                    OptionalNullable.of(\"email\")\n                )\n                .phone(\"phone\")\n                .address(\n                    OptionalNullable.of(\n                        Address\n                            .builder()\n                            .street(\"street\")\n                            .zipCode(\"zipCode\")\n                            .city(\n                                OptionalNullable.of(\"city\")\n                            )\n                            .state(\"state\")\n                            .country(\n                                OptionalNullable.of(\"country\")\n                            )\n                            .buildingId(\n                                OptionalNullable.of(\"buildingId\")\n                            )\n                            .tenantId(\"tenantId\")\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.nullableOptional.SeedNullableOptionalClient;\nimport com.seed.nullableOptional.core.OptionalNullable;\nimport com.seed.nullableOptional.resources.nullableoptional.types.Address;\nimport com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableOptionalClient client = SeedNullableOptionalClient\n            .builder()\n            .build();\n\n        client.nullableOptional().updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .email(\n                    OptionalNullable.of(\"email\")\n                )\n                .address(\n                    OptionalNullable.of(\n                        Address\n                            .builder()\n                            .street(\"street\")\n                            .zipCode(\"zipCode\")\n                            .city(\n                                OptionalNullable.of(\"city\")\n                            )\n                            .state(\"state\")\n                            .country(\n                                OptionalNullable.of(\"country\")\n                            )\n                            .buildingId(\n                                OptionalNullable.of(\"buildingId\")\n                            )\n                            .tenantId(\"tenantId\")\n                            .build()\n                    )\n                )\n                .username(\"username\")\n                .phone(\"phone\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.nullableOptional.SeedNullableOptionalClient;\nimport com.seed.nullableOptional.core.OptionalNullable;\nimport com.seed.nullableOptional.resources.nullableoptional.types.Address;\nimport com.seed.nullableOptional.resources.nullableoptional.types.UpdateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNullableOptionalClient client = SeedNullableOptionalClient\n            .builder()\n            .build();\n\n        client.nullableOptional().updateUser(\n            \"userId\",\n            UpdateUserRequest\n                .builder()\n                .email(\n                    OptionalNullable.of(\"email\")\n                )\n                .address(\n                    OptionalNullable.of(\n                        Address\n                            .builder()\n                            .street(\"street\")\n                            .zipCode(\"zipCode\")\n                            .city(\n                                OptionalNullable.of(\"city\")\n                            )\n                            .state(\"state\")\n                            .country(\n                                OptionalNullable.of(\"country\")\n                            )\n                            .buildingId(\n                                OptionalNullable.of(\"buildingId\")\n                            )\n                            .tenantId(\"tenantId\")\n                            .build()\n                    )\n                )\n                .username(\"username\")\n                .phone(\"phone\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "6cfc74b8",
+            "example_identifier": "38c1e988",
             "id": {
                 "method": "GET",
                 "path": "/api/users",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "15583b2d",
+            "example_identifier": "11bca12d",
             "id": {
                 "method": "GET",
                 "path": "/api/users/search",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "7d4bc061",
+            "example_identifier": "45a14ef1",
             "id": {
                 "method": "POST",
                 "path": "/api/profiles/complex",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "264ae274",
+            "example_identifier": "ed875da4",
             "id": {
                 "method": "GET",
                 "path": "/api/profiles/complex/{profileId}",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "ecef32fb",
+            "example_identifier": "2474c2eb",
             "id": {
                 "method": "PATCH",
                 "path": "/api/profiles/complex/{profileId}",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "4611856c",
+            "example_identifier": "19badd7c",
             "id": {
                 "method": "POST",
                 "path": "/api/test/deserialization",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "13a3ede5",
+            "example_identifier": "ecf32c35",
             "id": {
                 "method": "GET",
                 "path": "/api/users/filter",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "c47e0b0b",
+            "example_identifier": "262de21b",
             "id": {
                 "method": "GET",
                 "path": "/api/users/{userId}/notifications",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "170d4110",
+            "example_identifier": "49248850",
             "id": {
                 "method": "PUT",
                 "path": "/api/users/{userId}/tags",
@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "a00d0f74",
+            "example_identifier": "b1ed1cc4",
             "id": {
                 "method": "POST",
                 "path": "/api/search",

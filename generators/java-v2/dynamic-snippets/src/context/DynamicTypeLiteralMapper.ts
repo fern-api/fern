@@ -29,32 +29,11 @@ export class DynamicTypeLiteralMapper {
     }
 
     private usesOptionalNullable(): boolean {
-        return this.context.customConfig?.["collapse-optional-nullable"] === true;
+        return this.context.usesOptionalNullable();
     }
 
-    private shouldUseNullableAnnotation(): boolean {
-        return this.context.customConfig?.["use-nullable-annotation"] === true;
-    }
-
-    // Whether an optional/nullable value should be treated as absent (i.e. not provided).
-    private isAbsentContainerValue(inner: FernIr.dynamic.TypeReference, value: unknown): boolean {
-        return (
-            value === undefined ||
-            (typeof value === "object" && value !== null && Object.keys(value).length === 0 && inner.type === "named")
-        );
-    }
-
-    private optionalEmpty(): java.TypeLiteral {
-        return java.TypeLiteral.reference(
-            java.invokeMethod({
-                on: java.classReference({
-                    name: "Optional",
-                    packageName: "java.util"
-                }),
-                method: "empty",
-                arguments_: []
-            })
-        );
+    private usesNullableAnnotation(): boolean {
+        return this.context.usesNullableAnnotation();
     }
 
     private wrapInOptionalIfNotNop(
@@ -66,6 +45,33 @@ export class DynamicTypeLiteralMapper {
             return value;
         }
         if (isCollapsedOptionalNullable) {
+            return this.context.getOptionalNullableOf(value);
+        }
+        return java.TypeLiteral.optional({ value, useOf });
+    }
+
+    // Wraps an already-converted inner value for an `optional`/`nullable` wrapper type, honoring
+    // the `use-nullable-annotation` (raw, no wrapper) and `collapse-optional-nullable`
+    // (OptionalNullable<T>) configs. `propagatedCollapse` is set when an outer optional+nullable
+    // collapsed into this node.
+    private wrapNullableOrOptionalValue({
+        value,
+        wrapperType,
+        useOf,
+        propagatedCollapse
+    }: {
+        value: java.TypeLiteral;
+        wrapperType: "optional" | "nullable";
+        useOf: boolean;
+        propagatedCollapse: boolean;
+    }): java.TypeLiteral {
+        if (java.TypeLiteral.isNop(value)) {
+            return value;
+        }
+        if (wrapperType === "nullable" && this.usesNullableAnnotation()) {
+            return value;
+        }
+        if (propagatedCollapse || (this.usesOptionalNullable() && wrapperType === "nullable")) {
             return this.context.getOptionalNullableOf(value);
         }
         return java.TypeLiteral.optional({ value, useOf });
@@ -106,21 +112,84 @@ export class DynamicTypeLiteralMapper {
                 });
             }
             case "nullable":
-                return this.convertNullable({
-                    typeReference: args.typeReference,
+            case "optional": {
+                const wrapperType = args.typeReference.type;
+                const inner = args.typeReference.value;
+                if (
+                    args.value === undefined ||
+                    (typeof args.value === "object" &&
+                        args.value !== null &&
+                        Object.keys(args.value).length === 0 &&
+                        inner.type === "named")
+                ) {
+                    // In use-nullable-annotation mode a nullable is rendered as its raw type, so there
+                    // is no Optional/OptionalNullable wrapper to emit an "absent" sentinel for; fall
+                    // through and build the value directly below.
+                    if (!(wrapperType === "nullable" && this.usesNullableAnnotation())) {
+                        // Use OptionalNullable.absent() when the type collapses to OptionalNullable<T>
+                        // (a standalone nullable, a nested optional+nullable, or propagated from outer
+                        // recursion in collapse-optional-nullable mode).
+                        const isCollapsed =
+                            args.isCollapsedOptionalNullable ||
+                            (this.usesOptionalNullable() &&
+                                (wrapperType === "nullable" || inner.type === "optional" || inner.type === "nullable"));
+                        if (isCollapsed) {
+                            return this.context.getOptionalNullableAbsent();
+                        }
+                        return java.TypeLiteral.reference(
+                            java.invokeMethod({
+                                on: java.classReference({
+                                    name: "Optional",
+                                    packageName: "java.util"
+                                }),
+                                method: "empty",
+                                arguments_: []
+                            })
+                        );
+                    }
+                }
+
+                // When using OptionalNullable mode and we have nested optional/nullable,
+                // skip wrapping since they collapse into a single OptionalNullable<T>
+                if (this.usesOptionalNullable() && (inner.type === "optional" || inner.type === "nullable")) {
+                    return this.convert({
+                        typeReference: inner,
+                        value: args.value,
+                        as: args.as,
+                        inUndiscriminatedUnion: args.inUndiscriminatedUnion,
+                        isCollapsedOptionalNullable: true
+                    });
+                }
+
+                if (inner.type === "list") {
+                    const listLiteral = this.convertList({ list: inner.value, value: args.value });
+                    return this.wrapNullableOrOptionalValue({
+                        value: listLiteral,
+                        wrapperType,
+                        useOf: true,
+                        propagatedCollapse: args.isCollapsedOptionalNullable === true
+                    });
+                }
+
+                const convertedValue = this.convert({
+                    typeReference: inner,
                     value: args.value,
                     as: args.as,
-                    inUndiscriminatedUnion: args.inUndiscriminatedUnion,
-                    isCollapsedOptionalNullable: args.isCollapsedOptionalNullable
+                    inUndiscriminatedUnion: args.inUndiscriminatedUnion
                 });
-            case "optional":
-                return this.convertOptional({
-                    typeReference: args.typeReference,
-                    value: args.value,
-                    as: args.as,
-                    inUndiscriminatedUnion: args.inUndiscriminatedUnion,
-                    isCollapsedOptionalNullable: args.isCollapsedOptionalNullable
+                // TODO(amckinney): The Java generator produces Map<T, Optional<U>> whenever the value is an optional.
+                //
+                // This is difficult to use in practice - we should update this to unbox the map values and remove this
+                // flag.
+                // When in an undiscriminated union, we always use Optional.of() for optional types
+                const useOf = args.as === "mapValue" || args.inUndiscriminatedUnion === true;
+                return this.wrapNullableOrOptionalValue({
+                    value: convertedValue,
+                    wrapperType,
+                    useOf,
+                    propagatedCollapse: args.isCollapsedOptionalNullable === true
                 });
+            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
@@ -130,111 +199,6 @@ export class DynamicTypeLiteralMapper {
             default:
                 assertNever(args.typeReference);
         }
-    }
-
-    private convertOptional({
-        typeReference,
-        value,
-        as,
-        inUndiscriminatedUnion,
-        isCollapsedOptionalNullable
-    }: {
-        typeReference: FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable;
-        value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
-        inUndiscriminatedUnion?: boolean;
-        isCollapsedOptionalNullable?: boolean;
-    }): java.TypeLiteral {
-        const inner = typeReference.value;
-        if (this.isAbsentContainerValue(inner, value)) {
-            // Use OptionalNullable.absent() only when the type is truly a collapsed
-            // optional+nullable (either detected here or propagated from outer recursion).
-            const isCollapsed =
-                isCollapsedOptionalNullable === true ||
-                (this.usesOptionalNullable() && (inner.type === "optional" || inner.type === "nullable"));
-            return isCollapsed ? this.context.getOptionalNullableAbsent() : this.optionalEmpty();
-        }
-
-        if (inner.type === "list") {
-            const listLiteral = this.convertList({ list: inner.value, value });
-            return this.wrapInOptionalIfNotNop(listLiteral, true, isCollapsedOptionalNullable === true);
-        }
-
-        // When using OptionalNullable mode and we have nested optional/nullable,
-        // skip wrapping since they collapse into a single OptionalNullable<T>
-        if (this.usesOptionalNullable() && (inner.type === "optional" || inner.type === "nullable")) {
-            return this.convert({
-                typeReference: inner,
-                value,
-                as,
-                inUndiscriminatedUnion,
-                isCollapsedOptionalNullable: true
-            });
-        }
-
-        const convertedValue = this.convert({ typeReference: inner, value, as, inUndiscriminatedUnion });
-        // TODO(amckinney): The Java generator produces Map<T, Optional<U>> whenever the value is an optional.
-        //
-        // This is difficult to use in practice - we should update this to unbox the map values and remove this
-        // flag.
-        // When in an undiscriminated union, we always use Optional.of() for optional types
-        const useOf = as === "mapValue" || inUndiscriminatedUnion === true;
-        return this.wrapInOptionalIfNotNop(convertedValue, useOf, isCollapsedOptionalNullable === true);
-    }
-
-    private convertNullable({
-        typeReference,
-        value,
-        as,
-        inUndiscriminatedUnion,
-        isCollapsedOptionalNullable
-    }: {
-        typeReference: FernIr.dynamic.TypeReference.Nullable;
-        value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
-        inUndiscriminatedUnion?: boolean;
-        isCollapsedOptionalNullable?: boolean;
-    }): java.TypeLiteral {
-        const inner = typeReference.value;
-
-        // collapse-optional-nullable: nullable<T> is represented as OptionalNullable<T>, so values
-        // (including collection elements) are wrapped with OptionalNullable.of(...).
-        if (this.usesOptionalNullable()) {
-            if (this.isAbsentContainerValue(inner, value)) {
-                return this.context.getOptionalNullableAbsent();
-            }
-            // nullable<optional<U>> / nullable<nullable<U>> collapse into a single OptionalNullable<U>.
-            if (inner.type === "optional" || inner.type === "nullable") {
-                return this.convert({
-                    typeReference: inner,
-                    value,
-                    as,
-                    inUndiscriminatedUnion,
-                    isCollapsedOptionalNullable: true
-                });
-            }
-            if (inner.type === "list") {
-                const listLiteral = this.convertList({ list: inner.value, value });
-                return this.wrapInOptionalIfNotNop(listLiteral, true, true);
-            }
-            const convertedValue = this.convert({ typeReference: inner, value, as, inUndiscriminatedUnion });
-            return this.wrapInOptionalIfNotNop(convertedValue, true, true);
-        }
-
-        // use-nullable-annotation: nullable<T> is represented as a bare (possibly @Nullable-annotated) T,
-        // so values must NOT be wrapped in Optional/OptionalNullable.
-        if (this.shouldUseNullableAnnotation()) {
-            if (this.isAbsentContainerValue(inner, value)) {
-                return java.TypeLiteral.nop();
-            }
-            if (inner.type === "list") {
-                return this.convertList({ list: inner.value, value, as });
-            }
-            return this.convert({ typeReference: inner, value, as, inUndiscriminatedUnion });
-        }
-
-        // Default (legacy): nullable<T> is represented as Optional<T>, same handling as optional.
-        return this.convertOptional({ typeReference, value, as, inUndiscriminatedUnion, isCollapsedOptionalNullable });
     }
 
     private convertList({
@@ -254,46 +218,29 @@ export class DynamicTypeLiteralMapper {
             return java.TypeLiteral.nop();
         }
 
+        const isItemOptional = list.type === "optional" || list.type === "nullable";
+
         return java.TypeLiteral.list({
             valueType: this.context.dynamicTypeMapper.convert({ typeReference: list }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    return this.convertListItem({ list, value: v, as });
+                    if (isItemOptional && (list.type === "optional" || list.type === "nullable")) {
+                        const itemValue = this.convert({ typeReference: list.value, value: v, as });
+                        return this.wrapNullableOrOptionalValue({
+                            value: itemValue,
+                            wrapperType: list.type,
+                            useOf: true,
+                            propagatedCollapse: false
+                        });
+                    }
+                    return this.convert({ typeReference: list, value: v, as });
                 } finally {
                     this.context.errors.unscope();
                 }
             }),
             isParameter: true // For dynamic snippets, we're generating method parameters
         });
-    }
-
-    private convertListItem({
-        list,
-        value,
-        as
-    }: {
-        list: FernIr.dynamic.TypeReference;
-        value: unknown;
-        as?: DynamicTypeLiteralMapper.ConvertedAs;
-    }): java.TypeLiteral {
-        // Collection elements must use the explicit wrapper form (e.g. Optional.of(...)) since
-        // there is no builder overload to rely on for the element type.
-        if (list.type === "nullable") {
-            const itemValue = this.convert({ typeReference: list.value, value, as });
-            if (this.shouldUseNullableAnnotation()) {
-                return itemValue;
-            }
-            if (this.usesOptionalNullable()) {
-                return this.wrapInOptionalIfNotNop(itemValue, true, true);
-            }
-            return this.wrapInOptionalIfNotNop(itemValue, true);
-        }
-        if (list.type === "optional") {
-            const itemValue = this.convert({ typeReference: list.value, value, as });
-            return this.wrapInOptionalIfNotNop(itemValue, true);
-        }
-        return this.convert({ typeReference: list, value, as });
     }
 
     private convertLiteral({
@@ -553,8 +500,11 @@ export class DynamicTypeLiteralMapper {
                 }
             }
         }
-        // Re-sort all properties (including newly added defaults) to match schema declaration order.
-        // Java staged builders require method calls in the exact order defined by the schema.
+        // Re-sort all properties (including newly added defaults) into schema declaration order.
+        // Defaults for missing required properties are appended above, so without this a defaulted
+        // required property would render after user-provided ones. orderBuilderParameters later
+        // partitions required-before-optional with a stable sort, preserving this schema order
+        // within each group as required by Java staged builders.
         const paramOrderMap = new Map<string, number>();
         const declaredWireValues = new Set<string>();
         object_.properties.forEach((param, index) => {
@@ -590,12 +540,7 @@ export class DynamicTypeLiteralMapper {
                 builderParameters.push({
                     name: this.context.getMethodName(property.name.name),
                     value: convertedValue,
-                    // A property is non-required in the staged builder when it is optional or
-                    // nullable in the schema. This is independent of how the value renders (e.g.
-                    // a nullable field may render as a bare value under use-nullable-annotation or
-                    // as OptionalNullable under collapse-optional-nullable), so the schema is the
-                    // source of truth for builder-call ordering.
-                    isOptional: this.isOptionalOrNullable(property.typeReference)
+                    isRequired: this.isStagedBuilderProperty(property.typeReference)
                 });
             } finally {
                 this.context.errors.unscope();
@@ -609,7 +554,8 @@ export class DynamicTypeLiteralMapper {
                 if (rawValue != null) {
                     builderParameters.push({
                         name: "additionalProperty",
-                        value: java.TypeLiteral.raw(`"${this.escapeJavaString(key)}", ${rawValue}`)
+                        value: java.TypeLiteral.raw(`"${this.escapeJavaString(key)}", ${rawValue}`),
+                        isRequired: false
                     });
                 }
             }
@@ -623,24 +569,28 @@ export class DynamicTypeLiteralMapper {
     }
 
     /**
-     * Returns whether a property type is optional or nullable (resolving through aliases). Such
-     * properties are non-required in the generated staged builder, so the corresponding builder
-     * calls must follow the required ones regardless of how their values render.
+     * Returns true when a property becomes a required stage in v1's staged builder. v1 stages
+     * fields that are neither optional, nullable, nor collections (list/set/map); those are all
+     * exposed on the final stage instead. This intentionally resolves aliases itself because the
+     * shared `isOptional` helper does not treat an alias to an optional type as optional.
      */
-    private isOptionalOrNullable(typeReference: FernIr.dynamic.TypeReference): boolean {
+    private isStagedBuilderProperty(typeReference: FernIr.dynamic.TypeReference): boolean {
         switch (typeReference.type) {
             case "optional":
             case "nullable":
-                return true;
-            case "named": {
-                const resolved = this.context.resolveNamedType({ typeId: typeReference.value });
-                if (resolved != null && resolved.type === "alias") {
-                    return this.isOptionalOrNullable(resolved.typeReference);
-                }
+            case "list":
+            case "set":
+            case "map":
                 return false;
+            case "named": {
+                const resolvedType = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (resolvedType != null && resolvedType.type === "alias") {
+                    return this.isStagedBuilderProperty(resolvedType.typeReference);
+                }
+                return true;
             }
             default:
-                return false;
+                return true;
         }
     }
 

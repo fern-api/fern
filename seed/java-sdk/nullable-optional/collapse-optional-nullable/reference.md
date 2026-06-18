@@ -168,11 +168,9 @@ client.nullableOptional().updateUser(
     "userId",
     UpdateUserRequest
         .builder()
-        .username("username")
         .email(
             OptionalNullable.of("email")
         )
-        .phone("phone")
         .address(
             OptionalNullable.of(
                 Address
@@ -193,6 +191,8 @@ client.nullableOptional().updateUser(
                     .build()
             )
         )
+        .username("username")
+        .phone("phone")
         .build()
 );
 ```

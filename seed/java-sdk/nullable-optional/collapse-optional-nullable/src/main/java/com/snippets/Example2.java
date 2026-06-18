@@ -14,9 +14,7 @@ public class Example2 {
                 .updateUser(
                         "userId",
                         UpdateUserRequest.builder()
-                                .username("username")
                                 .email(OptionalNullable.of("email"))
-                                .phone("phone")
                                 .address(OptionalNullable.of(Address.builder()
                                         .street("street")
                                         .zipCode("zipCode")
@@ -26,6 +24,8 @@ public class Example2 {
                                         .buildingId(OptionalNullable.of("buildingId"))
                                         .tenantId("tenantId")
                                         .build()))
+                                .username("username")
+                                .phone("phone")
                                 .build());
     }
 }
