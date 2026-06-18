@@ -17,8 +17,15 @@ func nameAndWireValue(pascal string) *common.NameAndWireValue {
 	}
 }
 
+func primitiveProperty(pascal string, primitive common.PrimitiveTypeV1) *ir.ObjectProperty {
+	return &ir.ObjectProperty{
+		Name:      nameAndWireValue(pascal),
+		ValueType: &ir.TypeReference{Primitive: &ir.PrimitiveType{V1: primitive}},
+	}
+}
+
 func objectProperty(pascal string) *ir.ObjectProperty {
-	return &ir.ObjectProperty{Name: nameAndWireValue(pascal), ValueType: &ir.TypeReference{}}
+	return primitiveProperty(pascal, common.PrimitiveTypeV1String)
 }
 
 func literalObjectProperty(pascal string) *ir.ObjectProperty {
@@ -28,12 +35,16 @@ func literalObjectProperty(pascal string) *ir.ObjectProperty {
 	}
 }
 
-func objectTypeDeclaration(properties ...string) *ir.TypeDeclaration {
-	object := &ir.ObjectTypeDeclaration{}
-	for _, p := range properties {
-		object.Properties = append(object.Properties, objectProperty(p))
+func objectType(properties ...*ir.ObjectProperty) *ir.TypeDeclaration {
+	return &ir.TypeDeclaration{Shape: &ir.Type{Object: &ir.ObjectTypeDeclaration{Properties: properties}}}
+}
+
+func objectTypeDeclaration(propertyNames ...string) *ir.TypeDeclaration {
+	var properties []*ir.ObjectProperty
+	for _, name := range propertyNames {
+		properties = append(properties, objectProperty(name))
 	}
-	return &ir.TypeDeclaration{Shape: &ir.Type{Object: object}}
+	return objectType(properties...)
 }
 
 func samePropertiesAsObjectVariant(typeID common.TypeId) *ir.SingleUnionType {
@@ -125,6 +136,54 @@ func TestUnionInheritedBasePropertyNames(t *testing.T) {
 		}
 		if _, ok := got["Kind"]; ok {
 			t.Errorf("did not expect literal property Kind to be suppressed")
+		}
+	})
+
+	t.Run("does not suppress when a variant's same-named property has a different type", func(t *testing.T) {
+		// The delegating getter would be `GetName() string { ... return c.A.GetName() }`,
+		// but the variant's GetName() returns int — a type mismatch that would not compile.
+		mismatchTv := &typeVisitor{
+			dedupeUnionBaseProperties: true,
+			writer: &fileWriter{
+				types: map[common.TypeId]*ir.TypeDeclaration{
+					"A": objectType(primitiveProperty("Name", common.PrimitiveTypeV1Integer)),
+					"B": objectType(primitiveProperty("Name", common.PrimitiveTypeV1Integer)),
+				},
+			},
+		}
+		union := &ir.UnionTypeDeclaration{
+			BaseProperties: []*ir.ObjectProperty{primitiveProperty("Name", common.PrimitiveTypeV1String)},
+			Types: []*ir.SingleUnionType{
+				samePropertiesAsObjectVariant("A"),
+				samePropertiesAsObjectVariant("B"),
+			},
+		}
+		if got := mismatchTv.unionInheritedBasePropertyNames(union); len(got) != 0 {
+			t.Errorf("expected no suppression when base (string) and variant (int) types differ, got %v", got)
+		}
+	})
+
+	t.Run("does not suppress when a variant's same-named property is a literal", func(t *testing.T) {
+		// Base `Kind` is non-literal, but each variant's `Kind` is a literal whose getter is
+		// `Kind()` (no `Get` prefix); a delegating `Get<Name>()` would not compile.
+		literalVariantTv := &typeVisitor{
+			dedupeUnionBaseProperties: true,
+			writer: &fileWriter{
+				types: map[common.TypeId]*ir.TypeDeclaration{
+					"A": objectType(literalObjectProperty("Kind")),
+					"B": objectType(literalObjectProperty("Kind")),
+				},
+			},
+		}
+		union := &ir.UnionTypeDeclaration{
+			BaseProperties: []*ir.ObjectProperty{primitiveProperty("Kind", common.PrimitiveTypeV1String)},
+			Types: []*ir.SingleUnionType{
+				samePropertiesAsObjectVariant("A"),
+				samePropertiesAsObjectVariant("B"),
+			},
+		}
+		if got := literalVariantTv.unionInheritedBasePropertyNames(union); len(got) != 0 {
+			t.Errorf("expected no suppression when a variant's same-named property is a literal, got %v", got)
 		}
 	})
 
