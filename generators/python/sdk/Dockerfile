@@ -1,5 +1,5 @@
 # Stage 1: Copy Node.js from official image
-FROM node:24.16-trixie-slim AS node
+FROM node:24.17-trixie-slim AS node
 
 # Stage 2: Base Python image with dependencies
 # Pinned to the latest 3.13 patch release to pull in CPython security fixes
