@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.50.1
+  changelogEntry:
+    - summary: |
+        Bump js-yaml to 4.2.0 across all transitive dependencies to fix
+        CVE-2026-53550 (quadratic-complexity DoS in merge key handling).
+      type: chore
+  createdAt: "2026-06-18"
+  irVersion: 67
 - version: 5.50.0
   changelogEntry:
     - summary: |
