@@ -291,7 +291,8 @@ export class SdkGeneratorContext extends GeneratorContext {
             AsIsFiles.FileParameter,
             AsIsFiles.RawResponse,
             AsIsFiles.WithRawResponse,
-            AsIsFiles.WithRawResponseTask
+            AsIsFiles.WithRawResponseTask,
+            AsIsFiles.WithRawResponseStream
         ];
         files.push(AsIsFiles.Json.AdditionalProperties);
         if (this.hasGrpcEndpoints()) {

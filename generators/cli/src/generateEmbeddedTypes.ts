@@ -106,8 +106,23 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
     const { typesOutputDir, typesCrateName } = args;
     const crateName = typesCrateName.replace(/-/g, "_");
 
+    // Scan generated source files for reqwest::multipart usage (emitted
+    // by the model generator's FileUploadRequestGenerator).
+    const needsReqwest = await sourceFilesContain(path.join(typesOutputDir, "src"), "reqwest::multipart");
+
     // 1. Cargo.toml — minimal lib crate with serde derives and
     //    the extra deps required by the core serde helper modules.
+    const deps = [
+        'serde = { version = "1", features = ["derive"] }',
+        'serde_json = "1"',
+        'chrono = { version = "0.4", features = ["serde"] }',
+        'base64 = "0.22"',
+        'num-bigint = { version = "0.4", features = ["serde"] }',
+        'ordered-float = { version = "4.5", features = ["serde"] }'
+    ];
+    if (needsReqwest) {
+        deps.push('reqwest = { version = "0.12", features = ["multipart"], default-features = false }');
+    }
     const cargoToml = [
         "[package]",
         `name = "${crateName}"`,
@@ -118,12 +133,7 @@ async function patchTypesCrate(args: { typesOutputDir: string; typesCrateName: s
         "doctest = false",
         "",
         "[dependencies]",
-        'serde = { version = "1", features = ["derive"] }',
-        'serde_json = "1"',
-        'chrono = { version = "0.4", features = ["serde"] }',
-        'base64 = "0.22"',
-        'num-bigint = { version = "0.4", features = ["serde"] }',
-        'ordered-float = { version = "4.5", features = ["serde"] }',
+        ...deps,
         ""
     ].join("\n");
     await writeFile(path.join(typesOutputDir, "Cargo.toml"), cargoToml);
@@ -294,6 +304,32 @@ function resolveAsIsDir(): string {
             "Ensure `pnpm turbo run dist:cli --filter @fern-api/rust-model` has been run, " +
             "or that @fern-api/rust-base is installed in the workspace."
     );
+}
+
+/**
+ * Recursively check whether any `.rs` file under `dir` contains `needle`.
+ */
+async function sourceFilesContain(dir: string, needle: string): Promise<boolean> {
+    let entries;
+    try {
+        entries = await readdir(dir, { withFileTypes: true });
+    } catch (_e: unknown) {
+        return false;
+    }
+    for (const entry of entries) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+            if (await sourceFilesContain(full, needle)) {
+                return true;
+            }
+        } else if (entry.name.endsWith(".rs")) {
+            const content = await readFile(full, "utf-8");
+            if (content.includes(needle)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 /**

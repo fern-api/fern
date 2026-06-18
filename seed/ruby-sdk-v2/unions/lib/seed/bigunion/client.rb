@@ -25,7 +25,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{URI.encode_uri_component(params[:id].to_s)}",
+          path: "/bigunion/#{URI.encode_uri_component(params[:id].to_s)}",
           request_options: request_options
         )
         begin
@@ -56,7 +56,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "",
+          path: "/bigunion",
           body: Seed::Bigunion::Types::BigUnion.new(params).to_h,
           request_options: request_options
         )
@@ -86,7 +86,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/many",
+          path: "/bigunion/many",
           body: params,
           request_options: request_options
         )

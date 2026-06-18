@@ -1,0 +1,16 @@
+openapi: 3.1.0
+info:
+  title: Test text/csv response handling.
+  version: 1.0.0
+paths:
+  /export:
+    get:
+      operationId: exportCsv
+      summary: Export CSV
+      responses:
+        "200":
+          description: CSV export
+          content:
+            text/csv:
+              schema:
+                type: string

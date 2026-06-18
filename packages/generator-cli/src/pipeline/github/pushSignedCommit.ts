@@ -3,7 +3,6 @@ import type { ClonedRepository } from "@fern-api/github";
 import type { Octokit } from "@octokit/rest";
 
 import type { PipelineLogger } from "../PipelineLogger";
-import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./constants";
 
 const MAX_CONCURRENT_PUSH_RETRIES = 3;
 
@@ -35,8 +34,10 @@ export interface PushSignedCommitOptions {
     /**
      * Override the commit author and committer identity.
      *
-     * Omitted: `author` defaults to the Fern bot identity; `committer` is not sent, so
-     * GitHub fills it in from the authenticated installation and signs the commit.
+     * Omitted: neither `author` nor `committer` is sent, so GitHub fills both in from
+     * the authenticated installation (e.g. `fern-api[bot]` / the Fern bot noreply email)
+     * and signs the commit. Sending `author` alone is not enough: the Git Data API
+     * defaults `committer` to the provided `author`, which suppresses auto-signing.
      * Set: forces both `author` and `committer` to the provided identity — suppresses
      * auto-signing, but pins the committer for tooling that reads `git log --format=%cn`.
      */
@@ -81,20 +82,21 @@ export async function pushSignedCommit({
         tempRefPushed = true;
 
         for (let attempt = 0; attempt < MAX_CONCURRENT_PUSH_RETRIES; attempt++) {
-            // GitHub's web-flow signer keys off `committer`, not `author`. Omitting `committer`
-            // lets GitHub fill it in from the authenticated signing-capable principal (App
-            // installation, OAuth — never a PAT) and stamp the "Verified" signature. Always
-            // sending `author` keeps PR/`git log` attribution stable across every auth flavour.
-            const resolvedAuthor = author ?? { name: FERN_BOT_NAME, email: FERN_BOT_EMAIL };
-            const committerField = author != null ? { committer: author } : {};
+            // GitHub's web-flow signer keys off `committer`. The Git Data API defaults
+            // `committer` to `author` when `author` is provided, so sending `author` alone
+            // suppresses auto-signing. Omitting both lets GitHub fill them in from the
+            // authenticated signing-capable principal (App installation, OAuth — never a PAT)
+            // and stamp the "Verified" signature; the App's bot identity keeps the Fern bot
+            // noreply email, so attribution-based tooling (replay commit detection,
+            // findExistingUpdatablePR) still matches.
+            const identityFields = author != null ? { author, committer: author } : {};
             const { data: signedCommit } = await octokit.git.createCommit({
                 owner,
                 repo,
                 message,
                 tree: treeSha,
                 parents,
-                author: resolvedAuthor,
-                ...committerField
+                ...identityFields
             });
             const signedSha = signedCommit.sha;
 

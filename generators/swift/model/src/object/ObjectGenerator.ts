@@ -1,5 +1,5 @@
 import { getWireValue } from "@fern-api/base-generator";
-import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { sanitizeSwiftIdentifier, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -40,7 +40,7 @@ export class ObjectGenerator {
             symbol: this.symbol,
             constantPropertyDefinitions: [],
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
-                unsafeName: sanitizeSelf(this.context.caseConverter.camelUnsafe(p.name)),
+                unsafeName: sanitizeSwiftIdentifier(this.context.caseConverter.camelUnsafe(p.name)),
                 rawName: getWireValue(p.name),
                 type: p.valueType,
                 indirect: typeId != null && this.context.shouldGeneratePropertyAsIndirect(typeId, getWireValue(p.name)),

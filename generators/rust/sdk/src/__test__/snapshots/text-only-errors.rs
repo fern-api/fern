@@ -2,9 +2,9 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("SimpleError: Bad request - {{message}}")]
+    #[error("SimpleError: Bad request - {message}")]
     SimpleError { message: String, field: Option<String>, details: Option<String> },
-    #[error("GenericError: Internal server error - {{message}}")]
+    #[error("GenericError: Internal server error - {message}")]
     GenericError { message: String, error_id: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
@@ -54,7 +54,7 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::GenericError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        error_id: parsed.get("error_id").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        error_id: parsed.get("errorId").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }

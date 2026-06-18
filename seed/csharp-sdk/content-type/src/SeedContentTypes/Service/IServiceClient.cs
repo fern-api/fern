@@ -2,7 +2,7 @@ namespace SeedContentTypes;
 
 public partial interface IServiceClient
 {
-    Task PatchAsync(
+    WithRawResponseTask PatchAsync(
         PatchProxyRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -14,7 +14,7 @@ public partial interface IServiceClient
     /// - optional&lt;T&gt; fields (can be present or absent, but not null)
     /// - optional&lt;nullable&lt;T&gt;&gt; fields (can be present, absent, or null)
     /// </summary>
-    Task PatchComplexAsync(
+    WithRawResponseTask PatchComplexAsync(
         string id,
         PatchComplexRequest request,
         RequestOptions? options = null,
@@ -25,7 +25,7 @@ public partial interface IServiceClient
     /// Named request with mixed optional/nullable fields and merge-patch content type.
     /// This should trigger the NPE issue when optional fields aren't initialized.
     /// </summary>
-    Task NamedPatchWithMixedAsync(
+    WithRawResponseTask NamedPatchWithMixedAsync(
         string id,
         NamedMixedPatchRequest request,
         RequestOptions? options = null,
@@ -38,7 +38,7 @@ public partial interface IServiceClient
     /// 1. Not NPE when fields are not provided (tests initialization)
     /// 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
     /// </summary>
-    Task OptionalMergePatchTestAsync(
+    WithRawResponseTask OptionalMergePatchTestAsync(
         OptionalMergePatchRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -47,7 +47,7 @@ public partial interface IServiceClient
     /// <summary>
     /// Regular PATCH endpoint without merge-patch semantics
     /// </summary>
-    Task RegularPatchAsync(
+    WithRawResponseTask RegularPatchAsync(
         string id,
         RegularPatchRequest request,
         RequestOptions? options = null,

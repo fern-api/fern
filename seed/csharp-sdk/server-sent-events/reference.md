@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamAsync</a>(StreamCompletionRequest { ... }) -> IAsyncEnumerable&lt;StreamedCompletion&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamAsync</a>(StreamCompletionRequest { ... }) -> WithRawResponseStream&lt;StreamedCompletion&gt;</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
 </dl>
 </details>
 
-<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamWithoutTerminatorAsync</a>(StreamCompletionRequestWithoutTerminator { ... }) -> IAsyncEnumerable&lt;StreamedCompletion&gt;</code></summary>
+<details><summary><code>client.Completions.<a href="/src/SeedServerSentEvents/Completions/CompletionsClient.cs">StreamWithoutTerminatorAsync</a>(StreamCompletionRequestWithoutTerminator { ... }) -> WithRawResponseStream&lt;StreamedCompletion&gt;</code></summary>
 <dl>
 <dd>
 

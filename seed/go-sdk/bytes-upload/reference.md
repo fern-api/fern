@@ -44,9 +44,7 @@ client.Service.Upload(
 ```go
 request := &fern.UploadWithQueryParamsRequest{
         Model: "nova-2",
-        Body: bytes.NewReader(
-            []byte(""),
-        ),
+        Body: []byte(""),
     }
 client.Service.UploadWithQueryParams(
         context.TODO(),

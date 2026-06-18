@@ -21,6 +21,7 @@ class Base(UniversalBaseModel):
         user_name="username",
         metadata_tags=["tag1", "tag2"],
         extra_properties={"foo": "bar", "baz": "qux"},
+        status="ACTIVE",
     )
     """
 
@@ -46,6 +47,7 @@ class Resource_User(Base):
         user_name="username",
         metadata_tags=["tag1", "tag2"],
         extra_properties={"foo": "bar", "baz": "qux"},
+        status="ACTIVE",
     )
     """
 
@@ -76,6 +78,7 @@ class Resource_Organization(Base):
         user_name="username",
         metadata_tags=["tag1", "tag2"],
         extra_properties={"foo": "bar", "baz": "qux"},
+        status="ACTIVE",
     )
     """
 
@@ -99,6 +102,7 @@ Resource_User(
     user_name="username",
     metadata_tags=["tag1", "tag2"],
     extra_properties={"foo": "bar", "baz": "qux"},
+    status="ACTIVE",
 )
 """
 Resource = typing_extensions.Annotated[

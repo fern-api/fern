@@ -6,7 +6,7 @@ import Examples
     @Test func getFile2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -26,6 +26,7 @@ import Examples
         )
         let response = try await client.file.service.getFile(
             filename: "filename",
+            xFileApiVersion: "X-File-API-Version",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

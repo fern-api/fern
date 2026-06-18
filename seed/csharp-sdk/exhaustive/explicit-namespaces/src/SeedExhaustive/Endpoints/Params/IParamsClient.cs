@@ -26,7 +26,7 @@ public partial interface IParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    Task GetWithQueryAsync(
+    WithRawResponseTask GetWithQueryAsync(
         GetWithQuery request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -35,7 +35,7 @@ public partial interface IParamsClient
     /// <summary>
     /// GET with multiple of same query param
     /// </summary>
-    Task GetWithAllowMultipleQueryAsync(
+    WithRawResponseTask GetWithAllowMultipleQueryAsync(
         GetWithMultipleQuery request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -44,7 +44,7 @@ public partial interface IParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
-    Task GetWithPathAndQueryAsync(
+    WithRawResponseTask GetWithPathAndQueryAsync(
         string param,
         GetWithPathAndQuery request,
         RequestOptions? options = null,
@@ -54,7 +54,7 @@ public partial interface IParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
-    Task GetWithInlinePathAndQueryAsync(
+    WithRawResponseTask GetWithInlinePathAndQueryAsync(
         GetWithInlinePathAndQuery request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

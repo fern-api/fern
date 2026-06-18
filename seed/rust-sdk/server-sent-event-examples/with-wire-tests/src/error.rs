@@ -2,7 +2,7 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("BadRequestError: Bad request - {{message}}")]
+    #[error("BadRequestError: Bad request - {message}")]
     BadRequestError {
         message: String,
         field: Option<String>,

@@ -6,7 +6,7 @@ import NullableOptional
     @Test func getUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -59,7 +59,7 @@ import NullableOptional
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -125,7 +125,7 @@ import NullableOptional
     @Test func updateUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -192,7 +192,7 @@ import NullableOptional
     @Test func listUsers1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -286,7 +286,7 @@ import NullableOptional
     @Test func searchUsers1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -380,7 +380,7 @@ import NullableOptional
     @Test func createComplexProfile1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -754,7 +754,7 @@ import NullableOptional
     @Test func getComplexProfile1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -1015,7 +1015,7 @@ import NullableOptional
     @Test func updateComplexProfile1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -1310,7 +1310,7 @@ import NullableOptional
     @Test func testDeserialization1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "echo": {
@@ -1510,7 +1510,7 @@ import NullableOptional
     @Test func filterByRole1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -1603,7 +1603,7 @@ import NullableOptional
     @Test func getNotificationSettings1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "email",
@@ -1638,7 +1638,7 @@ import NullableOptional
     @Test func updateTags1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   "string",
@@ -1679,7 +1679,7 @@ import NullableOptional
     @Test func getSearchResults1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {

@@ -82,6 +82,166 @@
                 "type": "text"
             },
             "examples": null
+        },
+        "endpoint_service.getCsv": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getCsv",
+                    "camelCase": {
+                        "unsafeName": "getCsv",
+                        "safeName": "getCsv"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_csv",
+                        "safeName": "get_csv"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_CSV",
+                        "safeName": "GET_CSV"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetCsv",
+                        "safeName": "GetCsv"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/csv"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "text"
+            },
+            "examples": null
+        },
+        "endpoint_service.getXml": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getXml",
+                    "camelCase": {
+                        "unsafeName": "getXML",
+                        "safeName": "getXML"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_xml",
+                        "safeName": "get_xml"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_XML",
+                        "safeName": "GET_XML"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetXML",
+                        "safeName": "GetXML"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/xml"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "text"
+            },
+            "examples": null
         }
     },
     "pathParameters": [],

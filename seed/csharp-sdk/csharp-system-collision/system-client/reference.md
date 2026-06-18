@@ -103,7 +103,7 @@ await client.CreateTaskAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">EmptyResponseAsync</a>(Task { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">EmptyResponseAsync</a>(Task { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

@@ -17,6 +17,6 @@ export class MovieDoesNotExistError extends errors.SeedApiError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "MovieDoesNotExistError";
     }
 }

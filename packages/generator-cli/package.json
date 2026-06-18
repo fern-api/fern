@@ -47,7 +47,7 @@
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-api/replay": "0.16.2",
+    "@fern-api/replay": "0.18.0",
     "@fern-api/task-context": "workspace:*",
     "@octokit/rest": "catalog:",
     "es-toolkit": "catalog:",

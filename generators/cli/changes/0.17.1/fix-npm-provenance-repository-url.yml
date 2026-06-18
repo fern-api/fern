@@ -1,0 +1,5 @@
+- summary: |
+    Populate `repository.url` in generated npm `package.json` files from
+    the GitHub output mode's `repoUrl`. Fixes npm provenance verification
+    failures (E422) when publishing with `--provenance`.
+  type: fix

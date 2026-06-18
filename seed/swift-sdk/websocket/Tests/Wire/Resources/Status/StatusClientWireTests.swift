@@ -6,7 +6,7 @@ import Websocket
     @Test func getStatus1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "status": "status"

@@ -6,7 +6,7 @@ import Api
     @Test func updateVendor1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -46,7 +46,7 @@ import Api
     @Test func updateVendor2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -87,7 +87,7 @@ import Api
     @Test func createVendor1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -124,7 +124,7 @@ import Api
     @Test func createVendor2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "id": "id",
@@ -152,6 +152,7 @@ import Api
             ))
         )
         let response = try await client.vendor.createVendor(
+            idempotencyKey: "idempotencyKey",
             request: .init(
                 name: "name",
                 address: "address"

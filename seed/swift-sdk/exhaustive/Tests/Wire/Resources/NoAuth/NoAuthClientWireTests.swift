@@ -6,7 +6,7 @@ import Exhaustive
     @Test func postWithNoAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8

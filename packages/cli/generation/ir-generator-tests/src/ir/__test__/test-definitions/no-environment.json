@@ -54,6 +54,7 @@
                     "id": "endpoint_dummy.getDummy",
                     "name": "getDummy",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

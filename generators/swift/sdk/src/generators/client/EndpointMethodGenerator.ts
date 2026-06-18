@@ -114,14 +114,19 @@ export class EndpointMethodGenerator {
 
         if (endpoint.requestBody) {
             if (endpoint.requestBody.type === "reference") {
+                const requestBodySwiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+                    endpoint.requestBody.requestBodyType,
+                    this.parentClassSymbol
+                );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
-                            endpoint.requestBody.requestBodyType,
-                            this.parentClassSymbol
-                        ),
+                        type: requestBodySwiftType,
+                        defaultValue:
+                            requestBodySwiftType.variant.type === "optional"
+                                ? swift.Expression.rawValue("nil")
+                                : undefined,
                         docsContent: endpoint.requestBody.docs
                     })
                 );
@@ -187,10 +192,25 @@ export class EndpointMethodGenerator {
             json: (resp) =>
                 this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(resp.responseBodyType, this.parentClassSymbol),
             fileDownload: () => this.referencer.referenceFoundationType("Data"),
-            text: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle text responses
+            text: () => this.referencer.referenceSwiftType("String"),
             bytes: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
             streaming: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle streaming responses
-            streamParameter: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle stream parameter responses
+            // The Swift SDK does not yet implement response streaming, so a stream-parameter
+            // endpoint is generated against its non-streaming response shape.
+            streamParameter: (resp) => this.getMethodReturnTypeForNonStreamResponse(resp.nonStreamResponse),
+            _other: () => this.referencer.referenceAsIsType("JSONValue")
+        });
+    }
+
+    private getMethodReturnTypeForNonStreamResponse(
+        nonStreamResponse: FernIr.NonStreamHttpResponseBody
+    ): swift.TypeReference {
+        return nonStreamResponse._visit({
+            json: (resp) =>
+                this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(resp.responseBodyType, this.parentClassSymbol),
+            fileDownload: () => this.referencer.referenceFoundationType("Data"),
+            text: () => this.referencer.referenceSwiftType("String"),
+            bytes: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
             _other: () => this.referencer.referenceAsIsType("JSONValue")
         });
     }
@@ -300,7 +320,7 @@ export class EndpointMethodGenerator {
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value: this.referencer.resolvesToAnEnumWithRawValues(
-                                                        swiftType.nonOptional()
+                                                        swiftType.nonOptional().nonNullable()
                                                     )
                                                         ? swift.Expression.memberAccess({
                                                               target: swift.Expression.reference("$0"),
@@ -326,7 +346,14 @@ export class EndpointMethodGenerator {
                                                   methodName: this.inferQueryParamCaseName(swiftType),
                                                   arguments_: [
                                                       swift.functionArgument({
-                                                          value: swift.Expression.reference("$0")
+                                                          value: this.referencer.resolvesToAnEnumWithRawValues(
+                                                              swiftType.nonNullable()
+                                                          )
+                                                              ? swift.Expression.memberAccess({
+                                                                    target: swift.Expression.reference("$0"),
+                                                                    memberName: "rawValue"
+                                                                })
+                                                              : swift.Expression.reference("$0")
                                                       })
                                                   ]
                                               })

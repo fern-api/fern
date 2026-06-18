@@ -1128,6 +1128,7 @@
                     "id": "endpoint_.getAccount",
                     "name": "getAccount",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

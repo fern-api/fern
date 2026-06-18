@@ -323,8 +323,10 @@ export function convertHttpOperation({
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
+    const subtitle = getExtension<string>(operation, FernOpenAPIExtension.SUBTITLE);
     return convertedRequests.map((request) => ({
         summary: operation.summary,
+        subtitle: subtitle ?? undefined,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
         idempotent,
         audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],

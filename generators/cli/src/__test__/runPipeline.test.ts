@@ -108,18 +108,21 @@ describe("runPipeline", () => {
     const localFilesConfig: ResolvedOutputConfig = {
         version: "0.0.0",
         isGithubOutput: false,
+        repoUrl: undefined,
         npmPublishInfo: undefined
     };
 
     const githubConfigNoNpm: ResolvedOutputConfig = {
         version: "1.0.0",
         isGithubOutput: true,
+        repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: undefined
     };
 
     const githubConfig: ResolvedOutputConfig = {
         version: "1.5.0",
         isGithubOutput: true,
+        repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: {
             packageName: "@acme/cli",
             registryUrl: "https://registry.npmjs.org",
@@ -271,6 +274,7 @@ describe("runPipeline", () => {
         const versionedConfig: ResolvedOutputConfig = {
             version: "2.3.1",
             isGithubOutput: false,
+            repoUrl: undefined,
             npmPublishInfo: undefined
         };
         await runPipeline({

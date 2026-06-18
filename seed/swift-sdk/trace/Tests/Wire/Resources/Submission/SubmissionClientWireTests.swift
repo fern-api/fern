@@ -6,7 +6,7 @@ import Trace
     @Test func createExecutionSession1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "sessionId": "sessionId",
@@ -38,7 +38,7 @@ import Trace
     @Test func getExecutionSession1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "sessionId": "sessionId",
@@ -70,7 +70,7 @@ import Trace
     @Test func getExecutionSessionsState1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "states": {

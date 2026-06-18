@@ -1,7 +1,7 @@
 import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { EnumWithAssociatedValues, LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { EnumWithAssociatedValues, LiteralEnum, sanitizeSwiftIdentifier, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeLiteralMapper {
@@ -259,10 +259,19 @@ export class DynamicTypeLiteralMapper {
                     if (record == null) {
                         return swift.Expression.nop();
                     }
+                    // A single-property variant wraps its value under the variant's property
+                    // wire key (the union's CodingKeys raw value), which defaults to "value" but
+                    // can be customized via `key:` and is not exposed on the dynamic IR. The
+                    // discriminant has already been stripped from the record, so exclude any
+                    // inherited base properties to isolate the wrapped value's key.
+                    const basePropertyKeys = new Set(
+                        (unionVariant.properties ?? []).map((property) => property.name.wireValue)
+                    );
+                    const propertyKey = Object.keys(record).find((key) => !basePropertyKeys.has(key)) ?? "value";
                     const converted = this.convert({
                         fromSymbol,
                         typeReference: unionVariant.typeReference,
-                        value: record[unionVariant.discriminantValue.wireValue]
+                        value: record[propertyKey]
                     });
                     return swift.Expression.methodCall({
                         target: swift.Expression.reference(unionSymbol.name),
@@ -323,13 +332,30 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): swift.Expression {
         const symbol = this.context.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+        const exampleProperties = this.context.getExampleObjectProperties({
+            parameters: object_.properties,
+            snippetObject: value
+        });
+        const examplePropertiesByWireValue = new Map(
+            exampleProperties.map((typeInstance) => [typeInstance.name.wireValue, typeInstance])
+        );
+        // Literal properties are constants that the generated initializer always requires, so emit
+        // them in declaration order even when the example omits them.
+        const orderedProperties = object_.properties
+            .map((property) => {
+                const exampleProperty = examplePropertiesByWireValue.get(property.name.wireValue);
+                if (exampleProperty != null) {
+                    return exampleProperty;
+                }
+                if (property.typeReference.type === "literal") {
+                    return { name: property.name, typeReference: property.typeReference, value: undefined };
+                }
+                return null;
+            })
+            .filter((typeInstance) => typeInstance != null);
         return swift.Expression.structInitialization({
             unsafeName: symbol.name,
-            arguments_: this.context
-                .getExampleObjectProperties({
-                    parameters: object_.properties,
-                    snippetObject: value
-                })
+            arguments_: orderedProperties
                 .map((typeInstance) => {
                     const expression = this.convert({
                         fromSymbol,
@@ -340,12 +366,8 @@ export class DynamicTypeLiteralMapper {
                         return null;
                     }
                     return swift.functionArgument({
-                        label: sanitizeSelf(typeInstance.name.name.camelCase.unsafeName),
-                        value: this.convert({
-                            fromSymbol,
-                            typeReference: typeInstance.typeReference,
-                            value: typeInstance.value
-                        })
+                        label: sanitizeSwiftIdentifier(typeInstance.name.name.camelCase.unsafeName),
+                        value: expression
                     });
                 })
                 .filter((argument) => argument != null),

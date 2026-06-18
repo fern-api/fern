@@ -320,8 +320,14 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
 
         // Add request body properties
         this.tokenEndpoint.requestBody?._visit({
-            reference: () => {
-                // For referenced request bodies, we don't have individual properties
+            reference: (reference) => {
+                for (const property of this.getPropertiesForTypeReference(reference.requestBodyType)) {
+                    properties.push({
+                        camelName: this.case.camelUnsafe(property.name),
+                        isOptional: this.context.isOptional(property.valueType),
+                        literal: this.context.maybeLiteral(property.valueType)
+                    });
+                }
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
@@ -392,7 +398,36 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
             });
         }
+        const requestBody = this.tokenEndpoint.requestBody;
+        if (requestBody != null && requestBody.type === "reference") {
+            const internalType = this.context.phpTypeMapper
+                .convert({ reference: requestBody.requestBodyType })
+                .underlyingType().internalType;
+            if (internalType.type === "reference") {
+                return internalType.value;
+            }
+        }
         return undefined;
+    }
+
+    private getPropertiesForTypeReference(typeReference: FernIr.TypeReference): FernIr.ObjectProperty[] {
+        if (typeReference.type !== "named") {
+            return [];
+        }
+        return this.getPropertiesForTypeId(typeReference.typeId);
+    }
+
+    private getPropertiesForTypeId(typeId: FernIr.TypeId): FernIr.ObjectProperty[] {
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
+        if (typeDeclaration.shape.type !== "object") {
+            return [];
+        }
+        const properties: FernIr.ObjectProperty[] = [];
+        for (const extended of typeDeclaration.shape.extends) {
+            properties.push(...this.getPropertiesForTypeId(extended.typeId));
+        }
+        properties.push(...typeDeclaration.shape.properties);
+        return properties;
     }
 
     private getExpiresAtMethod(): php.Method {

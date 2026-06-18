@@ -1,0 +1,6 @@
+- summary: |
+    Always wrap IR-derived error fields in `Option` to match constructor code
+    that assigns `None` for missing fields, preventing struct/constructor type
+    mismatches. Fix thiserror format strings: `{{message}}` → `{message}` so
+    field values are actually interpolated.
+  type: fix

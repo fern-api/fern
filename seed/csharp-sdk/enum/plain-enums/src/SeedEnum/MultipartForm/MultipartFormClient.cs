@@ -11,7 +11,7 @@ public partial class MultipartFormClient : IMultipartFormClient
         _client = client;
     }
 
-    public async Task MultipartFormAsync(
+    private async Task<RawResponse> MultipartFormAsyncCore(
         MultipartFormRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -39,7 +39,12 @@ public partial class MultipartFormClient : IMultipartFormClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedEnum.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -48,8 +53,23 @@ public partial class MultipartFormClient : IMultipartFormClient
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedEnum.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    public WithRawResponseTask MultipartFormAsync(
+        MultipartFormRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(MultipartFormAsyncCore(request, options, cancellationToken));
     }
 }

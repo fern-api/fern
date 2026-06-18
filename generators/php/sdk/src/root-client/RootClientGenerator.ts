@@ -5,6 +5,7 @@ import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+import { getOAuthTokenRequestProperties } from "../oauth/oauthTokenRequestProperties.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -715,6 +716,21 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             environmentVariable: oauthConfig.clientSecretEnvVar
                         }
                     ];
+                    for (const property of getOAuthTokenRequestProperties(
+                        this.context,
+                        oauthConfig.tokenEndpoint.requestProperties
+                    )) {
+                        params.push({
+                            name: property.parameterName,
+                            docs: "A property required by the OAuth token endpoint.",
+                            isOptional,
+                            typeReference: this.getAuthParameterTypeReference({
+                                typeReference: property.valueType,
+                                envVar: undefined,
+                                isOptional
+                            })
+                        });
+                    }
                     return params;
                 }
                 // Fallback to the default bearer token scheme for other OAuth types
@@ -889,7 +905,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const clientIdFallback = oauth.configuration.clientIdEnvVar != null ? "$clientId" : "$clientId ?? ''";
         const clientSecretFallback =
             oauth.configuration.clientSecretEnvVar != null ? "$clientSecret" : "$clientSecret ?? ''";
-        writer.writeLine(`(${clientIdFallback}, ${clientSecretFallback}, $authClient);`);
+        const isAuthMandatory = this.context.ir.sdkConfig.isAuthMandatory;
+        const extraArgs = getOAuthTokenRequestProperties(
+            this.context,
+            oauth.configuration.tokenEndpoint.requestProperties
+        ).map((property) => (isAuthMandatory ? `$${property.parameterName}` : `$${property.parameterName} ?? ''`));
+        const args = [clientIdFallback, clientSecretFallback, ...extraArgs, "$authClient"].join(", ");
+        writer.writeLine(`(${args});`);
         writer.writeLine();
     }
 

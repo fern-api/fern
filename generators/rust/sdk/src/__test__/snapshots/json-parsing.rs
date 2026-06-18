@@ -2,9 +2,9 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("ValidationError: Unprocessable entity - {{message}}")]
+    #[error("ValidationError: Unprocessable entity - {message}")]
     ValidationError { message: String, field: Option<String>, validation_error: Option<String> },
-    #[error("ConflictError: Conflict - {{message}}")]
+    #[error("ConflictError: Conflict - {message}")]
     ConflictError { message: String, conflict_type: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
@@ -38,7 +38,7 @@ impl ApiError {
                     return Self::ValidationError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
                         field: parsed.get("field").and_then(|v| v.as_str().map(|s| s.to_string())),
-                        validation_error: parsed.get("validation_error").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        validation_error: parsed.get("validationError").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -54,7 +54,7 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::ConflictError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        conflict_type: parsed.get("conflict_type").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        conflict_type: parsed.get("conflictType").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }

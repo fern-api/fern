@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fully qualify `Foundation.Data` in the generated HTTP client and test
+    templates. When an API defined a type named `Data`, the generated
+    top-level `Data` type shadowed `Foundation.Data` in those templates, so the
+    request-body builder and stub helpers resolved to the wrong type and failed
+    to compile. The remaining bare `Data` references now use `Foundation.Data`,
+    matching the convention already used elsewhere in the runtime.
+  type: fix

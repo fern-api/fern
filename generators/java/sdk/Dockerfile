@@ -79,6 +79,8 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # krb5-libs (CVE-2026-40356 integer underflow OOB read, CVE-2026-40355
 # NULL pointer dereference in gss_accept_sec_context; fixed in
 # 1.21.3-7.amzn2023.0.1)
+# Security update 2026-06-10: add perl-* (CVE-2026-8376, CVE-2026-7010),
+# libsolv (CVE-2026-48863, CVE-2026-48864, CVE-2026-9149, CVE-2026-9150)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -103,7 +105,9 @@ RUN dnf --releasever=latest update -y \
     glibc-common \
     glibc-minimal-langpack \
     libgcrypt \
-    krb5-libs && \
+    krb5-libs \
+    'perl-*' \
+    libsolv && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
@@ -162,6 +166,21 @@ RUN for dir in \
         tar -xzf ip-address-10.2.0.tgz && \
         mv package ip-address && \
         rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tar; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/tar/-/tar-7.5.16.tgz -o tar-7.5.16.tgz && \
+        tar -xzf tar-7.5.16.tgz && \
+        mv package tar && \
+        rm tar-7.5.16.tgz; \
       fi; \
     done
 

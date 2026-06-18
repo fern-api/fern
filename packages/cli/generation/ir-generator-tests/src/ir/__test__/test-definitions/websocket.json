@@ -856,6 +856,7 @@
                     "id": "endpoint_status.get_status",
                     "name": "get_status",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

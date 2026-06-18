@@ -40,7 +40,7 @@ await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency
 </dl>
 </details>
 
-<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">DeleteAsync</a>(paymentId)</code></summary>
+<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">DeleteAsync</a>(paymentId) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

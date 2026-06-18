@@ -68,6 +68,7 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
@@ -513,6 +514,16 @@ export class DocsDefinitionResolver {
         });
         const collectTime = performance.now() - collectStart;
         this.taskContext.logger.debug(`Collected ${filesToUploadSet.size} files in ${collectTime.toFixed(0)}ms`);
+
+        // upload author-supplied Agent Skills bundles so the docs site can serve them
+        // at /.well-known/skills/… and /.well-known/agent-skills/…
+        const wellKnownSkillsFiles = await collectWellKnownSkillsFiles({
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+        });
+        if (wellKnownSkillsFiles.length > 0) {
+            this.taskContext.logger.debug(`Collected ${wellKnownSkillsFiles.length} well-known agent skills files`);
+            wellKnownSkillsFiles.forEach((filepath) => filesToUploadSet.add(filepath));
+        }
 
         // preprocess markdown files to extract image paths
         this.taskContext.logger.debug("Parsing image paths from markdown files...");
@@ -2080,7 +2091,9 @@ export class DocsDefinitionResolver {
         if (navNodes.length > 0) {
             const rootSlug = navNodes[0]?.slug.split("/").slice(0, -1).join("/");
             if (rootSlug) {
-                overviewPageId = await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`);
+                overviewPageId =
+                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${rootSlug}.mdx`));
             }
         }
 
@@ -2146,14 +2159,20 @@ export class DocsDefinitionResolver {
     /**
      * Read an MDX file from the library output directory, register its content,
      * and return its PageId. Returns undefined if the file doesn't exist.
+     *
+     * @param quiet - When true, suppresses the warning when the file is missing.
+     *   Used when probing multiple candidate paths (e.g. index.mdx then sibling .mdx).
      */
     private async registerLibraryMdxPage(
         outputDir: AbsoluteFilePath,
-        relativeMdxPath: string
+        relativeMdxPath: string,
+        { quiet = false }: { quiet?: boolean } = {}
     ): Promise<FernNavigation.PageId | undefined> {
         const absolutePath = join(outputDir, RelativeFilePath.of(relativeMdxPath));
         if (!existsSync(absolutePath)) {
-            this.taskContext.logger.warn(`Library MDX file not found: ${absolutePath}`);
+            if (!quiet) {
+                this.taskContext.logger.warn(`Library MDX file not found: ${absolutePath}`);
+            }
             return undefined;
         }
         const relPath = relative(this.docsWorkspace.absoluteFilePath, absolutePath);
@@ -2208,7 +2227,9 @@ export class DocsDefinitionResolver {
                 });
                 const sectionId = this.#idgen.get(`library-section/${node.slug}`);
 
-                const overviewPageId = await this.registerLibraryMdxPage(outputDir, `${node.slug}.mdx`);
+                const overviewPageId =
+                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}/index.mdx`, { quiet: true })) ??
+                    (await this.registerLibraryMdxPage(outputDir, `${node.slug}.mdx`));
 
                 // Filter out child pages whose slug matches the section's slug
                 // (they're already represented by the section's overview page)
@@ -2595,7 +2616,8 @@ export class DocsDefinitionResolver {
                     url: customAction.url,
                     icon: this.resolveIconFileId(customAction.icon),
                     default: customAction.default
-                }))
+                })),
+                skills: this.parsedDocsConfig.pageActions.options.skills
             }
         };
     }
