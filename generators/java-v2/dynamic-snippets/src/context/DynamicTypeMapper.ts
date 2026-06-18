@@ -68,8 +68,8 @@ export class DynamicTypeMapper {
     private convertNullable({ nullable }: { nullable: FernIr.dynamic.TypeReference.Nullable }): java.Type {
         const inner = nullable.value;
         if (this.usesOptionalNullable()) {
-            // nullable<optional<U>> collapses into OptionalNullable<U>.
-            if (inner.type === "optional") {
+            // nullable<optional<U>> / nullable<nullable<U>> collapse into a single OptionalNullable<U>.
+            if (inner.type === "optional" || inner.type === "nullable") {
                 return this.optionalNullableOf(inner.value);
             }
             return this.optionalNullableOf(inner);
@@ -83,8 +83,8 @@ export class DynamicTypeMapper {
 
     private convertOptional({ optional }: { optional: FernIr.dynamic.TypeReference.Optional }): java.Type {
         const inner = optional.value;
-        // optional<nullable<U>> collapses into OptionalNullable<U>.
-        if (this.usesOptionalNullable() && inner.type === "nullable") {
+        // optional<nullable<U>> / optional<optional<U>> collapse into a single OptionalNullable<U>.
+        if (this.usesOptionalNullable() && (inner.type === "nullable" || inner.type === "optional")) {
             return this.optionalNullableOf(inner.value);
         }
         return java.Type.optional(this.convert({ typeReference: inner }));
