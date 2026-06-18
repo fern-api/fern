@@ -16,7 +16,9 @@ import {
     CONTAINER_PATH_TO_IR,
     CONTAINER_PATH_TO_SNIPPET,
     CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
-    CONTAINER_SOURCES_DIRECTORY
+    CONTAINER_SOURCES_DIRECTORY,
+    TYPE_RELOCATIONS_FILENAME,
+    TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
 } from "./constants.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
@@ -263,6 +265,13 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             logger,
             containerId,
             command: [...entrypoint, CONTAINER_GENERATOR_CONFIG_PATH],
+            // Generators that relocate types to break import cycles write the
+            // relocations here. It is copied back to the host output dir below,
+            // where the host applies them to its dynamic snippet IR and deletes
+            // the file before copying generated output.
+            envVars: {
+                [TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR]: `${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}/${TYPE_RELOCATIONS_FILENAME}`
+            },
             runner: this.runner,
             writeLogsToFile: true
         });

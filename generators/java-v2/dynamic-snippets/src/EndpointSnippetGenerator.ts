@@ -957,7 +957,11 @@ export class EndpointSnippetGenerator {
         filePropertyInfo: FilePropertyInfo;
     }): java.BuilderParameter[] {
         if (this.context.shouldInlineFileProperties()) {
-            return [...filePropertyInfo.fileFields, ...filePropertyInfo.bodyPropertyFields];
+            // Body properties are emitted before file properties so that the snippet's builder call
+            // follows the generated staged-builder order. The dynamic IR does not expose whether a
+            // file is optional, so file builder parameters carry a concrete (non-optional) value and
+            // would otherwise be treated as required and ordered ahead of a required body property.
+            return [...filePropertyInfo.bodyPropertyFields, ...filePropertyInfo.fileFields];
         }
         return filePropertyInfo.bodyPropertyFields;
     }
