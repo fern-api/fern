@@ -500,7 +500,20 @@ export class DynamicTypeLiteralMapper {
                 }
             }
         }
-        const declaredWireValues = new Set<string>(object_.properties.map((param) => param.name.wireValue));
+        // Re-sort all properties (including newly added defaults) into schema declaration order.
+        // Defaults for missing required properties are appended above, so without this a defaulted
+        // required property would render after user-provided ones. orderBuilderParameters later
+        // partitions required-before-optional with a stable sort, preserving this schema order
+        // within each group as required by Java staged builders.
+        const paramOrderMap = new Map<string, number>();
+        const declaredWireValues = new Set<string>();
+        object_.properties.forEach((param, index) => {
+            paramOrderMap.set(param.name.wireValue, index);
+            declaredWireValues.add(param.name.wireValue);
+        });
+        properties.sort(
+            (a, b) => (paramOrderMap.get(a.name.wireValue) ?? 0) - (paramOrderMap.get(b.name.wireValue) ?? 0)
+        );
         const filteredProperties =
             as === "request"
                 ? properties.filter((property) => !this.context.isDirectLiteral(property.typeReference))
