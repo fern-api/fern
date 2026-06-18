@@ -445,18 +445,39 @@ export async function publishDocs({
                 }
             }
 
+            const REGISTER_MAX_RETRIES = 3;
+            const REGISTER_BASE_DELAY_MS = 1_000;
+
             let response;
-            try {
-                response = await fdr.api.register.registerApiDefinition({
-                    orgId: CjsFdrSdk.OrgId(organization),
-                    apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
-                    definition: apiDefinition,
-                    dynamicIRs: dynamicIRsByLanguage
-                });
-            } catch (error) {
-                const errorDetails = extractErrorDetails(error);
+            let lastError: unknown;
+
+            for (let attempt = 0; attempt <= REGISTER_MAX_RETRIES; attempt++) {
+                try {
+                    response = await fdr.api.register.registerApiDefinition({
+                        orgId: CjsFdrSdk.OrgId(organization),
+                        apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
+                        definition: apiDefinition,
+                        dynamicIRs: dynamicIRsByLanguage
+                    });
+                    break;
+                } catch (error) {
+                    lastError = error;
+                    if (attempt < REGISTER_MAX_RETRIES) {
+                        const delayMs = REGISTER_BASE_DELAY_MS * 2 ** attempt;
+                        context.logger.warn(
+                            `registerApiDefinition failed for ${apiName ?? "unknown"} ` +
+                                `(attempt ${attempt + 1}/${REGISTER_MAX_RETRIES + 1}), retrying in ${delayMs}ms...`
+                        );
+                        await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
+                    }
+                }
+            }
+
+            if (response == null) {
+                const errorDetails = extractErrorDetails(lastError);
                 context.logger.error(
-                    `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                    `FDR registerApiDefinition failed after ${REGISTER_MAX_RETRIES + 1} attempts. ` +
+                        `Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
                 );
                 if (apiName != null) {
                     return context.failAndThrow(
