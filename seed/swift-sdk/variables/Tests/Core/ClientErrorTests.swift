@@ -19,7 +19,10 @@ import Testing
         )
 
         do {
-            _ = try await client.service.post(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.service.post(
+                endpointParam: "<endpointParam>",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as VariablesError {
@@ -49,7 +52,10 @@ import Testing
         )
 
         do {
-            _ = try await client.service.post(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.service.post(
+                endpointParam: "<endpointParam>",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as VariablesError {
@@ -79,7 +85,10 @@ import Testing
         )
 
         do {
-            _ = try await client.service.post(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.service.post(
+                endpointParam: "<endpointParam>",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as VariablesError {
@@ -111,7 +120,10 @@ import Testing
         )
 
         do {
-            _ = try await client.service.post(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.service.post(
+                endpointParam: "<endpointParam>",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as VariablesError {
@@ -141,7 +153,10 @@ import Testing
         )
 
         do {
-            _ = try await client.service.post(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.service.post(
+                endpointParam: "<endpointParam>",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as VariablesError {
@@ -173,7 +188,10 @@ import Testing
         )
 
         do {
-            _ = try await client.service.post(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.service.post(
+                endpointParam: "<endpointParam>",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as VariablesError {
@@ -203,7 +221,10 @@ import Testing
         )
 
         do {
-            _ = try await client.service.post(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.service.post(
+                endpointParam: "<endpointParam>",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as VariablesError {

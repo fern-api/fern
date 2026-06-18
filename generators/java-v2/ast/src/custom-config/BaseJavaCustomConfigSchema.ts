@@ -33,7 +33,6 @@ export const BaseJavaCustomConfigSchema = z.object({
     //     (no Optional wrapper). Mirrors v1 behaviour when the Java @Nullable annotation is preferred.
     "collapse-optional-nullable": z.boolean().optional(),
     "use-nullable-annotation": z.boolean().optional(),
-
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
     "offset-semantics": z.enum(["item-index", "page-index"]).optional(),

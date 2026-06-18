@@ -195,7 +195,22 @@ export class EndpointMethodGenerator {
             text: () => this.referencer.referenceSwiftType("String"),
             bytes: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
             streaming: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle streaming responses
-            streamParameter: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle stream parameter responses
+            // The Swift SDK does not yet implement response streaming, so a stream-parameter
+            // endpoint is generated against its non-streaming response shape.
+            streamParameter: (resp) => this.getMethodReturnTypeForNonStreamResponse(resp.nonStreamResponse),
+            _other: () => this.referencer.referenceAsIsType("JSONValue")
+        });
+    }
+
+    private getMethodReturnTypeForNonStreamResponse(
+        nonStreamResponse: FernIr.NonStreamHttpResponseBody
+    ): swift.TypeReference {
+        return nonStreamResponse._visit({
+            json: (resp) =>
+                this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(resp.responseBodyType, this.parentClassSymbol),
+            fileDownload: () => this.referencer.referenceFoundationType("Data"),
+            text: () => this.referencer.referenceSwiftType("String"),
+            bytes: () => this.referencer.referenceAsIsType("JSONValue"), // TODO(kafkas): Handle bytes responses
             _other: () => this.referencer.referenceAsIsType("JSONValue")
         });
     }

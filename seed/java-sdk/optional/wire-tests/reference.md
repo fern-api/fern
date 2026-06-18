@@ -126,10 +126,12 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 client.optional().sendOptionalNullableWithAllOptionalProperties(
     "actionId",
     "id",
-    DeployParams
-        .builder()
-        .updateDraft(true)
-        .build()
+    Optional.of(
+        DeployParams
+            .builder()
+            .updateDraft(true)
+            .build()
+    )
 );
 ```
 </dd>
