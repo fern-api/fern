@@ -330,6 +330,12 @@ export abstract class AbstractSwiftGeneratorContext<
             this.nonStringMapKeyTypeIds = new Set(
                 [...candidateTypeIds].filter((typeId) => {
                     const shapeType = this.ir.types[typeId]?.shape.type;
+                    // Discriminated unions (`"union"`) are intentionally excluded: they generate as
+                    // Swift enums with associated values, which cannot be trivially serialized to a
+                    // single string and therefore cannot implement CodingKeyRepresentable safely.
+                    // Aliases are also excluded here; if an alias resolves to an enum or
+                    // undiscriminated union, the underlying type declaration is already covered by
+                    // the iteration over ir.types above.
                     return shapeType === "enum" || shapeType === "undiscriminatedUnion";
                 })
             );

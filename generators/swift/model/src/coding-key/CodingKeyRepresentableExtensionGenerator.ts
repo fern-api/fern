@@ -37,7 +37,7 @@ export class CodingKeyRepresentableExtensionGenerator {
                 "    public var codingKey: any CodingKey {",
                 "        guard let data = try? JSONEncoder().encode(self),",
                 "              let stringValue = try? JSONDecoder().decode(String.self, from: data) else {",
-                '            return StringKey("")',
+                `            fatalError("\\(Self.self) value could not be encoded as a string and cannot be used as a Dictionary key")`,
                 "        }",
                 "        return StringKey(stringValue)",
                 "    }",
