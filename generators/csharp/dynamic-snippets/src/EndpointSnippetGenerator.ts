@@ -7,7 +7,9 @@ import { Config } from "./Config.js";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
-// The C# SDK names the request body parameter "request" by default for body requests.
+// The request parameter is always named "request" in the generated C# SDK: the IR sets
+// `SdkRequest.requestParameterName` to the default for both body and wrapped requests (see
+// DEFAULT_REQUEST_PARAMETER_NAME in convertHttpSdkRequest.ts).
 const REQUEST_PARAMETER_NAME = "request";
 
 export class EndpointSnippetGenerator extends WithGeneration {
@@ -565,15 +567,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.Literal[] {
-        const args: ast.Literal[] = [];
-
+    }): (ast.Literal | ast.CodeBlock)[] {
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: ast.ConstructorField[] = [];
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
-        }
+        const includePathParameters = this.context.includePathParametersInWrappedRequest({
+            request,
+            inlinePathParameters: this.settings.shouldInlinePathParameters
+        });
+        const pathParameterFields = includePathParameters
+            ? this.getPathParameters({ namedParameters: pathParameters, snippet })
+            : [];
+        const separatePathParameterArgs = includePathParameters
+            ? []
+            : this.getPathParameterArguments({ namedParameters: pathParameters, snippet });
         this.context.errors.unscope();
 
         // TODO: Add support for file properties.
@@ -581,29 +587,26 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (
-            !this.context.includePathParametersInWrappedRequest({
-                request,
-                inlinePathParameters: this.settings.shouldInlinePathParameters
-            })
-        ) {
-            args.push(...pathParameterFields.map((field) => field.value));
-        }
         // For now, the C# SDK always requires the inlined request parameter.
-        args.push(
-            this.getInlinedRequestArg({
-                request,
-                snippet,
-                pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                    request,
-                    inlinePathParameters: this.settings.shouldInlinePathParameters
-                })
-                    ? pathParameterFields
-                    : [],
-                filePropertyInfo
-            })
-        );
-        return args;
+        const requestArg = this.getInlinedRequestArg({
+            request,
+            snippet,
+            pathParameterFields,
+            filePropertyInfo
+        });
+
+        // When path parameters are not inlined into the wrapped request they become separate method
+        // arguments, and any with a client default are optional in the generated signature and placed
+        // after the request parameter. The dynamic IR does not carry this optionality, so emit named
+        // arguments to make the call compile regardless of the parameter ordering in the signature.
+        if (separatePathParameterArgs.length > 0) {
+            return [
+                ...separatePathParameterArgs.map((arg) => this.namedArgument({ name: arg.name, value: arg.value })),
+                this.namedArgument({ name: REQUEST_PARAMETER_NAME, value: requestArg })
+            ];
+        }
+
+        return [requestArg];
     }
 
     private getFilePropertyInfo({
