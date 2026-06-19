@@ -1088,6 +1088,48 @@
       ],
       "additionalProperties": false
     },
+    "generators.GitRemoteSchema": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "description": "The git repository URL (e.g., https://github.com/org/repo.git)."
+        },
+        "ref": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Branch, tag, or commit SHA. Defaults to the repository's default branch."
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to the spec file or directory within the repository."
+        }
+      },
+      "required": [
+        "repo",
+        "path"
+      ],
+      "additionalProperties": false,
+      "description": "A reference to a file or directory in a remote git repository.\nThe CLI will shallow-clone the repo at the specified ref and resolve the path locally."
+    },
+    "generators.SpecSourceSchema": {
+      "anyOf": [
+        {
+          "type": "string",
+          "description": "A local file path relative to the Fern workspace."
+        },
+        {
+          "$ref": "#/definitions/generators.GitRemoteSchema"
+        }
+      ],
+      "description": "A spec source can be either a local file path (string) or a remote git reference."
+    },
     "generators.ProtobufDefinitionSchema": {
       "type": "object",
       "properties": {
@@ -1103,8 +1145,8 @@
           "description": "The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`)."
         },
         "root": {
-          "type": "string",
-          "description": "The path to the `.proto` directory root (e.g. `proto`)."
+          "$ref": "#/definitions/generators.SpecSourceSchema",
+          "description": "The path to the `.proto` directory root (e.g. `proto`), or a git remote reference."
         },
         "overrides": {
           "oneOf": [
@@ -2391,7 +2433,7 @@
       "type": "object",
       "properties": {
         "openapi": {
-          "type": "string"
+          "$ref": "#/definitions/generators.SpecSourceSchema"
         },
         "origin": {
           "oneOf": [
@@ -2633,7 +2675,7 @@
       "type": "object",
       "properties": {
         "asyncapi": {
-          "type": "string"
+          "$ref": "#/definitions/generators.SpecSourceSchema"
         },
         "origin": {
           "oneOf": [

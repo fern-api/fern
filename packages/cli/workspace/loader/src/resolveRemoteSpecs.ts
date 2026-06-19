@@ -129,7 +129,9 @@ export async function resolveRemoteSpecs({
             throw new Error(`Internal error: no clone found for ${key}`);
         }
 
-        const resolvedPath = AbsoluteFilePath.of(path.resolve(clonedPath, def.gitSource.path));
+        // Guard against absolute paths which would bypass the cloned directory
+        const gitPath = def.gitSource.path.startsWith("/") ? def.gitSource.path.slice(1) : def.gitSource.path;
+        const resolvedPath = AbsoluteFilePath.of(path.resolve(clonedPath, gitPath));
 
         if (def.schema.type === "protobuf") {
             return {

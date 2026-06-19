@@ -652,7 +652,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
-                const specPath = typeof spec.openapi === "string" ? spec.openapi : spec.openapi.path;
+                if (typeof spec.openapi !== "string") {
+                    throw new Error(
+                        "Git remote sources are not supported in specs overrides. " +
+                            `Please use a local path instead of the git source for repo '${spec.openapi.repo}'.`
+                    );
+                }
+                const specPath = spec.openapi;
                 const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(specPath, "openapi"));
                 // Handle both single override path and array of override paths
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
