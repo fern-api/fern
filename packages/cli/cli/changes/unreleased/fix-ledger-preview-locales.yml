@@ -1,3 +1,3 @@
 - summary: |
-    Use the typed ledger preview register client and include translated locales in preview publishes.
+    Fixes translated locales in ledger publishing mode (currently opt-in).
   type: fix
