@@ -129,9 +129,14 @@ export async function resolveRemoteSpecs({
             throw new Error(`Internal error: no clone found for ${key}`);
         }
 
-        // Guard against absolute paths which would bypass the cloned directory
-        const gitPath = def.gitSource.path.startsWith("/") ? def.gitSource.path.slice(1) : def.gitSource.path;
-        const resolvedPath = AbsoluteFilePath.of(path.resolve(clonedPath, gitPath));
+        // Validate the path to prevent directory traversal attacks
+        const resolvedPath = AbsoluteFilePath.of(path.resolve(clonedPath, def.gitSource.path));
+        if (!resolvedPath.startsWith(clonedPath + path.sep) && resolvedPath !== clonedPath) {
+            throw new Error(
+                `Invalid git source path '${def.gitSource.path}': ` +
+                    `path must be relative to the repository root and cannot traverse outside it.`
+            );
+        }
 
         if (def.schema.type === "protobuf") {
             return {

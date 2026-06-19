@@ -272,4 +272,54 @@ describe("resolveRemoteSpecs", () => {
             expect(result[0].schema.root).toBe(AbsoluteFilePath.of("/tmp/mock-clone-dir/proto"));
         }
     });
+
+    it("rejects absolute paths that escape the cloned directory", async () => {
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        __mockClone.mockResolvedValue(undefined);
+
+        const definitions: generatorsYml.APIDefinitionLocation[] = [
+            {
+                schema: { type: "oss", path: "/etc/passwd" },
+                origin: undefined,
+                overrides: undefined,
+                overlays: undefined,
+                audiences: [],
+                settings: undefined,
+                gitSource: {
+                    repo: "https://github.com/org/specs.git",
+                    ref: "main",
+                    path: "/etc/passwd"
+                }
+            }
+        ];
+
+        await expect(resolveRemoteSpecs({ definitions, context })).rejects.toThrow(
+            "path must be relative to the repository root and cannot traverse outside it"
+        );
+    });
+
+    it("rejects paths with directory traversal sequences", async () => {
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        __mockClone.mockResolvedValue(undefined);
+
+        const definitions: generatorsYml.APIDefinitionLocation[] = [
+            {
+                schema: { type: "oss", path: "../../proc/self/environ" },
+                origin: undefined,
+                overrides: undefined,
+                overlays: undefined,
+                audiences: [],
+                settings: undefined,
+                gitSource: {
+                    repo: "https://github.com/org/specs.git",
+                    ref: "main",
+                    path: "../../proc/self/environ"
+                }
+            }
+        ];
+
+        await expect(resolveRemoteSpecs({ definitions, context })).rejects.toThrow(
+            "path must be relative to the repository root and cannot traverse outside it"
+        );
+    });
 });
