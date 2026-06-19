@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { extractErrorMessage } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { execSync } from "child_process";

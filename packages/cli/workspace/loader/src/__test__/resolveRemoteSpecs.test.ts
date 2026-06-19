@@ -52,7 +52,7 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("resolves git source definitions to local paths", async () => {
-        const { __mockClone } = await import("simple-git") as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
         __mockClone.mockResolvedValue(undefined);
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
@@ -73,23 +73,22 @@ describe("resolveRemoteSpecs", () => {
 
         const result = await resolveRemoteSpecs({ definitions, context });
 
-        expect(__mockClone).toHaveBeenCalledWith(
-            "https://github.com/org/specs.git",
-            "/tmp/mock-clone-dir",
-            ["--depth", "1", "--branch", "main"]
-        );
+        expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
+            "--depth",
+            "1",
+            "--branch",
+            "main"
+        ]);
 
         expect(result[0]?.gitSource).toBeUndefined();
         expect(result[0]?.schema.type).toBe("oss");
         if (result[0]?.schema.type === "oss") {
-            expect(result[0].schema.path).toBe(
-                AbsoluteFilePath.of("/tmp/mock-clone-dir/openapi/service.yml")
-            );
+            expect(result[0].schema.path).toBe(AbsoluteFilePath.of("/tmp/mock-clone-dir/openapi/service.yml"));
         }
     });
 
     it("deduplicates clones for same repo+ref", async () => {
-        const { __mockClone } = await import("simple-git") as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
         __mockClone.mockResolvedValue(undefined);
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
@@ -128,7 +127,7 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("clones different repos separately", async () => {
-        const { __mockClone } = await import("simple-git") as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
         __mockClone.mockResolvedValue(undefined);
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
@@ -166,7 +165,7 @@ describe("resolveRemoteSpecs", () => {
     });
 
     it("omits --branch flag when ref is undefined", async () => {
-        const { __mockClone } = await import("simple-git") as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
         __mockClone.mockResolvedValue(undefined);
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
@@ -187,15 +186,14 @@ describe("resolveRemoteSpecs", () => {
 
         await resolveRemoteSpecs({ definitions, context });
 
-        expect(__mockClone).toHaveBeenCalledWith(
-            "https://github.com/org/specs.git",
-            "/tmp/mock-clone-dir",
-            ["--depth", "1"]
-        );
+        expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
+            "--depth",
+            "1"
+        ]);
     });
 
     it("throws auth error on authentication failure", async () => {
-        const { __mockClone } = await import("simple-git") as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
         __mockClone.mockRejectedValue(new Error("Authentication failed for 'https://github.com/org/private.git'"));
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
@@ -214,13 +212,11 @@ describe("resolveRemoteSpecs", () => {
             }
         ];
 
-        await expect(resolveRemoteSpecs({ definitions, context })).rejects.toThrow(
-            "authentication failed"
-        );
+        await expect(resolveRemoteSpecs({ definitions, context })).rejects.toThrow("authentication failed");
     });
 
     it("throws not-found error when repo does not exist", async () => {
-        const { __mockClone } = await import("simple-git") as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
         __mockClone.mockRejectedValue(new Error("Repository not found"));
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
@@ -239,18 +235,23 @@ describe("resolveRemoteSpecs", () => {
             }
         ];
 
-        await expect(resolveRemoteSpecs({ definitions, context })).rejects.toThrow(
-            "repository not found"
-        );
+        await expect(resolveRemoteSpecs({ definitions, context })).rejects.toThrow("repository not found");
     });
 
     it("resolves protobuf definitions correctly", async () => {
-        const { __mockClone } = await import("simple-git") as unknown as { __mockClone: ReturnType<typeof vi.fn> };
+        const { __mockClone } = (await import("simple-git")) as unknown as { __mockClone: ReturnType<typeof vi.fn> };
         __mockClone.mockResolvedValue(undefined);
 
         const definitions: generatorsYml.APIDefinitionLocation[] = [
             {
-                schema: { type: "protobuf", root: "proto/", target: "user/v1/user.proto", localGeneration: false, fromOpenAPI: false, dependencies: [] },
+                schema: {
+                    type: "protobuf",
+                    root: "proto/",
+                    target: "user/v1/user.proto",
+                    localGeneration: false,
+                    fromOpenAPI: false,
+                    dependencies: []
+                },
                 origin: undefined,
                 overrides: undefined,
                 overlays: undefined,
@@ -268,9 +269,7 @@ describe("resolveRemoteSpecs", () => {
 
         expect(result[0]?.gitSource).toBeUndefined();
         if (result[0]?.schema.type === "protobuf") {
-            expect(result[0].schema.root).toBe(
-                AbsoluteFilePath.of("/tmp/mock-clone-dir/proto")
-            );
+            expect(result[0].schema.root).toBe(AbsoluteFilePath.of("/tmp/mock-clone-dir/proto"));
         }
     });
 });

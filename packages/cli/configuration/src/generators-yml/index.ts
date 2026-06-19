@@ -15,8 +15,8 @@ export {
     type GeneratorGroup,
     type GeneratorInvocation,
     type GeneratorsConfiguration,
-    getPackageName,
     type GitSource,
+    getPackageName,
     type ProtoAPIDefinitionSchema,
     type ResolvedAutomationConfig,
     type SingleNamespaceAPIDefinition
