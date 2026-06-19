@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.3
+  changelogEntry:
+    - summary: |
+        Fixed C# generation failures for APIs that declare a model type named `Test`.
+        The generated test project no longer emits a `{Namespace}.Test` namespace that
+        collides with the model type, so serialization tests compile. Also taught the
+        OneOf equality comparer to treat undiscriminated-union string-enum members with
+        the same wire value as equal, since the concrete member type is not recoverable
+        when deserializing.
+      type: fix
+  createdAt: "2026-06-19"
+  irVersion: 66
 - version: 2.68.2
   changelogEntry:
     - summary: |
