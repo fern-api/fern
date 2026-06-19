@@ -4,17 +4,12 @@ import {
     createDocsLedgerClient,
     type DocsPublishGitInput,
     type FileManifestEntry,
-    type LedgerPreviewRegisterResponse,
     type LocaleEntry
 } from "@fern-api/fdr-sdk/orpc-client";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 
-import { buildTranslatedDocsDefinition } from "./buildTranslatedDocsDefinition.js";
-import { buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
-import { asyncPool } from "./utils/asyncPool.js";
-
-const TRANSLATION_BUILD_CONCURRENCY = 4;
+import { buildAllTranslationInputs, buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
 
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
@@ -82,32 +77,24 @@ export async function publishDocsViaLedgerPreview({
         fileIdToPath
     });
 
-    const builtTranslationDefs = await buildAllTranslationDefinitions({
+    const builtTranslations = await buildAllTranslationInputs({
         docsDefinition,
+        git,
+        apiDefinitions,
+        fileManifest,
+        fileIdToPath,
         resolver,
         context
     });
 
-    const translationInputs = builtTranslationDefs.map((t) => {
-        const { localeEntry, blobs: translationBlobs } = buildLedgerInput({
-            docsDefinition: t.translatedDefinition,
-            git,
-            apiDefinitions,
-            fileManifest,
-            fileIdToPath,
-            locale: t.locale
-        });
-        return { ...t, localeEntry, blobs: translationBlobs };
-    });
-
     // Merge all translation blobs into the base pool before register/upload.
-    for (const t of translationInputs) {
+    for (const t of builtTranslations) {
         for (const [hash, buf] of t.blobs) {
             blobs.set(hash, buf);
         }
     }
 
-    const locales: LocaleEntry[] = [baseLocale, ...translationInputs.map((t) => t.localeEntry)];
+    const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
     // ── Phase 2: Single register → upload → finish ─────────────────────
 
@@ -135,12 +122,7 @@ export async function publishDocsViaLedgerPreview({
         repo: baseLocale.repo,
         git
     };
-    const registerResult = await previewRegisterWithLocales({
-        fdrOrigin,
-        token,
-        headers,
-        input: previewRegisterInput
-    });
+    const registerResult = await client.previewRegister(previewRegisterInput);
     const registerTime = performance.now() - registerStart;
     context.logger.debug(
         `[ledger-preview] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, ` +
@@ -179,111 +161,4 @@ export async function publishDocsViaLedgerPreview({
         previewUrl: registerResult.previewUrl,
         deploymentId: finishResult.deploymentId
     };
-}
-
-// ── Translation build helpers ──────────────────────────────────────────
-
-interface BuiltTranslationDef {
-    locale: string;
-    localePages: Record<string, string>;
-    translatedDefinition: DocsDefinition;
-}
-
-/**
- * Build translated DocsDefinitions for every locale the resolver discovered.
- *
- * All locales are built in parallel. If ANY locale fails, the returned
- * promise rejects — callers should let the error propagate to abort the
- * entire publish.
- *
- * This only builds the DocsDefinitions (the expensive async part). The
- * caller converts them to ledger locale entries before previewRegister so
- * translation blobs are included in missingContent.
- */
-async function buildAllTranslationDefinitions({
-    docsDefinition,
-    resolver,
-    context
-}: {
-    docsDefinition: DocsDefinition;
-    resolver?: DocsDefinitionResolver;
-    context: TaskContext;
-}): Promise<BuiltTranslationDef[]> {
-    if (resolver == null) {
-        return [];
-    }
-
-    const translationPages = resolver.getTranslationPages();
-    const translationNavigationOverlays = resolver.getTranslationNavigationOverlays();
-
-    if (translationPages == null || Object.keys(translationPages).length === 0) {
-        return [];
-    }
-
-    const localeEntries = Object.entries(translationPages);
-    context.logger.info(`[ledger-preview] Building ${localeEntries.length} translation locale(s)...`);
-
-    return asyncPool(
-        TRANSLATION_BUILD_CONCURRENCY,
-        localeEntries,
-        async ([locale, localePages]): Promise<BuiltTranslationDef> => {
-            const translatedDefinition = await buildTranslatedDocsDefinition({
-                docsDefinition,
-                locale,
-                localePages,
-                translationNavigationOverlays,
-                resolver,
-                context
-            });
-            return { locale, localePages, translatedDefinition };
-        }
-    );
-}
-
-interface PreviewRegisterInput {
-    orgId: string;
-    previewId: string | null;
-    basePath: string;
-    defaultLocale: string;
-    locales: LocaleEntry[];
-    root: LocaleEntry["root"];
-    pages: LocaleEntry["pages"];
-    apiManifest: LocaleEntry["apiManifest"];
-    config: LocaleEntry["config"];
-    fileManifest: LocaleEntry["fileManifest"];
-    jsFiles: LocaleEntry["jsFiles"];
-    redirects: LocaleEntry["redirects"];
-    locale: string;
-    version?: LocaleEntry["version"];
-    repo?: LocaleEntry["repo"];
-    git?: DocsPublishGitInput;
-}
-
-async function previewRegisterWithLocales({
-    fdrOrigin,
-    token,
-    headers,
-    input
-}: {
-    fdrOrigin: string;
-    token: string;
-    headers: Record<string, string>;
-    input: PreviewRegisterInput;
-}): Promise<LedgerPreviewRegisterResponse> {
-    const response = await fetch(`${fdrOrigin.replace(/\/+$/, "")}/docs-ledger/preview/init`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            ...headers
-        },
-        body: JSON.stringify(input)
-    });
-
-    if (!response.ok) {
-        const body = await response.text();
-        throw new Error(`[ledger-preview] Preview register failed: HTTP ${response.status}: ${body}`);
-    }
-
-    return (await response.json()) as LedgerPreviewRegisterResponse;
 }

@@ -488,7 +488,7 @@ async function uploadBlobWithRetry(
 
 // ── Translation build helpers ──────────────────────────────────────────
 
-interface BuiltTranslation {
+export interface BuiltTranslation {
     locale: string;
     localePages: Record<string, string>;
     translatedDefinition: DocsDefinition;
@@ -576,7 +576,7 @@ export function buildLocaleApiDefinitions({
  * returned promise rejects — callers should let the error propagate to
  * abort the entire publish.
  */
-async function buildAllTranslationInputs({
+export async function buildAllTranslationInputs({
     docsDefinition,
     git,
     apiDefinitions,

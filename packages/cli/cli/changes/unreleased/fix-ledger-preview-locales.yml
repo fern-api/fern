@@ -1,0 +1,3 @@
+- summary: |
+    Use the typed ledger preview register client and include translated locales in preview publishes.
+  type: fix
