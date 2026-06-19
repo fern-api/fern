@@ -17,6 +17,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
+import { resolveRemoteSpecs } from "./resolveRemoteSpecs.js";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -46,8 +47,15 @@ export async function loadSingleNamespaceAPIWorkspace({
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
                 : undefined;
         if (definition.schema.type === "protobuf") {
-            const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
-            const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot);
+            // Resolved git sources produce absolute paths; use them directly
+            const absoluteFilepathToProtobufRoot: AbsoluteFilePath =
+                path.isAbsolute(definition.schema.root) && definition.resolvedAbsolutePath
+                    ? AbsoluteFilePath.of(definition.schema.root)
+                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.root));
+            const relativeFilepathToProtobufRoot =
+                path.isAbsolute(definition.schema.root) && definition.resolvedAbsolutePath
+                    ? RelativeFilePath.of(path.basename(definition.schema.root))
+                    : RelativeFilePath.of(definition.schema.root);
             if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
                 return {
                     didSucceed: false,
@@ -149,7 +157,8 @@ export async function loadSingleNamespaceAPIWorkspace({
             continue;
         }
 
-        if (path.isAbsolute(definition.schema.path)) {
+        // Reject user-specified absolute paths (only allow absolute paths from git source resolution)
+        if (path.isAbsolute(definition.schema.path) && !definition.resolvedAbsolutePath) {
             return {
                 didSucceed: false,
                 failures: {
@@ -161,9 +170,14 @@ export async function loadSingleNamespaceAPIWorkspace({
             };
         }
 
-        const relativeFilepath = RelativeFilePath.of(definition.schema.path);
-        const absoluteFilepath = join(absolutePathToWorkspace, relativeFilepath);
+        const absoluteFilepath: AbsoluteFilePath = path.isAbsolute(definition.schema.path)
+            ? AbsoluteFilePath.of(definition.schema.path)
+            : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
+
         if (!(await doesPathExist(absoluteFilepath))) {
+            const relativeFilepath = path.isAbsolute(definition.schema.path)
+                ? RelativeFilePath.of(path.basename(definition.schema.path))
+                : RelativeFilePath.of(definition.schema.path);
             return {
                 didSucceed: false,
                 failures: {
@@ -279,10 +293,14 @@ export async function loadAPIWorkspace({
         const specs: Spec[] = [];
 
         if (generatorsConfiguration.api.type === "singleNamespace") {
+            const resolvedDefinitions = await resolveRemoteSpecs({
+                definitions: generatorsConfiguration.api.definitions,
+                context
+            });
             const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
                 absolutePathToWorkspace,
                 namespace: undefined,
-                definitions: generatorsConfiguration.api.definitions
+                definitions: resolvedDefinitions
             });
             if (!Array.isArray(maybeSpecs)) {
                 return maybeSpecs;
@@ -291,13 +309,17 @@ export async function loadAPIWorkspace({
         } else {
             const namespaceEntries = Object.entries(generatorsConfiguration.api.definitions);
             const namespaceResults = await Promise.all(
-                namespaceEntries.map(([namespace, definitions]) =>
-                    loadSingleNamespaceAPIWorkspace({
+                namespaceEntries.map(async ([namespace, definitions]) => {
+                    const resolvedDefinitions = await resolveRemoteSpecs({
+                        definitions,
+                        context
+                    });
+                    return loadSingleNamespaceAPIWorkspace({
                         absolutePathToWorkspace,
                         namespace,
-                        definitions
-                    })
-                )
+                        definitions: resolvedDefinitions
+                    });
+                })
             );
             for (const maybeSpecs of namespaceResults) {
                 if (!Array.isArray(maybeSpecs)) {
@@ -307,10 +329,14 @@ export async function loadAPIWorkspace({
             }
 
             if (generatorsConfiguration.api.rootDefinitions != null) {
+                const resolvedRootDefinitions = await resolveRemoteSpecs({
+                    definitions: generatorsConfiguration.api.rootDefinitions,
+                    context
+                });
                 const maybeRootSpecs = await loadSingleNamespaceAPIWorkspace({
                     absolutePathToWorkspace,
                     namespace: undefined,
-                    definitions: generatorsConfiguration.api.rootDefinitions
+                    definitions: resolvedRootDefinitions
                 });
                 if (!Array.isArray(maybeRootSpecs)) {
                     return maybeRootSpecs;

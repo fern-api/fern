@@ -3,7 +3,7 @@
 import type * as GeneratorsYml from "../../../index.js";
 
 export interface AsyncApiSpecSchema {
-    asyncapi: string;
+    asyncapi: GeneratorsYml.SpecSourceSchema;
     origin?: string;
     overrides?: GeneratorsYml.OverridesSchema;
     namespace?: string;

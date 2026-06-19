@@ -308,7 +308,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         warnings.push(...settingsResult.warnings);
 
         const result: schemas.OpenApiSpecSchema = {
-            openapi: openApiSpec.openapi
+            openapi: typeof openApiSpec.openapi === "string" ? openApiSpec.openapi : openApiSpec.openapi.path
         };
 
         if (openApiSpec.origin != null) {
@@ -335,7 +335,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         warnings.push(...settingsResult.warnings);
 
         const result: schemas.AsyncApiSpecSchema = {
-            asyncapi: asyncApiSpec.asyncapi
+            asyncapi: typeof asyncApiSpec.asyncapi === "string" ? asyncApiSpec.asyncapi : asyncApiSpec.asyncapi.path
         };
 
         if (asyncApiSpec.origin != null) {
@@ -359,7 +359,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
 
         const result: schemas.ProtobufSpecSchema = {
             proto: {
-                root: protoDef.root
+                root: typeof protoDef.root === "string" ? protoDef.root : protoDef.root.path
             }
         };
 
@@ -479,7 +479,7 @@ function convertLegacyApiConfig(
         const protoDef = config.proto;
         const result: schemas.ProtobufSpecSchema = {
             proto: {
-                root: protoDef.root
+                root: typeof protoDef.root === "string" ? protoDef.root : protoDef.root.path
             }
         };
 

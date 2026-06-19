@@ -652,7 +652,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
-                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(spec.openapi, "openapi"));
+                const specPath = typeof spec.openapi === "string" ? spec.openapi : spec.openapi.path;
+                const absoluteFilepath = join(this.absoluteFilePath, toRelativePath(specPath, "openapi"));
                 // Handle both single override path and array of override paths
                 let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
                 const specOverridePaths: AbsoluteFilePath[] = [];
