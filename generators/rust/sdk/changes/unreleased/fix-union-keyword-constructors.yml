@@ -1,0 +1,6 @@
+- summary: |
+    Fix union variant constructors that fail to compile when the discriminant is a Rust keyword
+    (e.g. `static`, `override`) by using keyword-safe names (`static_`, `override_`). Also fix
+    duplicate `unknown` constructor (E0592) when a real variant's discriminant snake-cases to
+    `unknown` by emitting the catch-all under `unknown_value`.
+  type: fix

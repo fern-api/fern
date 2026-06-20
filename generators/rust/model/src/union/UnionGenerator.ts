@@ -540,20 +540,21 @@ export class UnionGenerator {
             // callers can wrap a raw JSON payload (the `#[non_exhaustive]` enum attribute
             // prevents direct construction outside the crate).
             if (this.isForwardCompatible()) {
-                // Check if any user-defined variant already produces a constructor named "unknown"
-                // to avoid duplicate method definitions.
-                const hasUnknownVariant = this.unionTypeDeclaration.types.some((ut) => {
-                    return this.context.case.snakeUnsafe(ut.discriminantValue) === UNKNOWN_CONSTRUCTOR_NAME;
-                });
-                if (!hasUnknownVariant) {
-                    if (needsNewline) {
-                        writer.newLine();
-                    }
-                    writer.writeBlock(`pub fn ${UNKNOWN_CONSTRUCTOR_NAME}(value: serde_json::Value) -> Self`, () => {
-                        writer.writeLine(`Self::${UNKNOWN_VARIANT_NAME}(value)`);
-                    });
-                    needsNewline = true;
+                if (needsNewline) {
+                    writer.newLine();
                 }
+                // Dedup: if a real variant already produces a constructor named `unknown`,
+                // emit the catch-all under `unknown_value` to avoid E0592 duplicate definitions.
+                const realConstructorNames = new Set(
+                    this.unionTypeDeclaration.types.map((ut) => this.context.case.snakeSafe(ut.discriminantValue))
+                );
+                const catchAllName = realConstructorNames.has(UNKNOWN_CONSTRUCTOR_NAME)
+                    ? `${UNKNOWN_CONSTRUCTOR_NAME}_value`
+                    : UNKNOWN_CONSTRUCTOR_NAME;
+                writer.writeBlock(`pub fn ${catchAllName}(value: serde_json::Value) -> Self`, () => {
+                    writer.writeLine(`Self::${UNKNOWN_VARIANT_NAME}(value)`);
+                });
+                needsNewline = true;
             }
 
             // Generate getter methods for base properties
@@ -594,7 +595,7 @@ export class UnionGenerator {
     private generateVariantConstructor(writer: rust.Writer, unionType: FernIr.SingleUnionType): void {
         const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
-        const constructorName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(unionType.discriminantValue));
+        const constructorName = this.context.case.snakeSafe(unionType.discriminantValue);
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
         unionType.shape._visit({
@@ -736,7 +737,7 @@ export class UnionGenerator {
         const constructors: ((writer: rust.Writer) => void)[] = [];
         const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
-        const constructorBaseName = this.context.case.snakeUnsafe(unionType.discriminantValue);
+        const constructorBaseName = this.context.case.snakeSafe(unionType.discriminantValue);
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
         unionType.shape._visit({

@@ -94,6 +94,31 @@ types:
       account_number: string
       routing_number: string
 
+  # Union with Rust keyword discriminants and a real "unknown" variant
+  # Regression test: constructors for keyword discriminants must be escaped,
+  # and the real "unknown" variant must not collide with the catch-all.
+  KeywordUnion:
+    discriminant: kind
+    union:
+      static:
+        type: StaticVariant
+      override:
+        type: OverrideVariant
+      unknown:
+        type: UnknownVariant
+
+  StaticVariant:
+    properties:
+      value: string
+
+  OverrideVariant:
+    properties:
+      priority: integer
+
+  UnknownVariant:
+    properties:
+      data: string
+
   FileFormat:
     enum:
       - JSON
