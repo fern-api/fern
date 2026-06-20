@@ -94,6 +94,30 @@ types:
       account_number: string
       routing_number: string
 
+  # Union with Rust keyword discriminants and an `unknown` variant that collides
+  # with the forward-compatible catch-all constructor name.
+  KeywordUnion:
+    discriminant: type
+    union:
+      static:
+        type: StaticData
+      override:
+        type: OverrideData
+      unknown:
+        type: UnknownData
+
+  StaticData:
+    properties:
+      value: string
+
+  OverrideData:
+    properties:
+      priority: integer
+
+  UnknownData:
+    properties:
+      payload: string
+
   FileFormat:
     enum:
       - JSON

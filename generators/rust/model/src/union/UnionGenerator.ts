@@ -543,7 +543,8 @@ export class UnionGenerator {
                 if (needsNewline) {
                     writer.newLine();
                 }
-                writer.writeBlock(`pub fn ${UNKNOWN_CONSTRUCTOR_NAME}(value: serde_json::Value) -> Self`, () => {
+                const unknownCtorName = this.getUnknownConstructorName();
+                writer.writeBlock(`pub fn ${unknownCtorName}(value: serde_json::Value) -> Self`, () => {
                     writer.writeLine(`Self::${UNKNOWN_VARIANT_NAME}(value)`);
                 });
                 needsNewline = true;
@@ -587,7 +588,7 @@ export class UnionGenerator {
     private generateVariantConstructor(writer: rust.Writer, unionType: FernIr.SingleUnionType): void {
         const rawVariantName = this.context.case.pascalUnsafe(unionType.discriminantValue);
         const variantName = this.context.escapeRustReservedType(rawVariantName);
-        const constructorName = this.context.case.snakeUnsafe(unionType.discriminantValue);
+        const constructorName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(unionType.discriminantValue));
         const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
         unionType.shape._visit({
@@ -816,6 +817,24 @@ export class UnionGenerator {
         });
 
         return constructors;
+    }
+
+    /**
+     * Returns the constructor name for the forward-compatible catch-all variant.
+     * Normally "unknown", but deconflicts to "unknown_value" if a real variant
+     * already produces an "unknown" constructor name.
+     */
+    private getUnknownConstructorName(): string {
+        const variantConstructorNames = new Set(
+            this.unionTypeDeclaration.types.map((unionType) =>
+                this.context.escapeRustKeyword(this.context.case.snakeUnsafe(unionType.discriminantValue))
+            )
+        );
+        let name = UNKNOWN_CONSTRUCTOR_NAME;
+        if (variantConstructorNames.has(name)) {
+            name = "unknown_value";
+        }
+        return name;
     }
 
     private getBasePropertyParams(): string[] {

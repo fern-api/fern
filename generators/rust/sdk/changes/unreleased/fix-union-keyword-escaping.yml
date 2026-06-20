@@ -1,0 +1,5 @@
+- summary: |
+    Fix union variant constructor names that are Rust keywords (e.g. `static`, `override`)
+    by escaping them with `r#` prefix. Also deconflict the forward-compatible catch-all
+    constructor when a real variant is named `unknown`.
+  type: fix
