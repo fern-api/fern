@@ -831,8 +831,8 @@ export class UnionGenerator {
             )
         );
         let name = UNKNOWN_CONSTRUCTOR_NAME;
-        if (variantConstructorNames.has(name)) {
-            name = "unknown_value";
+        while (variantConstructorNames.has(name)) {
+            name = `${name}_value`;
         }
         return name;
     }
