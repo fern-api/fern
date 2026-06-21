@@ -307,7 +307,8 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         const settingsResult = convertOpenApiSpecSettings(openApiSpec.settings as Record<string, unknown> | undefined);
         warnings.push(...settingsResult.warnings);
 
-        const openapiValue = typeof openApiSpec.openapi === "string" ? openApiSpec.openapi : openApiSpec.openapi.git.path;
+        const openapiValue =
+            typeof openApiSpec.openapi === "string" ? openApiSpec.openapi : openApiSpec.openapi.git.path;
         if (typeof openApiSpec.openapi !== "string") {
             warnings.push({
                 type: "info",
