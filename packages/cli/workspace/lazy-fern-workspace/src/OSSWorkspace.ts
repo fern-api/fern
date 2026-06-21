@@ -655,7 +655,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 if (typeof spec.openapi !== "string") {
                     throw new Error(
                         "Git remote sources are not supported in specs overrides. " +
-                            `Please use a local path instead of the git source for repo '${spec.openapi.repo}'.`
+                            `Please use a local path instead of the git source for repo '${spec.openapi.git.repo}'.`
                     );
                 }
                 const specPath = spec.openapi;

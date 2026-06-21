@@ -5,4 +5,4 @@ import type * as GeneratorsYml from "../../../index.js";
 /**
  * A spec source can be either a local file path (string) or a remote git reference.
  */
-export type SpecSourceSchema = string | GeneratorsYml.GitRemoteSchema;
+export type SpecSourceSchema = string | GeneratorsYml.SpecGitSourceSchema;

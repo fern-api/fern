@@ -3,13 +3,13 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { GitRemoteSchema } from "./GitRemoteSchema.js";
+import { SpecGitSourceSchema } from "./SpecGitSourceSchema.js";
 
 export const SpecSourceSchema: core.serialization.Schema<
     serializers.SpecSourceSchema.Raw,
     GeneratorsYml.SpecSourceSchema
-> = core.serialization.undiscriminatedUnion([core.serialization.string(), GitRemoteSchema]);
+> = core.serialization.undiscriminatedUnion([core.serialization.string(), SpecGitSourceSchema]);
 
 export declare namespace SpecSourceSchema {
-    export type Raw = string | GitRemoteSchema.Raw;
+    export type Raw = string | SpecGitSourceSchema.Raw;
 }

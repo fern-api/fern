@@ -47,6 +47,7 @@ export * from "./RequestOrResponseExampleGenerationSchema.js";
 export * from "./ResolveAliases.js";
 export * from "./ResolveAliasesSchema.js";
 export * from "./SpecSchema.js";
+export * from "./SpecGitSourceSchema.js";
 export * from "./SpecSourceSchema.js";
 export * from "./UnionSettingsSchema.js";
 export * from "./WhitelabelConfigurationSchema.js";

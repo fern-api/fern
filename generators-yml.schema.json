@@ -1118,6 +1118,19 @@
       "additionalProperties": false,
       "description": "A reference to a file or directory in a remote git repository.\nThe CLI will shallow-clone the repo at the specified ref and resolve the path locally."
     },
+    "generators.SpecGitSourceSchema": {
+      "type": "object",
+      "properties": {
+        "git": {
+          "$ref": "#/definitions/generators.GitRemoteSchema"
+        }
+      },
+      "required": [
+        "git"
+      ],
+      "additionalProperties": false,
+      "description": "A wrapper that identifies the spec source as a remote git reference.\nContains the git repository details under the `git` key."
+    },
     "generators.SpecSourceSchema": {
       "anyOf": [
         {
@@ -1125,7 +1138,7 @@
           "description": "A local file path relative to the Fern workspace."
         },
         {
-          "$ref": "#/definitions/generators.GitRemoteSchema"
+          "$ref": "#/definitions/generators.SpecGitSourceSchema"
         }
       ],
       "description": "A spec source can be either a local file path (string) or a remote git reference."

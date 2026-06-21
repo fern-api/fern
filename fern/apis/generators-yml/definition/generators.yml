@@ -617,6 +617,13 @@ types:
         type: string
         docs: Path to the spec file or directory within the repository.
 
+  SpecGitSourceSchema:
+    docs: |
+      A wrapper that identifies the spec source as a remote git reference.
+      Contains the git repository details under the `git` key.
+    properties:
+      git: GitRemoteSchema
+
   SpecSourceSchema:
     discriminated: false
     docs: |
@@ -624,7 +631,7 @@ types:
     union:
       - type: string
         docs: A local file path relative to the Fern workspace.
-      - GitRemoteSchema
+      - SpecGitSourceSchema
 
   OpenAPISpecSchema:
     properties:

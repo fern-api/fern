@@ -18,11 +18,11 @@ function parseSpecSource(source: generatorsYml.SpecSourceSchema): {
         return { path: source, gitSource: undefined };
     }
     return {
-        path: source.path,
+        path: source.git.path,
         gitSource: {
-            repo: source.repo,
-            ref: source.ref,
-            path: source.path
+            repo: source.git.repo,
+            ref: source.git.ref,
+            path: source.git.path
         }
     };
 }

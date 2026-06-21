@@ -307,7 +307,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         const settingsResult = convertOpenApiSpecSettings(openApiSpec.settings as Record<string, unknown> | undefined);
         warnings.push(...settingsResult.warnings);
 
-        const openapiValue = typeof openApiSpec.openapi === "string" ? openApiSpec.openapi : openApiSpec.openapi.path;
+        const openapiValue = typeof openApiSpec.openapi === "string" ? openApiSpec.openapi : openApiSpec.openapi.git.path;
         if (typeof openApiSpec.openapi !== "string") {
             warnings.push({
                 type: "info",
@@ -344,7 +344,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         warnings.push(...settingsResult.warnings);
 
         const asyncapiValue =
-            typeof asyncApiSpec.asyncapi === "string" ? asyncApiSpec.asyncapi : asyncApiSpec.asyncapi.path;
+            typeof asyncApiSpec.asyncapi === "string" ? asyncApiSpec.asyncapi : asyncApiSpec.asyncapi.git.path;
         if (typeof asyncApiSpec.asyncapi !== "string") {
             warnings.push({
                 type: "info",
@@ -376,7 +376,7 @@ function convertSpec(spec: generatorsYml.SpecSchema, warnings: MigratorWarning[]
         const protoSpec = spec as generatorsYml.ProtobufSpecSchema;
         const protoDef = protoSpec.proto;
 
-        const protoRootValue = typeof protoDef.root === "string" ? protoDef.root : protoDef.root.path;
+        const protoRootValue = typeof protoDef.root === "string" ? protoDef.root : protoDef.root.git.path;
         if (typeof protoDef.root !== "string") {
             warnings.push({
                 type: "info",
@@ -505,7 +505,7 @@ function convertLegacyApiConfig(
 
     if ("proto" in config && config.proto != null) {
         const protoDef = config.proto;
-        const legacyProtoRootValue = typeof protoDef.root === "string" ? protoDef.root : protoDef.root.path;
+        const legacyProtoRootValue = typeof protoDef.root === "string" ? protoDef.root : protoDef.root.git.path;
         if (typeof protoDef.root !== "string") {
             warnings.push({
                 type: "info",
