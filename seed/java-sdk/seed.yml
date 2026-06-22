@@ -399,7 +399,6 @@ allowedFailures:
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
-  - nullable:wrapped-aliases
   - pagination-custom
 
   - java-pagination-deep-cursor-path:wire-tests
