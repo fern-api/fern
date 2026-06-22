@@ -52,7 +52,9 @@ import Exhaustive
                 "list",
                 "list"
             ]),
-            set: Optional([]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
             map: Optional([
                 1: "map"
             ]),

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "6fab11ee",
+            "example_identifier": "dd39da9e",
             "id": {
                 "method": "POST",
                 "path": "/send-optional-body",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "4d44a9aa",
+            "example_identifier": "cace408a",
             "id": {
                 "method": "POST",
                 "path": "/send-optional-typed-body",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "6c2b5482",
+            "example_identifier": "3d637762",
             "id": {
                 "method": "POST",
                 "path": "/deploy/{actionId}/versions/{id}",
@@ -35,8 +35,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            DeployParams\n                .builder()\n                .updateDraft(true)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            Optional.of(\n                DeployParams\n                    .builder()\n                    .updateDraft(true)\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.objectsWithImports.SeedObjectsWithImportsClient;\nimport com.seed.objectsWithImports.resources.optional.types.DeployParams;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient\n            .builder()\n            .build();\n\n        client.optional().sendOptionalNullableWithAllOptionalProperties(\n            \"actionId\",\n            \"id\",\n            Optional.of(\n                DeployParams\n                    .builder()\n                    .updateDraft(true)\n                    .build()\n            )\n        );\n    }\n}\n"
             }
         }
     ],
