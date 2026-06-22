@@ -392,8 +392,6 @@ allowedFailures:
   - examples:readme-config
   - exhaustive:local-files
   - oauth-client-credentials-custom
-  - request-parameters
-  - streaming-parameter
 
   # Generated raw client / publish fixtures fail to compile in CI
   # (e.g. endpoint-security-auth's RawUserClient "cannot find symbol").
