@@ -1,4 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
+import safeRegex from "safe-regex";
 
 import { AbstractConverterContext } from "./AbstractConverterContext.js";
 import { ExampleConverter } from "./converters/ExampleConverter.js";
@@ -439,6 +440,12 @@ export class ExampleValidator {
         const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
         if (patternProperties && typeof patternProperties === "object") {
             for (const pattern of Object.keys(patternProperties)) {
+                // Skip patterns that are unsafe (could cause catastrophic backtracking / ReDoS) or
+                // syntactically invalid. Skipped patterns simply fall through to normal
+                // `additionalProperties` handling rather than being matched.
+                if (!safeRegex(pattern)) {
+                    continue;
+                }
                 try {
                     regexes.push(new RegExp(pattern));
                 } catch {

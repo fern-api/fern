@@ -319,6 +319,38 @@ describe("ExampleConverter", () => {
             expect(result.errors.some((error) => error.message.includes("notAllowed"))).toBe(true);
             expect(result.errors.some((error) => error.message.includes("x-allowed"))).toBe(false);
         });
+
+        it("should skip unsafe (ReDoS-prone) patterns so matching keys are not silently accepted", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: false,
+                // Catastrophically-backtracking pattern — must be skipped rather than compiled.
+                ...({ patternProperties: { "(a+)+$": { type: "string" } } } as object)
+            };
+
+            const example = {
+                name: "My Item",
+                aaaaaaaaaa: "value"
+            };
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve(),
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            // The unsafe pattern is skipped, so the key is treated as a normal additional
+            // property and flagged under additionalProperties: false.
+            expect(result.isValid).toBe(false);
+            expect(result.errors.some((error) => error.message.includes("aaaaaaaaaa"))).toBe(true);
+        });
     });
 
     describe("additionalProperties", () => {
