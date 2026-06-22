@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.11
+  changelogEntry:
+    - summary: |
+        Fixed a C# compile error (CS0102) for discriminated unions whose discriminant property name
+        collides with one of the union's variant type names. The colliding nested variant type is now
+        suffixed with `Inner` (e.g. `EventInner`), consistent with the existing handling for `Value`/`Type`.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
 - version: 2.68.10
   changelogEntry:
     - summary: |
