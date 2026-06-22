@@ -175,7 +175,14 @@ fn describe_binding_sources(binding: &SchemeBinding) -> String {
                 describe_credential_source(password),
             )
         }
-        SchemeBinding::Custom(_) => "custom auth provider".to_string(),
+        SchemeBinding::Custom(p) => {
+            let hints = p.credential_hints();
+            if hints.is_empty() {
+                "custom auth provider".to_string()
+            } else {
+                hints.join(" / ")
+            }
+        }
     }
 }
 
@@ -896,6 +903,23 @@ mod tests {
         )];
         let out = render_auth_help_section(&bindings).unwrap();
         assert!(out.contains("custom auth provider"));
+    }
+
+    #[test]
+    fn render_auth_help_section_shows_custom_provider_hints() {
+        let provider: DynAuthProvider = Arc::new(HeaderAuthProvider::new(
+            "apiKey",
+            "X-Api-Key",
+            AuthCredentialSource::from_env("MY_API_KEY"),
+            false,
+        ));
+        let bindings = vec![(
+            "apiKey".to_string(),
+            SchemeBinding::Custom(provider),
+        )];
+        let out = render_auth_help_section(&bindings).unwrap();
+        assert!(out.contains("MY_API_KEY environment variable"));
+        assert!(!out.contains("custom auth provider"));
     }
 
     #[tokio::test]

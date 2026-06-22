@@ -238,7 +238,14 @@ fn describe_binding_source(binding: &SchemeBinding) -> String {
                 describe_credential_source(password),
             )
         }
-        SchemeBinding::Custom(_) => "custom auth provider".to_string(),
+        SchemeBinding::Custom(p) => {
+            let hints = p.credential_hints();
+            if hints.is_empty() {
+                "custom auth provider".to_string()
+            } else {
+                hints.join(" or ")
+            }
+        }
     }
 }
 

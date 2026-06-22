@@ -1,0 +1,4 @@
+- summary: |
+    Show credential hints (env vars, flags) for custom auth providers in
+    `--help` output instead of the opaque "custom auth provider" label.
+  type: fix
