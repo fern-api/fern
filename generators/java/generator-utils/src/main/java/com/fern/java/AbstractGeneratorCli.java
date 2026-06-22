@@ -748,10 +748,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
         if (addSignaturePlugin) {
             buildGradle.addPlugins(GradlePlugin.builder().pluginId("signing").build());
-            buildGradle.addPlugins(GradlePlugin.builder()
-                    .pluginId("cl.franciscosolis.sonatype-central-upload")
-                    .version("1.0.3")
-                    .build());
+            // The sonatype-central-upload plugin is not declared in the plugins block because its artifact cannot be
+            // resolved on a Java 8 JVM (seed CI). GeneratedBuildGradle instead puts it on the buildscript classpath and
+            // applies it only when the build runs on Java 11+.
             buildGradle.addCustomBlocks("signing {\n" + "    sign(publishing.publications)\n" + "}");
             // Generate an empty gradle.properties file
             addGeneratedFile(GeneratedGradleProperties.getGeneratedFile());
