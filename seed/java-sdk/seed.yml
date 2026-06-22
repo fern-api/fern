@@ -390,16 +390,12 @@ allowedFailures:
   # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
   - alias-extends
 
-  # Generated raw client / publish fixtures fail to compile in CI
-  # (e.g. endpoint-security-auth's RawUserClient "cannot find symbol").
-  # Tracked for a follow-up PR.
-  - endpoint-security-auth
+  # The generated publish build.gradle applies the
+  # cl.franciscosolis.sonatype-central-upload plugin, which requires a JVM 11+
+  # runtime. Seed CI compiles generated SDKs with a Java 8 JVM, so Gradle cannot
+  # resolve the plugin classpath and the project fails to configure.
   - exhaustive:publish-to
   - exhaustive:signed_publish
-
-  # Snippet failures; many of these failures are due to the fact that a
-  # required list of query parameters is not actually required by the builder.
-  - pagination-custom
 
   # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
