@@ -417,5 +417,4 @@ fixtures:
     - customConfig:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
-allowedFailures:
-  - oauth-client-credentials-custom
+allowedFailures: []

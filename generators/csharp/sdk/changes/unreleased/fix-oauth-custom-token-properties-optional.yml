@@ -1,0 +1,3 @@
+- summary: |
+    Expose additional OAuth client-credentials token-request properties (e.g. custom properties and mapped scopes) as optional constructor parameters defaulting to null, matching the Java SDK. This fixes generated snippets and docs that construct the client with only clientId/clientSecret.
+  type: fix

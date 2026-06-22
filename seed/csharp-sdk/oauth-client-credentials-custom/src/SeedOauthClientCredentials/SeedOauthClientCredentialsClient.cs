@@ -11,8 +11,8 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
     public SeedOauthClientCredentialsClient(
         string clientId,
         string clientSecret,
-        string entityId,
-        string scp,
+        string? entityId = null,
+        string? scp = null,
         ClientOptions? clientOptions = null
     )
     {

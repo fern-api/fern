@@ -927,7 +927,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         environmentVariable: scheme.configuration.clientSecretEnvVar,
                         exampleValue: "client_secret"
                     },
-                    ...this.getOAuthAdditionalConstructorParams(scheme, isOptional)
+                    ...this.getOAuthAdditionalConstructorParams(scheme)
                 ];
             } else {
                 this.context.logger.warn(
@@ -1046,11 +1046,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
     }
 
-    private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {
+    private getOAuthAdditionalConstructorParams(scheme: OAuthScheme): ConstructorParameter[] {
         const params: ConstructorParameter[] = [];
-        // Include required, non-literal custom properties, matching Java's approach of
-        // skipping only literals. Keep the optional guard to avoid adding optional-typed
-        // properties as required constructor parameters.
+        // Include non-literal custom properties of the token request, mirroring Java's
+        // approach of skipping only literals. These are exposed as optional constructor
+        // parameters (defaulting to null), matching Java's optional builder setters, so the
+        // root client can be constructed with just clientId/clientSecret.
         for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
             if (isLiteralTypeReference(customProperty.property.valueType)) {
                 continue;
@@ -1065,7 +1066,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             params.push({
                 name,
                 docs: `The ${name} for OAuth authentication.`,
-                isOptional,
+                isOptional: true,
                 typeReference: customProperty.property.valueType,
                 type: typeRef,
                 exampleValue: name
@@ -1081,7 +1082,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 params.push({
                     name,
                     docs: `The ${name} for OAuth authentication.`,
-                    isOptional,
+                    isOptional: true,
                     typeReference: scopes.property.valueType,
                     type: typeRef,
                     exampleValue: name
@@ -1099,7 +1100,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         if (this.oauth == null) {
             return [];
         }
-        return this.getOAuthAdditionalConstructorParams(this.oauth, false).map((p) => p.name);
+        return this.getOAuthAdditionalConstructorParams(this.oauth).map((p) => p.name);
     }
 
     private getInferredAuthCredentialParams(): string[] {
