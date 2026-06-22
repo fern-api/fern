@@ -14,6 +14,11 @@ function bundle(entryCode: string): Promise<number> {
         const entryFile = path.join(tmpDir, "entry.ts");
         fs.writeFileSync(entryFile, entryCode);
 
+        // The temp dir lives under `src/`, which is included by the SDK's tsconfig.
+        // Always remove it (success or failure) so an orphaned entry can't pollute
+        // subsequent TypeScript compilations or get accidentally committed.
+        const cleanup = () => fs.rmSync(tmpDir, { recursive: true, force: true });
+
         const compiler = webpack({
             mode: "production",
             entry: entryFile,
@@ -62,19 +67,21 @@ function bundle(entryCode: string): Promise<number> {
 
         compiler.run((err, stats) => {
             if (err) {
+                cleanup();
                 reject(err);
                 return;
             }
             if (stats?.hasErrors()) {
-                reject(new Error(stats.compilation.errors.map((e) => e.message).join("\n")));
+                const error = new Error(stats.compilation.errors.map((e) => e.message).join("\n"));
+                cleanup();
+                reject(error);
                 return;
             }
 
             const bundlePath = path.join(tmpDir, "bundle.js");
             const size = fs.statSync(bundlePath).size;
 
-            // Clean up
-            fs.rmSync(tmpDir, { recursive: true, force: true });
+            cleanup();
 
             resolve(size);
         });
