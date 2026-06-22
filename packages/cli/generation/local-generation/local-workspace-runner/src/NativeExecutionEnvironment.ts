@@ -1,7 +1,12 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError } from "@fern-api/task-context";
 import { copyFile, rm } from "fs/promises";
-import { CONTAINER_SPECS_DIRECTORY } from "./constants.js";
+import { join } from "path";
+import {
+    CONTAINER_SPECS_DIRECTORY,
+    TYPE_RELOCATIONS_FILENAME,
+    TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
+} from "./constants.js";
 import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 
 const LICENSE_MOUNT_PATH = "/tmp/LICENSE";
@@ -64,6 +69,14 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         const specsMount = sourceMounts?.find((m: SourceMount) => m.containerPath === CONTAINER_SPECS_DIRECTORY);
         const specsEnv = specsMount != null ? { FERN_SPECS_DIR: specsMount.hostPath } : {};
 
+        // Generators that relocate types to break import cycles write the
+        // relocations here (directly in the host output dir). The host applies
+        // them to its dynamic snippet IR and deletes the file before copying
+        // generated output.
+        const relocationsEnv = {
+            [TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR]: join(outputPath, TYPE_RELOCATIONS_FILENAME)
+        };
+
         try {
             for (const command of this.commands) {
                 const processedCommand = command
@@ -88,6 +101,7 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                         ...process.env,
                         ...this.env,
                         ...specsEnv,
+                        ...relocationsEnv,
                         IR_PATH: irPath,
                         CONFIG_PATH: configPath,
                         OUTPUT_PATH: outputPath,

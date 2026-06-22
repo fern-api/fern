@@ -47,7 +47,6 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/ui-core-utils": "catalog:",
     "@fern-api/workspace-loader": "workspace:*",
     "@open-rpc/meta-schema": "catalog:",
     "@types/fast-levenshtein": "catalog:",

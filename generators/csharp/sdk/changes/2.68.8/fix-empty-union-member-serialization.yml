@@ -1,0 +1,5 @@
+- summary: |
+    Fixed serialization of discriminated union members that have no properties.
+    Such members now represent their value as a nullable object so they round-trip
+    correctly with only their discriminant (e.g. `{"type":"empty"}`).
+  type: fix

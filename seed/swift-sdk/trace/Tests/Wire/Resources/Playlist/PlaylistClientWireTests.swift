@@ -108,6 +108,12 @@ import Trace
             limit: 1,
             otherField: "otherField",
             multiLineDocs: "multiLineDocs",
+            optionalMultipleField: [
+                "optionalMultipleField"
+            ],
+            multipleField: [
+                "multipleField"
+            ],
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

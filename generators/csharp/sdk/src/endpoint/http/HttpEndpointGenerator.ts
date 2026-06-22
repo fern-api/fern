@@ -1,4 +1,4 @@
-import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
+import { GeneratorError } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -77,10 +77,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     break;
                 case "uri":
                 case "path":
-                    this.context.logger.warn(
-                        `Skipping endpoint '${getOriginalName(endpoint.name)}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                    throw GeneratorError.internalError(
+                        `'${endpoint.pagination.type}' pagination is not supported in C# and should have been treated as unpaged.`
                     );
-                    return;
                 default:
                     assertNever(endpoint.pagination);
             }
@@ -1724,15 +1723,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): ast.MethodInvocation | undefined {
         const service = this.context.getHttpService(serviceId) ?? fail(`Service with id ${serviceId} not found`);
         const serviceFilePath = service.name.fernFilepath;
-        const args = this.getNonEndpointArguments({
+        const { requiredArguments, optionalArguments } = this.getNonEndpointArguments({
             endpoint,
             example,
             parseDatetimes
         });
+        const args: (ast.CodeBlock | ast.ClassInstantiation)[] = [...requiredArguments];
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
+        args.push(...optionalArguments);
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {

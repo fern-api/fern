@@ -27,10 +27,10 @@ import Api
         let expectedResponse = Vendor(
             id: "id",
             name: "name",
-            status: Optional(.active),
+            status: Optional(VendorStatus.active),
             updateRequest: Optional(UpdateVendorRequest(
                 name: "name",
-                status: Optional(.active)
+                status: Optional(UpdateVendorRequestStatus.active)
             ))
         )
         let response = try await client.vendor.updateVendor(
@@ -67,10 +67,10 @@ import Api
         let expectedResponse = Vendor(
             id: "id",
             name: "name",
-            status: Optional(.active),
+            status: Optional(VendorStatus.active),
             updateRequest: Optional(UpdateVendorRequest(
                 name: "name",
-                status: Optional(.active)
+                status: Optional(UpdateVendorRequestStatus.active)
             ))
         )
         let response = try await client.vendor.updateVendor(
@@ -108,10 +108,10 @@ import Api
         let expectedResponse = Vendor(
             id: "id",
             name: "name",
-            status: Optional(.active),
+            status: Optional(VendorStatus.active),
             updateRequest: Optional(UpdateVendorRequest(
                 name: "name",
-                status: Optional(.active)
+                status: Optional(UpdateVendorRequestStatus.active)
             ))
         )
         let response = try await client.vendor.createVendor(
@@ -145,10 +145,10 @@ import Api
         let expectedResponse = Vendor(
             id: "id",
             name: "name",
-            status: Optional(.active),
+            status: Optional(VendorStatus.active),
             updateRequest: Optional(UpdateVendorRequest(
                 name: "name",
-                status: Optional(.active)
+                status: Optional(UpdateVendorRequestStatus.active)
             ))
         )
         let response = try await client.vendor.createVendor(

@@ -70,24 +70,30 @@ public class Example {
             CreateUserRequest
                 .builder()
                 .username("username")
+                .email(
+                    OptionalNullable.of("email")
+                )
+                .phone("phone")
                 .address(
                     OptionalNullable.of(
                         Address
                             .builder()
                             .street("street")
                             .zipCode("zipCode")
+                            .city(
+                                OptionalNullable.of("city")
+                            )
+                            .state("state")
                             .country(
                                 OptionalNullable.of("country")
                             )
-                            .city("city")
-                            .state("state")
-                            .buildingId("buildingId")
+                            .buildingId(
+                                OptionalNullable.of("buildingId")
+                            )
                             .tenantId("tenantId")
                             .build()
                     )
                 )
-                .email("email")
-                .phone("phone")
                 .build()
         );
     }
