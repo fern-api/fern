@@ -32,6 +32,16 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
     public static final String JAVA_LIBRARY_PLUGIN_ID = "java-library";
     public static final String MAVEN_PUBLISH_PLUGIN_ID = "maven-publish";
 
+    public static final String SONATYPE_CENTRAL_UPLOAD_PLUGIN_ID = "cl.franciscosolis.sonatype-central-upload";
+    public static final String SONATYPE_CENTRAL_UPLOAD_VERSION = "1.0.3";
+    public static final String SONATYPE_CENTRAL_UPLOAD_CLASSPATH =
+            "cl.franciscosolis:SonatypeCentralUpload:" + SONATYPE_CENTRAL_UPLOAD_VERSION;
+
+    // The sonatype-central-upload plugin's published Gradle module metadata requires a JVM 11+ runtime, so its
+    // classpath dependency, application, and configuration are all gated behind this check. This keeps the generated
+    // project configurable (e.g. compileJava) on older JVMs while preserving publish behavior on JVM 11+.
+    private static final String JVM_11_GUARD = "if (JavaVersion.current().isJava11Compatible())";
+
     public static final String MAVEN_SIGNING_KEY_ID = "MAVEN_SIGNATURE_KID";
 
     public static final String MAVEN_SIGNING_KEY = "MAVEN_SIGNATURE_SECRET_KEY";
@@ -68,6 +78,10 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
 
     public final String getContents() {
         RawFileWriter writer = new RawFileWriter();
+        if (shouldSignPackage()) {
+            writeSigningBuildscriptBlock(writer);
+            writer.addNewLine();
+        }
         if (!plugins().isEmpty()) {
             writer.beginControlFlow("plugins");
             for (GradlePlugin gradlePlugin : plugins()) {
@@ -80,6 +94,13 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.endControlFlow();
         }
         writer.addNewLine();
+
+        if (shouldSignPackage()) {
+            writer.beginControlFlow(JVM_11_GUARD);
+            writer.addLine("apply plugin: '" + SONATYPE_CENTRAL_UPLOAD_PLUGIN_ID + "'");
+            writer.endControlFlow();
+            writer.addNewLine();
+        }
 
         // add repositories (skip if central dependency management is enabled)
         if (!skipRepositories()) {
@@ -143,6 +164,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
             writer.addNewLine();
 
             if (shouldSignPackage()) {
+                writer.beginControlFlow(JVM_11_GUARD);
                 writer.beginControlFlow("sonatypeCentralUpload");
                 writer.addLine("username = \"$System.env." + MAVEN_USERNAME_ENV_VAR + "\"");
                 writer.addLine("password = \"$System.env." + MAVEN_PASSWORD_ENV_VAR + "\"");
@@ -160,6 +182,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.addLine("signingKey = \"$System.env." + MAVEN_SIGNING_KEY + "\"");
                 writer.addLine("signingKeyPassphrase = \"$System.env." + MAVEN_SIGNING_PASSWORD + "\"");
                 writer.endControlFlow();
+                writer.endControlFlow();
                 writer.addNewLine();
 
                 writer.beginControlFlow("signing");
@@ -171,10 +194,26 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
                 writer.endControlFlow();
 
                 writer.addNewLine();
+                writer.beginControlFlow(JVM_11_GUARD);
                 writer.addLine("sonatypeCentralUpload.dependsOn build");
+                writer.endControlFlow();
             }
         }
         return writer.getContents();
+    }
+
+    private void writeSigningBuildscriptBlock(RawFileWriter writer) {
+        writer.beginControlFlow("buildscript");
+        writer.beginControlFlow("repositories");
+        writer.addLine("gradlePluginPortal()");
+        writer.addLine("mavenCentral()");
+        writer.endControlFlow();
+        writer.beginControlFlow("dependencies");
+        writer.beginControlFlow(JVM_11_GUARD);
+        writer.addLine("classpath '" + SONATYPE_CENTRAL_UPLOAD_CLASSPATH + "'");
+        writer.endControlFlow();
+        writer.endControlFlow();
+        writer.endControlFlow();
     }
 
     /**

@@ -1,9 +1,24 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    dependencies {
+        if (JavaVersion.current().isJava11Compatible()) {
+            classpath 'cl.franciscosolis:SonatypeCentralUpload:1.0.3'
+        }
+    }
+}
+
 plugins {
     id 'java-library'
     id 'maven-publish'
     id 'com.diffplug.spotless' version '6.11.0'
     id 'signing'
-    id 'cl.franciscosolis.sonatype-central-upload' version '1.0.3'
+}
+
+if (JavaVersion.current().isJava11Compatible()) {
+    apply plugin: 'cl.franciscosolis.sonatype-central-upload'
 }
 
 repositories {
@@ -106,19 +121,21 @@ publishing {
     }
 }
 
-sonatypeCentralUpload {
-    username = "$System.env.MAVEN_USERNAME"
-    password = "$System.env.MAVEN_PASSWORD"
+if (JavaVersion.current().isJava11Compatible()) {
+    sonatypeCentralUpload {
+        username = "$System.env.MAVEN_USERNAME"
+        password = "$System.env.MAVEN_PASSWORD"
 
-    archives = files(
-        "$buildDir/libs/exhaustive-" + version + ".jar",
-        "$buildDir/libs/exhaustive-" + version + "-sources.jar",
-        "$buildDir/libs/exhaustive-" + version + "-javadoc.jar"
-    )
+        archives = files(
+            "$buildDir/libs/exhaustive-" + version + ".jar",
+            "$buildDir/libs/exhaustive-" + version + "-sources.jar",
+            "$buildDir/libs/exhaustive-" + version + "-javadoc.jar"
+        )
 
-    pom = file("$buildDir/publications/maven/pom-default.xml")
-    signingKey = "$System.env.MAVEN_SIGNATURE_SECRET_KEY"
-    signingKeyPassphrase = "$System.env.MAVEN_SIGNATURE_PASSWORD"
+        pom = file("$buildDir/publications/maven/pom-default.xml")
+        signingKey = "$System.env.MAVEN_SIGNATURE_SECRET_KEY"
+        signingKeyPassphrase = "$System.env.MAVEN_SIGNATURE_PASSWORD"
+    }
 }
 
 signing {
@@ -129,4 +146,6 @@ signing {
     sign publishing.publications.maven
 }
 
-sonatypeCentralUpload.dependsOn build
+if (JavaVersion.current().isJava11Compatible()) {
+    sonatypeCentralUpload.dependsOn build
+}

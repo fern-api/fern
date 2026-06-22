@@ -1,0 +1,3 @@
+- summary: |
+    Apply the `cl.franciscosolis.sonatype-central-upload` publish plugin conditionally on JVM 11+ so the generated signed-publish `build.gradle` configures and compiles on older JVMs (e.g. Java 8) while preserving publish behavior on JVM 11+.
+  type: fix
