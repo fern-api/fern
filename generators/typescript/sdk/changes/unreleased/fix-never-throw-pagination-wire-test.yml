@@ -1,0 +1,6 @@
+- summary: |
+    Fixed the generated wire test for paginated endpoints when `neverThrowErrors`
+    is enabled. In that mode the SDK returns a wrapped `APIResponse` instead of a
+    `Page`, so the test no longer calls `page.data`/`page.hasNextPage()`/
+    `page.getNextPage()`; it now asserts the returned `APIResponse` directly.
+  type: fix

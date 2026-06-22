@@ -1,0 +1,389 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_v2.test"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.V2.Test(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendTestSubmissionUpdate"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.SendTestSubmissionUpdate(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t\u0026fern.TestSubmissionUpdate{\n\t\tUpdateTime: fern.MustParseDateTime(\n\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t),\n\t\tUpdateInfo: \u0026fern.TestSubmissionUpdateInfo{\n\t\t\tRunning: fern.RunningSubmissionStateQueueingSubmission,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateTestSubmissionStatus"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.UpdateTestSubmissionStatus(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t\u0026fern.TestSubmissionStatus{\n\t\tType: \"stopped\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCaseV2"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.StoreTracedTestCaseV2(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t\"testCaseId\",\n\t[]*fern.TraceResponseV2{\n\t\t\u0026fern.TraceResponseV2{\n\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tLineNumber: 1,\n\t\t\tFile: \u0026fern.TracedFile{\n\t\t\t\tFilename:  \"filename\",\n\t\t\t\tDirectory: \"directory\",\n\t\t\t},\n\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\tIntegerValue: 1,\n\t\t\t},\n\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\tStart:  1,\n\t\t\t\tOffset: 1,\n\t\t\t},\n\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\tNumStackFrames: 1,\n\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tStdout: fern.String(\n\t\t\t\t\"stdout\",\n\t\t\t),\n\t\t},\n\t\t\u0026fern.TraceResponseV2{\n\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tLineNumber: 1,\n\t\t\tFile: \u0026fern.TracedFile{\n\t\t\t\tFilename:  \"filename\",\n\t\t\t\tDirectory: \"directory\",\n\t\t\t},\n\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\tIntegerValue: 1,\n\t\t\t},\n\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\tStart:  1,\n\t\t\t\tOffset: 1,\n\t\t\t},\n\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\tNumStackFrames: 1,\n\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tStdout: fern.String(\n\t\t\t\t\"stdout\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCase"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.StoreTracedTestCase(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t\"testCaseId\",\n\t\u0026fern.StoreTracedTestCaseRequest{\n\t\tResult: \u0026fern.TestCaseResultWithStdout{\n\t\t\tResult: \u0026fern.TestCaseResult{\n\t\t\t\tExpectedResult: \u0026fern.VariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t\tActualResult: \u0026fern.ActualResult{\n\t\t\t\t\tValue: \u0026fern.VariableValue{\n\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tPassed: true,\n\t\t\t},\n\t\t\tStdout: \"stdout\",\n\t\t},\n\t\tTraceResponses: []*fern.TraceResponse{\n\t\t\t\u0026fern.TraceResponse{\n\t\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t\tLineNumber: 1,\n\t\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\t\tStart:  1,\n\t\t\t\t\tOffset: 1,\n\t\t\t\t},\n\t\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\t\tNumStackFrames: 1,\n\t\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tStdout: fern.String(\n\t\t\t\t\t\"stdout\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.TraceResponse{\n\t\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t\tLineNumber: 1,\n\t\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\t\tStart:  1,\n\t\t\t\t\tOffset: 1,\n\t\t\t\t},\n\t\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\t\tNumStackFrames: 1,\n\t\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tStdout: fern.String(\n\t\t\t\t\t\"stdout\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendWorkspaceSubmissionUpdate"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.SendWorkspaceSubmissionUpdate(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t\u0026fern.WorkspaceSubmissionUpdate{\n\t\tUpdateTime: fern.MustParseDateTime(\n\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t),\n\t\tUpdateInfo: \u0026fern.WorkspaceSubmissionUpdateInfo{\n\t\t\tRunning: fern.RunningSubmissionStateQueueingSubmission,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateWorkspaceSubmissionStatus"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.UpdateWorkspaceSubmissionStatus(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t\u0026fern.WorkspaceSubmissionStatus{\n\t\tType: \"stopped\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspaceV2"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.StoreTracedWorkspaceV2(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t[]*fern.TraceResponseV2{\n\t\t\u0026fern.TraceResponseV2{\n\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tLineNumber: 1,\n\t\t\tFile: \u0026fern.TracedFile{\n\t\t\t\tFilename:  \"filename\",\n\t\t\t\tDirectory: \"directory\",\n\t\t\t},\n\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\tIntegerValue: 1,\n\t\t\t},\n\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\tStart:  1,\n\t\t\t\tOffset: 1,\n\t\t\t},\n\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\tNumStackFrames: 1,\n\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tStdout: fern.String(\n\t\t\t\t\"stdout\",\n\t\t\t),\n\t\t},\n\t\t\u0026fern.TraceResponseV2{\n\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t),\n\t\t\tLineNumber: 1,\n\t\t\tFile: \u0026fern.TracedFile{\n\t\t\t\tFilename:  \"filename\",\n\t\t\t\tDirectory: \"directory\",\n\t\t\t},\n\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\tIntegerValue: 1,\n\t\t\t},\n\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\tStart:  1,\n\t\t\t\tOffset: 1,\n\t\t\t},\n\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\tNumStackFrames: 1,\n\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t\tStdout: fern.String(\n\t\t\t\t\"stdout\",\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admin/store-workspace-trace/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspace"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n\tuuid \"github.com/google/uuid\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Admin.StoreTracedWorkspace(\n\tcontext.TODO(),\n\tuuid.MustParse(\n\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t),\n\t\u0026fern.StoreTracedWorkspaceRequest{\n\t\tWorkspaceRunDetails: \u0026fern.WorkspaceRunDetails{\n\t\t\tExceptionV2: \u0026fern.ExceptionV2{\n\t\t\t\tGeneric: \u0026fern.ExceptionInfo{\n\t\t\t\t\tExceptionType:       \"exceptionType\",\n\t\t\t\t\tExceptionMessage:    \"exceptionMessage\",\n\t\t\t\t\tExceptionStacktrace: \"exceptionStacktrace\",\n\t\t\t\t},\n\t\t\t},\n\t\t\tException: \u0026fern.ExceptionInfo{\n\t\t\t\tExceptionType:       \"exceptionType\",\n\t\t\t\tExceptionMessage:    \"exceptionMessage\",\n\t\t\t\tExceptionStacktrace: \"exceptionStacktrace\",\n\t\t\t},\n\t\t\tStdout: \"stdout\",\n\t\t},\n\t\tTraceResponses: []*fern.TraceResponse{\n\t\t\t\u0026fern.TraceResponse{\n\t\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t\tLineNumber: 1,\n\t\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\t\tStart:  1,\n\t\t\t\t\tOffset: 1,\n\t\t\t\t},\n\t\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\t\tNumStackFrames: 1,\n\t\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tStdout: fern.String(\n\t\t\t\t\t\"stdout\",\n\t\t\t\t),\n\t\t\t},\n\t\t\t\u0026fern.TraceResponse{\n\t\t\t\tSubmissionID: uuid.MustParse(\n\t\t\t\t\t\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n\t\t\t\t),\n\t\t\t\tLineNumber: 1,\n\t\t\t\tReturnValue: \u0026fern.DebugVariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t\tExpressionLocation: \u0026fern.ExpressionLocation{\n\t\t\t\t\tStart:  1,\n\t\t\t\t\tOffset: 1,\n\t\t\t\t},\n\t\t\t\tStack: \u0026fern.StackInformation{\n\t\t\t\t\tNumStackFrames: 1,\n\t\t\t\t\tTopStackFrame: \u0026fern.StackFrame{\n\t\t\t\t\t\tMethodName: \"methodName\",\n\t\t\t\t\t\tLineNumber: 1,\n\t\t\t\t\t\tScopes: []*fern.Scope{\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\u0026fern.Scope{\n\t\t\t\t\t\t\t\tVariables: map[string]*fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\"variables\": \u0026fern.DebugVariableValue{\n\t\t\t\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tStdout: fern.String(\n\t\t\t\t\t\"stdout\",\n\t\t\t\t),\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "GET",
+                "identifier_override": "endpoint_homepage.getHomepageProblems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Homepage.GetHomepageProblems(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/homepage-problems",
+                "method": "POST",
+                "identifier_override": "endpoint_homepage.setHomepageProblems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Homepage.SetHomepageProblems(\n\tcontext.TODO(),\n\t[]fern.ProblemID{\n\t\t\"string\",\n\t\t\"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/migration-info/all",
+                "method": "GET",
+                "identifier_override": "endpoint_migration.getAttemptedMigrations"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Migration.GetAttemptedMigrations(\n\tcontext.TODO(),\n\t\u0026fern.GetAttemptedMigrationsRequest{\n\t\tAdminKeyHeader: \"admin-key-header\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/create",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.createProblem"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Problem.CreateProblem(\n\tcontext.TODO(),\n\t\u0026fern.CreateProblemRequest{\n\t\tProblemName: \"problemName\",\n\t\tProblemDescription: \u0026fern.ProblemDescription{\n\t\t\tBoards: []*fern.ProblemDescriptionBoard{\n\t\t\t\t\u0026fern.ProblemDescriptionBoard{\n\t\t\t\t\tHTML: \"boards\",\n\t\t\t\t},\n\t\t\t\t\u0026fern.ProblemDescriptionBoard{\n\t\t\t\t\tHTML: \"boards\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tFiles: map[fern.Language]*fern.ProblemFiles{\n\t\t\tfern.LanguageJava: \u0026fern.ProblemFiles{\n\t\t\t\tSolutionFile: \u0026fern.FileInfo{\n\t\t\t\t\tFilename: \"filename\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t\tReadOnlyFiles: []*fern.FileInfo{\n\t\t\t\t\t\u0026fern.FileInfo{\n\t\t\t\t\t\tFilename: \"filename\",\n\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t},\n\t\t\t\t\t\u0026fern.FileInfo{\n\t\t\t\t\t\tFilename: \"filename\",\n\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tInputParams: []*fern.VariableTypeAndName{\n\t\t\t\u0026fern.VariableTypeAndName{\n\t\t\t\tVariableType: \u0026fern.VariableType{\n\t\t\t\t\tType: \"integerType\",\n\t\t\t\t},\n\t\t\t\tName: \"name\",\n\t\t\t},\n\t\t\t\u0026fern.VariableTypeAndName{\n\t\t\t\tVariableType: \u0026fern.VariableType{\n\t\t\t\t\tType: \"integerType\",\n\t\t\t\t},\n\t\t\t\tName: \"name\",\n\t\t\t},\n\t\t},\n\t\tOutputType: \u0026fern.VariableType{\n\t\t\tType: \"integerType\",\n\t\t},\n\t\tTestcases: []*fern.TestCaseWithExpectedResult{\n\t\t\t\u0026fern.TestCaseWithExpectedResult{\n\t\t\t\tTestCase: \u0026fern.TestCase{\n\t\t\t\t\tID: \"id\",\n\t\t\t\t\tParams: []*fern.VariableValue{\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tExpectedResult: \u0026fern.VariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t},\n\t\t\t\u0026fern.TestCaseWithExpectedResult{\n\t\t\t\tTestCase: \u0026fern.TestCase{\n\t\t\t\t\tID: \"id\",\n\t\t\t\t\tParams: []*fern.VariableValue{\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tExpectedResult: \u0026fern.VariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tMethodName: \"methodName\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/default-starter-files",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.getDefaultStarterFiles"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Problem.GetDefaultStarterFiles(\n\tcontext.TODO(),\n\t\u0026fern.GetDefaultStarterFilesRequest{\n\t\tInputParams: []*fern.VariableTypeAndName{\n\t\t\t\u0026fern.VariableTypeAndName{\n\t\t\t\tVariableType: \u0026fern.VariableType{\n\t\t\t\t\tType: \"integerType\",\n\t\t\t\t},\n\t\t\t\tName: \"name\",\n\t\t\t},\n\t\t\t\u0026fern.VariableTypeAndName{\n\t\t\t\tVariableType: \u0026fern.VariableType{\n\t\t\t\t\tType: \"integerType\",\n\t\t\t\t},\n\t\t\t\tName: \"name\",\n\t\t\t},\n\t\t},\n\t\tOutputType: \u0026fern.VariableType{\n\t\t\tType: \"integerType\",\n\t\t},\n\t\tMethodName: \"methodName\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/delete/{problemId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_problem.deleteProblem"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Problem.DeleteProblem(\n\tcontext.TODO(),\n\t\"problemId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problem-crud/update/{problemId}",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.updateProblem"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Problem.UpdateProblem(\n\tcontext.TODO(),\n\t\"problemId\",\n\t\u0026fern.CreateProblemRequest{\n\t\tProblemName: \"problemName\",\n\t\tProblemDescription: \u0026fern.ProblemDescription{\n\t\t\tBoards: []*fern.ProblemDescriptionBoard{\n\t\t\t\t\u0026fern.ProblemDescriptionBoard{\n\t\t\t\t\tHTML: \"boards\",\n\t\t\t\t},\n\t\t\t\t\u0026fern.ProblemDescriptionBoard{\n\t\t\t\t\tHTML: \"boards\",\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tFiles: map[fern.Language]*fern.ProblemFiles{\n\t\t\tfern.LanguageJava: \u0026fern.ProblemFiles{\n\t\t\t\tSolutionFile: \u0026fern.FileInfo{\n\t\t\t\t\tFilename: \"filename\",\n\t\t\t\t\tContents: \"contents\",\n\t\t\t\t},\n\t\t\t\tReadOnlyFiles: []*fern.FileInfo{\n\t\t\t\t\t\u0026fern.FileInfo{\n\t\t\t\t\t\tFilename: \"filename\",\n\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t},\n\t\t\t\t\t\u0026fern.FileInfo{\n\t\t\t\t\t\tFilename: \"filename\",\n\t\t\t\t\t\tContents: \"contents\",\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tInputParams: []*fern.VariableTypeAndName{\n\t\t\t\u0026fern.VariableTypeAndName{\n\t\t\t\tVariableType: \u0026fern.VariableType{\n\t\t\t\t\tType: \"integerType\",\n\t\t\t\t},\n\t\t\t\tName: \"name\",\n\t\t\t},\n\t\t\t\u0026fern.VariableTypeAndName{\n\t\t\t\tVariableType: \u0026fern.VariableType{\n\t\t\t\t\tType: \"integerType\",\n\t\t\t\t},\n\t\t\t\tName: \"name\",\n\t\t\t},\n\t\t},\n\t\tOutputType: \u0026fern.VariableType{\n\t\t\tType: \"integerType\",\n\t\t},\n\t\tTestcases: []*fern.TestCaseWithExpectedResult{\n\t\t\t\u0026fern.TestCaseWithExpectedResult{\n\t\t\t\tTestCase: \u0026fern.TestCase{\n\t\t\t\t\tID: \"id\",\n\t\t\t\t\tParams: []*fern.VariableValue{\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tExpectedResult: \u0026fern.VariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t},\n\t\t\t\u0026fern.TestCaseWithExpectedResult{\n\t\t\t\tTestCase: \u0026fern.TestCase{\n\t\t\t\t\tID: \"id\",\n\t\t\t\t\tParams: []*fern.VariableValue{\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\u0026fern.VariableValue{\n\t\t\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tExpectedResult: \u0026fern.VariableValue{\n\t\t\t\t\tIntegerValue: 1,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t\tMethodName: \"methodName\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.Problem.GetLightweightProblems(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.V3.Problem.GetLightweightProblems(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.Problem.GetProblems(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblems"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.V3.Problem.GetProblems(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLatestProblem"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.Problem.GetLatestProblem(\n\tcontext.TODO(),\n\t\"problemId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLatestProblem"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.V3.Problem.GetLatestProblem(\n\tcontext.TODO(),\n\t\"problemId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblemVersion"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.Problem.GetProblemVersion(\n\tcontext.TODO(),\n\t\"problemId\",\n\t1,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblemVersion"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.V2.V3.Problem.GetProblemVersion(\n\tcontext.TODO(),\n\t\"problemId\",\n\t1,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/create-session/{language}",
+                "method": "POST",
+                "identifier_override": "endpoint_submission.createExecutionSession"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Submission.CreateExecutionSession(\n\tcontext.TODO(),\n\tfern.LanguageJava,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/execution-sessions-state",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSessionsState"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Submission.GetExecutionSessionsState(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/stop/{sessionId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_submission.stopExecutionSession"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Submission.StopExecutionSession(\n\tcontext.TODO(),\n\t\"sessionId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sessions/{sessionId}",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSession"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Submission.GetExecutionSession(\n\tcontext.TODO(),\n\t\"sessionId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances",
+                "method": "GET",
+                "identifier_override": "endpoint_sysprop.getNumWarmInstances"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Sysprop.GetNumWarmInstances(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                "method": "PUT",
+                "identifier_override": "endpoint_sysprop.setNumWarmInstances"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Sysprop.SetNumWarmInstances(\n\tcontext.TODO(),\n\tfern.LanguageJava,\n\t1,\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/all",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylists"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Playlist.GetPlaylists(\n\tcontext.TODO(),\n\t1,\n\t\u0026fern.GetPlaylistsRequest{\n\t\tLimit: fern.Int(\n\t\t\t1,\n\t\t),\n\t\tOtherField:    \"otherField\",\n\t\tMultiLineDocs: \"multiLineDocs\",\n\t\tOptionalMultipleField: []*string{\n\t\t\tfern.String(\n\t\t\t\t\"optionalMultipleField\",\n\t\t\t),\n\t\t},\n\t\tMultipleField: []string{\n\t\t\t\"multipleField\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/create",
+                "method": "POST",
+                "identifier_override": "endpoint_playlist.createPlaylist"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Playlist.CreatePlaylist(\n\tcontext.TODO(),\n\t1,\n\t\u0026fern.CreatePlaylistRequest{\n\t\tDatetime: fern.MustParseDateTime(\n\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t),\n\t\tOptionalDatetime: fern.Time(\n\t\t\tfern.MustParseDateTime(\n\t\t\t\t\"2024-01-15T09:30:00Z\",\n\t\t\t),\n\t\t),\n\t\tBody: \u0026fern.PlaylistCreateRequest{\n\t\t\tName: \"name\",\n\t\t\tProblems: []fern.ProblemID{\n\t\t\t\t\"problems\",\n\t\t\t\t\"problems\",\n\t\t\t},\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Playlist.GetPlaylist(\n\tcontext.TODO(),\n\t1,\n\t\"playlistId\",\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "PUT",
+                "identifier_override": "endpoint_playlist.updatePlaylist"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/trace/fern\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Playlist.UpdatePlaylist(\n\tcontext.TODO(),\n\t1,\n\t\"playlistId\",\n\t\u0026fern.UpdatePlaylistRequest{\n\t\tName: \"name\",\n\t\tProblems: []fern.ProblemID{\n\t\t\t\"problems\",\n\t\t\t\"problems\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlist_id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_playlist.deletePlaylist"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/trace/fern/client\"\n\toption \"github.com/trace/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Playlist.DeletePlaylist(\n\tcontext.TODO(),\n\t1,\n\t\"playlist_id\",\n)\n"
+            }
+        }
+    ]
+}

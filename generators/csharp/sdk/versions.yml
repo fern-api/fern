@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.6
+  changelogEntry:
+    - summary: |
+        Fix generated code for literal-typed values. Literal path parameters are now emitted as
+        required arguments in dynamic snippets even when `generate-literals` is enabled, and mock
+        server tests now include literal-typed required request properties in the expected request
+        body so the SDK's serialized output matches.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.5
+  changelogEntry:
+    - summary: |
+        Fixed compilation of generated dynamic-snippet tests when `exported-client-class-name` is set.
+        The exported client class name is a docs-only override that names a customer-provided wrapper
+        class which is not part of generator output, so the compiled snippet tests now reference the
+        internal generated client while documentation snippets continue to use the exported name.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 2.68.4
+  changelogEntry:
+    - summary: |
+        Fix argument ordering for endpoints that have both a request body and a path parameter with a
+        client default. Such path parameters are optional in the generated method signature and are placed
+        after the request body, so the generated snippets, wire tests, and dynamic snippets now order their
+        arguments to match (placing required path parameters before the body and optional ones after, and
+        using named arguments in dynamic snippets where ordering is otherwise ambiguous).
+      type: fix
+  createdAt: "2026-06-19"
+  irVersion: 66
+- version: 2.68.3
+  changelogEntry:
+    - summary: |
+        Fixed C# generation failures for APIs that declare a model type named `Test`.
+        The generated test project no longer emits a `{Namespace}.Test` namespace that
+        collides with the model type, so serialization tests compile. Also taught the
+        OneOf equality comparer to treat undiscriminated-union string-enum members with
+        the same wire value as equal, since the concrete member type is not recoverable
+        when deserializing.
+      type: fix
+  createdAt: "2026-06-19"
+  irVersion: 66
 - version: 2.68.2
   changelogEntry:
     - summary: |
