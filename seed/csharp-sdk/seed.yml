@@ -419,5 +419,3 @@ fixtures:
       outputFolder: redact-response-body-on-error
 allowedFailures:
   - oauth-client-credentials-custom
-  - server-sent-event-examples
-  - server-sent-events-openapi

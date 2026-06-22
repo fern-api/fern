@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.8
+  changelogEntry:
+    - summary: |
+        Fix the serialization layer for discriminated unions that both `extend` another
+        type and declare `base-properties`. The generated `_Base` schema now extends the
+        parent type schemas (in addition to the base properties), so its inferred raw
+        type matches the declared `Raw` type and the union schema compiles.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.7
+  changelogEntry:
+    - summary: |
+        Fixed a runtime error in the serialization layer when a type references a
+        same-named type in another package. Such references are now wrapped with
+        `lazy()`/`lazyObject()` so they are resolved through the `serializers`
+        namespace barrel after all modules have initialized, instead of being read
+        eagerly during module load (which could throw "Cannot read properties of
+        undefined").
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
 - version: 3.72.6
   changelogEntry:
     - summary: |

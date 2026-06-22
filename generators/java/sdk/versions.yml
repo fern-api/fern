@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.10
+  changelogEntry:
+    - summary: |
+        Fix generated raw clients for cursor pagination whose deep cursor path navigates through inline
+        types or repeats property names. The generator no longer emits duplicate local variable names,
+        uses the correct type names in method references, and passes the navigated value (instead of a
+        type literal) when rebuilding the next-page request.
+      type: fix
+    - summary: |
+        Fix compilation of generated models that have a wrapped-alias property whose alias resolves to a nullable type. The builder now declares the backing field and a default setter for these properties, so the model compiles.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
 - version: 4.10.9
   changelogEntry:
     - summary: |
