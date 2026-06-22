@@ -880,14 +880,16 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
         innerValue
     }: {
         exampleUnion: ExampleUnionType;
-        innerValue: ast.AstNode;
+        innerValue: ast.AstNode | undefined;
     }): ast.AstNode {
         // todo - this should really be dereferencing the type and looking it up...
         return this.csharp.instantiateClass({
             classReference: this.getUnionTypeClassReferenceByTypeName(
                 this.case.pascalSafe(exampleUnion.singleUnionType.wireDiscriminantValue)
             ),
-            arguments_: [innerValue]
+            // Property-less members have no inner value, so the inner class is
+            // constructed with no arguments (e.g. `new Empty()`).
+            arguments_: innerValue != null ? [innerValue] : []
         });
     }
 
@@ -897,7 +899,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     }: {
         unionType: FernIr.ExampleSingleUnionType;
         parseDatetimes: boolean;
-    }): ast.AstNode {
+    }): ast.AstNode | undefined {
         switch (unionType.shape.type) {
             case "samePropertiesAsObject": {
                 const typeDeclaration = this.model.dereferenceType(unionType.shape.typeId).typeDeclaration;
@@ -914,8 +916,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     parseDatetimes
                 });
             case "noProperties":
-                // no params into inner union class
-                return this.csharp.codeblock("");
+                // Property-less members carry no value, so the inner union class
+                // is instantiated with no constructor arguments.
+                return undefined;
             default:
                 assertNever(unionType.shape);
         }
