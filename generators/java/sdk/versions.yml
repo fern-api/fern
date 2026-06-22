@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.8
+  changelogEntry:
+    - summary: |
+        Wrap `optional(nullable(T))` request bodies exactly once in generated dynamic snippets and wire tests so they match the generated method signature and compile. This also fixes a double-wrap (`OptionalNullable.of(OptionalNullable.of(...))`) when `collapse-optional-nullable` is enabled.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
 - version: 4.10.7
   changelogEntry:
     - summary: |
