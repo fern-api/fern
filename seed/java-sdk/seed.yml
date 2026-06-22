@@ -389,7 +389,6 @@ allowedFailures:
   # Extending an alias (that resolves to an object) is not yet supported by the
   # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
   - alias-extends
-  - inferred-auth-implicit-reference
 
   # Generated raw client / publish fixtures fail to compile in CI
   # (e.g. endpoint-security-auth's RawUserClient "cannot find symbol").
