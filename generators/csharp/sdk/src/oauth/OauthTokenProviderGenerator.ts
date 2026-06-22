@@ -103,11 +103,11 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             type: this.Primitive.string
         });
 
-        // Propagate required, non-literal custom properties from the token endpoint request
-        // as fields on the class. Literal properties are hardcoded in the request class and
-        // don't need to be passed through. This aligns with Java's approach of skipping only
-        // literals, while also keeping the optional guard to avoid adding optional-typed
-        // properties as required constructor parameters.
+        // Propagate non-literal custom properties from the token endpoint request as fields
+        // on the class. Literal properties are hardcoded in the request class and don't need
+        // to be passed through. These fields are nullable because the root client exposes them
+        // as optional constructor parameters (matching Java's optional builder setters), so the
+        // client can be constructed with just clientId/clientSecret.
         for (const customProperty of this.scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
             if (isLiteralTypeReference(customProperty.property.valueType)) {
                 continue;
@@ -125,7 +125,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 this.cls.addField({
                     origin: this.cls.explicit(this.format.private(name)),
                     access: ast.Access.Private,
-                    type: typeRef
+                    type: typeRef.asOptional()
                 })
             );
         }
@@ -141,7 +141,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                     this.cls.addField({
                         origin: this.cls.explicit(this.format.private(name)),
                         access: ast.Access.Private,
-                        type: typeRef
+                        type: typeRef.asOptional()
                     })
                 );
             }

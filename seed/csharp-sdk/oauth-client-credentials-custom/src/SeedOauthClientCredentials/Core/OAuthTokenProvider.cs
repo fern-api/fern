@@ -16,15 +16,15 @@ public partial class OAuthTokenProvider
 
     private string _clientSecret;
 
-    private string _entityId;
+    private string? _entityId;
 
-    private string _scp;
+    private string? _scp;
 
     public OAuthTokenProvider(
         string clientId,
         string clientSecret,
-        string EntityId,
-        string Scp,
+        string? EntityId,
+        string? Scp,
         AuthClient client
     )
     {
