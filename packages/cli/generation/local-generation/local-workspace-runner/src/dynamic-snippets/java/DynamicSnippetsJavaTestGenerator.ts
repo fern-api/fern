@@ -18,7 +18,8 @@ export class DynamicSnippetsJavaTestGenerator {
     constructor(
         private readonly context: TaskContext,
         private readonly ir: dynamic.DynamicIntermediateRepresentation,
-        private readonly generatorConfig: FernGeneratorExec.GeneratorConfig
+        private readonly generatorConfig: FernGeneratorExec.GeneratorConfig,
+        private readonly inlineTypeIds?: Set<string>
     ) {
         // Note: the local-workspace-runner uses convertIr which always returns a DynamicIntermediateRepresentation
         //       that is actually of the latest version in the workspace.
@@ -35,7 +36,8 @@ export class DynamicSnippetsJavaTestGenerator {
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             // biome-ignore lint/suspicious/noExplicitAny: workaround for version incompatibility - see note above
             ir: convertIr(this.ir) as unknown as any,
-            config: this.generatorConfig
+            config: this.generatorConfig,
+            inlineTypeIds: this.inlineTypeIds
         });
     }
 

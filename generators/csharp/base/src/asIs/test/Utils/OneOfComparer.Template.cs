@@ -1,5 +1,6 @@
 using NUnit.Framework.Constraints;
-using OneOf;
+using OneOf;<% if (context.generation.settings.isForwardCompatibleEnumsEnabled) { %>
+using <%= namespaces.qualifiedCore %>;<% } %>
 
 namespace NUnit.Framework;
 
@@ -30,7 +31,15 @@ public static class EqualConstraintExtensions
                 {
                     return false;
                 }
-
+<% if (context.generation.settings.isForwardCompatibleEnumsEnabled) { %>
+                // Undiscriminated unions of string enums are only distinguishable by their
+                // wire value: the concrete member type is not recoverable when deserializing,
+                // so two members with the same string value are considered equal.
+                if (x.Value is IStringEnum xStringEnum && y.Value is IStringEnum yStringEnum)
+                {
+                    return xStringEnum.Value == yStringEnum.Value;
+                }
+<% } %>
                 var propertiesComparer = new NUnitEqualityComparer();
                 var tolerance = Tolerance.Default;
                 propertiesComparer.CompareProperties = true;
@@ -76,7 +85,12 @@ public static class EqualConstraintExtensions
             {
                 return false;
             }
-
+<% if (context.generation.settings.isForwardCompatibleEnumsEnabled) { %>
+            if (oneOfX.Value is IStringEnum xStringEnum && oneOfY.Value is IStringEnum yStringEnum)
+            {
+                return xStringEnum.Value == yStringEnum.Value;
+            }
+<% } %>
             var tolerance = Tolerance.Default;
             return _comparer.AreEqual(oneOfX.Value, oneOfY.Value, ref tolerance);
         }
