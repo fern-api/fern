@@ -917,17 +917,21 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         requestProperties: FernIr.OAuthAccessTokenRequestProperties,
         context: FileContext
     ): Array<{ name: string; type: ts.TypeNode }> {
+        // Literal properties are injected by the generated client method and optional
+        // ones can be omitted, so neither needs to be surfaced as a required option.
+        const isRequiredNonLiteral = (requestProperty: FernIr.RequestProperty): boolean => {
+            const resolvedType = context.type.resolveTypeReference(requestProperty.property.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            return !isLiteral && !context.type.isOptional(requestProperty.property.valueType);
+        };
         const additionalProperties: FernIr.RequestProperty[] = [];
-        if (requestProperties.scopes != null) {
+        if (requestProperties.scopes != null && isRequiredNonLiteral(requestProperties.scopes)) {
             additionalProperties.push(requestProperties.scopes);
         }
         for (const customProperty of requestProperties.customProperties ?? []) {
-            const resolvedType = context.type.resolveTypeReference(customProperty.property.valueType);
-            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
-            if (isLiteral || context.type.isOptional(customProperty.property.valueType)) {
-                continue;
+            if (isRequiredNonLiteral(customProperty)) {
+                additionalProperties.push(customProperty);
             }
-            additionalProperties.push(customProperty);
         }
         return additionalProperties.map((requestProperty) => ({
             name: this.getName(requestProperty.property.name, context),
