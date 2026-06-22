@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.17.9
+  changelogEntry:
+    - summary: |
+        Fix crash in reference.md generation when OpenAPI specs contain `$ref`
+        parameter references (e.g. `$ref: "#/components/parameters/LimitParam"`).
+        The generator now resolves these references from `components.parameters`
+        instead of crashing with "Cannot read properties of undefined".
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
 - version: 0.17.8
   changelogEntry:
     - summary: |
