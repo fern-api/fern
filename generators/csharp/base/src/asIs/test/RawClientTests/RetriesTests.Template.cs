@@ -63,7 +63,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -93,7 +93,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
-        var request = new JsonRequest
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -189,7 +189,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest{
+                var request = new <%= namespaces.qualifiedCore %>.MultipartFormRequest{
                     BaseUrl = _baseUrl,
                     Method = HttpMethod.Post,
                     Path = "/test",
@@ -227,7 +227,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -266,7 +266,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -305,7 +305,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -338,7 +338,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new JsonRequest
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -377,7 +377,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest
+                var request = new <%= namespaces.qualifiedCore %>.MultipartFormRequest
                 {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -428,7 +428,7 @@ public class RetriesTests
             BaseRetryDelay = 0,
         };
 
-        var request = new JsonRequest
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -491,7 +491,7 @@ public class RetriesTests
             BaseRetryDelay = 0,
         };
 
-        var request = new JsonRequest
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,

@@ -66,7 +66,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -96,7 +96,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
-        var request = new JsonRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -230,7 +230,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -269,7 +269,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -308,7 +308,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -341,7 +341,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new JsonRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -438,7 +438,7 @@ public class RetriesTests
             BaseRetryDelay = 0,
         };
 
-        var request = new JsonRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -508,7 +508,7 @@ public class RetriesTests
             BaseRetryDelay = 0,
         };
 
-        var request = new JsonRequest
+        var request = new SeedOauthClientCredentialsMandatoryAuth.Core.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
