@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix inferred auth providers generating an invalid token request when the token
+    endpoint uses a referenced request body. The generated provider now sends the
+    request body keys using the same casing as the generated request type (the wire
+    value when the serde layer is disabled) instead of always camelCasing them.
+  type: fix
