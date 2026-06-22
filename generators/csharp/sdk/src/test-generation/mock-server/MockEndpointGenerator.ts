@@ -185,16 +185,23 @@ export class MockEndpointGenerator extends WithGeneration {
      * WireMock.Net matches `WithPath` against the percent-decoded request path, so the
      * stub must use the decoded form. The IR's `example.url` percent-encodes path parameter
      * values (e.g. an enum wire value of `>` becomes `%3E`), which would never match.
+     *
+     * The decoded value is escaped for embedding in a C# string literal (decoding can
+     * reintroduce `"`/`\`), matching the escaping applied to query parameter values above.
      */
     private toWireMockPath(url: string | undefined): string {
         if (!url) {
             return "/";
         }
         try {
-            return decodeURIComponent(url);
+            return this.escapeForCSharpStringLiteral(decodeURIComponent(url));
         } catch {
-            return url;
+            return this.escapeForCSharpStringLiteral(url);
         }
+    }
+
+    private escapeForCSharpStringLiteral(value: string): string {
+        return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
     }
 
     /*
