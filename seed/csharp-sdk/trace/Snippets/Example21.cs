@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Problem.UpdateProblemAsync(
-            "problemId",
-            new CreateProblemRequest {
+            problemId: "problemId",
+            request: new CreateProblemRequest {
                 ProblemName = "problemName",
                 ProblemDescription = new ProblemDescription {
                     Boards = new List<ProblemDescriptionBoard>(){

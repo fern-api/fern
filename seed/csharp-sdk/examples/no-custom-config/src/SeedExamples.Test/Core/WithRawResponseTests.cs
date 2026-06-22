@@ -4,7 +4,7 @@ using NUnit.Framework;
 using SeedExamples;
 using SeedExamples.Core;
 
-namespace SeedExamples.Test.Core;
+namespace SeedExamples.Test_.Core;
 
 [TestFixture]
 public class WithRawResponseTests

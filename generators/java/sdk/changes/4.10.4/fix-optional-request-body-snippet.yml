@@ -1,0 +1,6 @@
+- summary: |
+    Fix dynamic snippet generation for endpoints with an optional request body
+    that wraps a nullable type (e.g. `optional<nullable<T>>`). The snippet now
+    wraps the body in `Optional.of(...)` so it matches the generated client
+    method signature and compiles.
+  type: fix

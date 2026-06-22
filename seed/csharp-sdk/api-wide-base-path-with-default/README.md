@@ -42,7 +42,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.Widgets.CreateAsync("v1beta", new Widget { Name = "name" });
+await client.Widgets.CreateAsync(new Widget { Name = "name" }, "v1beta");
 ```
 
 ## Exception Handling

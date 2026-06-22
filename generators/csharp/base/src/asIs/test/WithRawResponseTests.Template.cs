@@ -4,7 +4,7 @@ using NUnit.Framework;
 using <%= namespace%>;
 using <%= namespace%>.Core;
 
-namespace <%= namespace%>.Test.Core;
+namespace <%= testNamespace%>.Core;
 
 [TestFixture]
 public class WithRawResponseTests
