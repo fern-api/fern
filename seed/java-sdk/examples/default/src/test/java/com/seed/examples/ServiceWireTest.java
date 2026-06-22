@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.resources.commons.types.types.Data;
 import com.seed.examples.resources.commons.types.types.EventInfo;
-import com.seed.examples.resources.commons.types.types.Metadata;
 import com.seed.examples.resources.service.requests.GetMetadataRequest;
 import com.seed.examples.resources.types.types.Actor;
 import com.seed.examples.resources.types.types.BigEntity;
@@ -352,7 +351,7 @@ public class ServiceWireTest {
                                 .name("name")
                                 .build())
                         .metadata(Metadata.html("metadata"))
-                        .commonMetadata(Metadata.builder()
+                        .commonMetadata(com.seed.examples.resources.commons.types.types.Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
                                     {
@@ -361,7 +360,7 @@ public class ServiceWireTest {
                                 })
                                 .jsonString("jsonString")
                                 .build())
-                        .eventInfo(EventInfo.metadata(Metadata.builder()
+                        .eventInfo(EventInfo.metadata(com.seed.examples.resources.commons.types.types.Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
                                     {
