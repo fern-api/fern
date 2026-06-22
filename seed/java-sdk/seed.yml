@@ -392,6 +392,3 @@ allowedFailures:
   # resolve the plugin classpath and the project fails to configure.
   - exhaustive:publish-to
   - exhaustive:signed_publish
-
-  # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
-  - file-upload:inline-file-properties
