@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.12
+  changelogEntry:
+    - summary: |
+        Generated request paths no longer contain duplicate slashes when an endpoint's
+        API/service base-paths join into an empty segment (e.g. a service `base-path: /`).
+        The client now requests `/{id}/{nestedId}` instead of `/{id}//{nestedId}`, matching
+        the path the server exposes and the behavior of the other SDK generators. Mock-server
+        test expectations are normalized the same way so they stay consistent with the client.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
 - version: 2.68.11
   changelogEntry:
     - summary: |
