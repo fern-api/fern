@@ -420,7 +420,6 @@ fixtures:
 allowedFailures:
   - enum:forward-compatible-enums
   - enum:plain-enums
-  - imdb:exported-client-class-name
   - oauth-client-credentials-custom
   - package-yml
   - pagination-uri-path
