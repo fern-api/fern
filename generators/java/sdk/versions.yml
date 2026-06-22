@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.11
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials token supplier generation so the mapped `scopes` request property is set on the token request builder, preventing a compile error when the token endpoint uses a custom scopes property.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
 - version: 4.10.10
   changelogEntry:
     - summary: |

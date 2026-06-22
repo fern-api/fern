@@ -568,5 +568,4 @@ scripts:
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
 allowedFailures:
-  - oauth-client-credentials-custom
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
