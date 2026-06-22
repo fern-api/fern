@@ -21,13 +21,13 @@ public final class QueryParamClient: Sendable {
         )
     }
 
-    public func sendList(operand: Operand, maybeOperand: Operand? = nil, operandOrColor: ColorOrOperand, maybeOperandOrColor: ColorOrOperand? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func sendList(operand: [Operand], maybeOperand: [Operand]? = nil, operandOrColor: [ColorOrOperand], maybeOperandOrColor: [ColorOrOperand]? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/query-list",
             queryParams: [
-                "operand": .string(operand.rawValue), 
-                "maybeOperand": maybeOperand.map { .string($0.rawValue) }, 
+                "operand": .unknown(operand), 
+                "maybeOperand": maybeOperand.map { .unknown($0) }, 
                 "operandOrColor": .unknown(operandOrColor), 
                 "maybeOperandOrColor": maybeOperandOrColor.map { .unknown($0) }
             ],

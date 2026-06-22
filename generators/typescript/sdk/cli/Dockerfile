@@ -19,7 +19,7 @@ RUN git config --global user.email "build@example.com" && \
     CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
     ls -la /out/tsgolint
 
-FROM node:24.16-trixie-slim
+FROM node:24.17-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
 # vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
@@ -46,6 +46,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
        curl libcurl4t64 libgnutls30t64 \
        libexpat1 \
+       libssh2-1t64 libtasn1-6 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*

@@ -49,13 +49,13 @@ public final class ParamsClient: Sendable {
     /// GET with multiple of same query param
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func getWithAllowMultipleQuery(query: [String], number: [Int], requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/params",
             queryParams: [
-                "query": .string(query), 
-                "number": .int(number)
+                "query": .stringArray(query), 
+                "number": .unknown(number)
             ],
             requestOptions: requestOptions
         )

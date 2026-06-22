@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.6
+  changelogEntry:
+    - summary: |
+        Fixed the generated wire test for paginated endpoints when `neverThrowErrors`
+        is enabled. In that mode the SDK returns a wrapped `APIResponse` instead of a
+        `Page`, so the test no longer calls `page.data`/`page.hasNextPage()`/
+        `page.getNextPage()`; it now asserts the returned `APIResponse` directly.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
 - version: 3.72.5
   changelogEntry:
     - summary: |

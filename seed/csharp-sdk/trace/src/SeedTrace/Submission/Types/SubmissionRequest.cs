@@ -111,10 +111,10 @@ public record SubmissionRequest
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'initializeWorkspaceRequest', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'initializeWorkspaceRequest', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'initializeWorkspaceRequest'.</exception>
-    public object AsInitializeWorkspaceRequest() =>
+    public object? AsInitializeWorkspaceRequest() =>
         IsInitializeWorkspaceRequest
             ? Value!
             : throw new global::System.Exception(
@@ -150,7 +150,7 @@ public record SubmissionRequest
 
     public T Match<T>(
         Func<SeedTrace.InitializeProblemRequest, T> onInitializeProblemRequest,
-        Func<object, T> onInitializeWorkspaceRequest,
+        Func<object?, T> onInitializeWorkspaceRequest,
         Func<SeedTrace.SubmitRequestV2, T> onSubmitV2,
         Func<SeedTrace.WorkspaceSubmitRequest, T> onWorkspaceSubmit,
         Func<SeedTrace.StopRequest, T> onStop,
@@ -172,7 +172,7 @@ public record SubmissionRequest
 
     public void Visit(
         Action<SeedTrace.InitializeProblemRequest> onInitializeProblemRequest,
-        Action<object> onInitializeWorkspaceRequest,
+        Action<object?> onInitializeWorkspaceRequest,
         Action<SeedTrace.SubmitRequestV2> onSubmitV2,
         Action<SeedTrace.WorkspaceSubmitRequest> onWorkspaceSubmit,
         Action<SeedTrace.StopRequest> onStop,
@@ -217,7 +217,7 @@ public record SubmissionRequest
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsInitializeWorkspaceRequest(out object? value)
     {
@@ -334,7 +334,7 @@ public record SubmissionRequest
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.InitializeProblemRequest"
                         ),
-                "initializeWorkspaceRequest" => new { },
+                "initializeWorkspaceRequest" => null,
                 "submitV2" => jsonWithoutDiscriminator.Deserialize<SeedTrace.SubmitRequestV2?>(
                     options
                 ) ?? throw new JsonException("Failed to deserialize SeedTrace.SubmitRequestV2"),
@@ -421,9 +421,9 @@ public record SubmissionRequest
     [Serializable]
     public record InitializeWorkspaceRequest
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>

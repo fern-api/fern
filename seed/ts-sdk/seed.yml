@@ -569,8 +569,6 @@ scripts:
           fi
 allowedFailures:
   - cross-package-type-names:serde-layer
-  - exhaustive:never-throw-errors
-  - exhaustive:multiple-exports
   - inferred-auth-implicit-reference
   - unions:serde-layer
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing

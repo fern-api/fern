@@ -148,7 +148,16 @@ import Nullable
             )
         ]
         let response = try await client.nullable.getUsers(
+            usernames: [
+                "usernames"
+            ],
             avatar: "avatar",
+            activated: [
+                true
+            ],
+            tags: [
+                .value("tags")
+            ],
             extra: .value(true),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

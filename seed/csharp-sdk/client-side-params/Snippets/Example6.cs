@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Service.UpdateUserAsync(
-            "userId",
-            new UpdateUserRequest {
+            userId: "userId",
+            request: new UpdateUserRequest {
                 Email = "email",
                 EmailVerified = true,
                 Username = "username",

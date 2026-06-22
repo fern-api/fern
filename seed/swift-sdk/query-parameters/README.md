@@ -103,7 +103,19 @@ private func main() async throws {
                 "tags",
                 "tags"
             ]
-        )
+        ),
+        excludeUser: [
+            User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            )
+        ],
+        filter: [
+            "filter"
+        ]
     )
 }
 
