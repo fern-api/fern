@@ -814,7 +814,7 @@ class ClientWrapperGenerator:
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 header_auth_scheme.value_type
             )
-            if self._has_oauth() and not type_hint.is_optional:
+            if (self._has_oauth() or self._context.custom_config.optional_auth) and not type_hint.is_optional:
                 type_hint = AST.TypeHint.optional(type_hint)
             parameters.append(
                 ConstructorParameter(
