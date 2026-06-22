@@ -839,7 +839,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
             name: this.context.getParameterName(parameter.name.name),
             value: this.context.dynamicLiteralMapper.convert({
                 ...parameter,
-                fallbackToDefault: parameter.name.wireValue
+                // Path parameters rendered as positional method arguments stay required even when
+                // `generateLiterals` is enabled, so literal values must still be emitted for them.
+                fallbackToDefault: parameter.name.wireValue,
+                forceLiteral: true
             })
         }));
     }

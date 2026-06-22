@@ -27,7 +27,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, request: Requests.JustFileWithQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: [String], optionalListOfStrings: [String]? = nil, request: Requests.JustFileWithQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file-with-query-params",
@@ -36,8 +36,8 @@ public final class ServiceClient: Sendable {
                 "maybeString": maybeString.map { .string($0) }, 
                 "integer": .int(integer), 
                 "maybeInteger": maybeInteger.map { .int($0) }, 
-                "listOfStrings": .string(listOfStrings), 
-                "optionalListOfStrings": optionalListOfStrings.map { .string($0) }
+                "listOfStrings": .stringArray(listOfStrings), 
+                "optionalListOfStrings": optionalListOfStrings.map { .stringArray($0) }
             ],
             body: request.asMultipartFormData(),
             requestOptions: requestOptions

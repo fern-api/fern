@@ -1169,8 +1169,12 @@ describe("${serviceName}", () => {
         // actually hits the mock server (which listens at server.baseUrl).
         // uri: full URL = server.baseUrl + endpoint path
         // path: just the endpoint path
+        // In neverThrowErrors mode the SDK returns a wrapped APIResponse rather than a Page
+        // (see GeneratedNonThrowingEndpointResponse.getPaginationInfo), so the generated test
+        // must treat paginated endpoints as regular endpoints.
+        const paginationEnabled = endpoint.pagination !== undefined && !this.neverThrowErrors;
         let uriPathNextOverride: { wireKey: string; nextValueCode: Code } | undefined;
-        if (rawResponseBody != null && endpoint.pagination != null) {
+        if (rawResponseBody != null && !this.neverThrowErrors && endpoint.pagination != null) {
             const pagination = endpoint.pagination;
             if (pagination.type === "uri" || pagination.type === "path") {
                 const nextProperty = pagination.type === "uri" ? pagination.nextUri : pagination.nextPath;
@@ -1348,7 +1352,9 @@ describe("${serviceName}", () => {
         // This is set after isCursorMissing is computed to ensure we don't allow multiple
         // requests when cursor is missing (since there's no next page to request)
         const supportsPaginatedResponse =
-            endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination);
+            paginationEnabled &&
+            endpoint.pagination !== undefined &&
+            paginationGeneratesPageObject(endpoint.pagination);
         let hasPagination = supportsPaginatedResponse;
         const expectedName =
             endpoint.pagination !== undefined
@@ -1394,7 +1400,7 @@ describe("${serviceName}", () => {
         // Extract pagination page field paths to ignore in request body matching
         // When getNextPage() is called, the SDK sends a different page/cursor value than the original request
         const paginationIgnoredFields: string[] = [];
-        if (endpoint.pagination !== undefined) {
+        if (paginationEnabled && endpoint.pagination !== undefined) {
             // Cursor and offset pagination have a "page" property that changes between requests
             // URI/path pagination does not have a "page" property since they use URLs from the response
             if (

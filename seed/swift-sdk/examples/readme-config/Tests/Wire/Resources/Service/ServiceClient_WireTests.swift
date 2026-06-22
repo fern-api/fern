@@ -232,6 +232,9 @@ import Examples
         let response = try await client.service.getMetadata(
             xApiVersion: "0.0.1",
             shallow: false,
+            tag: [
+                "development"
+            ],
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -264,6 +267,9 @@ import Examples
         let response = try await client.service.getMetadata(
             xApiVersion: "X-API-Version",
             shallow: true,
+            tag: [
+                "tag"
+            ],
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

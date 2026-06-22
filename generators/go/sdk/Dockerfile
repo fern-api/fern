@@ -26,6 +26,11 @@ RUN set -eux; \
             tar -xzf "${TARBALL}" -C "${nested}" --strip-components=1; \
         fi; \
     done; \
+    # Patch undici to 6.27.0 to fix CVE-2026-12151.
+    TARBALL="$(npm pack undici@6.27.0 --silent)"; \
+    rm -rf "${NPM_NM:?}/undici"; \
+    mkdir -p "${NPM_NM}/undici"; \
+    tar -xzf "${TARBALL}" -C "${NPM_NM}/undici" --strip-components=1; \
     # Patch tar to 7.5.16 (pinned) to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh.
     TARBALL="$(npm pack tar@7.5.16 --silent)"; \
     rm -rf "${NPM_NM:?}/tar"; \

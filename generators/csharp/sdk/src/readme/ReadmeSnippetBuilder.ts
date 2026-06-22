@@ -13,6 +13,7 @@ type FeatureId = FernIr.FeatureId;
 type Type = FernIr.Type;
 
 import { Generation } from "@fern-api/csharp-codegen";
+import { isPagerPagination } from "../endpoint/utils/isPagerPagination.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
@@ -340,7 +341,8 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.pagination != null) {
+            const pagination = endpointWithFilepath.endpoint.pagination;
+            if (pagination != null && isPagerPagination(pagination)) {
                 return endpointWithFilepath;
             }
             return undefined;

@@ -386,10 +386,6 @@ allowedFailures:
   # Extending an alias (that resolves to an object) is not yet supported by the
   # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
   - alias-extends
-  - examples:default
-  - examples:inline-file-properties
-  - examples:no-custom-config
-  - examples:readme-config
   - exhaustive:local-files
   - oauth-client-credentials-custom
   - inferred-auth-implicit-reference
@@ -406,7 +402,5 @@ allowedFailures:
   - nullable:wrapped-aliases
   - pagination-custom
 
-  # Optional wire tests have snippet generation bug with optional(nullable(T))
-  # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
-  - optional:wire-tests
-
+  # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
+  - file-upload:inline-file-properties

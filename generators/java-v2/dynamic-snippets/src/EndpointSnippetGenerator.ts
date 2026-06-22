@@ -685,21 +685,25 @@ export class EndpointSnippetGenerator {
                         return convertedValue;
                     }
 
+                    // The generated client method accepts the body as a single Optional<T> (or
+                    // OptionalNullable<T> in collapse mode) argument and therefore requires an
+                    // explicit Optional.of(...) / OptionalNullable.of(...). When the body nests
+                    // optional/nullable (e.g. optional<nullable<T>>), converting body.value.value
+                    // already yields an Optional/OptionalNullable literal, which the wrap below
+                    // would then either drop (the "avoid double optional" guard) or double-wrap
+                    // (OptionalNullable.of(OptionalNullable.of(...))). Convert the fully unwrapped
+                    // type so the value is wrapped exactly once.
+                    const unwrappedValue = this.context.dynamicTypeLiteralMapper.convert({
+                        typeReference: stripOptionalAndNullable(body.value),
+                        value,
+                        as: "request"
+                    });
+
                     if (isCollapsedOptionalNullable) {
-                        return this.context.getOptionalNullableOf(convertedValue);
+                        return this.context.getOptionalNullableOf(unwrappedValue);
                     } else {
-                        // The generated client method accepts the body as a single Optional<T>
-                        // argument and therefore requires an explicit Optional.of(...). When the
-                        // body nests optional/nullable (e.g. optional<nullable<T>>), converting
-                        // body.value.value yields an Optional literal that renders without
-                        // Optional.of(...), and wrapping it again is deduped away. Convert the
-                        // fully unwrapped type so the explicit Optional.of(...) is preserved.
                         return java.TypeLiteral.optional({
-                            value: this.context.dynamicTypeLiteralMapper.convert({
-                                typeReference: stripOptionalAndNullable(body.value),
-                                value,
-                                as: "request"
-                            }),
+                            value: unwrappedValue,
                             useOf: true
                         });
                     }

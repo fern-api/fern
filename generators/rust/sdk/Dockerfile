@@ -15,7 +15,7 @@ RUN apk update && apk upgrade --no-cache
 # because in-place self-upgrade of the bundled npm in node:22.22-alpine3.23 fails with
 # a stale module-resolution error.
 RUN mkdir -p /tmp/npm-upgrade \
-    && npm install --prefix /tmp/npm-upgrade npm@11.13.0 \
+    && npm install --prefix /tmp/npm-upgrade npm@11.17.0 \
     && rm -rf /usr/local/lib/node_modules/npm \
     && mv /tmp/npm-upgrade/node_modules/npm /usr/local/lib/node_modules/npm \
     && rm -rf /tmp/npm-upgrade \
@@ -34,7 +34,15 @@ RUN mkdir -p /tmp/ip-address-upgrade \
     && mv package /usr/local/lib/node_modules/npm/node_modules/ip-address \
     && rm -rf /tmp/ip-address-upgrade
 
-# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.13.0 vendors 5.0.5).
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
+
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.17.0 vendors 5.0.5).
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
