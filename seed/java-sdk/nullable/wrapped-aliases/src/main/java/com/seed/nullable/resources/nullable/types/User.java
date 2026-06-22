@@ -350,6 +350,7 @@ public final class User {
             return this;
         }
 
+        @java.lang.Override
         public _FinalStage email(Nullable<Email> email) {
             if (email.isNull()) {
                 this.email = null;
@@ -361,6 +362,7 @@ public final class User {
             return this;
         }
 
+        @java.lang.Override
         @JsonSetter(value = "email", nulls = Nulls.SKIP)
         public _FinalStage email(Email email) {
             this.email = email;
