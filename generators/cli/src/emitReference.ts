@@ -295,9 +295,17 @@ function resolveAvailability(op: OpenApiOperation): string | undefined {
 }
 
 /**
+ * Type guard: returns true when `p` is a JSON `$ref` pointer rather than
+ * an inline parameter object.
+ */
+function isRefEntry(p: OpenApiParameter | { $ref: string }): p is { $ref: string } {
+    return "$ref" in p && typeof (p as Record<string, unknown>).$ref === "string";
+}
+
+/**
  * Resolve `$ref` entries in a parameters array by looking them up in
- * `components.parameters`. Entries that are already inline or whose
- * `$ref` target cannot be found are passed through / skipped.
+ * `components.parameters`. Entries that are already inline are passed
+ * through; `$ref` entries whose target cannot be found are skipped.
  */
 function resolveParamRefs(
     params: (OpenApiParameter | { $ref: string })[],
@@ -305,16 +313,15 @@ function resolveParamRefs(
 ): OpenApiParameter[] {
     const resolved: OpenApiParameter[] = [];
     for (const p of params) {
-        if ("$ref" in p && typeof (p as { $ref?: string }).$ref === "string") {
-            const refPath = (p as { $ref: string }).$ref;
+        if (isRefEntry(p)) {
             // Expected format: "#/components/parameters/<name>"
-            const refName = refPath.split("/").pop();
+            const refName = p.$ref.split("/").pop();
             if (refName != null && componentParams[refName] != null) {
                 resolved.push(componentParams[refName]);
             }
             // Skip unresolvable $ref entries rather than crashing.
-        } else if ((p as OpenApiParameter).name != null) {
-            resolved.push(p as OpenApiParameter);
+        } else if (p.name != null) {
+            resolved.push(p);
         }
     }
     return resolved;
