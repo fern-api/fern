@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generate URI/path pagination endpoints as regular (unpaged) methods instead of
+    skipping them. Previously these endpoints were omitted from the client entirely,
+    leaving generated example snippets referencing methods that did not exist.
+  type: fix

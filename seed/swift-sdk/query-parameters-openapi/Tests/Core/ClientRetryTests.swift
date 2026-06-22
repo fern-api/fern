@@ -33,6 +33,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -55,6 +64,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -111,6 +138,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -133,6 +169,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -189,6 +243,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -211,6 +274,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -266,6 +347,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -288,6 +378,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -342,6 +450,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -364,6 +481,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -419,6 +554,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -441,6 +585,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -496,6 +658,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -518,6 +689,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -578,6 +767,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -600,6 +798,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -670,6 +886,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -692,6 +917,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -758,6 +1001,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -780,6 +1032,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -857,6 +1127,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -879,6 +1158,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -930,6 +1227,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -952,6 +1258,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
@@ -1007,6 +1331,15 @@ import Testing
                         "tags"
                     ]
                 ),
+                userList: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
                 optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
                 keyValue: [
                     "keyValue": "keyValue"
@@ -1029,6 +1362,24 @@ import Testing
                         "tags"
                     ]
                 ),
+                excludeUser: [
+                    User(
+                        name: "name",
+                        tags: [
+                            "tags",
+                            "tags"
+                        ]
+                    )
+                ],
+                filter: [
+                    "filter"
+                ],
+                tags: [
+                    "tags"
+                ],
+                optionalTags: [
+                    "optionalTags"
+                ],
                 neighbor: SearchRequestNeighbor.user(
                     User(
                         name: "name",
