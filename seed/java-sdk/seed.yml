@@ -92,11 +92,14 @@ fixtures:
       outputFolder: custom-client-class-name
       readmeConfig:
         exampleStyle: minimal
+    # local_files mode emits source-only output (no Gradle project/wrapper),
+    # so the gradle compile/spotless scripts can't run against it.
     - customConfig:
         inline-path-parameters: true
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
+      skipScripts: true
     - customConfig:
         inline-path-parameters: true
         enable-public-constructors: true
@@ -386,7 +389,6 @@ allowedFailures:
   # Extending an alias (that resolves to an object) is not yet supported by the
   # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
   - alias-extends
-  - exhaustive:local-files
 
   # Generated raw client / publish fixtures fail to compile in CI
   # (e.g. endpoint-security-auth's RawUserClient "cannot find symbol").
