@@ -301,8 +301,11 @@ export class GraphQLConverter {
                 field.args.length === 0 &&
                 this.isNamespaceType(returnRawType)
             ) {
-                // Create a parent operation for queries so the page can show
-                // the namespace type's own fields instead of the first child's schema.
+                // Queries: create a parent operation whose returnType points at the
+                // namespace type so the sidebar entry's page can render all nested
+                // fields. Mutations skip this — they're listed individually in the
+                // sidebar and each mutation's example request wraps itself in the
+                // parent field (e.g. mutation { account { create(...) } }).
                 if (operationType === "QUERY") {
                     const parentFlatId = `${operationType.toLowerCase()}_${fieldName}`;
                     pending.push({
