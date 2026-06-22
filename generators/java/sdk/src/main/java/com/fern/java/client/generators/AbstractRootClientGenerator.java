@@ -1644,6 +1644,21 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 OAuthAccessTokenRequestProperties requestProperties =
                         clientCredentials.getTokenEndpoint().getRequestProperties();
                 List<String> customPropertyNames = new ArrayList<>();
+                // The scopes request property (if mapped) is a required property on the token request and
+                // must be passed through to the OAuth token supplier, ordered before the remaining custom
+                // properties so the generated staged builder receives them in declaration order.
+                if (requestProperties.getScopes().isPresent()
+                        && !isLiteralProperty(requestProperties.getScopes().get())) {
+                    String scopesPropName = NameUtils.toName(requestProperties
+                                    .getScopes()
+                                    .get()
+                                    .getProperty()
+                                    .visit(new RequestPropertyToNameVisitor())
+                                    .getName())
+                            .getCamelCase()
+                            .getSafeName();
+                    customPropertyNames.add(scopesPropName);
+                }
                 if (requestProperties.getCustomProperties().isPresent()) {
                     for (RequestProperty customProp :
                             requestProperties.getCustomProperties().get()) {

@@ -387,7 +387,6 @@ allowedFailures:
   # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
   - alias-extends
   - exhaustive:local-files
-  - oauth-client-credentials-custom
   - inferred-auth-implicit-reference
 
   # Generated raw client / publish fixtures fail to compile in CI
