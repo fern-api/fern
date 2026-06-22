@@ -131,7 +131,5 @@ allowedFailures:
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference
-  - trace
-  - undiscriminated-unions
   # Server URL templating not yet supported in Swift SDK
   - server-url-templating
