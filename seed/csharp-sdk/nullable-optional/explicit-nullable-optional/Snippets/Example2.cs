@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.NullableOptional.UpdateUserAsync(
-            "userId",
-            new UpdateUserRequest {
+            userId: "userId",
+            request: new UpdateUserRequest {
                 Username = "username",
                 Email = "email",
                 Phone = "phone",

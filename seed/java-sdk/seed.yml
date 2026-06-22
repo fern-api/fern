@@ -387,12 +387,7 @@ allowedFailures:
   # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
   - alias-extends
   - exhaustive:local-files
-  - java-inline-types:no-wrapped-aliases
-  - nullable-optional:with-nullable-annotation
-  - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials-custom
-  - request-parameters
-  - streaming-parameter
   - inferred-auth-implicit-reference
 
   # Generated raw client / publish fixtures fail to compile in CI
@@ -404,8 +399,6 @@ allowedFailures:
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
-  - java-inline-types:inline
-  - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - pagination-custom
 
@@ -413,10 +406,6 @@ allowedFailures:
 
   # Bug with how java-sdk creates nightly balanced files
   - java-pagination-deep-cursor-path
-
-  # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
-  - file-upload:inline-file-properties
-
 
   # Optional wire tests have snippet generation bug with optional(nullable(T))
   # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
