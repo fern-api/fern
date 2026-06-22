@@ -343,10 +343,8 @@ exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.FileStream;
 import com.acme.acme.types.MyRequest;
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -356,10 +354,16 @@ client.service().post(
     MyRequest
         .builder()
         .file(
-            new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8)))
+            new File("Hello, world!")
         )
         .fileList(
-            new FileStream(ByteArrayInputStream("First".getBytes(StandardCharsets.UTF_8)))
+            new File("First")
+        )
+        .maybeFile(
+            new File("path/to/file")
+        )
+        .maybeFileList(
+            new File("path/to/file")
         )
         .build()
 );
@@ -370,10 +374,8 @@ exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.FileStream;
 import com.acme.acme.types.JustFileRequest;
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -383,7 +385,7 @@ client.service().justFile(
     JustFileRequest
         .builder()
         .file(
-            new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8)))
+            new File("Hello, world!")
         )
         .build()
 );
@@ -394,10 +396,8 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.FileStream;
 import com.acme.acme.types.JustFileWithQueryParamsRequest;
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -408,7 +408,7 @@ client.service().justFileWithQueryParams(
         .builder()
         .integer(42)
         .file(
-            new FileStream(ByteArrayInputStream("Hello, world!".getBytes(StandardCharsets.UTF_8)))
+            new File("Hello, world!")
         )
         .maybeString("exists")
         .build()

@@ -1,0 +1,8 @@
+- summary: |
+    When a generator breaks an import cycle by relocating types into a shared
+    package, the local generation runner now applies those relocations to the IR
+    that powers host-side dynamic snippet test generation. This keeps the
+    generated dynamic snippets referencing each relocated type from the same
+    package the generator declares it in, fixing undefined-symbol compile errors
+    in the Go SDK's dynamic snippet tests.
+  type: fix

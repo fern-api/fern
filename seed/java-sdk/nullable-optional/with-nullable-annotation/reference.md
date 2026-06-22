@@ -499,9 +499,7 @@ client.nullableOptional().createComplexProfile(
             )
         )
         .nullableArray(
-            Optional.of(
-                Arrays.asList("nullableArray", "nullableArray")
-            )
+            Arrays.asList("nullableArray", "nullableArray")
         )
         .optionalArray(
             Optional.of(
@@ -509,50 +507,42 @@ client.nullableOptional().createComplexProfile(
             )
         )
         .optionalNullableArray(
-            Optional.of(
-                Arrays.asList("optionalNullableArray", "optionalNullableArray")
-            )
+            Arrays.asList("optionalNullableArray", "optionalNullableArray")
         )
         .nullableListOfNullables(
-            Optional.of(
-                Arrays.asList(Optional.of("nullableListOfNullables"), Optional.of("nullableListOfNullables"))
-            )
+            Arrays.asList("nullableListOfNullables", "nullableListOfNullables")
         )
         .nullableMapOfNullables(
-            new HashMap<String, Optional<Address>>() {{
-                put("nullableMapOfNullables", Optional.of(
-                    Address
-                        .builder()
-                        .street("street")
-                        .zipCode("zipCode")
-                        .city(Optional.of("city"))
-                        .state(Optional.of("state"))
-                        .country(Optional.of("country"))
-                        .buildingId(Optional.of("buildingId"))
-                        .tenantId(Optional.of("tenantId"))
-                        .build()
-                ));
+            new HashMap<String, Address>() {{
+                put("nullableMapOfNullables", Address
+                    .builder()
+                    .street("street")
+                    .zipCode("zipCode")
+                    .city("city")
+                    .state(Optional.of("state"))
+                    .country(Optional.of("country"))
+                    .buildingId("buildingId")
+                    .tenantId(Optional.of("tenantId"))
+                    .build());
             }}
         )
         .nullableListOfUnions(
-            Optional.of(
-                Arrays.asList(
-                    NotificationMethod.email(
-                        EmailNotification
-                            .builder()
-                            .emailAddress("emailAddress")
-                            .subject("subject")
-                            .htmlContent("htmlContent")
-                            .build()
-                    ),
-                    NotificationMethod.email(
-                        EmailNotification
-                            .builder()
-                            .emailAddress("emailAddress")
-                            .subject("subject")
-                            .htmlContent("htmlContent")
-                            .build()
-                    )
+            Arrays.asList(
+                NotificationMethod.email(
+                    EmailNotification
+                        .builder()
+                        .emailAddress("emailAddress")
+                        .subject("subject")
+                        .htmlContent("htmlContent")
+                        .build()
+                ),
+                NotificationMethod.email(
+                    EmailNotification
+                        .builder()
+                        .emailAddress("emailAddress")
+                        .subject("subject")
+                        .htmlContent("htmlContent")
+                        .build()
                 )
             )
         )
@@ -712,9 +702,7 @@ client.nullableOptional().updateComplexProfile(
             )
         )
         .nullableArray(
-            Optional.of(
-                Arrays.asList("nullableArray", "nullableArray")
-            )
+            Arrays.asList("nullableArray", "nullableArray")
         )
         .build()
 );
@@ -856,9 +844,7 @@ client.nullableOptional().testDeserialization(
             )
         )
         .nullableList(
-            Optional.of(
-                Arrays.asList("nullableList", "nullableList")
-            )
+            Arrays.asList("nullableList", "nullableList")
         )
         .nullableMap(
             new HashMap<String, Integer>() {{
@@ -1077,9 +1063,7 @@ client.nullableOptional().updateTags(
     UpdateTagsRequest
         .builder()
         .tags(
-            Optional.of(
-                Arrays.asList("tags", "tags")
-            )
+            Arrays.asList("tags", "tags")
         )
         .categories(
             Optional.of(
@@ -1087,9 +1071,7 @@ client.nullableOptional().updateTags(
             )
         )
         .labels(
-            Optional.of(
-                Arrays.asList("labels", "labels")
-            )
+            Arrays.asList("labels", "labels")
         )
         .build()
 );
@@ -1175,13 +1157,11 @@ client.nullableOptional().getSearchResults(
         .builder()
         .query("query")
         .includeTypes(
-            Optional.of(
-                Arrays.asList("includeTypes", "includeTypes")
-            )
+            Arrays.asList("includeTypes", "includeTypes")
         )
         .filters(
-            new HashMap<String, Optional<String>>() {{
-                put("filters", Optional.of("filters"));
+            new HashMap<String, String>() {{
+                put("filters", "filters");
             }}
         )
         .build()
