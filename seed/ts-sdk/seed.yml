@@ -569,5 +569,4 @@ scripts:
           fi
 allowedFailures:
   - inferred-auth-implicit-reference
-  - unions:serde-layer
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
