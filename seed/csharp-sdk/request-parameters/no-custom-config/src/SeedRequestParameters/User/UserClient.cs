@@ -197,7 +197,7 @@ public partial class UserClient : IUserClient
             .Add("optionalString", request.OptionalString)
             .AddDeepObject("nestedUser", request.NestedUser)
             .AddDeepObject("optionalUser", request.OptionalUser)
-            .AddDeepObject("excludeUser", request.ExcludeUser)
+            .Add("excludeUser", request.ExcludeUser)
             .Add("filter", request.Filter)
             .Add("longParam", request.LongParam)
             .Add("bigIntParam", request.BigIntParam)

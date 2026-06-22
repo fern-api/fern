@@ -15,13 +15,15 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     constructor({
         ir,
         config,
-        options = {}
+        options = {},
+        inlineTypeIds
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
+        inlineTypeIds?: Set<string>;
     }) {
-        super(new DynamicSnippetsGeneratorContext({ ir, config, options }));
+        super(new DynamicSnippetsGeneratorContext({ ir, config, options, inlineTypeIds }));
     }
 
     public async generate(

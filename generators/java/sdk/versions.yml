@@ -1,4 +1,94 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.9
+  changelogEntry:
+    - summary: |
+        Fix two Java SDK compile errors. Endpoint method overloads that omit the wrapped
+        request (or pass only the request body) are no longer generated when the request has a
+        required service-level header, since the staged builder cannot be `.build()` without it.
+        Dynamic snippets now fully-qualify class references when two types share the same simple
+        name instead of emitting clashing single-type imports.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.8
+  changelogEntry:
+    - summary: |
+        Wrap `optional(nullable(T))` request bodies exactly once in generated dynamic snippets and wire tests so they match the generated method signature and compile. This also fixes a double-wrap (`OptionalNullable.of(OptionalNullable.of(...))`) when `collapse-optional-nullable` is enabled.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
+- version: 4.10.7
+  changelogEntry:
+    - summary: |
+        Fixed nested optional/nullable type generation in code examples under
+        `collapse-optional-nullable`. The snippet type mapper now collapses nested
+        same-kind wrappers (`optional<optional<T>>`, `nullable<nullable<T>>`) into a
+        single `OptionalNullable<T>`, matching the literal mapper and avoiding
+        type/value mismatches in generated examples.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation to reference the correct nested class names for inline
+        types. Inline types within objects, discriminated unions, and undiscriminated unions are
+        now resolved to their actual generated nested class (e.g. `Parent.Bar.Type1`) instead of a
+        mangled top-level name, so generated snippets compile.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.5
+  changelogEntry:
+    - summary: |
+        Fix Java SDK generation for the `use-nullable-annotation` and
+        `collapse-optional-nullable` configurations.
+
+        - Dynamic snippets now honor these config flags when emitting nullable and
+          optional values, so a nullable property rendered as a raw (non-`Optional`)
+          value no longer produces type mismatches such as
+          `Email cannot be converted to Nullable<Email>`.
+        - Staged-builder method calls in snippets are now ordered correctly: required
+          stages first, then the final-stage (optional, nullable, and collection)
+          properties. Collections (`list`/`set`/`map`) are treated as final-stage
+          properties to match v1's staged builders.
+        - Builder setters on the default (non-staged) builder no longer emit a
+          spurious `@Override` annotation, which previously failed to compile for
+          nullable request properties (e.g. `FilterByRoleRequest`).
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for endpoints with an optional request body
+        that wraps a nullable type (e.g. `optional<nullable<T>>`). The snippet now
+        wraps the body in `Optional.of(...)` so it matches the generated client
+        method signature and compiles.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.3
+  changelogEntry:
+    - summary: |
+        Support endpoints whose streaming behavior is toggled by a request parameter
+        ("stream parameter"). The SDK now resolves the streaming response variant for
+        these endpoints instead of failing generation.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
+- version: 4.10.2
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now compile for endpoints that inline file properties into the
+        request builder (`inline-file-properties: true`). File builder fields are typed as
+        `java.io.File`, so snippets render `new File("path/to/file")` (with a placeholder
+        path when the example omits a file) instead of a `FileStream`, and body properties
+        are emitted before file properties so a required body property's staged-builder step
+        precedes an optional file step.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 66
 - version: 4.10.1
   changelogEntry:
     - summary: |

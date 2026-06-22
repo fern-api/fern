@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.NullableOptional.UpdateComplexProfileAsync(
-            "profileId",
-            new UpdateComplexProfileRequest {
+            profileId: "profileId",
+            request: new UpdateComplexProfileRequest {
                 NullableRole = UserRole.Admin,
                 NullableStatus = UserStatus.Active,
                 NullableNotification = new NotificationMethod(

@@ -80,7 +80,20 @@ import RequestParameters
                     "tags"
                 ]
             ),
+            excludeUser: [
+                User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                )
+            ],
+            filter: [
+                "filter"
+            ],
             longParam: 1000000,
+            bigIntParam: "1000000",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
