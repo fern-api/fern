@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.68.6
+  changelogEntry:
+    - summary: |
+        Fix generated code for literal-typed values. Literal path parameters are now emitted as
+        required arguments in dynamic snippets even when `generate-literals` is enabled, and mock
+        server tests now include literal-typed required request properties in the expected request
+        body so the SDK's serialized output matches.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
 - version: 2.68.5
   changelogEntry:
     - summary: |
