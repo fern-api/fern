@@ -570,4 +570,3 @@ scripts:
 allowedFailures:
   - oauth-client-credentials-custom
   - inferred-auth-implicit-reference
-  - unions:serde-layer
