@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.50.4
+  changelogEntry:
+    - summary: |
+        Fixed the local C# dynamic-snippet test runner so it strips the docs-only
+        `exported-client-class-name` override before generating snippet tests. The compiled snippets now
+        reference the generated client class instead of the customer-provided wrapper, which is not part
+        of generator output.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
 - version: 5.50.3
   changelogEntry:
     - summary: |
