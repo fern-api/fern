@@ -196,7 +196,7 @@ public class OptionalWireTest {
                 .sendOptionalNullableWithAllOptionalProperties(
                         "actionId",
                         "id",
-                        DeployParams.builder().updateDraft(true).build());
+                        Optional.of(DeployParams.builder().updateDraft(true).build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());

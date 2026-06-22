@@ -16,6 +16,7 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
+import { applyTypeRelocations } from "./applyTypeRelocations.js";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
@@ -290,6 +291,16 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         inspect,
         runner
+    });
+
+    // If the generator relocated any types to break import cycles, apply those
+    // relocations to the IR powering host-side dynamic snippet generation so it
+    // references the moved types from the same package the generator declares
+    // them in. Deletes the relocations file so it never reaches the SDK output.
+    await applyTypeRelocations({
+        ir: latest,
+        tmpOutputDirectory: absolutePathToTmpOutputDirectory,
+        context
     });
 
     const taskHandler = new LocalTaskHandler({

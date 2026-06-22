@@ -125,7 +125,6 @@ public final class FilterByRoleRequest {
             return this;
         }
 
-        @java.lang.Override
         @JsonSetter("role")
         public Builder role(@Nullable UserRole role) {
             this.role = role;

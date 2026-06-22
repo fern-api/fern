@@ -19,7 +19,7 @@ RUN git config --global user.email "build@example.com" && \
     CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
     ls -la /out/tsgolint
 
-FROM node:24.16-trixie-slim
+FROM node:24.17-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
 # vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
@@ -46,6 +46,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
        curl libcurl4t64 libgnutls30t64 \
        libexpat1 \
+       libssh2-1t64 libtasn1-6 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
@@ -65,13 +66,18 @@ ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 # Upgrade bundled npm and patch vendored dependencies (ip-address,
 # brace-expansion) to versions that clear vulnerability scanners.
-RUN npm install -g npm@11.13.0 --force && \
+RUN npm install -g npm@11.17.0 --force && \
     cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack ip-address@10.1.1 && \
     rm -rf ip-address && \
     mkdir ip-address && \
     tar -xzf ip-address-10.1.1.tgz --strip-components=1 -C ip-address/ && \
     rm ip-address-10.1.1.tgz && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \
