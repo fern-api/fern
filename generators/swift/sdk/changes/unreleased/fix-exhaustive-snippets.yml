@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated code for `set`-typed request bodies and response values. The
+    Swift SDK represents `set` as `JSONValue`, so set example values now render
+    as `JSONValue` literals (e.g. `JSONValue.array([...])`) in snippets and wire
+    tests instead of being dropped or emitted as untyped Swift array literals.
+  type: fix
+- summary: |
+    Fix wire tests for endpoints that return an enum. The expected-response value
+    is now referenced through its enum type (e.g. `WeatherReport.sunny`) rather
+    than via shorthand (`.sunny`), which has no contextual type to resolve
+    against when the response itself is an enum.
+  type: fix
