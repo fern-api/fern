@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.Widgets.CreateAsync(
-            "apiVersion",
-            new Widget {
+            apiVersion: "apiVersion",
+            request: new Widget {
                 Name = "name"
             }
         );

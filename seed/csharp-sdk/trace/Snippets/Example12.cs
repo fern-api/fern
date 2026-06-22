@@ -12,8 +12,8 @@ public partial class Examples
         );
 
         await client.Playlist.CreatePlaylistAsync(
-            1,
-            new CreatePlaylistRequest {
+            serviceParam: 1,
+            request: new CreatePlaylistRequest {
                 Datetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                 OptionalDatetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
                 Body = new PlaylistCreateRequest {

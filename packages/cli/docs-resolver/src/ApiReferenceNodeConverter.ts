@@ -1,9 +1,8 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { isNonNullish, titleCase } from "@fern-api/core-utils";
+import { isNonNullish, titleCase, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
@@ -724,6 +723,7 @@ export class ApiReferenceNodeConverter {
                 collapsed: undefined,
                 operationType: graphqlOperation.operationType,
                 graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
+                graphqlOperationIds: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: convertDocsAvailability(endpointItem.availability ?? parentAvailability),
                 title:
@@ -876,6 +876,7 @@ export class ApiReferenceNodeConverter {
             collapsed: undefined,
             operationType: graphqlOperation.operationType,
             graphqlOperationId: APIV1Read.GraphQlOperationId(graphqlOperation.id),
+            graphqlOperationIds: undefined,
             apiDefinitionId: this.apiDefinitionId,
             availability: convertDocsAvailability(operationItem.availability ?? parentAvailability),
             title: operationItem.title ?? graphqlOperation.displayName ?? graphqlOperation.name ?? graphqlOperation.id,
@@ -1355,6 +1356,7 @@ export class ApiReferenceNodeConverter {
                     collapsed: undefined,
                     operationType: entry.operation.operationType,
                     graphqlOperationId: APIV1Read.GraphQlOperationId(entry.operation.id),
+                    graphqlOperationIds: undefined,
                     apiDefinitionId: this.apiDefinitionId,
                     availability: convertDocsAvailability(parentAvailability),
                     title: entry.operation.displayName ?? entry.operation.name ?? entry.operation.id,
@@ -1384,6 +1386,7 @@ export class ApiReferenceNodeConverter {
                     collapsed: undefined,
                     operationType: firstOp.operationType,
                     graphqlOperationId: APIV1Read.GraphQlOperationId(firstOp.id),
+                    graphqlOperationIds: groupOps.map((op) => APIV1Read.GraphQlOperationId(op.id)),
                     apiDefinitionId: this.apiDefinitionId,
                     availability: convertDocsAvailability(parentAvailability),
                     title: entry.parentField,

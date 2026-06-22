@@ -418,9 +418,6 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
-  - api-wide-base-path-with-default
-  - examples:no-custom-config
-  - examples:readme-config
   - imdb:exported-client-class-name
   - literal:no-custom-config
   - literal:readonly-constants

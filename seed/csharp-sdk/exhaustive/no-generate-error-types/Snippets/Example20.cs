@@ -13,8 +13,8 @@ public partial class Examples
         );
 
         await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
-            "string",
-            new NestedObjectWithRequiredField {
+            string_: "string",
+            request: new NestedObjectWithRequiredField {
                 String = "string",
                 NestedObject = new ObjectWithOptionalField {
                     String = "string",
