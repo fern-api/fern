@@ -401,10 +401,5 @@ allowedFailures:
   # required list of query parameters is not actually required by the builder.
   - pagination-custom
 
-  - java-pagination-deep-cursor-path:wire-tests
-
-  # Bug with how java-sdk creates nightly balanced files
-  - java-pagination-deep-cursor-path
-
   # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
