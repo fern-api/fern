@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated code and snippets for `allow-multiple` query parameters. These
+    parameters are now typed as arrays in endpoint method signatures (e.g.
+    `[String]`, `[Nullable<String>]`) and their example values render as arrays,
+    so the generated SDK, snippets, and wire tests compile correctly.
+  type: fix
+- summary: |
+    Fix `bigint` values rendering as empty in dynamic snippets. They are now
+    emitted as string literals, matching the `String` type used for bigints.
+  type: fix

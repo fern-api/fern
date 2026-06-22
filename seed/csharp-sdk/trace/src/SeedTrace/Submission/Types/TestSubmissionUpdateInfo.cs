@@ -123,10 +123,10 @@ public record TestSubmissionUpdateInfo
             : throw new global::System.Exception("TestSubmissionUpdateInfo.Type is not 'running'");
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'stopped', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'stopped'.</exception>
-    public object AsStopped() =>
+    public object? AsStopped() =>
         IsStopped
             ? Value!
             : throw new global::System.Exception("TestSubmissionUpdateInfo.Type is not 'stopped'");
@@ -163,21 +163,21 @@ public record TestSubmissionUpdateInfo
             );
 
     /// <summary>
-    /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
+    /// Returns the value as a <see cref="object?"/> if <see cref="Type"/> is 'finished', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'finished'.</exception>
-    public object AsFinished() =>
+    public object? AsFinished() =>
         IsFinished
             ? Value!
             : throw new global::System.Exception("TestSubmissionUpdateInfo.Type is not 'finished'");
 
     public T Match<T>(
         Func<SeedTrace.RunningSubmissionState, T> onRunning,
-        Func<object, T> onStopped,
+        Func<object?, T> onStopped,
         Func<SeedTrace.ErrorInfo, T> onErrored,
         Func<SeedTrace.GradedTestCaseUpdate, T> onGradedTestCase,
         Func<SeedTrace.RecordedTestCaseUpdate, T> onRecordedTestCase,
-        Func<object, T> onFinished,
+        Func<object?, T> onFinished,
         Func<string, object?, T> onUnknown_
     )
     {
@@ -195,11 +195,11 @@ public record TestSubmissionUpdateInfo
 
     public void Visit(
         Action<SeedTrace.RunningSubmissionState> onRunning,
-        Action<object> onStopped,
+        Action<object?> onStopped,
         Action<SeedTrace.ErrorInfo> onErrored,
         Action<SeedTrace.GradedTestCaseUpdate> onGradedTestCase,
         Action<SeedTrace.RecordedTestCaseUpdate> onRecordedTestCase,
-        Action<object> onFinished,
+        Action<object?> onFinished,
         Action<string, object?> onUnknown_
     )
     {
@@ -244,7 +244,7 @@ public record TestSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsStopped(out object? value)
     {
@@ -300,7 +300,7 @@ public record TestSubmissionUpdateInfo
     }
 
     /// <summary>
-    /// Attempts to cast the value to a <see cref="object"/> and returns true if successful.
+    /// Attempts to cast the value to a <see cref="object?"/> and returns true if successful.
     /// </summary>
     public bool TryAsFinished(out object? value)
     {
@@ -377,7 +377,7 @@ public record TestSubmissionUpdateInfo
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
-                "stopped" => new { },
+                "stopped" => null,
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "gradedTestCase" =>
@@ -390,7 +390,7 @@ public record TestSubmissionUpdateInfo
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.RecordedTestCaseUpdate"
                         ),
-                "finished" => new { },
+                "finished" => null,
                 _ => json.Deserialize<object?>(options),
             };
             return new TestSubmissionUpdateInfo(discriminator, value);
@@ -471,9 +471,9 @@ public record TestSubmissionUpdateInfo
     [Serializable]
     public record Stopped
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 
     /// <summary>
@@ -542,8 +542,8 @@ public record TestSubmissionUpdateInfo
     [Serializable]
     public record Finished
     {
-        internal object Value => new { };
+        internal object? Value => null;
 
-        public override string ToString() => Value.ToString() ?? "null";
+        public override string ToString() => Value?.ToString() ?? "null";
     }
 }

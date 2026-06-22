@@ -2,6 +2,7 @@ export const Protocol = {
     CaseIterable: "CaseIterable",
     Codable: "Codable",
     CodingKey: "CodingKey",
+    CodingKeyRepresentable: "CodingKeyRepresentable",
     Decodable: "Decodable",
     Encodable: "Encodable",
     Equatable: "Equatable",

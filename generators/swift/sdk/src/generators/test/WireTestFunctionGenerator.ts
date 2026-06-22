@@ -230,7 +230,13 @@ export class WireTestFunctionGenerator {
                             multiline: true
                         });
                     },
-                    set: () => swift.Expression.arrayLiteral({}),
+                    set: (setContainer) =>
+                        // The Swift SDK represents `set` types as `JSONValue`, so render the
+                        // expected value as a `JSONValue` (e.g. `JSONValue.array([...])`) to match
+                        // the decoded response type instead of a bare Swift array literal.
+                        this.generateUnknownExampleResponse(
+                            setContainer.set.map((item) => buildJsonFromExampleTypeReference(item))
+                        ),
                     nullable: (nullableContainer) => {
                         if (this.sdkGeneratorContext.customConfig.nullableAsOptional) {
                             const exampleTypeRef =
@@ -324,9 +330,14 @@ export class WireTestFunctionGenerator {
                         return this.generateExampleResponse(exampleAliasType.value, fromScope);
                     },
                     enum: (exampleEnumType) => {
-                        return swift.Expression.enumCaseShorthand(
-                            this.sdkGeneratorContext.caseConverter.camelUnsafe(exampleEnumType.value)
-                        );
+                        // Reference the enum case through its type (e.g. `WeatherReport.sunny`)
+                        // rather than via shorthand (`.sunny`). The expected-response constant is
+                        // declared without an explicit type annotation, so a bare shorthand has no
+                        // contextual type to resolve against when the response itself is an enum.
+                        return swift.Expression.memberAccess({
+                            target: swift.Expression.reference(symbol.name),
+                            memberName: this.sdkGeneratorContext.caseConverter.camelUnsafe(exampleEnumType.value)
+                        });
                     },
                     object: (exampleObjectType) => {
                         const propertyArgs: swift.FunctionArgument[] = this.orderExamplePropertiesByDeclaration(
