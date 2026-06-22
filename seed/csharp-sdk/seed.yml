@@ -418,7 +418,6 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
-  - imdb:exported-client-class-name
   - literal:no-custom-config
   - literal:readonly-constants
   - oauth-client-credentials-custom
