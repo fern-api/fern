@@ -245,6 +245,82 @@ describe("ExampleConverter", () => {
         });
     });
 
+    describe("patternProperties", () => {
+        const mockContextWithResolve = () =>
+            ({
+                ...mockContext,
+                resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }) => schemaOrReference)
+            }) as unknown as AbstractConverterContext<object>;
+
+        it("should accept properties matching a patternProperties regex even when additionalProperties is false", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: false,
+                // patternProperties is not modeled by openapi-types; cast through the schema object
+                ...({ patternProperties: { "^x-": { type: "string" } } } as object)
+            };
+
+            const example = {
+                name: "My Item",
+                "x-custom": "value",
+                "x-another": "value2"
+            };
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve(),
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.errors).toHaveLength(0);
+            expect(result.validExample).toEqual({
+                name: "My Item",
+                "x-custom": "value",
+                "x-another": "value2"
+            });
+        });
+
+        it("should still reject properties matching no pattern when additionalProperties is false", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                type: "object",
+                properties: {
+                    name: { type: "string" }
+                },
+                required: ["name"],
+                additionalProperties: false,
+                ...({ patternProperties: { "^x-": { type: "string" } } } as object)
+            };
+
+            const example = {
+                name: "My Item",
+                "x-allowed": "value",
+                notAllowed: "should be flagged"
+            };
+
+            const converter = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve(),
+                schema,
+                example
+            });
+
+            const result = converter.convert();
+
+            expect(result.isValid).toBe(false);
+            expect(result.errors.length).toBeGreaterThan(0);
+            expect(result.errors.some((error) => error.message.includes("notAllowed"))).toBe(true);
+            expect(result.errors.some((error) => error.message.includes("x-allowed"))).toBe(false);
+        });
+    });
+
     describe("additionalProperties", () => {
         it("should preserve additional properties when additionalProperties is true", () => {
             const schema: OpenAPIV3_1.SchemaObject = {

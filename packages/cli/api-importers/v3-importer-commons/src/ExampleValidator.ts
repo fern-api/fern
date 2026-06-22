@@ -359,11 +359,15 @@ export class ExampleValidator {
 
         const exampleObj = example as Record<string, unknown>;
         const definedProperties = this.collectAllPropertyKeys(schema);
+        // Keys matching a `patternProperties` regex are valid and must not be treated as unexpected.
+        const patternPropertyRegexes = this.collectAllPatternPropertyRegexes(schema);
 
         const exampleProperties = Object.keys(exampleObj);
 
-        // Check if any example property is not defined in the schema
-        return exampleProperties.some((prop) => !definedProperties.has(prop));
+        // Check if any example property is neither defined in the schema nor matched by a pattern
+        return exampleProperties.some(
+            (prop) => !definedProperties.has(prop) && !patternPropertyRegexes.some((regex) => regex.test(prop))
+        );
     }
 
     /**
@@ -420,6 +424,45 @@ export class ExampleValidator {
         }
 
         return propertyKeys;
+    }
+
+    /**
+     * Recursively collects the `patternProperties` regexes from a schema, including those
+     * from allOf, oneOf, and anyOf compositions. Patterns that fail to compile are skipped.
+     */
+    private collectAllPatternPropertyRegexes(
+        schema: OpenAPIV3_1.SchemaObject,
+        visited: Set<string> = new Set()
+    ): RegExp[] {
+        const regexes: RegExp[] = [];
+
+        const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
+        if (patternProperties && typeof patternProperties === "object") {
+            for (const pattern of Object.keys(patternProperties)) {
+                try {
+                    regexes.push(new RegExp(pattern));
+                } catch {
+                    // Ignore invalid regex patterns
+                }
+            }
+        }
+
+        for (const subSchema of [...(schema.allOf ?? []), ...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: [],
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    regexes.push(...this.collectAllPatternPropertyRegexes(resolved, visited));
+                }
+            }
+        }
+
+        return regexes;
     }
 
     /**

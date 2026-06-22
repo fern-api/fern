@@ -956,10 +956,33 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
-        if (additionalPropertyKeys.length > 0) {
+        // Keys that match a `patternProperties` regex are valid properties even when
+        // `additionalProperties: false`. We don't implement first-class `patternProperties`
+        // support: we simply accept the matching keys and preserve their values without
+        // validating them against the matched pattern's schema.
+        const patternPropertyRegexes = this.collectAllPatternPropertyRegexes(resolvedSchema);
+        const patternMatchedKeys = additionalPropertyKeys.filter((key) =>
+            patternPropertyRegexes.some((regex) => regex.test(key))
+        );
+        const remainingAdditionalKeys = additionalPropertyKeys.filter((key) => !patternMatchedKeys.includes(key));
+
+        patternMatchedKeys.forEach((key) => {
+            additionalPropertiesResults.push({
+                key,
+                result: {
+                    isValid: true,
+                    coerced: false,
+                    usedProvidedExample: true,
+                    validExample: exampleObj[key],
+                    errors: []
+                }
+            });
+        });
+
+        if (remainingAdditionalKeys.length > 0) {
             if (resolvedSchema.additionalProperties === false) {
                 // Additional properties are not allowed, create errors for each extra property
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     const breadcrumbPath = [...this.breadcrumbs, key].join(".");
                     const error = {
                         message: `Found unexpected property '${key}' in example. This property does not exist in the schema${breadcrumbPath ? ` at path: ${breadcrumbPath}` : ""}`,
@@ -981,7 +1004,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 resolvedSchema.additionalProperties === undefined
             ) {
                 // additionalProperties: true or undefined - preserve values without validation
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     additionalPropertiesResults.push({
                         key,
                         result: {
@@ -996,7 +1019,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             } else {
                 // additionalProperties is a schema object - validate each additional property against it
                 const additionalPropsSchema = resolvedSchema.additionalProperties as OpenAPIV3_1.SchemaObject;
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     const exampleConverter = new ExampleConverter({
                         breadcrumbs: [...this.breadcrumbs, key],
                         context: this.context,
@@ -1593,5 +1616,45 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         return propertyKeys;
+    }
+
+    /**
+     * Recursively collects the `patternProperties` regexes from a schema, including those
+     * from allOf, oneOf, and anyOf compositions. Patterns that fail to compile are skipped
+     * (the matching keys then fall through to normal `additionalProperties` handling).
+     */
+    private collectAllPatternPropertyRegexes(
+        schema: OpenAPIV3_1.SchemaObject,
+        visited: Set<string> = new Set()
+    ): RegExp[] {
+        const regexes: RegExp[] = [];
+
+        const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
+        if (patternProperties && typeof patternProperties === "object") {
+            for (const pattern of Object.keys(patternProperties)) {
+                try {
+                    regexes.push(new RegExp(pattern));
+                } catch {
+                    // Ignore invalid regex patterns
+                }
+            }
+        }
+
+        for (const subSchema of [...(schema.allOf ?? []), ...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    regexes.push(...this.collectAllPatternPropertyRegexes(resolved, visited));
+                }
+            }
+        }
+
+        return regexes;
     }
 }
