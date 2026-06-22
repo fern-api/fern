@@ -21,6 +21,7 @@ export declare namespace AuthProvidersGenerator {
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
         shouldUseWrapper: boolean;
+        optionalAuth: boolean;
     }
 }
 
@@ -31,7 +32,8 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
         authScheme,
         neverThrowErrors,
         includeSerdeLayer,
-        shouldUseWrapper
+        shouldUseWrapper,
+        optionalAuth
     }: AuthProvidersGenerator.Init) {
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
@@ -55,7 +57,7 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory && !optionalAuth,
                         shouldUseWrapper
                     });
                 case "bearer":
@@ -63,7 +65,7 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory && !optionalAuth,
                         shouldUseWrapper
                     });
                 case "header":
@@ -71,7 +73,7 @@ export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory && !optionalAuth,
                         shouldUseWrapper
                     });
                 case "oauth":

@@ -34,6 +34,7 @@ export declare namespace SdkClientClassGenerator {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
+        optionalAuth: boolean;
     }
 
     export namespace generateService {
@@ -73,6 +74,7 @@ export class SdkClientClassGenerator {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
+    private readonly optionalAuth: boolean;
 
     constructor({
         caseConverter,
@@ -100,7 +102,8 @@ export class SdkClientClassGenerator {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        alwaysSendAuth
+        alwaysSendAuth,
+        optionalAuth
     }: SdkClientClassGenerator.Init) {
         this.case = caseConverter;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -128,6 +131,7 @@ export class SdkClientClassGenerator {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
+        this.optionalAuth = optionalAuth;
     }
 
     public generateService({
@@ -165,7 +169,8 @@ export class SdkClientClassGenerator {
             generateEndpointMetadata: this.generateEndpointMetadata,
             parameterNaming: this.parameterNaming,
             offsetSemantics: this.offsetSemantics,
-            alwaysSendAuth: this.alwaysSendAuth
+            alwaysSendAuth: this.alwaysSendAuth,
+            optionalAuth: this.optionalAuth
         });
     }
 }

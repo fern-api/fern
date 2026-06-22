@@ -104,6 +104,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             customPagerName: parsed?.customPagerName ?? "CustomPager",
             resolveQueryParameterNameConflicts: parsed?.resolveQueryParameterNameConflicts ?? false,
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
+            optionalAuth: parsed?.["optional-auth"] ?? false,
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy"
         };
@@ -268,7 +269,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 customPagerName: customConfig.customPagerName ?? "CustomPager",
                 resolveQueryParameterNameConflicts: customConfig.resolveQueryParameterNameConflicts,
                 maxRetries: customConfig.maxRetries,
-                alwaysSendAuth: customConfig.alwaysSendAuth
+                alwaysSendAuth: customConfig.alwaysSendAuth,
+                optionalAuth: customConfig.optionalAuth
             }
         });
         const typescriptProject = await sdkGenerator.generate();

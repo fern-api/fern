@@ -21,7 +21,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: authScheme as unknown as FernIr.AuthScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             expect(generator.shouldWriteFile()).toBe(true);
             const filePath = generator.getFilePath();
@@ -36,7 +37,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: authScheme as unknown as FernIr.AuthScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             expect(generator.shouldWriteFile()).toBe(true);
             const filePath = generator.getFilePath();
@@ -54,7 +56,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: authScheme as unknown as FernIr.AuthScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             expect(generator.shouldWriteFile()).toBe(true);
             const filePath = generator.getFilePath();
@@ -136,7 +139,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: inferredScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             expect(generator.shouldWriteFile()).toBe(true);
             const filePath = generator.getFilePath();
@@ -150,7 +154,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: { type: "any" },
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             expect(generator.shouldWriteFile()).toBe(true);
             const filePath = generator.getFilePath();
@@ -164,7 +169,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: { type: "routing" },
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             expect(generator.shouldWriteFile()).toBe(true);
             const filePath = generator.getFilePath();
@@ -181,7 +187,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: authScheme as unknown as FernIr.AuthScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             expect(generator.shouldWriteFile()).toBe(true);
         });
@@ -195,7 +202,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: authScheme as unknown as FernIr.AuthScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             const filePath = generator.getFilePath();
             expect(filePath.directories).toEqual(
@@ -210,7 +218,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: authScheme as unknown as FernIr.AuthScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             const filePath = generator.getFilePath();
             expect(filePath.directories).toEqual(
@@ -228,7 +237,8 @@ describe("AuthProvidersGenerator", () => {
                 authScheme: authScheme as unknown as FernIr.AuthScheme,
                 neverThrowErrors: false,
                 includeSerdeLayer: true,
-                shouldUseWrapper: false
+                shouldUseWrapper: false,
+                optionalAuth: false
             });
             // Verify shouldWriteFile returns true (meaning writeToFile would delegate)
             expect(generator.shouldWriteFile()).toBe(true);

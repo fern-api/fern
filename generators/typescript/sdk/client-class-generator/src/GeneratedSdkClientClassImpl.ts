@@ -83,6 +83,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         alwaysSendAuth: boolean;
+        optionalAuth: boolean;
     }
 }
 
@@ -128,6 +129,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly alwaysSendAuth: boolean;
+    private readonly optionalAuth: boolean;
 
     constructor({
         caseConverter,
@@ -156,7 +158,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        alwaysSendAuth
+        alwaysSendAuth,
+        optionalAuth
     }: GeneratedSdkClientClassImpl.Init) {
         this.case = caseConverter;
         this.isRoot = isRoot;
@@ -178,6 +181,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.alwaysSendAuth = alwaysSendAuth;
+        this.optionalAuth = optionalAuth;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;

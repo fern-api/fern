@@ -375,6 +375,10 @@ fixtures:
     - outputFolder: websockets
       customConfig:
         generateWebSocketClients: true
+  bearer-token-environment-variable:
+    - outputFolder: optional-auth
+      customConfig:
+        optional-auth: true
   any-auth:
     - outputFolder: no-custom-config
       customConfig: null

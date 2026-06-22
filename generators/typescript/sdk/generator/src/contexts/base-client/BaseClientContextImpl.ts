@@ -23,6 +23,7 @@ export declare namespace BaseClientContextImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
         caseConverter: CaseConverter;
+        optionalAuth: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -44,6 +45,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
     private readonly case: CaseConverter;
+    private readonly optionalAuth: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -69,7 +71,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         generateIdempotentRequestOptions,
         parameterNaming,
         baseClientTypeDeclarationReferencer,
-        caseConverter
+        caseConverter,
+        optionalAuth
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -79,6 +82,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
         this.case = caseConverter;
+        this.optionalAuth = optionalAuth;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -113,7 +117,7 @@ export class BaseClientContextImpl implements BaseClientContext {
 
         // Check auth options from the intersection type
         // Auth options are required when auth is mandatory and there's no environment variable fallback
-        const isAuthMandatory = this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+        const isAuthMandatory = this.intermediateRepresentation.sdkConfig.isAuthMandatory && !this.optionalAuth;
 
         if (this.bearerAuthScheme != null) {
             const hasTokenEnv = this.bearerAuthScheme.tokenEnvVar != null;

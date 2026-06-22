@@ -119,3 +119,21 @@ def test_parse_wrapped_aliases() -> None:
         match="Wrapped aliases are only supported in Pydantic V1, V1_ON_V2, or V2, please update your `version` field appropriately to continue using wrapped aliases.",
     ):
         SDKCustomConfig.parse_obj(both)
+
+
+def test_optional_auth_default() -> None:
+    """Default value of optional_auth is False."""
+    config = SDKCustomConfig.parse_obj({})
+    assert config.optional_auth is False
+
+
+def test_optional_auth_explicit_true() -> None:
+    """optional_auth can be set to True."""
+    config = SDKCustomConfig.parse_obj({"optional_auth": True})
+    assert config.optional_auth is True
+
+
+def test_optional_auth_kebab_case_alias() -> None:
+    """optional-auth (kebab-case) is accepted and mapped to optional_auth."""
+    config = SDKCustomConfig.parse_obj({"optional-auth": True})
+    assert config.optional_auth is True

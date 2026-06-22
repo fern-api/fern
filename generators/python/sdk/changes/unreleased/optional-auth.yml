@@ -1,0 +1,4 @@
+- summary: |
+    Add `optional-auth` generator config flag that makes client auth parameters
+    optional even when the spec declares all endpoints as auth-mandatory.
+  type: feat

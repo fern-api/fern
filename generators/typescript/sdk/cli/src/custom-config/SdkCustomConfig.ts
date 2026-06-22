@@ -81,5 +81,6 @@ export interface SdkCustomConfig {
     resolveQueryParameterNameConflicts: boolean;
     maxRetries: number | undefined;
     alwaysSendAuth: boolean;
+    optionalAuth: boolean;
     retryStatusCodes: "legacy" | "recommended";
 }
