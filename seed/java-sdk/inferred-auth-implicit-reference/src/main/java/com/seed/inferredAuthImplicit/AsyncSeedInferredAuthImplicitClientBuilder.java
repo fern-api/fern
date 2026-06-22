@@ -20,11 +20,41 @@ public class AsyncSeedInferredAuthImplicitClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
+    private String clientId = null;
+
+    private String clientSecret = null;
+
+    private String scope = null;
+
     private Environment environment;
 
     private OkHttpClient httpClient;
 
     private Optional<LogConfig> logging = Optional.empty();
+
+    /**
+     * Sets clientId
+     */
+    public AsyncSeedInferredAuthImplicitClientBuilder clientId(String clientId) {
+        this.clientId = clientId;
+        return this;
+    }
+
+    /**
+     * Sets clientSecret
+     */
+    public AsyncSeedInferredAuthImplicitClientBuilder clientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+        return this;
+    }
+
+    /**
+     * Sets scope
+     */
+    public AsyncSeedInferredAuthImplicitClientBuilder scope(String scope) {
+        this.scope = scope;
+        return this;
+    }
 
     public AsyncSeedInferredAuthImplicitClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -117,11 +147,12 @@ public class AsyncSeedInferredAuthImplicitClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
-        if (true) {
+        if (this.clientId != null && this.clientSecret != null) {
             ClientOptions.Builder authClientOptionsBuilder =
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            InferredAuthTokenSupplier inferredAuthTokenSupplier = new InferredAuthTokenSupplier(authClient);
+            InferredAuthTokenSupplier inferredAuthTokenSupplier =
+                    new InferredAuthTokenSupplier(this.clientId, this.clientSecret, this.scope, authClient);
             builder.addHeader(
                     "Authorization", () -> inferredAuthTokenSupplier.get().get("Authorization"));
         }

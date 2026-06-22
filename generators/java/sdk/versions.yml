@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.12
+  changelogEntry:
+    - summary: |
+        Fix inferred auth token supplier generation when the token endpoint's request body is a referenced (named) type rather than an inlined body. The supplier now resolves the referenced type's properties and passes the required token-request properties to the builder, instead of calling `builder().build()` on a staged builder that has required properties.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 66
 - version: 4.10.11
   changelogEntry:
     - summary: |

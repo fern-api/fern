@@ -567,5 +567,4 @@ scripts:
             echo "Running yarn test..."
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
-allowedFailures:
-  - inferred-auth-implicit-reference
+allowedFailures: []
