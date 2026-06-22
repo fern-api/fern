@@ -1,6 +1,6 @@
 # Stage 1: Java V2
 # Non-slim trixie because the patch RUN steps below shell out to curl and tar.
-FROM node:24.16-trixie AS node
+FROM node:24.17-trixie AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
@@ -166,6 +166,19 @@ RUN for dir in \
         tar -xzf ip-address-10.2.0.tgz && \
         mv package ip-address && \
         rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
       fi; \
     done
 

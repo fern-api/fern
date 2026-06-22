@@ -39,7 +39,7 @@ public class CreateTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Widgets.CreateAsync("apiVersion", new Widget { Name = "name" });
+        var response = await Client.Widgets.CreateAsync(new Widget { Name = "name" }, "apiVersion");
         JsonAssert.AreEqual(response, mockResponse);
     }
 
@@ -73,7 +73,7 @@ public class CreateTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Widgets.CreateAsync("v1beta", new Widget { Name = "name" });
+        var response = await Client.Widgets.CreateAsync(new Widget { Name = "name" }, "v1beta");
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

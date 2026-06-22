@@ -964,8 +964,11 @@ public abstract class AbstractEndpointWriter {
             if (httpEndpoint.getRequestBody().isPresent()) {
                 isOptional = httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
             }
-            if (!httpEndpoint.getHeaders().isEmpty() && isOptional) {
-                isOptional = httpEndpoint.getHeaders().stream().allMatch(httpHeader -> httpHeader
+            List<HttpHeader> wrapperHeaders = Stream.concat(
+                            httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
+                    .collect(Collectors.toList());
+            if (!wrapperHeaders.isEmpty() && isOptional) {
+                isOptional = wrapperHeaders.stream().allMatch(httpHeader -> httpHeader
                         .getValueType()
                         .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             }
@@ -1005,8 +1008,11 @@ public abstract class AbstractEndpointWriter {
             if (!bodyIsRequired) {
                 return false;
             }
-            boolean allHeadersOptional = httpEndpoint.getHeaders().isEmpty()
-                    || httpEndpoint.getHeaders().stream().allMatch(httpHeader -> httpHeader
+            List<HttpHeader> wrapperHeaders = Stream.concat(
+                            httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
+                    .collect(Collectors.toList());
+            boolean allHeadersOptional = wrapperHeaders.isEmpty()
+                    || wrapperHeaders.stream().allMatch(httpHeader -> httpHeader
                             .getValueType()
                             .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             boolean allQueryParamsOptional = httpEndpoint.getQueryParameters().isEmpty()
@@ -1020,7 +1026,7 @@ public abstract class AbstractEndpointWriter {
                             .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             boolean hasOnlyOptionalWrapperAdditions =
                     allHeadersOptional && allQueryParamsOptional && allInlinePathParamsOptional;
-            boolean hasWrapperAdditions = !httpEndpoint.getHeaders().isEmpty()
+            boolean hasWrapperAdditions = !wrapperHeaders.isEmpty()
                     || !httpEndpoint.getQueryParameters().isEmpty()
                     || (inlinePathParams && !httpEndpoint.getPathParameters().isEmpty());
             return hasOnlyOptionalWrapperAdditions && hasWrapperAdditions;

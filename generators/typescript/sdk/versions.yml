@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.72.9
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials providers when the token endpoint request body has
+        required properties beyond the client id and secret (e.g. a scopes mapping or
+        other custom fields). Those required, non-literal properties are now surfaced on
+        the client-credentials options and forwarded to the token request, so the
+        generated provider compiles and sends a complete request.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.8
+  changelogEntry:
+    - summary: |
+        Fix the serialization layer for discriminated unions that both `extend` another
+        type and declare `base-properties`. The generated `_Base` schema now extends the
+        parent type schemas (in addition to the base properties), so its inferred raw
+        type matches the declared `Raw` type and the union schema compiles.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.7
+  changelogEntry:
+    - summary: |
+        Fixed a runtime error in the serialization layer when a type references a
+        same-named type in another package. Such references are now wrapped with
+        `lazy()`/`lazyObject()` so they are resolved through the `serializers`
+        namespace barrel after all modules have initialized, instead of being read
+        eagerly during module load (which could throw "Cannot read properties of
+        undefined").
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.6
+  changelogEntry:
+    - summary: |
+        Fixed the generated wire test for paginated endpoints when `neverThrowErrors`
+        is enabled. In that mode the SDK returns a wrapped `APIResponse` instead of a
+        `Page`, so the test no longer calls `page.data`/`page.hasNextPage()`/
+        `page.getNextPage()`; it now asserts the returned `APIResponse` directly.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
 - version: 3.72.5
   changelogEntry:
     - summary: |

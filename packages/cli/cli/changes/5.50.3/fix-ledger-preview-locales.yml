@@ -1,0 +1,3 @@
+- summary: |
+    Fixes translated locales in ledger publishing mode (currently opt-in).
+  type: fix

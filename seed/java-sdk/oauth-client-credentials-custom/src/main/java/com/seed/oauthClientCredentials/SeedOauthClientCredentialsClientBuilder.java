@@ -259,6 +259,8 @@ public class SeedOauthClientCredentialsClientBuilder {
 
         private final String clientSecret;
 
+        private String scp = null;
+
         private String entityId = null;
 
         private String scope = null;
@@ -266,6 +268,11 @@ public class SeedOauthClientCredentialsClientBuilder {
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
+        }
+
+        public _CredentialsAuth scp(String scp) {
+            this.scp = scp;
+            return this;
         }
 
         public _CredentialsAuth entityId(String entityId) {
@@ -283,8 +290,8 @@ public class SeedOauthClientCredentialsClientBuilder {
             validateConfiguration();
             ClientOptions baseOptions = buildClientOptions();
             AuthClient authClient = new AuthClient(baseOptions);
-            OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.entityId, this.scope, authClient);
+            OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
+                    this.clientId, this.clientSecret, this.scp, this.entityId, this.scope, authClient);
             ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
                     .addHeader("Authorization", oAuthTokenSupplier)
                     .build();
