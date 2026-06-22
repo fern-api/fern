@@ -47,6 +47,8 @@ import com.fern.ir.model.http.RequestPropertyValue;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
@@ -56,6 +58,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
+import com.fern.java.client.generators.endpoint.PaginationPathUtils;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -1505,6 +1508,25 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
                     @Override
                     public Void visitReference(com.fern.ir.model.http.HttpRequestBodyReference reference) {
+                        reference
+                                .getRequestBodyType()
+                                .visit(new PaginationPathUtils.TypeReferenceResolver(clientGeneratorContext))
+                                .map(TypeDeclaration::getShape)
+                                .flatMap(shape -> shape.getObject())
+                                .ifPresent(objectDeclaration -> {
+                                    for (ObjectProperty prop : resolvedObjectProperties(objectDeclaration)) {
+                                        String propName = NameUtils.getName(prop.getName())
+                                                .getCamelCase()
+                                                .getSafeName();
+                                        if (!isLiteralType(prop.getValueType())) {
+                                            credentialPropertyNames.add(propName);
+                                            if (!isOptionalType(prop.getValueType())) {
+                                                requiredCredentialPropertyNames.add(propName);
+                                            }
+                                            createSetter(propName, Optional.empty(), Optional.empty());
+                                        }
+                                    }
+                                });
                         return null;
                     }
 
@@ -1629,6 +1651,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 return container.isOptional();
             }
             return false;
+        }
+
+        private List<ObjectProperty> resolvedObjectProperties(ObjectTypeDeclaration objectDeclaration) {
+            List<ObjectProperty> resolved = new ArrayList<>();
+            objectDeclaration.getExtendedProperties().stream()
+                    .flatMap(List::stream)
+                    .forEach(resolved::add);
+            resolved.addAll(objectDeclaration.getProperties());
+            return resolved;
         }
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
