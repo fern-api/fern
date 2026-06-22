@@ -354,9 +354,6 @@ catalogs:
     is-ci:
       specifier: ^3.0.1
       version: 3.0.1
-    js-yaml:
-      specifier: ^4.2.0
-      version: 4.2.0
     js-yaml-source-map:
       specifier: ^0.2.2
       version: 0.2.2
@@ -597,13 +594,17 @@ overrides:
   esbuild: ^0.28.1
   yauzl: ^3.2.1
   '@opentelemetry/core': '>=2.8.0'
+  js-yaml: '>=4.2.0'
+
+patchedDependencies:
+  gray-matter@4.0.3: 0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73
 
 importers:
 
   .:
     dependencies:
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
     devDependencies:
       '@babel/core':
@@ -715,7 +716,7 @@ importers:
         specifier: ^10.48.0
         version: 10.49.0
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -1441,7 +1442,7 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -3840,7 +3841,7 @@ importers:
         specifier: workspace:*
         version: link:../../../task-context
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
     devDependencies:
       '@fern-api/configs':
@@ -4112,7 +4113,7 @@ importers:
         specifier: workspace:*
         version: link:../../../workspace/loader
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       openapi-types:
         specifier: ^12.1.3
@@ -4204,7 +4205,7 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       js-yaml-source-map:
         specifier: 'catalog:'
@@ -4553,12 +4554,12 @@ importers:
         version: 16.13.2
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       immer:
         specifier: ^10.1.1
         version: 10.2.0
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       latest-version:
         specifier: 'catalog:'
@@ -4695,7 +4696,7 @@ importers:
         specifier: ^9.2.23
         version: 9.3.8(@types/node@22.19.17)
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       yaml:
         specifier: 'catalog:'
@@ -4972,7 +4973,7 @@ importers:
         version: 7.2.0
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       inquirer:
         specifier: ^9.2.15
         version: 9.3.8(@types/node@22.19.17)
@@ -4980,7 +4981,7 @@ importers:
         specifier: 'catalog:'
         version: 3.0.1
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       json-stream-stringify:
         specifier: 'catalog:'
@@ -5109,9 +5110,9 @@ importers:
         version: 6.3.0
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -5172,7 +5173,7 @@ importers:
         specifier: workspace:*
         version: link:../../task-context
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
     devDependencies:
       '@fern-api/configs':
@@ -5216,7 +5217,7 @@ importers:
         version: link:../../task-context
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -5256,7 +5257,7 @@ importers:
         version: link:../../task-context
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       hast-util-to-mdast:
         specifier: 'catalog:'
         version: 10.1.2
@@ -5323,7 +5324,7 @@ importers:
         version: 3.0.3
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       mdast-util-from-markdown:
         specifier: 'catalog:'
         version: 2.0.3
@@ -5444,7 +5445,7 @@ importers:
         version: 4.22.1
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -5562,12 +5563,12 @@ importers:
         version: 3.0.0
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       heap-js:
         specifier: 'catalog:'
         version: 2.7.1
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -5637,7 +5638,7 @@ importers:
         specifier: 'catalog:'
         version: 4.22.1
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       node-fetch:
         specifier: 'catalog:'
@@ -6203,7 +6204,7 @@ importers:
         specifier: 'catalog:'
         version: 4.2.1
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       semver:
         specifier: ^7.6.3
@@ -6378,7 +6379,7 @@ importers:
         specifier: 'catalog:'
         version: 1.2.1
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -6503,7 +6504,7 @@ importers:
         specifier: 'catalog:'
         version: 11.3.4
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -6558,7 +6559,7 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       tmp-promise:
         specifier: 'catalog:'
@@ -6831,7 +6832,7 @@ importers:
         specifier: 'catalog:'
         version: 4.0.9
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -7136,7 +7137,7 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -7224,7 +7225,7 @@ importers:
         specifier: 'catalog:'
         version: 5.6.2
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       zod:
         specifier: 'catalog:'
@@ -7365,9 +7366,9 @@ importers:
         version: 21.3.4
       gray-matter:
         specifier: 'catalog:'
-        version: 4.0.3
+        version: 4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73)
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -7565,7 +7566,7 @@ importers:
         specifier: 'catalog:'
         version: 1.34.11
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       latest-version:
         specifier: 'catalog:'
@@ -8253,7 +8254,7 @@ importers:
         specifier: 'catalog:'
         version: 6.3.0
       js-yaml:
-        specifier: 'catalog:'
+        specifier: '>=4.2.0'
         version: 4.2.0
       lodash-es:
         specifier: 'catalog:'
@@ -11231,9 +11232,6 @@ packages:
   arg@1.0.0:
     resolution: {integrity: sha512-Wk7TEzl1KqvTGs/uyhmHO/3XLd3t1UeU4IstvPXVzGPM522cTjqjNZ99esCkcL52sjqjo8e8CTBcWhkxvGzoAw==}
 
-  argparse@1.0.10:
-    resolution: {integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==}
-
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
@@ -12958,15 +12956,7 @@ packages:
   js-yaml-source-map@0.2.2:
     resolution: {integrity: sha512-z45Aww8oXJh9GuWUnwmvHsAkB7I/oWrkoHU554UQ8Ik4dyhVrk/nwClTI435feU7QIy7E0XaW8jHvZ4QxaAjog==}
     peerDependencies:
-      js-yaml: ^4.0.0
-
-  js-yaml@3.14.2:
-    resolution: {integrity: sha512-PMSmkqxr106Xa156c2M265Z+FTrPl+oxd/rgOQy2tijQeK5TxQ43psO1ZCwhVOSdnn+RzkzlRz/eY4BgJBYVpg==}
-    hasBin: true
-
-  js-yaml@4.1.1:
-    resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
-    hasBin: true
+      js-yaml: '>=4.2.0'
 
   js-yaml@4.2.0:
     resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
@@ -14360,9 +14350,6 @@ packages:
 
   spdx-license-ids@3.0.23:
     resolution: {integrity: sha512-CWLcCCH7VLu13TgOH+r8p1O/Znwhqv/dbb6lqWy67G+pT1kHmeD/+V36AVb/vq8QMIQwVShJ6Ssl5FPh0fuSdw==}
-
-  sprintf-js@1.0.3:
-    resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
   stack-utils@2.0.6:
     resolution: {integrity: sha512-XlkWvfIm6RmsWtNJx+uqtKLS8eqFbxUg0ZzLXqY0caEy9l7hruX8IpiDnjsLavoBgqCCR71TqWO8MaXYheJ3RQ==}
@@ -17528,7 +17515,7 @@ snapshots:
       colorette: 1.4.0
       https-proxy-agent: 7.0.6
       js-levenshtein: 1.1.6
-      js-yaml: 4.1.1
+      js-yaml: 4.2.0
       minimatch: 10.2.5
       pluralize: 8.0.0
       yaml-ast-parser: 0.0.43
@@ -18283,10 +18270,6 @@ snapshots:
   arch@2.2.0: {}
 
   arg@1.0.0: {}
-
-  argparse@1.0.10:
-    dependencies:
-      sprintf-js: 1.0.3
 
   argparse@2.0.1: {}
 
@@ -19661,9 +19644,9 @@ snapshots:
 
   graphql@16.13.2: {}
 
-  gray-matter@4.0.3:
+  gray-matter@4.0.3(patch_hash=0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73):
     dependencies:
-      js-yaml: 3.14.2
+      js-yaml: 4.2.0
       kind-of: 6.0.3
       section-matter: 1.0.0
       strip-bom-string: 1.0.0
@@ -20172,15 +20155,6 @@ snapshots:
   js-yaml-source-map@0.2.2(js-yaml@4.2.0):
     dependencies:
       js-yaml: 4.2.0
-
-  js-yaml@3.14.2:
-    dependencies:
-      argparse: 1.0.10
-      esprima: 4.0.1
-
-  js-yaml@4.1.1:
-    dependencies:
-      argparse: 2.0.1
 
   js-yaml@4.2.0:
     dependencies:
@@ -22024,8 +21998,6 @@ snapshots:
       spdx-license-ids: 3.0.23
 
   spdx-license-ids@3.0.23: {}
-
-  sprintf-js@1.0.3: {}
 
   stack-utils@2.0.6:
     dependencies:

@@ -1,6 +1,6 @@
 # Bundled npm globals are removed below so npm's JS dependencies cannot be
 # flagged or invoked at runtime — this image only runs the bundled CLI via node.
-FROM node:24.16-trixie-slim
+FROM node:24.17-trixie-slim
 # Security update 2026-05-18: trixie's krb5 (1.21.3-5), curl (8.14.1),
 # and gnutls28 (3.8.9) are still vulnerable to CVE-2026-40355,
 # CVE-2026-40356 (krb5), CVE-2026-1965/4873/5545/6253/6429 (curl),
@@ -20,6 +20,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
     && apt-get install -y --no-install-recommends -t sid \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
        curl libcurl4t64 libgnutls30t64 \
+       libssh2-1t64 libtasn1-6 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
