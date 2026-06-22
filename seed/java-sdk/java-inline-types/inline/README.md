@@ -57,7 +57,6 @@ package com.example.usage;
 
 import com.seed.object.SeedObjectClient;
 import com.seed.object.requests.PostRootRequest;
-import com.seed.object.types.RequestTypeInlineType1;
 
 public class Example {
     public static void main(String[] args) {
@@ -69,7 +68,7 @@ public class Example {
             PostRootRequest
                 .builder()
                 .bar(
-                    RequestTypeInlineType1
+                    PostRootRequest.Bar
                         .builder()
                         .foo("foo")
                         .build()

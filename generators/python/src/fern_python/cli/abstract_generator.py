@@ -255,9 +255,14 @@ class AbstractGenerator(ABC):
         # when publishing to github, we always need a project config, so that
         # we generate a pyproject.toml
         if output_mode.publish_info is None:
+            custom_package_name = (
+                generator_config.custom_config.get("package_name")
+                if generator_config.custom_config is not None
+                else None
+            )
             return ProjectConfig(
-                package_name=generator_config.organization,
-                package_version="0.0.0",
+                package_name=custom_package_name or generator_config.organization,
+                package_version=output_mode.version or "0.0.0",
             )
         publish_info_union = output_mode.publish_info.get_as_union()
         if publish_info_union.type != "pypi":
