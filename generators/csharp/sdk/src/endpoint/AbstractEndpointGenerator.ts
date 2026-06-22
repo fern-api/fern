@@ -15,6 +15,7 @@ import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenera
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
 import { getEndpointRequest } from "./utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
+import { isPagerPagination } from "./utils/isPagerPagination.js";
 
 type PagingEndpoint = HttpEndpoint & {
     pagination: NonNullable<HttpEndpoint["pagination"]>;
@@ -261,7 +262,13 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (!this.context.config.generatePaginatedClients) {
             return false;
         }
-        return endpoint.pagination !== undefined;
+        if (endpoint.pagination === undefined) {
+            return false;
+        }
+        // uri/path pagination is not yet generated as a pager in C#. Rather than skipping these
+        // endpoints entirely (which leaves the method off the client), treat them as regular
+        // unpaged methods so they are still generated and callable.
+        return isPagerPagination(endpoint.pagination);
     }
 
     protected assertHasPagination(endpoint: HttpEndpoint): asserts endpoint is PagingEndpoint {
@@ -293,15 +300,17 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         }
         const serviceFilePath = service.name.fernFilepath;
 
-        const args = this.getNonEndpointArguments({
+        const { requiredArguments, optionalArguments } = this.getNonEndpointArguments({
             endpoint,
             example,
             parseDatetimes
         });
+        const args: (ast.CodeBlock | ast.ClassInstantiation)[] = [...requiredArguments];
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
+        args.push(...optionalArguments);
         const on = this.csharp.codeblock((writer) => {
             writer.write(`${clientVariableName}`);
             for (const path of serviceFilePath.allParts) {
@@ -392,21 +401,39 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         endpoint: HttpEndpoint;
         example: ExampleEndpointCall;
         parseDatetimes: boolean;
-    }): (ast.CodeBlock | ast.ClassInstantiation)[] {
+    }): {
+        requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[];
+        optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[];
+    } {
         if (!this.includePathParametersInEndpointSignature({ endpoint })) {
-            return [];
+            return { requiredArguments: [], optionalArguments: [] };
         }
+        // Path parameters with a client default are optional in the generated signature and are
+        // placed after the request body, so their snippet arguments must be ordered the same way.
+        const pathParameterNamesWithClientDefault = new Set(
+            endpoint.allPathParameters
+                .filter((pathParam) => this.defaultValueExtractor.extractClientDefault(pathParam.clientDefault) != null)
+                .map((pathParam) => getOriginalName(pathParam.name))
+        );
         const pathParameters = [
             ...example.rootPathParameters,
             ...example.servicePathParameters,
             ...example.endpointPathParameters
         ];
-        return pathParameters.map((pathParameter) =>
-            this.exampleGenerator.getSnippetForTypeReference({
+        const requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
+        const optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
+        for (const pathParameter of pathParameters) {
+            const snippet = this.exampleGenerator.getSnippetForTypeReference({
                 exampleTypeReference: pathParameter.value,
                 parseDatetimes
-            })
-        );
+            });
+            if (pathParameterNamesWithClientDefault.has(getOriginalName(pathParameter.name))) {
+                optionalArguments.push(snippet);
+            } else {
+                requiredArguments.push(snippet);
+            }
+        }
+        return { requiredArguments, optionalArguments };
     }
 
     private getJustRequestBodySnippet(

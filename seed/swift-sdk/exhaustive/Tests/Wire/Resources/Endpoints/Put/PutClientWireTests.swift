@@ -35,14 +35,14 @@ import Exhaustive
         let expectedResponse = PutResponse(
             errors: Optional([
                 Error(
-                    category: .apiError,
-                    code: .internalServerError,
+                    category: ErrorCategory.apiError,
+                    code: ErrorCode.internalServerError,
                     detail: Optional("detail"),
                     field: Optional("field")
                 ),
                 Error(
-                    category: .apiError,
-                    code: .internalServerError,
+                    category: ErrorCategory.apiError,
+                    code: ErrorCode.internalServerError,
                     detail: Optional("detail"),
                     field: Optional("field")
                 )

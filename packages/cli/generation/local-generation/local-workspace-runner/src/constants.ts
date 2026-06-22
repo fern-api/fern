@@ -34,6 +34,24 @@ export const CONTAINER_SPECS_DIRECTORY = DOCKER_SPECS_DIRECTORY;
 export const DEFAULT_NODE_DEBUG_PORT = "9229";
 
 /**
+ * Filename, relative to the generator's output directory, that the Go (v1)
+ * generator writes its cycle-breaking type relocations to when
+ * {@link TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR} is set. The output directory
+ * is host-readable in every execution environment (bind mount, `docker cp`, or
+ * native), so the host-side dynamic snippet test generator can apply the same
+ * relocations the generator did. The file is deleted before generated output is
+ * copied to its final location, so it never ships in an SDK.
+ */
+export const TYPE_RELOCATIONS_FILENAME = ".fern-type-relocations.json";
+
+/**
+ * Environment variable telling the generator where to additionally write its
+ * cycle-breaking type relocations. Must match `typeRelocationsOutputFilepathEnvVar`
+ * in `generators/go/internal/generator/generator.go`.
+ */
+export const TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR = "FERN_TYPE_RELOCATIONS_OUTPUT_FILEPATH";
+
+/**
  * Generators that receive pre-processed raw API spec files mounted into their
  * Docker container. Add new generator names here as they opt in.
  */

@@ -1,5 +1,5 @@
 # Stage 1: Copy Node.js from official image
-FROM node:24.16-trixie-slim AS node
+FROM node:24.17-trixie-slim AS node
 
 # Stage 2: Base Python image with dependencies
 # Pinned to the latest 3.13 patch release to pull in CPython security fixes
@@ -33,6 +33,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
        curl libcurl4t64 libgnutls30t64 \
        libexpat1 \
+       libssh2-1t64 libtasn1-6 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
@@ -77,6 +78,19 @@ RUN for dir in \
         tar -xzf ip-address-10.2.0.tgz && \
         mv package ip-address && \
         rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
       fi; \
     done
 

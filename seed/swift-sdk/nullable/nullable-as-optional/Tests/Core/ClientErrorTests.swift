@@ -20,7 +20,16 @@ import Testing
 
         do {
             _ = try await client.nullable.getUsers(
+                usernames: [
+                    "usernames"
+                ],
                 avatar: "avatar",
+                activated: [
+                    true
+                ],
+                tags: [
+                    .value("tags")
+                ],
                 extra: .value(true),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -54,7 +63,16 @@ import Testing
 
         do {
             _ = try await client.nullable.getUsers(
+                usernames: [
+                    "usernames"
+                ],
                 avatar: "avatar",
+                activated: [
+                    true
+                ],
+                tags: [
+                    .value("tags")
+                ],
                 extra: .value(true),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -88,7 +106,16 @@ import Testing
 
         do {
             _ = try await client.nullable.getUsers(
+                usernames: [
+                    "usernames"
+                ],
                 avatar: "avatar",
+                activated: [
+                    true
+                ],
+                tags: [
+                    .value("tags")
+                ],
                 extra: .value(true),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -124,7 +151,16 @@ import Testing
 
         do {
             _ = try await client.nullable.getUsers(
+                usernames: [
+                    "usernames"
+                ],
                 avatar: "avatar",
+                activated: [
+                    true
+                ],
+                tags: [
+                    .value("tags")
+                ],
                 extra: .value(true),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -158,7 +194,16 @@ import Testing
 
         do {
             _ = try await client.nullable.getUsers(
+                usernames: [
+                    "usernames"
+                ],
                 avatar: "avatar",
+                activated: [
+                    true
+                ],
+                tags: [
+                    .value("tags")
+                ],
                 extra: .value(true),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -194,7 +239,16 @@ import Testing
 
         do {
             _ = try await client.nullable.getUsers(
+                usernames: [
+                    "usernames"
+                ],
                 avatar: "avatar",
+                activated: [
+                    true
+                ],
+                tags: [
+                    .value("tags")
+                ],
                 extra: .value(true),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -228,7 +282,16 @@ import Testing
 
         do {
             _ = try await client.nullable.getUsers(
+                usernames: [
+                    "usernames"
+                ],
                 avatar: "avatar",
+                activated: [
+                    true
+                ],
+                tags: [
+                    .value("tags")
+                ],
                 extra: .value(true),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

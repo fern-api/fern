@@ -1,4 +1,4 @@
-FROM node:24.16-alpine3.23 AS node
+FROM node:24.17-alpine3.23 AS node
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine
 
 ENV YARN_CACHE_FOLDER=/.yarn
@@ -24,13 +24,21 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.16 vendors 5.0.5).
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.17 vendors 5.0.5).
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \
     tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
     rm brace-expansion-5.0.6.tgz
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
 
 # Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
 # (PAX size override applied to intermediary GNU long-name/long-link headers,
