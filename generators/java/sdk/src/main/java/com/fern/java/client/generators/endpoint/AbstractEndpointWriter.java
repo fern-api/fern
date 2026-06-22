@@ -1008,8 +1008,11 @@ public abstract class AbstractEndpointWriter {
             if (!bodyIsRequired) {
                 return false;
             }
-            boolean allHeadersOptional = httpEndpoint.getHeaders().isEmpty()
-                    || httpEndpoint.getHeaders().stream().allMatch(httpHeader -> httpHeader
+            List<HttpHeader> wrapperHeaders = Stream.concat(
+                            httpService.getHeaders().stream(), httpEndpoint.getHeaders().stream())
+                    .collect(Collectors.toList());
+            boolean allHeadersOptional = wrapperHeaders.isEmpty()
+                    || wrapperHeaders.stream().allMatch(httpHeader -> httpHeader
                             .getValueType()
                             .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             boolean allQueryParamsOptional = httpEndpoint.getQueryParameters().isEmpty()
@@ -1023,7 +1026,7 @@ public abstract class AbstractEndpointWriter {
                             .visit(new TypeReferenceUtils.TypeReferenceIsOptional(false, clientGeneratorContext)));
             boolean hasOnlyOptionalWrapperAdditions =
                     allHeadersOptional && allQueryParamsOptional && allInlinePathParamsOptional;
-            boolean hasWrapperAdditions = !httpEndpoint.getHeaders().isEmpty()
+            boolean hasWrapperAdditions = !wrapperHeaders.isEmpty()
                     || !httpEndpoint.getQueryParameters().isEmpty()
                     || (inlinePathParams && !httpEndpoint.getPathParameters().isEmpty());
             return hasOnlyOptionalWrapperAdditions && hasWrapperAdditions;

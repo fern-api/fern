@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Fix two Java SDK compile errors. The raw client no longer generates a request-less
-    endpoint overload (calling `Request.builder().build()`) when the wrapped request has a
-    required service-level header, and dynamic snippets now fully-qualify class references
-    when two types share the same simple name instead of emitting clashing imports.
+    Fix two Java SDK compile errors. Endpoint method overloads that omit the wrapped
+    request (or pass only the request body) are no longer generated when the request has a
+    required service-level header, since the staged builder cannot be `.build()` without it.
+    Dynamic snippets now fully-qualify class references when two types share the same simple
+    name instead of emitting clashing single-type imports.
   type: fix
