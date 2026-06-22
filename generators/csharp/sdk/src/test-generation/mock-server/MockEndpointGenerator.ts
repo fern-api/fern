@@ -13,6 +13,7 @@ type TypeId = FernIr.TypeId;
 type TypeReference = FernIr.TypeReference;
 
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody.js";
+import { normalizePathSlashes } from "../../endpoint/utils/normalizePath.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace TestClass {
@@ -188,15 +189,18 @@ export class MockEndpointGenerator extends WithGeneration {
      *
      * The decoded value is escaped for embedding in a C# string literal (decoding can
      * reintroduce `"`/`\`), matching the escaping applied to query parameter values above.
+     *
+     * Duplicate slashes (from base-paths that join into an empty segment) are collapsed so
+     * the stub matches the collapsed path the generated client requests.
      */
     private toWireMockPath(url: string | undefined): string {
         if (!url) {
             return "/";
         }
         try {
-            return this.escapeForCSharpStringLiteral(decodeURIComponent(url));
+            return this.escapeForCSharpStringLiteral(normalizePathSlashes(decodeURIComponent(url)));
         } catch {
-            return this.escapeForCSharpStringLiteral(url);
+            return this.escapeForCSharpStringLiteral(normalizePathSlashes(url));
         }
     }
 
