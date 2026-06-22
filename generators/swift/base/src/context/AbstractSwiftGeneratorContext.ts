@@ -302,6 +302,25 @@ export abstract class AbstractSwiftGeneratorContext<
                     _other: noop
                 });
             };
+            const visitJsonResponse = (jsonResponse: FernIr.JsonResponse): void => {
+                jsonResponse._visit({
+                    response: (r) => visitTypeReference(r.responseBodyType),
+                    nestedPropertyAsResponse: (r) => visitTypeReference(r.responseBodyType),
+                    _other: noop
+                });
+            };
+            const visitStreamingResponse = (streaming: FernIr.StreamingResponse): void => {
+                streaming._visit({
+                    json: (chunk) => visitTypeReference(chunk.payload),
+                    sse: (chunk) => visitTypeReference(chunk.payload),
+                    text: noop,
+                    _other: noop
+                });
+            };
+
+            // Map key types can appear in type declarations as well as directly on endpoints
+            // (inlined request bodies, file-upload bodies, responses, and parameters) without
+            // being reachable through `ir.types`, so both are scanned.
             Object.values(this.ir.types).forEach((typeDeclaration) => {
                 typeDeclaration.shape._visit({
                     alias: (atd) => visitTypeReference(atd.aliasOf),
@@ -327,20 +346,100 @@ export abstract class AbstractSwiftGeneratorContext<
                     _other: noop
                 });
             });
+            Object.values(this.ir.services).forEach((service) => {
+                service.endpoints.forEach((endpoint) => {
+                    [...endpoint.headers, ...endpoint.queryParameters, ...endpoint.allPathParameters].forEach(
+                        (parameter) => visitTypeReference(parameter.valueType)
+                    );
+                    endpoint.requestBody?._visit({
+                        inlinedRequestBody: (body) => {
+                            [...(body.extendedProperties ?? []), ...body.properties].forEach((property) => {
+                                visitTypeReference(property.valueType);
+                            });
+                        },
+                        reference: (body) => visitTypeReference(body.requestBodyType),
+                        fileUpload: (body) => {
+                            body.properties.forEach((property) => {
+                                property._visit({
+                                    file: noop,
+                                    bodyProperty: (bodyProperty) => visitTypeReference(bodyProperty.valueType),
+                                    _other: noop
+                                });
+                            });
+                        },
+                        bytes: noop,
+                        _other: noop
+                    });
+                    endpoint.response?.body?._visit({
+                        json: (jsonResponse) => visitJsonResponse(jsonResponse),
+                        streaming: (streaming) => visitStreamingResponse(streaming),
+                        streamParameter: (sp) => {
+                            sp.nonStreamResponse._visit({
+                                json: (jsonResponse) => visitJsonResponse(jsonResponse),
+                                fileDownload: noop,
+                                text: noop,
+                                bytes: noop,
+                                _other: noop
+                            });
+                            visitStreamingResponse(sp.streamResponse);
+                        },
+                        fileDownload: noop,
+                        text: noop,
+                        bytes: noop,
+                        _other: noop
+                    });
+                });
+            });
+            Object.values(this.ir.errors).forEach((error) => {
+                if (error.type != null) {
+                    visitTypeReference(error.type);
+                }
+            });
+
             this.nonStringMapKeyTypeIds = new Set(
-                [...candidateTypeIds].filter((typeId) => {
-                    const shapeType = this.ir.types[typeId]?.shape.type;
-                    // Discriminated unions (`"union"`) are intentionally excluded: they generate as
-                    // Swift enums with associated values, which cannot be trivially serialized to a
-                    // single string and therefore cannot implement CodingKeyRepresentable safely.
-                    // Aliases are also excluded here; if an alias resolves to an enum or
-                    // undiscriminated union, the underlying type declaration is already covered by
-                    // the iteration over ir.types above.
-                    return shapeType === "enum" || shapeType === "undiscriminatedUnion";
-                })
+                [...candidateTypeIds]
+                    .map((typeId) => this.resolveToNonStringMapKeyTypeId(typeId))
+                    .filter((typeId): typeId is FernIr.TypeId => typeId != null)
             );
         }
         return this.nonStringMapKeyTypeIds;
+    }
+
+    /**
+     * Resolves a type used as a map key to the underlying schema type ID that must carry the
+     * `CodingKeyRepresentable` conformance, or `undefined` if no conformance is needed.
+     *
+     * Enum (raw values) and undiscriminated-union types receive the conformance directly. Aliases
+     * are transparent in Swift (a `typealias` does not create a new type), so an alias resolving to
+     * an enum or undiscriminated union points at the underlying type declaration that needs it.
+     * Discriminated unions (`"union"`) are intentionally excluded: they generate as Swift enums with
+     * associated values, which cannot be serialized to a single string and so cannot implement
+     * `CodingKeyRepresentable` safely.
+     */
+    private resolveToNonStringMapKeyTypeId(typeId: FernIr.TypeId): FernIr.TypeId | undefined {
+        const shape = this.ir.types[typeId]?.shape;
+        if (shape == null) {
+            return undefined;
+        }
+        return shape._visit({
+            enum: () => typeId,
+            undiscriminatedUnion: () => typeId,
+            alias: (atd) =>
+                atd.resolvedType._visit({
+                    named: (resolved) =>
+                        resolved.shape === FernIr.ShapeType.Enum ||
+                        resolved.shape === FernIr.ShapeType.UndiscriminatedUnion
+                            ? resolved.name.typeId
+                            : undefined,
+                    container: () => undefined,
+                    primitive: () => undefined,
+                    unknown: () => undefined,
+                    _other: () => undefined
+                }),
+            object: () => undefined,
+            union: () => undefined,
+            _other: () => undefined
+        });
     }
 
     public getPropertiesOfDiscriminatedUnionVariant(typeId: FernIr.TypeId): FernIr.ObjectProperty[] {
