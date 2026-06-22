@@ -143,7 +143,9 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives()
+    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives(request: .array([
+        .string("string")
+    ]))
 }
 
 try await main()
@@ -200,7 +202,11 @@ import Exhaustive
 private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpoints.container.getAndReturnSetOfObjects()
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects(request: .array([
+        .object([
+            "string": .string("string")
+        ])
+    ]))
 }
 
 try await main()
@@ -512,9 +518,13 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([
+            .string("set")
+        ]),
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
@@ -586,9 +596,13 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([
+            .string("set")
+        ]),
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
@@ -907,9 +921,13 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([
+                .string("set")
+            ]),
             map: [
                 1: "map"
-            ]
+            ],
+            bigint: "1000000"
         )
     )
 }
@@ -1048,9 +1066,13 @@ private func main() async throws {
             "list",
             "list"
         ],
+        set: .array([
+            .string("set")
+        ]),
         map: [
             1: "map"
-        ]
+        ],
+        bigint: "1000000"
     ))
 }
 
@@ -1246,9 +1268,13 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([
+                .string("set")
+            ]),
             map: [
                 1: "map"
-            ]
+            ],
+            bigint: "1000000"
         )
     ))
 }
@@ -1325,9 +1351,13 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             )
         )
     )
@@ -1412,9 +1442,13 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             )
         ),
         NestedObjectWithRequiredField(
@@ -1433,9 +1467,13 @@ private func main() async throws {
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             )
         )
     ])
@@ -2202,7 +2240,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithAllowMultipleQuery</a>(query: String, number: Int, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithAllowMultipleQuery</a>(query: [String], number: [Int], requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2256,7 +2294,7 @@ try await main()
 <dl>
 <dd>
 
-**query:** `String` 
+**query:** `[String]` 
     
 </dd>
 </dl>
@@ -2264,7 +2302,7 @@ try await main()
 <dl>
 <dd>
 
-**number:** `Int` 
+**number:** `[Int]` 
     
 </dd>
 </dl>
@@ -3719,9 +3757,13 @@ private func main() async throws {
                 "list",
                 "list"
             ],
+            set: .array([
+                .string("set")
+            ]),
             map: [
                 1: "map"
-            ]
+            ],
+            bigint: "1000000"
         )
     ))
 }

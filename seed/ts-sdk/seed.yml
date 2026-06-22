@@ -568,7 +568,6 @@ scripts:
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
 allowedFailures:
-  - exhaustive:multiple-exports
   - oauth-client-credentials-custom
   - inferred-auth-implicit-reference
   - unions:serde-layer
