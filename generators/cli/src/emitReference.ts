@@ -56,7 +56,7 @@ export async function emitReference(args: {
 interface OpenApiDocument {
     info?: { title?: string; version?: string };
     paths?: Record<string, Record<string, OpenApiOperation>>;
-    components?: { schemas?: Record<string, unknown> };
+    components?: { schemas?: Record<string, unknown>; parameters?: Record<string, OpenApiParameter> };
 }
 
 interface OpenApiOperation {
@@ -64,7 +64,7 @@ interface OpenApiOperation {
     summary?: string;
     description?: string;
     tags?: string[];
-    parameters?: OpenApiParameter[];
+    parameters?: (OpenApiParameter | { $ref: string })[];
     requestBody?: OpenApiRequestBody;
     "x-fern-sdk-group-name"?: string | string[];
     "x-fern-sdk-method-name"?: string;
@@ -136,11 +136,15 @@ function collectResources(
     namespace: string | undefined
 ): void {
     const paths = doc.paths ?? {};
+    const componentParams = doc.components?.parameters ?? {};
 
     for (const [pathStr, pathItem] of Object.entries(paths)) {
         // Collect path-level parameters (inherited by all operations)
-        const pathParams: OpenApiParameter[] =
-            ((pathItem as Record<string, unknown>).parameters as OpenApiParameter[] | undefined) ?? [];
+        const pathParams: OpenApiParameter[] = resolveParamRefs(
+            ((pathItem as Record<string, unknown>).parameters as (OpenApiParameter | { $ref: string })[] | undefined) ??
+                [],
+            componentParams
+        );
 
         for (const method of HTTP_METHODS) {
             const operation = pathItem[method] as OpenApiOperation | undefined;
@@ -156,7 +160,7 @@ function collectResources(
             const availability = resolveAvailability(operation);
 
             // Merge path-level + operation-level params (operation wins on conflict).
-            const params = mergeParameters(pathParams, operation.parameters ?? []);
+            const params = mergeParameters(pathParams, resolveParamRefs(operation.parameters ?? [], componentParams));
             const paramEntries = params
                 .filter((p) => p["x-fern-ignore"] !== true && p.in !== "cookie")
                 .map((p) => ({
@@ -288,6 +292,32 @@ function resolveAvailability(op: OpenApiOperation): string | undefined {
         return "deprecated";
     }
     return undefined;
+}
+
+/**
+ * Resolve `$ref` entries in a parameters array by looking them up in
+ * `components.parameters`. Entries that are already inline or whose
+ * `$ref` target cannot be found are passed through / skipped.
+ */
+function resolveParamRefs(
+    params: (OpenApiParameter | { $ref: string })[],
+    componentParams: Record<string, OpenApiParameter>
+): OpenApiParameter[] {
+    const resolved: OpenApiParameter[] = [];
+    for (const p of params) {
+        if ("$ref" in p && typeof (p as { $ref?: string }).$ref === "string") {
+            const refPath = (p as { $ref: string }).$ref;
+            // Expected format: "#/components/parameters/<name>"
+            const refName = refPath.split("/").pop();
+            if (refName != null && componentParams[refName] != null) {
+                resolved.push(componentParams[refName]);
+            }
+            // Skip unresolvable $ref entries rather than crashing.
+        } else if ((p as OpenApiParameter).name != null) {
+            resolved.push(p as OpenApiParameter);
+        }
+    }
+    return resolved;
 }
 
 function mergeParameters(pathLevel: OpenApiParameter[], opLevel: OpenApiParameter[]): OpenApiParameter[] {
