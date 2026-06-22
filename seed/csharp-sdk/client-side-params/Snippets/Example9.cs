@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Service.GetConnectionAsync(
-            "connectionId",
-            new GetConnectionRequest {
+            connectionId: "connectionId",
+            request: new GetConnectionRequest {
                 Fields = "fields"
             }
         );

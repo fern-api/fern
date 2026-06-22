@@ -92,7 +92,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${normalizePathSlashes(example.url || "/")}")`);
+                writer.write(`.WithPath("${this.toWireMockPath(example.url)}")`);
 
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
@@ -178,6 +178,34 @@ export class MockEndpointGenerator extends WithGeneration {
                 }
             });
         });
+    }
+
+    /**
+     * Returns the request path to match against in a WireMock stub.
+     *
+     * WireMock.Net matches `WithPath` against the percent-decoded request path, so the
+     * stub must use the decoded form. The IR's `example.url` percent-encodes path parameter
+     * values (e.g. an enum wire value of `>` becomes `%3E`), which would never match.
+     *
+     * The decoded value is escaped for embedding in a C# string literal (decoding can
+     * reintroduce `"`/`\`), matching the escaping applied to query parameter values above.
+     *
+     * Duplicate slashes (from base-paths that join into an empty segment) are collapsed so
+     * the stub matches the collapsed path the generated client requests.
+     */
+    private toWireMockPath(url: string | undefined): string {
+        if (!url) {
+            return "/";
+        }
+        try {
+            return this.escapeForCSharpStringLiteral(normalizePathSlashes(decodeURIComponent(url)));
+        } catch {
+            return this.escapeForCSharpStringLiteral(normalizePathSlashes(url));
+        }
+    }
+
+    private escapeForCSharpStringLiteral(value: string): string {
+        return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
     }
 
     /*
@@ -388,6 +416,26 @@ export class MockEndpointGenerator extends WithGeneration {
         if (exampleRequest.extraProperties) {
             for (const extraProp of exampleRequest.extraProperties) {
                 result[getWireValue(extraProp.name)] = this.filterExampleTypeReference(extraProp.value);
+            }
+        }
+
+        // Literal-typed properties are implicit constants that never appear in examples, yet
+        // the SDK always serializes them with their constant value. Include them in the expected
+        // request JSON so the mock server matches the SDK's serialized output.
+        if (endpoint.requestBody?.type === "inlinedRequestBody") {
+            const allProps = [...endpoint.requestBody.properties, ...(endpoint.requestBody.extendedProperties ?? [])];
+            for (const prop of allProps) {
+                const wireValue = getWireValue(prop.name);
+                if (wireValue in result) {
+                    continue;
+                }
+                if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
+                    continue;
+                }
+                const literalValue = this.getLiteralWireValue(prop.valueType);
+                if (literalValue !== undefined) {
+                    result[wireValue] = literalValue;
+                }
             }
         }
 
@@ -649,6 +697,22 @@ export class MockEndpointGenerator extends WithGeneration {
     }
 
     /**
+     * Returns the constant wire value for a (non-optional) literal-typed property, or undefined
+     * if the type is not a literal. Literal properties are implicit constants that the SDK always
+     * serializes even when they are absent from the example.
+     */
+    private getLiteralWireValue(typeReference: TypeReference): unknown {
+        if (typeReference.type !== "container" || typeReference.container.type !== "literal") {
+            return undefined;
+        }
+        return typeReference.container.literal._visit<unknown>({
+            string: (value) => value,
+            boolean: (value) => value,
+            _other: () => undefined
+        });
+    }
+
+    /**
      * Returns true if a property's type will be marked as `required` in C#.
      */
     private isRequiredProperty(typeReference: TypeReference): boolean {
@@ -708,6 +772,17 @@ export class MockEndpointGenerator extends WithGeneration {
                 }
                 return undefined;
             }
+            case "container":
+                // Literal-typed properties are always serialized by the SDK with their
+                // constant value, so use that value as the default for wire test matching.
+                if (typeReference.container.type === "literal") {
+                    return typeReference.container.literal._visit<unknown>({
+                        string: (value) => value,
+                        boolean: (value) => value,
+                        _other: () => undefined
+                    });
+                }
+                return undefined;
             default:
                 return undefined;
         }

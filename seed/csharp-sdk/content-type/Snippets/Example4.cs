@@ -10,8 +10,8 @@ public partial class Examples
         );
 
         await client.Service.RegularPatchAsync(
-            "id",
-            new RegularPatchRequest {
+            id: "id",
+            request: new RegularPatchRequest {
                 Field1 = "field1",
                 Field2 = 1
             }

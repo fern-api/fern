@@ -1,0 +1,3 @@
+rootProject.name = 'streaming-parameter'
+
+include 'sample-app'

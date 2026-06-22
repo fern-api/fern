@@ -3,7 +3,6 @@ package com.snippets;
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.resources.commons.types.types.Data;
 import com.seed.examples.resources.commons.types.types.EventInfo;
-import com.seed.examples.resources.commons.types.types.Metadata;
 import com.seed.examples.resources.types.types.Actor;
 import com.seed.examples.resources.types.types.BigEntity;
 import com.seed.examples.resources.types.types.CastMember;
@@ -65,7 +64,7 @@ public class Example19 {
                                 .name("name")
                                 .build())
                         .metadata(Metadata.html("metadata"))
-                        .commonMetadata(Metadata.builder()
+                        .commonMetadata(com.seed.examples.resources.commons.types.types.Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
                                     {
@@ -74,7 +73,7 @@ public class Example19 {
                                 })
                                 .jsonString("jsonString")
                                 .build())
-                        .eventInfo(EventInfo.metadata(Metadata.builder()
+                        .eventInfo(EventInfo.metadata(com.seed.examples.resources.commons.types.types.Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
                                     {

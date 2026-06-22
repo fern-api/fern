@@ -569,7 +569,6 @@ scripts:
           fi
 allowedFailures:
   - cross-package-type-names:serde-layer
-  - exhaustive:never-throw-errors
   - exhaustive:multiple-exports
   - oauth-client-credentials-custom
   - inferred-auth-implicit-reference

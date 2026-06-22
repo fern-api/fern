@@ -128,20 +128,8 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - audiences
-  - enum
-  - exhaustive
   - multi-url-environment
   - multi-url-environment-no-default
   - multi-url-environment-reference
-  - oauth-client-credentials-with-variables
-  - query-parameters
-  - request-parameters
-  - streaming
-  - streaming-parameter
-  - trace
-  - undiscriminated-unions
   # Server URL templating not yet supported in Swift SDK
-  - server-sent-events-openapi
   - server-url-templating
-  - variables
