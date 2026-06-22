@@ -10,11 +10,11 @@ public partial class Examples
         );
 
         await client.User.GetUserSpecificsAsync(
-            "tenant_id",
-            "user_id",
-            1,
-            "thought",
-            new GetUserSpecificsRequest()
+            tenantId: "tenant_id",
+            userId: "user_id",
+            version: 1,
+            thought: "thought",
+            request: new GetUserSpecificsRequest()
         );
     }
 

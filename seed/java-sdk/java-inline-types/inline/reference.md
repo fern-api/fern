@@ -16,7 +16,7 @@ client.getRoot(
     PostRootRequest
         .builder()
         .bar(
-            RequestTypeInlineType1
+            PostRootRequest.Bar
                 .builder()
                 .foo("foo")
                 .build()
@@ -75,12 +75,12 @@ client.getDiscriminatedUnion(
     GetDiscriminatedUnionRequest
         .builder()
         .bar(
-            DiscriminatedUnion1.type1(
-                DiscriminatedUnion1InlineType1
+            GetDiscriminatedUnionRequest.Bar.type1(
+                GetDiscriminatedUnionRequest.Bar.Type1
                     .builder()
                     .foo("foo")
                     .bar(
-                        DiscriminatedUnion1InlineType1InlineType1
+                        GetDiscriminatedUnionRequest.Bar.Type1.Bar_
                             .builder()
                             .foo("foo")
                             .ref(
@@ -154,12 +154,12 @@ client.getUndiscriminatedUnion(
     GetUndiscriminatedUnionRequest
         .builder()
         .bar(
-            UndiscriminatedUnion1.of(
-                UndiscriminatedUnion1InlineType1
+            GetUndiscriminatedUnionRequest.Bar.of(
+                GetUndiscriminatedUnionRequest.Bar.InlineType1
                     .builder()
                     .foo("foo")
                     .bar(
-                        UndiscriminatedUnion1InlineType1InlineType1
+                        GetUndiscriminatedUnionRequest.Bar.InlineType1.Bar_
                             .builder()
                             .foo("foo")
                             .ref(

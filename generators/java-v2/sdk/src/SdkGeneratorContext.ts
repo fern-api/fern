@@ -78,27 +78,26 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             case "bytes":
                 throw GeneratorError.internalError("Returning bytes is not supported");
             case "streaming":
-                switch (responseBody.value.type) {
-                    case "text":
-                        throw GeneratorError.internalError("Returning streamed text is not supported");
-                    case "json":
-                        return java.Type.iterable(
-                            this.javaTypeMapper.convert({ reference: responseBody.value.payload })
-                        );
-                    case "sse":
-                        return java.Type.iterable(
-                            this.javaTypeMapper.convert({ reference: responseBody.value.payload })
-                        );
-                    default:
-                        assertNever(responseBody.value);
-                        throw GeneratorError.internalError("Unknown streaming type");
-                }
+                return this.getStreamingReturnType(responseBody.value);
             case "fileDownload":
                 return java.Type.inputStream();
             case "streamParameter":
-                throw GeneratorError.internalError("Returning stream parameter is not supported");
+                return this.getStreamingReturnType(responseBody.streamResponse);
             default:
                 assertNever(responseBody);
+        }
+    }
+
+    private getStreamingReturnType(streamingResponse: FernIr.StreamingResponse): java.Type {
+        switch (streamingResponse.type) {
+            case "text":
+                throw GeneratorError.internalError("Returning streamed text is not supported");
+            case "json":
+            case "sse":
+                return java.Type.iterable(this.javaTypeMapper.convert({ reference: streamingResponse.payload }));
+            default:
+                assertNever(streamingResponse);
+                throw GeneratorError.internalError("Unknown streaming type");
         }
     }
 

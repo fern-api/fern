@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.14.21
+  changelogEntry:
+    - summary: |
+        Fix `pyproject.toml` distribution name for github-output SDKs without a PyPI publish target
+        to prefer `config.package_name` over the organization name. Also use `output_mode.version`
+        instead of hardcoding `0.0.0`.
+      type: fix
+  createdAt: "2026-06-20"
+  irVersion: 67
 - version: 5.14.20
   changelogEntry:
     - summary: |

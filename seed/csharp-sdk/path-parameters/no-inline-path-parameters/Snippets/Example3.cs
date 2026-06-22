@@ -10,9 +10,9 @@ public partial class Examples
         );
 
         await client.User.GetUserAsync(
-            "tenant_id",
-            "user_id",
-            new GetUsersRequest()
+            tenantId: "tenant_id",
+            userId: "user_id",
+            request: new GetUsersRequest()
         );
     }
 

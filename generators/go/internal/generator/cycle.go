@@ -486,6 +486,9 @@ func replaceFilepathForTypeInTypeReference(
 	typeId common.TypeId,
 	fernFilepath *common.FernFilepath,
 ) {
+	if typeReference == nil {
+		return
+	}
 	if container := typeReference.Container; container != nil {
 		replaceFilepathForTypeInContainer(container, typeId, fernFilepath)
 	}

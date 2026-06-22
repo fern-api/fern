@@ -1,4 +1,4 @@
-FROM node:24.16-alpine3.23 AS node
+FROM node:24.17-alpine3.23 AS node
 
 FROM golang:1.26.4-alpine3.23
 

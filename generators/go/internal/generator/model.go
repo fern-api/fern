@@ -36,6 +36,7 @@ func (f *fileWriter) WriteType(
 		alwaysSendRequiredProperties: f.alwaysSendRequiredProperties,
 		includeRawJSON:               includeRawJSON,
 		gettersPassByValue:           f.gettersPassByValue,
+		dedupeUnionBaseProperties:    f.dedupeUnionBaseProperties,
 	}
 	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
@@ -53,6 +54,7 @@ type typeVisitor struct {
 	includeRawJSON               bool
 	alwaysSendRequiredProperties bool
 	gettersPassByValue           bool
+	dedupeUnionBaseProperties    bool
 }
 
 // Compile-time assertion.
@@ -451,6 +453,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// be emitted twice, producing duplicate struct fields and getters that fail to
 	// compile. Skip those base properties; the extended property already covers them.
 	extendedPropertyNames := t.unionExtendedPropertyNames(union)
+	// Base properties that every variant already carries (e.g. properties lifted from a
+	// shared parent by `infer-discriminated-union-base-properties`) are suppressed as
+	// top-level struct fields. Emitting them would duplicate the data each variant
+	// already declares and, for samePropertiesAsObject variants, the top-level copy is
+	// silently dropped on marshal. They stay reachable through discriminant-switching
+	// getters (see writeUnionInheritedBasePropertyGetters below).
+	inheritedBasePropertyNames := t.unionInheritedBasePropertyNames(union)
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
@@ -466,6 +475,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	}
 	for _, property := range union.BaseProperties {
 		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
+		if _, ok := inheritedBasePropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
 			continue
 		}
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
@@ -536,10 +548,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
-	typeFields := t.getTypeFieldsForUnion(union)
+	typeFields := t.getTypeFieldsForUnion(union, inheritedBasePropertyNames)
 	for _, typeField := range typeFields {
 		t.writeGetterMethod(receiver, typeField)
 	}
+	// Inherited base properties have no top-level field; expose them via getters that
+	// read from the active variant so there's a single source of truth.
+	t.writeUnionInheritedBasePropertyGetters(union, receiver, inheritedBasePropertyNames)
 	for _, literal := range append(literals, unionLiterals...) {
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
 		t.writer.P("if ", receiver, " == nil {")
@@ -567,6 +582,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	}
 	for _, property := range union.BaseProperties {
 		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
+		if _, ok := inheritedBasePropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
 			continue
 		}
 		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
@@ -1632,8 +1650,160 @@ func (t *typeVisitor) unionExtendedPropertyNames(union *ir.UnionTypeDeclaration)
 	return names
 }
 
-// getTypeFieldsForUnion retrieves the type fields for the given union.
-func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*typeField {
+// objectExportedProperties returns the object's properties keyed by their exported Go
+// field name, including those inherited via its `extends` chain. When a name is declared
+// by both the object and a parent, the object's own property wins (Go field shadowing).
+func objectExportedProperties(
+	object *ir.ObjectTypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
+) map[string]*ir.ObjectProperty {
+	properties := make(map[string]*ir.ObjectProperty)
+	var collect func(obj *ir.ObjectTypeDeclaration)
+	collect = func(obj *ir.ObjectTypeDeclaration) {
+		if obj == nil {
+			return
+		}
+		for _, extend := range obj.Extends {
+			collect(resolveObjectTypeDeclaration(extend.TypeId, types))
+		}
+		for _, property := range obj.Properties {
+			properties[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)] = property
+		}
+	}
+	collect(object)
+	return properties
+}
+
+// unionInheritedBasePropertyNames returns the set of base-property field names that every
+// variant of the union already carries AND can safely expose through a delegating getter.
+// The OpenAPI parser lifts properties shared by all variants onto the union's
+// BaseProperties so that generators without structural typing (Go, C#) can expose them.
+// Re-emitting them as top-level struct fields, however, duplicates the data each variant
+// already declares; and because samePropertiesAsObject variants are marshaled from the
+// variant itself, the top-level copy is silently dropped on marshal. The caller
+// suppresses these duplicate fields and instead exposes them through discriminant-
+// switching getters that read from the active variant (see
+// writeUnionInheritedBasePropertyGetters).
+//
+// A base property is only suppressed when every variant exposes a matching `Get<Name>()`,
+// i.e. a non-literal property of the same name whose getter returns the same Go type as
+// the base property's getter. Shapes that would make the delegating getter fail to
+// compile are left alone (the base property keeps its own top-level field):
+//   - any variant that is not samePropertiesAsObject (carries no object properties);
+//   - a literal base property, or a variant whose same-named property is a literal (those
+//     use a `<Name>()` getter with no `Get` prefix, so a delegating `Get<Name>()` would
+//     reference a non-existent method);
+//   - a variant whose same-named property has a different type/optionality than the base
+//     property (the delegating call would return the wrong type).
+//
+// Gated behind the `dedupeUnionBaseProperties` config flag (default off) because removing
+// the top-level fields is a breaking change to the generated surface; existing users keep
+// the duplicated fields until they opt in.
+func (t *typeVisitor) unionInheritedBasePropertyNames(union *ir.UnionTypeDeclaration) map[string]struct{} {
+	if !t.dedupeUnionBaseProperties {
+		return nil
+	}
+	if len(union.BaseProperties) == 0 || len(union.Types) == 0 {
+		return nil
+	}
+	variantProperties := make([]map[string]*ir.ObjectProperty, 0, len(union.Types))
+	for _, unionType := range union.Types {
+		if unionType.Shape == nil ||
+			unionType.Shape.PropertiesType != "samePropertiesAsObject" ||
+			unionType.Shape.SamePropertiesAsObject == nil {
+			return nil
+		}
+		object := resolveObjectTypeDeclaration(unionType.Shape.SamePropertiesAsObject.TypeId, t.writer.types)
+		variantProperties = append(variantProperties, objectExportedProperties(object, t.writer.types))
+	}
+	// Compare getter types against a throwaway scope so that resolving a variant
+	// property's type never registers an import on the real file scope: in the rare path
+	// where the types differ and the base property keeps its top-level field, the
+	// variant's (unused) type would otherwise leak in as an "imported and not used" error.
+	comparisonScope := gospec.NewScope()
+	inherited := make(map[string]struct{})
+	for _, property := range union.BaseProperties {
+		if isLiteralType(property.ValueType, t.writer.types) {
+			continue
+		}
+		fieldName := goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)
+		baseGetterType, _, _, _ := processTypeFieldForOptional(property.ValueType, t.writer.types, comparisonScope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		if t.everyVariantHasMatchingGetter(variantProperties, fieldName, baseGetterType, comparisonScope) {
+			inherited[fieldName] = struct{}{}
+		}
+	}
+	return inherited
+}
+
+// everyVariantHasMatchingGetter reports whether every variant declares a non-literal
+// property named fieldName whose getter returns baseGetterType — i.e. whether a
+// delegating `Get<fieldName>() baseGetterType { ... return variant.Get<fieldName>() }`
+// would compile for every variant. The scope is a throwaway used only to render
+// comparable type strings; it must not be the real file scope.
+func (t *typeVisitor) everyVariantHasMatchingGetter(
+	variantProperties []map[string]*ir.ObjectProperty,
+	fieldName string,
+	baseGetterType string,
+	comparisonScope *gospec.Scope,
+) bool {
+	for _, properties := range variantProperties {
+		variantProperty, ok := properties[fieldName]
+		if !ok {
+			return false
+		}
+		if isLiteralType(variantProperty.ValueType, t.writer.types) {
+			return false
+		}
+		variantGetterType, _, _, _ := processTypeFieldForOptional(variantProperty.ValueType, t.writer.types, comparisonScope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		if variantGetterType != baseGetterType {
+			return false
+		}
+	}
+	return true
+}
+
+// writeUnionInheritedBasePropertyGetters emits getters for base properties that every
+// variant already carries. Instead of reading a (suppressed) top-level field, each
+// getter switches on the discriminant and returns the value from the active variant,
+// keeping a single source of truth while still letting callers reach the shared field
+// without a type switch of their own.
+func (t *typeVisitor) writeUnionInheritedBasePropertyGetters(
+	union *ir.UnionTypeDeclaration,
+	receiver string,
+	inheritedBasePropertyNames map[string]struct{},
+) {
+	if len(inheritedBasePropertyNames) == 0 {
+		return
+	}
+	discriminantName := t.unionDiscriminantFieldName(union)
+	for _, property := range union.BaseProperties {
+		fieldName := goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)
+		if _, ok := inheritedBasePropertyNames[fieldName]; !ok {
+			continue
+		}
+		goType, zeroValue, _, _ := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
+		t.writer.P("func (", receiver, " *", t.typeName, ") Get", fieldName, "()", goType, " {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return ", zeroValue)
+		t.writer.P("}")
+		t.writer.P("switch ", receiver, ".", discriminantName, " {")
+		for _, unionType := range union.Types {
+			variantFieldName := goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+			t.writer.P("case \"", unionType.DiscriminantValue.WireValue, "\":")
+			t.writer.P("return ", receiver, ".", variantFieldName, ".Get", fieldName, "()")
+		}
+		t.writer.P("}")
+		t.writer.P("return ", zeroValue)
+		t.writer.P("}")
+		t.writer.P()
+	}
+}
+
+// getTypeFieldsForUnion retrieves the type fields for the given union. The caller passes
+// the already-computed inheritedBasePropertyNames (see VisitUnion) so the set isn't
+// recomputed; inherited base properties are emitted as discriminant-switching getters
+// rather than stored fields, so they are excluded here.
+func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration, inheritedBasePropertyNames map[string]struct{}) []*typeField {
 	var fields []*typeField
 	fields = append(
 		fields,
@@ -1655,6 +1825,10 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	}
 	for _, property := range union.BaseProperties {
 		if _, ok := extendedPropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			continue
+		}
+		if _, ok := inheritedBasePropertyNames[goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)]; ok {
+			// Emitted as a discriminant-switching getter instead of a stored field.
 			continue
 		}
 		if isLiteralType(property.ValueType, t.writer.types) {
