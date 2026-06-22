@@ -18,6 +18,7 @@ import com.seed.deepCursorPath.resources.deepcursorpath.types.C;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.D;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineA;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineB;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineC;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineD;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;
@@ -155,7 +156,7 @@ public class RawDeepCursorPathClient {
                                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
                 IndirectionRequired indirection = IndirectionRequired.builder()
-                        .from(com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired)
+                        .from(request.getIndirection())
                         .startingAfter(startingAfter)
                         .build();
                 MainRequired nextRequest = MainRequired.builder()
@@ -227,19 +228,19 @@ public class RawDeepCursorPathClient {
                                 responseBodyString,
                                 com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                 Optional<String> startingAfter = parsedResponse.getStartingAfter();
-                Optional<InlineD> b = request.getB()
-                        .map(B::getC)
-                        .flatMap(C::getB)
-                        .map((InlineD b_) -> InlineD.builder()
-                                .from(b_)
+                Optional<InlineD> b2 = request.getB()
+                        .map(InlineB::getC)
+                        .flatMap(InlineC::getB)
+                        .map((InlineD b2_) -> InlineD.builder()
+                                .from(b2_)
                                 .startingAfter(startingAfter)
                                 .build());
-                Optional<InlineC> c = b.flatMap((InlineD b_) -> request.getB()
-                        .map(B::getC)
-                        .map((InlineC c_) -> InlineC.builder().from(c_).b(b_).build()));
-                Optional<InlineD> b = c.flatMap((InlineC c_) -> request.getB()
-                        .map((InlineD b_) -> InlineD.builder().from(b_).c(c_).build()));
-                InlineA nextRequest = InlineA.builder().from(request).b(b).build();
+                Optional<InlineC> c = b2.flatMap((InlineD b2_) -> request.getB()
+                        .map(InlineB::getC)
+                        .map((InlineC c_) -> InlineC.builder().from(c_).b(b2_).build()));
+                Optional<InlineB> b0 = c.flatMap((InlineC c_) -> request.getB()
+                        .map((InlineB b0_) -> InlineB.builder().from(b0_).c(c_).build()));
+                InlineA nextRequest = InlineA.builder().from(request).b(b0).build();
                 List<String> result = parsedResponse.getResults();
                 return new SeedDeepCursorPathHttpResponse<>(
                         new SyncPagingIterable<String>(

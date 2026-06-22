@@ -1,0 +1,7 @@
+- summary: |
+    Fix argument ordering for endpoints that have both a request body and a path parameter with a
+    client default. Such path parameters are optional in the generated method signature and are placed
+    after the request body, so the generated snippets, wire tests, and dynamic snippets now order their
+    arguments to match (placing required path parameters before the body and optional ones after, and
+    using named arguments in dynamic snippets where ordering is otherwise ambiguous).
+  type: fix

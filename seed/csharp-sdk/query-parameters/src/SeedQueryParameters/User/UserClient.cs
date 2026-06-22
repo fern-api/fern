@@ -31,7 +31,7 @@ public partial class UserClient : IUserClient
             .Add("optionalString", request.OptionalString)
             .AddDeepObject("nestedUser", request.NestedUser)
             .AddDeepObject("optionalUser", request.OptionalUser)
-            .AddDeepObject("excludeUser", request.ExcludeUser)
+            .Add("excludeUser", request.ExcludeUser)
             .Add("filter", request.Filter)
             .MergeAdditional(options?.AdditionalQueryParameters)
             .Build();

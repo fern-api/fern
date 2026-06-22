@@ -359,5 +359,4 @@ allowedFailures:
   # "not supported yet" or a nil-pointer panic). These need feature work.
 
   # Generated Go code does not compile. Each needs a generator fix.
-  - trace # generated v2/ subpackage references undefined test types
   - request-parameters # int64 default 9223372036854775807 loses precision in the IR pipeline

@@ -8,7 +8,7 @@ RUN rustup component add rustfmt \
     && cp "$RUSTFMT" /rustfmt/rustfmt \
     && cp "$(dirname "$RUSTFMT")/../lib"/librustc_driver-*.so /rustfmt/lib/
 
-FROM node:24.16-alpine3.23
+FROM node:24.17-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 
@@ -24,13 +24,21 @@ ENV PATH=/usr/local/lib/rustfmt:$PATH \
     LD_LIBRARY_PATH=/usr/local/lib/rustfmt/lib
 RUN rustfmt --version
 
-# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.16 vendors 5.0.5).
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.17 vendors 5.0.5).
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \
     tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
     rm brace-expansion-5.0.6.tgz
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
 
 # Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
 # (PAX size override applied to intermediary GNU long-name/long-link headers,

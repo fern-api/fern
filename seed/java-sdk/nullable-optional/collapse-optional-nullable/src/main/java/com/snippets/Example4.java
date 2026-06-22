@@ -12,8 +12,8 @@ public class Example4 {
         client.nullableOptional()
                 .searchUsers(SearchUsersRequest.builder()
                         .query("query")
+                        .department(OptionalNullable.of("department"))
                         .isActive(OptionalNullable.of(true))
-                        .department("department")
                         .role("role")
                         .build());
     }

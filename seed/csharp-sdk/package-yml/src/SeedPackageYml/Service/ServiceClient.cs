@@ -30,7 +30,7 @@ public partial class ServiceClient : IServiceClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/{0}//{1}",
+                        "/{0}/{1}",
                         ValueConvert.ToPathParameterString(id),
                         ValueConvert.ToPathParameterString(nestedId)
                     ),
