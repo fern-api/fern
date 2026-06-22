@@ -491,7 +491,7 @@ public final class BuilderGenerator {
                         finalStageBuilder::addMethod,
                         builderImpl::addReversedFields,
                         builderImpl::addReversedMethods,
-                        false);
+                        true);
             } else if (isNullable) {
                 addNullableFieldSetter(
                         enrichedProperty,
