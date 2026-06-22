@@ -139,7 +139,10 @@ public class PaginationPathUtils {
         // item has been seen, so a concrete type is always available by the time this is used.
         TypeName prevType = null;
 
-        Map<EnrichedCursorPathItem, Boolean> gettersAreOptional = new HashMap<>();
+        // Tracked by position rather than keyed by the path item: a cursor path may repeat a
+        // property name with the same optionality (e.g. b.c.b), and value-equal items would
+        // collide in a map, losing the shallower item's accumulated-optional flag.
+        List<Boolean> gettersAreOptional = new ArrayList<>();
 
         for (int i = 0; i < enrichedItems.size(); i++) {
             EnrichedCursorPathItem enriched = enrichedItems.get(i);
@@ -166,7 +169,7 @@ public class PaginationPathUtils {
             }
             getters.add(getter);
             optional = optional || enriched.optional();
-            gettersAreOptional.put(enriched, optional);
+            gettersAreOptional.add(optional);
             prevType =
                     unboxedTypeName(generatorContext, referencesByIndex.get(i)).orElse(null);
         }
@@ -189,7 +192,7 @@ public class PaginationPathUtils {
                     .typeName(unboxedTypeName(generatorContext, typeReference).get())
                     .variableName(variableNames.get(itemIndex))
                     .previous(previous)
-                    .optional(gettersAreOptional.get(enrichedItems.get(itemIndex)))
+                    .optional(gettersAreOptional.get(itemIndex))
                     .build());
         }
 
@@ -298,7 +301,7 @@ public class PaginationPathUtils {
                         builder.setter(CodeBlock.builder()
                                 .add("$T $L = ", enrichedGetter.typeName(), enrichedGetter.variableName())
                                 .add(
-                                        "$T.builder().from($L).$L($L).build())",
+                                        "$T.builder().from($L).$L($L).build()",
                                         enrichedGetter.typeName(),
                                         enrichedGetter.getter(),
                                         enrichedGetter.previous().get().propertyName(),
