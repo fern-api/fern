@@ -314,14 +314,14 @@ import Examples
             identifiers: [
                 Identifier(
                     type: `Type`.basicType(
-                        .primitive
+                        BasicType.primitive
                     ),
                     value: "value",
                     label: "label"
                 ),
                 Identifier(
                     type: `Type`.basicType(
-                        .primitive
+                        BasicType.primitive
                     ),
                     value: "value",
                     label: "label"
