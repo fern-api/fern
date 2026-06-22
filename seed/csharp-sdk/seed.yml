@@ -420,4 +420,3 @@ fixtures:
 allowedFailures:
   - oauth-client-credentials-custom
   - package-yml
-  - server-sent-event-examples
