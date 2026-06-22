@@ -1,0 +1,9 @@
+- summary: |
+    Fix `unreachable pattern` warnings in generated request structs by using
+    `#[serde(skip)]` instead of `#[serde(skip_serializing)]` for query parameter
+    fields that share serde rename targets with body fields.
+  type: fix
+- summary: |
+    Suppress `dead_code` warning on the internal `ReqwestExecutor` struct in the
+    generated HTTP client template.
+  type: fix

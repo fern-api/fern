@@ -225,11 +225,15 @@ export function generateFieldAttributes(
         attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 
-    // If the field is entirely skipped during serialization (e.g. query params sent
-    // separately from the request body), use skip_serializing instead of skip_serializing_if.
+    // If the field is entirely excluded from serde (e.g. query params sent
+    // separately from the request body), use #[serde(skip)] so the field
+    // participates in neither serialization nor deserialization. Using only
+    // skip_serializing would leave the field eligible for deserialization,
+    // which can collide with a body field whose #[serde(rename = "X")]
+    // matches this field's name, producing an `unreachable pattern` warning.
     const isOptional = isOptionalType(property.valueType);
     if (options?.skipSerialization) {
-        attributes.push(Attribute.serde.skipSerializing());
+        attributes.push(Attribute.serde.skip());
     } else if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
     }

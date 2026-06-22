@@ -117,6 +117,7 @@ pub trait RequestExecutor: Send + Sync {
 }
 
 /// Default executor that delegates to a `reqwest::Client`.
+#[allow(dead_code)]
 struct ReqwestExecutor {
     client: Client,
 }

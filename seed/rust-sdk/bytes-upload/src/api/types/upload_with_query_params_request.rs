@@ -2,15 +2,15 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UploadWithQueryParamsRequest {
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     #[serde(default)]
     pub body: Vec<u8>,
     /// The model to use for processing
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     #[serde(default)]
     pub model: String,
     /// The language of the content
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     pub language: Option<String>,
 }
 
