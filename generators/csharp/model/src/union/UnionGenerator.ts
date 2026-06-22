@@ -21,7 +21,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     private readonly classReference: ast.ClassReference;
     private readonly exampleGenerator: ExampleGenerator;
     private readonly unionMemberTypeMap: Map<FernIr.SingleUnionType, ast.Type>;
-    private discriminantPropertyName: string | undefined;
+    private readonly discriminantPropertyName: string;
 
     constructor(
         context: ModelGeneratorContext,
@@ -37,6 +37,12 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
         this.exampleGenerator = new ExampleGenerator(context);
         this.unionMemberTypeMap = new Map(
             unionDeclaration.types.map((type) => this.getCsharpTypeMapEntry(type, context))
+        );
+        // Resolve the discriminant property name the same way the discriminant field does
+        // (via getPropertyNameFor). Computed here so it is available on every code path,
+        // including doGenerateSnippet, which does not call doGenerate.
+        this.discriminantPropertyName = this.model.getPropertyNameFor(
+            this.generation.case.resolveNameAndWireValue(this.unionDeclaration.discriminant)
         );
     }
 
@@ -70,7 +76,6 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
             get: "public",
             set: "internal"
         });
-        this.discriminantPropertyName = discriminant.name;
 
         const value = class_.addField({
             enclosingType: class_,
@@ -495,10 +500,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
     private getUnionTypeClassReferenceByTypeName(type: string): ast.ClassReference {
         // A nested union-type class cannot share a name with a member of the enclosing union
         // (e.g. the discriminant property or the `Value` property), otherwise C# emits CS0102.
-        const reservedNames = ["Value", "Type"];
-        if (this.discriminantPropertyName != null) {
-            reservedNames.push(this.discriminantPropertyName);
-        }
+        const reservedNames = ["Value", "Type", this.discriminantPropertyName];
         const name = reservedNames.includes(type) ? `${type}Inner` : type;
         return this.csharp.classReference({
             enclosingType: this.classReference,
