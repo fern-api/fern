@@ -386,10 +386,6 @@ scripts:
       - ./gradlew compileJava spotlessCheck
 
 allowedFailures:
-  # Extending an alias (that resolves to an object) is not yet supported by the
-  # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
-  - alias-extends
-
   # The generated publish build.gradle applies the
   # cl.franciscosolis.sonatype-central-upload plugin, which requires a JVM 11+
   # runtime. Seed CI compiles generated SDKs with a Java 8 JVM, so Gradle cannot
