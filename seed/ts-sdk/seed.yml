@@ -567,5 +567,3 @@ scripts:
             echo "Running yarn test..."
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
-allowedFailures:
-  - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing
