@@ -17,6 +17,8 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private final String clientSecret;
 
+    private final String scp;
+
     private final String entityId;
 
     private final String scope;
@@ -28,9 +30,10 @@ public final class OAuthTokenSupplier implements Supplier<String> {
     private Instant expiresAt;
 
     public OAuthTokenSupplier(
-            String clientId, String clientSecret, String entityId, String scope, AuthClient authClient) {
+            String clientId, String clientSecret, String scp, String entityId, String scope, AuthClient authClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.scp = scp;
         this.entityId = entityId;
         this.scope = scope;
         this.authClient = authClient;
@@ -41,6 +44,7 @@ public final class OAuthTokenSupplier implements Supplier<String> {
         GetTokenRequest getTokenRequest = GetTokenRequest.builder()
                 .cid(clientId)
                 .csr(clientSecret)
+                .scp(scp)
                 .entityId(entityId)
                 .scope(scope)
                 .build();

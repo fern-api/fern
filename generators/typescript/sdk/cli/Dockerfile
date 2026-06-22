@@ -66,13 +66,18 @@ ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 # Upgrade bundled npm and patch vendored dependencies (ip-address,
 # brace-expansion) to versions that clear vulnerability scanners.
-RUN npm install -g npm@11.13.0 --force && \
+RUN npm install -g npm@11.17.0 --force && \
     cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack ip-address@10.1.1 && \
     rm -rf ip-address && \
     mkdir ip-address && \
     tar -xzf ip-address-10.1.1.tgz --strip-components=1 -C ip-address/ && \
     rm ip-address-10.1.1.tgz && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \

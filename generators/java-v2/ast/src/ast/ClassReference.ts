@@ -36,8 +36,15 @@ export class ClassReference extends AstNode {
     public write(writer: Writer): void {
         const topLevelClassName = this.enclosingClasses[0] ?? this.name;
         const qualifiedName = [...this.enclosingClasses, this.name].join(".");
-        writer.addImport(`${this.packageName}.${topLevelClassName}`);
         if (this.fullyQualified) {
+            writer.write(`${this.packageName}.${qualifiedName}`);
+            return;
+        }
+        const { shouldFullyQualify } = writer.addReference({
+            name: topLevelClassName,
+            packageName: this.packageName
+        });
+        if (shouldFullyQualify) {
             writer.write(`${this.packageName}.${qualifiedName}`);
             return;
         }

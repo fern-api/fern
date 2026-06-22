@@ -10,7 +10,10 @@ enum Example17 {
 
         _ = try await client.service.getMetadata(
             xApiVersion: "0.0.1",
-            shallow: false
+            shallow: false,
+            tag: [
+                "development"
+            ]
         )
     }
 }
