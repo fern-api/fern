@@ -91,7 +91,7 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${example.url || "/"}")`);
+                writer.write(`.WithPath("${this.toWireMockPath(example.url)}")`);
 
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
@@ -177,6 +177,31 @@ export class MockEndpointGenerator extends WithGeneration {
                 }
             });
         });
+    }
+
+    /**
+     * Returns the request path to match against in a WireMock stub.
+     *
+     * WireMock.Net matches `WithPath` against the percent-decoded request path, so the
+     * stub must use the decoded form. The IR's `example.url` percent-encodes path parameter
+     * values (e.g. an enum wire value of `>` becomes `%3E`), which would never match.
+     *
+     * The decoded value is escaped for embedding in a C# string literal (decoding can
+     * reintroduce `"`/`\`), matching the escaping applied to query parameter values above.
+     */
+    private toWireMockPath(url: string | undefined): string {
+        if (!url) {
+            return "/";
+        }
+        try {
+            return this.escapeForCSharpStringLiteral(decodeURIComponent(url));
+        } catch {
+            return this.escapeForCSharpStringLiteral(url);
+        }
+    }
+
+    private escapeForCSharpStringLiteral(value: string): string {
+        return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
     }
 
     /*
