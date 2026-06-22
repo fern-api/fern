@@ -11,6 +11,7 @@ type HttpEndpoint = FernIr.HttpEndpoint;
 type ServiceId = FernIr.ServiceId;
 
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
+import { isPagerPagination } from "../../endpoint/utils/isPagerPagination.js";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
@@ -69,12 +70,9 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
         if (pagination == null) {
             return false;
         }
-        // uri/path pagination is not generated as a pager in C#; these endpoints are emitted as
-        // regular unpaged methods, so the test must not iterate them with `await foreach`.
-        if (pagination.type === "uri" || pagination.type === "path") {
-            return false;
-        }
-        return true;
+        // Only pager pagination types (offset/cursor/custom) are iterated with `await foreach`;
+        // uri/path are emitted as regular unpaged methods.
+        return isPagerPagination(pagination);
     }
 
     private getServiceNamespaceSegments(): string[] {

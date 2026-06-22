@@ -15,6 +15,7 @@ import { WrappedRequestGenerator } from "../wrapped-request/WrappedRequestGenera
 import { EndpointSignatureInfo } from "./EndpointSignatureInfo.js";
 import { getEndpointRequest } from "./utils/getEndpointRequest.js";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType.js";
+import { isPagerPagination } from "./utils/isPagerPagination.js";
 
 type PagingEndpoint = HttpEndpoint & {
     pagination: NonNullable<HttpEndpoint["pagination"]>;
@@ -264,13 +265,10 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         if (endpoint.pagination === undefined) {
             return false;
         }
-        // uri/path pagination is not yet supported as a pager in C#. Rather than skipping these
+        // uri/path pagination is not yet generated as a pager in C#. Rather than skipping these
         // endpoints entirely (which leaves the method off the client), treat them as regular
         // unpaged methods so they are still generated and callable.
-        if (endpoint.pagination.type === "uri" || endpoint.pagination.type === "path") {
-            return false;
-        }
-        return true;
+        return isPagerPagination(endpoint.pagination);
     }
 
     protected assertHasPagination(endpoint: HttpEndpoint): asserts endpoint is PagingEndpoint {
