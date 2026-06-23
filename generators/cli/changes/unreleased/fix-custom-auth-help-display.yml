@@ -1,0 +1,5 @@
+- summary: |
+    Show credential source hints (e.g. env var names) in `--help` for
+    custom auth providers instead of the opaque "custom auth provider" label.
+    Affects basic-auth-with-omit bindings where the env var was not visible.
+  type: fix
