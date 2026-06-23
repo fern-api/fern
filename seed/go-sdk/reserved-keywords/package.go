@@ -34,6 +34,526 @@ func (t *TestRequest) SetFor(for_ string) {
 	t.require(testRequestFieldFor)
 }
 
+type BackupConfig struct {
+	Type     string
+	Override *BackupOverride
+	Fallback *BackupOverride
+
+	rawJSON json.RawMessage
+}
+
+func (b *BackupConfig) GetType() string {
+	if b == nil {
+		return ""
+	}
+	return b.Type
+}
+
+func (b *BackupConfig) GetOverride() *BackupOverride {
+	if b == nil {
+		return nil
+	}
+	return b.Override
+}
+
+func (b *BackupConfig) GetFallback() *BackupOverride {
+	if b == nil {
+		return nil
+	}
+	return b.Fallback
+}
+
+func (b *BackupConfig) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	b.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", b)
+	}
+	switch unmarshaler.Type {
+	case "override":
+		value := new(BackupOverride)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.Override = value
+	case "fallback":
+		value := new(BackupOverride)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.Fallback = value
+	}
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b BackupConfig) MarshalJSON() ([]byte, error) {
+	if err := b.validate(); err != nil {
+		return nil, err
+	}
+	if b.Override != nil {
+		return internal.MarshalJSONWithExtraProperty(b.Override, "type", "override")
+	}
+	if b.Fallback != nil {
+		return internal.MarshalJSONWithExtraProperty(b.Fallback, "type", "fallback")
+	}
+	if len(b.rawJSON) > 0 {
+		return b.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", b)
+}
+
+type BackupConfigVisitor interface {
+	VisitOverride(*BackupOverride) error
+	VisitFallback(*BackupOverride) error
+}
+
+func (b *BackupConfig) Accept(visitor BackupConfigVisitor) error {
+	if b.Override != nil {
+		return visitor.VisitOverride(b.Override)
+	}
+	if b.Fallback != nil {
+		return visitor.VisitFallback(b.Fallback)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", b)
+}
+
+func (b *BackupConfig) validate() error {
+	if b == nil {
+		return fmt.Errorf("type %T is nil", b)
+	}
+	var fields []string
+	if b.Override != nil {
+		fields = append(fields, "override")
+	}
+	if b.Fallback != nil {
+		fields = append(fields, "fallback")
+	}
+	if len(fields) == 0 {
+		if b.Type != "" {
+			if len(b.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", b, b.Type)
+		}
+		return fmt.Errorf("type %T is empty", b)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", b, fields)
+	}
+	if b.Type != "" {
+		field := fields[0]
+		if b.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				b,
+				b.Type,
+				b,
+			)
+		}
+	}
+	return nil
+}
+
+var (
+	backupOverrideFieldModel = big.NewInt(1 << 0)
+)
+
+type BackupOverride struct {
+	Model string `json:"model" url:"model"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BackupOverride) GetModel() string {
+	if b == nil {
+		return ""
+	}
+	return b.Model
+}
+
+func (b *BackupOverride) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
+	return b.extraProperties
+}
+
+func (b *BackupOverride) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetModel sets the Model field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BackupOverride) SetModel(model string) {
+	b.Model = model
+	b.require(backupOverrideFieldModel)
+}
+
+func (b *BackupOverride) UnmarshalJSON(data []byte) error {
+	type unmarshaler BackupOverride
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BackupOverride(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BackupOverride) MarshalJSON() ([]byte, error) {
+	type embed BackupOverride
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (b *BackupOverride) String() string {
+	if b == nil {
+		return "<nil>"
+	}
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
+var (
+	customSipHeaderFieldKey   = big.NewInt(1 << 0)
+	customSipHeaderFieldValue = big.NewInt(1 << 1)
+)
+
+type CustomSipHeader struct {
+	Key   string `json:"key" url:"key"`
+	Value string `json:"value" url:"value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CustomSipHeader) GetKey() string {
+	if c == nil {
+		return ""
+	}
+	return c.Key
+}
+
+func (c *CustomSipHeader) GetValue() string {
+	if c == nil {
+		return ""
+	}
+	return c.Value
+}
+
+func (c *CustomSipHeader) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CustomSipHeader) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetKey sets the Key field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomSipHeader) SetKey(key string) {
+	c.Key = key
+	c.require(customSipHeaderFieldKey)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CustomSipHeader) SetValue(value string) {
+	c.Value = value
+	c.require(customSipHeaderFieldValue)
+}
+
+func (c *CustomSipHeader) UnmarshalJSON(data []byte) error {
+	type unmarshaler CustomSipHeader
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CustomSipHeader(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CustomSipHeader) MarshalJSON() ([]byte, error) {
+	type embed CustomSipHeader
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CustomSipHeader) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type DependencyItem struct {
+	Type    string
+	Known   *KnownDependency
+	Unknown *KnownDependency
+
+	rawJSON json.RawMessage
+}
+
+func (d *DependencyItem) GetType() string {
+	if d == nil {
+		return ""
+	}
+	return d.Type
+}
+
+func (d *DependencyItem) GetKnown() *KnownDependency {
+	if d == nil {
+		return nil
+	}
+	return d.Known
+}
+
+func (d *DependencyItem) GetUnknown() *KnownDependency {
+	if d == nil {
+		return nil
+	}
+	return d.Unknown
+}
+
+func (d *DependencyItem) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	d.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", d)
+	}
+	switch unmarshaler.Type {
+	case "known":
+		value := new(KnownDependency)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		d.Known = value
+	case "unknown":
+		value := new(KnownDependency)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		d.Unknown = value
+	}
+	d.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (d DependencyItem) MarshalJSON() ([]byte, error) {
+	if err := d.validate(); err != nil {
+		return nil, err
+	}
+	if d.Known != nil {
+		return internal.MarshalJSONWithExtraProperty(d.Known, "type", "known")
+	}
+	if d.Unknown != nil {
+		return internal.MarshalJSONWithExtraProperty(d.Unknown, "type", "unknown")
+	}
+	if len(d.rawJSON) > 0 {
+		return d.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", d)
+}
+
+type DependencyItemVisitor interface {
+	VisitKnown(*KnownDependency) error
+	VisitUnknown(*KnownDependency) error
+}
+
+func (d *DependencyItem) Accept(visitor DependencyItemVisitor) error {
+	if d.Known != nil {
+		return visitor.VisitKnown(d.Known)
+	}
+	if d.Unknown != nil {
+		return visitor.VisitUnknown(d.Unknown)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", d)
+}
+
+func (d *DependencyItem) validate() error {
+	if d == nil {
+		return fmt.Errorf("type %T is nil", d)
+	}
+	var fields []string
+	if d.Known != nil {
+		fields = append(fields, "known")
+	}
+	if d.Unknown != nil {
+		fields = append(fields, "unknown")
+	}
+	if len(fields) == 0 {
+		if d.Type != "" {
+			if len(d.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", d, d.Type)
+		}
+		return fmt.Errorf("type %T is empty", d)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", d, fields)
+	}
+	if d.Type != "" {
+		field := fields[0]
+		if d.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				d,
+				d.Type,
+				d,
+			)
+		}
+	}
+	return nil
+}
+
+var (
+	knownDependencyFieldName = big.NewInt(1 << 0)
+)
+
+type KnownDependency struct {
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (k *KnownDependency) GetName() string {
+	if k == nil {
+		return ""
+	}
+	return k.Name
+}
+
+func (k *KnownDependency) GetExtraProperties() map[string]interface{} {
+	if k == nil {
+		return nil
+	}
+	return k.extraProperties
+}
+
+func (k *KnownDependency) require(field *big.Int) {
+	if k.explicitFields == nil {
+		k.explicitFields = big.NewInt(0)
+	}
+	k.explicitFields.Or(k.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (k *KnownDependency) SetName(name string) {
+	k.Name = name
+	k.require(knownDependencyFieldName)
+}
+
+func (k *KnownDependency) UnmarshalJSON(data []byte) error {
+	type unmarshaler KnownDependency
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*k = KnownDependency(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *k)
+	if err != nil {
+		return err
+	}
+	k.extraProperties = extraProperties
+	k.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (k *KnownDependency) MarshalJSON() ([]byte, error) {
+	type embed KnownDependency
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*k),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, k.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (k *KnownDependency) String() string {
+	if k == nil {
+		return "<nil>"
+	}
+	if len(k.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(k.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(k); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", k)
+}
+
 var (
 	packageFieldName = big.NewInt(1 << 0)
 )
@@ -216,4 +736,130 @@ func (r *Record) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+type SipHeaderAction struct {
+	Type    string
+	Static  *CustomSipHeader
+	Dynamic *CustomSipHeader
+
+	rawJSON json.RawMessage
+}
+
+func (s *SipHeaderAction) GetType() string {
+	if s == nil {
+		return ""
+	}
+	return s.Type
+}
+
+func (s *SipHeaderAction) GetStatic() *CustomSipHeader {
+	if s == nil {
+		return nil
+	}
+	return s.Static
+}
+
+func (s *SipHeaderAction) GetDynamic() *CustomSipHeader {
+	if s == nil {
+		return nil
+	}
+	return s.Dynamic
+}
+
+func (s *SipHeaderAction) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	s.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
+	switch unmarshaler.Type {
+	case "static":
+		value := new(CustomSipHeader)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Static = value
+	case "dynamic":
+		value := new(CustomSipHeader)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Dynamic = value
+	}
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s SipHeaderAction) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
+	if s.Static != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Static, "type", "static")
+	}
+	if s.Dynamic != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Dynamic, "type", "dynamic")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+type SipHeaderActionVisitor interface {
+	VisitStatic(*CustomSipHeader) error
+	VisitDynamic(*CustomSipHeader) error
+}
+
+func (s *SipHeaderAction) Accept(visitor SipHeaderActionVisitor) error {
+	if s.Static != nil {
+		return visitor.VisitStatic(s.Static)
+	}
+	if s.Dynamic != nil {
+		return visitor.VisitDynamic(s.Dynamic)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+func (s *SipHeaderAction) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Static != nil {
+		fields = append(fields, "static")
+	}
+	if s.Dynamic != nil {
+		fields = append(fields, "dynamic")
+	}
+	if len(fields) == 0 {
+		if s.Type != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Type)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Type != "" {
+		field := fields[0]
+		if s.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Type,
+				s,
+			)
+		}
+	}
+	return nil
 }
