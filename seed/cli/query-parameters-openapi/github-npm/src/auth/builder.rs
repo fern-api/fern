@@ -180,7 +180,13 @@ fn describe_binding_sources(binding: &SchemeBinding) -> String {
             if hints.is_empty() {
                 "custom auth provider".to_string()
             } else {
-                hints.join(" / ")
+                // credential_hints() uses "environment variable"; normalise
+                // to the shorter "env var" used by describe_credential_source.
+                hints
+                    .iter()
+                    .map(|h| h.replace("environment variable", "env var"))
+                    .collect::<Vec<_>>()
+                    .join(" / ")
             }
         }
     }
@@ -917,7 +923,8 @@ mod tests {
             SchemeBinding::Custom(provider),
         )];
         let out = render_auth_help_section(&bindings).unwrap();
-        assert!(out.contains("CLOSE_API_KEY"), "should show env var name, got: {out}");
+        assert!(out.contains("CLOSE_API_KEY env var"), "should show env var name with short label, got: {out}");
+        assert!(!out.contains("environment variable"), "should use 'env var' not 'environment variable', got: {out}");
         assert!(!out.contains("custom auth provider"), "should not show opaque label, got: {out}");
     }
 
