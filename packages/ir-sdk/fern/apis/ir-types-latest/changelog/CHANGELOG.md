@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.6.0] - 2026-06-22
+
+- Feature: Add optional `clientDefault` field to the dynamic IR's `NamedParameter`.
+  Carries a path parameter's client-side default (`clientDefault`) literal through to
+  the dynamic IR so dynamic-snippet generators can treat the parameter as optional and
+  order it after required parameters (e.g. after the request body), matching the
+  generated SDK signature. Defaults to `undefined` for backward compatibility.
+
 ## [v67.5.0] - 2026-06-12
 
 - Feature: Add optional `subtitle` field to `HttpEndpoint`. Populated from the

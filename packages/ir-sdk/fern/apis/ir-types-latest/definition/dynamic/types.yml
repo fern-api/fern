@@ -10,6 +10,13 @@ types:
       variable:
         docs: If set, this parameter references a variable defined at the client level
         type: optional<string>
+      clientDefault:
+        docs: |
+          If set, a client-side default value for this parameter. When present, the
+          parameter is optional in the generated SDK and is ordered after required
+          parameters (e.g. after the request body), mirroring the path parameter's
+          `clientDefault` in the full IR.
+        type: optional<LiteralType>
 
   NamedType:
     docs: |

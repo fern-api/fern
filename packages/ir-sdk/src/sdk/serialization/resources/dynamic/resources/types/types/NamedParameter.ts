@@ -4,6 +4,7 @@ import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import * as serializers from "../../../../../index.js";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { LiteralType } from "./LiteralType.js";
 import { ObjectPropertyAccess } from "./ObjectPropertyAccess.js";
 
 export const NamedParameter: core.serialization.ObjectSchema<
@@ -14,6 +15,7 @@ export const NamedParameter: core.serialization.ObjectSchema<
     typeReference: core.serialization.lazy(() => serializers.dynamic.TypeReference),
     propertyAccess: ObjectPropertyAccess.optional(),
     variable: core.serialization.string().optional(),
+    clientDefault: LiteralType.optional(),
 });
 
 export declare namespace NamedParameter {
@@ -22,5 +24,6 @@ export declare namespace NamedParameter {
         typeReference: serializers.dynamic.TypeReference.Raw;
         propertyAccess?: ObjectPropertyAccess.Raw | null;
         variable?: string | null;
+        clientDefault?: LiteralType.Raw | null;
     }
 }

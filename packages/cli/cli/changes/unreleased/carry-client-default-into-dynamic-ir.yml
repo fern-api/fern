@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Carry a path parameter's `clientDefault` into the dynamic IR's `NamedParameter`.
+    This lets dynamic-snippet generators treat a base-path parameter with a client
+    default as optional and order it after required parameters (e.g. after the
+    request body), matching the generated SDK signature.
+  type: feat
