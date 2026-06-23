@@ -18,6 +18,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { template as templateFn } from "lodash-es";
 
 import {
+    MultiUrlEnvironmentGenerator,
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
@@ -627,11 +628,15 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSourceEnvironmentFile(context: SdkGeneratorContext): void {
-        if (context.ir.environments && context.ir.environments.environments.type === "singleBaseUrl") {
-            const environmentSymbol = context.project.nameRegistry.getEnvironmentSymbolOrThrow();
+        if (context.ir.environments == null) {
+            return;
+        }
+        const environmentSymbol = context.project.nameRegistry.getEnvironmentSymbolOrThrow();
+        const environments = context.ir.environments.environments;
+        if (environments.type === "singleBaseUrl") {
             const environmentGenerator = new SingleUrlEnvironmentGenerator({
                 enumName: environmentSymbol.name,
-                environments: context.ir.environments.environments,
+                environments,
                 sdkGeneratorContext: context
             });
             const environmentEnum = environmentGenerator.generate();
@@ -640,8 +645,20 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 directory: RelativeFilePath.of(""),
                 contents: [environmentEnum]
             });
+        } else if (environments.type === "multipleBaseUrls") {
+            const environmentGenerator = new MultiUrlEnvironmentGenerator({
+                structName: environmentSymbol.name,
+                environments,
+                sdkGeneratorContext: context
+            });
+            const environmentStruct = environmentGenerator.generate();
+            context.project.addSourceFile({
+                nameCandidateWithoutExtension: environmentStruct.name,
+                directory: RelativeFilePath.of(""),
+                contents: [environmentStruct]
+            });
         } else {
-            // TODO(kafkas): Handle multiple environments
+            assertNever(environments);
         }
     }
 

@@ -11,6 +11,7 @@ public final class S3Client: Sendable {
         return try await httpClient.performRequest(
             method: .post,
             path: "/s3/presigned-url",
+            baseUrlId: "s3",
             body: request,
             requestOptions: requestOptions,
             responseType: String.self

@@ -53,6 +53,71 @@ export class RootClientGenerator {
         });
     }
 
+    private get isMultiUrlEnvironment(): boolean {
+        return this.sdkGeneratorContext.ir.environments?.environments.type === "multipleBaseUrls";
+    }
+
+    private get multipleBaseUrlsEnvironments(): FernIr.MultipleBaseUrlsEnvironments | undefined {
+        const environments = this.sdkGeneratorContext.ir.environments;
+        return environments?.environments.type === "multipleBaseUrls" ? environments.environments : undefined;
+    }
+
+    private getEnvironmentSymbolReference(): string {
+        const environmentSymbol = this.sdkGeneratorContext.project.nameRegistry.getEnvironmentSymbolOrThrow();
+        return this.sdkGeneratorContext.project.nameRegistry.reference({
+            fromSymbol: this.symbol,
+            toSymbol: environmentSymbol
+        });
+    }
+
+    private getEnvironmentTypeReference(): swift.TypeReference {
+        const environmentSymbol = this.sdkGeneratorContext.project.nameRegistry.getEnvironmentSymbolOrThrow();
+        return this.referencer.referenceType(environmentSymbol);
+    }
+
+    private getDefaultEnvironmentExpression(): swift.Expression | undefined {
+        const environments = this.sdkGeneratorContext.ir.environments;
+        if (environments == null || environments.environments.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+        const defaultEnvId = environments.defaultEnvironment;
+        if (defaultEnvId == null) {
+            return undefined;
+        }
+        const defaultEnvironment = environments.environments.environments.find((e) => e.id === defaultEnvId);
+        if (defaultEnvironment == null) {
+            return undefined;
+        }
+        return swift.Expression.memberAccess({
+            target: swift.Expression.reference(this.getEnvironmentSymbolReference()),
+            memberName: this.sdkGeneratorContext.caseConverter.camelUnsafe(defaultEnvironment.name)
+        });
+    }
+
+    private buildEnvironmentParam({ withDefault }: { withDefault: boolean }): swift.FunctionParameter {
+        return swift.functionParameter({
+            argumentLabel: "environment",
+            unsafeName: "environment",
+            type: this.getEnvironmentTypeReference(),
+            defaultValue: withDefault ? this.getDefaultEnvironmentExpression() : undefined,
+            docsContent:
+                "The environment to use for requests from the client. If not provided, the default environment will be used."
+        });
+    }
+
+    private buildBaseURLsDictionaryExpression(environments: FernIr.MultipleBaseUrlsEnvironments): swift.Expression {
+        return swift.Expression.dictionaryLiteral({
+            entries: environments.baseUrls.map((baseUrl) => [
+                swift.Expression.stringLiteral(baseUrl.id),
+                swift.Expression.memberAccess({
+                    target: swift.Expression.reference("environment"),
+                    memberName: this.sdkGeneratorContext.caseConverter.camelUnsafe(baseUrl.name)
+                })
+            ]),
+            multiline: true
+        });
+    }
+
     private get headersParam() {
         return swift.functionParameter({
             argumentLabel: "headers",
@@ -166,10 +231,15 @@ export class RootClientGenerator {
                 : swift.Expression.reference("headers");
 
         const designatedInitializerArgs: swift.FunctionArgument[] = [
-            swift.functionArgument({
-                label: "baseURL",
-                value: swift.Expression.reference("baseURL")
-            }),
+            this.isMultiUrlEnvironment
+                ? swift.functionArgument({
+                      label: "environment",
+                      value: swift.Expression.reference("environment")
+                  })
+                : swift.functionArgument({
+                      label: "baseURL",
+                      value: swift.Expression.reference("baseURL")
+                  }),
             swift.functionArgument({
                 label: "headerAuth",
                 value: authSchemes.header
@@ -389,7 +459,9 @@ export class RootClientGenerator {
     }: {
         bearerTokenParamType: BearerTokenParamType;
     }): swift.FunctionParameter[] {
-        const params: swift.FunctionParameter[] = [this.baseUrlParam];
+        const params: swift.FunctionParameter[] = [
+            this.isMultiUrlEnvironment ? this.buildEnvironmentParam({ withDefault: true }) : this.baseUrlParam
+        ];
         const authSchemes = this.getAuthSchemeParameters();
         if (authSchemes.header) {
             params.push(authSchemes.header.param);
@@ -414,11 +486,13 @@ export class RootClientGenerator {
 
     private generateDesignatedInitializer(): swift.Initializer {
         const initializerParams: swift.FunctionParameter[] = [
-            swift.functionParameter({
-                argumentLabel: "baseURL",
-                unsafeName: "baseURL",
-                type: this.referencer.referenceSwiftType("String")
-            }),
+            this.isMultiUrlEnvironment
+                ? this.buildEnvironmentParam({ withDefault: false })
+                : swift.functionParameter({
+                      argumentLabel: "baseURL",
+                      unsafeName: "baseURL",
+                      type: this.referencer.referenceSwiftType("String")
+                  }),
             swift.functionParameter({
                 argumentLabel: "headerAuth",
                 unsafeName: "headerAuth",
@@ -492,14 +566,30 @@ export class RootClientGenerator {
                     unsafeName: "config",
                     value: swift.Expression.classInitialization({
                         unsafeName: "ClientConfig",
-                        arguments_: [
-                            ...initializerParams.map((p) =>
+                        arguments_: initializerParams.flatMap((p) => {
+                            if (p.unsafeName === "environment") {
+                                const environments = this.multipleBaseUrlsEnvironments;
+                                if (environments == null) {
+                                    return [];
+                                }
+                                return [
+                                    swift.functionArgument({
+                                        label: "baseURL",
+                                        value: swift.Expression.stringLiteral("")
+                                    }),
+                                    swift.functionArgument({
+                                        label: "baseURLs",
+                                        value: this.buildBaseURLsDictionaryExpression(environments)
+                                    })
+                                ];
+                            }
+                            return [
                                 swift.functionArgument({
                                     label: p.unsafeName,
                                     value: swift.Expression.reference(p.unsafeName)
                                 })
-                            )
-                        ],
+                            ];
+                        }),
                         multiline: true
                     })
                 }),
@@ -559,7 +649,7 @@ export class RootClientGenerator {
             }
             return undefined;
         } else if (this.sdkGeneratorContext.ir.environments.environments.type === "multipleBaseUrls") {
-            // TODO(kafkas): Handle multiple environments
+            // Multi-URL environments are exposed via an `environment` parameter rather than a `baseURL` default.
             return undefined;
         } else {
             assertNever(this.sdkGeneratorContext.ir.environments.environments);

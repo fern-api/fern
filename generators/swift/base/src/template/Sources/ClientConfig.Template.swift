@@ -46,6 +46,7 @@ public final class ClientConfig: Swift.Sendable {
     }
 
     let baseURL: Swift.String
+    let baseURLs: [Swift.String: Swift.String]?
     let headerAuth: HeaderAuth?
     let bearerAuth: BearerAuth?
     let basicAuth: BasicAuth?
@@ -56,6 +57,7 @@ public final class ClientConfig: Swift.Sendable {
 
     init(
         baseURL: Swift.String,
+        baseURLs: [Swift.String: Swift.String]? = nil,
         headerAuth: HeaderAuth? = nil,
         bearerAuth: BearerAuth? = nil,
         basicAuth: BasicAuth? = nil,
@@ -65,6 +67,7 @@ public final class ClientConfig: Swift.Sendable {
         urlSession: Networking.URLSession? = nil
     ) {
         self.baseURL = baseURL
+        self.baseURLs = baseURLs
         self.headerAuth = headerAuth
         self.bearerAuth = bearerAuth
         self.basicAuth = basicAuth

@@ -11,6 +11,7 @@ public final class Ec2Client: Sendable {
         return try await httpClient.performRequest(
             method: .post,
             path: "/ec2/boot",
+            baseUrlId: "ec2",
             body: request,
             requestOptions: requestOptions
         )

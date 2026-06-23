@@ -245,7 +245,6 @@ export class EndpointMethodGenerator {
                 label: "method",
                 value: swift.Expression.enumCaseShorthand(this.getEnumCaseNameForHttpMethod(endpoint.method))
             }),
-            // TODO(kafkas): Handle multi-url environments
             swift.functionArgument({
                 label: "path",
                 value: swift.Expression.stringLiteral(
@@ -253,6 +252,18 @@ export class EndpointMethodGenerator {
                 )
             })
         ];
+
+        if (
+            endpoint.baseUrl != null &&
+            this.sdkGeneratorContext.ir.environments?.environments.type === "multipleBaseUrls"
+        ) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "baseUrlId",
+                    value: swift.Expression.stringLiteral(endpoint.baseUrl)
+                })
+            );
+        }
 
         if (endpoint.requestBody?.type === "bytes") {
             arguments_.push(

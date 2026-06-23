@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Added support for multi-URL environments so APIs that expose different base
+    URLs per server group now generate a compiling client. The generator emits
+    an environment struct holding a URL per server and a static property for each
+    declared environment, and threads the per-endpoint server selection through
+    the client config so each request resolves the correct base URL.
+  type: fix
