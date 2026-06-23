@@ -1333,10 +1333,30 @@ export class ApiReferenceNodeConverter {
             }
         }
 
+        // Absorb parent operations into their matching groups. A parent operation
+        // is a flat entry whose name matches a group's parentField and has no
+        // fieldPath (e.g. query_geography with returnType GeographyQueries). It
+        // becomes the group's representative so the page renders the namespace
+        // type's fields rather than a single child operation.
+        const parentOpsByGroup = new Map<string, APIV1Read.GraphQlOperation>();
+        for (const entry of insertionOrder) {
+            if (entry.type === "flat") {
+                const name = entry.operation.name ?? entry.operation.id;
+                if (groupedByParent.has(name) && getFieldPath(entry.operation) == null) {
+                    parentOpsByGroup.set(name, entry.operation);
+                }
+            }
+        }
+
         const children: FernNavigation.V1.ApiPackageChild[] = [];
 
         for (const entry of insertionOrder) {
             if (entry.type === "flat") {
+                // Skip parent operations that were absorbed into a group above.
+                const name = entry.operation.name ?? entry.operation.id;
+                if (parentOpsByGroup.has(name)) {
+                    continue;
+                }
                 const fieldPath = getFieldPath(entry.operation);
                 const leafName = entry.operation.name ?? entry.operation.id;
                 let operationSlug = parentSlug;
@@ -1370,22 +1390,23 @@ export class ApiReferenceNodeConverter {
                     featureFlags: undefined
                 });
             } else {
-                // Render the parent field as a single sidebar entry. The page content
-                // shows all child operations: the frontend discovers siblings by
-                // finding every operation in the API definition whose fieldPath[0]
-                // matches this parent field and whose operationType matches.
+                // Render the parent field as a single sidebar entry. If a parent
+                // operation exists (returnType points at the namespace type), use it
+                // as the representative so the page renders the namespace type's
+                // fields. Otherwise fall back to the first child operation.
                 const groupOps = groupedByParent.get(entry.parentField) ?? [];
-                const firstOp = groupOps[0];
-                if (firstOp == null) {
+                const parentOp = parentOpsByGroup.get(entry.parentField);
+                const representativeOp = parentOp ?? groupOps[0];
+                if (representativeOp == null) {
                     continue;
                 }
                 const fieldSlug = parentSlug.append(kebabCase(entry.parentField));
                 children.push({
-                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${firstOp.id}`),
+                    id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${representativeOp.id}`),
                     type: "graphql" as const,
                     collapsed: undefined,
-                    operationType: firstOp.operationType,
-                    graphqlOperationId: APIV1Read.GraphQlOperationId(firstOp.id),
+                    operationType: representativeOp.operationType,
+                    graphqlOperationId: APIV1Read.GraphQlOperationId(representativeOp.id),
                     graphqlOperationIds: groupOps.map((op) => APIV1Read.GraphQlOperationId(op.id)),
                     apiDefinitionId: this.apiDefinitionId,
                     availability: convertDocsAvailability(parentAvailability),
