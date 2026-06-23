@@ -183,10 +183,12 @@ export class NameRegistry {
      */
     public registerEnvironmentSymbol({
         configEnvironmentEnumName,
-        registeredSourceModuleName
+        registeredSourceModuleName,
+        shape = { type: "enum-with-raw-values" }
     }: {
         configEnvironmentEnumName: string | undefined;
         registeredSourceModuleName: string;
+        shape?: swift.TypeSymbolShape;
     }): swift.Symbol {
         const candidates: [string, ...string[]] = [
             `${registeredSourceModuleName}Environment`,
@@ -197,7 +199,7 @@ export class NameRegistry {
             candidates.unshift(configEnvironmentEnumName);
         }
         const symbolName = this.sourceModuleNamespace.addEnvironmentSymbolName(candidates);
-        return this.symbolRegistry.registerSourceModuleType(symbolName, { type: "enum-with-raw-values" });
+        return this.symbolRegistry.registerSourceModuleType(symbolName, shape);
     }
 
     public getEnvironmentSymbolOrThrow(): swift.Symbol {

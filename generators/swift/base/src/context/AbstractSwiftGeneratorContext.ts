@@ -101,7 +101,11 @@ export abstract class AbstractSwiftGeneratorContext<
         });
         nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
-            registeredSourceModuleName: registeredSourceModuleSymbol.name
+            registeredSourceModuleName: registeredSourceModuleSymbol.name,
+            shape:
+                ir.environments?.environments.type === "multipleBaseUrls"
+                    ? { type: "struct" }
+                    : { type: "enum-with-raw-values" }
         });
 
         // Must first register top-level symbols

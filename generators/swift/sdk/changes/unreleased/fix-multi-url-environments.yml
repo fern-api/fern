@@ -1,0 +1,5 @@
+- summary: |
+    Add support for multi-URL environments. The generated client now exposes an
+    environment struct with one base URL per service and routes each sub-client to
+    its corresponding base URL.
+  type: fix

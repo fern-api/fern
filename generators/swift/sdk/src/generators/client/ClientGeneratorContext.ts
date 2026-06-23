@@ -16,7 +16,11 @@ export class ClientGeneratorContext {
     private readonly sdkGeneratorContext: SdkGeneratorContext;
 
     public readonly httpClient: { property: swift.Property; clientName: string };
-    public readonly subClients: { property: swift.Property; clientName: string }[];
+    public readonly subClients: {
+        property: swift.Property;
+        clientName: string;
+        subpackage: FernIr.Subpackage;
+    }[];
     private readonly referencer: Referencer;
 
     public constructor({ symbol, packageOrSubpackage, sdkGeneratorContext }: ClientGeneratorContext.Args) {
@@ -28,7 +32,7 @@ export class ClientGeneratorContext {
         this.httpClient = this.getHttpClient();
     }
 
-    private getSubClients(): { property: swift.Property; clientName: string }[] {
+    private getSubClients(): { property: swift.Property; clientName: string; subpackage: FernIr.Subpackage }[] {
         return this.sdkGeneratorContext
             .getSubpackagesOrThrow(this.packageOrSubpackage)
             .map(([subpackageId, subpackage]) => {
@@ -42,7 +46,8 @@ export class ClientGeneratorContext {
                 });
                 return {
                     property,
-                    clientName: subClientSymbol.name
+                    clientName: subClientSymbol.name,
+                    subpackage
                 };
             });
     }

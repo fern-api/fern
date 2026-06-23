@@ -18,6 +18,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { template as templateFn } from "lodash-es";
 
 import {
+    MultiUrlEnvironmentGenerator,
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
@@ -627,21 +628,40 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSourceEnvironmentFile(context: SdkGeneratorContext): void {
-        if (context.ir.environments && context.ir.environments.environments.type === "singleBaseUrl") {
-            const environmentSymbol = context.project.nameRegistry.getEnvironmentSymbolOrThrow();
-            const environmentGenerator = new SingleUrlEnvironmentGenerator({
-                enumName: environmentSymbol.name,
-                environments: context.ir.environments.environments,
-                sdkGeneratorContext: context
-            });
-            const environmentEnum = environmentGenerator.generate();
-            context.project.addSourceFile({
-                nameCandidateWithoutExtension: environmentEnum.name,
-                directory: RelativeFilePath.of(""),
-                contents: [environmentEnum]
-            });
-        } else {
-            // TODO(kafkas): Handle multiple environments
+        if (context.ir.environments == null) {
+            return;
+        }
+        const environments = context.ir.environments.environments;
+        const environmentSymbol = context.project.nameRegistry.getEnvironmentSymbolOrThrow();
+        switch (environments.type) {
+            case "singleBaseUrl": {
+                const environmentEnum = new SingleUrlEnvironmentGenerator({
+                    enumName: environmentSymbol.name,
+                    environments,
+                    sdkGeneratorContext: context
+                }).generate();
+                context.project.addSourceFile({
+                    nameCandidateWithoutExtension: environmentEnum.name,
+                    directory: RelativeFilePath.of(""),
+                    contents: [environmentEnum]
+                });
+                break;
+            }
+            case "multipleBaseUrls": {
+                const environmentStruct = new MultiUrlEnvironmentGenerator({
+                    symbol: environmentSymbol,
+                    environments,
+                    sdkGeneratorContext: context
+                }).generate();
+                context.project.addSourceFile({
+                    nameCandidateWithoutExtension: environmentStruct.name,
+                    directory: RelativeFilePath.of(""),
+                    contents: [environmentStruct]
+                });
+                break;
+            }
+            default:
+                assertNever(environments);
         }
     }
 
