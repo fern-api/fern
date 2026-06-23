@@ -11,6 +11,7 @@ public final class ItemsClient: Sendable {
         return try await httpClient.performRequest(
             method: .get,
             path: "/items",
+            baseUrlId: "Base",
             requestOptions: requestOptions,
             responseType: String.self
         )

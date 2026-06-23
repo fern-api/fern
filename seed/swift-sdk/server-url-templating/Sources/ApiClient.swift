@@ -6,20 +6,20 @@ public final class ApiClient: Sendable {
 
     /// Initialize the client with the specified configuration.
     ///
-    /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
+    /// - Parameter environment: The environment to use for requests from the client. If not provided, the default environment will be used.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
-        baseURL: String,
+        environment: ApiEnvironment = ApiEnvironment.regionalApiServer,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
         urlSession: Networking.URLSession? = nil
     ) {
         self.init(
-            baseURL: baseURL,
+            environment: environment,
             headerAuth: nil,
             bearerAuth: nil,
             basicAuth: nil,
@@ -31,7 +31,7 @@ public final class ApiClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        environment: ApiEnvironment = ApiEnvironment.regionalApiServer,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,
@@ -41,7 +41,11 @@ public final class ApiClient: Sendable {
         urlSession: Networking.URLSession? = nil
     ) {
         let config = ClientConfig(
-            baseURL: baseURL,
+            baseURL: environment.base,
+            baseUrls: [
+                "Base": environment.base, 
+                "Auth": environment.auth
+            ],
             headerAuth: headerAuth,
             bearerAuth: bearerAuth,
             basicAuth: basicAuth,
@@ -57,6 +61,7 @@ public final class ApiClient: Sendable {
         return try await httpClient.performRequest(
             method: .get,
             path: "/users",
+            baseUrlId: "Base",
             requestOptions: requestOptions,
             responseType: [User].self
         )
@@ -66,6 +71,7 @@ public final class ApiClient: Sendable {
         return try await httpClient.performRequest(
             method: .get,
             path: "/users/\(userId)",
+            baseUrlId: "Base",
             requestOptions: requestOptions,
             responseType: User.self
         )
@@ -75,6 +81,7 @@ public final class ApiClient: Sendable {
         return try await httpClient.performRequest(
             method: .post,
             path: "/auth/token",
+            baseUrlId: "Auth",
             body: request,
             requestOptions: requestOptions,
             responseType: TokenResponse.self

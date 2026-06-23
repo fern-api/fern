@@ -11,6 +11,7 @@ public final class FilesClient: Sendable {
         return try await httpClient.performRequest(
             method: .post,
             path: "/files/content",
+            baseUrlId: "Upload",
             body: request,
             requestOptions: requestOptions,
             responseType: String.self

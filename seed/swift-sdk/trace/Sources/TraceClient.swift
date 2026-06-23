@@ -85,7 +85,7 @@ public final class TraceClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        baseURL: String = TraceEnvironment.prod.rawValue,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,

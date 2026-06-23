@@ -17,6 +17,7 @@ final class HTTPClient: Swift.Sendable {
     func performRequest(
         method: HTTP.Method,
         path: Swift.String,
+        baseUrlId: Swift.String? = nil,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [Swift.String: Swift.String?] = [:],
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
@@ -26,6 +27,7 @@ final class HTTPClient: Swift.Sendable {
         _ = try await performRequest(
             method: method,
             path: path,
+            baseUrlId: baseUrlId,
             contentType: requestContentType,
             headers: requestHeaders,
             queryParams: requestQueryParams,
@@ -39,6 +41,7 @@ final class HTTPClient: Swift.Sendable {
     func performRequest<T: Swift.Decodable>(
         method: HTTP.Method,
         path: Swift.String,
+        baseUrlId: Swift.String? = nil,
         contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [Swift.String: Swift.String?] = [:],
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
@@ -61,6 +64,7 @@ final class HTTPClient: Swift.Sendable {
         let request = try await buildRequest(
             method: method,
             path: path,
+            baseUrlId: baseUrlId,
             requestContentType: requestContentType,
             requestHeaders: requestHeaders,
             requestQueryParams: requestQueryParams,
@@ -99,6 +103,7 @@ final class HTTPClient: Swift.Sendable {
     private func buildRequest(
         method: HTTP.Method,
         path: Swift.String,
+        baseUrlId: Swift.String? = nil,
         requestContentType: HTTP.ContentType,
         requestHeaders: [Swift.String: Swift.String?],
         requestQueryParams: [Swift.String: QueryParameter?],
@@ -107,7 +112,7 @@ final class HTTPClient: Swift.Sendable {
     ) async throws -> Networking.URLRequest {
         // Init with URL
         let url = buildRequestURL(
-            path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
+            path: path, baseUrlId: baseUrlId, requestQueryParams: requestQueryParams, requestOptions: requestOptions
         )
         var request = Networking.URLRequest(url: url)
 
@@ -143,10 +148,12 @@ final class HTTPClient: Swift.Sendable {
 
     private func buildRequestURL(
         path: Swift.String,
+        baseUrlId: Swift.String? = nil,
         requestQueryParams: [Swift.String: QueryParameter?],
         requestOptions: RequestOptions? = nil
     ) -> URL {
-        let endpointURL = "\(clientConfig.baseURL)\(path)"
+        let baseURL = baseUrlId.flatMap { clientConfig.baseUrls?[$0] } ?? clientConfig.baseURL
+        let endpointURL = "\(baseURL)\(path)"
         guard var components = Foundation.URLComponents(string: endpointURL) else {
             preconditionFailure(
                 "Invalid URL '\(endpointURL)' - this indicates an unexpected error in the SDK."

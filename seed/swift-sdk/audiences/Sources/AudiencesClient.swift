@@ -37,7 +37,7 @@ public final class AudiencesClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        baseURL: String = AudiencesEnvironment.environmentA.rawValue,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,

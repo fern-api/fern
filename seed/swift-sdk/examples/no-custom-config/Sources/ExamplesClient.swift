@@ -70,7 +70,7 @@ public final class ExamplesClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        baseURL: String = ExamplesEnvironment.production.rawValue,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,

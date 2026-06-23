@@ -62,7 +62,7 @@ public final class SingleUrlEnvironmentNoDefaultClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        baseURL: String = SingleUrlEnvironmentNoDefaultEnvironment.production.rawValue,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,

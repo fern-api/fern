@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add support for APIs with multiple base URLs (server URL templating). The environment type is now generated as a struct exposing one URL per base URL ID, and each endpoint resolves its configured base URL at request time.
+  type: fix

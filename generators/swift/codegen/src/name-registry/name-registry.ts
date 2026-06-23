@@ -183,10 +183,12 @@ export class NameRegistry {
      */
     public registerEnvironmentSymbol({
         configEnvironmentEnumName,
-        registeredSourceModuleName
+        registeredSourceModuleName,
+        environmentType
     }: {
         configEnvironmentEnumName: string | undefined;
         registeredSourceModuleName: string;
+        environmentType: "singleBaseUrl" | "multipleBaseUrls";
     }): swift.Symbol {
         const candidates: [string, ...string[]] = [
             `${registeredSourceModuleName}Environment`,
@@ -197,7 +199,12 @@ export class NameRegistry {
             candidates.unshift(configEnvironmentEnumName);
         }
         const symbolName = this.sourceModuleNamespace.addEnvironmentSymbolName(candidates);
-        return this.symbolRegistry.registerSourceModuleType(symbolName, { type: "enum-with-raw-values" });
+        // Environments with multiple base URLs are generated as a struct (one property per base URL),
+        // whereas environments with a single base URL are generated as a String-backed enum.
+        return this.symbolRegistry.registerSourceModuleType(
+            symbolName,
+            environmentType === "multipleBaseUrls" ? { type: "struct" } : { type: "enum-with-raw-values" }
+        );
     }
 
     public getEnvironmentSymbolOrThrow(): swift.Symbol {

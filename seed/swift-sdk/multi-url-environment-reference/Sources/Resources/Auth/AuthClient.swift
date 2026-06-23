@@ -11,6 +11,7 @@ public final class AuthClient: Sendable {
         return try await httpClient.performRequest(
             method: .post,
             path: "/oauth/token",
+            baseUrlId: "Auth",
             body: request,
             requestOptions: requestOptions,
             responseType: AuthGetTokenResponse.self

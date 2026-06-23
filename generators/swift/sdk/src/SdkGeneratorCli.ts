@@ -18,6 +18,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { template as templateFn } from "lodash-es";
 
 import {
+    MultipleBaseUrlsEnvironmentGenerator,
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
@@ -640,8 +641,19 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 directory: RelativeFilePath.of(""),
                 contents: [environmentEnum]
             });
-        } else {
-            // TODO(kafkas): Handle multiple environments
+        } else if (context.ir.environments && context.ir.environments.environments.type === "multipleBaseUrls") {
+            const environmentSymbol = context.project.nameRegistry.getEnvironmentSymbolOrThrow();
+            const environmentGenerator = new MultipleBaseUrlsEnvironmentGenerator({
+                structName: environmentSymbol.name,
+                environments: context.ir.environments.environments,
+                sdkGeneratorContext: context
+            });
+            const environmentStruct = environmentGenerator.generate();
+            context.project.addSourceFile({
+                nameCandidateWithoutExtension: environmentStruct.name,
+                directory: RelativeFilePath.of(""),
+                contents: [environmentStruct]
+            });
         }
     }
 

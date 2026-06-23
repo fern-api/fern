@@ -62,7 +62,7 @@ public final class SimpleApiClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        baseURL: String = SimpleApiEnvironment.production.rawValue,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,

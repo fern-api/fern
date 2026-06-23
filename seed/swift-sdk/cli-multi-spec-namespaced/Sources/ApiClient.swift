@@ -73,7 +73,7 @@ public final class ApiClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        baseURL: String = ApiEnvironment.default.rawValue,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,

@@ -245,7 +245,6 @@ export class EndpointMethodGenerator {
                 label: "method",
                 value: swift.Expression.enumCaseShorthand(this.getEnumCaseNameForHttpMethod(endpoint.method))
             }),
-            // TODO(kafkas): Handle multi-url environments
             swift.functionArgument({
                 label: "path",
                 value: swift.Expression.stringLiteral(
@@ -253,6 +252,11 @@ export class EndpointMethodGenerator {
                 )
             })
         ];
+
+        const baseUrlIdArgument = this.getBaseUrlIdArgumentForEndpoint(endpoint);
+        if (baseUrlIdArgument != null) {
+            arguments_.push(baseUrlIdArgument);
+        }
 
         if (endpoint.requestBody?.type === "bytes") {
             arguments_.push(
@@ -429,6 +433,26 @@ export class EndpointMethodGenerator {
         }
 
         return arguments_;
+    }
+
+    /**
+     * For APIs with multiple base URLs (server URL templating), an endpoint may declare which base
+     * URL it targets. When it does, we pass the corresponding base URL ID so the HTTP client can
+     * resolve the correct URL from the configured environment at request time.
+     */
+    private getBaseUrlIdArgumentForEndpoint(endpoint: FernIr.HttpEndpoint): swift.FunctionArgument | undefined {
+        const environments = this.sdkGeneratorContext.ir.environments?.environments;
+        if (endpoint.baseUrl == null || environments?.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+        const baseUrl = environments.baseUrls.find((b) => b.id === endpoint.baseUrl);
+        if (baseUrl == null) {
+            return undefined;
+        }
+        return swift.functionArgument({
+            label: "baseUrlId",
+            value: swift.Expression.stringLiteral(baseUrl.id)
+        });
     }
 
     private getResolvedSwiftTypeForTypeReference(typeReference: FernIr.TypeReference): swift.TypeReference {
