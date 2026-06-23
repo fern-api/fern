@@ -595,6 +595,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_users": {
       "displayName": undefined,

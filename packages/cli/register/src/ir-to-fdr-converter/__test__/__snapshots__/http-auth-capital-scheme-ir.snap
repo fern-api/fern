@@ -448,6 +448,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "getBasicProtected_Response_200": {
