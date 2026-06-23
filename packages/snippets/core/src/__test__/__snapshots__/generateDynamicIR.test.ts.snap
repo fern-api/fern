@@ -85,6 +85,7 @@ exports[`generateDynamicIR > go 1`] = `
       "extends": undefined,
       "properties": [
         {
+          "clientDefault": undefined,
           "name": {
             "name": {
               "camelCase": {

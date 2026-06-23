@@ -525,6 +525,10 @@
               "typeReference": {
                 "value": "STRING",
                 "type": "primitive"
+              },
+              "clientDefault": {
+                "value": "us-east-1",
+                "type": "string"
               }
             }
           ],
