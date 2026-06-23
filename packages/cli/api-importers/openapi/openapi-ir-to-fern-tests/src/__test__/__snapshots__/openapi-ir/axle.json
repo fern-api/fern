@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0",
   "title": "Axle API",
   "servers": [
     {

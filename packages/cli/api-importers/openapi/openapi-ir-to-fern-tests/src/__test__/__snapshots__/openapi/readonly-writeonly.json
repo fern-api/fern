@@ -326,4 +326,5 @@ error-discrimination:
 display-name: Readonly and Writeonly Properties API
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -303,4 +303,5 @@ error-discrimination:
 display-name: Inlined path parameters
 ",
   },
+  "specVersion": "1.0.0",
 }
