@@ -1,6 +1,5 @@
 import { Examples } from "@fern-api/core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
-import safeRegex from "safe-regex";
 
 import { AbstractConverter, AbstractConverterContext, APIError } from "../index.js";
 
@@ -957,15 +956,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
-        // Keys that match a `patternProperties` regex are valid properties even when
-        // `additionalProperties: false`. We don't implement first-class `patternProperties`
-        // support: we simply accept the matching keys and preserve their values without
-        // validating them against the matched pattern's schema.
-        const patternPropertyRegexes = this.collectAllPatternPropertyRegexes(resolvedSchema);
-        const patternMatchedKeys = additionalPropertyKeys.filter((key) =>
-            patternPropertyRegexes.some((regex) => regex.test(key))
-        );
-        const remainingAdditionalKeys = additionalPropertyKeys.filter((key) => !patternMatchedKeys.includes(key));
+        // If the schema declares `patternProperties`, accept all otherwise-undefined keys and
+        // preserve their values. We don't implement first-class `patternProperties` support and
+        // deliberately don't compile or match the patterns themselves — the presence of
+        // `patternProperties` simply means example keys should not be rejected as unexpected
+        // additional properties (e.g. under `additionalProperties: false`).
+        const hasPatternProperties = this.schemaHasPatternProperties(resolvedSchema);
+        const patternMatchedKeys = hasPatternProperties ? additionalPropertyKeys : [];
+        const remainingAdditionalKeys = hasPatternProperties ? [] : additionalPropertyKeys;
 
         patternMatchedKeys.forEach((key) => {
             additionalPropertiesResults.push({
@@ -1620,31 +1618,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     /**
-     * Recursively collects the `patternProperties` regexes from a schema, including those
-     * from allOf, oneOf, and anyOf compositions. Patterns that fail to compile are skipped
-     * (the matching keys then fall through to normal `additionalProperties` handling).
+     * Returns true if the schema declares any `patternProperties`, including via allOf, oneOf,
+     * and anyOf compositions. The patterns themselves are intentionally not compiled or matched.
      */
-    private collectAllPatternPropertyRegexes(
-        schema: OpenAPIV3_1.SchemaObject,
-        visited: Set<string> = new Set()
-    ): RegExp[] {
-        const regexes: RegExp[] = [];
-
+    private schemaHasPatternProperties(schema: OpenAPIV3_1.SchemaObject, visited: Set<string> = new Set()): boolean {
         const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
-        if (patternProperties && typeof patternProperties === "object") {
-            for (const pattern of Object.keys(patternProperties)) {
-                // Skip patterns that are unsafe (could cause catastrophic backtracking / ReDoS) or
-                // syntactically invalid. Skipped patterns simply fall through to normal
-                // `additionalProperties` handling rather than being matched.
-                if (!safeRegex(pattern)) {
-                    continue;
-                }
-                try {
-                    regexes.push(new RegExp(pattern));
-                } catch {
-                    // Ignore invalid regex patterns
-                }
-            }
+        if (patternProperties && typeof patternProperties === "object" && Object.keys(patternProperties).length > 0) {
+            return true;
         }
 
         for (const subSchema of [...(schema.allOf ?? []), ...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
@@ -1657,11 +1637,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
                 if (!visited.has(refKey)) {
                     visited.add(refKey);
-                    regexes.push(...this.collectAllPatternPropertyRegexes(resolved, visited));
+                    if (this.schemaHasPatternProperties(resolved, visited)) {
+                        return true;
+                    }
                 }
             }
         }
 
-        return regexes;
+        return false;
     }
 }

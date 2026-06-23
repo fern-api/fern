@@ -288,7 +288,10 @@ describe("ExampleConverter", () => {
             });
         });
 
-        it("should still reject properties matching no pattern when additionalProperties is false", () => {
+        it("should accept any additional key when patternProperties is present (patterns are not matched)", () => {
+            // We deliberately do not compile or match the patterns: the mere presence of
+            // patternProperties means example keys are not rejected, even ones that wouldn't
+            // match the declared pattern. This keeps the fix minimal (no regex engine involved).
             const schema: OpenAPIV3_1.SchemaObject = {
                 type: "object",
                 properties: {
@@ -302,7 +305,7 @@ describe("ExampleConverter", () => {
             const example = {
                 name: "My Item",
                 "x-allowed": "value",
-                notAllowed: "should be flagged"
+                doesNotMatchPattern: "still accepted"
             };
 
             const converter = new ExampleConverter({
@@ -314,42 +317,13 @@ describe("ExampleConverter", () => {
 
             const result = converter.convert();
 
-            expect(result.isValid).toBe(false);
-            expect(result.errors.length).toBeGreaterThan(0);
-            expect(result.errors.some((error) => error.message.includes("notAllowed"))).toBe(true);
-            expect(result.errors.some((error) => error.message.includes("x-allowed"))).toBe(false);
-        });
-
-        it("should skip unsafe (ReDoS-prone) patterns so matching keys are not silently accepted", () => {
-            const schema: OpenAPIV3_1.SchemaObject = {
-                type: "object",
-                properties: {
-                    name: { type: "string" }
-                },
-                required: ["name"],
-                additionalProperties: false,
-                // Catastrophically-backtracking pattern — must be skipped rather than compiled.
-                ...({ patternProperties: { "(a+)+$": { type: "string" } } } as object)
-            };
-
-            const example = {
+            expect(result.isValid).toBe(true);
+            expect(result.errors).toHaveLength(0);
+            expect(result.validExample).toEqual({
                 name: "My Item",
-                aaaaaaaaaa: "value"
-            };
-
-            const converter = new ExampleConverter({
-                breadcrumbs: [],
-                context: mockContextWithResolve(),
-                schema,
-                example
+                "x-allowed": "value",
+                doesNotMatchPattern: "still accepted"
             });
-
-            const result = converter.convert();
-
-            // The unsafe pattern is skipped, so the key is treated as a normal additional
-            // property and flagged under additionalProperties: false.
-            expect(result.isValid).toBe(false);
-            expect(result.errors.some((error) => error.message.includes("aaaaaaaaaa"))).toBe(true);
         });
     });
 

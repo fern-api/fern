@@ -1,5 +1,4 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import safeRegex from "safe-regex";
 
 import { AbstractConverterContext } from "./AbstractConverterContext.js";
 import { ExampleConverter } from "./converters/ExampleConverter.js";
@@ -358,17 +357,19 @@ export class ExampleValidator {
             return false;
         }
 
+        // If the schema declares `patternProperties`, treat unknown keys as allowed rather than
+        // unexpected. We don't compile or match the patterns themselves.
+        if (this.schemaHasPatternProperties(schema)) {
+            return false;
+        }
+
         const exampleObj = example as Record<string, unknown>;
         const definedProperties = this.collectAllPropertyKeys(schema);
-        // Keys matching a `patternProperties` regex are valid and must not be treated as unexpected.
-        const patternPropertyRegexes = this.collectAllPatternPropertyRegexes(schema);
 
         const exampleProperties = Object.keys(exampleObj);
 
-        // Check if any example property is neither defined in the schema nor matched by a pattern
-        return exampleProperties.some(
-            (prop) => !definedProperties.has(prop) && !patternPropertyRegexes.some((regex) => regex.test(prop))
-        );
+        // Check if any example property is not defined in the schema
+        return exampleProperties.some((prop) => !definedProperties.has(prop));
     }
 
     /**
@@ -428,30 +429,13 @@ export class ExampleValidator {
     }
 
     /**
-     * Recursively collects the `patternProperties` regexes from a schema, including those
-     * from allOf, oneOf, and anyOf compositions. Patterns that fail to compile are skipped.
+     * Returns true if the schema declares any `patternProperties`, including via allOf, oneOf,
+     * and anyOf compositions. The patterns themselves are intentionally not compiled or matched.
      */
-    private collectAllPatternPropertyRegexes(
-        schema: OpenAPIV3_1.SchemaObject,
-        visited: Set<string> = new Set()
-    ): RegExp[] {
-        const regexes: RegExp[] = [];
-
+    private schemaHasPatternProperties(schema: OpenAPIV3_1.SchemaObject, visited: Set<string> = new Set()): boolean {
         const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
-        if (patternProperties && typeof patternProperties === "object") {
-            for (const pattern of Object.keys(patternProperties)) {
-                // Skip patterns that are unsafe (could cause catastrophic backtracking / ReDoS) or
-                // syntactically invalid. Skipped patterns simply fall through to normal
-                // `additionalProperties` handling rather than being matched.
-                if (!safeRegex(pattern)) {
-                    continue;
-                }
-                try {
-                    regexes.push(new RegExp(pattern));
-                } catch {
-                    // Ignore invalid regex patterns
-                }
-            }
+        if (patternProperties && typeof patternProperties === "object" && Object.keys(patternProperties).length > 0) {
+            return true;
         }
 
         for (const subSchema of [...(schema.allOf ?? []), ...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
@@ -464,12 +448,14 @@ export class ExampleValidator {
                 const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
                 if (!visited.has(refKey)) {
                     visited.add(refKey);
-                    regexes.push(...this.collectAllPatternPropertyRegexes(resolved, visited));
+                    if (this.schemaHasPatternProperties(resolved, visited)) {
+                        return true;
+                    }
                 }
             }
         }
 
-        return regexes;
+        return false;
     }
 
     /**
