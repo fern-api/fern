@@ -104,7 +104,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -134,7 +135,8 @@
                             "value": "INTEGER"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -164,7 +166,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "body": null
@@ -204,7 +207,8 @@
                 "value": "STRING"
             },
             "propertyAccess": null,
-            "variable": null
+            "variable": null,
+            "clientDefault": null
         }
     ],
     "environments": null,

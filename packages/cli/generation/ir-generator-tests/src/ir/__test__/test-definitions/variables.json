@@ -372,7 +372,8 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": "rootVariable"
+                            "variable": "rootVariable",
+                            "clientDefault": null
                         }
                     ],
                     "body": null

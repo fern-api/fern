@@ -1558,7 +1558,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -1588,7 +1589,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -1618,7 +1620,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "WRITE_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -1648,7 +1651,8 @@
                             "value": "type_:UserProfile"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -1711,7 +1715,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -1741,7 +1746,8 @@
                             "value": "type_:UserProfileVerification"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -1771,7 +1777,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "WRITE_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -1834,7 +1841,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -1936,7 +1944,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -1966,7 +1975,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -1996,7 +2006,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "WRITE_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -2026,7 +2037,8 @@
                             "value": "type_:UserProfile"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -2056,7 +2068,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": [
@@ -2169,7 +2182,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2199,7 +2213,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": "READ_ONLY",
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2229,7 +2244,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": "WRITE_ONLY",
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2259,7 +2275,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2289,7 +2306,8 @@
                                     "value": "type_:Foo"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             }
                         ]
                     },
@@ -2350,7 +2368,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2380,7 +2399,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": "READ_ONLY",
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2410,7 +2430,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": "WRITE_ONLY",
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2440,7 +2461,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2470,7 +2492,8 @@
                                     "value": "type_:Foo"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             }
                         ]
                     },
@@ -2527,7 +2550,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2557,7 +2581,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": "READ_ONLY",
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2587,7 +2612,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": "WRITE_ONLY",
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2617,7 +2643,8 @@
                                     "value": "STRING"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             },
                             {
                                 "name": {
@@ -2647,7 +2674,8 @@
                                     "value": "type_:Foo"
                                 },
                                 "propertyAccess": null,
-                                "variable": null
+                                "variable": null,
+                                "clientDefault": null
                             }
                         ]
                     }
@@ -2710,7 +2738,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -2740,7 +2769,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "READ_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     },
                     {
                         "name": {
@@ -2770,7 +2800,8 @@
                             "value": "STRING"
                         },
                         "propertyAccess": "WRITE_ONLY",
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,

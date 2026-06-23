@@ -619,7 +619,8 @@
                             }
                         },
                         "propertyAccess": null,
-                        "variable": null
+                        "variable": null,
+                        "clientDefault": null
                     }
                 ],
                 "extends": null,
@@ -658,7 +659,8 @@
                     }
                 },
                 "propertyAccess": null,
-                "variable": null
+                "variable": null,
+                "clientDefault": null
             }
         ],
         "endpoints": {
@@ -751,7 +753,11 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": {
+                                "type": "string",
+                                "value": "us-east-1"
+                            }
                         }
                     ],
                     "queryParameters": [
@@ -786,7 +792,8 @@
                                 }
                             },
                             "propertyAccess": null,
-                            "variable": null
+                            "variable": null,
+                            "clientDefault": null
                         }
                     ],
                     "headers": [],
