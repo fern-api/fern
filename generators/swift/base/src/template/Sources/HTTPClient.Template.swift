@@ -17,7 +17,8 @@ final class HTTPClient: Swift.Sendable {
     func performRequest(
         method: HTTP.Method,
         path: Swift.String,
-        contentType requestContentType: HTTP.ContentType = .applicationJson,
+<% if (isMultiUrlEnvironment) { %>        baseURLId: Swift.String? = nil,
+<% } %>        contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [Swift.String: Swift.String?] = [:],
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
         body requestBody: Any? = nil,
@@ -26,7 +27,8 @@ final class HTTPClient: Swift.Sendable {
         _ = try await performRequest(
             method: method,
             path: path,
-            contentType: requestContentType,
+<% if (isMultiUrlEnvironment) { %>            baseURLId: baseURLId,
+<% } %>            contentType: requestContentType,
             headers: requestHeaders,
             queryParams: requestQueryParams,
             body: requestBody,
@@ -39,7 +41,8 @@ final class HTTPClient: Swift.Sendable {
     func performRequest<T: Swift.Decodable>(
         method: HTTP.Method,
         path: Swift.String,
-        contentType requestContentType: HTTP.ContentType = .applicationJson,
+<% if (isMultiUrlEnvironment) { %>        baseURLId: Swift.String? = nil,
+<% } %>        contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [Swift.String: Swift.String?] = [:],
         queryParams requestQueryParams: [Swift.String: QueryParameter?] = [:],
         body requestBody: Any? = nil,
@@ -61,7 +64,8 @@ final class HTTPClient: Swift.Sendable {
         let request = try await buildRequest(
             method: method,
             path: path,
-            requestContentType: requestContentType,
+<% if (isMultiUrlEnvironment) { %>            baseURLId: baseURLId,
+<% } %>            requestContentType: requestContentType,
             requestHeaders: requestHeaders,
             requestQueryParams: requestQueryParams,
             requestBody: requestBody,
@@ -99,7 +103,8 @@ final class HTTPClient: Swift.Sendable {
     private func buildRequest(
         method: HTTP.Method,
         path: Swift.String,
-        requestContentType: HTTP.ContentType,
+<% if (isMultiUrlEnvironment) { %>        baseURLId: Swift.String? = nil,
+<% } %>        requestContentType: HTTP.ContentType,
         requestHeaders: [Swift.String: Swift.String?],
         requestQueryParams: [Swift.String: QueryParameter?],
         requestBody: HTTP.RequestBody? = nil,
@@ -107,8 +112,9 @@ final class HTTPClient: Swift.Sendable {
     ) async throws -> Networking.URLRequest {
         // Init with URL
         let url = buildRequestURL(
-            path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
-        )
+<% if (isMultiUrlEnvironment) { %>            path: path, baseURLId: baseURLId, requestQueryParams: requestQueryParams, requestOptions: requestOptions
+<% } else { %>            path: path, requestQueryParams: requestQueryParams, requestOptions: requestOptions
+<% } %>        )
         var request = Networking.URLRequest(url: url)
 
         // Set timeout
@@ -143,11 +149,14 @@ final class HTTPClient: Swift.Sendable {
 
     private func buildRequestURL(
         path: Swift.String,
-        requestQueryParams: [Swift.String: QueryParameter?],
+<% if (isMultiUrlEnvironment) { %>        baseURLId: Swift.String? = nil,
+<% } %>        requestQueryParams: [Swift.String: QueryParameter?],
         requestOptions: RequestOptions? = nil
     ) -> URL {
-        let endpointURL = "\(clientConfig.baseURL)\(path)"
-        guard var components = Foundation.URLComponents(string: endpointURL) else {
+<% if (isMultiUrlEnvironment) { %>        let resolvedBaseURL = baseURLId.flatMap { clientConfig.baseURLs?[$0] } ?? clientConfig.baseURL
+        let endpointURL = "\(resolvedBaseURL)\(path)"
+<% } else { %>        let endpointURL = "\(clientConfig.baseURL)\(path)"
+<% } %>        guard var components = Foundation.URLComponents(string: endpointURL) else {
             preconditionFailure(
                 "Invalid URL '\(endpointURL)' - this indicates an unexpected error in the SDK."
             )

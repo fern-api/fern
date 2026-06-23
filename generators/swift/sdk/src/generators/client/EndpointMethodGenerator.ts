@@ -245,7 +245,6 @@ export class EndpointMethodGenerator {
                 label: "method",
                 value: swift.Expression.enumCaseShorthand(this.getEnumCaseNameForHttpMethod(endpoint.method))
             }),
-            // TODO(kafkas): Handle multi-url environments
             swift.functionArgument({
                 label: "path",
                 value: swift.Expression.stringLiteral(
@@ -253,6 +252,16 @@ export class EndpointMethodGenerator {
                 )
             })
         ];
+
+        const baseUrlId = this.getBaseUrlIdForEndpoint(endpoint);
+        if (baseUrlId != null) {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "baseURLId",
+                    value: swift.Expression.stringLiteral(baseUrlId)
+                })
+            );
+        }
 
         if (endpoint.requestBody?.type === "bytes") {
             arguments_.push(
@@ -466,6 +475,13 @@ export class EndpointMethodGenerator {
             (header) => !endpointHeaderWireValues.has(getWireValue(header.name))
         );
         return [...filteredServiceHeaders, ...endpoint.headers];
+    }
+
+    private getBaseUrlIdForEndpoint(endpoint: FernIr.HttpEndpoint): string | undefined {
+        if (this.sdkGeneratorContext.ir.environments?.environments.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+        return endpoint.baseUrl ?? undefined;
     }
 
     private getEnumCaseNameForHttpMethod(method: FernIr.HttpMethod): string {

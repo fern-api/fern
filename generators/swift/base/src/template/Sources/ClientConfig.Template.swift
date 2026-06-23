@@ -46,7 +46,8 @@ public final class ClientConfig: Swift.Sendable {
     }
 
     let baseURL: Swift.String
-    let headerAuth: HeaderAuth?
+<% if (isMultiUrlEnvironment) { %>    let baseURLs: [Swift.String: Swift.String]?
+<% } %>    let headerAuth: HeaderAuth?
     let bearerAuth: BearerAuth?
     let basicAuth: BasicAuth?
     let headers: [Swift.String: Swift.String]?
@@ -56,7 +57,8 @@ public final class ClientConfig: Swift.Sendable {
 
     init(
         baseURL: Swift.String,
-        headerAuth: HeaderAuth? = nil,
+<% if (isMultiUrlEnvironment) { %>        baseURLs: [Swift.String: Swift.String]? = nil,
+<% } %>        headerAuth: HeaderAuth? = nil,
         bearerAuth: BearerAuth? = nil,
         basicAuth: BasicAuth? = nil,
         headers: [Swift.String: Swift.String]? = nil,
@@ -65,7 +67,8 @@ public final class ClientConfig: Swift.Sendable {
         urlSession: Networking.URLSession? = nil
     ) {
         self.baseURL = baseURL
-        self.headerAuth = headerAuth
+<% if (isMultiUrlEnvironment) { %>        self.baseURLs = baseURLs
+<% } %>        self.headerAuth = headerAuth
         self.bearerAuth = bearerAuth
         self.basicAuth = basicAuth
         self.headers = headers

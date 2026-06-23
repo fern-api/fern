@@ -58,14 +58,20 @@ export class TemplateDataGenerator {
     private generateTemplateDataForHTTPClient() {
         const errorEnumSymbol = this.context.project.nameRegistry.getErrorEnumSymbolOrThrow();
         return {
-            errorEnumName: errorEnumSymbol.name
+            errorEnumName: errorEnumSymbol.name,
+            isMultiUrlEnvironment: this.isMultiUrlEnvironment()
         };
     }
 
     private generateTemplateDataForClientConfig() {
         return {
-            defaultMaxRetries: this.context.customConfig.maxRetries ?? 2
+            defaultMaxRetries: this.context.customConfig.maxRetries ?? 2,
+            isMultiUrlEnvironment: this.isMultiUrlEnvironment()
         };
+    }
+
+    private isMultiUrlEnvironment(): boolean {
+        return this.context.ir.environments?.environments.type === "multipleBaseUrls";
     }
 
     public generateTestTemplateData(templateId: TestTemplateFileId) {

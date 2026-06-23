@@ -1,0 +1,5 @@
+- summary: |
+    Add support for multi-URL environments (without a default environment). The generator now emits an
+    environment struct exposing each service's base URL, threads a per-endpoint `baseURLId` through the
+    HTTP client, and resolves the correct base URL per request.
+  type: fix
