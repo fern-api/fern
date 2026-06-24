@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.51.1
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` corrupting generated SDK code by replacing all occurrences
+        of the literal string "AUTO" (e.g. `SENSOR_MODE_AUTO`, `CORRELATION_TYPE_AUTOMATED`)
+        with the version number. The generator now receives the safe magic placeholder
+        version (`0.0.0-fern-placeholder`) instead of "AUTO", and the post-generation
+        sed replacement targets only that placeholder.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
 - version: 5.51.0
   changelogEntry:
     - summary: |
