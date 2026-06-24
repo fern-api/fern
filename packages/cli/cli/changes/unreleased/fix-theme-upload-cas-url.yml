@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern docs theme upload` failing with HTTP 422 for all theme asset files.
+    The CAS content-check URL was using the deprecated path format, causing the
+    orgId to be resolved from the token instead of the request. The bind step then
+    derived a different org-scoped S3 key and could not find the uploaded content.
+  type: fix

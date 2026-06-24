@@ -260,7 +260,7 @@ export class ThemeConfigProcessor {
     private async uploadToCas(content: Buffer, contentType: string, bindPath: string, label: string): Promise<string> {
         const hash = createHash("sha256").update(content).digest("hex");
 
-        const casUrl = `${FDR_ORIGIN}/v2/registry/content/${hash}?orgId=${encodeURIComponent(this.orgId)}`;
+        const casUrl = `${FDR_ORIGIN}/v2/registry/content/${encodeURIComponent(this.orgId)}/${hash}`;
         this.context.logger.debug(`  CAS check: PUT ${casUrl} (${contentType}, ${content.byteLength} bytes)`);
 
         let checkRes: Response;
