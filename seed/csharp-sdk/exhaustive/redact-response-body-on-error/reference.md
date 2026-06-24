@@ -2016,6 +2016,66 @@ await client.Endpoints.Params.UploadWithPathAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">CreateWithBodyAndQueryAsync</a>(CreateWithBodyAndQuery { ... }) -> WithRawResponseTask&lt;ObjectWithOptionalField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Params.CreateWithBodyAndQueryAsync(
+    new CreateWithBodyAndQuery
+    {
+        Fields = "_fields",
+        Body = new ObjectWithRequiredField { String = "string" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateWithBodyAndQuery` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">GetWithBooleanPathAsync</a>(param) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>

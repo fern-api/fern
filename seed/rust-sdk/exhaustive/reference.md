@@ -2288,6 +2288,83 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">create_with_body_and_query</a>(request: ObjectWithRequiredField, fields: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .create_with_body_and_query(
+            &CreateWithBodyAndQueryRequest {
+                fields: Some("_fields".to_string()),
+                body: ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `Option<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_boolean_path</a>(param: bool) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>

@@ -11,6 +11,7 @@ from ...core.api_error import ApiError
 from pydantic import ValidationError
 from ...core.parse_error import ParsingError
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...general_errors.errors.bad_request_body import BadRequestBody
 from ...general_errors.types.bad_object_request_info import BadObjectRequestInfo
 from ...core.client_wrapper import AsyncClientWrapper
@@ -325,6 +326,91 @@ class RawParamsClient:
                     ObjectWithRequiredField,
                     parse_obj_as(
                         type_ =ObjectWithRequiredField,  # type: ignore
+                        object_ =_response.json()
+                    )
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+    
+    def create_with_body_and_query(self, *, string: str, fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ObjectWithOptionalField]:
+        """
+        POST with referenced body + query params
+        
+        Parameters
+        ----------
+        string : str
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        HttpResponse[ObjectWithOptionalField]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "params/body-and-query",method="POST",
+            params={"_fields": fields, }
+            ,
+            json={
+                "string": string,
+            }
+            ,
+            request_options=request_options,omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalField,
+                    parse_obj_as(
+                        type_ =ObjectWithOptionalField,  # type: ignore
+                        object_ =_response.json()
+                    )
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+    
+    def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[ObjectWithOptionalField]:
+        """
+        POST bytes body + query params
+        
+        Parameters
+        ----------
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        HttpResponse[ObjectWithOptionalField]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "params/bytes-and-query",method="POST",
+            params={"_fields": fields, }
+            ,
+            content=request,
+            request_options=request_options,omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalField,
+                    parse_obj_as(
+                        type_ =ObjectWithOptionalField,  # type: ignore
                         object_ =_response.json()
                     )
                 )
@@ -721,6 +807,91 @@ class AsyncRawParamsClient:
                     ObjectWithRequiredField,
                     parse_obj_as(
                         type_ =ObjectWithRequiredField,  # type: ignore
+                        object_ =_response.json()
+                    )
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+    
+    async def create_with_body_and_query(self, *, string: str, fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[ObjectWithOptionalField]:
+        """
+        POST with referenced body + query params
+        
+        Parameters
+        ----------
+        string : str
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithOptionalField]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "params/body-and-query",method="POST",
+            params={"_fields": fields, }
+            ,
+            json={
+                "string": string,
+            }
+            ,
+            request_options=request_options,omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalField,
+                    parse_obj_as(
+                        type_ =ObjectWithOptionalField,  # type: ignore
+                        object_ =_response.json()
+                    )
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+    
+    async def upload_bytes_with_query(self, *, request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]], fields: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[ObjectWithOptionalField]:
+        """
+        POST bytes body + query params
+        
+        Parameters
+        ----------
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+        
+        fields : typing.Optional[str]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithOptionalField]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "params/bytes-and-query",method="POST",
+            params={"_fields": fields, }
+            ,
+            content=request,
+            request_options=request_options,omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalField,
+                    parse_obj_as(
+                        type_ =ObjectWithOptionalField,  # type: ignore
                         object_ =_response.json()
                     )
                 )
