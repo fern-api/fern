@@ -80,7 +80,7 @@ export async function generateEmbeddedSdk(args: {
     //    generator receives IR at its pinned version.
     const taskContext = createMockTaskContext();
     const migratedIrJson = await migrateIntermediateRepresentationForGenerator({
-        intermediateRepresentation: parsedIr.value as unknown as IntermediateRepresentation,
+        intermediateRepresentation: parsedIr.value,
         context: taskContext,
         targetGenerator: {
             name: RUST_SDK_GENERATOR_NAME,

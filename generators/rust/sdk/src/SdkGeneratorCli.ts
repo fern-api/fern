@@ -1,4 +1,4 @@
-import { GeneratorNotificationService, GeneratorError, GeneratorExecParsing, NopGeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, GeneratorError, GeneratorExecParsing } from "@fern-api/base-generator";
 import { readFile } from "fs/promises";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -62,7 +62,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         const ir = await this.parseIntermediateRepresentation(config.irFilepath);
         const customConfig = this.parseCustomConfigOrThrow(config.customConfig);
-        const generatorNotificationService = new NopGeneratorNotificationService();
+        const generatorNotificationService = new GeneratorNotificationService(
+            FernGeneratorExec.GeneratorEnvironment.local()
+        );
         const context = this.constructContext({
             ir,
             customConfig,
