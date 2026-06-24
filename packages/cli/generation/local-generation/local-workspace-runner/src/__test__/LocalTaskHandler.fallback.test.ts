@@ -388,7 +388,7 @@ describe("LocalTaskHandler - Fallback Chain (magic version absent)", () => {
         // Both fallbacks fail
         mockLoggingExeca.mockResolvedValue({ stdout: "", exitCode: 128 });
 
-        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder" });
+        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder", generatorLanguage: "go" });
         const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
@@ -703,7 +703,7 @@ describe("LocalTaskHandler - normalizeVersionPrefix", () => {
         });
 
         // magic version is "v0.0.0-fern-placeholder" (has v prefix, like Go)
-        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder" });
+        const handler = await createTaskHandler({ version: "v0.0.0-fern-placeholder", generatorLanguage: "go" });
         const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();

@@ -5,6 +5,8 @@ import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import {
     AutoVersioningCache,
     extractLanguageFromGeneratorName,
+    isAutoVersion,
+    MAGIC_VERSION,
     mapMagicVersionForLanguage
 } from "@fern-api/generator-cli/autoversion";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
@@ -213,10 +215,16 @@ export async function writeFilesToDiskAndRunGenerator({
     const generatorLanguage =
         generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const mappedVersion = version != null ? mapMagicVersionForLanguage(version, generatorLanguage) : version;
+    // When outputVersionOverride is AUTO, substitute the magic version constant so the
+    // generator produces code with a safe placeholder ("0.0.0-fern-placeholder") instead
+    // of the literal "AUTO" string — which would corrupt identifiers containing "AUTO"
+    // during the post-generation sed replacement.
+    const effectiveOutputVersion =
+        outputVersionOverride != null && isAutoVersion(outputVersionOverride) ? MAGIC_VERSION : outputVersionOverride;
     const mappedOutputVersionOverride =
-        outputVersionOverride != null
-            ? mapMagicVersionForLanguage(outputVersionOverride, generatorLanguage)
-            : outputVersionOverride;
+        effectiveOutputVersion != null
+            ? mapMagicVersionForLanguage(effectiveOutputVersion, generatorLanguage)
+            : effectiveOutputVersion;
 
     const config = getGeneratorConfig({
         generatorInvocation,
