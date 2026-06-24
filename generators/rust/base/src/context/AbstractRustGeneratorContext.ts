@@ -559,6 +559,22 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Check if IR has any file upload endpoints that return a binary (streaming) response
+     */
+    public hasFileUploadStreamEndpoints(): boolean {
+        return this.cachedFeature("hasFileUploadStreamEndpoints", () =>
+            Object.values(this.ir.services).some((service) =>
+                service.endpoints.some(
+                    (endpoint) =>
+                        endpoint.requestBody?.type === "fileUpload" &&
+                        endpoint.response?.body != null &&
+                        (endpoint.response.body.type === "fileDownload" || endpoint.response.body.type === "bytes")
+                )
+            )
+        );
+    }
+
+    /**
      * Check if IR has any bytes (octet-stream) request body endpoints
      */
     public hasBytesEndpoints(): boolean {

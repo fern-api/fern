@@ -1,0 +1,9 @@
+- summary: |
+    Fix file upload endpoints that return binary streaming responses (ByteStream).
+    Previously these used execute_multipart_request which requires DeserializeOwned,
+    causing compilation failures. Now uses a dedicated execute_multipart_stream_request method.
+  type: fix
+- summary: |
+    Fix duplicate struct fields when a file upload endpoint has query parameters
+    whose snake_case name collides with a body property name.
+  type: fix

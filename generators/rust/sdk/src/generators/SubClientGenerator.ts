@@ -897,7 +897,12 @@ export class SubClientGenerator {
 
         if (isFileUpload) {
             // Use multipart request for file uploads
-            executeMethod = "execute_multipart_request";
+            // If the response is binary (file download), use the streaming variant
+            if (responseType === "binary") {
+                executeMethod = "execute_multipart_stream_request";
+            } else {
+                executeMethod = "execute_multipart_request";
+            }
             const multipartBody = "request.clone().to_multipart()";
             executeArgs = `
             Method::${httpMethod},

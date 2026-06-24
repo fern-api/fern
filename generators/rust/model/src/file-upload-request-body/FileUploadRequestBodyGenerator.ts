@@ -172,11 +172,20 @@ export class FileUploadRequestBodyGenerator {
 
         // Add query parameters to struct fields but NOT to bodyProperties —
         // query params are sent as URL query string parameters, not multipart form fields.
+        // Skip query parameters whose snake_case name collides with an existing body/file property.
         let queryParamFieldNames = new Set<string>();
         if (queryParameters && queryParameters.length > 0) {
+            const existingFieldNames = new Set(
+                allProperties.map((p) => this.context.escapeRustKeyword(this.context.case.snakeUnsafe(p.name)))
+            );
             const result = convertQueryParametersToProperties(queryParameters, this.context);
-            allProperties.push(...result.properties);
-            queryParamFieldNames = result.fieldNames;
+            for (const prop of result.properties) {
+                const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(prop.name));
+                if (!existingFieldNames.has(fieldName)) {
+                    allProperties.push(prop);
+                    queryParamFieldNames.add(fieldName);
+                }
+            }
         }
 
         return { allProperties, fileProperties, bodyProperties, queryParamFieldNames };
