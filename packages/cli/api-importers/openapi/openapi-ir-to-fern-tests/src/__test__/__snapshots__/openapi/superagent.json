@@ -2373,4 +2373,5 @@ headers:
     name: xSuperagentApiKey
 ",
   },
+  "specVersion": "0.0.7",
 }

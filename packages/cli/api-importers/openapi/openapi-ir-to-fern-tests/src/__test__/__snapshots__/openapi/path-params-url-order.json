@@ -79,4 +79,5 @@ error-discrimination:
 display-name: Foo Bar API
 ",
   },
+  "specVersion": "1.0.0",
 }

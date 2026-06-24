@@ -8,6 +8,11 @@ enum Example42 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.params.getWithBooleanPath(param: "true")
+        _ = try await client.endpoints.params.createWithBodyAndQuery(
+            fields: "_fields",
+            request: ObjectWithRequiredField(
+                string: "string"
+            )
+        )
     }
 }

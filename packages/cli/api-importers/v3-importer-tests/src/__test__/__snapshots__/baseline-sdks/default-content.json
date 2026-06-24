@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "v1",
   "apiName": "api",
   "apiDisplayName": "Default Content Type",
   "auth": {

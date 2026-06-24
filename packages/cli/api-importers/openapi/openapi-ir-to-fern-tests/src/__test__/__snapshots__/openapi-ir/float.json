@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Test spec for `float` types specified as number formats.",
   "servers": [],
   "websocketServers": [],

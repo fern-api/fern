@@ -16,8 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := 1.1
-    client.Endpoints.Primitive.GetAndReturnDouble(
+    request := int64(1000000)
+    client.Endpoints.Primitive.GetAndReturnLong(
         context.TODO(),
         request,
     )

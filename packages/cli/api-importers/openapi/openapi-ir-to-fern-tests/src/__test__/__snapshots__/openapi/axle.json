@@ -1539,4 +1539,5 @@ auth-schemes:
 auth: apiKeyAuth
 ",
   },
+  "specVersion": "1.0",
 }

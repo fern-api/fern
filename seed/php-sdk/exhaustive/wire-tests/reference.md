@@ -2137,6 +2137,129 @@ $client->endpoints->params->uploadWithPath(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;createWithBodyAndQuery($request) -> ?ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->createWithBodyAndQuery(
+    new CreateWithBodyAndQuery([
+        'fields' => '_fields',
+        'body' => new ObjectWithRequiredField([
+            'string' => 'string',
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$fields:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;uploadBytesWithQuery($request) -> ?ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->uploadBytesWithQuery($request): ?ObjectWithOptionalField;
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$fields:** `?string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;params-&gt;getWithBooleanPath($param) -> ?string</code></summary>
 <dl>
 <dd>

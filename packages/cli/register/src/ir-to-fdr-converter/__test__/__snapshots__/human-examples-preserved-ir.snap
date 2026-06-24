@@ -1419,6 +1419,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_products": {
       "displayName": undefined,

@@ -8,6 +8,6 @@ enum Example66 {
             token: "<token>"
         )
 
-        _ = try await client.noReqBody.postWithNoRequestBody()
+        _ = try await client.noReqBody.getWithNoRequestBody()
     }
 }

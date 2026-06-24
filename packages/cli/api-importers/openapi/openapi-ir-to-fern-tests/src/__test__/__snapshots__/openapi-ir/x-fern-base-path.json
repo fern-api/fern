@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0",
   "title": "Acme API",
   "description": "The Acme API.",
   "basePath": "/v1",

@@ -61,6 +61,7 @@
             "forwardCompatible": null
         }
     },
+    "specVersion": null,
     "apiName": "version",
     "apiDisplayName": null,
     "apiDocs": null,

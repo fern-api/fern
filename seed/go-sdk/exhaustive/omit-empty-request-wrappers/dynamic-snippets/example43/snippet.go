@@ -16,8 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.GetWithPathAndErrors(
+    client.Endpoints.Params.GetWithBooleanPath(
         context.TODO(),
-        "param",
+        true,
     )
 }

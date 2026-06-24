@@ -381,6 +381,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_oneOfExamples": {
       "displayName": undefined,

@@ -150,4 +150,5 @@ environments:
 default-environment: production
 ",
   },
+  "specVersion": "1.0.0",
 }

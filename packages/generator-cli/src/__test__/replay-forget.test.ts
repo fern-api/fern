@@ -126,8 +126,8 @@ describe("replayForget", { tags: ["slow"] }, () => {
             await cleanup?.();
         });
 
-        it("returns initialized=false", () => {
-            const result = replayForget({ outputDir: repoPath });
+        it("returns initialized=false", async () => {
+            const result = await replayForget({ outputDir: repoPath });
             expect(result.initialized).toBe(false);
         });
     });
@@ -146,8 +146,8 @@ describe("replayForget", { tags: ["slow"] }, () => {
             await cleanup?.();
         });
 
-        it("removes all patches", () => {
-            const result = replayForget({ outputDir: repoPath, options: { all: true } });
+        it("removes all patches", async () => {
+            const result = await replayForget({ outputDir: repoPath, options: { all: true } });
             expect(result.initialized).toBe(true);
             expect(result.removed).toHaveLength(2);
             expect(result.remaining).toBe(0);
@@ -168,8 +168,8 @@ describe("replayForget", { tags: ["slow"] }, () => {
             await cleanup?.();
         });
 
-        it("shows what would be removed without removing", () => {
-            const result = replayForget({ outputDir: repoPath, options: { all: true, dryRun: true } });
+        it("shows what would be removed without removing", async () => {
+            const result = await replayForget({ outputDir: repoPath, options: { all: true, dryRun: true } });
             expect(result.removed).toHaveLength(2);
 
             // Verify patches still exist
@@ -193,15 +193,15 @@ describe("replayForget", { tags: ["slow"] }, () => {
             await cleanup?.();
         });
 
-        it("removes specific patch by ID", () => {
-            const result = replayForget({ outputDir: repoPath, options: { patchIds: ["patch-aaa11111"] } });
+        it("removes specific patch by ID", async () => {
+            const result = await replayForget({ outputDir: repoPath, options: { patchIds: ["patch-aaa11111"] } });
             expect(result.removed).toHaveLength(1);
             expect(result.removed[0]?.id).toBe("patch-aaa11111");
             expect(result.remaining).toBe(1);
         });
 
-        it("reports already-forgotten IDs", () => {
-            const result = replayForget({ outputDir: repoPath, options: { patchIds: ["patch-nonexistent"] } });
+        it("reports already-forgotten IDs", async () => {
+            const result = await replayForget({ outputDir: repoPath, options: { patchIds: ["patch-nonexistent"] } });
             expect(result.removed).toHaveLength(0);
             expect(result.alreadyForgotten).toContain("patch-nonexistent");
             expect(result.notFound).toBe(true);
@@ -222,20 +222,20 @@ describe("replayForget", { tags: ["slow"] }, () => {
             await cleanup?.();
         });
 
-        it("matches patches by file path", () => {
-            const result = replayForget({ outputDir: repoPath, options: { pattern: "src/helper.ts" } });
+        it("matches patches by file path", async () => {
+            const result = await replayForget({ outputDir: repoPath, options: { pattern: "src/helper.ts" } });
             expect(result.matched).toHaveLength(1);
             expect(result.matched?.[0]?.id).toBe("patch-bbb22222");
         });
 
-        it("matches patches by commit message substring", () => {
-            const result = replayForget({ outputDir: repoPath, options: { pattern: "helper utility" } });
+        it("matches patches by commit message substring", async () => {
+            const result = await replayForget({ outputDir: repoPath, options: { pattern: "helper utility" } });
             expect(result.matched).toHaveLength(1);
             expect(result.matched?.[0]?.id).toBe("patch-bbb22222");
         });
 
-        it("returns notFound when no match", () => {
-            const result = replayForget({ outputDir: repoPath, options: { pattern: "nonexistent-file.ts" } });
+        it("returns notFound when no match", async () => {
+            const result = await replayForget({ outputDir: repoPath, options: { pattern: "nonexistent-file.ts" } });
             expect(result.notFound).toBe(true);
             expect(result.matched).toHaveLength(0);
         });
@@ -255,8 +255,8 @@ describe("replayForget", { tags: ["slow"] }, () => {
             await cleanup?.();
         });
 
-        it("returns all patches as matched for selection", () => {
-            const result = replayForget({ outputDir: repoPath });
+        it("returns all patches as matched for selection", async () => {
+            const result = await replayForget({ outputDir: repoPath });
             expect(result.matched).toHaveLength(2);
             expect(result.removed).toHaveLength(0);
         });

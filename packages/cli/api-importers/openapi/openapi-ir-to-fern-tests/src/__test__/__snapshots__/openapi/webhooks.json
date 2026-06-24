@@ -107,4 +107,5 @@ error-discrimination:
 display-name: Webhooks
 ",
   },
+  "specVersion": "1.0.0",
 }

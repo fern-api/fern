@@ -105,6 +105,9 @@ pub struct CliApp {
     /// bindings — each binding's spec references schemes by name and
     /// the credential source is looked up from this registry.
     auth_bindings: Vec<(String, SchemeBinding)>,
+    /// Login flows declared for this CLI. Each populates one auth
+    /// scheme's keyring entry on `<bin> auth login`. See ADR-0007.
+    login_flows: Vec<crate::auth::login::DynLoginFlow>,
 }
 
 impl CliApp {
@@ -118,6 +121,7 @@ impl CliApp {
             deferred_ops: Vec::new(),
             cli_commands: Vec::new(),
             auth_bindings: Vec::new(),
+            login_flows: Vec::new(),
         }
     }
 
@@ -166,6 +170,48 @@ impl CliApp {
     /// ```
     pub fn auth(mut self, builder: impl AuthSchemeBuilder) -> Self {
         self.auth_bindings.push(builder.into_binding());
+        self
+    }
+
+    /// Declare a login flow for one of the registered auth schemes.
+    ///
+    /// Generated and hand-written CLIs use this to wire `<bin> auth login`
+    /// to a concrete flow — `DeviceCodeLoginFlow`, `PkceLoginFlow`, or
+    /// `TokenPasteLoginFlow` from [`crate::auth::login`] /
+    /// [`crate::auth::oauth2`]. Exactly one flow per scheme (ADR-0007).
+    ///
+    /// Token-paste via `--with-token` is universally available regardless
+    /// of declared flows; this method only matters when a binary wants
+    /// the OAuth (device-code / PKCE) flow to run automatically.
+    pub fn login_flow(mut self, flow: impl crate::auth::login::LoginFlow + 'static) -> Self {
+        let scheme = flow.scheme_name().to_string();
+        // If the flow declares a request-time auth provider (OAuth flows
+        // do, paste does not), register it as a Custom scheme binding so
+        // the dispatch pipeline uses the OAuth2KeyringProvider on every
+        // API request — refresh-on-expired included.
+        if let Some(provider) = flow.build_auth_provider(&self.name) {
+            // Replace any existing binding for this scheme. The flow's
+            // provider supersedes plain bearer/header on the same name —
+            // but emit a warning so a hand-written CLI that wired both
+            // (e.g. `.auth(BearerAuth::new("X").env("Y")).login_flow(...)`)
+            // discovers the silent replacement instead of debugging a
+            // mysteriously-ignored env var.
+            let prior = self.auth_bindings.len();
+            self.auth_bindings.retain(|(n, _)| n != &scheme);
+            if self.auth_bindings.len() < prior {
+                tracing::warn!(
+                    scheme = %scheme,
+                    cli = %self.name,
+                    "login_flow() replaced a previously-registered auth binding for scheme `{scheme}` — \
+                     any .auth() / .auth_scheme_*() / .auth_provider*() call for that scheme is discarded. \
+                     Move the .login_flow() call before the .auth() call, or drop the .auth() if the login \
+                     flow's request-time provider is what you want."
+                );
+            }
+            self.auth_bindings
+                .push((scheme, crate::auth::builder::SchemeBinding::Custom(provider)));
+        }
+        self.login_flows.push(std::sync::Arc::new(flow));
         self
     }
 
@@ -448,16 +494,33 @@ impl CliApp {
     /// Run the CLI, consuming `self`. Builds the command tree, parses
     /// argv, dispatches through the matched binding, applies hooks,
     /// and formats output.
-    pub fn run(mut self) {
+    pub fn run(self) {
+        let args: Vec<std::ffi::OsString> = std::env::args_os().collect();
+        self.run_with_args(args)
+    }
+
+    /// Like [`Self::run`], but takes the argv to parse explicitly
+    /// instead of pulling from `std::env::args_os()`. Useful when a
+    /// binary's `main` needs to pre-scan or rewrite argv (e.g. to
+    /// strip binding-steering flags like `--voice`) before the
+    /// spec-driven clap tree sees it. Performs the same one-time
+    /// setup as `run` (sigpipe reset, `.env` load, logging init) and
+    /// terminates the process with the run's exit code.
+    pub fn run_with_args<I, T>(mut self, args: I)
+    where
+        I: IntoIterator<Item = T>,
+        T: Into<std::ffi::OsString>,
+    {
         crate::reset_sigpipe();
         let _ = dotenvy::dotenv();
         crate::init_logging(&self.name);
 
         self.propagate_root_auth();
 
+        let args: Vec<std::ffi::OsString> = args.into_iter().map(Into::into).collect();
         let rt = tokio::runtime::Runtime::new().expect("Failed to create tokio runtime");
         let mut out = std::io::stdout().lock();
-        let exit = rt.block_on(self.run_inner(std::env::args_os().collect(), &mut out));
+        let exit = rt.block_on(self.run_inner(args, &mut out));
         drop(out);
         std::process::exit(exit);
     }
@@ -499,6 +562,12 @@ impl CliApp {
     /// validate that specs don't reference unregistered schemes.
     /// Must be called before `run_inner` / `dispatch_pipeline`.
     fn propagate_root_auth(&mut self) {
+        // Inject a keyring source into every scheme's credential chain
+        // before propagating, so `<bin> auth login` populating the keyring
+        // is visible to the binding-level auth provider without per-binary
+        // wiring (ADR-0008 § precedence).
+        crate::auth::login::inject_keyring_sources(&self.name, &mut self.auth_bindings);
+
         if !self.auth_bindings.is_empty() {
             for binding in &mut self.bindings {
                 binding.set_root_auth(&self.auth_bindings);
@@ -660,7 +729,7 @@ impl CliApp {
             .arg(
                 clap::Arg::new("format")
                     .long("format")
-                    .help("Output format: json (default), table, yaml, csv")
+                    .help("Output format: json, table, yaml, csv. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var.")
                     .value_name("FORMAT")
                     .global(true),
             )
@@ -683,82 +752,32 @@ impl CliApp {
                     .global(true),
             );
 
-        // Collect each binding's subtree commands, global args, and help
-        // footer, then merge into the root.
-        let mut binding_commands: Vec<(usize, Vec<String>)> = Vec::new();
-        let mut after_help_sections: Vec<String> = Vec::new();
-        // Track registered arg IDs to avoid clap panic on duplicates
-        // when multiple bindings share the same global args (e.g.
-        // root-level CLI auth flags propagated to every binding).
-        let mut seen_arg_ids: std::collections::HashSet<String> = [
-            "format".to_string(),
-            "base-url".to_string(),
-            "schema".to_string(),
-            "help".to_string(),
-            "version".to_string(),
-        ]
-        .into();
-        // Pre-seeded with subcommands that get registered AFTER the binding
-        // merge loop (built-in `completion` and `man`, added below in 1c). If
-        // a binding's spec happens to expose a top-level subcommand by one of
-        // those names, the loop skips it so the built-in wins instead of
-        // tripping clap's duplicate-subcommand panic at parse time.
-        let mut seen_subcommand_names: std::collections::HashSet<String> =
-            ["completion".to_string(), "man".to_string()].into();
-        for (idx, binding) in self.bindings.iter().enumerate() {
-            let subcmd = binding.build_command()?;
-            // Merge this binding's subcommands into the root. If two bindings
-            // contribute a subcommand with the same name, only the first
-            // wins — clap panics on duplicate names, and the path-based
-            // resolver in `resolve_binding_for_path` already disambiguates by
-            // which binding owns the path.
-            for sub in subcmd.get_subcommands().cloned() {
-                let name = sub.get_name().to_string();
-                if !seen_subcommand_names.insert(name.clone()) {
-                    continue;
-                }
-                binding_commands.push((idx, vec![name]));
-                cli = cli.subcommand(sub);
-            }
-            // Merge binding-level global args (server vars, SDK vars,
-            // global headers) into the root command.
-            for arg in subcmd.get_arguments() {
-                let id = arg.get_id().as_str();
-                if !seen_arg_ids.insert(id.to_string()) {
-                    continue;
-                }
-                cli = cli.arg(arg.clone());
-            }
-            // Carry the binding's about into the root when CliApp
-            // doesn't override it.
-            if self.title.is_none() {
-                if let Some(about) = subcmd.get_about() {
-                    cli = cli.about(about.to_string());
-                }
-            }
-            // Collect after_help sections from all bindings for
-            // composition (concatenate, not overwrite).
-            if let Some(help) = subcmd.get_after_help() {
-                after_help_sections.push(help.to_string());
-            }
-        }
-        if !after_help_sections.is_empty() {
-            // Deduplicate lines across bindings (preserving order) so
-            // two bindings sharing the same env vars or auth schemes
-            // don't repeat identical footer lines.
-            let merged = deduplicate_after_help(&after_help_sections);
-            cli = cli.after_help(merged);
-        }
+        // Deep-merge every binding's subtree into one placeholder
+        // command and build the full leaf-path → binding-index map.
+        // Errors surface (as `CliError::Validation`) if two bindings
+        // declare the same full leaf path — before any dispatch.
+        let (merged_subtree, leaf_map, binding_cmds) =
+            merge_binding_subtrees(&self.bindings)?;
+
+        // Graft the merged subtree's subcommands and binding-level
+        // global args / about / after_help into the root cli, reusing
+        // the per-binding commands already built above.
+        cli = graft_merged_subtree(cli, &binding_cmds, merged_subtree, self.title.is_some());
 
         // 1b. Register CLI-level custom commands (may be nested).
         for cc in &self.cli_commands {
             cli = crate::custom_commands::graft_subcommand(cli, &cc.path, cc.cmd.clone());
         }
 
-        // 1c. Register `completion` and `man` subcommands.
+        // 1c. Register `completion`, `man`, and `auth` subcommands.
+        //
+        // `auth` is always grafted, even on binaries that declare no OAuth
+        // flow — `auth login --with-token` is the universal credential
+        // entry point that ships on every Fern CLI (ADR-0007 § always-graft).
         cli = cli
             .subcommand(crate::completions::completion_command())
-            .subcommand(crate::man::man_command());
+            .subcommand(crate::man::man_command())
+            .subcommand(crate::auth::login::build_auth_command());
 
         // 1d. Apply Tier 1 deferred operations (alias, hide, stability)
         // before completion/man generation so aliases appear in tab-
@@ -839,6 +858,20 @@ impl CliApp {
         // 4. Resolve which binding owns the matched subcommand.
         let (op_path, sub_matches) = resolve_op_path(&matches);
 
+        // 3a. Intercept the always-grafted `auth` subcommand before binding
+        // resolution — it's framework-owned, not spec-owned, and runs
+        // synchronously without touching any binding (ADR-0007 § always-graft).
+        if let Some(("auth", auth_matches)) = matches.subcommand() {
+            crate::auth::login::dispatch_auth(
+                auth_matches,
+                &self.name,
+                &self.auth_bindings,
+                &self.login_flows,
+                out,
+            )?;
+            return Ok(PipelineOutcome::Success);
+        }
+
         // 4a. Check CLI-level custom commands first.
         for cc in &self.cli_commands {
             if let Some(target) = crate::custom_commands::walk_matches_to_custom(
@@ -856,15 +889,13 @@ impl CliApp {
             }
         }
 
-        let binding_idx = resolve_binding_for_path(
-            &op_path,
-            &binding_commands,
-        ).ok_or_else(|| {
-            CliError::Discovery(format!(
-                "No binding found for command path: {}",
-                op_path.join(" "),
-            ))
-        })?;
+        let binding_idx = resolve_binding_for_leaf(&op_path, &leaf_map)
+            .ok_or_else(|| {
+                CliError::Discovery(format!(
+                    "No binding found for command path: {}",
+                    op_path.join(" "),
+                ))
+            })?;
 
         // 5. Dispatch to the binding. NO SHORTCUT — always goes through
         //    the full pipeline.
@@ -879,7 +910,7 @@ impl CliApp {
                 let transformed = self.hooks.run_transform_response(value, &op_path).await?;
 
                 // Format and write output.
-                let pipeline = formatter::OutputPipeline::from_matches(&matches)
+                let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
                     .map_err(|e| CliError::Validation(e.to_string()))?;
                 pipeline
                     .emit(out, &transformed, false, true)
@@ -895,7 +926,7 @@ impl CliApp {
                 if self.hooks.has_recover_error() {
                     match self.hooks.run_recover_error(err, &op_path).await {
                         Ok(value) => {
-                            let pipeline = formatter::OutputPipeline::from_matches(&matches)
+                            let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
                                 .map_err(|e| CliError::Validation(e.to_string()))?;
                             pipeline
                                 .emit(out, &value, false, true)
@@ -926,20 +957,228 @@ fn resolve_op_path(matches: &clap::ArgMatches) -> (Vec<String>, &clap::ArgMatche
     (path, current)
 }
 
-/// Find which binding index owns the first segment of the command path.
-fn resolve_binding_for_path(
-    op_path: &[String],
-    binding_commands: &[(usize, Vec<String>)],
-) -> Option<usize> {
+/// Attach `merged_subtree`'s subcommands to `cli`, then dedup-merge each
+/// binding's global args / about / after_help into `cli`.
+///
+/// `binding_cmds` is the per-binding `clap::Command` vector already built
+/// by [`merge_binding_subtrees`] — passed in so we don't call
+/// `binding.build_command()` a second time.
+///
+/// `title_set` says whether `CliApp::title()` already provided an
+/// about line — when true we don't let a binding's about override it.
+fn graft_merged_subtree(
+    mut cli: clap::Command,
+    binding_cmds: &[clap::Command],
+    merged_subtree: clap::Command,
+    title_set: bool,
+) -> clap::Command {
+    // 1. Attach every top-level subcommand from the merged subtree.
+    //    Skip subcommands named `completion`, `man`, or `auth` — the
+    //    built-in counterparts are registered AFTER this graft (at
+    //    step 1c in `CliApp::run`) and clap panics on duplicate
+    //    top-level subcommands. `auth` is the always-grafted framework
+    //    surface for `auth login` / `logout` / `status` (ADR-0007).
+    //    No known spec uses these names, but the guard matches the old
+    //    pre-refactor behavior and keeps us safe against adversarial specs.
+    for sub in merged_subtree.get_subcommands().cloned() {
+        if matches!(sub.get_name(), "completion" | "man" | "auth") {
+            continue;
+        }
+        cli = cli.subcommand(sub);
+    }
+
+    // 2. Walk each binding's command for its global args, about, and
+    //    after_help. Dedup by arg id (skip the root-owned globals to
+    //    avoid clap panic on duplicates).
+    let mut seen_arg_ids: std::collections::HashSet<String> = [
+        "format".to_string(),
+        "base-url".to_string(),
+        "schema".to_string(),
+        "help".to_string(),
+        "version".to_string(),
+    ]
+    .into();
+    let mut after_help_sections: Vec<String> = Vec::new();
+
+    for subcmd in binding_cmds {
+        for arg in subcmd.get_arguments() {
+            let id = arg.get_id().as_str();
+            if !seen_arg_ids.insert(id.to_string()) {
+                continue;
+            }
+            cli = cli.arg(arg.clone());
+        }
+        // Carry the first binding's about into the root only when
+        // CliApp::title() didn't already set one.
+        if !title_set {
+            if let Some(about) = subcmd.get_about() {
+                cli = cli.about(about.to_string());
+            }
+        }
+        if let Some(help) = subcmd.get_after_help() {
+            after_help_sections.push(help.to_string());
+        }
+    }
+    if !after_help_sections.is_empty() {
+        cli = cli.after_help(deduplicate_after_help(&after_help_sections));
+    }
+    cli
+}
+
+/// `(binding_idx, full_leaf_path)` for every leaf in a merged command tree.
+type LeafMap = Vec<(usize, Vec<String>)>;
+
+/// Deep-merge the subtrees contributed by all bindings into a single
+/// placeholder `clap::Command` and build a leaf-path → binding-index map.
+///
+/// **Returns** `(merged_subtree, leaf_map, binding_cmds)` where:
+/// - `merged_subtree` is a `clap::Command::new("__merged_subtree__")` whose
+///   top-level subcommands are the union of all bindings' top-level
+///   subcommands, deep-merged at every level so two bindings can
+///   contribute disjoint children under the same group;
+/// - `leaf_map` is a [`LeafMap`] of `(binding_idx, full_leaf_path)` entries,
+///   one per leaf in the merged tree;
+/// - `binding_cmds` is each binding's raw `clap::Command` (in registration
+///   order) — handed back so callers can read global args / about /
+///   after_help without invoking `binding.build_command()` a second time.
+///
+/// **Errors** with `CliError::Validation` when two bindings declare the
+/// exact same full leaf path — those would collide unrecoverably at
+/// dispatch, so we surface the colliding path(s) up-front.
+fn merge_binding_subtrees(
+    bindings: &[Box<dyn Binding>],
+) -> Result<(clap::Command, LeafMap, Vec<clap::Command>), CliError> {
+    // 1. Build each binding's clap command.
+    let mut binding_cmds: Vec<clap::Command> = Vec::with_capacity(bindings.len());
+    for b in bindings {
+        binding_cmds.push(b.build_command()?);
+    }
+
+    // 2. Collect every leaf path with its owning binding index.
+    let mut leaf_map: LeafMap = Vec::new();
+    for (idx, cmd) in binding_cmds.iter().enumerate() {
+        for sub in cmd.get_subcommands() {
+            let mut path = vec![sub.get_name().to_string()];
+            collect_leaves(sub, &mut path, idx, &mut leaf_map);
+        }
+    }
+
+    // 3. Detect leaf-path collisions across bindings. Two leaves with
+    //    the same path but different owning binding indexes are a
+    //    collision; identical owner (same idx) is just a duplicate
+    //    within one binding's tree and not our concern here.
+    //
+    //    Intrinsic top-level commands every binding registers (e.g.
+    //    `generate-skills`) are functionally identical across bindings —
+    //    `merge_command_subtree` produces a single node for them — so
+    //    they're exempt from collision detection. Without this exemption
+    //    every multi-binding CliApp would fail validation on the
+    //    binding-emitted intrinsics alone. See d683bd7 (square panic).
+    let mut by_path: std::collections::BTreeMap<Vec<String>, std::collections::BTreeSet<usize>> =
+        std::collections::BTreeMap::new();
+    for (idx, path) in &leaf_map {
+        if is_intrinsic_top_level_leaf(path) {
+            continue;
+        }
+        by_path.entry(path.clone()).or_default().insert(*idx);
+    }
+    let collisions: Vec<String> = by_path
+        .into_iter()
+        .filter(|(_, owners)| owners.len() > 1)
+        .map(|(path, _)| path.join(" "))
+        .collect();
+    if !collisions.is_empty() {
+        return Err(CliError::Validation(format!(
+            "colliding leaf command path(s): {}",
+            collisions.join(", "),
+        )));
+    }
+
+    // 4. Deep-merge each binding's top-level subcommands into a placeholder.
+    let mut merged = clap::Command::new("__merged_subtree__");
+    for cmd in &binding_cmds {
+        for sub in cmd.get_subcommands().cloned() {
+            merged = merge_command_subtree(merged, sub);
+        }
+    }
+
+    Ok((merged, leaf_map, binding_cmds))
+}
+
+/// Find which binding index owns the leaf matched by `op_path`.
+///
+/// Returns `None` for empty paths or unknown paths.
+fn resolve_binding_for_leaf(op_path: &[String], leaf_map: &LeafMap) -> Option<usize> {
     if op_path.is_empty() {
         return None;
     }
-    // Last-registered binding wins (matches design: "last binding wins").
-    binding_commands
+    leaf_map
         .iter()
-        .rev()
-        .find(|(_, cmd_path)| cmd_path.first() == op_path.first())
+        .find(|(_, leaf)| leaf.as_slice() == op_path)
         .map(|(idx, _)| *idx)
+}
+
+/// Names of leaf top-level commands that every binding emits identically
+/// (e.g. `generate-skills` from `OpenApiBinding::build_command`). When two
+/// bindings each contribute one, the deep-merge produces a single node;
+/// the collision detector would otherwise flag them as user-facing
+/// conflicts. Exempting them here mirrors the pre-ACP-1.1 intrinsic
+/// dedup that d683bd7 introduced for the same square `generate-skills`
+/// panic.
+fn is_intrinsic_top_level_leaf(path: &[String]) -> bool {
+    matches!(path, [name] if name == "generate-skills")
+}
+
+/// DFS over a `clap::Command` subtree, pushing `(idx, path.clone())` for
+/// every leaf (subcommand with no further subcommands).
+fn collect_leaves(cmd: &clap::Command, path: &mut Vec<String>, idx: usize, out: &mut LeafMap) {
+    let mut has_child = false;
+    for sub in cmd.get_subcommands() {
+        has_child = true;
+        path.push(sub.get_name().to_string());
+        collect_leaves(sub, path, idx, out);
+        path.pop();
+    }
+    if !has_child {
+        out.push((idx, path.clone()));
+    }
+}
+
+/// Deep-merge `incoming` into `parent`. If `parent` already has a
+/// subcommand with the same name, recurse into it via `mut_subcommand`;
+/// otherwise attach `incoming` as a fresh subcommand. Leaf collisions
+/// (two subcommands with identical names and no further children) are
+/// not detected here — the caller has already vetted leaf paths via
+/// `merge_binding_subtrees`.
+///
+/// Note: `merge_binding_subtrees` matches on full leaf paths, so it
+/// catches the common collision case (two bindings contribute the
+/// same operation). It does **not** catch partial-path shadowing —
+/// e.g. binding A contributes `users` as a leaf operation while
+/// binding B contributes `users → list`. After this merge `users`
+/// gains a subcommand, so clap requires a subcommand selection and
+/// binding A's leaf operation becomes unreachable. OpenAPI bindings
+/// generated from `x-fern-sdk-group-name` structure operations as
+/// leaves *under* groups (not at the group level itself), so this
+/// case is structurally unreachable for spec-driven bindings; it
+/// can only arise from hand-rolled `.command(...)` registrations
+/// that mix leaf and group nodes at the same path.
+fn merge_command_subtree(
+    parent: clap::Command,
+    incoming: clap::Command,
+) -> clap::Command {
+    let incoming_name = incoming.get_name().to_string();
+    if parent.find_subcommand(&incoming_name).is_some() {
+        // Recurse: deep-merge incoming's children into the existing subcommand.
+        parent.mut_subcommand(incoming_name, move |mut existing| {
+            for child in incoming.get_subcommands().cloned() {
+                existing = merge_command_subtree(existing, child);
+            }
+            existing
+        })
+    } else {
+        parent.subcommand(incoming)
+    }
 }
 
 /// Apply a transform to the command at `path` using clap's
@@ -1025,20 +1264,173 @@ mod tests {
         assert_eq!(path, vec!["users".to_string(), "get".to_string()]);
     }
 
-    #[test]
-    fn resolve_binding_last_wins() {
-        let commands = vec![
-            (0, vec!["users".to_string()]),
-            (1, vec!["users".to_string()]),
-        ];
-        let path = vec!["users".to_string(), "get".to_string()];
-        assert_eq!(resolve_binding_for_path(&path, &commands), Some(1));
+    // ── Helpers for merge_binding_subtrees / resolve_binding_for_leaf ──
+
+    /// Minimal Binding stub for unit-testing the merge helpers.
+    struct TestBinding {
+        name: String,
+        command: clap::Command,
+    }
+
+    impl TestBinding {
+        fn new(name: &str, command: clap::Command) -> Self {
+            Self { name: name.to_string(), command }
+        }
+    }
+
+    impl Binding for TestBinding {
+        fn name(&self) -> &str { &self.name }
+        fn set_cli_name(&mut self, _name: &str) {}
+        fn build_command(&self) -> Result<clap::Command, CliError> {
+            Ok(self.command.clone())
+        }
+        fn dispatch<'a>(
+            &'a self,
+            _root: &'a clap::ArgMatches,
+            _sub: &'a clap::ArgMatches,
+            _op: &'a [String],
+        ) -> crate::binding::BoxFuture<'a, Result<DispatchResult, CliError>> {
+            Box::pin(async { Ok(DispatchResult::Handled) })
+        }
+    }
+
+    fn p(s: &[&str]) -> Vec<String> {
+        s.iter().map(|x| x.to_string()).collect()
     }
 
     #[test]
-    fn resolve_binding_empty_path() {
-        let commands = vec![(0, vec!["users".to_string()])];
-        assert_eq!(resolve_binding_for_path(&[], &commands), None);
+    fn merge_disjoint_top_levels() {
+        // Binding A: users → list ; Binding B: posts → get
+        let a = clap::Command::new("a")
+            .subcommand(clap::Command::new("users").subcommand(clap::Command::new("list")));
+        let b = clap::Command::new("b")
+            .subcommand(clap::Command::new("posts").subcommand(clap::Command::new("get")));
+        let bindings: Vec<Box<dyn Binding>> = vec![
+            Box::new(TestBinding::new("a", a)),
+            Box::new(TestBinding::new("b", b)),
+        ];
+
+        let (merged, leaf_map, _) = merge_binding_subtrees(&bindings).expect("merge ok");
+
+        // Both top-level groups present.
+        assert!(merged.find_subcommand("users").is_some(), "users should be present");
+        assert!(merged.find_subcommand("posts").is_some(), "posts should be present");
+
+        // Both leaves owned by their respective binding indexes.
+        assert_eq!(resolve_binding_for_leaf(&p(&["users", "list"]), &leaf_map), Some(0));
+        assert_eq!(resolve_binding_for_leaf(&p(&["posts", "get"]), &leaf_map), Some(1));
+    }
+
+    #[test]
+    fn merge_overlapping_top_levels_disjoint_leaves() {
+        // A: convai → agents → list ; B: convai → conversations → get
+        let a = clap::Command::new("a").subcommand(
+            clap::Command::new("convai")
+                .subcommand(clap::Command::new("agents").subcommand(clap::Command::new("list"))),
+        );
+        let b = clap::Command::new("b").subcommand(
+            clap::Command::new("convai")
+                .subcommand(
+                    clap::Command::new("conversations").subcommand(clap::Command::new("get")),
+                ),
+        );
+        let bindings: Vec<Box<dyn Binding>> = vec![
+            Box::new(TestBinding::new("a", a)),
+            Box::new(TestBinding::new("b", b)),
+        ];
+
+        let (merged, leaf_map, _) = merge_binding_subtrees(&bindings).expect("merge ok");
+
+        let convai = merged
+            .find_subcommand("convai")
+            .expect("convai should be merged into one parent");
+        assert!(convai.find_subcommand("agents").is_some(), "agents should be present");
+        assert!(
+            convai.find_subcommand("conversations").is_some(),
+            "conversations should be present",
+        );
+
+        assert_eq!(
+            resolve_binding_for_leaf(&p(&["convai", "agents", "list"]), &leaf_map),
+            Some(0),
+        );
+        assert_eq!(
+            resolve_binding_for_leaf(&p(&["convai", "conversations", "get"]), &leaf_map),
+            Some(1),
+        );
+    }
+
+    #[test]
+    fn merge_detects_leaf_collision() {
+        // Both bindings declare users → list (full leaf-path collision).
+        let a = clap::Command::new("a")
+            .subcommand(clap::Command::new("users").subcommand(clap::Command::new("list")));
+        let b = clap::Command::new("b")
+            .subcommand(clap::Command::new("users").subcommand(clap::Command::new("list")));
+        let bindings: Vec<Box<dyn Binding>> = vec![
+            Box::new(TestBinding::new("a", a)),
+            Box::new(TestBinding::new("b", b)),
+        ];
+
+        let err = merge_binding_subtrees(&bindings).expect_err("collision must error");
+        match err {
+            CliError::Validation(msg) => {
+                assert!(
+                    msg.contains("users list"),
+                    "collision message must list path 'users list', got: {msg}",
+                );
+            }
+            other => panic!("expected Validation, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn merge_exempts_intrinsic_generate_skills_from_collision() {
+        // Two bindings that BOTH expose the binding-emitted intrinsic
+        // `generate-skills` top-level leaf plus disjoint user-facing
+        // subtrees. The intrinsic must NOT trip the collision detector
+        // (the deep-merge produces a single node for it); only true
+        // user-facing collisions should error.
+        let a = clap::Command::new("a")
+            .subcommand(clap::Command::new("users").subcommand(clap::Command::new("list")))
+            .subcommand(clap::Command::new("generate-skills"));
+        let b = clap::Command::new("b")
+            .subcommand(clap::Command::new("posts").subcommand(clap::Command::new("get")))
+            .subcommand(clap::Command::new("generate-skills"));
+        let bindings: Vec<Box<dyn Binding>> = vec![
+            Box::new(TestBinding::new("a", a)),
+            Box::new(TestBinding::new("b", b)),
+        ];
+
+        let (merged, _leaf_map, _) =
+            merge_binding_subtrees(&bindings).expect("intrinsic dedup should not error");
+
+        assert!(
+            merged.find_subcommand("generate-skills").is_some(),
+            "merged tree must keep a single `generate-skills` node",
+        );
+        // Sanity check the disjoint user-facing subtrees survived too.
+        assert!(merged.find_subcommand("users").is_some());
+        assert!(merged.find_subcommand("posts").is_some());
+    }
+
+    #[test]
+    fn resolve_binding_for_leaf_finds_owner() {
+        let leaf_map: LeafMap = vec![
+            (0, p(&["users", "list"])),
+            (1, p(&["posts", "get"])),
+            (1, p(&["posts", "list"])),
+        ];
+
+        // Known path → Some(owner index).
+        assert_eq!(resolve_binding_for_leaf(&p(&["users", "list"]), &leaf_map), Some(0));
+        assert_eq!(resolve_binding_for_leaf(&p(&["posts", "get"]), &leaf_map), Some(1));
+
+        // Unknown path → None.
+        assert_eq!(resolve_binding_for_leaf(&p(&["unknown"]), &leaf_map), None);
+
+        // Empty path → None.
+        assert_eq!(resolve_binding_for_leaf(&[], &leaf_map), None);
     }
 
     #[test]

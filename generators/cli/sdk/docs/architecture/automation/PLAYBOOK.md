@@ -199,6 +199,12 @@ src/graphql/parser.rs
 src/graphql/discovery.rs
 src/graphql/executor.rs
 src/graphql/commands.rs
+src/asyncapi/app.rs
+src/asyncapi/parser.rs
+src/asyncapi/discovery.rs
+src/asyncapi/executor.rs
+src/asyncapi/overlay.rs
+src/asyncapi/commands.rs
 src/auth/provider.rs
 src/auth/credential.rs
 src/auth/compose.rs

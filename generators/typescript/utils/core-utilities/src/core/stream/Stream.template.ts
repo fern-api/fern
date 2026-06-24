@@ -35,16 +35,13 @@ export declare namespace Stream {
         streamTerminator?: string;
         eventDiscriminator?: string;
     }
+}
 
-    /**
-     * Represents a parsed Server-Sent Event with metadata.
-     */
-    interface ServerSentEvent<T> {
-        data: T;
-        event?: string;
-        eventId?: string;
-        retry?: number;
-    }
+export interface ServerSentEvent<T> {
+    data: T;
+    id?: string;
+    retry?: number;
+    event?: string;
 }
 
 const DATA_PREFIX = "data:";
@@ -102,17 +99,11 @@ export class Stream<T> implements AsyncIterable<T> {
      * Iterates over full SSE events including metadata (event, id, retry).
      * This is the SSE-aware counterpart of the default async iteration which only yields parsed data.
      */
-    async *events(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
-        yield* this.iterFullEvents();
+    async *events(): AsyncGenerator<ServerSentEvent<T>, void> {
+        yield* this.iterMessages();
     }
 
-    private async *iterMessages(): AsyncGenerator<T, void> {
-        for await (const event of this.iterFullEvents()) {
-            yield event.data;
-        }
-    }
-
-    private async *iterFullEvents(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
+    private async *iterMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         if (this.eventDiscriminator != null) {
             yield* this.iterSseEvents();
         } else {
@@ -120,11 +111,11 @@ export class Stream<T> implements AsyncIterable<T> {
         }
     }
 
-    private async *iterDataMessages(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
+    private async *iterDataMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let prefixSeen = false;
-        let retryValue: number | undefined;
+        let lastRetry: number | undefined;
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
 
@@ -137,18 +128,18 @@ export class Stream<T> implements AsyncIterable<T> {
                     continue;
                 }
 
-                if (this.prefix != null && line.startsWith(ID_PREFIX)) {
-                    const val = line.slice(ID_PREFIX.length).trim();
-                    if (!val.includes("\0")) {
-                        this._lastEventId = val;
+                if (line.startsWith(ID_PREFIX)) {
+                    const idValue = line.slice(ID_PREFIX.length).trim();
+                    if (!idValue.includes("\0")) {
+                        this._lastEventId = idValue;
                     }
                     continue;
                 }
-
-                if (this.prefix != null && line.startsWith(RETRY_PREFIX)) {
-                    const val = parseInt(line.slice(RETRY_PREFIX.length).trim(), 10);
-                    if (!isNaN(val)) {
-                        retryValue = val;
+                if (line.startsWith(RETRY_PREFIX)) {
+                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                    const parsed = parseInt(retryValue, 10);
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                        lastRetry = parsed;
                     }
                     continue;
                 }
@@ -165,24 +156,19 @@ export class Stream<T> implements AsyncIterable<T> {
                 if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
                     return;
                 }
-                const message = await this.parse(fromJson(line));
-                yield {
-                    data: message,
-                    eventId: this._lastEventId,
-                    retry: retryValue,
-                };
+                const data = await this.parse(fromJson(line));
+                yield { data, id: this._lastEventId, retry: lastRetry, event: undefined };
                 prefixSeen = false;
-                retryValue = undefined;
             }
         }
     }
 
-    private async *iterSseEvents(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
+    private async *iterSseEvents(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let eventType: string | undefined;
         let dataValue: string | undefined;
-        let retryValue: number | undefined;
+        let lastRetry: number | undefined;
 
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
@@ -194,20 +180,14 @@ export class Stream<T> implements AsyncIterable<T> {
 
                 if (!line.trim()) {
                     if (dataValue != null) {
-                        const parsed = await this.dispatchSseEvent(dataValue, eventType);
-                        if (parsed == null) {
+                        const data = await this.dispatchSseEvent(dataValue, eventType);
+                        if (data == null) {
                             return;
                         }
-                        yield {
-                            data: parsed,
-                            event: eventType,
-                            eventId: this._lastEventId,
-                            retry: retryValue,
-                        };
+                        yield { data, id: this._lastEventId, retry: lastRetry, event: eventType };
                     }
                     eventType = undefined;
                     dataValue = undefined;
-                    retryValue = undefined;
                     continue;
                 }
 
@@ -217,28 +197,24 @@ export class Stream<T> implements AsyncIterable<T> {
                     const val = line.slice(DATA_PREFIX.length).trim();
                     dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
                 } else if (line.startsWith(ID_PREFIX)) {
-                    const val = line.slice(ID_PREFIX.length).trim();
-                    if (!val.includes("\0")) {
-                        this._lastEventId = val;
+                    const idValue = line.slice(ID_PREFIX.length).trim();
+                    if (!idValue.includes("\0")) {
+                        this._lastEventId = idValue;
                     }
                 } else if (line.startsWith(RETRY_PREFIX)) {
-                    const val = parseInt(line.slice(RETRY_PREFIX.length).trim(), 10);
-                    if (!isNaN(val)) {
-                        retryValue = val;
+                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                    const parsed = parseInt(retryValue, 10);
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                        lastRetry = parsed;
                     }
                 }
             }
         }
 
         if (dataValue != null) {
-            const parsed = await this.dispatchSseEvent(dataValue, eventType);
-            if (parsed != null) {
-                yield {
-                    data: parsed,
-                    event: eventType,
-                    eventId: this._lastEventId,
-                    retry: retryValue,
-                };
+            const data = await this.dispatchSseEvent(dataValue, eventType);
+            if (data != null) {
+                yield { data, id: this._lastEventId, retry: lastRetry, event: eventType };
             }
         }
     }
@@ -251,6 +227,15 @@ export class Stream<T> implements AsyncIterable<T> {
             return null;
         }
         return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));
+    }
+
+    public withMetadata(): AsyncIterable<ServerSentEvent<T>> {
+        const self = this;
+        return {
+            async *[Symbol.asyncIterator]() {
+                yield* self.iterMessages();
+            }
+        };
     }
 
     private injectDiscriminator(parsed: unknown, eventType: string | undefined): unknown {
@@ -268,8 +253,8 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
-        for await (const message of this.iterMessages()) {
-            yield message;
+        for await (const event of this.iterMessages()) {
+            yield event.data;
         }
     }
 
