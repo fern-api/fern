@@ -2977,16 +2977,16 @@ describe("replaceMagicVersion: AUTO string must not be used as placeholder", () 
             await fs.writeFile(
                 enumFile,
                 [
-                    'export const SensorMode = {',
+                    "export const SensorMode = {",
                     '    SensorModeAuto: "SENSOR_MODE_AUTO",',
                     '    SensorModeManual: "SENSOR_MODE_MANUAL",',
-                    '} as const;',
-                    '',
-                    'export const CorrelationType = {',
+                    "} as const;",
+                    "",
+                    "export const CorrelationType = {",
                     '    CorrelationTypeAutomated: "CORRELATION_TYPE_AUTOMATED",',
                     '    CorrelationTypeManual: "CORRELATION_TYPE_MANUAL",',
-                    '} as const;',
-                    ''
+                    "} as const;",
+                    ""
                 ].join("\n")
             );
 
@@ -2995,11 +2995,7 @@ describe("replaceMagicVersion: AUTO string must not be used as placeholder", () 
             await fs.writeFile(packageJson, '{\n  "name": "test-sdk",\n  "version": "AUTO"\n}');
 
             // BUG: Using "AUTO" as the magic version corrupts enum values
-            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
-                tempDir,
-                "AUTO",
-                "4.13.1"
-            );
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(tempDir, "AUTO", "4.13.1");
 
             const enumContent = await fs.readFile(enumFile, "utf-8");
             // These assertions demonstrate the bug: enum values get corrupted
@@ -3022,16 +3018,16 @@ describe("replaceMagicVersion: AUTO string must not be used as placeholder", () 
             await fs.writeFile(
                 enumFile,
                 [
-                    'export const SensorMode = {',
+                    "export const SensorMode = {",
                     '    SensorModeAuto: "SENSOR_MODE_AUTO",',
                     '    SensorModeManual: "SENSOR_MODE_MANUAL",',
-                    '} as const;',
-                    '',
-                    'export const CorrelationType = {',
+                    "} as const;",
+                    "",
+                    "export const CorrelationType = {",
                     '    CorrelationTypeAutomated: "CORRELATION_TYPE_AUTOMATED",',
                     '    CorrelationTypeManual: "CORRELATION_TYPE_MANUAL",',
-                    '} as const;',
-                    ''
+                    "} as const;",
+                    ""
                 ].join("\n")
             );
 

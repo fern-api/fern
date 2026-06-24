@@ -162,9 +162,10 @@ export async function runLocalGenerationForWorkspace({
                 // When version is "AUTO", substitute the magic placeholder so the
                 // generator embeds a unique string that won't collide with real code
                 // during the post-generation sed replacement.
-                const irVersion = version != null && isAutoVersion(version)
-                    ? MAGIC_VERSION
-                    : version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+                const irVersion =
+                    version != null && isAutoVersion(version)
+                        ? MAGIC_VERSION
+                        : (version ?? (await computeSemanticVersion({ packageName, generatorInvocation })));
 
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,

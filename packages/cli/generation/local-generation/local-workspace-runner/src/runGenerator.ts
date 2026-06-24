@@ -219,7 +219,9 @@ export async function writeFilesToDiskAndRunGenerator({
         generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const versionForGenerator = version != null && isAutoVersion(version) ? MAGIC_VERSION : version;
     const mappedVersion =
-        versionForGenerator != null ? mapMagicVersionForLanguage(versionForGenerator, generatorLanguage) : versionForGenerator;
+        versionForGenerator != null
+            ? mapMagicVersionForLanguage(versionForGenerator, generatorLanguage)
+            : versionForGenerator;
     const outputVersionForGenerator =
         outputVersionOverride != null && isAutoVersion(outputVersionOverride) ? MAGIC_VERSION : outputVersionOverride;
     const mappedOutputVersionOverride =
