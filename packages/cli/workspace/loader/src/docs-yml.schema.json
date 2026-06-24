@@ -5909,6 +5909,13 @@
         "static"
       ]
     },
+    "docs.ChangelogLayout": {
+      "type": "string",
+      "enum": [
+        "timeline",
+        "classic"
+      ]
+    },
     "docs.LayoutConfig": {
       "type": "object",
       "properties": {
@@ -6054,6 +6061,17 @@
             }
           ],
           "description": "If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages."
+        },
+        "changelog-layout": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ChangelogLayout"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sets which layout to use for changelog pages.\n\n@default: `timeline`\n\n- `timeline` renders the searchable timeline-of-cards layout.\n- `classic` renders the legacy stacked-entries layout with a per-page table of contents."
         }
       },
       "additionalProperties": false
