@@ -33,6 +33,13 @@ export declare namespace Stream {
     }
 }
 
+export interface ServerSentEvent<T> {
+    data: T;
+    id: string | undefined;
+    retry: number | undefined;
+    event: string | undefined;
+}
+
 const DATA_PREFIX = "data:";
 const EVENT_PREFIX = "event:";
 const ID_PREFIX = "id:";
@@ -52,8 +59,6 @@ export class Stream<T> implements AsyncIterable<T> {
     private eventDiscriminator: string | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
-    private _lastEventId: string | undefined;
-    private _lastRetry: number | undefined;
 
     constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
@@ -74,7 +79,7 @@ export class Stream<T> implements AsyncIterable<T> {
         }
     }
 
-    private async *iterMessages(): AsyncGenerator<T, void> {
+    private async *iterMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         if (this.eventDiscriminator != null) {
             yield* this.iterSseEvents();
         } else {
@@ -82,10 +87,12 @@ export class Stream<T> implements AsyncIterable<T> {
         }
     }
 
-    private async *iterDataMessages(): AsyncGenerator<T, void> {
+    private async *iterDataMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let prefixSeen = false;
+        let lastId: string | undefined;
+        let lastRetry: number | undefined;
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
 
@@ -99,11 +106,18 @@ export class Stream<T> implements AsyncIterable<T> {
                 }
 
                 if (line.startsWith(ID_PREFIX)) {
-                    this.processSseId(line.slice(ID_PREFIX.length).trim());
+                    const idValue = line.slice(ID_PREFIX.length).trim();
+                    if (!idValue.includes("\0")) {
+                        lastId = idValue;
+                    }
                     continue;
                 }
                 if (line.startsWith(RETRY_PREFIX)) {
-                    this.processSseRetry(line.slice(RETRY_PREFIX.length).trim());
+                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                    const parsed = parseInt(retryValue, 10);
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                        lastRetry = parsed;
+                    }
                     continue;
                 }
 
@@ -119,18 +133,20 @@ export class Stream<T> implements AsyncIterable<T> {
                 if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
                     return;
                 }
-                const message = await this.parse(fromJson(line));
-                yield message;
+                const data = await this.parse(fromJson(line));
+                yield { data, id: lastId, retry: lastRetry, event: undefined };
                 prefixSeen = false;
             }
         }
     }
 
-    private async *iterSseEvents(): AsyncGenerator<T, void> {
+    private async *iterSseEvents(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let eventType: string | undefined;
         let dataValue: string | undefined;
+        let lastId: string | undefined;
+        let lastRetry: number | undefined;
 
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
@@ -142,11 +158,11 @@ export class Stream<T> implements AsyncIterable<T> {
 
                 if (!line.trim()) {
                     if (dataValue != null) {
-                        const message = await this.dispatchSseEvent(dataValue, eventType);
-                        if (message == null) {
+                        const data = await this.dispatchSseEvent(dataValue, eventType);
+                        if (data == null) {
                             return;
                         }
-                        yield message;
+                        yield { data, id: lastId, retry: lastRetry, event: eventType };
                     }
                     eventType = undefined;
                     dataValue = undefined;
@@ -159,17 +175,24 @@ export class Stream<T> implements AsyncIterable<T> {
                     const val = line.slice(DATA_PREFIX.length).trim();
                     dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
                 } else if (line.startsWith(ID_PREFIX)) {
-                    this.processSseId(line.slice(ID_PREFIX.length).trim());
+                    const idValue = line.slice(ID_PREFIX.length).trim();
+                    if (!idValue.includes("\0")) {
+                        lastId = idValue;
+                    }
                 } else if (line.startsWith(RETRY_PREFIX)) {
-                    this.processSseRetry(line.slice(RETRY_PREFIX.length).trim());
+                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                    const parsed = parseInt(retryValue, 10);
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                        lastRetry = parsed;
+                    }
                 }
             }
         }
 
         if (dataValue != null) {
-            const message = await this.dispatchSseEvent(dataValue, eventType);
-            if (message != null) {
-                yield message;
+            const data = await this.dispatchSseEvent(dataValue, eventType);
+            if (data != null) {
+                yield { data, id: lastId, retry: lastRetry, event: eventType };
             }
         }
     }
@@ -184,33 +207,13 @@ export class Stream<T> implements AsyncIterable<T> {
         return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));
     }
 
-    /**
-     * The `id` field from the most recently yielded SSE event.
-     * Per the SSE spec, this persists across events until a new `id` field is received.
-     */
-    public get lastEventId(): string | undefined {
-        return this._lastEventId;
-    }
-
-    /**
-     * The `retry` field (in milliseconds) from the most recently received SSE event
-     * that contained a `retry` field.
-     */
-    public get lastRetry(): number | undefined {
-        return this._lastRetry;
-    }
-
-    private processSseId(value: string): void {
-        if (!value.includes("\0")) {
-            this._lastEventId = value;
-        }
-    }
-
-    private processSseRetry(value: string): void {
-        const parsed = parseInt(value, 10);
-        if (!isNaN(parsed) && String(parsed) === value) {
-            this._lastRetry = parsed;
-        }
+    public withMetadata(): AsyncIterable<ServerSentEvent<T>> {
+        const self = this;
+        return {
+            async *[Symbol.asyncIterator]() {
+                yield* self.iterMessages();
+            },
+        };
     }
 
     private injectDiscriminator(parsed: unknown, eventType: string | undefined): unknown {
@@ -228,8 +231,8 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
-        for await (const message of this.iterMessages()) {
-            yield message;
+        for await (const event of this.iterMessages()) {
+            yield event.data;
         }
     }
 
