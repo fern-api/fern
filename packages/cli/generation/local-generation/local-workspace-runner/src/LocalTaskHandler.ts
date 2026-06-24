@@ -12,9 +12,11 @@ import {
     countFilesInDiff,
     formatSizeKB,
     isAutoVersion,
+    MAGIC_VERSION,
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
+    mapMagicVersionForLanguage,
     maxVersionBump
 } from "@fern-api/generator-cli/autoversion";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -157,10 +159,14 @@ export class LocalTaskHandler {
                     autoVersioningVersionBumpReason: undefined
                 };
             }
-            // Replace placeholder version with computed version
+            // Replace placeholder version with computed version.
+            // Use the language-mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go,
+            // "0.0.0.dev0" for Python) — NOT the raw "AUTO" string, which would corrupt
+            // identifiers containing "AUTO" during the global sed replacement.
+            const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, this.generatorLanguage ?? "");
             await autoVersioningService.replaceMagicVersion(
                 this.absolutePathToLocalOutput,
-                this.version,
+                mappedMagicVersion,
                 autoVersionResult.version
             );
 
@@ -197,6 +203,11 @@ export class LocalTaskHandler {
         const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
         let diffFile: string | undefined;
 
+        // Compute the language-mapped magic version used for diff analysis.
+        // The generator produces code with this placeholder (e.g., "v0.0.0-fern-placeholder"
+        // for Go, "0.0.0.dev0" for Python, "0.0.0-fern-placeholder" for others).
+        const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, this.generatorLanguage ?? "");
+
         try {
             this.context.logger.info("Analyzing SDK changes for automatic semantic versioning");
 
@@ -209,8 +220,7 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // Extract previous version and clean diff
-            // Note: this.version is the mapped magic version (e.g., "v0.0.0-fern-placeholder" for Go)
+            // Extract previous version and clean diff using the mapped magic version
             if (!this.version) {
                 throw new CliError({
                     message: "Version is required for auto versioning",
@@ -220,7 +230,7 @@ export class LocalTaskHandler {
 
             let previousVersion: string | undefined;
             try {
-                previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+                previousVersion = autoVersioningService.extractPreviousVersion(diffContent, mappedMagicVersion);
             } catch (e) {
                 if (!(e instanceof AutoVersioningException) || !e.magicVersionAbsent) {
                     throw e;
@@ -238,7 +248,7 @@ export class LocalTaskHandler {
                 }
                 if (previousVersion == null) {
                     this.context.logger.info("No git tags found — treating as new SDK repository");
-                    const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                    const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
                     const commitMessage = this.isWhitelabel
                         ? "Initial SDK generation"
                         : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -249,7 +259,7 @@ export class LocalTaskHandler {
                 }
                 this.context.logger.debug(`Previous version from fallback: ${previousVersion}`);
             }
-            const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
+            const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, mappedMagicVersion);
 
             const rawDiffSizeKB = formatSizeKB(diffContent.length);
             const cleanedDiffSizeKB = formatSizeKB(cleanedDiff.length);
@@ -282,7 +292,7 @@ export class LocalTaskHandler {
                 this.context.logger.info(
                     "No previous version found (new SDK repository). Using 0.0.1 as initial version."
                 );
-                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
                 const commitMessage = this.isWhitelabel
                     ? "Initial SDK generation"
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -521,7 +531,7 @@ export class LocalTaskHandler {
                     `AUTO versioning could not extract previous version: ${error.message}. ` +
                         `Falling back to initial version 0.0.1.`
                 );
-                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const initialVersion = mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1";
                 const commitMessage = this.isWhitelabel
                     ? "Initial SDK generation"
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
@@ -688,8 +698,8 @@ export class LocalTaskHandler {
 
     /**
      * Normalizes a version string's `v` prefix to match the convention used by
-     * the magic version (`this.version`).  Git tags may use `v1.2.3` while the
-     * magic version is `0.0.0-fern-placeholder` (no prefix) or vice-versa.
+     * the magic version for this generator's language. Git tags may use `v1.2.3`
+     * while the magic version is `0.0.0-fern-placeholder` (no prefix) or vice-versa.
      * Without normalization the mismatch propagates into `replaceMagicVersion`
      * and can produce invalid versions in package manifests (e.g. `v1.3.0` in
      * a `package.json` that expects bare semver).
@@ -698,8 +708,9 @@ export class LocalTaskHandler {
         if (version == null) {
             return undefined;
         }
+        const mapped = mapMagicVersionForLanguage(MAGIC_VERSION, this.generatorLanguage ?? "");
         const stripped = version.startsWith("v") ? version.slice(1) : version;
-        if (this.version?.startsWith("v")) {
+        if (mapped.startsWith("v")) {
             return `v${stripped}`;
         }
         return stripped;
