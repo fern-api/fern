@@ -1,0 +1,2 @@
+pub mod endpoints_file_upload_with_query_params;
+pub use endpoints_file_upload_with_query_params::FileUploadWithQueryParamsClient;

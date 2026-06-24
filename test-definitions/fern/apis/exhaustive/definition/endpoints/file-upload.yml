@@ -1,0 +1,30 @@
+service:
+  auth: true
+  base-path: /file-upload
+  endpoints:
+    convert:
+      docs: |
+        File upload endpoint that returns void.
+        This tests a basic multipart file upload.
+      path: /convert
+      method: POST
+      request:
+        name: FileUploadConvertRequest
+        body:
+          properties:
+            file: file
+            maybe_string: optional<string>
+
+    convertStreaming:
+      docs: |
+        File upload endpoint that returns a binary response (ByteStream).
+        This tests the combination of multipart request + binary download response.
+      path: /convert-streaming
+      method: POST
+      request:
+        name: FileUploadConvertStreamingRequest
+        body:
+          properties:
+            file: file
+            maybe_string: optional<string>
+      response: file

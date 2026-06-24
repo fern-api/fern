@@ -514,6 +514,8 @@ async fn main() {
 </dl>
 </details>
 
+## Endpoints FileUploadWithQueryParams
+## Endpoints FileUpload
 ## Endpoints HttpMethods
 <details><summary><code>client.endpoints().http_methods.<a href="/src/api/resources/endpoints/http_methods/client.rs">test_get</a>(id: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>

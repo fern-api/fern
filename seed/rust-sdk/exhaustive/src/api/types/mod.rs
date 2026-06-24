@@ -1,3 +1,6 @@
+pub mod convert_request;
+pub mod convert_request_upload;
+pub mod convert_streaming_request;
 pub mod create_with_body_and_query_request;
 pub mod endpoints_pagination_paginated_response;
 pub mod endpoints_put_error;
@@ -34,6 +37,9 @@ pub mod types_union_animal;
 pub mod types_union_mixed_type;
 pub mod upload_bytes_with_query_request;
 
+pub use convert_request::ConvertRequest;
+pub use convert_request_upload::ConvertRequest2;
+pub use convert_streaming_request::ConvertStreamingRequest;
 pub use create_with_body_and_query_request::CreateWithBodyAndQueryRequest;
 pub use endpoints_pagination_paginated_response::PaginatedResponse;
 pub use endpoints_put_error::Error;

@@ -1,0 +1,21 @@
+service:
+  auth: true
+  base-path: /file-upload-with-query-params
+  endpoints:
+    convert:
+      docs: |
+        File upload endpoint with query parameters.
+        The endpoint name collides with endpoints/file-upload.yml's convert endpoint
+        to test that generated code correctly handles disambiguated request types.
+      path: /convert
+      method: POST
+      request:
+        name: FileUploadWithQueryParamsConvertRequest
+        query-parameters:
+          maybeString: optional<string>
+          integer: integer
+          maybeInteger: optional<integer>
+        body:
+          properties:
+            file: file
+            maybe_string: optional<string>

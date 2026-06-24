@@ -7,6 +7,10 @@ pub mod content_type;
 pub use content_type::ContentTypeClient;
 pub mod enum_;
 pub use enum_::EnumClient;
+pub mod file_upload_with_query_params;
+pub use file_upload_with_query_params::FileUploadWithQueryParamsClient;
+pub mod file_upload;
+pub use file_upload::FileUploadClient;
 pub mod http_methods;
 pub use http_methods::HttpMethodsClient;
 pub mod object;
@@ -28,6 +32,8 @@ pub struct EndpointsClient {
     pub container: ContainerClient,
     pub content_type: ContentTypeClient,
     pub enum_: EnumClient,
+    pub file_upload_with_query_params: FileUploadWithQueryParamsClient,
+    pub file_upload: FileUploadClient,
     pub http_methods: HttpMethodsClient,
     pub object: ObjectClient,
     pub pagination: PaginationClient,
@@ -45,6 +51,8 @@ impl EndpointsClient {
             container: ContainerClient::new(config.clone())?,
             content_type: ContentTypeClient::new(config.clone())?,
             enum_: EnumClient::new(config.clone())?,
+            file_upload_with_query_params: FileUploadWithQueryParamsClient::new(config.clone())?,
+            file_upload: FileUploadClient::new(config.clone())?,
             http_methods: HttpMethodsClient::new(config.clone())?,
             object: ObjectClient::new(config.clone())?,
             pagination: PaginationClient::new(config.clone())?,
