@@ -1,7 +1,7 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { existsSync } from "fs";
-import { readdir, readFile, stat, writeFile } from "fs/promises";
+import { lstat, readdir, readFile, writeFile } from "fs/promises";
 import { extname, join } from "path";
 import semver from "semver";
 
@@ -970,7 +970,11 @@ export class AutoVersioningService {
 
         for (const entry of entries) {
             const fullPath = join(dir, entry);
-            const entryStat = await stat(fullPath);
+            const entryStat = await lstat(fullPath);
+
+            if (entryStat.isSymbolicLink()) {
+                continue;
+            }
 
             if (entryStat.isDirectory()) {
                 // Skip .git and vendor directories
@@ -1052,10 +1056,6 @@ export class AutoVersioningService {
             this.logger.debug(`Updated Go imports in ${filePath}`);
         }
     }
-
-    /**
-     * Escapes special characters for use in sed command.
-     */
 
     /**
      * Extracts the file path from a diff file section.
