@@ -1,0 +1,6 @@
+- summary: |
+    Fix `--version AUTO` leaking literal "AUTO" into the IR version field (used for
+    User-Agent and SDK version headers) and into alternate generation code paths.
+    Also add `isAutoVersioning` flag to `LocalTaskHandler` so the auto-versioning
+    pipeline triggers correctly when the version is the safe placeholder.
+  type: fix
