@@ -116,26 +116,6 @@ pub trait RequestExecutor: Send + Sync {
     ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>>;
 }
 
-/// Default executor that delegates to a `reqwest::Client`.
-#[allow(dead_code)]
-struct ReqwestExecutor {
-    client: Client,
-}
-
-impl RequestExecutor for ReqwestExecutor {
-    fn execute(
-        &self,
-        request: Request,
-    ) -> BoxFuture<'_, Result<Response, Box<dyn std::error::Error + Send + Sync>>> {
-        Box::pin(async move {
-            self.client
-                .execute(request)
-                .await
-                .map_err(|e| Box::new(e) as Box<dyn std::error::Error + Send + Sync>)
-        })
-    }
-}
-
 /// Configuration for OAuth token fetching.
 ///
 /// This struct contains all the information needed to automatically fetch
