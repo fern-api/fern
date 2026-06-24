@@ -657,6 +657,7 @@ function convertLayoutConfig(
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
+        hideRelatedTopics: layout.hideRelatedTopics ?? false,
         mobileToc: layout.mobileToc ?? false,
         // Passed through as-is (no default): omitted renders the searchable
         // timeline, "classic" renders the legacy stacked layout. Resolved by the

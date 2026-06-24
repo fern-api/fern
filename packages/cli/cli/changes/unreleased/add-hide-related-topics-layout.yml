@@ -1,0 +1,3 @@
+- summary: |
+    Add `hide-related-topics` option to the `layout` config in docs.yml. When set to true, the auto-suggested related topics section will not be rendered at the bottom of documentation pages.
+  type: feat
