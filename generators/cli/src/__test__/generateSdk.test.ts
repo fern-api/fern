@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import type { SdkGeneratorContext } from "@fern-api/rust-sdk";
+import { describe, expect, it } from "vitest";
 import { resolveClientTreeFromContext } from "../generateSdk.js";
 
 /**

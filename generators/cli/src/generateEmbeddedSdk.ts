@@ -23,7 +23,7 @@
  */
 
 import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
-import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { SdkGeneratorCli, SdkGeneratorContext } from "@fern-api/rust-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, readFile, rm, unlink, writeFile } from "fs/promises";
