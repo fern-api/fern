@@ -1,0 +1,6 @@
+- summary: |
+    Fix multipart file-upload endpoints that return binary responses (fileDownload/bytes).
+    Previously these endpoints incorrectly called `execute_multipart_request<ByteStream>`,
+    which failed because ByteStream does not implement DeserializeOwned. Now routes to a
+    new `execute_multipart_stream_request` method that returns ByteStream directly.
+  type: fix

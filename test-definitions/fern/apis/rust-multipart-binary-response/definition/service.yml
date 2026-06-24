@@ -1,0 +1,56 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    # Multipart file upload with binary (audio) response and query params
+    # Mirrors ElevenLabs speech-to-speech: multipart audio in -> binary audio out
+    convertAudio:
+      path: /audio/convert
+      method: POST
+      request:
+        name: ConvertAudioRequest
+        query-parameters:
+          enable_logging: optional<boolean>
+          optimize_streaming_latency: optional<integer>
+          output_format: string
+        body:
+          properties:
+            audio: file
+            model_id: optional<string>
+      response: file
+
+    # Multipart file upload with binary response (no query params)
+    isolateAudio:
+      path: /audio/isolate
+      method: POST
+      request:
+        name: IsolateAudioRequest
+        body:
+          properties:
+            audio: file
+      response: file
+
+    # Multipart file upload with JSON response (existing pattern, should still work)
+    transcribeAudio:
+      path: /audio/transcribe
+      method: POST
+      request:
+        name: TranscribeAudioRequest
+        query-parameters:
+          language: optional<string>
+        body:
+          properties:
+            audio: file
+            model_id: optional<string>
+      response: TranscriptionResult
+
+    # Non-file endpoint to force snippet generation
+    simple:
+      path: "/snippet"
+      method: POST
+
+types:
+  TranscriptionResult:
+    properties:
+      text: string
+      language: optional<string>

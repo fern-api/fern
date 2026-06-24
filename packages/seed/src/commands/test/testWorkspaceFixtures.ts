@@ -8,7 +8,7 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { printTestCases } from "./printTestCases.js";
 import { TestRunner } from "./test-runner/index.js";
 
-export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "ts"];
+export const LANGUAGE_SPECIFIC_FIXTURE_PREFIXES = ["csharp", "go", "java", "python", "ruby", "rust", "ts"];
 
 export const FIXTURES = readDirectories(
     path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
