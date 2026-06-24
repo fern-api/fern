@@ -156,6 +156,72 @@ describe("Stream", () => {
 
             expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
         });
+
+        it("should expose lastEventId from id field", async () => {
+            const mockStream = createReadableStream([
+                'id: evt-1\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            expect(stream.lastEventId).toBeUndefined();
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+            expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
+            expect(stream.lastEventId).toBe("evt-2");
+        });
+
+        it("should expose lastRetry from retry field", async () => {
+            const mockStream = createReadableStream([
+                'retry: 5000\ndata: {"value": 1}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            expect(stream.lastRetry).toBeUndefined();
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+            expect(messages).toEqual([{ value: 1 }]);
+            expect(stream.lastRetry).toBe(5000);
+        });
+
+        it("should ignore retry field with non-integer value", async () => {
+            const mockStream = createReadableStream([
+                'retry: abc\ndata: {"value": 1}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            for await (const _ of stream) { /* drain */ }
+            expect(stream.lastRetry).toBeUndefined();
+        });
+
+        it("should ignore id field containing null character", async () => {
+            const mockStream = createReadableStream([
+                'id: valid\ndata: {"value": 1}\nid: bad\0id\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            for await (const _ of stream) { /* drain */ }
+            expect(stream.lastEventId).toBe("valid");
+        });
     });
 
     describe("SSE event-level discrimination (inject discriminator)", () => {
@@ -366,6 +432,56 @@ describe("Stream", () => {
                 { type: "completion", content: "hi" },
                 { type: "completion", content: "world" },
             ]);
+        });
+
+        it("should expose lastEventId from id field with discriminator", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: msg-001\ndata: {"content": "hello"}\n\nevent: completion\nid: msg-002\ndata: {"content": "world"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            expect(stream.lastEventId).toBeUndefined();
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+            expect(messages).toEqual([
+                { type: "completion", content: "hello" },
+                { type: "completion", content: "world" },
+            ]);
+            expect(stream.lastEventId).toBe("msg-002");
+        });
+
+        it("should expose lastRetry from retry field with discriminator", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nretry: 3000\ndata: {"content": "hello"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            for await (const _ of stream) { /* drain */ }
+            expect(stream.lastRetry).toBe(3000);
+        });
+
+        it("should persist lastEventId across events per SSE spec", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: msg-001\ndata: {"content": "first"}\n\nevent: completion\ndata: {"content": "second"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            for await (const _ of stream) { /* drain */ }
+            expect(stream.lastEventId).toBe("msg-001");
         });
 
         it("should inject empty string discriminator when event field is present but empty", async () => {

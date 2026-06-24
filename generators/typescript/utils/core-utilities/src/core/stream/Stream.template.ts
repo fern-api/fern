@@ -39,6 +39,8 @@ export declare namespace Stream {
 
 const DATA_PREFIX = "data:";
 const EVENT_PREFIX = "event:";
+const ID_PREFIX = "id:";
+const RETRY_PREFIX = "retry:";
 
 export class Stream<T> implements AsyncIterable<T> {
     <% if (streamType === "wrapper") { %>
@@ -57,6 +59,8 @@ export class Stream<T> implements AsyncIterable<T> {
     private eventDiscriminator: string | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
+    private _lastEventId: string | undefined;
+    private _lastRetry: number | undefined;
 
     constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
@@ -98,6 +102,15 @@ export class Stream<T> implements AsyncIterable<T> {
                 buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
+                    continue;
+                }
+
+                if (line.startsWith(ID_PREFIX)) {
+                    this.processSseId(line.slice(ID_PREFIX.length).trim());
+                    continue;
+                }
+                if (line.startsWith(RETRY_PREFIX)) {
+                    this.processSseRetry(line.slice(RETRY_PREFIX.length).trim());
                     continue;
                 }
 
@@ -152,6 +165,10 @@ export class Stream<T> implements AsyncIterable<T> {
                 } else if (line.startsWith(DATA_PREFIX)) {
                     const val = line.slice(DATA_PREFIX.length).trim();
                     dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                } else if (line.startsWith(ID_PREFIX)) {
+                    this.processSseId(line.slice(ID_PREFIX.length).trim());
+                } else if (line.startsWith(RETRY_PREFIX)) {
+                    this.processSseRetry(line.slice(RETRY_PREFIX.length).trim());
                 }
             }
         }
@@ -172,6 +189,35 @@ export class Stream<T> implements AsyncIterable<T> {
             return null;
         }
         return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));
+    }
+
+    /**
+     * The `id` field from the most recently yielded SSE event.
+     * Per the SSE spec, this persists across events until a new `id` field is received.
+     */
+    public get lastEventId(): string | undefined {
+        return this._lastEventId;
+    }
+
+    /**
+     * The `retry` field (in milliseconds) from the most recently received SSE event
+     * that contained a `retry` field.
+     */
+    public get lastRetry(): number | undefined {
+        return this._lastRetry;
+    }
+
+    private processSseId(value: string): void {
+        if (!value.includes("\0")) {
+            this._lastEventId = value;
+        }
+    }
+
+    private processSseRetry(value: string): void {
+        const parsed = parseInt(value, 10);
+        if (!isNaN(parsed) && String(parsed) === value) {
+            this._lastRetry = parsed;
+        }
     }
 
     private injectDiscriminator(parsed: unknown, eventType: string | undefined): unknown {

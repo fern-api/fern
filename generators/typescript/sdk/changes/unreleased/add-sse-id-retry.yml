@@ -1,0 +1,5 @@
+- summary: |
+    Add support for SSE `id` and `retry` fields in the TypeScript SDK Stream class.
+    Consumers can now access `stream.lastEventId` and `stream.lastRetry` to read
+    the most recent SSE event ID and retry interval without any breaking changes.
+  type: feat
