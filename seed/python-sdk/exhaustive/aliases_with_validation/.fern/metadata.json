@@ -3,7 +3,9 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "timeout_in_seconds": "infinity"
+    "pydantic_config": {
+      "use_pydantic_field_aliases": true
+    }
   },
   "originGitCommit": "DUMMY",
   "invokedBy": "ci",
