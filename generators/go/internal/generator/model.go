@@ -2175,9 +2175,6 @@ func isAliasToPointerType(typeId common.TypeId, types map[common.TypeId]*ir.Type
 			return true
 		}
 		if aliasOf.Named != nil {
-			if isPointer(types[aliasOf.Named.TypeId]) {
-				return true
-			}
 			typeId = aliasOf.Named.TypeId
 			continue
 		}
