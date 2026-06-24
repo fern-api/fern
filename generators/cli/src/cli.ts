@@ -54,14 +54,13 @@ async function generate(configPath: string): Promise<void> {
                 })
             );
 
-            const { summary: ir, sdkGlueInfo } = await readIr(config.irFilepath);
+            const ir = await readIr(config.irFilepath);
             const outputConfig = resolveOutputConfig(config.output);
             const outcome = await runPipeline({
                 outputDir: config.output.path,
                 customConfig: getCustomConfig(config),
                 ir,
                 irFilepath: config.irFilepath,
-                sdkGlueIrInfo: sdkGlueInfo,
                 outputConfig,
                 specsDir: process.env.FERN_SPECS_DIR,
                 sdkTemplateDir: process.env.FERN_SDK_TEMPLATE_DIR

@@ -801,6 +801,12 @@ importers:
       '@fern-api/generator-cli':
         specifier: workspace:*
         version: link:../../packages/generator-cli
+      '@fern-api/ir-migrations':
+        specifier: workspace:*
+        version: link:../../packages/cli/generation/ir-migrations
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../packages/ir-sdk
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../rust/base
@@ -810,6 +816,9 @@ importers:
       '@fern-api/rust-sdk':
         specifier: workspace:*
         version: link:../rust/sdk
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../packages/cli/task-context
       '@fern-fern/ir-sdk':
         specifier: 67.0.0
         version: 67.0.0

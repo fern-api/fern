@@ -11,10 +11,10 @@ import { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
 import { generateAgentSkills } from "./generateAgentSkills.js";
 import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
-import type { SubClientField } from "./generateSdkGlue.js";
-import { generateSdkGlue } from "./generateSdkGlue.js";
+import type { SubClientField } from "./generateSdk.js";
+import { generateSdk } from "./generateSdk.js";
 import { deriveBinaryName } from "./identity.js";
-import type { IrSummary, SdkGlueIrInfo } from "./ir.js";
+import type { IrSummary } from "./ir.js";
 import { patchCargoLockForSdk, patchCargoLockForTypes, patchCargoToml } from "./patchCargoToml.js";
 import { patchDistWorkspaceToml } from "./patchDistWorkspace.js";
 import type { ResolvedOutputConfig } from "./resolveOutputConfig.js";
@@ -42,15 +42,13 @@ export async function runPipeline(args: {
     outputDir: string;
     customConfig: FernCliCustomConfig;
     ir: IrSummary;
-    /** Path to the IR JSON file for embedded types codegen. */
+    /** Path to the IR JSON file for embedded types/SDK codegen. */
     irFilepath?: string;
-    /** Pre-parsed IR data for SDK glue client tree resolution. */
-    sdkGlueIrInfo?: SdkGlueIrInfo;
     outputConfig: ResolvedOutputConfig;
     sdkTemplateDir?: string;
     specsDir?: string;
 }): Promise<PipelineOutcome> {
-    const { outputDir, customConfig, ir, irFilepath, sdkGlueIrInfo, outputConfig, sdkTemplateDir, specsDir } = args;
+    const { outputDir, customConfig, ir, irFilepath, outputConfig, sdkTemplateDir, specsDir } = args;
 
     if (!(await hasOpenApiSpecs(specsDir))) {
         return { status: "skipped", reason: "no-openapi-specs" };
@@ -107,6 +105,7 @@ export async function runPipeline(args: {
     // Generate the embedded types + SDK crates (on by default; opt-out via customCommands: false).
     let typesCrateName: string | undefined;
     let sdkCrateName: string | undefined;
+    let subClients: SubClientField[] = [];
     if (customCommands && irFilepath != null) {
         typesCrateName = await generateEmbeddedTypes({
             irFilepath,
@@ -116,26 +115,25 @@ export async function runPipeline(args: {
         await writeFernignore(outputDir, binaryName);
 
         if (typesCrateName != null) {
-            sdkCrateName = await generateEmbeddedSdk({
+            const sdkResult = await generateEmbeddedSdk({
                 irFilepath,
                 outputDir,
                 binaryName,
                 typesCrateName
             });
-        }
-    }
+            sdkCrateName = sdkResult.sdkCrateName;
 
-    // Generate the SDK glue module (sdk_client + block_on) that bridges
-    // the CLI's AppContext to the co-generated SDK client.
-    // Client names are derived from the IR (not regex-parsed from
-    // generated Rust source) so de-conflicted names like
-    // `SimpleClient2` are resolved correctly.
-    let subClients: SubClientField[] = [];
-    if (sdkCrateName != null) {
-        if (sdkGlueIrInfo == null) {
-            throw new Error("sdkGlueIrInfo is required when SDK crate generation is enabled");
+            // Generate the SDK module (client + block_on) that bridges
+            // the CLI's AppContext to the co-generated SDK client.
+            // Client names are read directly from the Rust SDK generator
+            // context — the authoritative source for de-conflicted names.
+            subClients = await generateSdk({
+                outputDir,
+                binaryName,
+                sdkCrateName,
+                sdkContext: sdkResult.sdkContext
+            });
         }
-        subClients = await generateSdkGlue({ outputDir, binaryName, sdkCrateName, irInfo: sdkGlueIrInfo });
     }
 
     // Generate agent skills (.agents/skills/ + .claude symlink) so coding

@@ -64,7 +64,7 @@ export async function copySpecs(args: {
     binaryName: string;
     authBindings: DetectedAuthBinding[];
     specsDir?: string;
-    /** When true, emit `mod custom;` + `mod sdk_glue;` + `custom::register(app)` in main.rs. */
+    /** When true, emit `mod custom;` + `mod sdk;` + `custom::register(app)` in main.rs. */
     customCommands?: boolean;
 }): Promise<void> {
     const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
@@ -138,9 +138,9 @@ function renderCustomRsWithSdk(sdkCrate: string): string {
         "//! The generated `main.rs` calls `custom::register(app)` at",
         "//! startup, composing your commands into the CLI at compile time.",
         "//!",
-        "//! Each handler receives an `AppContext`. Use `sdk_glue::sdk_client(ctx)`",
+        "//! Each handler receives an `AppContext`. Use `super::sdk::client(ctx)`",
         "//! to get a fully-wired SDK client that inherits the CLI's auth,",
-        "//! retries, TLS, and global headers. Use `sdk_glue::block_on(future)`",
+        "//! retries, TLS, and global headers. Use `super::sdk::block_on(future)`",
         "//! to run async SDK calls from synchronous handler context.",
         `//! Types are available via \`${sdkCrate}::api::*\`.`,
         "",
@@ -161,8 +161,8 @@ function renderCustomRsWithSdk(sdkCrate: string): string {
         '    //         .arg(clap::Arg::new("plant-id").required(true)),',
         "    //     |matches, ctx| {",
         '    //         let plant_id = matches.get_one::<String>("plant-id").unwrap();',
-        "    //         let client = super::sdk_glue::sdk_client(ctx);",
-        "    //         let plant = super::sdk_glue::block_on(",
+        "    //         let client = super::sdk::client(ctx);",
+        "    //         let plant = super::sdk::block_on(",
         "    //             client.plants.get_plant(plant_id, None),",
         "    //         )?;",
         '    //         println!("{}", serde_json::to_string_pretty(&plant).unwrap());',
@@ -209,7 +209,7 @@ function renderMainRs(args: {
 
     if (customCommands) {
         lines.push("mod custom;");
-        lines.push("mod sdk_glue;");
+        lines.push("mod sdk;");
         lines.push("");
     }
 

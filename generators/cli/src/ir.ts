@@ -21,47 +21,8 @@ export interface IrSummary {
 }
 
 /**
- * Minimal subpackage data needed to build the SDK glue client tree.
- * Mirrors the fields the Rust SDK generator reads from `FernIr.Subpackage`
- * when resolving client names and building the sub-client hierarchy.
- */
-export interface SdkGlueSubpackageInfo {
-    name: FernIr.NameOrString;
-    subpackages: FernIr.SubpackageId[];
-    service: FernIr.ServiceId | undefined;
-    hasEndpointsInTree: boolean;
-}
-
-/**
- * IR data needed by `generateSdkGlue` to derive the client tree.
- *
- * This replaces the previous approach of regex-parsing generated Rust
- * source files. By reading the IR directly, we use the same data the
- * Rust SDK generator uses, ensuring client names (including
- * de-conflicted ones like `SimpleClient2`) are always correct.
- */
-export interface SdkGlueIrInfo {
-    apiName: FernIr.NameOrString;
-    rootPackage: {
-        subpackages: FernIr.SubpackageId[];
-        service: FernIr.ServiceId | undefined;
-    };
-    subpackages: Record<FernIr.SubpackageId, SdkGlueSubpackageInfo>;
-    casingsConfig: FernIr.CasingsConfig | undefined;
-}
-
-/**
- * Combined result of parsing the IR — all slices the CLI generator
- * needs in a single read. Respects the "IR is read once per pipeline
- * run" convention documented in CLAUDE.md.
- */
-export interface ParsedIr {
-    summary: IrSummary;
-    sdkGlueInfo: SdkGlueIrInfo;
-}
-
-/**
- * Parse the IR file and return every slice the CLI generator needs.
+ * Parse the IR file and return the `IrSummary` slice the CLI
+ * generator needs for binary identity and auth wiring.
  *
  * Goes through the IR SDK's serialization layer rather than picking
  * fields off raw `JSON.parse` output, so consumers get fully
@@ -77,7 +38,7 @@ export interface ParsedIr {
  * structure doesn't match the SDK's schema at all. The orchestrator
  * catches and surfaces these to the user.
  */
-export async function readIr(irFilepath: string): Promise<ParsedIr> {
+export async function readIr(irFilepath: string): Promise<IrSummary> {
     const raw = await readFile(irFilepath, "utf-8");
     const json: unknown = JSON.parse(raw);
 
@@ -93,38 +54,8 @@ export async function readIr(irFilepath: string): Promise<ParsedIr> {
 
     const ir = parsed.value;
 
-    const subpackages: Record<string, SdkGlueSubpackageInfo> = {};
-    for (const [subpackageId, subpackage] of Object.entries(ir.subpackages)) {
-        subpackages[subpackageId] = {
-            name: subpackage.name,
-            subpackages: subpackage.subpackages,
-            service: subpackage.service ?? undefined,
-            hasEndpointsInTree: subpackage.hasEndpointsInTree
-        };
-    }
-
     return {
-        summary: {
-            apiDisplayName: ir.apiDisplayName,
-            auth: { schemes: ir.auth.schemes }
-        },
-        sdkGlueInfo: {
-            apiName: ir.apiName,
-            rootPackage: {
-                subpackages: ir.rootPackage.subpackages,
-                service: ir.rootPackage.service ?? undefined
-            },
-            subpackages,
-            casingsConfig: ir.casingsConfig ?? undefined
-        }
+        apiDisplayName: ir.apiDisplayName,
+        auth: { schemes: ir.auth.schemes }
     };
-}
-
-/**
- * Convenience wrapper that returns only the `IrSummary` slice.
- * Prefer `readIr` when both summary and sdkGlueInfo are needed.
- */
-export async function readIrSummary(irFilepath: string): Promise<IrSummary> {
-    const { summary } = await readIr(irFilepath);
-    return summary;
 }

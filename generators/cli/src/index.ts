@@ -15,14 +15,8 @@ export { emitReadme } from "./emitReadme.js";
 export { emitReference } from "./emitReference.js";
 export { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
-export {
-    type IrSummary,
-    type ParsedIr,
-    readIr,
-    readIrSummary,
-    type SdkGlueIrInfo,
-    type SdkGlueSubpackageInfo
-} from "./ir.js";
+export { type SubClientField, generateSdk, resolveClientTreeFromContext, type RootClientInfo } from "./generateSdk.js";
+export { type IrSummary, readIr } from "./ir.js";
 export { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "./patchCargoToml.js";
 export { applyDistWorkspacePatch, patchDistWorkspaceToml, stripNpmInstaller } from "./patchDistWorkspace.js";
 export {
@@ -30,4 +24,5 @@ export {
     type ResolvedOutputConfig,
     resolveOutputConfig
 } from "./resolveOutputConfig.js";
+export { type EmbeddedSdkResult, generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 export { type PipelineOutcome, runPipeline } from "./runPipeline.js";

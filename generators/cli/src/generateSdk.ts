@@ -1,29 +1,24 @@
 /**
- * Generate `cli/<binaryName>/sdk_glue.rs` — the adapter that bridges
- * the CLI's runtime (`AppContext`, `CliExecutor`) to the co-generated
- * SDK crate's typed client.
+ * Generate `cli/<binaryName>/sdk.rs` — the adapter that bridges the
+ * CLI's runtime (`AppContext`, `CliExecutor`) to the co-generated SDK
+ * crate's typed client.
  *
  * Provides two public helpers for custom command handlers:
  *
- *   - `sdk_client(ctx)` — construct a fully-wired SDK root client that
+ *   - `client(ctx)` — construct a fully-wired SDK root client that
  *     routes through the CLI's auth/retry/TLS stack.
  *   - `block_on(future)` — run an async SDK call from synchronous
  *     handler context (bridges `ApiError` → `CliError`).
  *
- * Client names and the sub-client tree are derived from the Fern IR
- * using the same de-confliction logic as the Rust SDK generator
- * (`SymbolRegistry` with numbered-suffix strategy + `CaseConverter`),
- * so the generated `sdk_glue.rs` is always in sync with the generated
- * SDK — including specs with nested `x-fern-sdk-group-name` groups
- * and de-conflicted client names like `SimpleClient2`, `PoolsClient3`.
+ * Client names and the sub-client tree are read directly from the Rust
+ * SDK generator's `SdkGeneratorContext` — the authoritative source for
+ * de-conflicted names (including `SimpleClient2`, `PoolsClient3`).
+ * No independent re-derivation: zero drift possible.
  */
 
-import { CaseConverter } from "@fern-api/base-generator";
-import { SymbolRegistry } from "@fern-api/core-utils";
+import { SdkGeneratorContext } from "@fern-api/rust-sdk";
 import { writeFile } from "fs/promises";
 import path from "path";
-
-import type { SdkGlueIrInfo } from "./ir.js";
 
 /** A sub-client field (possibly nested). */
 export interface SubClientField {
@@ -31,7 +26,7 @@ export interface SubClientField {
     typeName: string;
 }
 
-/** Recursive tree of client fields derived from the IR. */
+/** Recursive tree of client fields derived from the SDK context. */
 interface ClientNode {
     fieldName: string;
     typeName: string;
@@ -40,7 +35,7 @@ interface ClientNode {
     children: ClientNode[];
 }
 
-/** Root client info derived from the IR. */
+/** Root client info read from the SDK generator context. */
 export interface RootClientInfo {
     name: string;
     subClients: ClientNode[];
@@ -48,63 +43,23 @@ export interface RootClientInfo {
 }
 
 // ---------------------------------------------------------------------------
-// IR-based client tree resolution
+// Context-based client tree resolution
 // ---------------------------------------------------------------------------
 
 /**
- * Build a client name registry that mirrors the Rust SDK generator's
- * `AbstractRustGeneratorContext.registerAllFilenames()` — Priority 4.
- *
- * Registration order:
- *   1. Root client (id "root")
- *   2. All subpackages in `Object.entries(ir.subpackages)` iteration order
- *
- * The `SymbolRegistry` with `numbered-suffix` strategy appends `2`, `3`, …
- * when base names collide (e.g. `SimpleClient` → `SimpleClient2`).
+ * Build the recursive client tree by reading directly from the Rust
+ * SDK generator context. Names are authoritative — they come from the
+ * same `RustFilenameRegistry` that produced the generated SDK crate.
  */
-function buildClientNameRegistry(caseConverter: CaseConverter, irInfo: SdkGlueIrInfo): SymbolRegistry {
-    const registry = new SymbolRegistry({
-        reservedSymbolNames: [],
-        conflictResolutionStrategy: "numbered-suffix"
-    });
-
-    // Register root client first (matches Rust SDK generator order).
-    const rootClientName = `${caseConverter.pascalSafe(irInfo.apiName)}Client`;
-    registry.registerSymbol("root", [rootClientName]);
-
-    // Register ALL subpackage clients in Object.entries() insertion order — this
-    // matches the Rust SDK generator's registerAllFilenames() (Priority 4) at
-    // AbstractRustGeneratorContext.ts:824, which also iterates Object.entries(ir.subpackages).
-    // Both parse the same serialized IR JSON, so insertion order is deterministic.
-    for (const [subpackageId, subpackage] of Object.entries(irInfo.subpackages)) {
-        const baseClientName = `${caseConverter.pascalSafe(subpackage.name)}Client`;
-        registry.registerSymbol(subpackageId, [baseClientName]);
-    }
-
-    return registry;
-}
-
-/**
- * Build the recursive client tree for a package's direct sub-clients.
- *
- * Mirrors `ClientGeneratorContext.getSubClients()` from the Rust SDK
- * generator: only subpackages with `service != null || hasEndpointsInTree`
- * become struct fields.
- */
-function buildClientTree(
-    caseConverter: CaseConverter,
-    registry: SymbolRegistry,
-    irInfo: SdkGlueIrInfo,
+function buildClientTreeFromContext(
+    context: SdkGeneratorContext,
     subpackageIds: string[],
     parentModulePath: string[]
 ): ClientNode[] {
     const nodes: ClientNode[] = [];
 
     for (const subpackageId of subpackageIds) {
-        const subpackage = irInfo.subpackages[subpackageId];
-        if (subpackage == null) {
-            continue;
-        }
+        const subpackage = context.getSubpackageOrThrow(subpackageId);
 
         // Only include subpackages that contribute client struct fields
         // (matches ClientGeneratorContext.getSubClients() filter).
@@ -112,11 +67,11 @@ function buildClientTree(
             continue;
         }
 
-        const fieldName = caseConverter.snakeSafe(subpackage.name);
-        const typeName = registry.getSymbolNameByIdOrThrow(subpackageId);
+        const fieldName = context.case.snakeSafe(subpackage.name);
+        const typeName = context.getUniqueClientNameForSubpackage(subpackage);
         const modulePath = [...parentModulePath, fieldName];
 
-        const children = buildClientTree(caseConverter, registry, irInfo, subpackage.subpackages, modulePath);
+        const children = buildClientTreeFromContext(context, subpackage.subpackages, modulePath);
 
         nodes.push({ fieldName, typeName, modulePath, children });
     }
@@ -125,25 +80,18 @@ function buildClientTree(
 }
 
 /**
- * Resolve the full client tree from the IR, using the same
- * de-confliction logic as the Rust SDK generator.
+ * Resolve the full client tree from the SDK generator context.
+ * All names are authoritative — read directly from the Rust SDK
+ * generator's filename registry.
  */
-export function resolveClientTreeFromIr(irInfo: SdkGlueIrInfo): RootClientInfo {
-    const caseConverter = new CaseConverter({
-        generationLanguage: "rust",
-        keywords: irInfo.casingsConfig?.keywords,
-        smartCasing: irInfo.casingsConfig?.smartCasing ?? true
-    });
-
-    const registry = buildClientNameRegistry(caseConverter, irInfo);
-
-    const rootClientName = registry.getSymbolNameByIdOrThrow("root");
-    const subClients = buildClientTree(caseConverter, registry, irInfo, irInfo.rootPackage.subpackages, []);
+export function resolveClientTreeFromContext(context: SdkGeneratorContext): RootClientInfo {
+    const rootClientName = context.getClientName();
+    const subClients = buildClientTreeFromContext(context, context.ir.rootPackage.subpackages, []);
 
     // The root struct has an `http_client` field when the root package
     // itself has a service (i.e., root-level endpoints exist alongside
     // sub-client groups).
-    const hasHttpClient = irInfo.rootPackage.service != null;
+    const hasHttpClient = context.ir.rootPackage.service != null;
 
     return { name: rootClientName, subClients, hasHttpClient };
 }
@@ -199,9 +147,9 @@ function qualifyType(sdkCrate: string, node: ClientNode): string {
 }
 
 /**
- * Generate the `sdk_glue.rs` module content.
+ * Generate the `sdk.rs` module content.
  */
-function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): string {
+function renderSdk(sdkCrateSnake: string, rootClient: RootClientInfo): string {
     const subClientInits = rootClient.subClients
         .map((node) => {
             const init = renderClientInit(sdkCrateSnake, node, "        ");
@@ -214,7 +162,7 @@ function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): strin
     const httpClientInit = rootClient.hasHttpClient ? "\n        http_client: http_client.clone()," : "";
 
     return `\
-//! Generated SDK client glue — bridges AppContext to the co-generated SDK.
+//! Generated SDK client adapter — bridges AppContext to the co-generated SDK.
 //!
 //! Auto-generated by @fern-api/cli-generator. Do not edit by hand.
 
@@ -254,14 +202,14 @@ impl ${sdkCrateSnake}::RequestExecutor for CliExecutorAdapter {
 }
 
 // ---------------------------------------------------------------------------
-// sdk_client — construct a fully-wired SDK root client
+// client — construct a fully-wired SDK root client
 // ---------------------------------------------------------------------------
 
 /// Build the SDK root client from the CLI's runtime context.
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn sdk_client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name} {
+pub fn client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name} {
     let executor = ctx.build_sdk_executor();
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = ${sdkCrateSnake}::ClientConfig::default();
@@ -331,28 +279,27 @@ fn http_status_reason(status: u16) -> &'static str {
 }
 
 /**
- * Generate `cli/<binaryName>/sdk_glue.rs`.
+ * Generate `cli/<binaryName>/sdk.rs`.
  *
- * Derives the client tree from the IR using the same de-confliction
- * logic as the Rust SDK generator, so client names like `SimpleClient2`
- * and `PoolsClient3` are resolved correctly without regex-parsing
- * generated Rust source files.
+ * Reads client names directly from the Rust SDK generator context —
+ * the single authoritative source for de-conflicted names. No
+ * independent re-derivation, no drift.
  */
-export async function generateSdkGlue(args: {
+export async function generateSdk(args: {
     outputDir: string;
     binaryName: string;
     sdkCrateName: string;
-    irInfo: SdkGlueIrInfo;
+    sdkContext: SdkGeneratorContext;
 }): Promise<SubClientField[]> {
-    const { outputDir, binaryName, sdkCrateName, irInfo } = args;
+    const { outputDir, binaryName, sdkCrateName, sdkContext } = args;
     const sdkCrateSnake = sdkCrateName.replace(/-/g, "_");
 
-    const rootClient = resolveClientTreeFromIr(irInfo);
+    const rootClient = resolveClientTreeFromContext(sdkContext);
 
-    // Write the glue module.
+    // Write the sdk module.
     const binDir = path.join(outputDir, "cli", binaryName);
-    const content = renderSdkGlue(sdkCrateSnake, rootClient);
-    await writeFile(path.join(binDir, "sdk_glue.rs"), content);
+    const content = renderSdk(sdkCrateSnake, rootClient);
+    await writeFile(path.join(binDir, "sdk.rs"), content);
 
     // Return flat sub-client list for agent skill generation.
     return flattenSubClients(rootClient.subClients);
