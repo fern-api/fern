@@ -2968,6 +2968,100 @@ describe("Python PEP 440 magic version", () => {
     });
 });
 
+describe("replaceMagicVersion: AUTO string must not be used as placeholder", () => {
+    it("using AUTO as placeholder corrupts unrelated code containing AUTO substring", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-auto-corrupt-"));
+        try {
+            // Simulate a TypeScript SDK with enum values containing "AUTO"
+            const enumFile = path.join(tempDir, "types.ts");
+            await fs.writeFile(
+                enumFile,
+                [
+                    'export const SensorMode = {',
+                    '    SensorModeAuto: "SENSOR_MODE_AUTO",',
+                    '    SensorModeManual: "SENSOR_MODE_MANUAL",',
+                    '} as const;',
+                    '',
+                    'export const CorrelationType = {',
+                    '    CorrelationTypeAutomated: "CORRELATION_TYPE_AUTOMATED",',
+                    '    CorrelationTypeManual: "CORRELATION_TYPE_MANUAL",',
+                    '} as const;',
+                    ''
+                ].join("\n")
+            );
+
+            // Simulate package.json with "AUTO" as version (what the generator embeds)
+            const packageJson = path.join(tempDir, "package.json");
+            await fs.writeFile(packageJson, '{\n  "name": "test-sdk",\n  "version": "AUTO"\n}');
+
+            // BUG: Using "AUTO" as the magic version corrupts enum values
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "AUTO",
+                "4.13.1"
+            );
+
+            const enumContent = await fs.readFile(enumFile, "utf-8");
+            // These assertions demonstrate the bug: enum values get corrupted
+            expect(enumContent).toContain("SENSOR_MODE_4.13.1");
+            expect(enumContent).toContain("CORRELATION_TYPE_4.13.1MATED");
+
+            // The version field gets replaced correctly but at the cost of corrupting enums
+            const packageContent = await fs.readFile(packageJson, "utf-8");
+            expect(packageContent).toContain('"version": "4.13.1"');
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("using MAGIC_VERSION as placeholder does not corrupt unrelated code", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-magic-safe-"));
+        try {
+            // Same enum file with AUTO in values
+            const enumFile = path.join(tempDir, "types.ts");
+            await fs.writeFile(
+                enumFile,
+                [
+                    'export const SensorMode = {',
+                    '    SensorModeAuto: "SENSOR_MODE_AUTO",',
+                    '    SensorModeManual: "SENSOR_MODE_MANUAL",',
+                    '} as const;',
+                    '',
+                    'export const CorrelationType = {',
+                    '    CorrelationTypeAutomated: "CORRELATION_TYPE_AUTOMATED",',
+                    '    CorrelationTypeManual: "CORRELATION_TYPE_MANUAL",',
+                    '} as const;',
+                    ''
+                ].join("\n")
+            );
+
+            // package.json with the proper magic version (what generator SHOULD embed)
+            const packageJson = path.join(tempDir, "package.json");
+            await fs.writeFile(packageJson, '{\n  "name": "test-sdk",\n  "version": "0.0.0-fern-placeholder"\n}');
+
+            // CORRECT: Using MAGIC_VERSION as the placeholder leaves enums untouched
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                MAGIC_VERSION,
+                "4.13.1"
+            );
+
+            const enumContent = await fs.readFile(enumFile, "utf-8");
+            // Enum values remain untouched
+            expect(enumContent).toContain("SENSOR_MODE_AUTO");
+            expect(enumContent).toContain("CORRELATION_TYPE_AUTOMATED");
+            expect(enumContent).not.toContain("4.13.1");
+
+            // Only the version field gets replaced
+            const packageContent = await fs.readFile(packageJson, "utf-8");
+            expect(packageContent).toContain('"version": "4.13.1"');
+            expect(packageContent).not.toContain("0.0.0-fern-placeholder");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+});
+
 describe("getLatestVersionFromGitTags", () => {
     // Helper to create a temporary bare git repo that can serve as a remote,
     // and a clone of it, so `git ls-remote --tags origin` works.

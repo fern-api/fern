@@ -1,0 +1,6 @@
+- summary: |
+    Fix `--version AUTO` corrupting generated SDK files by replacing all occurrences
+    of "AUTO" in the output. The literal string "AUTO" is now correctly substituted
+    with the magic version placeholder before being passed to the generator, so only
+    the intended version field is replaced during post-generation processing.
+  type: fix

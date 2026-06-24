@@ -14,7 +14,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
+import { AutoVersioningCache, isAutoVersion, MAGIC_VERSION } from "@fern-api/generator-cli/autoversion";
 import {
     buildReplayTelemetryProps,
     logReplaySummary,
@@ -94,7 +94,7 @@ export async function runLocalGenerationForWorkspace({
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
     const userProvidedVersion = version;
-    if (userProvidedVersion != null) {
+    if (userProvidedVersion != null && !isAutoVersion(userProvidedVersion)) {
         if (absolutePathToPreview != null) {
             context.logger.warn(
                 "Skipping version availability check in preview mode. " +
@@ -159,6 +159,13 @@ export async function runLocalGenerationForWorkspace({
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
+                // When version is "AUTO", substitute the magic placeholder so the
+                // generator embeds a unique string that won't collide with real code
+                // during the post-generation sed replacement.
+                const irVersion = version != null && isAutoVersion(version)
+                    ? MAGIC_VERSION
+                    : version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -170,7 +177,7 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                    version: irVersion,
                     packageName,
                     context,
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace),

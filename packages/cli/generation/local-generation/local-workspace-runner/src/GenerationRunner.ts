@@ -10,6 +10,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { isAutoVersion, MAGIC_VERSION } from "@fern-api/generator-cli/autoversion";
 import { type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli/pipeline";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -218,6 +219,13 @@ export class GenerationRunner {
         }
 
         // Generate IR once here
+        // When version is "AUTO", use the magic placeholder so the generator
+        // doesn't embed the literal "AUTO" string (which would corrupt unrelated
+        // code during the post-generation sed replacement).
+        const irVersion =
+            outputVersionOverride != null && isAutoVersion(outputVersionOverride)
+                ? MAGIC_VERSION
+                : outputVersionOverride;
         const rawIr = generateIntermediateRepresentation({
             workspace,
             audiences: generatorGroup.audiences,
@@ -230,7 +238,7 @@ export class GenerationRunner {
                 skipAutogenerationIfManualExamplesExist: skipAutogenerationIfManualExamplesExist ?? false
             },
             readme: generatorInvocation.readme,
-            version: outputVersionOverride,
+            version: irVersion,
             packageName: generatorsYml.getPackageName({ generatorInvocation }),
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),
