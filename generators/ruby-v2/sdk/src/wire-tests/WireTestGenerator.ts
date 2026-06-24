@@ -387,18 +387,27 @@ export class WireTestGenerator {
     }
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
-        let basePath =
+        let fullPath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
 
-        if (!basePath.startsWith("/")) {
-            basePath = `/${basePath}`;
+        if (!fullPath.startsWith("/")) {
+            fullPath = `/${fullPath}`;
         }
 
+        // Use the full path (with query string) for the mapping key lookup,
+        // since getWireMockConfigContent keys by fullPathTemplate when available.
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
-            requestUrlPathTemplate: basePath
+            requestUrlPathTemplate: fullPath
         });
+
+        // Strip query string from the path for the actual URL
+        let basePath = fullPath;
+        const queryIndex = basePath.indexOf("?");
+        if (queryIndex !== -1) {
+            basePath = basePath.substring(0, queryIndex);
+        }
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         if (!wiremockMapping) {
@@ -557,9 +566,10 @@ export class WireTestGenerator {
         const out: Record<string, WireMockMapping> = {};
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
         for (const mapping of wiremockStubMapping.mappings) {
+            const pathForKey = mapping.metadata.fullPathTemplate ?? mapping.request.urlPathTemplate;
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
-                requestUrlPathTemplate: mapping.request.urlPathTemplate
+                requestUrlPathTemplate: pathForKey
             });
             out[key] = mapping;
         }

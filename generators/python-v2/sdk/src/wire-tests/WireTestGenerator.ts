@@ -764,9 +764,10 @@ export class WireTestGenerator {
         const out: Record<string, WireMockMapping> = {};
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
         for (const mapping of wiremockStubMapping.mappings) {
+            const pathForKey = mapping.metadata.fullPathTemplate ?? mapping.request.urlPathTemplate;
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
-                requestUrlPathTemplate: mapping.request.urlPathTemplate
+                requestUrlPathTemplate: pathForKey
             });
             out[key] = mapping;
         }
@@ -777,27 +778,34 @@ export class WireTestGenerator {
     // =============================================================================
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
-        let basePath = endpoint.fullPath.head;
+        let fullPath = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts || []) {
-            basePath += `{${part.pathParameter}}${part.tail}`;
+            fullPath += `{${part.pathParameter}}${part.tail}`;
         }
-        if (!basePath.startsWith("/")) {
-            basePath = "/" + basePath;
+        if (!fullPath.startsWith("/")) {
+            fullPath = "/" + fullPath;
         }
 
         // Strip URL fragment - fragments are never sent to the server in HTTP requests
         // e.g., "/oauth2/token#refresh" -> "/oauth2/token"
-        const fragmentIndex = basePath.indexOf("#");
+        const fragmentIndex = fullPath.indexOf("#");
         if (fragmentIndex !== -1) {
-            basePath = basePath.substring(0, fragmentIndex);
+            fullPath = fullPath.substring(0, fragmentIndex);
         }
 
-        // Substitute path parameters with actual values from WireMock mapping
-        // Use the path WITHOUT fragment to look up the mapping, since mock-utils strips fragments
+        // Use the full path (with query string) for the mapping key lookup,
+        // since getWireMockConfigContent keys by fullPathTemplate when available.
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
-            requestUrlPathTemplate: basePath
+            requestUrlPathTemplate: fullPath
         });
+
+        // Strip query string from the path for the actual URL
+        let basePath = fullPath;
+        const queryIndex = basePath.indexOf("?");
+        if (queryIndex !== -1) {
+            basePath = basePath.substring(0, queryIndex);
+        }
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         if (wiremockMapping && wiremockMapping.request.pathParameters) {

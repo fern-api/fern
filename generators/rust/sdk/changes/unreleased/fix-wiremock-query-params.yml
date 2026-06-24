@@ -1,0 +1,5 @@
+- summary: |
+    Fix WireMock wire test generation to correctly handle endpoints with embedded query strings
+    in their path (e.g. Stainless overload paths). Query parameters are now stripped from
+    urlPathTemplate and matched separately.
+  type: fix
