@@ -274,7 +274,7 @@ export function mapDocsConfigToLedgerConfig({
     fileManifest: Record<string, FileManifestEntry> | undefined;
     fileIdToPath: Map<string, string> | undefined;
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
-}) {
+}): LedgerConfig & { editThisPageGithub?: { owner: string; repo: string; branch: string; host: string } } {
     return {
         title: docsConfig.title,
         defaultLanguage: docsConfig.defaultLanguage,
