@@ -1974,7 +1974,22 @@ func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReferenc
 			c.value = value
 			return nil
 		}
+		// If the collapsed inner type is a named alias that already resolves
+		// to a pointer type, skip adding another pointer to avoid double
+		// pointers (e.g. optional<nullable<named(NullableDateAlias)>>).
+		if optionalOrNullableContainer.Named != nil && isAliasToPointerType(optionalOrNullableContainer.Named.TypeId, c.types) {
+			c.value = value
+			return nil
+		}
 		c.value = fmt.Sprintf("*%s", value)
+		return nil
+	}
+
+	// If the inner type is a named alias that already resolves to a pointer
+	// type (e.g. nullable<named(ISO8601DateNullable)> where the alias target
+	// is nullable<date> = *time.Time), skip adding another pointer.
+	if optionalOrNullable.Named != nil && isAliasToPointerType(optionalOrNullable.Named.TypeId, c.types) {
+		c.value = value
 		return nil
 	}
 
@@ -2312,6 +2327,33 @@ func isPointer(typeDeclaration *ir.TypeDeclaration) bool {
 	}
 	// Unreachable.
 	return false
+}
+
+// isAliasToPointerType checks if a named type is an alias that already
+// generates as a pointer in Go (e.g. a nullable primitive like *time.Time).
+// This prevents double pointers when nullable(named(NullableDateAlias))
+// would otherwise produce *NullableDateAlias = **time.Time.
+func isAliasToPointerType(typeId common.TypeId, types map[common.TypeId]*ir.TypeDeclaration) bool {
+	seen := make(map[common.TypeId]struct{})
+	for {
+		if _, ok := seen[typeId]; ok {
+			return false
+		}
+		seen[typeId] = struct{}{}
+		td := types[typeId]
+		if td == nil || td.Shape.Alias == nil {
+			return false
+		}
+		aliasOf := td.Shape.Alias.AliasOf
+		if aliasOf.Container != nil && (aliasOf.Container.Optional != nil || aliasOf.Container.Nullable != nil) {
+			return true
+		}
+		if aliasOf.Named != nil {
+			typeId = aliasOf.Named.TypeId
+			continue
+		}
+		return false
+	}
 }
 
 // typeNameToReceiver returns the receiver name for
