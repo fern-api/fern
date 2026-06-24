@@ -4685,7 +4685,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Actor ID",
                         "docs": null
                     },
                     {
@@ -4778,7 +4778,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                                 }
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Director",
                         "docs": null
                     },
                     {
@@ -4871,7 +4871,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                                 }
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Empty Object",
                         "docs": null
                     },
                     {
@@ -4964,7 +4964,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
                                 }
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Empty Object",
                         "docs": "i am docs"
                     }
                 ]
@@ -24725,7 +24725,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Actor ID",
                         "availability": null,
                         "docs": null
                     },
@@ -24744,7 +24744,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "displayName": null,
                             "typeId": "type_director:Director"
                         },
-                        "displayName": null,
+                        "displayName": "Director",
                         "availability": null,
                         "docs": null
                     },
@@ -24763,7 +24763,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "displayName": null,
                             "typeId": "type_imdb:EmptyObject"
                         },
-                        "displayName": null,
+                        "displayName": "Empty Object",
                         "availability": null,
                         "docs": null
                     },
@@ -24782,7 +24782,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "displayName": null,
                             "typeId": "type_imdb:EmptyObject"
                         },
-                        "displayName": null,
+                        "displayName": "Empty Object",
                         "availability": null,
                         "docs": "i am docs"
                     }

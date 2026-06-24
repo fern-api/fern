@@ -234,6 +234,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                 "variants": [
                     {
                         "discriminantValue": "actor",
+                        "displayName": "Actor ID",
                         "additionalProperties": {
                             "extends": [],
                             "properties": [
@@ -249,6 +250,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     {
                         "discriminantValue": "director",
+                        "displayName": "Director",
                         "additionalProperties": {
                             "extends": [
                                 "type_director:Director"
@@ -258,6 +260,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     {
                         "discriminantValue": "producer",
+                        "displayName": "Empty Object",
                         "additionalProperties": {
                             "extends": [
                                 "type_imdb:EmptyObject"
@@ -268,6 +271,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     {
                         "description": "i am docs",
                         "discriminantValue": "cinematographer",
+                        "displayName": "Empty Object",
                         "additionalProperties": {
                             "extends": [
                                 "type_imdb:EmptyObject"
@@ -1081,6 +1085,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                 "variants": [
                     {
                         "discriminantValue": "actor",
+                        "displayName": "Actor ID",
                         "additionalProperties": {
                             "extends": [],
                             "properties": [
@@ -1096,6 +1101,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     {
                         "discriminantValue": "director",
+                        "displayName": "Director",
                         "additionalProperties": {
                             "extends": [
                                 "type_director:Director"
@@ -1105,6 +1111,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     {
                         "discriminantValue": "producer",
+                        "displayName": "Empty Object",
                         "additionalProperties": {
                             "extends": [
                                 "type_imdb:EmptyObject"
@@ -1115,6 +1122,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     {
                         "description": "i am docs",
                         "discriminantValue": "cinematographer",
+                        "displayName": "Empty Object",
                         "additionalProperties": {
                             "extends": [
                                 "type_imdb:EmptyObject"
