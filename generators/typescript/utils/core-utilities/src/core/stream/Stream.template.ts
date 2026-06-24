@@ -122,7 +122,7 @@ export class Stream<T> implements AsyncIterable<T> {
                 if (line.startsWith(RETRY_PREFIX)) {
                     const retryValue = line.slice(RETRY_PREFIX.length).trim();
                     const parsed = parseInt(retryValue, 10);
-                    if (!isNaN(parsed) && String(parsed) === retryValue) {
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
                         lastRetry = parsed;
                     }
                     continue;
@@ -189,7 +189,7 @@ export class Stream<T> implements AsyncIterable<T> {
                 } else if (line.startsWith(RETRY_PREFIX)) {
                     const retryValue = line.slice(RETRY_PREFIX.length).trim();
                     const parsed = parseInt(retryValue, 10);
-                    if (!isNaN(parsed) && String(parsed) === retryValue) {
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
                         lastRetry = parsed;
                     }
                 }

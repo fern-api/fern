@@ -683,6 +683,26 @@ describe("Stream", () => {
             expect(events[2]?.id).toBe("second");
         });
 
+        it("should attach metadata on last event without trailing blank line", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: last-1\nretry: 1000\ndata: {"content": "hi"}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { type: "completion", content: "hi" }, id: "last-1", retry: 1000, event: "completion" },
+            ]);
+        });
+
         it("should not affect default iteration which still yields T", async () => {
             const mockStream = createReadableStream([
                 'id: evt-1\nretry: 3000\ndata: {"value": 1}\n',
