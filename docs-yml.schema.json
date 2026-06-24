@@ -6051,6 +6051,17 @@
           ],
           "description": "If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter."
         },
+        "hide-related-topics": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `hide-related-topics` is set to true, the auto-suggested related topics section will not be rendered at the bottom of pages. This can be overridden for a specific page using the frontmatter."
+        },
         "mobile-toc": {
           "oneOf": [
             {

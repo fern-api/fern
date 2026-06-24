@@ -2863,6 +2863,9 @@
             "hide-feedback": {
               "type": "boolean"
             },
+            "hide-related-topics": {
+              "type": "boolean"
+            },
             "mobile-toc": {
               "type": "boolean"
             },
