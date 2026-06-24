@@ -115,6 +115,7 @@ export class Stream<T> implements AsyncIterable<T> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let prefixSeen = false;
+        let retryValue: number | undefined;
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
 
@@ -136,6 +137,10 @@ export class Stream<T> implements AsyncIterable<T> {
                 }
 
                 if (this.prefix != null && line.startsWith(RETRY_PREFIX)) {
+                    const val = parseInt(line.slice(RETRY_PREFIX.length).trim(), 10);
+                    if (!Number.isNaN(val)) {
+                        retryValue = val;
+                    }
                     continue;
                 }
 
@@ -155,8 +160,10 @@ export class Stream<T> implements AsyncIterable<T> {
                 yield {
                     data: message,
                     eventId: this._lastEventId,
+                    retry: retryValue,
                 };
                 prefixSeen = false;
+                retryValue = undefined;
             }
         }
     }

@@ -193,7 +193,7 @@ describe("Stream", () => {
 
         it("should expose events() with SSE metadata for non-discriminated SSE", async () => {
             const mockStream = createReadableStream([
-                'id: evt-1\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
+                'id: evt-1\nretry: 5000\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -207,8 +207,8 @@ describe("Stream", () => {
             }
 
             expect(events).toEqual([
-                { data: { value: 1 }, eventId: "evt-1" },
-                { data: { value: 2 }, eventId: "evt-2" },
+                { data: { value: 1 }, eventId: "evt-1", retry: 5000 },
+                { data: { value: 2 }, eventId: "evt-2", retry: undefined },
             ]);
         });
     });
