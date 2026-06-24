@@ -11,6 +11,7 @@ export declare namespace Caller {
         url: go.AstNode;
         request?: go.AstNode;
         response?: go.AstNode;
+        responseIsOptional?: boolean;
         errorCodes?: go.AstNode;
         /** The import path of the namespace where the endpoint is defined. Used to reference namespace-specific ErrorCodes. */
         namespaceImportPath?: string;
@@ -188,6 +189,12 @@ export class Caller {
             arguments_.push({
                 name: "Response",
                 value: go.TypeInstantiation.reference(args.response)
+            });
+        }
+        if (args.responseIsOptional === true) {
+            arguments_.push({
+                name: "ResponseIsOptional",
+                value: go.TypeInstantiation.bool(true)
             });
         }
         if (args.errorCodes != null) {

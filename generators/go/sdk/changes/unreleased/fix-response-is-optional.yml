@@ -1,0 +1,6 @@
+- summary: |
+    Set `ResponseIsOptional: true` in generated `CallParams` when an endpoint's
+    response body type is wrapped in Optional or Nullable. This fixes a bug where
+    endpoints declaring both a 200 (with body) and 204 (no body) success response
+    would return an error on 204 instead of a successful nil response.
+  type: fix

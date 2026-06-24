@@ -469,6 +469,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     url: go.codeblock("endpointURL"),
                     request: signature.request?.getRequestReference(),
                     response: this.getResponseParameterReference({ endpoint }),
+                    responseIsOptional: this.hasOptionalOrNullableResponse({ endpoint }),
                     errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
                     namespaceImportPath: this.context.getNamespaceImportPath(subpackage)
                 })
@@ -1058,6 +1059,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             default:
                 assertNever(responseBody);
         }
+    }
+
+    private hasOptionalOrNullableResponse({ endpoint }: { endpoint: FernIr.HttpEndpoint }): boolean {
+        const body = endpoint.response?.body;
+        if (body == null || body.type !== "json") {
+            return false;
+        }
+        const jsonResponse = body.value;
+        const responseBodyType =
+            jsonResponse.type === "response"
+                ? jsonResponse.responseBodyType
+                : jsonResponse.type === "nestedPropertyAsResponse"
+                  ? jsonResponse.responseBodyType
+                  : undefined;
+        if (responseBodyType == null) {
+            return false;
+        }
+        if (responseBodyType.type !== "container") {
+            return false;
+        }
+        return responseBodyType.container.type === "optional" || responseBodyType.container.type === "nullable";
     }
 
     private getResponseReturnStatement({

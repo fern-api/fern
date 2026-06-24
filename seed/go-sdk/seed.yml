@@ -260,6 +260,9 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
+  no-content-response:
+    - outputFolder: .
+      customConfig: null
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
