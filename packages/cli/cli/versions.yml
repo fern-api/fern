@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.50.6
+  changelogEntry:
+    - summary: |
+        Forward edit-this-page GitHub config (owner/repo/branch/host) from docs.yml
+        into the ledger manifest so the docs reader can synthesize the correct
+        "Edit this page" URL without depending on runtime git provenance.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
 - version: 5.50.5
   changelogEntry:
     - summary: |
