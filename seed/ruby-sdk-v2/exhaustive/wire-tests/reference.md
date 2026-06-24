@@ -2297,6 +2297,79 @@ client.endpoints.params.upload_with_path(param: "upload-path")
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">create_with_body_and_query</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.params.create_with_body_and_query(
+  fields: "_fields",
+  string: "string"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_boolean_path</a>(param) -> String</code></summary>
 <dl>
 <dd>

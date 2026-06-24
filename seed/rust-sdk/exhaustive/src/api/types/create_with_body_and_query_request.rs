@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct CreateWithBodyAndQueryRequest {
     #[serde(rename = "_fields")]
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     pub fields: Option<String>,
     #[serde(default)]
     pub body: ObjectWithRequiredField,

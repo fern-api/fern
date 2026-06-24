@@ -2732,6 +2732,90 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">createWithBodyAndQuery</a>(fields: String?, request: ObjectWithRequiredField, requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.params.createWithBodyAndQuery(
+        fields: "_fields",
+        request: ObjectWithRequiredField(
+            string: "string"
+        )
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `String?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithBooleanPath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>

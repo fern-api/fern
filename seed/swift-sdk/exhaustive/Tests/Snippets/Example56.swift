@@ -8,6 +8,11 @@ enum Example56 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.urls.withMixedCase()
+        _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
+            Dog(
+                name: "name",
+                likesToWoof: true
+            )
+        ))
     }
 }
