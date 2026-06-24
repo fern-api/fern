@@ -137,6 +137,11 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningNewVersion?: string;
     autoVersioningPreviousVersion?: string;
 }> {
+    // When version is AUTO, pass the magic placeholder to the IR so that any
+    // version strings embedded in generated code (e.g., User-Agent header) use
+    // the safe placeholder that will be correctly replaced post-generation.
+    const irVersion = version ?? outputVersionOverride;
+    const effectiveIrVersion = irVersion != null && isAutoVersion(irVersion) ? MAGIC_VERSION : irVersion;
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
@@ -144,7 +149,7 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
-        version: version ?? outputVersionOverride,
+        version: effectiveIrVersion,
         sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
         ir
