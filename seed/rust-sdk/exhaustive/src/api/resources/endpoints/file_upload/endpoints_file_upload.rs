@@ -55,7 +55,7 @@ impl FileUploadClient {
         options: Option<RequestOptions>,
     ) -> Result<ByteStream, ApiError> {
         self.http_client
-            .execute_multipart_request(
+            .execute_multipart_stream_request(
                 Method::POST,
                 "/file-upload/convert-streaming",
                 request.clone().to_multipart(),

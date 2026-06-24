@@ -5,10 +5,7 @@ pub struct ConvertRequest {
     #[serde(default)]
     #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
-    #[serde(skip)]
-    pub maybe_string: Option<String>,
-    #[serde(rename = "maybeString")]
-    #[serde(skip)]
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_string: Option<String>,
     #[serde(skip)]
     #[serde(default)]
@@ -50,7 +47,6 @@ impl ConvertRequest {
 pub struct ConvertRequestBuilder {
     file: Option<Vec<u8>>,
     maybe_string: Option<String>,
-    maybe_string: Option<String>,
     integer: Option<i64>,
     maybe_integer: Option<i64>,
 }
@@ -58,11 +54,6 @@ pub struct ConvertRequestBuilder {
 impl ConvertRequestBuilder {
     pub fn file(mut self, value: Vec<u8>) -> Self {
         self.file = Some(value);
-        self
-    }
-
-    pub fn maybe_string(mut self, value: impl Into<String>) -> Self {
-        self.maybe_string = Some(value.into());
         self
     }
 
@@ -88,7 +79,6 @@ impl ConvertRequestBuilder {
     pub fn build(self) -> Result<ConvertRequest, BuildError> {
         Ok(ConvertRequest {
             file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
-            maybe_string: self.maybe_string,
             maybe_string: self.maybe_string,
             integer: self
                 .integer
