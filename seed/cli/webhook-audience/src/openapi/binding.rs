@@ -437,11 +437,17 @@ impl Binding for OpenApiBinding {
             let params_override = matched_args
                 .get_one::<String>("params")
                 .map(|s| s.as_str());
-            let params = super::app::collect_params_from_flags(
-                matched_args,
-                method,
-                params_override,
-            )?;
+            // `collect_params_from_flags` may call `resolve_file_refs` which
+            // performs blocking `std::fs::read` I/O. Wrap in `block_in_place`
+            // so the tokio runtime can schedule other work while the thread is
+            // parked on disk reads.
+            let params = tokio::task::block_in_place(|| {
+                super::app::collect_params_from_flags(
+                    matched_args,
+                    method,
+                    params_override,
+                )
+            })?;
             let params_json_string = serde_json::to_string(&params)
                 .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
             let params_json: Option<&str> = if params.is_empty() {
@@ -454,6 +460,7 @@ impl Binding for OpenApiBinding {
             let body_json = body_json_owned.as_deref();
 
             let dry_run = matched_args.get_flag("dry-run");
+            let debug = root_matches.get_flag("debug");
 
             let pagination = super::app::build_pagination_config(matched_args, doc);
 
@@ -480,17 +487,33 @@ impl Binding for OpenApiBinding {
             // Validate binary body path for dangerous characters. Validate the
             // SAME string the executor will use as the file path — for plain
             // and `@`-prefixed values that's the input with the optional `@`
-            // stripped; for the `\@<REST>` escape that's the literal `@<REST>`
-            // produced by `strip_or_escape_at`. Unlike the multipart and
+            // (or `@file://` / `@data://` scheme) stripped; for the `\@<REST>`
+            // escape that's the literal `@<REST>`. Unlike the multipart and
             // JSON-shorthand sites, the binary-body escape still opens a file
-            // (see `BinaryBodySource::parse` → `File(...)`), so path-shape
-            // validation must apply in both branches. FER-10436.
+            // (see `BinaryBodySource::parse` → `File { .. }`), so path-shape
+            // validation must apply in both branches. FER-10436, FER-10532.
+            //
+            // Stdin is only the `Auto`-mode `-` sentinel; an explicit scheme
+            // (`@file://-` / `@data://-`) is a literal filename and is still
+            // validated.
             if let Some(path_str) = binary_body_path {
-                let stripped = executor::strip_or_escape_at(path_str);
-                if stripped.as_ref() != "-" {
-                    let flag = method.binary_request_body.as_ref()
-                        .map(|b| b.flag_name.as_str()).unwrap_or("file");
-                    crate::output::reject_dangerous_chars(stripped.as_ref(), &format!("--{flag}"))?;
+                let flag = method.binary_request_body.as_ref()
+                    .map(|b| b.flag_name.as_str()).unwrap_or("file");
+                let (inner, is_stdin) = match executor::parse_at_ref(path_str) {
+                    executor::AtRef::File { path, mode: executor::AtMode::Auto } => {
+                        let is_dash = path.as_ref() == "-";
+                        (path, is_dash)
+                    }
+                    executor::AtRef::File { path, .. } => (path, false),
+                    executor::AtRef::Escaped(literal) => {
+                        (std::borrow::Cow::Owned(literal), false)
+                    }
+                    executor::AtRef::Plain(s) => {
+                        (std::borrow::Cow::Borrowed(s), s == "-")
+                    }
+                };
+                if !is_stdin {
+                    crate::output::reject_dangerous_chars(inner.as_ref(), &format!("--{flag}"))?;
                 }
             }
 
@@ -554,6 +577,7 @@ impl Binding for OpenApiBinding {
                 no_extract,
                 no_retry,
                 no_stream,
+                debug,
                 &global_header_overrides,
             )
             .await?;
@@ -576,6 +600,7 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let debug = matches.get_flag("debug");
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         let ctx = super::AppContext::new(
@@ -584,7 +609,8 @@ impl Binding for OpenApiBinding {
             entry.http_config,
             entry.global_headers,
         ).with_quiet(quiet)
-         .with_base_url_override(base_url_override);
+         .with_base_url_override(base_url_override)
+         .with_debug(debug);
         Ok(Some(Box::new(ctx)))
     }
 
@@ -600,12 +626,16 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let debug = matches.get_flag("debug");
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {
                     ctx.add_entry(entry);
+                    ctx.debug = debug;
+                    ctx.quiet = quiet;
+                    ctx.base_url_override = base_url_override;
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -617,7 +647,8 @@ impl Binding for OpenApiBinding {
                         entry.http_config,
                         entry.global_headers,
                     ).with_quiet(quiet)
-                     .with_base_url_override(base_url_override);
+                     .with_base_url_override(base_url_override)
+                     .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
@@ -629,7 +660,8 @@ impl Binding for OpenApiBinding {
                     entry.http_config,
                     entry.global_headers,
                 ).with_quiet(quiet)
-                 .with_base_url_override(base_url_override);
+                 .with_base_url_override(base_url_override)
+                 .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
         }

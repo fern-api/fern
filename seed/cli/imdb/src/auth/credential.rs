@@ -25,6 +25,8 @@ use std::sync::Arc;
 
 use secrecy::SecretString;
 
+use crate::auth::keyring_store::active_store;
+
 type CredentialClosure = Arc<dyn Fn() -> Option<String> + Send + Sync>;
 
 /// How an auth credential's value is resolved at request time.
@@ -63,6 +65,18 @@ pub enum AuthCredentialSource {
     /// report the original source after `finalize()` replaces `Cli` with
     /// a `Closure`.
     Closure(CredentialClosure, Option<String>),
+    /// Read from the OS keyring (or its file fallback). Populated by
+    /// `auth login` flows; resolves via the process-global active
+    /// [`KeyringStore`](crate::auth::keyring_store::KeyringStore).
+    ///
+    /// Sits at priority 3 in the default credential chain — below CLI
+    /// flags and env vars, above file sources (ADR-0008).
+    Keyring {
+        /// Keyring service name — typically the CLI's binary name.
+        service: String,
+        /// Account name within the service — typically the auth scheme name.
+        account: String,
+    },
     /// No source bound. The provider will report itself as unable to
     /// satisfy requests.
     Missing,
@@ -102,6 +116,15 @@ impl AuthCredentialSource {
         AuthCredentialSource::Closure(Arc::new(f), None)
     }
 
+    /// Bind to a keyring entry at `(service, account)`. The value is read
+    /// from the process-global active [`KeyringStore`] at resolve time.
+    pub fn keyring(service: impl Into<String>, account: impl Into<String>) -> Self {
+        AuthCredentialSource::Keyring {
+            service: service.into(),
+            account: account.into(),
+        }
+    }
+
     /// Resolve the value, if available. Empty strings are treated as
     /// missing — they would otherwise produce an empty header, which is
     /// almost never what a caller intends.
@@ -123,6 +146,12 @@ impl AuthCredentialSource {
             AuthCredentialSource::Literal(v) => Some(SecretString::from(v.clone())),
             AuthCredentialSource::Chain(sources) => sources.iter().find_map(|s| s.resolve()),
             AuthCredentialSource::Closure(f, _) => f().filter(|v| !v.is_empty()).map(SecretString::from),
+            AuthCredentialSource::Keyring { service, account } => active_store()
+                .get(service, account)
+                .ok()
+                .flatten()
+                .filter(|v| !v.is_empty())
+                .map(SecretString::from),
             AuthCredentialSource::Missing => None,
         }
     }
@@ -139,6 +168,9 @@ impl AuthCredentialSource {
                 sources.iter().flat_map(|s| s.credential_hints()).collect()
             }
             AuthCredentialSource::Closure(_, Some(hint)) => vec![hint.clone()],
+            AuthCredentialSource::Keyring { service, account } => {
+                vec![format!("keyring entry {service}:{account} (populated by `<bin> auth login`)")]
+            }
             AuthCredentialSource::Literal(_)
             | AuthCredentialSource::Closure(_, None)
             | AuthCredentialSource::Missing => Vec::new(),
@@ -169,6 +201,7 @@ impl AuthCredentialSource {
             | AuthCredentialSource::File(_)
             | AuthCredentialSource::Literal(_)
             | AuthCredentialSource::Closure(_, _)
+            | AuthCredentialSource::Keyring { .. }
             | AuthCredentialSource::Missing => {}
         }
     }
@@ -215,6 +248,9 @@ impl std::fmt::Debug for AuthCredentialSource {
                 } else {
                     write!(f, "Closure")
                 }
+            }
+            AuthCredentialSource::Keyring { service, account } => {
+                write!(f, "Keyring({service}:{account})")
             }
             AuthCredentialSource::Missing => write!(f, "Missing"),
         }
@@ -634,6 +670,87 @@ mod tests {
     fn credential_hints_closure_without_hint_is_empty() {
         let s = AuthCredentialSource::closure(|| Some("x".into()));
         assert!(s.credential_hints().is_empty());
+    }
+
+    // -------- Keyring --------
+
+    #[test]
+    #[serial_test::serial]
+    fn keyring_source_resolves_via_active_store() {
+        use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("svc", "OAuth2", "stashed-token").unwrap();
+        set_active_store(mock.clone());
+
+        let s = AuthCredentialSource::keyring("svc", "OAuth2");
+        assert_eq!(resolved(&s), Some("stashed-token".to_string()));
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn keyring_source_returns_none_when_unset() {
+        use crate::auth::keyring_store::{set_active_store, MockKeyringStore};
+        set_active_store(Arc::new(MockKeyringStore::new()));
+
+        let s = AuthCredentialSource::keyring("svc", "nothing-here");
+        assert_eq!(resolved(&s), None);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn keyring_source_empty_value_resolves_to_none() {
+        use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
+        let mock = Arc::new(MockKeyringStore::new());
+        mock.set("svc", "k", "").unwrap();
+        set_active_store(mock);
+
+        let s = AuthCredentialSource::keyring("svc", "k");
+        assert_eq!(resolved(&s), None);
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn keyring_source_in_chain_falls_through_when_missing() {
+        use crate::auth::keyring_store::{set_active_store, MockKeyringStore};
+        set_active_store(Arc::new(MockKeyringStore::new()));
+
+        let s = AuthCredentialSource::any([
+            AuthCredentialSource::keyring("svc", "nothing"),
+            AuthCredentialSource::literal("fallback"),
+        ]);
+        assert_eq!(resolved(&s), Some("fallback".to_string()));
+    }
+
+    #[test]
+    fn keyring_credential_hint_describes_entry() {
+        let s = AuthCredentialSource::keyring("elevenlabs", "OAuth2");
+        let hints = s.credential_hints();
+        assert_eq!(hints.len(), 1);
+        assert!(hints[0].contains("elevenlabs"));
+        assert!(hints[0].contains("OAuth2"));
+        assert!(hints[0].contains("auth login"));
+    }
+
+    #[test]
+    fn keyring_cli_args_is_empty() {
+        let s = AuthCredentialSource::keyring("svc", "acct");
+        assert!(s.cli_args().is_empty());
+    }
+
+    #[test]
+    fn keyring_finalize_is_pass_through() {
+        let cmd = clap::Command::new("test");
+        let matches = Arc::new(cmd.try_get_matches_from(vec!["test"]).unwrap());
+        let s = AuthCredentialSource::keyring("svc", "acct").finalize(&matches);
+        assert!(matches!(s, AuthCredentialSource::Keyring { .. }));
+    }
+
+    #[test]
+    fn keyring_debug_shows_service_and_account() {
+        let s = AuthCredentialSource::keyring("elevenlabs", "OAuth2");
+        let dbg = format!("{s:?}");
+        assert!(dbg.contains("elevenlabs"));
+        assert!(dbg.contains("OAuth2"));
     }
 
     #[test]
