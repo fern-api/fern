@@ -33,9 +33,9 @@ export declare namespace Stream {
 
 export interface ServerSentEvent<T> {
     data: T;
-    id: string | undefined;
-    retry: number | undefined;
-    event: string | undefined;
+    id?: string;
+    retry?: number;
+    event?: string;
 }
 
 const DATA_PREFIX = "data:";
