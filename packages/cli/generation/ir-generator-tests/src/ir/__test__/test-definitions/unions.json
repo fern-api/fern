@@ -114,7 +114,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:NormalSweet"
                         },
-                        "displayName": null,
+                        "displayName": "Normal Sweet",
                         "availability": null,
                         "docs": null
                     },
@@ -133,7 +133,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:ThankfulFactor"
                         },
-                        "displayName": null,
+                        "displayName": "Thankful Factor",
                         "availability": null,
                         "docs": null
                     },
@@ -152,7 +152,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:JumboEnd"
                         },
-                        "displayName": null,
+                        "displayName": "Jumbo End",
                         "availability": null,
                         "docs": null
                     },
@@ -171,7 +171,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:HastyPain"
                         },
-                        "displayName": null,
+                        "displayName": "Hasty Pain",
                         "availability": null,
                         "docs": null
                     },
@@ -190,7 +190,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:MistySnow"
                         },
-                        "displayName": null,
+                        "displayName": "Misty Snow",
                         "availability": null,
                         "docs": null
                     },
@@ -209,7 +209,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:DistinctFailure"
                         },
-                        "displayName": null,
+                        "displayName": "Distinct Failure",
                         "availability": null,
                         "docs": null
                     },
@@ -228,7 +228,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:PracticalPrinciple"
                         },
-                        "displayName": null,
+                        "displayName": "Practical Principle",
                         "availability": null,
                         "docs": null
                     },
@@ -247,7 +247,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:LimpingStep"
                         },
-                        "displayName": null,
+                        "displayName": "Limping Step",
                         "availability": null,
                         "docs": null
                     },
@@ -266,7 +266,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:VibrantExcitement"
                         },
-                        "displayName": null,
+                        "displayName": "Vibrant Excitement",
                         "availability": null,
                         "docs": null
                     },
@@ -285,7 +285,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:ActiveDiamond"
                         },
-                        "displayName": null,
+                        "displayName": "Active Diamond",
                         "availability": null,
                         "docs": null
                     },
@@ -304,7 +304,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:PopularLimit"
                         },
-                        "displayName": null,
+                        "displayName": "Popular Limit",
                         "availability": null,
                         "docs": null
                     },
@@ -323,7 +323,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:FalseMirror"
                         },
-                        "displayName": null,
+                        "displayName": "False Mirror",
                         "availability": null,
                         "docs": null
                     },
@@ -342,7 +342,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:PrimaryBlock"
                         },
-                        "displayName": null,
+                        "displayName": "Primary Block",
                         "availability": null,
                         "docs": null
                     },
@@ -361,7 +361,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:RotatingRatio"
                         },
-                        "displayName": null,
+                        "displayName": "Rotating Ratio",
                         "availability": null,
                         "docs": null
                     },
@@ -380,7 +380,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:ColorfulCover"
                         },
-                        "displayName": null,
+                        "displayName": "Colorful Cover",
                         "availability": null,
                         "docs": null
                     },
@@ -399,7 +399,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:DisloyalValue"
                         },
-                        "displayName": null,
+                        "displayName": "Disloyal Value",
                         "availability": null,
                         "docs": null
                     },
@@ -418,7 +418,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:GruesomeCoach"
                         },
-                        "displayName": null,
+                        "displayName": "Gruesome Coach",
                         "availability": null,
                         "docs": null
                     },
@@ -437,7 +437,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:TotalWork"
                         },
-                        "displayName": null,
+                        "displayName": "Total Work",
                         "availability": null,
                         "docs": null
                     },
@@ -456,7 +456,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:HarmoniousPlay"
                         },
-                        "displayName": null,
+                        "displayName": "Harmonious Play",
                         "availability": null,
                         "docs": null
                     },
@@ -475,7 +475,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:UniqueStress"
                         },
-                        "displayName": null,
+                        "displayName": "Unique Stress",
                         "availability": null,
                         "docs": null
                     },
@@ -494,7 +494,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:UnwillingSmoke"
                         },
-                        "displayName": null,
+                        "displayName": "Unwilling Smoke",
                         "availability": null,
                         "docs": null
                     },
@@ -513,7 +513,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:FrozenSleep"
                         },
-                        "displayName": null,
+                        "displayName": "Frozen Sleep",
                         "availability": null,
                         "docs": null
                     },
@@ -532,7 +532,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:DiligentDeal"
                         },
-                        "displayName": null,
+                        "displayName": "Diligent Deal",
                         "availability": null,
                         "docs": null
                     },
@@ -551,7 +551,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:AttractiveScript"
                         },
-                        "displayName": null,
+                        "displayName": "Attractive Script",
                         "availability": null,
                         "docs": null
                     },
@@ -570,7 +570,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:HoarseMouse"
                         },
-                        "displayName": null,
+                        "displayName": "Hoarse Mouse",
                         "availability": null,
                         "docs": null
                     },
@@ -589,7 +589,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:CircularCard"
                         },
-                        "displayName": null,
+                        "displayName": "Circular Card",
                         "availability": null,
                         "docs": null
                     },
@@ -608,7 +608,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:PotableBad"
                         },
-                        "displayName": null,
+                        "displayName": "Potable Bad",
                         "availability": null,
                         "docs": null
                     },
@@ -627,7 +627,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:TriangularRepair"
                         },
-                        "displayName": null,
+                        "displayName": "Triangular Repair",
                         "availability": null,
                         "docs": null
                     },
@@ -646,7 +646,7 @@
                             "displayName": null,
                             "typeId": "type_bigunion:GaseousRoad"
                         },
-                        "displayName": null,
+                        "displayName": "Gaseous Road",
                         "availability": null,
                         "docs": null
                     }
@@ -2961,7 +2961,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     },
@@ -2986,7 +2986,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Bar",
                         "availability": null,
                         "docs": null
                     }
@@ -3255,7 +3255,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": "This is a Foo field."
                     },
@@ -3280,7 +3280,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Bar",
                         "availability": null,
                         "docs": null
                     }
@@ -3712,7 +3712,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     },
@@ -3731,7 +3731,7 @@
                             "displayName": null,
                             "typeId": "type_types:Bar"
                         },
-                        "displayName": null,
+                        "displayName": "Bar",
                         "availability": null,
                         "docs": "This is a bar field."
                     }
@@ -3898,7 +3898,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     },
@@ -4038,7 +4038,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     },
@@ -4402,7 +4402,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     }
@@ -5042,7 +5042,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     }
@@ -5154,7 +5154,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     },
@@ -5173,7 +5173,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     }
@@ -5339,7 +5339,7 @@
                             "displayName": null,
                             "typeId": "type_types:Foo"
                         },
-                        "displayName": null,
+                        "displayName": "Foo",
                         "availability": null,
                         "docs": null
                     },
@@ -5358,7 +5358,7 @@
                             "displayName": null,
                             "typeId": "type_types:FooExtended"
                         },
-                        "displayName": null,
+                        "displayName": "Foo Extended",
                         "availability": null,
                         "docs": null
                     }
@@ -5552,7 +5552,7 @@
                             "displayName": null,
                             "typeId": "type_types:FirstItemType"
                         },
-                        "displayName": null,
+                        "displayName": "First Item Type",
                         "availability": null,
                         "docs": null
                     },
@@ -5571,7 +5571,7 @@
                             "displayName": null,
                             "typeId": "type_types:SecondItemType"
                         },
-                        "displayName": null,
+                        "displayName": "Second Item Type",
                         "availability": null,
                         "docs": null
                     }
@@ -6969,7 +6969,7 @@
                             "displayName": null,
                             "typeId": "type_union:Circle"
                         },
-                        "displayName": null,
+                        "displayName": "Circle",
                         "availability": null,
                         "docs": null
                     },
@@ -6988,7 +6988,7 @@
                             "displayName": null,
                             "typeId": "type_union:Square"
                         },
-                        "displayName": null,
+                        "displayName": "Square",
                         "availability": null,
                         "docs": null
                     }

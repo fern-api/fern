@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: Test spec for anyOf $ref displayName propagation
+  version: 1.0.0
+
+paths:
+  /media:
+    post:
+      operationId: createMedia
+      tags:
+        - Media
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMediaRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+
+components:
+  schemas:
+    CreateMediaRequest:
+      type: object
+      required:
+        - inputs
+      properties:
+        inputs:
+          type: array
+          description: Add one input at a time.
+          items:
+            anyOf:
+              - $ref: "#/components/schemas/VideoInput"
+              - $ref: "#/components/schemas/WatermarkInput"
+              - $ref: "#/components/schemas/AudioInput"
+              - $ref: "#/components/schemas/SubtitleInput"
+
+    VideoInput:
+      type: object
+      required:
+        - url
+        - type
+      properties:
+        type:
+          type: string
+          example: video
+          description: Defines the type of input.
+        url:
+          type: string
+          example: "https://example.com/video.mp4"
+
+    WatermarkInput:
+      type: object
+      required:
+        - url
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - watermark
+          description: Type of overlay.
+          example: watermark
+        url:
+          type: string
+          format: uri
+          description: URL of the watermark image.
+
+    AudioInput:
+      type: object
+      required:
+        - swapTrackUrl
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - audio
+          description: Type of overlay.
+          example: audio
+        swapTrackUrl:
+          type: string
+          format: uri
+          description: URL of the audio track.
+
+    SubtitleInput:
+      type: object
+      required:
+        - type
+        - url
+        - languageName
+      properties:
+        type:
+          type: string
+          example: subtitle
+          description: Defines the type of input.
+        url:
+          type: string
+          format: uri
+          description: The direct URL of the subtitle file.
+        languageName:
+          type: string
+          description: Name of the language.

@@ -611,7 +611,7 @@
                             "displayName": null,
                             "typeId": "type_:User"
                         },
-                        "displayName": null,
+                        "displayName": "User",
                         "availability": null,
                         "docs": null
                     },
@@ -634,7 +634,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Admin",
                         "availability": null,
                         "docs": null
                     },

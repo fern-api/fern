@@ -1,0 +1,286 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "AudioInput": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "swapTrackUrl": {
+                "docs": "URL of the audio track.",
+                "type": "string",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SubtitleInput": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "languageName": {
+                "docs": "Name of the language.",
+                "type": "string",
+              },
+              "url": {
+                "docs": "The direct URL of the subtitle file.",
+                "type": "string",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "VideoInput": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "url": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "WatermarkInput": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "url": {
+                "docs": "URL of the watermark image.",
+                "type": "string",
+                "validation": {
+                  "format": "uri",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  VideoInput:
+    properties:
+      url: string
+    source:
+      openapi: ../openapi.yml
+  WatermarkInput:
+    properties:
+      url:
+        type: string
+        docs: URL of the watermark image.
+        validation:
+          format: uri
+    source:
+      openapi: ../openapi.yml
+  AudioInput:
+    properties:
+      swapTrackUrl:
+        type: string
+        docs: URL of the audio track.
+        validation:
+          format: uri
+    source:
+      openapi: ../openapi.yml
+  SubtitleInput:
+    properties:
+      url:
+        type: string
+        docs: The direct URL of the subtitle file.
+        validation:
+          format: uri
+      languageName:
+        type: string
+        docs: Name of the language.
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "media.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createMedia": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "inputs": [
+                      {
+                        "type": "video",
+                        "url": "https://example.com/video.mp4",
+                      },
+                    ],
+                  },
+                  "response": {
+                    "body": {
+                      "id": "id",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/media",
+              "request": {
+                "body": {
+                  "properties": {
+                    "inputs": {
+                      "docs": "Add one input at a time.",
+                      "type": "list<CreateMediaRequestInputsItem>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateMediaRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "CreateMediaResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "CreateMediaRequestInputsItem": {
+            "availability": undefined,
+            "base-properties": {},
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "type",
+            },
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "audio": "root.AudioInput",
+              "subtitle": "root.SubtitleInput",
+              "video": "root.VideoInput",
+              "watermark": "root.WatermarkInput",
+            },
+          },
+          "CreateMediaResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+types:
+  CreateMediaRequestInputsItem:
+    discriminant:
+      value: type
+      context: data
+    base-properties: {}
+    union:
+      video: root.VideoInput
+      watermark: root.WatermarkInput
+      audio: root.AudioInput
+      subtitle: root.SubtitleInput
+    source:
+      openapi: ../openapi.yml
+  CreateMediaResponse:
+    properties:
+      id: optional<string>
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createMedia:
+      path: /media
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: CreateMediaRequest
+        body:
+          properties:
+            inputs:
+              docs: Add one input at a time.
+              type: list<CreateMediaRequestInputsItem>
+        content-type: application/json
+      response:
+        docs: Success
+        type: CreateMediaResponse
+        status-code: 200
+      examples:
+        - request:
+            inputs:
+              - url: https://example.com/video.mp4
+                type: video
+          response:
+            body:
+              id: id
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test spec for anyOf $ref displayName propagation",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test spec for anyOf $ref displayName propagation
+",
+  },
+  "specVersion": "1.0.0",
+}

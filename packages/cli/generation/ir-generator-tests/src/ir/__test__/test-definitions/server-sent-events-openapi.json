@@ -45,7 +45,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolHeartbeat"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Heartbeat",
                         "availability": null,
                         "docs": null
                     },
@@ -62,7 +62,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolStringEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol String Event",
                         "availability": null,
                         "docs": null
                     },
@@ -79,7 +79,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolNumberEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Number Event",
                         "availability": null,
                         "docs": null
                     },
@@ -96,7 +96,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolObjectEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Object Event",
                         "availability": null,
                         "docs": null
                     }
@@ -153,7 +153,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolHeartbeat"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Heartbeat",
                         "availability": null,
                         "docs": null
                     },
@@ -170,7 +170,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolStringEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol String Event",
                         "availability": null,
                         "docs": null
                     },
@@ -187,7 +187,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolNumberEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Number Event",
                         "availability": null,
                         "docs": null
                     },
@@ -204,7 +204,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolCollisionObjectEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Collision Object Event",
                         "availability": null,
                         "docs": null
                     }
@@ -261,7 +261,7 @@
                             "displayName": null,
                             "typeId": "type_:DataContextHeartbeat"
                         },
-                        "displayName": null,
+                        "displayName": "Data Context Heartbeat",
                         "availability": null,
                         "docs": null
                     },
@@ -278,7 +278,7 @@
                             "displayName": null,
                             "typeId": "type_:DataContextEntityEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Data Context Entity Event",
                         "availability": null,
                         "docs": null
                     }
@@ -335,7 +335,7 @@
                             "displayName": null,
                             "typeId": "type_:DataContextHeartbeat"
                         },
-                        "displayName": null,
+                        "displayName": "Data Context Heartbeat",
                         "availability": null,
                         "docs": null
                     },
@@ -352,7 +352,7 @@
                             "displayName": null,
                             "typeId": "type_:DataContextEntityEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Data Context Entity Event",
                         "availability": null,
                         "docs": null
                     }
@@ -409,7 +409,7 @@
                             "displayName": null,
                             "typeId": "type_:DataContextHeartbeat"
                         },
-                        "displayName": null,
+                        "displayName": "Data Context Heartbeat",
                         "availability": null,
                         "docs": null
                     },
@@ -426,7 +426,7 @@
                             "displayName": null,
                             "typeId": "type_:DataContextEntityEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Data Context Entity Event",
                         "availability": null,
                         "docs": null
                     }
@@ -483,7 +483,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolHeartbeat"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Heartbeat",
                         "availability": null,
                         "docs": null
                     },
@@ -500,7 +500,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolStringEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol String Event",
                         "availability": null,
                         "docs": null
                     },
@@ -517,7 +517,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolNumberEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Number Event",
                         "availability": null,
                         "docs": null
                     },
@@ -534,7 +534,7 @@
                             "displayName": null,
                             "typeId": "type_:ProtocolObjectEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Protocol Object Event",
                         "availability": null,
                         "docs": null
                     }
@@ -613,7 +613,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamMessageVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Message Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -630,7 +630,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamInterruptVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Interrupt Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -647,7 +647,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamCompactVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Compact Variant",
                         "availability": null,
                         "docs": null
                     }
@@ -725,7 +725,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamMessageVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Message Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -742,7 +742,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamInterruptVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Interrupt Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -759,7 +759,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamCompactVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Compact Variant",
                         "availability": null,
                         "docs": null
                     }
@@ -2726,7 +2726,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamMessageVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Message Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -2743,7 +2743,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamInterruptVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Interrupt Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -2760,7 +2760,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionStreamCompactVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Union Stream Compact Variant",
                         "availability": null,
                         "docs": null
                     }

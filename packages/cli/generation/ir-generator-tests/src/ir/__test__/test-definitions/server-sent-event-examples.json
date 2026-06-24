@@ -351,7 +351,7 @@
                             "displayName": null,
                             "typeId": "type_completions:CompletionEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Completion Event",
                         "availability": null,
                         "docs": null
                     },
@@ -370,7 +370,7 @@
                             "displayName": null,
                             "typeId": "type_completions:ErrorEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Error Event",
                         "availability": null,
                         "docs": null
                     },
@@ -389,7 +389,7 @@
                             "displayName": null,
                             "typeId": "type_completions:EventEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Event Event",
                         "availability": null,
                         "docs": null
                     }
@@ -604,7 +604,7 @@
                             "displayName": null,
                             "typeId": "type_completions:GroupCreatedEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Group Created Event",
                         "availability": null,
                         "docs": null
                     },
@@ -623,7 +623,7 @@
                             "displayName": null,
                             "typeId": "type_completions:GroupDeletedEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Group Deleted Event",
                         "availability": null,
                         "docs": null
                     }
@@ -681,7 +681,7 @@
                             "displayName": null,
                             "typeId": "type_completions:CompletionEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Completion Event",
                         "availability": null,
                         "docs": null
                     },
@@ -700,7 +700,7 @@
                             "displayName": null,
                             "typeId": "type_completions:ErrorEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Error Event",
                         "availability": null,
                         "docs": null
                     }

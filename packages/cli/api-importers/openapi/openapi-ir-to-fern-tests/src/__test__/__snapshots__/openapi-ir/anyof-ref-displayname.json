@@ -1,0 +1,376 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Test spec for anyOf $ref displayName propagation",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createMedia",
+      "tags": [
+        "Media"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateMediaBody",
+      "request": {
+        "schema": {
+          "generatedName": "CreateMediaRequest",
+          "schema": "CreateMediaRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createMediaResponseId",
+              "key": "id",
+              "schema": {
+                "generatedName": "CreateMediaResponseId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CreateMediaResponseId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CreateMediaResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/media",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "value": [
+                  {
+                    "value": {
+                      "value": {
+                        "url": {
+                          "value": {
+                            "value": "https://example.com/video.mp4",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "type": {
+                          "value": {
+                            "value": "video",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "discriminated"
+                    },
+                    "type": "oneOf"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "CreateMediaRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createMediaRequestInputs",
+            "key": "inputs",
+            "schema": {
+              "description": "Add one input at a time.",
+              "value": {
+                "value": {
+                  "commonProperties": [],
+                  "discriminantProperty": "type",
+                  "discriminatorContext": "data",
+                  "generatedName": "CreateMediaRequestInputsItem",
+                  "schemas": {
+                    "video": {
+                      "generatedName": "ComponentsSchemasVideoInput",
+                      "schema": "VideoInput",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
+                    },
+                    "watermark": {
+                      "generatedName": "ComponentsSchemasWatermarkInput",
+                      "schema": "WatermarkInput",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
+                    },
+                    "audio": {
+                      "generatedName": "ComponentsSchemasAudioInput",
+                      "schema": "AudioInput",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
+                    },
+                    "subtitle": {
+                      "generatedName": "ComponentsSchemasSubtitleInput",
+                      "schema": "SubtitleInput",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
+                    }
+                  },
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              },
+              "generatedName": "CreateMediaRequestInputs",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateMediaRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "VideoInput": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "videoInputUrl",
+            "key": "url",
+            "schema": {
+              "schema": {
+                "example": "https://example.com/video.mp4",
+                "type": "string"
+              },
+              "generatedName": "VideoInputUrl",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "VideoInput",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "WatermarkInput": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "watermarkInputUrl",
+            "key": "url",
+            "schema": {
+              "description": "URL of the watermark image.",
+              "schema": {
+                "format": "uri",
+                "type": "string"
+              },
+              "generatedName": "WatermarkInputUrl",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "WatermarkInput",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AudioInput": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "audioInputSwapTrackUrl",
+            "key": "swapTrackUrl",
+            "schema": {
+              "description": "URL of the audio track.",
+              "schema": {
+                "format": "uri",
+                "type": "string"
+              },
+              "generatedName": "AudioInputSwapTrackUrl",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AudioInput",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SubtitleInput": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "subtitleInputUrl",
+            "key": "url",
+            "schema": {
+              "description": "The direct URL of the subtitle file.",
+              "schema": {
+                "format": "uri",
+                "type": "string"
+              },
+              "generatedName": "SubtitleInputUrl",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "subtitleInputLanguageName",
+            "key": "languageName",
+            "schema": {
+              "description": "Name of the language.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SubtitleInputLanguageName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "SubtitleInput",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

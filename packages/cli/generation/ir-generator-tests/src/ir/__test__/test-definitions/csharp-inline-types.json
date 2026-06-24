@@ -1082,7 +1082,7 @@
                             "displayName": null,
                             "typeId": "type_:DiscriminatedUnion1InlineType1"
                         },
-                        "displayName": null,
+                        "displayName": "Discriminated Union1inline Type1",
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -1099,7 +1099,7 @@
                             "displayName": null,
                             "typeId": "type_:DiscriminatedUnion1InlineType2"
                         },
-                        "displayName": null,
+                        "displayName": "Discriminated Union1inline Type2",
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -1116,7 +1116,7 @@
                             "displayName": null,
                             "typeId": "type_:ReferenceType"
                         },
-                        "displayName": null,
+                        "displayName": "Reference Type",
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
@@ -1970,7 +1970,7 @@
                             "displayName": null,
                             "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1"
                         },
-                        "displayName": null,
+                        "displayName": "Undiscriminated Union1discriminated Union1inline Type1",
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -1987,7 +1987,7 @@
                             "displayName": null,
                             "typeId": "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2"
                         },
-                        "displayName": null,
+                        "displayName": "Undiscriminated Union1discriminated Union1inline Type2",
                         "availability": null,
                         "docs": "lorem ipsum"
                     },
@@ -2004,7 +2004,7 @@
                             "displayName": null,
                             "typeId": "type_:ReferenceType"
                         },
-                        "displayName": null,
+                        "displayName": "Reference Type",
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
@@ -2719,7 +2719,7 @@
                             "displayName": null,
                             "typeId": "type_:AliasVariantType"
                         },
-                        "displayName": null,
+                        "displayName": "Alias Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -2736,7 +2736,7 @@
                             "displayName": null,
                             "typeId": "type_:NonAliasVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Non Alias Variant",
                         "availability": null,
                         "docs": null
                     }
@@ -4500,7 +4500,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionWithTypesVariantInlineType1"
                         },
-                        "displayName": null,
+                        "displayName": "Union with Types Variant Inline Type1",
                         "availability": null,
                         "docs": "This variant name collides with the default nested class name \"Types\""
                     },
@@ -4517,7 +4517,7 @@
                             "displayName": null,
                             "typeId": "type_:UnionWithTypesVariantOtherInlineType1"
                         },
-                        "displayName": null,
+                        "displayName": "Union with Types Variant Other Inline Type1",
                         "availability": null,
                         "docs": "This is a non-colliding variant"
                     }

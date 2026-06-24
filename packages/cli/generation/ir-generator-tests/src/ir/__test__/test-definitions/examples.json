@@ -863,7 +863,7 @@
                             "displayName": null,
                             "typeId": "type_commons/types:Metadata"
                         },
-                        "displayName": null,
+                        "displayName": "Metadata",
                         "availability": null,
                         "docs": null
                     },
@@ -891,7 +891,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Tag",
                         "availability": null,
                         "docs": null
                     }
@@ -6423,7 +6423,7 @@
                             "displayName": null,
                             "typeId": "type_types:ExceptionInfo"
                         },
-                        "displayName": null,
+                        "displayName": "Exception Info",
                         "availability": null,
                         "docs": null
                     },

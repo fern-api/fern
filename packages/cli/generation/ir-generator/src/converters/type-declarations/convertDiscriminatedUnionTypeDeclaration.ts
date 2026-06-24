@@ -1,3 +1,4 @@
+import { titleCase } from "@fern-api/core-utils";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     SingleUnionType,
@@ -6,6 +7,7 @@ import {
     TypeReference,
     UnionDiscriminatorContext
 } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
@@ -57,6 +59,14 @@ export function convertDiscriminatedUnionTypeDeclaration({
 
         const parsedValueType = file.parseTypeReference(rawType);
 
+        const explicitDisplayName = getDisplayName(rawSingleUnionType);
+        const displayName =
+            explicitDisplayName != null
+                ? explicitDisplayName
+                : parsedValueType.type === "named"
+                  ? titleCase(getOriginalName(parsedValueType.name))
+                  : undefined;
+
         return {
             discriminantValue,
             shape: getSingleUnionTypeProperties({
@@ -67,7 +77,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 typeResolver
             }),
             docs: getDocs(rawSingleUnionType),
-            displayName: getDisplayName(rawSingleUnionType),
+            displayName,
             availability: getAvailability(rawSingleUnionType)
         };
     });

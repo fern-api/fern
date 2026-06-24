@@ -698,7 +698,7 @@
                             "displayName": null,
                             "typeId": "type_:Isin"
                         },
-                        "displayName": null,
+                        "displayName": "Isin",
                         "availability": null,
                         "docs": null
                     },
@@ -715,7 +715,7 @@
                             "displayName": null,
                             "typeId": "type_:Cusip"
                         },
-                        "displayName": null,
+                        "displayName": "Cusip",
                         "availability": null,
                         "docs": null
                     }

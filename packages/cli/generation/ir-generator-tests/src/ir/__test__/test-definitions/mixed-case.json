@@ -946,7 +946,7 @@
                             "displayName": null,
                             "typeId": "type_service:User"
                         },
-                        "displayName": null,
+                        "displayName": "User",
                         "availability": null,
                         "docs": null
                     },
@@ -965,7 +965,7 @@
                             "displayName": null,
                             "typeId": "type_service:Organization"
                         },
-                        "displayName": null,
+                        "displayName": "Organization",
                         "availability": null,
                         "docs": null
                     }

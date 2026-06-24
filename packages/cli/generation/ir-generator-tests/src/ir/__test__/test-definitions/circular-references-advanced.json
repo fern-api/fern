@@ -1231,7 +1231,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Primitive Value",
                         "availability": null,
                         "docs": null
                     },
@@ -1250,7 +1250,7 @@
                             "displayName": null,
                             "typeId": "type_ast:ObjectValue"
                         },
-                        "displayName": null,
+                        "displayName": "Object Value",
                         "availability": null,
                         "docs": null
                     },
@@ -1275,7 +1275,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Container Value",
                         "availability": null,
                         "docs": null
                     }

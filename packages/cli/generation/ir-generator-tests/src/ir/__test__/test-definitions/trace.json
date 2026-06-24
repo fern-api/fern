@@ -362,7 +362,7 @@
                             "displayName": null,
                             "typeId": "type_commons:ListType"
                         },
-                        "displayName": null,
+                        "displayName": "List Type",
                         "availability": null,
                         "docs": null
                     },
@@ -381,7 +381,7 @@
                             "displayName": null,
                             "typeId": "type_commons:MapType"
                         },
-                        "displayName": null,
+                        "displayName": "MAP Type",
                         "availability": null,
                         "docs": null
                     },
@@ -752,7 +752,7 @@
                             "displayName": null,
                             "typeId": "type_commons:MapValue"
                         },
-                        "displayName": null,
+                        "displayName": "MAP Value",
                         "availability": null,
                         "docs": null
                     },
@@ -802,7 +802,7 @@
                             "displayName": null,
                             "typeId": "type_commons:BinaryTreeValue"
                         },
-                        "displayName": null,
+                        "displayName": "Binary Tree Value",
                         "availability": null,
                         "docs": null
                     },
@@ -821,7 +821,7 @@
                             "displayName": null,
                             "typeId": "type_commons:SinglyLinkedListValue"
                         },
-                        "displayName": null,
+                        "displayName": "Singly Linked List Value",
                         "availability": null,
                         "docs": null
                     },
@@ -840,7 +840,7 @@
                             "displayName": null,
                             "typeId": "type_commons:DoublyLinkedListValue"
                         },
-                        "displayName": null,
+                        "displayName": "Doubly Linked List Value",
                         "availability": null,
                         "docs": null
                     },
@@ -1019,7 +1019,7 @@
                             "displayName": null,
                             "typeId": "type_commons:DebugMapValue"
                         },
-                        "displayName": null,
+                        "displayName": "Debug MAP Value",
                         "availability": null,
                         "docs": null
                     },
@@ -1069,7 +1069,7 @@
                             "displayName": null,
                             "typeId": "type_commons:BinaryTreeNodeAndTreeValue"
                         },
-                        "displayName": null,
+                        "displayName": "Binary Tree Node and Tree Value",
                         "availability": null,
                         "docs": null
                     },
@@ -1088,7 +1088,7 @@
                             "displayName": null,
                             "typeId": "type_commons:SinglyLinkedListNodeAndListValue"
                         },
-                        "displayName": null,
+                        "displayName": "Singly Linked List Node and List Value",
                         "availability": null,
                         "docs": null
                     },
@@ -1107,7 +1107,7 @@
                             "displayName": null,
                             "typeId": "type_commons:DoublyLinkedListNodeAndListValue"
                         },
-                        "displayName": null,
+                        "displayName": "Doubly Linked List Node and List Value",
                         "availability": null,
                         "docs": null
                     },
@@ -1144,7 +1144,7 @@
                             "displayName": null,
                             "typeId": "type_commons:GenericValue"
                         },
-                        "displayName": null,
+                        "displayName": "Generic Value",
                         "availability": null,
                         "docs": null
                     }
@@ -3631,7 +3631,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Playlist ID",
                         "availability": null,
                         "docs": null
                     }
@@ -4169,7 +4169,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Variable Value",
                         "availability": null,
                         "docs": null
                     },
@@ -4705,7 +4705,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Problem ID",
                         "availability": null,
                         "docs": null
                     },
@@ -4730,7 +4730,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Create Problem Error",
                         "availability": null,
                         "docs": null
                     }
@@ -4848,7 +4848,7 @@
                             "displayName": null,
                             "typeId": "type_problem:GenericCreateProblemError"
                         },
-                        "displayName": null,
+                        "displayName": "Generic Create Problem Error",
                         "availability": null,
                         "docs": null
                     }
@@ -5184,7 +5184,7 @@
                             "displayName": null,
                             "typeId": "type_submission:InitializeProblemRequest"
                         },
-                        "displayName": null,
+                        "displayName": "Initialize Problem Request",
                         "availability": null,
                         "docs": null
                     },
@@ -5212,7 +5212,7 @@
                             "displayName": null,
                             "typeId": "type_submission:SubmitRequestV2"
                         },
-                        "displayName": null,
+                        "displayName": "Submit Request V2",
                         "availability": null,
                         "docs": null
                     },
@@ -5231,7 +5231,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceSubmitRequest"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Submit Request",
                         "availability": null,
                         "docs": null
                     },
@@ -5250,7 +5250,7 @@
                             "displayName": null,
                             "typeId": "type_submission:StopRequest"
                         },
-                        "displayName": null,
+                        "displayName": "Stop Request",
                         "availability": null,
                         "docs": null
                     }
@@ -5974,7 +5974,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Problem ID",
                         "availability": null,
                         "docs": null
                     },
@@ -6002,7 +6002,7 @@
                             "displayName": null,
                             "typeId": "type_submission:ExceptionInfo"
                         },
-                        "displayName": null,
+                        "displayName": "Exception Info",
                         "availability": null,
                         "docs": null
                     },
@@ -6027,7 +6027,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Code Execution Update",
                         "availability": null,
                         "docs": null
                     },
@@ -6046,7 +6046,7 @@
                             "displayName": null,
                             "typeId": "type_submission:TerminatedResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Terminated Response",
                         "availability": null,
                         "docs": null
                     }
@@ -6156,7 +6156,7 @@
                             "displayName": null,
                             "typeId": "type_submission:BuildingExecutorResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Building Executor Response",
                         "availability": null,
                         "docs": "Statuses if an executor for the session isn't ready (Before RunningResponse)."
                     },
@@ -6175,7 +6175,7 @@
                             "displayName": null,
                             "typeId": "type_submission:RunningResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Running Response",
                         "availability": null,
                         "docs": "Sent once a test submission is executing."
                     },
@@ -6194,7 +6194,7 @@
                             "displayName": null,
                             "typeId": "type_submission:ErroredResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Errored Response",
                         "availability": null,
                         "docs": "Sent if a submission cannot be run (i.e. Compile Error)."
                     },
@@ -6213,7 +6213,7 @@
                             "displayName": null,
                             "typeId": "type_submission:StoppedResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Stopped Response",
                         "availability": null,
                         "docs": "Sent if a submission is stopped."
                     },
@@ -6232,7 +6232,7 @@
                             "displayName": null,
                             "typeId": "type_submission:GradedResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Graded Response",
                         "availability": null,
                         "docs": "Graded testcases without trace information."
                     },
@@ -6251,7 +6251,7 @@
                             "displayName": null,
                             "typeId": "type_submission:GradedResponseV2"
                         },
-                        "displayName": null,
+                        "displayName": "Graded Response V2",
                         "availability": null,
                         "docs": "Graded submission for v2 problems."
                     },
@@ -6270,7 +6270,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceRanResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Ran Response",
                         "availability": null,
                         "docs": "Workspace run without trace information."
                     },
@@ -6289,7 +6289,7 @@
                             "displayName": null,
                             "typeId": "type_submission:RecordingResponseNotification"
                         },
-                        "displayName": null,
+                        "displayName": "Recording Response Notification",
                         "availability": null,
                         "docs": "Gives progress about what is being recorded."
                     },
@@ -6308,7 +6308,7 @@
                             "displayName": null,
                             "typeId": "type_submission:RecordedResponseNotification"
                         },
-                        "displayName": null,
+                        "displayName": "Recorded Response Notification",
                         "availability": null,
                         "docs": "Graded testcases with trace information."
                     },
@@ -6327,7 +6327,7 @@
                             "displayName": null,
                             "typeId": "type_submission:InvalidRequestResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Invalid Request Response",
                         "availability": null,
                         "docs": "Sent if an invalid request is sent for a submission."
                     },
@@ -6346,7 +6346,7 @@
                             "displayName": null,
                             "typeId": "type_submission:FinishedResponse"
                         },
-                        "displayName": null,
+                        "displayName": "Finished Response",
                         "availability": null,
                         "docs": "Sent once a submission is graded and fully recorded."
                     }
@@ -6783,7 +6783,7 @@
                             "displayName": null,
                             "typeId": "type_submission:CompileError"
                         },
-                        "displayName": null,
+                        "displayName": "Compile Error",
                         "availability": null,
                         "docs": null
                     },
@@ -6802,7 +6802,7 @@
                             "displayName": null,
                             "typeId": "type_submission:RuntimeError"
                         },
-                        "displayName": null,
+                        "displayName": "Runtime Error",
                         "availability": null,
                         "docs": "If the submission cannot be executed and throws a runtime error before getting to any of the testcases."
                     },
@@ -6821,7 +6821,7 @@
                             "displayName": null,
                             "typeId": "type_submission:InternalError"
                         },
-                        "displayName": null,
+                        "displayName": "Internal Error",
                         "availability": null,
                         "docs": "If the trace backend encounters an unexpected error."
                     }
@@ -7579,7 +7579,7 @@
                             "displayName": null,
                             "typeId": "type_submission:TestCaseHiddenGrade"
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Hidden Grade",
                         "availability": null,
                         "docs": null
                     },
@@ -7598,7 +7598,7 @@
                             "displayName": null,
                             "typeId": "type_submission:TestCaseNonHiddenGrade"
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Non Hidden Grade",
                         "availability": null,
                         "docs": null
                     }
@@ -8463,7 +8463,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Variable Value",
                         "availability": null,
                         "docs": null
                     },
@@ -8482,7 +8482,7 @@
                             "displayName": null,
                             "typeId": "type_submission:ExceptionInfo"
                         },
-                        "displayName": null,
+                        "displayName": "Exception Info",
                         "availability": null,
                         "docs": null
                     },
@@ -8507,7 +8507,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Exception V2",
                         "availability": null,
                         "docs": null
                     }
@@ -8575,7 +8575,7 @@
                             "displayName": null,
                             "typeId": "type_submission:ExceptionInfo"
                         },
-                        "displayName": null,
+                        "displayName": "Exception Info",
                         "availability": null,
                         "docs": null
                     },
@@ -8841,7 +8841,7 @@
                             "displayName": null,
                             "typeId": "type_submission:SubmissionIdNotFound"
                         },
-                        "displayName": null,
+                        "displayName": "Submission ID Not Found",
                         "availability": null,
                         "docs": "The submission request references a submission id that doesn't exist."
                     },
@@ -8860,7 +8860,7 @@
                             "displayName": null,
                             "typeId": "type_submission:CustomTestCasesUnsupported"
                         },
-                        "displayName": null,
+                        "displayName": "Custom Test Cases Unsupported",
                         "availability": null,
                         "docs": null
                     },
@@ -8879,7 +8879,7 @@
                             "displayName": null,
                             "typeId": "type_submission:UnexpectedLanguageError"
                         },
-                        "displayName": null,
+                        "displayName": "Unexpected Language Error",
                         "availability": null,
                         "docs": "The submission request was routed to an incorrect language executor."
                     }
@@ -10653,7 +10653,7 @@
                             "displayName": null,
                             "typeId": "type_submission:TestSubmissionStatusV2"
                         },
-                        "displayName": null,
+                        "displayName": "Test Submission Status V2",
                         "availability": null,
                         "docs": null
                     },
@@ -10672,7 +10672,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceSubmissionStatusV2"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Submission Status V2",
                         "availability": null,
                         "docs": null
                     }
@@ -11185,7 +11185,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Running Submission State",
                         "availability": null,
                         "docs": null
                     },
@@ -11219,7 +11219,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Error Info",
                         "availability": null,
                         "docs": null
                     },
@@ -11238,7 +11238,7 @@
                             "displayName": null,
                             "typeId": "type_submission:GradedTestCaseUpdate"
                         },
-                        "displayName": null,
+                        "displayName": "Graded Test Case Update",
                         "availability": null,
                         "docs": null
                     },
@@ -11257,7 +11257,7 @@
                             "displayName": null,
                             "typeId": "type_submission:RecordedTestCaseUpdate"
                         },
-                        "displayName": null,
+                        "displayName": "Recorded Test Case Update",
                         "availability": null,
                         "docs": null
                     },
@@ -11440,7 +11440,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Running Submission State",
                         "availability": null,
                         "docs": null
                     },
@@ -11459,7 +11459,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceRunDetails"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Run Details",
                         "availability": null,
                         "docs": null
                     },
@@ -11496,7 +11496,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceTracedUpdate"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Traced Update",
                         "availability": null,
                         "docs": null
                     },
@@ -11521,7 +11521,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Error Info",
                         "availability": null,
                         "docs": null
                     },
@@ -11844,7 +11844,7 @@
                             "displayName": null,
                             "typeId": "type_submission:TestSubmissionState"
                         },
-                        "displayName": null,
+                        "displayName": "Test Submission State",
                         "availability": null,
                         "docs": null
                     },
@@ -11863,7 +11863,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceSubmissionState"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Submission State",
                         "availability": null,
                         "docs": null
                     }
@@ -12036,7 +12036,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Error Info",
                         "availability": null,
                         "docs": null
                     },
@@ -12061,7 +12061,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Running Submission State",
                         "availability": null,
                         "docs": null
                     },
@@ -12080,7 +12080,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceRunDetails"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Run Details",
                         "availability": null,
                         "docs": null
                     },
@@ -12099,7 +12099,7 @@
                             "displayName": null,
                             "typeId": "type_submission:WorkspaceRunDetails"
                         },
-                        "displayName": null,
+                        "displayName": "Workspace Run Details",
                         "availability": null,
                         "docs": null
                     }
@@ -12357,7 +12357,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Error Info",
                         "availability": null,
                         "docs": null
                     },
@@ -12382,7 +12382,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Running Submission State",
                         "availability": null,
                         "docs": null
                     },
@@ -12505,7 +12505,7 @@
                             "displayName": null,
                             "typeId": "type_submission:TestCaseResultWithStdout"
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Result with Stdout",
                         "availability": null,
                         "docs": null
                     },
@@ -12530,7 +12530,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Grade",
                         "availability": null,
                         "docs": null
                     },
@@ -12549,7 +12549,7 @@
                             "displayName": null,
                             "typeId": "type_submission:TracedTestCase"
                         },
-                        "displayName": null,
+                        "displayName": "Traced Test Case",
                         "availability": null,
                         "docs": null
                     }
@@ -15013,7 +15013,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Template ID",
                         "availability": null,
                         "docs": null
                     },
@@ -15035,7 +15035,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:TestCaseImplementation"
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Implementation",
                         "availability": null,
                         "docs": null
                     }
@@ -15520,7 +15520,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:TestCaseWithActualResultImplementation"
                         },
-                        "displayName": null,
+                        "displayName": "Test Case with Actual Result Implementation",
                         "availability": null,
                         "docs": null
                     },
@@ -15542,7 +15542,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:VoidFunctionDefinition"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Definition",
                         "availability": null,
                         "docs": null
                     }
@@ -16348,7 +16348,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:DeepEqualityCorrectnessCheck"
                         },
-                        "displayName": null,
+                        "displayName": "Deep Equality Correctness Check",
                         "availability": null,
                         "docs": null
                     },
@@ -16370,7 +16370,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:VoidFunctionDefinitionThatTakesActualResult"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Definition That Takes Actual Result",
                         "availability": null,
                         "docs": null
                     }
@@ -16722,7 +16722,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Parameter ID",
                         "availability": null,
                         "docs": null
                     }
@@ -17264,7 +17264,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:BasicCustomFiles"
                         },
-                        "displayName": null,
+                        "displayName": "Basic Custom Files",
                         "availability": null,
                         "docs": null
                     },
@@ -17871,7 +17871,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:VoidFunctionSignature"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Signature",
                         "availability": null,
                         "docs": null
                     },
@@ -17893,7 +17893,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:NonVoidFunctionSignature"
                         },
-                        "displayName": null,
+                        "displayName": "Non Void Function Signature",
                         "availability": null,
                         "docs": null
                     },
@@ -17915,7 +17915,7 @@
                             "displayName": null,
                             "typeId": "type_v2/problem:VoidFunctionSignatureThatTakesActualResult"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Signature That Takes Actual Result",
                         "availability": null,
                         "docs": "Useful when specifying custom grading for a testcase where actualResult is defined."
                     }
@@ -19829,7 +19829,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Template ID",
                         "availability": null,
                         "docs": null
                     },
@@ -19853,7 +19853,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:TestCaseImplementation"
                         },
-                        "displayName": null,
+                        "displayName": "Test Case Implementation",
                         "availability": null,
                         "docs": null
                     }
@@ -20362,7 +20362,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:TestCaseWithActualResultImplementation"
                         },
-                        "displayName": null,
+                        "displayName": "Test Case with Actual Result Implementation",
                         "availability": null,
                         "docs": null
                     },
@@ -20386,7 +20386,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:VoidFunctionDefinition"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Definition",
                         "availability": null,
                         "docs": null
                     }
@@ -21230,7 +21230,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:DeepEqualityCorrectnessCheck"
                         },
-                        "displayName": null,
+                        "displayName": "Deep Equality Correctness Check",
                         "availability": null,
                         "docs": null
                     },
@@ -21254,7 +21254,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:VoidFunctionDefinitionThatTakesActualResult"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Definition That Takes Actual Result",
                         "availability": null,
                         "docs": null
                     }
@@ -21624,7 +21624,7 @@
                                 "inline": null
                             }
                         },
-                        "displayName": null,
+                        "displayName": "Parameter ID",
                         "availability": null,
                         "docs": null
                     }
@@ -22188,7 +22188,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:BasicCustomFiles"
                         },
-                        "displayName": null,
+                        "displayName": "Basic Custom Files",
                         "availability": null,
                         "docs": null
                     },
@@ -22819,7 +22819,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:VoidFunctionSignature"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Signature",
                         "availability": null,
                         "docs": null
                     },
@@ -22843,7 +22843,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:NonVoidFunctionSignature"
                         },
-                        "displayName": null,
+                        "displayName": "Non Void Function Signature",
                         "availability": null,
                         "docs": null
                     },
@@ -22867,7 +22867,7 @@
                             "displayName": null,
                             "typeId": "type_v2/v3/problem:VoidFunctionSignatureThatTakesActualResult"
                         },
-                        "displayName": null,
+                        "displayName": "Void Function Signature That Takes Actual Result",
                         "availability": null,
                         "docs": "Useful when specifying custom grading for a testcase where actualResult is defined."
                     }

@@ -1426,7 +1426,7 @@
                             "displayName": null,
                             "typeId": "type_nullable-optional:EmailNotification"
                         },
-                        "displayName": null,
+                        "displayName": "Email Notification",
                         "availability": null,
                         "docs": null
                     },
@@ -1445,7 +1445,7 @@
                             "displayName": null,
                             "typeId": "type_nullable-optional:SmsNotification"
                         },
-                        "displayName": null,
+                        "displayName": "Sms Notification",
                         "availability": null,
                         "docs": null
                     },
@@ -1464,7 +1464,7 @@
                             "displayName": null,
                             "typeId": "type_nullable-optional:PushNotification"
                         },
-                        "displayName": null,
+                        "displayName": "Push Notification",
                         "availability": null,
                         "docs": null
                     }
@@ -1863,7 +1863,7 @@
                             "displayName": null,
                             "typeId": "type_nullable-optional:UserResponse"
                         },
-                        "displayName": null,
+                        "displayName": "User Response",
                         "availability": null,
                         "docs": null
                     },
@@ -1882,7 +1882,7 @@
                             "displayName": null,
                             "typeId": "type_nullable-optional:Organization"
                         },
-                        "displayName": null,
+                        "displayName": "Organization",
                         "availability": null,
                         "docs": null
                     },
@@ -1901,7 +1901,7 @@
                             "displayName": null,
                             "typeId": "type_nullable-optional:Document"
                         },
-                        "displayName": null,
+                        "displayName": "Document",
                         "availability": null,
                         "docs": null
                     }

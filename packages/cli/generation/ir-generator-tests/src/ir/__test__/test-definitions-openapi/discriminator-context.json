@@ -45,7 +45,7 @@
                             "displayName": null,
                             "typeId": "type_:SseMessageEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Sse Message Event",
                         "availability": null,
                         "docs": null
                     },
@@ -62,7 +62,7 @@
                             "displayName": null,
                             "typeId": "type_:SseHeartbeatEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Sse Heartbeat Event",
                         "availability": null,
                         "docs": null
                     },
@@ -79,7 +79,7 @@
                             "displayName": null,
                             "typeId": "type_:SseErrorEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Sse Error Event",
                         "availability": null,
                         "docs": null
                     }
@@ -423,7 +423,7 @@
                             "displayName": null,
                             "typeId": "type_:DogVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Dog Variant",
                         "availability": null,
                         "docs": null
                     },
@@ -440,7 +440,7 @@
                             "displayName": null,
                             "typeId": "type_:CatVariant"
                         },
-                        "displayName": null,
+                        "displayName": "Cat Variant",
                         "availability": null,
                         "docs": null
                     }
@@ -657,7 +657,7 @@
                             "displayName": null,
                             "typeId": "type_:ExplicitMessageEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Explicit Message Event",
                         "availability": null,
                         "docs": null
                     },
@@ -674,7 +674,7 @@
                             "displayName": null,
                             "typeId": "type_:ExplicitHeartbeatEvent"
                         },
-                        "displayName": null,
+                        "displayName": "Explicit Heartbeat Event",
                         "availability": null,
                         "docs": null
                     }

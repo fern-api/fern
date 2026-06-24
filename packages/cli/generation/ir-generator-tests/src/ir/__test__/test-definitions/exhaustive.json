@@ -2452,7 +2452,7 @@
                             "displayName": null,
                             "typeId": "type_types/union:Dog"
                         },
-                        "displayName": null,
+                        "displayName": "Dog",
                         "availability": null,
                         "docs": null
                     },
@@ -2474,7 +2474,7 @@
                             "displayName": null,
                             "typeId": "type_types/union:Cat"
                         },
-                        "displayName": null,
+                        "displayName": "Cat",
                         "availability": null,
                         "docs": null
                     }

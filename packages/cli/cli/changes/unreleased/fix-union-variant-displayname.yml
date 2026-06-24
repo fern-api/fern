@@ -1,0 +1,3 @@
+- summary: |
+    Populate displayName for discriminated union variants derived from named type references, so docs display meaningful schema names (e.g. "Video Input") instead of generic "object".
+  type: fix
