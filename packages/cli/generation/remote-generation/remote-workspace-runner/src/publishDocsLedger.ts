@@ -74,27 +74,30 @@ interface BlobRef {
 }
 
 /**
- * `JSON.stringify` with deterministic key ordering at every level. Arrays
- * keep their original ordering (positions are meaningful); object keys are
- * sorted lexicographically via the replacer. Two inputs that differ only by
- * key insertion order serialize identically — required so the apiManifest
- * blob hash is stable across publishes (cf. FDR `stableStringify`).
+ * Sort only the top-level keys of a plain object for deterministic
+ * serialization, without recursing into nested values. This avoids
+ * reordering keys inside API example JSON bodies (request/response),
+ * which are preformatted user content and must preserve their
+ * original field order.
  */
-function stableStringify(value: unknown): string {
-    return JSON.stringify(value, (_key, val) => {
-        if (val != null && typeof val === "object" && !Array.isArray(val)) {
-            return Object.fromEntries(Object.entries(val).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
-        }
-        return val;
-    });
+function sortTopLevelKeys(obj: Record<string, unknown>): Record<string, unknown> {
+    return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
 }
 
 /**
- * Serializes a value to a JSON buffer using {@link stableStringify} and
- * returns a BlobRef + the raw bytes, keyed by content hash for later upload.
+ * Serializes a value to a JSON buffer using standard `JSON.stringify`
+ * and returns a BlobRef + the raw bytes, keyed by content hash.
+ *
+ * Callers that need deterministic output for non-deterministic inputs
+ * (e.g. Map iteration order) should sort top-level keys via
+ * {@link sortTopLevelKeys} before calling this function.
+ *
+ * Unlike the previous `stableStringify` approach, this does NOT sort
+ * keys recursively — API example bodies are preformatted content
+ * whose field order must be preserved.
  */
 function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer } {
-    const buf = Buffer.from(stableStringify(value), "utf-8");
+    const buf = Buffer.from(JSON.stringify(value), "utf-8");
     const hash = sha256(buf);
     return {
         ref: { hash, contentType: "application/json", contentLength: buf.length },
@@ -187,9 +190,10 @@ export function buildLedgerInput({
     // `apiDefinitions` is populated by the `registerApi` callback inside a
     // `Promise.all`, so the Map's insertion order reflects whichever HTTP
     // round-trip completed first — non-deterministic across publishes.
-    // {@link jsonBlobRef} uses {@link stableStringify}, which sorts object
-    // keys at every level, so the resulting bytes are stable regardless of
-    // Map iteration order.
+    // We sort the top-level keys (apiDefinitionId) for determinism, but
+    // use standard `JSON.stringify` to preserve nested key order — API
+    // example bodies (request/response JSON) are preformatted content
+    // whose field order must not be reordered.
     //
     // Determinism caveat: stable apiManifest bytes are necessary but not
     // sufficient for a deterministic deployment hash. Page bodies must also
@@ -201,7 +205,8 @@ export function buildLedgerInput({
     // request, so deployment-level dedup will not fire there.
     let apiManifestRef: BlobRef | null = null;
     if (apiDefinitions.size > 0) {
-        const manifestObj = Object.fromEntries(apiDefinitions);
+        const sortedEntries = [...apiDefinitions.entries()].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+        const manifestObj = Object.fromEntries(sortedEntries);
         const manifestBlob = jsonBlobRef(manifestObj);
         blobs.set(manifestBlob.hash, manifestBlob.buf);
         apiManifestRef = manifestBlob.ref;
@@ -211,7 +216,7 @@ export function buildLedgerInput({
     // custom header/footer components resolved by DocsDefinitionResolver.
     let jsFilesRef: BlobRef | null = null;
     if (docsDefinition.jsFiles != null && Object.keys(docsDefinition.jsFiles).length > 0) {
-        const jsFilesBlob = jsonBlobRef(docsDefinition.jsFiles);
+        const jsFilesBlob = jsonBlobRef(sortTopLevelKeys(docsDefinition.jsFiles));
         blobs.set(jsFilesBlob.hash, jsFilesBlob.buf);
         jsFilesRef = jsFilesBlob.ref;
     }

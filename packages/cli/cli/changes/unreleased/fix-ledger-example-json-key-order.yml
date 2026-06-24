@@ -1,0 +1,7 @@
+- summary: |
+    Fix ledger publish reordering JSON keys in API example bodies. The
+    `stableStringify` serialization sorted all object keys recursively,
+    which reordered preformatted request/response example JSON. Now only
+    top-level manifest keys are sorted for determinism; nested content
+    (including examples) preserves its original field order.
+  type: fix
