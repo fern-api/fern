@@ -1,0 +1,6 @@
+- summary: |
+    Fix WireMock wire test generation for endpoints whose OpenAPI paths embed query
+    strings (e.g. Stainless overload dispatch pattern `?stainless_overload=methodName`).
+    Query parameters are now correctly stripped from WithPath and added as separate
+    WithParam calls, matching WireMock.Net's path-only matching behavior.
+  type: fix

@@ -92,7 +92,18 @@ export class MockEndpointGenerator extends WithGeneration {
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${this.toWireMockPath(example.url)}")`);
+                // Strip any embedded query string from the URL before passing to WithPath
+                const exampleUrl = this.stripQueryString(example.url);
+                writer.write(`.WithPath("${this.toWireMockPath(exampleUrl)}")`);
+
+                // Add query parameters embedded in the endpoint's full path
+                // (e.g. "/path?stainless_overload=multiQuery" → WithParam("stainless_overload", "multiQuery"))
+                const pathQueryParams = this.extractPathQueryParams(endpoint);
+                for (const [key, value] of Object.entries(pathQueryParams)) {
+                    const escapedKey = this.escapeForCSharpStringLiteral(key);
+                    const escapedValue = this.escapeForCSharpStringLiteral(value);
+                    writer.write(`.WithParam("${escapedKey}", "${escapedValue}")`);
+                }
 
                 for (const parameter of example.queryParameters) {
                     const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
@@ -206,6 +217,39 @@ export class MockEndpointGenerator extends WithGeneration {
 
     private escapeForCSharpStringLiteral(value: string): string {
         return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    }
+
+    private stripQueryString(url: string | undefined): string | undefined {
+        if (!url) {
+            return url;
+        }
+        const queryIndex = url.indexOf("?");
+        if (queryIndex !== -1) {
+            return url.substring(0, queryIndex);
+        }
+        return url;
+    }
+
+    private extractPathQueryParams(endpoint: HttpEndpoint): Record<string, string> {
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        const queryIndex = path.indexOf("?");
+        if (queryIndex === -1) {
+            return {};
+        }
+        const queryString = path.substring(queryIndex + 1);
+        const params: Record<string, string> = {};
+        for (const pair of queryString.split("&")) {
+            const eqIndex = pair.indexOf("=");
+            if (eqIndex !== -1) {
+                const key = decodeURIComponent(pair.substring(0, eqIndex));
+                const value = decodeURIComponent(pair.substring(eqIndex + 1));
+                params[key] = value;
+            }
+        }
+        return params;
     }
 
     /*

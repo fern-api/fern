@@ -47,9 +47,13 @@ export class WireTestGenerator {
         let out: Record<string, WireMockMapping> = {};
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
         for (const mapping of wiremockStubMapping.mappings) {
+            // Use the original full path (including query string) from metadata when available,
+            // so that endpoints sharing the same base path but differing by query-string overload
+            // (e.g. Stainless's ?stainless_overload=...) each get a unique key.
+            const pathForKey = mapping.metadata.fullPathTemplate ?? mapping.request.urlPathTemplate;
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
-                requestUrlPathTemplate: mapping.request.urlPathTemplate
+                requestUrlPathTemplate: pathForKey
             });
             out[key] = mapping;
         }
@@ -808,18 +812,28 @@ export class WireTestGenerator {
     }
 
     private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
-        let basePath =
+        // Build the full path including any embedded query string for key lookup
+        let fullPath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
 
-        if (!basePath.startsWith("/")) {
-            basePath = `/${basePath}`;
+        if (!fullPath.startsWith("/")) {
+            fullPath = `/${fullPath}`;
         }
 
+        // Use the full path (with query string) for the mapping key lookup,
+        // since getWireMockConfigContent keys by fullPathTemplate when available.
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
-            requestUrlPathTemplate: basePath
+            requestUrlPathTemplate: fullPath
         });
+
+        // Strip query string from the path for the actual URL path used in VerifyRequestCount
+        let basePath = fullPath;
+        const queryIndex = basePath.indexOf("?");
+        if (queryIndex !== -1) {
+            basePath = basePath.substring(0, queryIndex);
+        }
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         // Take the first 15 keys
@@ -864,7 +878,11 @@ export class WireTestGenerator {
     private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
 
-        if (!dynamicEndpointExample?.queryParameters) {
+        // Extract query parameters embedded in the endpoint's full path
+        // (e.g. "/path?stainless_overload=multiQuery" → { stainless_overload: "multiQuery" })
+        const pathQueryParams = this.extractPathQueryParams(endpoint);
+
+        if (!dynamicEndpointExample?.queryParameters && Object.keys(pathQueryParams).length === 0) {
             return "nil";
         }
 
@@ -881,7 +899,14 @@ export class WireTestGenerator {
         }
 
         const queryParamEntries: string[] = [];
-        for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
+
+        // Add query parameters extracted from the endpoint's path first
+        for (const [paramName, paramValue] of Object.entries(pathQueryParams)) {
+            queryParamEntries.push(`${JSON.stringify(paramName)}: ${JSON.stringify(paramValue)}`);
+        }
+
+        // Add query parameters from the dynamic example
+        for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample?.queryParameters ?? {})) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
                 if (Array.isArray(paramValue) && paramValue.length > 1) {
@@ -908,6 +933,28 @@ export class WireTestGenerator {
         }
 
         return `map[string]interface{}{${queryParamEntries.join(", ")}}`;
+    }
+
+    private extractPathQueryParams(endpoint: FernIr.HttpEndpoint): Record<string, string> {
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        const queryIndex = path.indexOf("?");
+        if (queryIndex === -1) {
+            return {};
+        }
+        const queryString = path.substring(queryIndex + 1);
+        const params: Record<string, string> = {};
+        for (const pair of queryString.split("&")) {
+            const eqIndex = pair.indexOf("=");
+            if (eqIndex !== -1) {
+                const key = decodeURIComponent(pair.substring(0, eqIndex));
+                const value = decodeURIComponent(pair.substring(eqIndex + 1));
+                params[key] = value;
+            }
+        }
+        return params;
     }
 
     private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {

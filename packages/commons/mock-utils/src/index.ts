@@ -42,6 +42,8 @@ export interface WireMockMapping {
                 via: string;
             };
         };
+        /** Original path template including any embedded query string, for lookup disambiguation. */
+        fullPathTemplate?: string;
     };
     postServeActions?: unknown[];
 }
@@ -168,8 +170,10 @@ export class WireMock {
         example: FernIr.ExampleEndpointCall | undefined,
         streamConditionProperty: string | undefined
     ): WireMockMapping | null {
-        // Build URL path template
+        // Build URL path template (stripped of query params for WireMock matching)
         const urlPathTemplate = this.buildUrlPathTemplate(endpoint);
+        // Preserve the original full path (including any embedded query string) for lookup disambiguation
+        const rawFullPath = this.buildRawFullPath(endpoint);
 
         // Extract path parameters from example (root, service, and endpoint levels)
         const pathParameters: Record<string, { equalTo: string }> = {};
@@ -188,8 +192,11 @@ export class WireMock {
             }
         }
 
+        // Extract query parameters embedded in the path (e.g. ?stainless_overload=branchFrom)
+        const pathQueryParams = this.extractPathQueryParameters(endpoint);
+
         // Extract query parameters from example
-        const queryParameters: Record<string, QueryParameterMatcher> = {};
+        const queryParameters: Record<string, QueryParameterMatcher> = { ...pathQueryParams };
         for (const param of example?.queryParameters || []) {
             const paramName = param.name != null ? getWireValue(param.name) : undefined;
             if (!paramName) {
@@ -380,7 +387,8 @@ export class WireMock {
                         at: "2020-01-01T00:00:00.000Z",
                         via: "SYSTEM"
                     }
-                }
+                },
+                fullPathTemplate: rawFullPath !== urlPathTemplate ? rawFullPath : undefined
             }
         };
 
@@ -413,7 +421,61 @@ export class WireMock {
         if (fragmentIndex !== -1) {
             path = path.substring(0, fragmentIndex);
         }
+        // Strip query string — query parameters embedded in the path (e.g. Stainless
+        // overload paths like "?stainless_overload=branchFrom") must be matched via
+        // the separate queryParameters field, not as part of urlPathTemplate.
+        const queryIndex = path.indexOf("?");
+        if (queryIndex !== -1) {
+            path = path.substring(0, queryIndex);
+        }
         return path;
+    }
+
+    /**
+     * Builds the raw full path template including any embedded query string.
+     * Used only for metadata / lookup disambiguation, not for WireMock matching.
+     */
+    private buildRawFullPath(endpoint: FernIr.HttpEndpoint): string {
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts || []) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        if (!path.startsWith("/")) {
+            path = "/" + path;
+        }
+        const fragmentIndex = path.indexOf("#");
+        if (fragmentIndex !== -1) {
+            path = path.substring(0, fragmentIndex);
+        }
+        return path;
+    }
+
+    /**
+     * Extracts query parameters that are embedded in the endpoint's full path.
+     * Some OpenAPI specs embed query strings directly in the path key
+     * (e.g. "/v2/namespaces/{namespace}?stainless_overload=branchFrom").
+     * These need to be extracted and matched as WireMock queryParameters.
+     */
+    private extractPathQueryParameters(endpoint: FernIr.HttpEndpoint): Record<string, QueryParameterMatcher> {
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts || []) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        const queryIndex = path.indexOf("?");
+        if (queryIndex === -1) {
+            return {};
+        }
+        const queryString = path.substring(queryIndex + 1);
+        const params: Record<string, QueryParameterMatcher> = {};
+        for (const pair of queryString.split("&")) {
+            const eqIndex = pair.indexOf("=");
+            if (eqIndex !== -1) {
+                const key = decodeURIComponent(pair.substring(0, eqIndex));
+                const value = decodeURIComponent(pair.substring(eqIndex + 1));
+                params[key] = { equalTo: value };
+            }
+        }
+        return params;
     }
 
     public exampleToQueryOrHeaderValue({ value }: { value: FernIr.ExampleTypeReference }): string | undefined {
