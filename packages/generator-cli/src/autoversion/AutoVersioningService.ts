@@ -1057,7 +1057,6 @@ export class AutoVersioningService {
      * Escapes special characters for use in sed command.
      */
 
-
     /**
      * Extracts the file path from a diff file section.
      * Parses the "diff --git a/path b/path" header line.
