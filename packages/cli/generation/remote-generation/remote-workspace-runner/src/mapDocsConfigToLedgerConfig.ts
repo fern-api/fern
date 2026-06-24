@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
-import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
+import type { FileManifestEntry, ImageRef, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
 
 type DocsConfig = DocsV1Write.DocsConfig;
 
@@ -267,12 +267,14 @@ function mapIntegrations(integrations: DocsConfig["integrations"]): LedgerConfig
 export function mapDocsConfigToLedgerConfig({
     docsConfig,
     fileManifest,
-    fileIdToPath
+    fileIdToPath,
+    editThisPage
 }: {
     docsConfig: DocsConfig;
     fileManifest: Record<string, FileManifestEntry> | undefined;
     fileIdToPath: Map<string, string> | undefined;
-}): LedgerConfig {
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
+}) {
     return {
         title: docsConfig.title,
         defaultLanguage: docsConfig.defaultLanguage,
@@ -298,6 +300,15 @@ export function mapDocsConfigToLedgerConfig({
         aiChatConfig: docsConfig.aiChatConfig,
         pageActions: docsConfig.pageActions,
         editThisPageLaunch: docsConfig.editThisPageLaunch,
+        editThisPageGithub:
+            editThisPage?.github != null
+                ? {
+                      owner: editThisPage.github.owner,
+                      repo: editThisPage.github.repo,
+                      branch: editThisPage.github.branch ?? "main",
+                      host: editThisPage.github.host ?? "https://github.com"
+                  }
+                : undefined,
         integrations: mapIntegrations(docsConfig.integrations),
         header: docsConfig.header,
         footer: docsConfig.footer
