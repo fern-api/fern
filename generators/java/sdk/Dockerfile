@@ -81,6 +81,10 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # 1.21.3-7.amzn2023.0.1)
 # Security update 2026-06-10: add perl-* (CVE-2026-8376, CVE-2026-7010),
 # libsolv (CVE-2026-48863, CVE-2026-48864, CVE-2026-9149, CVE-2026-9150)
+# Security update 2026-06-24: add graphite2 (CVE-2026-50593, integer
+# underflow OOB write; fixed in 1.3.15 via ALAS2023-2026-1856),
+# giflib (CVE-2026-26740, heap buffer overflow in EGifGCBToExtension;
+# fixed via ALAS2023-2026-1883)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -107,7 +111,9 @@ RUN dnf --releasever=latest update -y \
     libgcrypt \
     krb5-libs \
     'perl-*' \
-    libsolv && \
+    libsolv \
+    graphite2 \
+    giflib && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
