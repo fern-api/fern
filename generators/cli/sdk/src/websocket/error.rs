@@ -18,7 +18,9 @@
 //! | local | unparseable JSON from server | `Other` | 5 |
 //!
 //! The abnormal-close hint nudges users toward the most common failure
-//! mode: missed pings under ElevenLabs' 20-second inactivity timeout.
+//! mode — typically a missed application-level keepalive reply. Each
+//! customer overrides it on their [`super::WsConfig`] with API-specific
+//! guidance.
 
 use tokio_tungstenite::tungstenite;
 
@@ -26,32 +28,10 @@ use crate::error::CliError;
 
 /// Default hint appended to abnormal-close errors. API-neutral by
 /// design — it's the message a customer of *any* WS-using CLI should
-/// understand. Per-API constructors on [`super::WsConfig`] (e.g.
-/// [`super::WsConfig::elevenlabs_convai`], [`super::WsConfig::deepgram_listen`])
-/// override this with API-specific guidance.
+/// understand. Customer code overrides
+/// [`super::WsConfig::abnormal_close_hint`] with API-specific guidance.
 pub const ABNORMAL_CLOSE_HINT: &str =
     "connection ended abnormally; check auth, network, and the API's keepalive/timeout requirements";
-
-/// ElevenLabs-flavoured hint: the most common ElevenLabs failure mode
-/// is a missed app-level pong inside the 20-second inactivity window.
-/// Used by [`super::WsConfig::elevenlabs_convai`] /
-/// [`super::WsConfig::elevenlabs_tts`].
-pub const ELEVENLABS_CLOSE_HINT: &str =
-    "likely missed ping/pong reply; check your auto_responder config";
-
-/// Deepgram-flavoured hint.
-pub const DEEPGRAM_CLOSE_HINT: &str =
-    "check KeepAlive cadence (every 3-8s) and audio encoding/sample_rate";
-
-/// OpenAI Realtime-flavoured hint.
-pub const OPENAI_REALTIME_CLOSE_HINT: &str =
-    "session may have hit the 30-minute cap or the model rejected the config; \
-     see OpenAI Realtime docs";
-
-/// AssemblyAI-flavoured hint.
-pub const ASSEMBLYAI_CLOSE_HINT: &str =
-    "check audio encoding (PCM16 expected) and that the session hasn't \
-     exceeded its idle/max duration";
 
 /// Map a `tungstenite::Error` raised during the handshake phase to a
 /// [`CliError`] following the matrix above. Public so an external caller
@@ -135,9 +115,8 @@ pub(crate) fn map_stream_error(err: tungstenite::Error, hint: &str) -> CliError 
 ///
 /// Returns `Err` for everything else, with `hint` woven into the message
 /// when supplied. `hint` is what the user should investigate; pass
-/// [`ABNORMAL_CLOSE_HINT`] for the canonical ElevenLabs missed-pong
-/// nudge, or supply an API-specific string (see
-/// [`super::WsConfig::abnormal_close_hint`]).
+/// [`ABNORMAL_CLOSE_HINT`] for the API-neutral default, or supply an
+/// API-specific string (see [`super::WsConfig::abnormal_close_hint`]).
 pub(crate) fn classify_close_frame(
     frame: Option<&tungstenite::protocol::CloseFrame<'_>>,
     hint: &str,

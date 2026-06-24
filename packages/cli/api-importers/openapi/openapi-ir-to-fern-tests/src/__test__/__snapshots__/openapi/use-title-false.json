@@ -60,4 +60,5 @@ error-discrimination:
 display-name: Hume AI Batch API
 ",
   },
+  "specVersion": "0.1.0",
 }

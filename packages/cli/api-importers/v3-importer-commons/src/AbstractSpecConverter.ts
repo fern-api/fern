@@ -91,7 +91,8 @@ export abstract class AbstractSpecConverter<
             audiences: undefined,
             generationMetadata: undefined,
             apiPlayground: undefined,
-            casingsConfig: undefined
+            casingsConfig: undefined,
+            specVersion: undefined
         };
     }
 

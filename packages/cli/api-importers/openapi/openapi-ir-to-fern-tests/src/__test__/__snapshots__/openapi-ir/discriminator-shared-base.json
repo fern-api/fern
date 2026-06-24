@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Discriminator Shared Base Test",
   "servers": [],
   "websocketServers": [],

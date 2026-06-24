@@ -204,4 +204,5 @@ error-discrimination:
 display-name: Nullable Types Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

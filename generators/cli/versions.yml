@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.17.11
+  changelogEntry:
+    - summary: |
+        Show credential source hints (e.g. env var names) in `--help` for custom auth
+        providers instead of the opaque "custom auth provider" label.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
 - version: 0.17.10
   changelogEntry:
     - summary: |

@@ -141,4 +141,5 @@ error-discrimination:
 display-name: Enum of separator characters
 ",
   },
+  "specVersion": "1.0.0",
 }

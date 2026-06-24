@@ -23,27 +23,86 @@ use crate::openapi::discovery::{
     RestMethod, RetriesConfig, StreamingConfig,
 };
 
-/// Strip a leading `@` (curl-style file prefix), or rewrite `\@` to a literal
-/// `@`. Used at every top-level site that interprets a leading `@` as a file
-/// path (binary-body uploads, multipart file fields).
+/// Encoding mode for an `@`-prefixed file reference. Selected by the URI-style
+/// prefix on the flag value (FER-10532). `Auto` is the implicit default — the
+/// `@<path>` form FER-10436 shipped — and is what every other call site
+/// reaches when no explicit scheme is supplied.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum AtMode {
+    /// `@<path>` — read file; embed UTF-8 when valid, base64 otherwise.
+    Auto,
+    /// `@file://<path>` — read file; require valid UTF-8 or error.
+    Text,
+    /// `@data://<path>` — read file; always base64-encode.
+    Data,
+}
+
+/// Parsed view of a raw flag value that may carry an `@`/`\@` prefix.
+/// Returned by [`parse_at_ref`] so every `@`-aware call site shares one
+/// parser instead of re-implementing the prefix grammar.
+pub(crate) enum AtRef<'a> {
+    /// Plain value with no `@` prefix; caller treats as a literal path/string.
+    Plain(&'a str),
+    /// `\@<rest>` escape; the value is the literal string `@<rest>`.
+    /// At the binary-body site this literal is still treated as a file path
+    /// (FER-10436 contract); at multipart and nested-JSON sites it is sent
+    /// as-is with no file read.
+    Escaped(String),
+    /// `@<path>`, `@file://<path>`, or `@data://<path>` — a file reference
+    /// whose encoding is dictated by `mode`. `path` is the *inner* path with
+    /// the optional scheme prefix already stripped, ready to hand to the
+    /// filesystem.
+    File { path: Cow<'a, str>, mode: AtMode },
+}
+
+/// Parse the optional `@`/`\@` prefix on a raw flag value. Recognises the
+/// `@file://` (text-only) and `@data://` (always-base64) scheme prefixes
+/// added in FER-10532; everything else preserves the FER-10436 baseline.
+pub(crate) fn parse_at_ref(raw: &str) -> AtRef<'_> {
+    if let Some(rest) = raw.strip_prefix("\\@") {
+        return AtRef::Escaped(format!("@{rest}"));
+    }
+    if let Some(rest) = raw.strip_prefix('@') {
+        if let Some(path) = rest.strip_prefix("file://") {
+            return AtRef::File {
+                path: Cow::Borrowed(path),
+                mode: AtMode::Text,
+            };
+        }
+        if let Some(path) = rest.strip_prefix("data://") {
+            return AtRef::File {
+                path: Cow::Borrowed(path),
+                mode: AtMode::Data,
+            };
+        }
+        return AtRef::File {
+            path: Cow::Borrowed(rest),
+            mode: AtMode::Auto,
+        };
+    }
+    AtRef::Plain(raw)
+}
+
+/// Strip a leading `@` (or `@file://` / `@data://`) curl-style file prefix,
+/// or rewrite `\@` to a literal `@`. Returns the path string the caller
+/// should hand to the filesystem (or validate).
 ///
-/// Returns a [`Cow`] so the common cases (`@path` → `path`, `path` → `path`)
-/// borrow from the input while the rare `\@literal` → `@literal` rewrite
-/// allocates.
+/// This is a thin convenience over [`parse_at_ref`] for the common case
+/// where the caller only needs the inner path (e.g. for control-character
+/// validation). When the encoding mode matters, use [`parse_at_ref`] directly.
 ///
 /// Semantics:
-/// - `"@/tmp/foo"` → `"/tmp/foo"` (curl-style file prefix stripped)
-/// - `"@-"` → `"-"` (stdin sentinel)
-/// - `"/tmp/foo"` → `"/tmp/foo"` (plain path, unchanged)
-/// - `"\\@literal"` → `"@literal"` (escape — caller treats as a literal string,
-///   not a file path)
+/// - `"@/tmp/foo"`         → `"/tmp/foo"`
+/// - `"@file:///tmp/foo"`  → `"/tmp/foo"`
+/// - `"@data:///tmp/foo"`  → `"/tmp/foo"`
+/// - `"@-"`                → `"-"` (stdin sentinel; only meaningful in `Auto` mode)
+/// - `"/tmp/foo"`          → `"/tmp/foo"`
+/// - `"\\@literal"`        → `"@literal"` (escape — literal, not a file ref)
 pub(crate) fn strip_or_escape_at(raw: &str) -> Cow<'_, str> {
-    if let Some(rest) = raw.strip_prefix("\\@") {
-        Cow::Owned(format!("@{rest}"))
-    } else if let Some(rest) = raw.strip_prefix('@') {
-        Cow::Borrowed(rest)
-    } else {
-        Cow::Borrowed(raw)
+    match parse_at_ref(raw) {
+        AtRef::Plain(s) => Cow::Borrowed(s),
+        AtRef::Escaped(literal) => Cow::Owned(literal),
+        AtRef::File { path, .. } => path,
     }
 }
 
@@ -53,17 +112,44 @@ pub(crate) fn is_escaped_literal(raw: &str) -> bool {
     raw.starts_with("\\@")
 }
 
+/// Encode raw file bytes for embedding in a JSON string position or other
+/// text-like context, applying [`AtMode`] semantics. `field` and `path` are
+/// passed only to format the UTF-8 error from `AtMode::Text`.
+pub(crate) fn encode_file_bytes_for_text(
+    bytes: Vec<u8>,
+    mode: AtMode,
+    field: &str,
+    path: &str,
+) -> Result<String, CliError> {
+    match mode {
+        AtMode::Auto => Ok(match String::from_utf8(bytes) {
+            Ok(text) => text,
+            Err(e) => BASE64.encode(e.into_bytes()),
+        }),
+        AtMode::Text => String::from_utf8(bytes).map_err(|_| {
+            CliError::Validation(format!(
+                "@file://{path} for {field}: file is not valid UTF-8 \
+                 (use @data://{path} to base64-encode binary content, \
+                 or drop the explicit scheme for auto-detection)"
+            ))
+        }),
+        AtMode::Data => Ok(BASE64.encode(bytes)),
+    }
+}
+
 /// Walk a parsed JSON value and resolve `@filename` references found in
 /// string positions. Mirrors Stainless's CLI generator behavior for the
 /// object-shorthand body-flag path (e.g. `--profile '{"pic":"@abe.jpg"}'`).
 ///
 /// Rewrites in place:
-/// - `"\\@literal"` → `"@literal"` (escape — no file read)
-/// - `"@<path>"`     → file contents (UTF-8 if valid, otherwise base64)
-/// - anything else   → unchanged
+/// - `"\\@literal"`         → `"@literal"` (escape — no file read)
+/// - `"@<path>"`            → file contents (UTF-8 if valid, otherwise base64)
+/// - `"@file://<path>"`     → file contents as UTF-8 (errors if not UTF-8)
+/// - `"@data://<path>"`     → base64-encoded file contents (always)
+/// - anything else          → unchanged
 ///
 /// Errors include the file path and a JSON-Pointer-style path to the offending
-/// field for debuggability (e.g. `"/foo/bar/0/baz"`). FER-10436.
+/// field for debuggability (e.g. `"/foo/bar/0/baz"`). FER-10436, FER-10532.
 pub(crate) fn resolve_file_refs(value: &mut Value) -> Result<(), CliError> {
     resolve_file_refs_at_path(value, &mut String::new())
 }
@@ -75,31 +161,37 @@ pub(crate) fn resolve_file_refs(value: &mut Value) -> Result<(), CliError> {
 fn resolve_file_refs_at_path(value: &mut Value, pointer: &mut String) -> Result<(), CliError> {
     match value {
         Value::String(s) => {
-            if is_escaped_literal(s) {
+            match parse_at_ref(s) {
                 // `\@literal` → `@literal`; no disk access.
-                *s = strip_or_escape_at(s).into_owned();
-            } else if let Some(path) = s.strip_prefix('@') {
-                let field = if pointer.is_empty() { "/" } else { pointer.as_str() };
-                // Match the path-safety contract every other file-read site
-                // honors (binary body in binding.rs, multipart in app.rs):
-                // reject control chars / dangerous Unicode before disk I/O so
-                // an adversarial nested value like `@evil\x00path` can't
-                // bypass the safety net the other entry points enforce.
-                crate::output::reject_dangerous_chars(
-                    path,
-                    &format!("JSON field '{field}'"),
-                )?;
-                let bytes = std::fs::read(path).map_err(|io_err| {
-                    CliError::Validation(format!(
-                        "Failed to read file '{path}' for JSON field '{field}': {io_err}"
-                    ))
-                })?;
-                // Embed as UTF-8 when possible (preserves human-readable
-                // diffs in wire bodies); fall back to base64 for binary.
-                *s = match String::from_utf8(bytes) {
-                    Ok(text) => text,
-                    Err(e) => BASE64.encode(e.into_bytes()),
-                };
+                AtRef::Escaped(literal) => *s = literal,
+                // No `@` prefix — leave the value alone.
+                AtRef::Plain(_) => {}
+                AtRef::File { path, mode } => {
+                    let field = if pointer.is_empty() { "/" } else { pointer.as_str() };
+                    // Match the path-safety contract every other file-read site
+                    // honors (binary body in binding.rs, multipart in app.rs):
+                    // reject control chars / dangerous Unicode before disk I/O so
+                    // an adversarial nested value like `@evil\x00path` can't
+                    // bypass the safety net the other entry points enforce.
+                    crate::output::reject_dangerous_chars(
+                        path.as_ref(),
+                        &format!("JSON field '{field}'"),
+                    )?;
+                    let bytes = std::fs::read(path.as_ref()).map_err(|io_err| {
+                        CliError::Validation(format!(
+                            "Failed to read file '{}' for JSON field '{field}': {io_err}",
+                            path.as_ref()
+                        ))
+                    })?;
+                    // Auto preserves the FER-10436 behavior (UTF-8 or base64);
+                    // Text and Data are the FER-10532 explicit modes.
+                    *s = encode_file_bytes_for_text(
+                        bytes,
+                        mode,
+                        &format!("JSON field '{field}'"),
+                        path.as_ref(),
+                    )?;
+                }
             }
             Ok(())
         }
@@ -137,18 +229,22 @@ fn resolve_file_refs_at_path(value: &mut Value, pointer: &mut String) -> Result<
 /// Resolved source for a binary request body (octet-stream uploads etc.).
 ///
 /// Driven by the value passed on the CLI's binary-body flag (`--file`, `--body`,
-/// or whatever name the spec dictates). Accepts four forms:
+/// or whatever name the spec dictates). Accepts six forms:
 ///
 /// - `<PATH>` — plain filesystem path. Sent with `Content-Length`.
 /// - `@<PATH>` — same path, curl-style prefix. Sent with `Content-Length`.
+/// - `@file://<PATH>` — read; require valid UTF-8 or error (FER-10532).
+/// - `@data://<PATH>` — read; always base64-encode the bytes (FER-10532).
 /// - `\@<REST>` — escape: send a file whose path is literally `@<REST>`.
 /// - `-` or `@-` — read from stdin. Sent with `Transfer-Encoding: chunked`
-///   (no length).
+///   (no length). `@file://-` and `@data://-` are treated as a literal file
+///   path named `-`, not stdin.
 pub enum BinaryBodySource<'a> {
-    /// Stream from a file on disk. Content-Length comes from file metadata.
+    /// Stream from a file on disk. `mode` selects raw-byte streaming
+    /// (`Auto`) vs. read-into-memory transforms (`Text`, `Data`).
     /// Owned `Cow` covers the `\@literal` escape; borrowed covers the
     /// common `@path` and `path` cases.
-    File(Cow<'a, str>),
+    File { path: Cow<'a, str>, mode: AtMode },
     /// Read from stdin. Body is streamed with chunked transfer encoding.
     Stdin,
 }
@@ -158,11 +254,24 @@ impl<'a> BinaryBodySource<'a> {
     /// optional `@` prefix (or applying the `\@` escape) happens here so the
     /// rest of the pipeline only sees a clean path or `Stdin`.
     pub fn parse(raw: &'a str) -> Self {
-        let stripped = strip_or_escape_at(raw);
-        if stripped.as_ref() == "-" {
-            Self::Stdin
-        } else {
-            Self::File(stripped)
+        match parse_at_ref(raw) {
+            // Bare `-` and `@-` map to stdin. An explicit scheme (`@file://-` /
+            // `@data://-`) is *not* stdin — the user opted into a literal
+            // file-path interpretation, so `-` is just a filename.
+            AtRef::Plain("-") => Self::Stdin,
+            AtRef::File { path, mode: AtMode::Auto } if path.as_ref() == "-" => Self::Stdin,
+            AtRef::File { path, mode } => Self::File { path, mode },
+            // `\@<REST>` resolves to a literal-path file read at this site
+            // (FER-10436). The literal already carries no scheme prefix, so
+            // it inherits `Auto` byte-streaming semantics.
+            AtRef::Escaped(literal) => Self::File {
+                path: Cow::Owned(literal),
+                mode: AtMode::Auto,
+            },
+            AtRef::Plain(s) => Self::File {
+                path: Cow::Borrowed(s),
+                mode: AtMode::Auto,
+            },
         }
     }
 }
@@ -298,15 +407,16 @@ pub(crate) fn binary_body_is_stdin(binary_body_path: Option<&str>) -> bool {
 pub(crate) fn multipart_has_stdin(parts: &Option<Vec<MultipartPart>>) -> bool {
     match parts {
         Some(parts) => parts.iter().any(|p| match p {
-            MultipartPart::File { path, .. } => {
+            MultipartPart::File { path, .. } => match parse_at_ref(path) {
                 // `\@literal` is an escape, not a stdin sentinel — route it
-                // to the file branch instead. Everything else uses the same
-                // strip-`@` logic as `BinaryBodySource::parse`. FER-10436.
-                if is_escaped_literal(path) {
-                    return false;
-                }
-                strip_or_escape_at(path).as_ref() == "-"
-            }
+                // to the file branch instead. FER-10436.
+                AtRef::Escaped(_) => false,
+                // Only `Auto`-mode `@-` (or bare `-`) is stdin. An explicit
+                // scheme like `@file://-` means a literal file path named `-`.
+                AtRef::File { path, mode: AtMode::Auto } => path.as_ref() == "-",
+                AtRef::File { .. } => false,
+                AtRef::Plain(s) => s == "-",
+            },
             MultipartPart::Text { .. } => false,
         }),
         None => false,
@@ -640,8 +750,21 @@ fn parse_and_validate_inputs(
     // `body_from_flags` are never both populated, so the body is sourced
     // from exactly one channel here.
     let body: Option<Value> = if let Some(b) = body_json {
-        let json_val: Value = serde_json::from_str(b)
+        let mut json_val: Value = serde_json::from_str(b)
             .map_err(|e| CliError::Validation(format!("Invalid --json body: {e}")))?;
+        // Resolve `@file` references inside `--json` bodies, matching the
+        // behavior of per-field object-shorthand flags (FER-10436).
+        //
+        // Called directly (no `block_in_place`) because this sync function
+        // is reached from two async contexts:
+        //   a) binding.rs dispatch → `execute_method().await`
+        //   b) app.rs custom-command → `block_in_place` → `block_on` →
+        //      `execute_method`
+        // Wrapping in `block_in_place` here would create a nested
+        // `block_in_place → block_on → block_in_place` chain in path (b).
+        // The file reads are brief, and for a CLI tool the momentary
+        // blocking of a single worker thread is acceptable.
+        resolve_file_refs(&mut json_val)?;
         Some(json_val)
     } else if !body_from_flags.is_empty() {
         Some(Value::Object(body_from_flags))
@@ -888,7 +1011,7 @@ async fn build_http_request(
             })?;
             request = request.header("Content-Type", &binary.content_type);
             match BinaryBodySource::parse(raw) {
-                BinaryBodySource::File(path) => {
+                BinaryBodySource::File { path, mode: AtMode::Auto } => {
                     let path_ref: &str = path.as_ref();
                     let file_meta = tokio::fs::metadata(path_ref).await.map_err(|e| {
                         CliError::Validation(format!(
@@ -900,6 +1023,29 @@ async fn build_http_request(
                         build_binary_file_stream(path_ref, file_meta.len(), &binary.flag_name);
                     request = request.header("Content-Length", content_length);
                     request = request.body(body);
+                }
+                BinaryBodySource::File { path, mode } => {
+                    // `Text` / `Data` modes (FER-10532) need the full bytes in
+                    // memory to validate UTF-8 or to base64-encode — there is
+                    // no streaming form of either transform. The transformed
+                    // body becomes a sized in-memory buffer.
+                    let path_ref: &str = path.as_ref();
+                    let bytes = tokio::fs::read(path_ref).await.map_err(|e| {
+                        CliError::Validation(format!(
+                            "Failed to read --{} '{path_ref}': {e}",
+                            binary.flag_name
+                        ))
+                    })?;
+                    let body_bytes = encode_file_bytes_for_text(
+                        bytes,
+                        mode,
+                        &format!("--{}", binary.flag_name),
+                        path_ref,
+                    )?
+                    .into_bytes();
+                    let content_length = body_bytes.len() as u64;
+                    request = request.header("Content-Length", content_length);
+                    request = request.body(reqwest::Body::from(body_bytes));
                 }
                 BinaryBodySource::Stdin => {
                     // No Content-Length — reqwest emits Transfer-Encoding: chunked.
@@ -1730,6 +1876,7 @@ pub async fn execute_method(
     no_extract: bool,
     no_retry: bool,
     no_stream: bool,
+    debug: bool,
     extra_headers: &[(String, String)],
 ) -> Result<Option<Value>, CliError> {
     let binary_flag = method
@@ -1795,8 +1942,16 @@ pub async fn execute_method(
                 .map(|b| (b.content_type.as_str(), b.flag_name.as_str()))
                 .unwrap_or(("", ""));
             let (source, transfer) = match BinaryBodySource::parse(raw) {
-                BinaryBodySource::File(p) => {
-                    (json!({ "file": p.as_ref() }), "content-length")
+                BinaryBodySource::File { path, mode } => {
+                    let mode_str = match mode {
+                        AtMode::Auto => "auto",
+                        AtMode::Text => "text",
+                        AtMode::Data => "data",
+                    };
+                    (
+                        json!({ "file": path.as_ref(), "mode": mode_str }),
+                        "content-length",
+                    )
                 }
                 BinaryBodySource::Stdin => (json!({ "stdin": true }), "chunked"),
             };
@@ -1844,6 +1999,52 @@ pub async fn execute_method(
     let mut pages_fetched: u32 = 0;
     let mut captured_values = Vec::new();
     let auth_metadata = endpoint_metadata_for(method);
+
+    // Derive spec-declared sensitive names for the debug dump.
+    let additional_sensitive_headers: Vec<&str> = if debug {
+        doc.security_schemes
+            .values()
+            .filter_map(|s| {
+                if let crate::openapi::discovery::SecurityScheme::ApiKeyHeader { name } = s {
+                    Some(name.as_str())
+                } else {
+                    None
+                }
+            })
+            .collect()
+    } else {
+        Vec::new()
+    };
+    let additional_sensitive_query_params: Vec<&str> = if debug {
+        doc.security_schemes
+            .values()
+            .filter_map(|s| {
+                if let crate::openapi::discovery::SecurityScheme::ApiKeyQuery { name } = s {
+                    Some(name.as_str())
+                } else {
+                    None
+                }
+            })
+            .collect()
+    } else {
+        Vec::new()
+    };
+
+    // Pre-compute the body string for the debug request dump. This is
+    // computed once here because the body doesn't change across retries.
+    let body_str_for_dump: Option<String> = if debug
+        && binary_body_path.is_none()
+        && !input.is_upload
+        && multipart_parts.is_none()
+    {
+        if method.body_encoding.is_form() {
+            input.body.as_ref().map(encode_form_body)
+        } else {
+            input.body.as_ref().map(|v| v.to_string())
+        }
+    } else {
+        None
+    };
 
     // Build the client once outside the pagination loop. Client construction
     // reads env vars and (with TLS) builds a connection pool; rebuilding per
@@ -1923,7 +2124,20 @@ pub async fn execute_method(
                 request = request.header("Idempotency-Key", key.as_str());
             }
 
-            match request.send().await {
+            let built = request.build().map_err(|e| {
+                CliError::Other(anyhow::Error::from(e).context("Failed to build HTTP request"))
+            })?;
+            if debug {
+                crate::debug::dump_request(
+                    built.method().as_str(),
+                    built.url().as_str(),
+                    built.headers(),
+                    body_str_for_dump.as_deref(),
+                    &additional_sensitive_headers,
+                    &additional_sensitive_query_params,
+                );
+            }
+            match client.execute(built).await {
                 Ok(resp) => {
                     let status = resp.status();
                     let retry_after_header = resp
@@ -2012,6 +2226,7 @@ pub async fn execute_method(
             .to_string();
 
         if !status.is_success() {
+            let response_headers = response.headers().clone();
             let error_body = response.text().await.unwrap_or_default();
             tracing::warn!(
                 api_method = method_id,
@@ -2020,6 +2235,15 @@ pub async fn execute_method(
                 latency_ms = latency_ms,
                 "API error"
             );
+            if debug {
+                crate::debug::dump_error_response(
+                    status.as_u16(),
+                    latency_ms,
+                    &response_headers,
+                    &error_body,
+                    &additional_sensitive_headers,
+                );
+            }
             return handle_error_response(
                 status,
                 &error_body,
@@ -2059,6 +2283,13 @@ pub async fn execute_method(
                 // with `x-fern-pagination`), so the pagination loop
                 // never re-enters; bumping the counter would only
                 // confuse the unrelated request-tracing in `debug!`.
+                if debug {
+                    crate::debug::dump_streaming_note(
+                        status.as_u16(),
+                        response.headers(),
+                        &additional_sensitive_headers,
+                    );
+                }
                 stream_response(
                     response,
                     streaming,
@@ -2100,11 +2331,21 @@ pub async fn execute_method(
             content_type.contains("application/json") || content_type.contains("text/json");
 
         if is_json || content_type.is_empty() {
+            let response_headers = response.headers().clone();
             let body_text = response
                 .text()
                 .await
                 .context("Failed to read response body")?;
 
+            if debug {
+                crate::debug::dump_response(
+                    status.as_u16(),
+                    latency_ms,
+                    &response_headers,
+                    &body_text,
+                    &additional_sensitive_headers,
+                );
+            }
             let response_body = body_text;
             let should_continue = handle_json_response(
                 &response_body,
@@ -2126,16 +2367,26 @@ pub async fn execute_method(
             if should_continue {
                 continue;
             }
-        } else if let Some(res) = handle_binary_response(
-            response,
-            &content_type,
-            output_path,
-            pipeline,
-            capture_output,
-        )
-        .await?
-        {
-            captured_values.push(res);
+        } else {
+            let bin_headers = response.headers().clone();
+            if debug {
+                crate::debug::dump_streaming_note(
+                    status.as_u16(),
+                    &bin_headers,
+                    &additional_sensitive_headers,
+                );
+            }
+            if let Some(res) = handle_binary_response(
+                response,
+                &content_type,
+                output_path,
+                pipeline,
+                capture_output,
+            )
+            .await?
+            {
+                captured_values.push(res);
+            }
         }
 
         break;
@@ -2998,9 +3249,22 @@ async fn build_multipart_form(
                     continue;
                 }
                 let mime = file_part_mime(content_type.as_deref());
-                let stripped = strip_or_escape_at(path);
-                let stripped_ref: &str = stripped.as_ref();
-                let (bytes, file_name) = if stripped_ref == "-" {
+                // Parse the raw stored path so we know which encoding the
+                // user asked for (`Auto` → raw bytes, `Text` → UTF-8 only,
+                // `Data` → always base64 — FER-10532). Stdin (`@-` / `-`)
+                // is only reachable through `Auto`.
+                let (inner_path, mode) = match parse_at_ref(path) {
+                    AtRef::File { path: p, mode } => (p, mode),
+                    AtRef::Plain(s) => (Cow::Borrowed(s), AtMode::Auto),
+                    // `\@literal` was handled above; reachable only for a
+                    // defensively-constructed File part. Fall back to the
+                    // FER-10436 contract: open a file whose name is the
+                    // literal `@<rest>`.
+                    AtRef::Escaped(literal) => (Cow::Owned(literal), AtMode::Auto),
+                };
+                let inner_ref: &str = inner_path.as_ref();
+                let is_stdin = mode == AtMode::Auto && inner_ref == "-";
+                let (bytes, file_name) = if is_stdin {
                     let mut buf = Vec::new();
                     tokio::io::AsyncReadExt::read_to_end(&mut tokio::io::stdin(), &mut buf)
                         .await
@@ -3011,19 +3275,31 @@ async fn build_multipart_form(
                         })?;
                     (buf, "stdin".to_string())
                 } else {
-                    let file_bytes = tokio::fs::read(stripped_ref).await.map_err(|e| {
+                    let file_bytes = tokio::fs::read(inner_ref).await.map_err(|e| {
                         CliError::Validation(format!(
-                            "Failed to read file '{stripped_ref}' for multipart field '{name}': {e}"
+                            "Failed to read file '{inner_ref}' for multipart field '{name}': {e}"
                         ))
                     })?;
-                    let file_name = std::path::Path::new(stripped_ref)
+                    let file_name = std::path::Path::new(inner_ref)
                         .file_name()
                         .and_then(|n| n.to_str())
                         .unwrap_or("upload")
                         .to_string();
                     (file_bytes, file_name)
                 };
-                let file_part = reqwest::multipart::Part::bytes(bytes)
+                // Apply the FER-10532 mode transform when the user asked
+                // for one. `Auto` and stdin keep their raw-byte path.
+                let part_bytes: Vec<u8> = match mode {
+                    AtMode::Auto => bytes,
+                    AtMode::Text | AtMode::Data => encode_file_bytes_for_text(
+                        bytes,
+                        mode,
+                        &format!("multipart field '{name}'"),
+                        inner_ref,
+                    )?
+                    .into_bytes(),
+                };
+                let file_part = reqwest::multipart::Part::bytes(part_bytes)
                     .file_name(file_name)
                     .mime_str(mime)
                     .map_err(|e| {
@@ -4119,6 +4395,33 @@ mod tests {
         ])));
         // No multipart parts at all.
         assert!(!multipart_has_stdin(&None));
+
+        // FER-10532: explicit-scheme `-` is a literal filename, NOT stdin.
+        // `@file://-` and `@data://-` both fail the stdin check so retries
+        // stay enabled (the file read is replayable, unlike a pipe).
+        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::File {
+            name: "file".into(),
+            path: "@file://-".into(),
+            content_type: None,
+        }])));
+        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::File {
+            name: "file".into(),
+            path: "@data://-".into(),
+            content_type: None,
+        }])));
+        // FER-10532: explicit-scheme path that happens to be `-` somewhere
+        // else (e.g. `@file://./-.bin`) is also a real path.
+        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::File {
+            name: "file".into(),
+            path: "@file:///tmp/audio.txt".into(),
+            content_type: None,
+        }])));
+        // FER-10436: `\@-` is the escape — literal value `@-`, not stdin.
+        assert!(!multipart_has_stdin(&Some(vec![MultipartPart::File {
+            name: "file".into(),
+            path: "\\@-".into(),
+            content_type: None,
+        }])));
     }
 
     #[test]
@@ -4526,7 +4829,10 @@ mod tests {
     #[test]
     fn test_binary_body_source_plain_path() {
         match BinaryBodySource::parse("/tmp/audio.mp3") {
-            BinaryBodySource::File(p) => assert_eq!(p.as_ref(), "/tmp/audio.mp3"),
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "/tmp/audio.mp3");
+                assert_eq!(mode, AtMode::Auto);
+            }
             BinaryBodySource::Stdin => panic!("expected File"),
         }
     }
@@ -4534,7 +4840,10 @@ mod tests {
     #[test]
     fn test_binary_body_source_at_path_strips_prefix() {
         match BinaryBodySource::parse("@/tmp/audio.mp3") {
-            BinaryBodySource::File(p) => assert_eq!(p.as_ref(), "/tmp/audio.mp3"),
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "/tmp/audio.mp3");
+                assert_eq!(mode, AtMode::Auto);
+            }
             BinaryBodySource::Stdin => panic!("expected File"),
         }
     }
@@ -4555,7 +4864,10 @@ mod tests {
         // Only the first `@` is stripped — matches curl's behavior for filenames
         // that legitimately start with `@`.
         match BinaryBodySource::parse("@@weird-name.mp3") {
-            BinaryBodySource::File(p) => assert_eq!(p.as_ref(), "@weird-name.mp3"),
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "@weird-name.mp3");
+                assert_eq!(mode, AtMode::Auto);
+            }
             BinaryBodySource::Stdin => panic!("expected File"),
         }
     }
@@ -4566,7 +4878,74 @@ mod tests {
         // (rather than triggering the `@` strip). Users can pass a path that
         // literally begins with `@` this way. FER-10436.
         match BinaryBodySource::parse("\\@weird") {
-            BinaryBodySource::File(p) => assert_eq!(p.as_ref(), "@weird"),
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "@weird");
+                assert_eq!(mode, AtMode::Auto);
+            }
+            BinaryBodySource::Stdin => panic!("expected File"),
+        }
+    }
+
+    // FER-10532 — explicit scheme prefixes carry an [`AtMode`] through to the
+    // executor. The path is stripped to the inner filesystem path; `-` is no
+    // longer the stdin sentinel under an explicit scheme.
+
+    #[test]
+    fn test_binary_body_source_file_scheme_is_text_mode() {
+        match BinaryBodySource::parse("@file:///tmp/audio.txt") {
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "/tmp/audio.txt");
+                assert_eq!(mode, AtMode::Text);
+            }
+            BinaryBodySource::Stdin => panic!("expected File"),
+        }
+    }
+
+    #[test]
+    fn test_binary_body_source_data_scheme_is_data_mode() {
+        match BinaryBodySource::parse("@data:///tmp/audio.bin") {
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "/tmp/audio.bin");
+                assert_eq!(mode, AtMode::Data);
+            }
+            BinaryBodySource::Stdin => panic!("expected File"),
+        }
+    }
+
+    #[test]
+    fn test_binary_body_source_file_scheme_dash_is_not_stdin() {
+        // `@file://-` is a literal file path named `-`, not stdin. Only the
+        // bare `Auto`-mode `@-` (and plain `-`) trigger stdin.
+        match BinaryBodySource::parse("@file://-") {
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "-");
+                assert_eq!(mode, AtMode::Text);
+            }
+            BinaryBodySource::Stdin => panic!("explicit-scheme `-` must not be stdin"),
+        }
+    }
+
+    #[test]
+    fn test_binary_body_source_data_scheme_dash_is_not_stdin() {
+        match BinaryBodySource::parse("@data://-") {
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "-");
+                assert_eq!(mode, AtMode::Data);
+            }
+            BinaryBodySource::Stdin => panic!("explicit-scheme `-` must not be stdin"),
+        }
+    }
+
+    #[test]
+    fn test_binary_body_source_backslash_at_file_scheme_is_literal_path() {
+        // `\@file://x` escapes the *whole* `@`-prefix grammar — the value
+        // becomes the literal path string `@file://x` (FER-10436 escape
+        // semantics). No scheme is parsed; mode stays `Auto`.
+        match BinaryBodySource::parse("\\@file:///etc/hosts") {
+            BinaryBodySource::File { path, mode } => {
+                assert_eq!(path.as_ref(), "@file:///etc/hosts");
+                assert_eq!(mode, AtMode::Auto);
+            }
             BinaryBodySource::Stdin => panic!("expected File"),
         }
     }
@@ -4738,6 +5117,130 @@ mod tests {
             msg.contains("control"),
             "error must mention control characters: {msg}"
         );
+    }
+
+    // -----------------------------------------------------------------
+    // FER-10532 — explicit `@file://` (UTF-8 only) and `@data://` (base64)
+    // scheme prefixes inside object-shorthand JSON values.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn test_resolve_file_refs_file_scheme_inlines_utf8_string() {
+        // `@file://<path>` reads UTF-8 text and embeds the string verbatim,
+        // never base64. Same wire output as the `Auto` mode would produce
+        // for valid UTF-8 — the value of the scheme is the *guarantee*.
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(tmp.path(), b"hello strict").unwrap();
+        let at_path = format!("@file://{}", tmp.path().to_str().unwrap());
+
+        let mut value = json!({ "outer": { "pic": at_path } });
+        resolve_file_refs(&mut value).expect("should resolve");
+        assert_eq!(value["outer"]["pic"], json!("hello strict"));
+    }
+
+    #[test]
+    fn test_resolve_file_refs_file_scheme_errors_on_non_utf8() {
+        // The defining behavior of `@file://`: refuse to silently base64
+        // a binary payload. The error must surface the JSON pointer and
+        // a hint about `@data://` so the user knows the escape hatch.
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(tmp.path(), [0xff, 0xfe, 0xfd]).unwrap();
+        let at_path = format!("@file://{}", tmp.path().to_str().unwrap());
+
+        let mut value = json!({ "blob": at_path });
+        let err = resolve_file_refs(&mut value).expect_err("must reject non-UTF-8");
+        let CliError::Validation(msg) = &err else {
+            panic!("expected Validation, got {err:?}");
+        };
+        assert!(
+            msg.contains("not valid UTF-8"),
+            "error must say `not valid UTF-8`: {msg}"
+        );
+        assert!(
+            msg.contains("@data://"),
+            "error must hint at @data:// escape hatch: {msg}"
+        );
+        assert!(msg.contains("/blob"), "error must include JSON pointer: {msg}");
+    }
+
+    #[test]
+    fn test_resolve_file_refs_data_scheme_base64s_utf8_input() {
+        // `@data://<path>` always base64-encodes, even on valid UTF-8
+        // (otherwise it would be identical to `@file://`). This is the
+        // case Stainless documents for "API expects base64 of a text
+        // payload."
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        let utf8_payload = b"hello fern";
+        std::fs::write(tmp.path(), utf8_payload).unwrap();
+        let at_path = format!("@data://{}", tmp.path().to_str().unwrap());
+
+        let mut value = json!({ "encoded": at_path });
+        resolve_file_refs(&mut value).expect("should resolve");
+        let expected = BASE64.encode(utf8_payload);
+        assert_eq!(value["encoded"], json!(expected));
+    }
+
+    #[test]
+    fn test_resolve_file_refs_data_scheme_base64s_binary_input() {
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        let raw_bytes: Vec<u8> = vec![0xff, 0xfe, 0x00, 0x01];
+        std::fs::write(tmp.path(), &raw_bytes).unwrap();
+        let at_path = format!("@data://{}", tmp.path().to_str().unwrap());
+
+        let mut value = json!({ "blob": at_path });
+        resolve_file_refs(&mut value).expect("should resolve");
+        assert_eq!(value["blob"], json!(BASE64.encode(&raw_bytes)));
+    }
+
+    #[test]
+    fn test_resolve_file_refs_backslash_at_file_scheme_is_literal() {
+        // `\@file://x` is a literal string `@file://x` — no scheme is
+        // parsed, no file is read. Same escape rule as `\@<rest>`.
+        let mut value = json!({ "k": "\\@file:///etc/hosts" });
+        resolve_file_refs(&mut value).expect("escape should not touch disk");
+        assert_eq!(value["k"], json!("@file:///etc/hosts"));
+    }
+
+    #[test]
+    fn test_resolve_file_refs_backslash_at_data_scheme_is_literal() {
+        let mut value = json!({ "k": "\\@data:///etc/hosts" });
+        resolve_file_refs(&mut value).expect("escape should not touch disk");
+        assert_eq!(value["k"], json!("@data:///etc/hosts"));
+    }
+
+    #[test]
+    fn test_parse_at_ref_recognises_schemes() {
+        // Direct coverage on the parser so each scheme has at least one
+        // unit test that doesn't have to spin up a filesystem.
+        match parse_at_ref("@file:///etc/hosts") {
+            AtRef::File { path, mode } => {
+                assert_eq!(path.as_ref(), "/etc/hosts");
+                assert_eq!(mode, AtMode::Text);
+            }
+            _ => panic!("expected File(Text)"),
+        }
+        match parse_at_ref("@data:///etc/hosts") {
+            AtRef::File { path, mode } => {
+                assert_eq!(path.as_ref(), "/etc/hosts");
+                assert_eq!(mode, AtMode::Data);
+            }
+            _ => panic!("expected File(Data)"),
+        }
+        match parse_at_ref("@/etc/hosts") {
+            AtRef::File { path, mode } => {
+                assert_eq!(path.as_ref(), "/etc/hosts");
+                assert_eq!(mode, AtMode::Auto);
+            }
+            _ => panic!("expected File(Auto)"),
+        }
+        match parse_at_ref("\\@file:///etc/hosts") {
+            AtRef::Escaped(s) => assert_eq!(s, "@file:///etc/hosts"),
+            _ => panic!("expected Escaped"),
+        }
+        match parse_at_ref("plain-path") {
+            AtRef::Plain(s) => assert_eq!(s, "plain-path"),
+            _ => panic!("expected Plain"),
+        }
     }
 
     #[test]
@@ -9778,6 +10281,7 @@ async fn test_execute_method_dry_run() {
         false, // no_extract
         false, // no_retry
         false, // no_stream
+        false, // debug
         &[],
     )
     .await;
@@ -9826,6 +10330,7 @@ async fn test_execute_method_missing_path_param() {
         false, // no_extract
         false, // no_retry
         false, // no_stream
+        false, // debug
         &[],
     )
     .await;

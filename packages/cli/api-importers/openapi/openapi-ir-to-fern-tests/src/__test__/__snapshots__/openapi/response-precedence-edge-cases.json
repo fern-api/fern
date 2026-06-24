@@ -379,4 +379,5 @@ error-discrimination:
 display-name: Response Precedence Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

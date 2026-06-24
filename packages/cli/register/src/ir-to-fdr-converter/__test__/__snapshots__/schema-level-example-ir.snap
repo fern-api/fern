@@ -1396,6 +1396,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_plant": {
       "displayName": undefined,

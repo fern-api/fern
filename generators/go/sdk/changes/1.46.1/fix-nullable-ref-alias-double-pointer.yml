@@ -1,0 +1,9 @@
+- summary: |
+    Fix double-pointer types generated for nullable date fields that reference
+    shared component schemas via $ref. When a nullable type alias (e.g.
+    `type Iso8601DateNullable = *time.Time`) was used as a field type, the
+    generator incorrectly produced `*Iso8601DateNullable` (effectively
+    `**time.Time`), causing Go compilation errors. The generator now detects
+    aliases that already resolve to pointer types and avoids wrapping them in
+    an additional pointer.
+  type: fix

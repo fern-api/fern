@@ -205,4 +205,5 @@ default-environment: default
 default-url: one
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -358,6 +358,7 @@ puts user.name",
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "getUser_Response_200": {
