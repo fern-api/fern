@@ -16,6 +16,8 @@
 | [0003](../../adr/0003-null-sentinel-on-nullable-scalar-body-flags.md) | Null sentinel on nullable scalar body flags | Accepted (2026-05-27) | [`docs/adr/0003`](../../adr/0003-null-sentinel-on-nullable-scalar-body-flags.md) | [FER-10753](https://linear.app/buildwithfern/issue/FER-10753) (OpenAPI 3.0/3.1 nullable scalar flags) |
 | [0004](../../adr/0004-all-of-flattening-into-per-field-flags.md) | `allOf` flattening into per-field flags | Accepted (2026-05-28) | [`docs/adr/0004`](../../adr/0004-all-of-flattening-into-per-field-flags.md) | [PR #124](https://github.com/fern-api/cli-sdk/pull/124) (allOf + nullable-union composition lowering) |
 | [0005](../../adr/0005-nullable-union-promotion-via-composition.md) | Nullable-union promotion via composition | Accepted (2026-05-28) | [`docs/adr/0005`](../../adr/0005-nullable-union-promotion-via-composition.md) | [PR #124](https://github.com/fern-api/cli-sdk/pull/124) (allOf + nullable-union composition lowering) |
+| [0007](../../adr/0007-login-flows-one-shot-per-binary.md) | Login flows are one-shot per binary | Accepted (2026-06-11) | [`docs/adr/0007`](../../adr/0007-login-flows-one-shot-per-binary.md) | [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) (first-class OAuth + login support) |
+| [0008](../../adr/0008-credential-precedence-and-storage-fallback.md) | Credential precedence chain and storage fallback | Accepted (2026-06-11) | [`docs/adr/0008`](../../adr/0008-credential-precedence-and-storage-fallback.md) | [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) (first-class OAuth + login support) |
 
 ## Implicit decisions — candidates for promotion
 
@@ -23,11 +25,11 @@ These are durable architectural choices already in force. Promotion to a
 formal ADR is recommended when the decision is next revisited (or when
 the listed risk materializes). Listed in rough priority order.
 
-### D-A. Protocol path isolation: `src/openapi/` and `src/graphql/` share nothing
+### D-A. Protocol path isolation: `src/openapi/`, `src/graphql/`, and `src/asyncapi/` share nothing
 
 - **Where documented today:** [`AGENTS.md`](../../../AGENTS.md) lines 91–106.
 - **Driver:** Code-generator delivery model — customers receive a snapshot
-  of exactly one path. The two paths are never bundled.
+  of exactly one path. The paths are never bundled together.
 - **Drivers in Linear:** [FER-10364](https://linear.app/buildwithfern/issue/FER-10364) (CLI generator file-hierarchy partition) — the refactor that established the boundary.
 - **Implementation:** Refactor in PR #15, `refactor(FER-10364): partition src/ into openapi/ and graphql/ protocol modules`.
 - **Why this should be the next ADR:** It's the load-bearing constraint of the
@@ -352,6 +354,75 @@ the listed risk materializes). Listed in rough priority order.
 - **Why this should be promoted:** Any customer with overlapping
   global-header + per-op parameter names depends on this precedence rule.
   Changing it would re-introduce the panic.
+
+### D-AC. Cross-binding deep-merge with leaf-collision detection
+
+- **Where documented today:** [PR #167](https://github.com/fern-api/cli-sdk/pull/167); `src/app.rs` (`merge_command_trees`); [`ARCHITECTURE.md` §8.7](../ARCHITECTURE.md#87-custom-commands-and-extension-surface).
+- **Driver:** AsyncAPI landing as third protocol path required composing
+  disjoint subcommand trees from multiple bindings (e.g. ElevenLabs REST
+  + WebSocket). The prior last-wins resolution silently dropped commands
+  when two bindings contributed to the same top-level group.
+- **Implementation:** Deep subtree merge walks both command trees; leaf
+  nodes with identical full paths error with `CliError::Validation` at
+  startup rather than silently overwriting. Non-leaf groups are merged
+  recursively.
+- **Why this should be promoted:** Every multi-binding CLI depends on
+  the merge semantics. A regression to last-wins silently hides commands
+  from users.
+
+### D-AD. First-class OAuth login — always-grafted `auth` subcommand
+
+- **Where documented today:** [FER-9856](https://linear.app/buildwithfern/issue/FER-9856); [PR #191](https://github.com/fern-api/cli-sdk/pull/191); [ADR-0007](../../adr/0007-login-flows-one-shot-per-binary.md); [ADR-0008](../../adr/0008-credential-precedence-and-storage-fallback.md); [`ARCHITECTURE.md` §8.21](../ARCHITECTURE.md#821-first-class-oauth-login-support).
+- **Driver:** Customers needed `auth login` with no code change — just a
+  spec extension. API-key-only binaries get keyring-backed storage for free.
+- **Implementation:** Three flow types (PKCE, device-code, token-paste).
+  One flow per binary, no flow-picker prompt. `auth` subcommand grafted on
+  all CLIs. Keyring storage with file fallback. Credential precedence:
+  CLI > env > keyring > file. `auth status` discloses shadowing.
+- **Reversal note:** Supersedes the foundation-only `TokenStore` /
+  `FileTokenStore` / `KeyringTokenStore` layer from FER-10692 — that
+  plumbing is now wired end-to-end.
+
+### D-AE. TTY-aware default output format with `<NAME>_OUTPUT` env var
+
+- **Where documented today:** [FER-10543](https://linear.app/buildwithfern/issue/FER-10543); [FER-10541](https://linear.app/buildwithfern/issue/FER-10541); [PR #143](https://github.com/fern-api/cli-sdk/pull/143); [`ARCHITECTURE.md` §8.22](../ARCHITECTURE.md#822-tty-aware-default-output).
+- **Driver:** Agents pipe output and need JSON; humans at a terminal want
+  tables. The env var adds a persistent preference without per-invocation
+  `--format`.
+- **Implementation:** `resolve_default_format()` in `src/formatter.rs`.
+  Precedence: `--format` flag > `<NAME>_OUTPUT` env var > TTY-aware default
+  (table when interactive, JSON when piped or `CI=true`).
+- **Why this should be promoted:** Every downstream agent integration
+  depends on the piped-→-JSON default. Changing the precedence chain or
+  default would silently break agent scripts.
+
+### D-AF. `@file` resolution in JSON body inputs (Stainless parity)
+
+- **Where documented today:** [FER-10436](https://linear.app/buildwithfern/issue/FER-10436); [PR #164](https://github.com/fern-api/cli-sdk/pull/164); [PR #201](https://github.com/fern-api/cli-sdk/pull/201); [`ARCHITECTURE.md` §8.23](../ARCHITECTURE.md#823-file-resolution-in-body-inputs).
+- **Driver:** Stainless parity — users expect `@<path>` to embed file
+  contents in body flags, matching the Stainless CLI convention.
+- **Implementation:** `resolve_file_refs()` / `strip_or_escape_at()` in
+  `src/openapi/executor.rs`. `@<path>` reads and embeds (UTF-8 → string,
+  binary → base64). `\@` escapes. Works at all `@`-aware sites including
+  object-shorthand JSON and `--json` whole-body. Blocking I/O wrapped in
+  `block_in_place`.
+- **Why this should be promoted:** The `@file` semantics are user-facing
+  and documented in Stainless’s public docs. Changing behavior silently
+  breaks copy-pasted examples.
+
+### D-AG. `oneOf [T, array<T>]` union recognition with `$ref` chain resolution
+
+- **Where documented today:** [PR #188](https://github.com/fern-api/cli-sdk/pull/188); `src/openapi/parser.rs` (`recognize_scalar_or_array_union`, `resolve_ref_chain`); [`ARCHITECTURE.md` §8.24](../ARCHITECTURE.md#824-oneof-t-arrayt-union-recognition).
+- **Driver:** Real-world OpenAPI specs (e.g. fern-api/fern#16438) use
+  `oneOf: [{type: string}, {type: array, items: {type: string}}]` for
+  body parameters that accept either a single value or a list.
+- **Implementation:** `recognize_scalar_or_array_union()` detects unions
+  for any scalar T. `resolve_ref_chain()` follows `$ref` chains up to 8
+  levels. Wire serialization: single value → scalar, multiple → array.
+  `--schema` renders `oneOf` annotation.
+- **Why this should be promoted:** Union handling affects the wire format
+  of every operation using the pattern. A regression silently sends arrays
+  where scalars are expected (or vice versa).
 
 ---
 
