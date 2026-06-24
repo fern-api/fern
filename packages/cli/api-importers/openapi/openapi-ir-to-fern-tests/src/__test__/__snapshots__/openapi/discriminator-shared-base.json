@@ -107,7 +107,7 @@
             "properties": {
               "code": {
                 "docs": "Machine-readable error code",
-                "type": "optional<ForbiddenErrorCode>",
+                "type": "optional<ForbiddenErrorBodyCode>",
               },
               "message": {
                 "docs": "Human-readable error message",
@@ -118,7 +118,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "ForbiddenErrorCode": {
+          "ForbiddenErrorBodyCode": {
             "docs": "Machine-readable error code",
             "enum": [
               "ACCESS_DENIED",
@@ -157,7 +157,7 @@
             "properties": {
               "code": {
                 "docs": "Machine-readable error code",
-                "type": "optional<UnauthorizedErrorCode>",
+                "type": "optional<UnauthorizedErrorBodyCode>",
               },
               "message": {
                 "docs": "Human-readable error message",
@@ -168,7 +168,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "UnauthorizedErrorCode": {
+          "UnauthorizedErrorBodyCode": {
             "docs": "Machine-readable error code",
             "enum": [
               "UNABLE_TO_AUTHENTICATE",
@@ -212,7 +212,7 @@
       - Error
     source:
       openapi: ../openapi.yml
-  UnauthorizedErrorCode:
+  UnauthorizedErrorBodyCode:
     enum:
       - UNABLE_TO_AUTHENTICATE
     docs: Machine-readable error code
@@ -223,14 +223,14 @@
     docs: Authentication failed
     properties:
       code:
-        type: optional<UnauthorizedErrorCode>
+        type: optional<UnauthorizedErrorBodyCode>
         docs: Machine-readable error code
       message:
         type: string
         docs: Human-readable error message
     source:
       openapi: ../openapi.yml
-  ForbiddenErrorCode:
+  ForbiddenErrorBodyCode:
     enum:
       - ACCESS_DENIED
     docs: Machine-readable error code
@@ -241,7 +241,7 @@
     docs: Access denied
     properties:
       code:
-        type: optional<ForbiddenErrorCode>
+        type: optional<ForbiddenErrorBodyCode>
         docs: Machine-readable error code
       message:
         type: string
