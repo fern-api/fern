@@ -32,8 +32,8 @@ mmdc -i 01-context.mmd -o 01-context.svg
 ## Conventions
 
 - Light-blue fill = inside `fern-cli-sdk`.
-- Green fill = shared infrastructure (above both protocol paths).
+- Green fill = shared infrastructure (above all protocol paths).
 - Orange fill = OpenAPI protocol path (intentionally isolated).
 - Light-blue fill (deeper) = GraphQL protocol path (intentionally isolated).
-- Dashed link between the two protocol paths = "no shared abstractions"
+- Dashed link between protocol paths = "no shared abstractions"
   ([§8.2](../ARCHITECTURE.md#82-protocol-path-isolation)).
