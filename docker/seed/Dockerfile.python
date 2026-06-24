@@ -10,7 +10,7 @@ RUN apk add --no-cache curl && \
 # containerd/runc rebuild also picks up dependency bumps from the v2.3.x line.
 FROM golang:1.26.4-alpine3.23 AS overlay-binaries
 ARG CONTAINERD_VERSION=2.3.2
-ARG RUNC_VERSION=1.3.5
+ARG RUNC_VERSION=1.3.6
 ARG MOBY_VERSION=29.5.2
 ARG DOCKER_CLI_VERSION=29.5.2
 ARG COMPOSE_VERSION=5.1.4
