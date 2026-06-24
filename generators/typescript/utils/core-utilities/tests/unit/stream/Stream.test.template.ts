@@ -156,6 +156,61 @@ describe("Stream", () => {
 
             expect(messages).toEqual([{ value: 1 }, { value: 2 }]);
         });
+
+        it("should track lastEventId from id: fields", async () => {
+            const mockStream = createReadableStream([
+                'id: evt-1\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            for await (const _message of stream) {
+                // consume
+            }
+
+            expect(stream.lastEventId).toBe("evt-2");
+        });
+
+        it("should ignore id: fields containing null characters", async () => {
+            const mockStream = createReadableStream([
+                'id: valid-1\ndata: {"value": 1}\nid: bad\0id\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            for await (const _message of stream) {
+                // consume
+            }
+
+            expect(stream.lastEventId).toBe("valid-1");
+        });
+
+        it("should expose events() with SSE metadata for non-discriminated SSE", async () => {
+            const mockStream = createReadableStream([
+                'id: evt-1\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: unknown[] = [];
+            for await (const event of stream.events()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { value: 1 }, eventId: "evt-1" },
+                { data: { value: 2 }, eventId: "evt-2" },
+            ]);
+        });
     });
 
     describe("SSE event-level discrimination (inject discriminator)", () => {
@@ -384,6 +439,88 @@ describe("Stream", () => {
             }
 
             expect(messages).toEqual([{ type: "", content: "hello" }]);
+        });
+
+        it("should parse id: and retry: fields and expose via events()", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: evt-1\nretry: 3000\ndata: {"content": "hello"}\n\nevent: completion\nid: evt-2\ndata: {"content": "world"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: unknown[] = [];
+            for await (const event of stream.events()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { type: "completion", content: "hello" }, event: "completion", eventId: "evt-1", retry: 3000 },
+                { data: { type: "completion", content: "world" }, event: "completion", eventId: "evt-2", retry: undefined },
+            ]);
+            expect(stream.lastEventId).toBe("evt-2");
+        });
+
+        it("should persist lastEventId across events per SSE spec", async () => {
+            const mockStream = createReadableStream([
+                'event: a\nid: persistent-id\ndata: {"v": 1}\n\nevent: b\ndata: {"v": 2}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: unknown[] = [];
+            for await (const event of stream.events()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { type: "a", v: 1 }, event: "a", eventId: "persistent-id", retry: undefined },
+                { data: { type: "b", v: 2 }, event: "b", eventId: "persistent-id", retry: undefined },
+            ]);
+        });
+
+        it("should ignore invalid retry values", async () => {
+            const mockStream = createReadableStream([
+                'event: a\nretry: not-a-number\ndata: {"v": 1}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: unknown[] = [];
+            for await (const event of stream.events()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { type: "a", v: 1 }, event: "a", eventId: undefined, retry: undefined },
+            ]);
+        });
+
+        it("should still yield data-only from default iteration after adding metadata", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: evt-1\nretry: 1000\ndata: {"content": "hello"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "completion", content: "hello" }]);
+            expect(stream.lastEventId).toBe("evt-1");
         });
     });
 

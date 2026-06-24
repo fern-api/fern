@@ -35,10 +35,22 @@ export declare namespace Stream {
         streamTerminator?: string;
         eventDiscriminator?: string;
     }
+
+    /**
+     * Represents a parsed Server-Sent Event with metadata.
+     */
+    interface ServerSentEvent<T> {
+        data: T;
+        event?: string;
+        eventId?: string;
+        retry?: number;
+    }
 }
 
 const DATA_PREFIX = "data:";
 const EVENT_PREFIX = "event:";
+const ID_PREFIX = "id:";
+const RETRY_PREFIX = "retry:";
 
 export class Stream<T> implements AsyncIterable<T> {
     <% if (streamType === "wrapper") { %>
@@ -57,6 +69,7 @@ export class Stream<T> implements AsyncIterable<T> {
     private eventDiscriminator: string | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
+    private _lastEventId: string | undefined;
 
     constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
@@ -77,7 +90,29 @@ export class Stream<T> implements AsyncIterable<T> {
         }
     }
 
+    /**
+     * The ID of the last SSE event received, per the SSE spec.
+     * Persists across events and is updated when an `id:` field is parsed.
+     */
+    get lastEventId(): string | undefined {
+        return this._lastEventId;
+    }
+
+    /**
+     * Iterates over full SSE events including metadata (event, id, retry).
+     * This is the SSE-aware counterpart of the default async iteration which only yields parsed data.
+     */
+    async *events(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
+        yield* this.iterFullEvents();
+    }
+
     private async *iterMessages(): AsyncGenerator<T, void> {
+        for await (const event of this.iterFullEvents()) {
+            yield event.data;
+        }
+    }
+
+    private async *iterFullEvents(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
         if (this.eventDiscriminator != null) {
             yield* this.iterSseEvents();
         } else {
@@ -85,7 +120,7 @@ export class Stream<T> implements AsyncIterable<T> {
         }
     }
 
-    private async *iterDataMessages(): AsyncGenerator<T, void> {
+    private async *iterDataMessages(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let prefixSeen = false;
@@ -98,6 +133,18 @@ export class Stream<T> implements AsyncIterable<T> {
                 buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
+                    continue;
+                }
+
+                if (this.prefix != null && line.startsWith(ID_PREFIX)) {
+                    const val = line.slice(ID_PREFIX.length).trim();
+                    if (!val.includes("\0")) {
+                        this._lastEventId = val;
+                    }
+                    continue;
+                }
+
+                if (this.prefix != null && line.startsWith(RETRY_PREFIX)) {
                     continue;
                 }
 
@@ -114,17 +161,21 @@ export class Stream<T> implements AsyncIterable<T> {
                     return;
                 }
                 const message = await this.parse(fromJson(line));
-                yield message;
+                yield {
+                    data: message,
+                    eventId: this._lastEventId,
+                };
                 prefixSeen = false;
             }
         }
     }
 
-    private async *iterSseEvents(): AsyncGenerator<T, void> {
+    private async *iterSseEvents(): AsyncGenerator<Stream.ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let eventType: string | undefined;
         let dataValue: string | undefined;
+        let retryValue: number | undefined;
 
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
@@ -136,14 +187,20 @@ export class Stream<T> implements AsyncIterable<T> {
 
                 if (!line.trim()) {
                     if (dataValue != null) {
-                        const message = await this.dispatchSseEvent(dataValue, eventType);
-                        if (message == null) {
+                        const parsed = await this.dispatchSseEvent(dataValue, eventType);
+                        if (parsed == null) {
                             return;
                         }
-                        yield message;
+                        yield {
+                            data: parsed,
+                            event: eventType,
+                            eventId: this._lastEventId,
+                            retry: retryValue,
+                        };
                     }
                     eventType = undefined;
                     dataValue = undefined;
+                    retryValue = undefined;
                     continue;
                 }
 
@@ -152,14 +209,29 @@ export class Stream<T> implements AsyncIterable<T> {
                 } else if (line.startsWith(DATA_PREFIX)) {
                     const val = line.slice(DATA_PREFIX.length).trim();
                     dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                } else if (line.startsWith(ID_PREFIX)) {
+                    const val = line.slice(ID_PREFIX.length).trim();
+                    if (!val.includes("\0")) {
+                        this._lastEventId = val;
+                    }
+                } else if (line.startsWith(RETRY_PREFIX)) {
+                    const val = parseInt(line.slice(RETRY_PREFIX.length).trim(), 10);
+                    if (!isNaN(val)) {
+                        retryValue = val;
+                    }
                 }
             }
         }
 
         if (dataValue != null) {
-            const message = await this.dispatchSseEvent(dataValue, eventType);
-            if (message != null) {
-                yield message;
+            const parsed = await this.dispatchSseEvent(dataValue, eventType);
+            if (parsed != null) {
+                yield {
+                    data: parsed,
+                    event: eventType,
+                    eventId: this._lastEventId,
+                    retry: retryValue,
+                };
             }
         }
     }

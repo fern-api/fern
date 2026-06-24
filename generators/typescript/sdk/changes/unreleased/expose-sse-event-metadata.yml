@@ -1,0 +1,7 @@
+- summary: |
+    Expose SSE event `id` and `retry` metadata in the TypeScript SDK's `Stream` class.
+    Users can now access `stream.lastEventId` during iteration, or use `stream.events()`
+    to iterate over `Stream.ServerSentEvent<T>` objects containing `data`, `event`,
+    `eventId`, and `retry` fields. This achieves parity with the Python SDK's
+    `ServerSentEvent` dataclass.
+  type: feat
