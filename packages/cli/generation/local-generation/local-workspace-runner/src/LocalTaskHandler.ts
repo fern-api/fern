@@ -37,6 +37,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
         version: string | undefined;
+        isAutoVersioning?: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
         autoVersioningCache?: AutoVersioningCache;
@@ -55,6 +56,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     private version: string | undefined;
+    private isAutoVersioning: boolean;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
     private autoVersioningCache: AutoVersioningCache | undefined;
@@ -71,6 +73,7 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
         version,
+        isAutoVersioning,
         ai,
         isWhitelabel,
         autoVersioningCache,
@@ -86,6 +89,7 @@ export class LocalTaskHandler {
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
         this.version = version;
+        this.isAutoVersioning = isAutoVersioning ?? (version != null && isAutoVersion(version));
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
         this.autoVersioningCache = autoVersioningCache;
@@ -108,8 +112,7 @@ export class LocalTaskHandler {
         const isExistingGitRepo = await this.isGitRepository();
 
         // Read prior changelog BEFORE copy operations overwrite the output directory
-        const priorChangelog =
-            this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
+        const priorChangelog = this.isAutoVersioning ? await this.readPriorChangelog(3) : "";
 
         if (isFernIgnorePresent) {
             const absolutePathToFernignore = AbsoluteFilePath.of(
@@ -144,7 +147,7 @@ export class LocalTaskHandler {
         }
 
         // Handle automatic semantic versioning if version is AUTO
-        if (this.version != null && isAutoVersion(this.version)) {
+        if (this.isAutoVersioning && this.version != null) {
             const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
             const autoVersionResult = await this.handleAutoVersioning(priorChangelog);
             if (autoVersionResult == null) {

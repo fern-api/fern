@@ -323,6 +323,7 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
         version: mappedVersion,
+        isAutoVersioning: version != null && isAutoVersion(version),
         ai,
         isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
         autoVersioningCache,
