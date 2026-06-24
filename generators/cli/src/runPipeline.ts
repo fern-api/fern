@@ -7,6 +7,7 @@ import { detectAuthBindings } from "./detectAuth.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
 import { emitReference } from "./emitReference.js";
+import { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
 import { generateAgentSkills } from "./generateAgentSkills.js";
 import { generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
 import { generateEmbeddedTypes } from "./generateEmbeddedTypes.js";
@@ -90,7 +91,8 @@ export async function runPipeline(args: {
         binaryName,
         apiDisplayName: ir.apiDisplayName,
         authBindings,
-        npmPublishInfo: outputConfig.npmPublishInfo
+        npmPublishInfo: outputConfig.npmPublishInfo,
+        repoUrl: outputConfig.repoUrl
     });
     await emitReference({
         outputDir,
@@ -167,6 +169,10 @@ export async function runPipeline(args: {
         } else {
             await emitCiWorkflow({ outputDir, binaryName });
         }
+        // Emit cargo-dist release workflow unconditionally for GitHub output.
+        // This provides curl|bash installation via GitHub Release assets
+        // regardless of whether npm publishing is configured.
+        await emitReleaseWorkflow({ outputDir });
     }
 
     return { status: "generated", binaryName };
