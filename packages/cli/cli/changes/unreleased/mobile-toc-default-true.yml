@@ -1,0 +1,4 @@
+- summary: |
+    Switch mobile-toc default from opt-in (false) to opt-out (true) so the
+    mobile table of contents is enabled for all documentation sites by default.
+  type: feat

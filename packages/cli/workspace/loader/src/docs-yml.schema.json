@@ -6053,7 +6053,7 @@
               "type": "null"
             }
           ],
-          "description": "If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages."
+          "description": "A sticky collapsible table of contents bar is shown on mobile viewports for guide and overview layout pages by default. Set `mobile-toc` to false to disable it."
         }
       },
       "additionalProperties": false
