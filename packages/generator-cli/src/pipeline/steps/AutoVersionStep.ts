@@ -103,17 +103,13 @@ export class AutoVersionStep extends BaseStep {
         const { service, language, mappedMagicVersion, commit } = params;
         const initialVersion = this.config.baseVersion ?? (mappedMagicVersion.startsWith("v") ? "v0.0.1" : "0.0.1");
 
-        // `initialVersion` flows into `AutoVersioningService.replaceMagicVersion`, which
-        // runs `bash -c` with the value embedded in a single-quoted sed expression. A
-        // stray single quote or shell metacharacter would escape quoting and execute
-        // arbitrary code on the generation host. `baseVersion` is user-supplied config,
-        // so validate it against the same strict semver regex `incrementVersion` uses
-        // before letting it reach the shell. The two hardcoded defaults are safe.
+        // `initialVersion` flows into `AutoVersioningService.replaceMagicVersion`.
+        // `baseVersion` is user-supplied config, so validate it against the same strict
+        // semver regex `incrementVersion` uses. The two hardcoded defaults are safe.
         if (!isValidSemver(initialVersion)) {
             const errorMessage =
                 `AutoVersionStep: baseVersion ${JSON.stringify(initialVersion)} is not a valid semver ` +
-                `string (expected e.g. "1.2.3" or "v1.2.3"). Refusing to run to avoid shell injection ` +
-                `into the placeholder-rewrite step.`;
+                `string (expected e.g. "1.2.3" or "v1.2.3"). Refusing to run.`;
             this.logger.error(errorMessage);
             return {
                 executed: true,
@@ -600,7 +596,7 @@ export class AutoVersionStep extends BaseStep {
 
         // Prefer the pipeline-supplied baseVersion (main tip's metadata.json) over
         // diff extraction, which is blind to customer manual bumps. Semver-validate
-        // before use — it flows into bash + sed in replaceMagicVersion.
+        // before use — it flows into replaceMagicVersion.
         if (baseVersion != null && isValidSemver(baseVersion)) {
             this.logger.debug(`AutoVersionStep: previous version from pipeline baseVersion: ${baseVersion}`);
             return this.normalizeVersionPrefix(baseVersion, mappedMagicVersion);

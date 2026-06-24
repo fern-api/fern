@@ -1,6 +1,5 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { existsSync } from "fs";
 import { readdir, readFile, stat, writeFile } from "fs/promises";
 import { extname, join } from "path";
@@ -833,43 +832,36 @@ export class AutoVersioningService {
     ): Promise<void> {
         this.logger.debug(`Replacing placeholder version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
-        const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
+        const files = await this.walkDirectory(workingDirectory, () => true);
+        let replacedCount = 0;
 
-        // Detect sed version by attempting to get version info
-        // GNU sed supports --version, BSD sed does not
-        let isGNUSed = false;
-        try {
-            await loggingExeca(this.logger, "sed", ["--version"], {
-                doNotPipeOutput: true
-            });
-            isGNUSed = true;
-        } catch {
-            // BSD sed will fail with --version
-            isGNUSed = false;
+        for (const filePath of files) {
+            if (await this.isBinaryFile(filePath)) {
+                continue;
+            }
+
+            const content = await readFile(filePath, "utf-8");
+            if (!content.includes(mappedMagicVersion)) {
+                continue;
+            }
+
+            const updated = content.split(mappedMagicVersion).join(finalVersion);
+            await writeFile(filePath, updated, "utf-8");
+            replacedCount++;
         }
 
-        let command: string;
-        if (isGNUSed) {
-            // GNU sed (Linux, DevBox on Mac)
-            command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '${sedCommand}' {} +`;
-        } else {
-            // BSD sed (native macOS)
-            command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '' '${sedCommand}' {} +`;
-        }
+        this.logger.debug(`Placeholder version replaced successfully in ${replacedCount} file(s)`);
+    }
 
-        try {
-            await loggingExeca(this.logger, "bash", ["-c", command], {
-                cwd: workingDirectory,
-                doNotPipeOutput: true
-            });
-        } catch (error) {
-            throw new CliError({
-                message: `Failed to replace placeholder version in generated files: ${extractErrorMessage(error)}`,
-                code: CliError.Code.UserError
-            });
+    private async isBinaryFile(filePath: string): Promise<boolean> {
+        const buffer = await readFile(filePath);
+        const headerSize = Math.min(buffer.length, 8192);
+        for (let i = 0; i < headerSize; i++) {
+            if (buffer[i] === 0) {
+                return true;
+            }
         }
-
-        this.logger.debug("Placeholder version replaced successfully");
+        return false;
     }
 
     /**
@@ -1064,9 +1056,7 @@ export class AutoVersioningService {
     /**
      * Escapes special characters for use in sed command.
      */
-    private escapeForSed(str: string): string {
-        return str.replace(/[/&]/g, "\\$&");
-    }
+
 
     /**
      * Extracts the file path from a diff file section.
