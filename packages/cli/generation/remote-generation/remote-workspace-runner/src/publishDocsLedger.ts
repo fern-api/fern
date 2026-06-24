@@ -74,30 +74,61 @@ interface BlobRef {
 }
 
 /**
- * Sort only the top-level keys of a plain object for deterministic
- * serialization, without recursing into nested values. This avoids
- * reordering keys inside API example JSON bodies (request/response),
- * which are preformatted user content and must preserve their
- * original field order.
+ * Keys whose values are preformatted user content (e.g. API example
+ * request/response JSON) and must not have their object keys reordered.
+ * {@link stableStringify} skips recursive key-sorting for the entire
+ * subtree rooted at these values.
+ *
+ * Covers endpoint examples (`requestBody`, `responseBody`), webhook
+ * examples (`payload`), and websocket message examples (`body`). All
+ * are typed as `z.unknown()` in the fdr-sdk register contract.
  */
-function sortTopLevelKeys(obj: Record<string, unknown>): Record<string, unknown> {
-    return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+const PREFORMATTED_KEYS: ReadonlySet<string> = new Set(["requestBody", "responseBody", "payload", "body"]);
+
+/**
+ * `JSON.stringify` with deterministic key ordering at every level, except
+ * for subtrees rooted at {@link PREFORMATTED_KEYS} which are passed through
+ * as-is to preserve their original field order. Arrays keep their original
+ * ordering (positions are meaningful); all other object keys are sorted
+ * lexicographically via the replacer. Two inputs that differ only by key
+ * insertion order serialize identically — required so the apiManifest
+ * blob hash is stable across publishes (cf. FDR `stableStringify`).
+ *
+ * Uses a WeakSet to track which objects belong to a preformatted subtree
+ * so that deeply nested keys (e.g. `care.water` inside a `responseBody`)
+ * are also preserved.
+ */
+function stableStringify(value: unknown): string {
+    const preformatted = new WeakSet();
+    return JSON.stringify(value, function (key, val) {
+        // When we encounter a preformatted key, mark its value and return
+        // immediately — the entire subtree should be serialized as-is.
+        if (PREFORMATTED_KEYS.has(key) && val != null && typeof val === "object") {
+            preformatted.add(val);
+            return val;
+        }
+        // `this` is the holder (parent) object for the current key.
+        // If the parent is in a preformatted subtree, propagate the mark
+        // to child objects and return the value without sorting.
+        if (this != null && typeof this === "object" && preformatted.has(this)) {
+            if (val != null && typeof val === "object") {
+                preformatted.add(val);
+            }
+            return val;
+        }
+        if (val != null && typeof val === "object" && !Array.isArray(val)) {
+            return Object.fromEntries(Object.entries(val).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+        }
+        return val;
+    });
 }
 
 /**
- * Serializes a value to a JSON buffer using standard `JSON.stringify`
- * and returns a BlobRef + the raw bytes, keyed by content hash.
- *
- * Callers that need deterministic output for non-deterministic inputs
- * (e.g. Map iteration order) should sort top-level keys via
- * {@link sortTopLevelKeys} before calling this function.
- *
- * Unlike the previous `stableStringify` approach, this does NOT sort
- * keys recursively — API example bodies are preformatted content
- * whose field order must be preserved.
+ * Serializes a value to a JSON buffer using {@link stableStringify} and
+ * returns a BlobRef + the raw bytes, keyed by content hash for later upload.
  */
 function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer } {
-    const buf = Buffer.from(JSON.stringify(value), "utf-8");
+    const buf = Buffer.from(stableStringify(value), "utf-8");
     const hash = sha256(buf);
     return {
         ref: { hash, contentType: "application/json", contentLength: buf.length },
@@ -190,10 +221,10 @@ export function buildLedgerInput({
     // `apiDefinitions` is populated by the `registerApi` callback inside a
     // `Promise.all`, so the Map's insertion order reflects whichever HTTP
     // round-trip completed first — non-deterministic across publishes.
-    // We sort the top-level keys (apiDefinitionId) for determinism, but
-    // use standard `JSON.stringify` to preserve nested key order — API
-    // example bodies (request/response JSON) are preformatted content
-    // whose field order must not be reordered.
+    // {@link jsonBlobRef} uses {@link stableStringify}, which sorts object
+    // keys at every level for deterministic hashing — except for values
+    // under {@link PREFORMATTED_KEYS} (example bodies), which are passed
+    // through as-is to preserve their original field order.
     //
     // Determinism caveat: stable apiManifest bytes are necessary but not
     // sufficient for a deterministic deployment hash. Page bodies must also
@@ -205,8 +236,7 @@ export function buildLedgerInput({
     // request, so deployment-level dedup will not fire there.
     let apiManifestRef: BlobRef | null = null;
     if (apiDefinitions.size > 0) {
-        const sortedEntries = [...apiDefinitions.entries()].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
-        const manifestObj = Object.fromEntries(sortedEntries);
+        const manifestObj = Object.fromEntries(apiDefinitions);
         const manifestBlob = jsonBlobRef(manifestObj);
         blobs.set(manifestBlob.hash, manifestBlob.buf);
         apiManifestRef = manifestBlob.ref;
@@ -216,7 +246,7 @@ export function buildLedgerInput({
     // custom header/footer components resolved by DocsDefinitionResolver.
     let jsFilesRef: BlobRef | null = null;
     if (docsDefinition.jsFiles != null && Object.keys(docsDefinition.jsFiles).length > 0) {
-        const jsFilesBlob = jsonBlobRef(sortTopLevelKeys(docsDefinition.jsFiles));
+        const jsFilesBlob = jsonBlobRef(docsDefinition.jsFiles);
         blobs.set(jsFilesBlob.hash, jsFilesBlob.buf);
         jsFilesRef = jsFilesBlob.ref;
     }

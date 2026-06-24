@@ -266,11 +266,10 @@ describe("buildLedgerInput", () => {
     it("apiManifest blob hash is stable across Map insertion order (determinism guard)", () => {
         // Reproduces the docs-ledger deterministic-hash bug: `apiDefinitions`
         // is built by `Promise.all` of /api/register calls in CLI, so its Map
-        // insertion order is whichever round-trip completed first. Without
-        // top-level key sorting, byte-identical content would hash differently
-        // across publishes and the docs-ledger "no-op republish" fast-path
-        // would never fire. The two manifests below have identical entries
-        // inserted in opposite orders and MUST produce the same blob hash.
+        // insertion order is whichever round-trip completed first. `stableStringify`
+        // sorts object keys so two semantically identical payloads hash the same
+        // regardless of insertion order. The two manifests below have identical
+        // entries inserted in opposite orders and MUST produce the same blob hash.
         const minimalApiDefinition: ApiDefinition = {
             types: {},
             subpackages: {},
@@ -396,31 +395,60 @@ describe("buildLedgerInput", () => {
         expect(translatedParsed["api-1"].apiName).toBe("plant-api-zh");
     });
 
-    it("preserves nested key order in apiManifest blob (no recursive key sorting)", () => {
-        // API example bodies (request/response JSON) are preformatted user
-        // content — their field order is intentional and must not be reordered
-        // alphabetically. This test verifies that the serialized blob preserves
-        // the original key insertion order within each definition, including
-        // deeply nested objects.
-        const apiDefWithOrderedKeys: ApiDefinition = {
-            types: {
-                "type_plant:PlantResponse": {
-                    name: "PlantResponse",
-                    shape: {
-                        type: "object",
-                        extends: [],
-                        properties: [
-                            { key: "name", valueType: { type: "primitive", value: { type: "string" } } },
-                            { key: "species", valueType: { type: "primitive", value: { type: "string" } } },
-                            { key: "id", valueType: { type: "primitive", value: { type: "string" } } }
-                        ]
-                    }
-                }
-            },
+    it("preserves example body key order in apiManifest blob (PREFORMATTED_KEYS skip)", () => {
+        // API example bodies (requestBody / responseBody) are preformatted
+        // user content — their field order is intentional. stableStringify
+        // skips recursive key-sorting for values under PREFORMATTED_KEYS,
+        // so the serialized blob preserves the original key order in example
+        // JSON while still sorting structural keys for determinism.
+        //
+        // We embed an endpoint with a responseBody whose keys are
+        // intentionally NOT in alphabetical order. After serialization,
+        // the blob must preserve that order.
+        const apiDefWithExample: ApiDefinition = {
+            types: {},
             subpackages: {},
             rootPackage: {
-                endpoints: [],
-                types: ["type_plant:PlantResponse"],
+                endpoints: [
+                    {
+                        description: undefined,
+                        availability: undefined,
+                        id: "getPlant",
+                        name: undefined,
+                        path: {
+                            parts: [],
+                            pathParameters: []
+                        },
+                        queryParameters: [],
+                        headers: [],
+                        request: undefined,
+                        response: undefined,
+                        errors: undefined,
+                        examples: [
+                            {
+                                path: "/plants/plant-123",
+                                pathParameters: {},
+                                queryParameters: {},
+                                headers: {},
+                                requestBody: undefined,
+                                responseStatusCode: 200,
+                                responseBody: {
+                                    name: "Monstera Deliciosa",
+                                    species: "Monstera",
+                                    id: "plant-123",
+                                    care: {
+                                        water: "weekly",
+                                        sunlight: "indirect",
+                                        difficulty: "easy"
+                                    }
+                                }
+                            }
+                        ],
+                        method: "GET",
+                        environments: undefined
+                    }
+                ],
+                types: [],
                 subpackages: [],
                 websockets: [],
                 webhooks: []
@@ -431,7 +459,7 @@ describe("buildLedgerInput", () => {
         };
 
         const apiDefinitions = new Map<string, ApiDefinition>();
-        apiDefinitions.set("api-1", apiDefWithOrderedKeys);
+        apiDefinitions.set("api-1", apiDefWithExample);
 
         const { localeEntry, blobs } = buildLedgerInput({
             docsDefinition: makeDocsDefinition(),
@@ -442,16 +470,9 @@ describe("buildLedgerInput", () => {
         expect(manifestBuf).toBeDefined();
         const parsed = JSON.parse(manifestBuf?.toString("utf-8") ?? "");
 
-        // Verify nested key order is preserved (not sorted alphabetically).
-        // With the old stableStringify, "shape" would come after "name" is gone
-        // and properties array items would have keys sorted.
-        const typeDef = parsed["api-1"].types["type_plant:PlantResponse"];
-        expect(Object.keys(typeDef)).toEqual(["name", "shape"]);
-        expect(Object.keys(typeDef.shape)).toEqual(["type", "extends", "properties"]);
-
-        // Verify property key order within each property object is preserved.
-        const firstProp = typeDef.shape.properties[0];
-        expect(Object.keys(firstProp)).toEqual(["key", "valueType"]);
+        const responseBody = parsed["api-1"].rootPackage.endpoints[0].examples[0].responseBody;
+        expect(Object.keys(responseBody)).toEqual(["name", "species", "id", "care"]);
+        expect(Object.keys(responseBody.care)).toEqual(["water", "sunlight", "difficulty"]);
     });
 
     it("forwards fileManifest unchanged (file blobs are loaded lazily, not included in blob map)", () => {
