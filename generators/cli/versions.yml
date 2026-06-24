@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.18.0
+  changelogEntry:
+    - summary: |
+        Add curl|bash installation support for generated CLIs via cargo-dist
+        release assets. Emits `.github/workflows/release.yml` unconditionally
+        for GitHub output, removes npm from dist-workspace.toml installers,
+        and updates the README Installation section to lead with shell/powershell
+        installer one-liners.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
 - version: 0.17.12
   changelogEntry:
     - summary: |
