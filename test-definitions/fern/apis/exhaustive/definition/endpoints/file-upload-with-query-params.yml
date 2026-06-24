@@ -5,8 +5,8 @@ service:
     convert:
       docs: |
         File upload endpoint with query parameters.
-        The endpoint name collides with endpoints/file-upload.yml's convert endpoint
-        to test that generated code correctly handles disambiguated request types.
+        Tests that generated code correctly handles file upload requests
+        that also have query parameters.
       path: /convert
       method: POST
       request:
@@ -18,4 +18,4 @@ service:
         body:
           properties:
             file: file
-            maybe_string: optional<string>
+            maybe_list: optional<list<string>>

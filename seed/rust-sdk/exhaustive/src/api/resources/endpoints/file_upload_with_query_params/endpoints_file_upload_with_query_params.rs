@@ -14,8 +14,8 @@ impl FileUploadWithQueryParamsClient {
     }
 
     /// File upload endpoint with query parameters.
-    /// The endpoint name collides with endpoints/file-upload.yml's convert endpoint
-    /// to test that generated code correctly handles disambiguated request types.
+    /// Tests that generated code correctly handles file upload requests
+    /// that also have query parameters.
     ///
     /// # Arguments
     ///

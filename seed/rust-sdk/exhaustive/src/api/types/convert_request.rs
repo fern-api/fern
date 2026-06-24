@@ -6,6 +6,9 @@ pub struct ConvertRequest {
     #[serde(with = "crate::core::base64_bytes")]
     pub file: Vec<u8>,
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub maybe_list: Option<Vec<String>>,
+    #[serde(rename = "maybeString")]
+    #[serde(skip)]
     pub maybe_string: Option<String>,
     #[serde(skip)]
     #[serde(default)]
@@ -26,9 +29,9 @@ impl ConvertRequest {
                 .unwrap(),
         );
 
-        if let Some(ref value) = self.maybe_string {
+        if let Some(ref value) = self.maybe_list {
             if let Ok(json_str) = serde_json::to_string(value) {
-                form = form.text("maybe_string", json_str);
+                form = form.text("maybe_list", json_str);
             }
         }
 
@@ -46,6 +49,7 @@ impl ConvertRequest {
 #[non_exhaustive]
 pub struct ConvertRequestBuilder {
     file: Option<Vec<u8>>,
+    maybe_list: Option<Vec<String>>,
     maybe_string: Option<String>,
     integer: Option<i64>,
     maybe_integer: Option<i64>,
@@ -54,6 +58,11 @@ pub struct ConvertRequestBuilder {
 impl ConvertRequestBuilder {
     pub fn file(mut self, value: Vec<u8>) -> Self {
         self.file = Some(value);
+        self
+    }
+
+    pub fn maybe_list(mut self, value: Vec<String>) -> Self {
+        self.maybe_list = Some(value);
         self
     }
 
@@ -79,6 +88,7 @@ impl ConvertRequestBuilder {
     pub fn build(self) -> Result<ConvertRequest, BuildError> {
         Ok(ConvertRequest {
             file: self.file.ok_or_else(|| BuildError::missing_field("file"))?,
+            maybe_list: self.maybe_list,
             maybe_string: self.maybe_string,
             integer: self
                 .integer

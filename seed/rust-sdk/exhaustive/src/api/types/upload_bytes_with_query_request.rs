@@ -2,11 +2,11 @@ pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UploadBytesWithQueryRequest {
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     #[serde(default)]
     pub body: Vec<u8>,
     #[serde(rename = "_fields")]
-    #[serde(skip_serializing)]
+    #[serde(skip)]
     pub fields: Option<String>,
 }
 
