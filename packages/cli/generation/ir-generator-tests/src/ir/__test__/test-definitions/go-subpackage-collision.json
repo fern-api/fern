@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "go-subpackage-collision",
     "apiDisplayName": null,
     "apiDocs": null,

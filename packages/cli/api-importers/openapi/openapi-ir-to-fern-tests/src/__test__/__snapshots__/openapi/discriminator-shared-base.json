@@ -308,4 +308,5 @@ error-discrimination:
 display-name: Discriminator Shared Base Test
 ",
   },
+  "specVersion": "1.0.0",
 }

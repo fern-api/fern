@@ -294,6 +294,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {},
   "variables": [],

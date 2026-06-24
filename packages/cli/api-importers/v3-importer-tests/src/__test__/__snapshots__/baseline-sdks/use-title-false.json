@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "0.1.0",
   "apiName": "api",
   "apiDisplayName": "Hume AI Batch API",
   "auth": {

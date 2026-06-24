@@ -381,4 +381,5 @@ error-discrimination:
 display-name: Readonly Schema References API
 ",
   },
+  "specVersion": "1.0.0",
 }

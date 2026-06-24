@@ -305,4 +305,5 @@ error-discrimination:
 display-name: Lift shared allOf properties from oneOf variants
 ",
   },
+  "specVersion": "1.0.0",
 }

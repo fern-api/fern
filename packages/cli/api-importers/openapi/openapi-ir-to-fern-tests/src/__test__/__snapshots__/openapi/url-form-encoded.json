@@ -146,4 +146,5 @@ error-discrimination:
 display-name: URL Form Encoded API
 ",
   },
+  "specVersion": "1.0.0",
 }

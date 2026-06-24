@@ -6333,4 +6333,5 @@ auth-schemes:
 auth: bearerAuth
 ",
   },
+  "specVersion": "1",
 }
