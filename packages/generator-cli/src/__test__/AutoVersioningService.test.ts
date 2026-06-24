@@ -812,6 +812,60 @@ describe("AutoVersioningService", () => {
         }
     });
 
+    // --- Regression test: AUTO identifiers must not be corrupted ---
+    // Reproduces the bug from https://github.com/fern-api/fern/pull/16675
+    // When --version AUTO was used, the sed command did `s/AUTO/<version>/g`
+    // which corrupted identifiers like SENSOR_MODE_AUTO and CORRELATION_TYPE_AUTOMATED.
+    // The fix ensures we always replace the magic placeholder, never "AUTO".
+
+    it("testReplaceMagicVersion_doesNotCorruptAutoIdentifiers", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const typesFile = path.join(tempDir, "types.ts");
+            const originalContent = [
+                "export const SensorMode = {",
+                '    SensorModeAuto: "SENSOR_MODE_AUTO",',
+                '    SensorModeManual: "SENSOR_MODE_MANUAL",',
+                "} as const;",
+                "",
+                "export const CorrelationType = {",
+                '    CorrelationTypeAutomated: "CORRELATION_TYPE_AUTOMATED",',
+                '    CorrelationTypeManual: "CORRELATION_TYPE_MANUAL",',
+                "} as const;",
+                "",
+                "export const AutoScaling = {",
+                "    enabled: true,",
+                '    mode: "AUTO_DETECT",',
+                "} as const;",
+                "",
+                'export const VERSION = "0.0.0-fern-placeholder";'
+            ].join("\n");
+            await fs.writeFile(typesFile, originalContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "4.13.1"
+            );
+
+            const updatedContent = await fs.readFile(typesFile, "utf-8");
+
+            // Version placeholder should be replaced
+            expect(updatedContent).not.toContain("0.0.0-fern-placeholder");
+            expect(updatedContent).toContain('"4.13.1"');
+
+            // AUTO identifiers must be preserved unchanged
+            expect(updatedContent).toContain('"SENSOR_MODE_AUTO"');
+            expect(updatedContent).toContain('"CORRELATION_TYPE_AUTOMATED"');
+            expect(updatedContent).toContain('"AUTO_DETECT"');
+            expect(updatedContent).toContain("SensorModeAuto");
+            expect(updatedContent).toContain("CorrelationTypeAutomated");
+            expect(updatedContent).toContain("AutoScaling");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
     // --- Tests for extractPreviousVersion: exception path ---
 
     it("testExtractPreviousVersion_noMagicVersionInDiff_throws", () => {
