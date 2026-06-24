@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
-import type { FileManifestEntry, ImageRef, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
+import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
 
 type DocsConfig = DocsV1Write.DocsConfig;
 
