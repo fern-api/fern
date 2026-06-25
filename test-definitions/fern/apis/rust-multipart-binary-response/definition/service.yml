@@ -44,6 +44,26 @@ service:
             model_id: optional<string>
       response: TranscriptionResult
 
+    # Reproduces ElevenLabs shape: file-upload endpoint whose naive type name
+    # ("SpeechToSpeechRequest") collides with a declared schema type.
+    # The file-upload envelope gets collision-resolved to a different name,
+    # so getRequestTypeName(endpoint) != getFileUploadRequestTypeName(endpoint.id).
+    # Bug B: without the fix, the endpoint binds to the declared type (no query fields) → E0609.
+    speechToSpeech:
+      path: /speech-to-speech/convert
+      method: POST
+      request:
+        name: SpeechToSpeechRequest
+        query-parameters:
+          enable_logging: optional<boolean>
+          optimize_streaming_latency: optional<integer>
+          output_format: string
+        body:
+          properties:
+            audio: file
+            model_id: optional<string>
+      response: file
+
     # Non-file endpoint to force snippet generation
     simple:
       path: "/snippet"
@@ -54,3 +74,11 @@ types:
     properties:
       text: string
       language: optional<string>
+
+  # Declared type that collides with the speechToSpeech endpoint's file-upload
+  # request type name. This forces the file-upload envelope to get a different
+  # collision-resolved name, reproducing the ElevenLabs Bug B scenario.
+  SpeechToSpeechRequest:
+    properties:
+      audio_data: string
+      model_id: optional<string>

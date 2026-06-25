@@ -70,6 +70,29 @@ impl ServiceClient {
             .await
     }
 
+    pub async fn speech_to_speech(
+        &self,
+        request: &SpeechToSpeechRequest2,
+        options: Option<RequestOptions>,
+    ) -> Result<ByteStream, ApiError> {
+        self.http_client
+            .execute_multipart_stream_request(
+                Method::POST,
+                "/speech-to-speech/convert",
+                request.clone().to_multipart(),
+                QueryBuilder::new()
+                    .bool("enable_logging", request.enable_logging.clone())
+                    .int(
+                        "optimize_streaming_latency",
+                        request.optimize_streaming_latency.clone(),
+                    )
+                    .string("output_format", request.output_format.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::POST, "/snippet", None, None, options)

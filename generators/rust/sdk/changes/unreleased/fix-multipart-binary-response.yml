@@ -1,6 +1,6 @@
 - summary: |
-    Fix multipart file-upload endpoints that return binary responses (fileDownload/bytes).
-    Previously these endpoints incorrectly called `execute_multipart_request<ByteStream>`,
-    which failed because ByteStream does not implement DeserializeOwned. Now routes to a
-    new `execute_multipart_stream_request` method that returns ByteStream directly.
+    Fix multipart file-upload endpoints with binary responses to use streaming method,
+    and fix file-upload endpoints with query parameters to bind the query-folded envelope
+    type instead of the bare body type. Both issues caused cargo build failures on
+    endpoints like ElevenLabs speech-to-speech (multipart + binary response + query params).
   type: fix

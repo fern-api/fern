@@ -1106,8 +1106,10 @@ export class SubClientGenerator {
                     return generateRustTypeForTypeReference(reference.requestBodyType, this.context);
                 },
                 fileUpload: () => {
-                    // For file uploads, use a structured type instead of generic Value
-                    const requestTypeName = this.getRequestTypeName(endpoint);
+                    const requestTypeName =
+                        endpoint.queryParameters.length > 0
+                            ? this.context.getFileUploadRequestTypeName(endpoint.id)
+                            : this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
                 bytes: () => {
