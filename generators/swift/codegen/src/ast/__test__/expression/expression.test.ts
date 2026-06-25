@@ -134,7 +134,7 @@ describe("Expression", () => {
 
             expect(dictionaryLiteral.toString()).toMatchInlineSnapshot(`
               "[
-                  "host": "localhost", 
+                  "host": "localhost",
                   "port": "8080"
               ]"
             `);

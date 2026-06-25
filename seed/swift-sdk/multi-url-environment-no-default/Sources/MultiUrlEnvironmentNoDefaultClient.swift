@@ -75,7 +75,7 @@ public final class MultiUrlEnvironmentNoDefaultClient: Sendable {
         let config = ClientConfig(
             baseURL: "",
             baseURLs: [
-                "ec2": environment.ec2, 
+                "ec2": environment.ec2,
                 "s3": environment.s3
             ],
             headerAuth: headerAuth,

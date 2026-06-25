@@ -401,9 +401,11 @@ export class Expression extends AstNode {
         }
         dictLiteral.entries?.forEach(([key, value], entryIdx) => {
             if (entryIdx > 0) {
-                writer.write(", ");
+                writer.write(",");
                 if (multiline) {
                     writer.newLine();
+                } else {
+                    writer.write(" ");
                 }
             }
             key.write(writer);
