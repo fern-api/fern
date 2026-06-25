@@ -158,7 +158,11 @@ class JsonSerializer
             $type = get_class($data);
             throw new JsonException("Class $type must implement JsonSerializable.");
         }
-        return $data->jsonSerialize();
+        $result = $data->jsonSerialize();
+        if (is_array($result) && empty($result)) {
+            return new \stdClass();
+        }
+        return $result;
     }
 
     /**

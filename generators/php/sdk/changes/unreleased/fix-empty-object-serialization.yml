@@ -1,0 +1,4 @@
+- summary: |
+    Fix empty object serialization to produce `{}` instead of `[]` when all
+    properties are unset. This applies to both top-level and nested objects.
+  type: fix
