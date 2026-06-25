@@ -17,8 +17,14 @@ org.assertj:* = 3.19.0
 org.mockito:* = 4.11.0
 io.github.origin-energy:java-snapshot-* = 3.3.2
 
-# jackson
-com.fasterxml.jackson.*:jackson-* = 2.18.8
+# jackson - upgrade to 2.22.0 to fix CVE-2026-54515 (jackson-databind)
+# 2.18.9 backport not yet published; 2.22.0 is the first available release with the fix
+# annotations uses simplified versioning (2.22 not 2.22.0), so it's pinned separately
+com.fasterxml.jackson.core:jackson-annotations = 2.22
+com.fasterxml.jackson.core:jackson-core = 2.22.0
+com.fasterxml.jackson.core:jackson-databind = 2.22.0
+com.fasterxml.jackson.datatype:jackson-datatype-jdk8 = 2.22.0
+com.fasterxml.jackson.datatype:jackson-datatype-jsr310 = 2.22.0
 
 # errorprone
 com.google.errorprone:error_prone_* = 2.12.1

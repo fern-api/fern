@@ -1,0 +1,4 @@
+- summary: |
+    Bump jackson from 2.18.8 to 2.22.0 to fix CVE-2026-54515.
+    2.18.9 backport not yet published; 2.22.0 is the first available release with the fix.
+  type: chore
