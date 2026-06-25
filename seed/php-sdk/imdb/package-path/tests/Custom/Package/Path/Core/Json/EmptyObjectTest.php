@@ -5,6 +5,7 @@ namespace Custom\Package\Path\Tests\Core\Json;
 use PHPUnit\Framework\TestCase;
 use Custom\Package\Path\Core\Json\JsonProperty;
 use Custom\Package\Path\Core\Json\JsonSerializableType;
+use Custom\Package\Path\Core\Types\ArrayType;
 
 class EmptyObject extends JsonSerializableType
 {
@@ -54,6 +55,26 @@ class EmptyObjectWithNestedObject extends JsonSerializableType
     }
 }
 
+class ObjectWithEmptyMap extends JsonSerializableType
+{
+    /**
+     * @var array<string, string> $metadata
+     */
+    #[JsonProperty('metadata'), ArrayType(['string' => 'string'])]
+    public array $metadata;
+
+    /**
+     * @param array{
+     *   metadata: array<string, string>,
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->metadata = $values['metadata'];
+    }
+}
+
 class EmptyObjectTest extends TestCase
 {
     public function testEmptyObjectSerializesToObject(): void
@@ -87,5 +108,19 @@ class EmptyObjectTest extends TestCase
         $object = EmptyObject::fromJson($json);
         $this->assertNull($object->optionalField);
         $this->assertEquals('{}', $object->toJson(), 'Deserialized empty object should re-serialize to {}.');
+    }
+
+    public function testEmptyMapSerializesToObject(): void
+    {
+        $object = new ObjectWithEmptyMap(['metadata' => []]);
+        $json = $object->toJson();
+        $this->assertJsonStringEqualsJsonString('{"metadata":{}}', $json, 'Empty map should serialize to {} not [].');
+    }
+
+    public function testNonEmptyMapSerializesCorrectly(): void
+    {
+        $object = new ObjectWithEmptyMap(['metadata' => ['key' => 'value']]);
+        $json = $object->toJson();
+        $this->assertJsonStringEqualsJsonString('{"metadata":{"key":"value"}}', $json);
     }
 }
