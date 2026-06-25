@@ -65,6 +65,7 @@ export class Stream<T> implements AsyncIterable<T> {
     private messageTerminator: string;
     private streamTerminator: string | undefined;
     private eventDiscriminator: string | undefined;
+    private resumable: boolean;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
@@ -76,8 +77,10 @@ export class Stream<T> implements AsyncIterable<T> {
             this.messageTerminator = "\n";
             this.streamTerminator = eventShape.streamTerminator;
             this.eventDiscriminator = eventShape.eventDiscriminator;
+            this.resumable = eventShape.resumable ?? false;
         } else {
             this.messageTerminator = eventShape.messageTerminator;
+            this.resumable = false;
         }
         signal?.addEventListener("abort", () => this.controller.abort());
 
