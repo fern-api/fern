@@ -3,6 +3,7 @@ import {
     applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
     applyTranslatedNavigationOverlays,
+    findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -876,18 +877,52 @@ export async function runAppPreviewServer({
                     }
                 }
 
+                const baseApis = docsDefinition.apis as Record<string, APIV1Read.ApiDefinition>;
                 const localeApis = translatedApiDefinitions?.[locale];
-                const translatedApis =
-                    localeApis != null ? { ...docsDefinition.apis, ...localeApis } : docsDefinition.apis;
 
-                // Splicing `apis` alone leaves the sidebar in the default language,
-                // since the nav tree bakes in titles from the base API definition.
+                // A translated spec that drifts from the base — most commonly a changed
+                // OpenAPI tag name (which derives subpackage/endpoint ids), but also a
+                // missing/added endpoint or a changed path — produces an API whose nav
+                // nodes can't all be resolved. Serving such a definition would make the
+                // docs renderer fail to resolve a nav node and return a 500. For those
+                // APIs we serve the base (default-locale) definition and keep the base nav
+                // ids, but still localize the sidebar titles we can match by locator.
+                let servedLocaleApis = localeApis;
+                let rewritableApiIds: ReadonlySet<string> | undefined;
                 if (localeApis != null && updatedRoot != null) {
-                    updatedRoot = applyTranslatedApiTitlesToNavTree(
-                        updatedRoot,
-                        docsDefinition.apis as Record<string, APIV1Read.ApiDefinition>,
-                        localeApis
+                    const incompatibleApiIds = findIncompatibleTranslatedApiIds(updatedRoot, baseApis, localeApis);
+                    if (incompatibleApiIds.size > 0) {
+                        context.logger.warn(
+                            `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for locale ` +
+                                `"${locale}" diverge from the default-locale spec (e.g. changed OpenAPI tag names, ` +
+                                `operationIds, or paths, or a missing/added endpoint), so they can't be fully matched ` +
+                                `to the navigation tree. Serving the default-locale API for those (localized sidebar ` +
+                                `titles are still applied where they can be matched). For fully localized API reference ` +
+                                `content, translate only human-readable text and keep tag names/operationIds/paths ` +
+                                `identical to the base spec.`
+                        );
+                        servedLocaleApis = Object.fromEntries(
+                            Object.entries(localeApis).filter(([apiId]) => !incompatibleApiIds.has(apiId))
+                        );
+                    }
+                    rewritableApiIds = new Set(
+                        Object.keys(localeApis).filter((apiId) => !incompatibleApiIds.has(apiId))
                     );
+                }
+
+                const hasServedLocaleApis = servedLocaleApis != null && Object.keys(servedLocaleApis).length > 0;
+                const translatedApis = hasServedLocaleApis
+                    ? { ...docsDefinition.apis, ...servedLocaleApis }
+                    : docsDefinition.apis;
+
+                // Splicing `apis` alone leaves the sidebar in the default language, since
+                // the nav tree bakes in titles from the base API definition. Localize
+                // titles for every translated API (matched by id or locator); ids are only
+                // repointed for the APIs whose translated definition we actually serve.
+                if (localeApis != null && Object.keys(localeApis).length > 0 && updatedRoot != null) {
+                    updatedRoot = applyTranslatedApiTitlesToNavTree(updatedRoot, baseApis, localeApis, {
+                        rewritableApiIds
+                    });
                 }
 
                 const translatedDefinition: DocsV1Read.DocsDefinition = {
