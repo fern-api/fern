@@ -6,6 +6,7 @@ imports:
   environment: environment.yml
   errors: errors.yml
   examples: examples.yml
+  graphql: graphql.yml
   proto: proto.yml
   types: types.yml
   variables: variables.yml
@@ -33,6 +34,7 @@ types:
     union:
       http: {}
       grpc: GrpcTransport
+      graphql: graphql.GraphqlTransport
 
   GrpcTransport:
     properties:
