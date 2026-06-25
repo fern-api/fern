@@ -3,10 +3,12 @@
 //! This module contains client implementations for:
 //!
 //! - **Service**
+//! - **Types**
 
 use crate::{ApiError, ClientConfig};
 
 pub mod service;
+pub mod types;
 pub struct ApiClient {
     pub config: ClientConfig,
     pub service: ServiceClient,
@@ -22,3 +24,4 @@ impl ApiClient {
 }
 
 pub use service::ServiceClient;
+pub use types::TypesClient;

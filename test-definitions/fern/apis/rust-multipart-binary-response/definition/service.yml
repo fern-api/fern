@@ -74,11 +74,3 @@ types:
     properties:
       text: string
       language: optional<string>
-
-  # Declared type that collides with the speechToSpeech endpoint's file-upload
-  # request type name. This forces the file-upload envelope to get a different
-  # collision-resolved name, reproducing the ElevenLabs Bug B scenario.
-  SpeechToSpeechRequest:
-    properties:
-      audio_data: string
-      model_id: optional<string>
