@@ -1,0 +1,47 @@
+service:
+  auth: false
+  base-path: /identifiers
+  endpoints:
+    update:
+      docs: Update an identifier whose path param shares a name with a body property.
+      method: PATCH
+      path: /{idType}
+      request:
+        name: IdentifierUpdate
+        path-parameters:
+          idType:
+            docs: The current identifier type in the URL path.
+            type: string
+        body:
+          properties:
+            idType:
+              docs: The new identifier type to set in the body.
+              type: string
+            oldValue: string
+            newValue: string
+      response: IdentifierUpdateResponse
+      examples:
+        - path-parameters:
+            idType: email
+          request:
+            idType: phone
+            oldValue: "+13175556789"
+            newValue: "+13175556798"
+          response:
+            body:
+              idType: phone
+              oldValue: "+13175556789"
+              newValue: "+13175556798"
+
+types:
+  IdentifierUpdateResponse:
+    properties:
+      idType: string
+      oldValue: string
+      newValue: string
+    examples:
+      - name: First
+        value:
+          idType: phone
+          oldValue: "+13175556789"
+          newValue: "+13175556798"
