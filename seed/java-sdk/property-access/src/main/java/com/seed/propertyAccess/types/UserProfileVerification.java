@@ -99,7 +99,6 @@ public final class UserProfileVerification {
 
         /**
          * <p>User profile verification status</p>
-         * <p>User profile verification status</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

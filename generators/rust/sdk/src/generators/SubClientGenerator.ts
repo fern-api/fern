@@ -897,8 +897,14 @@ export class SubClientGenerator {
 
         if (isFileUpload) {
             // Use multipart request for file uploads
-            executeMethod = "execute_multipart_request";
             const multipartBody = "request.clone().to_multipart()";
+            if (responseType === "binary") {
+                // Multipart upload with binary/streaming response (e.g., audio conversion)
+                executeMethod = "execute_multipart_stream_request";
+            } else {
+                // Multipart upload with JSON-deserializable response
+                executeMethod = "execute_multipart_request";
+            }
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
@@ -1100,8 +1106,10 @@ export class SubClientGenerator {
                     return generateRustTypeForTypeReference(reference.requestBodyType, this.context);
                 },
                 fileUpload: () => {
-                    // For file uploads, use a structured type instead of generic Value
-                    const requestTypeName = this.getRequestTypeName(endpoint);
+                    const requestTypeName =
+                        endpoint.queryParameters.length > 0
+                            ? this.context.getFileUploadRequestTypeName(endpoint.id)
+                            : this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
                 bytes: () => {
