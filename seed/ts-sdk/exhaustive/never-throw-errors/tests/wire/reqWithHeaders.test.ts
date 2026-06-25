@@ -12,16 +12,16 @@ describe("ReqWithHeadersClient", () => {
         server
             .mockEndpoint()
             .post("/test-headers/custom-header")
-            .header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
-            .header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER")
+            .header("X-TEST-SERVICE-HEADER", "service`value")
+            .header("X-TEST-ENDPOINT-HEADER", 'endpoint"value')
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .build();
 
         const response = await client.reqWithHeaders.getWithCustomHeader({
-            "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
-            "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+            "X-TEST-SERVICE-HEADER": "service`value",
+            "X-TEST-ENDPOINT-HEADER": 'endpoint"value',
             body: "string",
         });
         expect(response).toEqual({

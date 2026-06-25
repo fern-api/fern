@@ -3,8 +3,8 @@
 /**
  * @example
  *     {
- *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
- *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+ *         xTestServiceHeader: "service`value",
+ *         xTestEndpointHeader: "endpoint\"value",
  *         body: "string"
  *     }
  */

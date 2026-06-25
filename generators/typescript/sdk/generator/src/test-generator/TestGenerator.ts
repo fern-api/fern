@@ -472,12 +472,12 @@ export function ${functionName}(server: MockServer): void {
         .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
-                return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
+                return code`.header("${getWireValue(h.name)}", ${getHeaderValueStringLiteral(h.value.jsonExample)})
                 `;
             })}${example.endpointHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
-                return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
+                return code`.header("${getWireValue(h.name)}", ${getHeaderValueStringLiteral(h.value.jsonExample)})
                 `;
             })}${
             rawRequestBody
@@ -538,12 +538,12 @@ export function ${functionName}(server: MockServer): void {
         .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
-                return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
+                return code`.header("${getWireValue(h.name)}", ${getHeaderValueStringLiteral(h.value.jsonExample)})
                 `;
             })}${example.endpointHeaders
             .filter((h) => h.value.jsonExample != null)
             .map((h) => {
-                return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
+                return code`.header("${getWireValue(h.name)}", ${getHeaderValueStringLiteral(h.value.jsonExample)})
                 `;
             })}${
             rawRequestBody
@@ -1464,12 +1464,12 @@ describe("${serviceName}", () => {
             .${endpoint.method.toLowerCase()}("${mockUrl}")${example.serviceHeaders
                 .filter((h) => h.value.jsonExample != null)
                 .map((h) => {
-                    return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
+                    return code`.header("${getWireValue(h.name)}", ${getHeaderValueStringLiteral(h.value.jsonExample)})
                     `;
                 })}${example.endpointHeaders
                 .filter((h) => h.value.jsonExample != null)
                 .map((h) => {
-                    return code`.header("${getWireValue(h.name)}", "${h.value.jsonExample}")
+                    return code`.header("${getWireValue(h.name)}", ${getHeaderValueStringLiteral(h.value.jsonExample)})
                     `;
                 })}${
                 rawRequestBody
@@ -2078,6 +2078,10 @@ describe("${serviceName}", () => {
             }
         });
     }
+}
+
+function getHeaderValueStringLiteral(jsonExample: unknown): string {
+    return JSON.stringify(String(jsonExample));
 }
 
 function getExampleResponseStatusCode({

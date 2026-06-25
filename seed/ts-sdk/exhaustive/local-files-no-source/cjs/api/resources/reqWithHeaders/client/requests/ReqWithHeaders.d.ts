@@ -1,8 +1,8 @@
 /**
  * @example
  *     {
- *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
- *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+ *         "X-TEST-SERVICE-HEADER": "service`value",
+ *         "X-TEST-ENDPOINT-HEADER": "endpoint\"value",
  *         body: "string"
  *     }
  */

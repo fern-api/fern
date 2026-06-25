@@ -683,7 +683,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.reqWithHeaders.getWithCustomHeader({\n    \"X-TEST-SERVICE-HEADER\": \"X-TEST-SERVICE-HEADER\",\n    \"X-TEST-ENDPOINT-HEADER\": \"X-TEST-ENDPOINT-HEADER\",\n    body: \"string\"\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.reqWithHeaders.getWithCustomHeader({\n    \"X-TEST-SERVICE-HEADER\": \"service`value\",\n    \"X-TEST-ENDPOINT-HEADER\": \"endpoint\\\"value\",\n    body: \"string\"\n});\n"
             }
         }
     ],
