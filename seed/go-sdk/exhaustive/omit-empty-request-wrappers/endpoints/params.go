@@ -4,8 +4,49 @@ package endpoints
 
 import (
 	json "encoding/json"
+	internal "github.com/exhaustive/fern/internal"
+	types "github.com/exhaustive/fern/types"
 	big "math/big"
 )
+
+var (
+	createWithBodyAndQueryFieldFields = big.NewInt(1 << 0)
+)
+
+type CreateWithBodyAndQuery struct {
+	Fields *string                        `json:"-" url:"_fields,omitempty"`
+	Body   *types.ObjectWithRequiredField `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateWithBodyAndQuery) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateWithBodyAndQuery) SetFields(fields *string) {
+	c.Fields = fields
+	c.require(createWithBodyAndQueryFieldFields)
+}
+
+func (c *CreateWithBodyAndQuery) UnmarshalJSON(data []byte) error {
+	body := new(types.ObjectWithRequiredField)
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	c.Body = body
+	return nil
+}
+
+func (c *CreateWithBodyAndQuery) MarshalJSON() ([]byte, error) {
+	return json.Marshal(c.Body)
+}
 
 var (
 	getWithMultipleQueryFieldQuery  = big.NewInt(1 << 0)
@@ -196,4 +237,51 @@ func (m *ModifyResourceAtInlinedPath) UnmarshalJSON(data []byte) error {
 
 func (m *ModifyResourceAtInlinedPath) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m.Body)
+}
+
+var (
+	uploadBytesWithQueryFieldFields = big.NewInt(1 << 0)
+)
+
+type UploadBytesWithQuery struct {
+	Fields *string `json:"-" url:"_fields,omitempty"`
+	Body   []byte  `json:"-" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UploadBytesWithQuery) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UploadBytesWithQuery) SetFields(fields *string) {
+	u.Fields = fields
+	u.require(uploadBytesWithQueryFieldFields)
+}
+
+func (u *UploadBytesWithQuery) UnmarshalJSON(data []byte) error {
+	type unmarshaler UploadBytesWithQuery
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UploadBytesWithQuery(body)
+	return nil
+}
+
+func (u *UploadBytesWithQuery) MarshalJSON() ([]byte, error) {
+	type embed UploadBytesWithQuery
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }

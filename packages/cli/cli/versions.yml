@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.51.2
+  changelogEntry:
+    - summary: |
+        Fix inline enum type names ignoring parent schema's `x-fern-type-name` override.
+        When a parent schema was renamed via `x-fern-type-name`, inline enum properties
+        still derived their type name from the original parent name instead of the override.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
 - version: 5.51.1
   changelogEntry:
     - summary: |

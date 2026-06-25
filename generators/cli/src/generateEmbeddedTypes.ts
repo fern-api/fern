@@ -232,10 +232,15 @@ async function restructureTypesModule(srcDir: string): Promise<void> {
 
     // Inject `use super::*;` into each moved type file so sibling types
     // (re-exported by mod.rs) are visible alongside prelude imports.
+    // The allow attribute suppresses unused-import warnings for files
+    // that don't reference any sibling types.
     for (const filePath of movedFiles) {
         const content = await readFile(filePath, "utf-8");
         if (!content.includes("use super::*;")) {
-            const patched = content.replace("pub use crate::prelude::*;", "pub use crate::prelude::*;\nuse super::*;");
+            const patched = content.replace(
+                "pub use crate::prelude::*;",
+                "pub use crate::prelude::*;\n#[allow(unused_imports)]\nuse super::*;"
+            );
             if (patched !== content) {
                 await writeFile(filePath, patched);
             }

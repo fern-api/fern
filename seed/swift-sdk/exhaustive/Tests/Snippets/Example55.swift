@@ -8,11 +8,6 @@ enum Example55 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
-            Dog(
-                name: "name",
-                likesToWoof: true
-            )
-        ))
+        _ = try await client.endpoints.put.add(id: "id")
     }
 }

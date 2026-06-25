@@ -33,10 +33,18 @@ describe("applyDistWorkspacePatch", () => {
         expect(patched).toContain("[workspace]");
         expect(patched).toContain('cargo-dist-version = "0.31.0"');
         expect(patched).toContain('ci = "github"');
-        expect(patched).toContain('installers = ["shell", "powershell", "npm"]');
+        expect(patched).toContain('installers = ["shell", "powershell"]');
+        expect(patched).not.toContain('"npm"');
         expect(patched).toContain("targets = [");
         expect(patched).toContain("aarch64-apple-darwin");
         expect(patched).toContain('install-path = "CARGO_HOME"');
+    });
+
+    it("strips npm from installers even if other fern-specific anchors are absent", () => {
+        const withNpm = '[dist]\ninstallers = ["shell", "powershell", "npm"]\n';
+        const patched = applyDistWorkspacePatch(withNpm);
+        expect(patched).toContain('installers = ["shell", "powershell"]');
+        expect(patched).not.toContain('"npm"');
     });
 
     it("is idempotent — running twice produces the same output as once", () => {

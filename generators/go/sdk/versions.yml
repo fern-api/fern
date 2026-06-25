@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.46.2
+  changelogEntry:
+    - summary: |
+        Fix double-pointer types for nullable $ref alias fields in v2 GoTypeMapper and DynamicTypeMapper,
+        consistent with the v1 fix in model.go.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 66
 - version: 1.46.1
   changelogEntry:
     - summary: |

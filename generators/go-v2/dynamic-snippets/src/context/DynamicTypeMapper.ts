@@ -36,9 +36,9 @@ export class DynamicTypeMapper {
                 return this.convertNamed({ named });
             }
             case "optional":
-                return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
+                return this.convertOptionalOrNullable(args.typeReference.value);
             case "nullable":
-                return go.Type.optional(this.convert({ typeReference: args.typeReference.value }));
+                return this.convertOptionalOrNullable(args.typeReference.value);
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":
@@ -47,6 +47,59 @@ export class DynamicTypeMapper {
                 return this.convertUnknown();
             default:
                 assertNever(args.typeReference);
+        }
+    }
+
+    private convertOptionalOrNullable(innerReference: FernIr.dynamic.TypeReference): go.Type {
+        if (this.isPointerAliasReference(innerReference)) {
+            return this.convert({ typeReference: innerReference });
+        }
+        return go.Type.optional(this.convert({ typeReference: innerReference }));
+    }
+
+    /**
+     * Returns true if the type reference resolves to a named alias that already
+     * generates as a pointer type in Go. Also handles the collapse case where
+     * optional(nullable(named(alias))) should not produce a double pointer.
+     */
+    private isPointerAliasReference(reference: FernIr.dynamic.TypeReference): boolean {
+        if (reference.type === "named") {
+            return this.isAliasToPointerType(reference.value);
+        }
+        if (reference.type === "optional" || reference.type === "nullable") {
+            const inner = reference.value;
+            if (inner.type === "named") {
+                return this.isAliasToPointerType(inner.value);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a named type is an alias that already generates as a pointer in Go
+     * (e.g. a nullable primitive like *time.Time). Traverses alias chains.
+     */
+    private isAliasToPointerType(typeId: FernIr.dynamic.TypeId): boolean {
+        const seen = new Set<FernIr.dynamic.TypeId>();
+        let currentTypeId = typeId;
+        while (true) {
+            if (seen.has(currentTypeId)) {
+                return false;
+            }
+            seen.add(currentTypeId);
+            const namedType = this.context.resolveNamedType({ typeId: currentTypeId });
+            if (namedType == null || namedType.type !== "alias") {
+                return false;
+            }
+            const aliasOf = namedType.typeReference;
+            if (aliasOf.type === "optional" || aliasOf.type === "nullable") {
+                return true;
+            }
+            if (aliasOf.type === "named") {
+                currentTypeId = aliasOf.value;
+                continue;
+            }
+            return false;
         }
     }
 

@@ -652,6 +652,172 @@ public partial class ParamsClient : IParamsClient
         }
     }
 
+    private async Task<WithRawResponse<ObjectWithOptionalField>> CreateWithBodyAndQueryAsyncCore(
+        CreateWithBodyAndQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("_fields", request.Fields)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/params/body-and-query",
+                    Body = request.Body,
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return new WithRawResponse<ObjectWithOptionalField>()
+                {
+                    Data = responseData,
+                    RawResponse = new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    private async Task<WithRawResponse<ObjectWithOptionalField>> UploadBytesWithQueryAsyncCore(
+        UploadBytesWithQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedExhaustive.Core.QueryStringBuilder.Builder(capacity: 1)
+            .Add("_fields", request.Fields)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new StreamRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/params/bytes-and-query",
+                    Body = request.Body,
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return new WithRawResponse<ObjectWithOptionalField>()
+                {
+                    Data = responseData,
+                    RawResponse = new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
     private async Task<WithRawResponse<string>> GetWithBooleanPathAsyncCore(
         bool param,
         RequestOptions? options = null,
@@ -997,6 +1163,43 @@ public partial class ParamsClient : IParamsClient
     {
         return new WithRawResponseTask<ObjectWithRequiredField>(
             UploadWithPathAsyncCore(param, request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// POST with referenced body + query params
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Params.CreateWithBodyAndQueryAsync(
+    ///     new CreateWithBodyAndQuery
+    ///     {
+    ///         Fields = "_fields",
+    ///         Body = new ObjectWithRequiredField { String = "string" },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithOptionalField> CreateWithBodyAndQueryAsync(
+        CreateWithBodyAndQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithOptionalField>(
+            CreateWithBodyAndQueryAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// POST bytes body + query params
+    /// </summary>
+    public WithRawResponseTask<ObjectWithOptionalField> UploadBytesWithQueryAsync(
+        UploadBytesWithQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithOptionalField>(
+            UploadBytesWithQueryAsyncCore(request, options, cancellationToken)
         );
     }
 

@@ -96,4 +96,13 @@ export interface LayoutConfig {
     hideFeedback?: boolean;
     /** If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages. */
     mobileToc?: boolean;
+    /**
+     * Sets which layout to use for changelog pages.
+     *
+     * @default: `timeline`
+     *
+     * - `timeline` renders the searchable timeline-of-cards layout.
+     * - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
+     */
+    changelogLayout?: FernDocsConfig.ChangelogLayout;
 }
