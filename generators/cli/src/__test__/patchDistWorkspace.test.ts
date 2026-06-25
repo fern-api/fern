@@ -3,7 +3,12 @@ import os from "os";
 import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { addWorkspaceMember, applyDistWorkspacePatch, patchDistWorkspaceToml } from "../index.js";
+import {
+    addWorkspaceMember,
+    applyDistWorkspacePatch,
+    patchDistWorkspaceToml,
+    removeWorkspaceMember
+} from "../index.js";
 
 const SDK_DIST_WORKSPACE_PATH = path.resolve(
     path.dirname(url.fileURLToPath(import.meta.url)),
@@ -47,6 +52,13 @@ describe("applyDistWorkspacePatch", () => {
         expect(patched).not.toContain('"npm"');
     });
 
+    it("strips the cli-sdk-only crates/pipeline-fixture workspace member that never ships to generated CLIs", () => {
+        const patched = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
+        expect(patched).not.toContain("pipeline-fixture");
+        // the root crate member must survive
+        expect(patched).toContain('members = ["cargo:."]');
+    });
+
     it("is idempotent — running twice produces the same output as once", () => {
         const once = applyDistWorkspacePatch(TEMPLATE_DIST_TOML);
         const twice = applyDistWorkspacePatch(once);
@@ -88,6 +100,31 @@ describe("addWorkspaceMember", () => {
     });
 });
 
+describe("removeWorkspaceMember", () => {
+    it("removes the named member while preserving the others", () => {
+        const input = '[workspace]\nmembers = ["cargo:.", "cargo:crates/pipeline-fixture"]\n';
+        const result = removeWorkspaceMember(input, "cargo:crates/pipeline-fixture");
+        expect(result).toContain('members = ["cargo:."]');
+        expect(result).not.toContain("pipeline-fixture");
+    });
+
+    it("removes a member from the middle of the list without leaving dangling commas", () => {
+        const input = '[workspace]\nmembers = ["cargo:.", "cargo:crates/pipeline-fixture", "cargo:close-api-types"]\n';
+        const result = removeWorkspaceMember(input, "cargo:crates/pipeline-fixture");
+        expect(result).toContain('members = ["cargo:.", "cargo:close-api-types"]');
+    });
+
+    it("is a no-op when the member is absent", () => {
+        const input = '[workspace]\nmembers = ["cargo:."]\n';
+        expect(removeWorkspaceMember(input, "cargo:crates/pipeline-fixture")).toBe(input);
+    });
+
+    it("is a no-op when there is no [workspace] members array", () => {
+        const input = '[dist]\ncargo-dist-version = "0.31.0"\n';
+        expect(removeWorkspaceMember(input, "cargo:crates/pipeline-fixture")).toBe(input);
+    });
+});
+
 describe("patchDistWorkspaceToml (filesystem)", () => {
     let tmpDir: string;
 
@@ -107,6 +144,7 @@ describe("patchDistWorkspaceToml (filesystem)", () => {
         const result = await readFile(path.join(tmpDir, "dist-workspace.toml"), "utf-8");
         expect(result).not.toContain("@fern-api");
         expect(result).not.toContain("cli-sdk");
+        expect(result).not.toContain("pipeline-fixture");
         expect(result).toContain('cargo-dist-version = "0.31.0"');
     });
 

@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:crates/pipeline-fixture", "cargo:api-wide-base-path-with-default-types", "cargo:api-wide-base-path-with-default-sdk"]
+members = ["cargo:.", "cargo:api-wide-base-path-with-default-types", "cargo:api-wide-base-path-with-default-sdk"]
 
 # Config for 'dist'
 [dist]

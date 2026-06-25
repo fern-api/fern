@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:crates/pipeline-fixture", "cargo:oauth-client-credentials-openapi-types", "cargo:oauth-client-credentials-openapi-sdk"]
+members = ["cargo:.", "cargo:oauth-client-credentials-openapi-types", "cargo:oauth-client-credentials-openapi-sdk"]
 
 # Config for 'dist'
 [dist]

@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:crates/pipeline-fixture", "cargo:openapi-request-body-ref-types", "cargo:openapi-request-body-ref-sdk"]
+members = ["cargo:.", "cargo:openapi-request-body-ref-types", "cargo:openapi-request-body-ref-sdk"]
 
 # Config for 'dist'
 [dist]

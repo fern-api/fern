@@ -12,6 +12,12 @@ import path from "path";
  * either fills in their own values or accepts cargo-dist's defaults
  * (no npm installer).
  *
+ * We also drop the `cargo:crates/pipeline-fixture` workspace member that
+ * the template inherits verbatim from cli-sdk's own `dist-workspace.toml`.
+ * `pipeline-fixture` is a cli-sdk-only release-pipeline smoke-test crate; it
+ * is never vendored into generated CLIs, so leaving the member in place makes
+ * `cargo metadata` / `cargo dist plan` fail to load a nonexistent manifest.
+ *
  * Everything else in the file — `targets`, `installers`, `ci`,
  * `archive` formats — is generic boilerplate worth keeping.
  *
@@ -62,7 +68,26 @@ export async function patchDistWorkspaceToml(args: {
 export function applyDistWorkspacePatch(distToml: string): string {
     let result = distToml.replace(NPM_SCOPE_BLOCK, "").replace(NPM_PACKAGE_BLOCK, "");
     result = stripNpmInstaller(result);
+    result = removeWorkspaceMember(result, PIPELINE_FIXTURE_MEMBER);
     return result;
+}
+
+/**
+ * Remove a workspace member entry from the `members = [...]` array under
+ * `[workspace]`, leaving the rest of the list intact. No-op when the
+ * `[workspace]` section, the `members` array, or the member is absent.
+ */
+export function removeWorkspaceMember(distToml: string, member: string): string {
+    return distToml.replace(
+        /(\[workspace\]\s*\nmembers\s*=\s*\[)([^\]]*)\]/,
+        (_match, prefix: string, inner: string) => {
+            const items = inner
+                .split(",")
+                .map((s) => s.trim())
+                .filter((s) => s.length > 0 && s !== `"${member}"`);
+            return `${prefix}${items.join(", ")}]`;
+        }
+    );
 }
 
 /**
@@ -104,6 +129,13 @@ export function addWorkspaceMember(distToml: string, typesCrateName: string): st
     // No [workspace] section — append one
     return distToml + `\n[workspace]\nmembers = [${memberLine}]\n`;
 }
+
+/**
+ * cli-sdk-only release-pipeline smoke-test crate. It lives in cli-sdk's
+ * workspace but is never vendored into generated CLIs, so its `members`
+ * entry must be stripped from the shipped `dist-workspace.toml`.
+ */
+const PIPELINE_FIXTURE_MEMBER = "cargo:crates/pipeline-fixture";
 
 const NPM_SCOPE_BLOCK = `# A namespace to use when publishing this package to the npm registry
 npm-scope = "@fern-api"

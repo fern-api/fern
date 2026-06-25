@@ -21,6 +21,7 @@ export {
     addWorkspaceMember,
     applyDistWorkspacePatch,
     patchDistWorkspaceToml,
+    removeWorkspaceMember,
     stripNpmInstaller
 } from "./patchDistWorkspace.js";
 export {
