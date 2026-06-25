@@ -99,7 +99,6 @@ public final class TreeIdentifiable {
 
         /**
          * <p>Unique tree identifier.</p>
-         * <p>Unique tree identifier.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

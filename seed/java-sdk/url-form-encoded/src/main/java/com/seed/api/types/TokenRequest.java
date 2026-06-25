@@ -120,7 +120,6 @@ public final class TokenRequest {
 
         /**
          * <p>Client identifier</p>
-         * <p>Client identifier</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -131,7 +130,6 @@ public final class TokenRequest {
         }
 
         /**
-         * <p>Client secret</p>
          * <p>Client secret</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
