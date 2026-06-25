@@ -45,8 +45,8 @@ public partial class OAuthTokenProvider
                     {
                         Cid = _clientId,
                         Csr = _clientSecret,
-                        EntityId = _entityId,
-                        Scp = _scp,
+                        EntityId = _entityId!,
+                        Scp = _scp!,
                     }
                 )
                 .ConfigureAwait(false);

@@ -228,7 +228,11 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                                         ...this.additionalRequestFields.entries().map(([name, field]) => {
                                             return {
                                                 name,
-                                                assignment: this.csharp.codeblock(field.name)
+                                                // The fields are nullable because the root client exposes them as
+                                                // optional constructor parameters, but the token request requires
+                                                // them. Assert non-null here, matching Java which passes the same
+                                                // possibly-null values straight into the required request fields.
+                                                assignment: this.csharp.codeblock(`${field.name}!`)
                                             };
                                         })
                                     ]
