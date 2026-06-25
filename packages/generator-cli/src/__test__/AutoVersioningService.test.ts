@@ -1055,10 +1055,7 @@ describe("AutoVersioningService", () => {
             for (const dir of excludedDirs) {
                 const dirPath = path.join(tempDir, dir, "nested");
                 await fs.mkdir(dirPath, { recursive: true });
-                await fs.writeFile(
-                    path.join(dirPath, "file.txt"),
-                    "version=0.0.0-fern-placeholder"
-                );
+                await fs.writeFile(path.join(dirPath, "file.txt"), "version=0.0.0-fern-placeholder");
             }
 
             // Create a regular file
