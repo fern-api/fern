@@ -63,10 +63,10 @@ private func main() async throws {
             type: .movie,
             tag: "tag-12efs9dv",
             metadata: [
-                "academyAward": .bool(true), 
-                "releaseDate": .string("2023-12-08"), 
+                "academyAward": .bool(true),
+                "releaseDate": .string("2023-12-08"),
                 "ratings": .object([
-                    "rottenTomatoes": .number(97), 
+                    "rottenTomatoes": .number(97),
                     "imdb": .number(7.6)
                 ])
             ],
@@ -82,7 +82,7 @@ private func main() async throws {
             Metadata(
                 id: "event-12345",
                 data: [
-                    "key1": "val1", 
+                    "key1": "val1",
                     "key2": "val2"
                 ],
                 jsonString: "abc"
@@ -131,10 +131,10 @@ private func main() async throws {
                 .string("Christian Bale"),
                 .string("Florence Pugh"),
                 .string("Willem Dafoe")
-            ]), 
-            "releaseDate": .string("2023-12-08"), 
+            ]),
+            "releaseDate": .string("2023-12-08"),
             "ratings": .object([
-                "rottenTomatoes": .number(97), 
+                "rottenTomatoes": .number(97),
                 "imdb": .number(7.6)
             ])
         ],
