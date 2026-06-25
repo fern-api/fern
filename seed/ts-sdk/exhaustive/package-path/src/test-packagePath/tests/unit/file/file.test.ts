@@ -430,6 +430,22 @@ describe("toBinaryUploadRequest", () => {
         });
     });
 
+    describe("null and undefined input", () => {
+        it("should throw TypeError for undefined", async () => {
+            await expect(toBinaryUploadRequest(undefined as unknown as Uploadable)).rejects.toThrow(TypeError);
+            await expect(toBinaryUploadRequest(undefined as unknown as Uploadable)).rejects.toThrow(
+                /but received undefined/,
+            );
+        });
+
+        it("should throw TypeError for null", async () => {
+            await expect(toBinaryUploadRequest(null as unknown as Uploadable)).rejects.toThrow(TypeError);
+            await expect(toBinaryUploadRequest(null as unknown as Uploadable)).rejects.toThrow(
+                /but received null/,
+            );
+        });
+    });
+
     describe("Edge cases", () => {
         it("should handle empty headers when no metadata is available", async () => {
             const buffer = Buffer.from("");
