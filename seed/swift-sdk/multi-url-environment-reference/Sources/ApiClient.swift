@@ -9,14 +9,14 @@ public final class ApiClient: Sendable {
 
     /// Initialize the client with the specified configuration and a static bearer token.
     ///
-    /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
+    /// - Parameter environment: The environment to use for requests from the client.
     /// - Parameter token: Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
-        baseURL: String,
+        environment: ApiEnvironment = ApiEnvironment.production,
         token: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
@@ -24,7 +24,7 @@ public final class ApiClient: Sendable {
         urlSession: Networking.URLSession? = nil
     ) {
         self.init(
-            baseURL: baseURL,
+            environment: environment,
             headerAuth: nil,
             bearerAuth: token.map {
                 .init(token: .staticToken($0))
@@ -39,14 +39,14 @@ public final class ApiClient: Sendable {
 
     /// Initialize the client with the specified configuration and an async bearer token provider.
     ///
-    /// - Parameter baseURL: The base URL to use for requests from the client. If not provided, the default base URL will be used.
+    /// - Parameter environment: The environment to use for requests from the client.
     /// - Parameter token: An async function that returns the bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.
     /// - Parameter headers: Additional headers to send with each request.
     /// - Parameter timeout: Request timeout in seconds. Defaults to 60 seconds. Ignored if a custom `urlSession` is provided.
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
-        baseURL: String,
+        environment: ApiEnvironment = ApiEnvironment.production,
         token: ClientConfig.CredentialProvider? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
@@ -54,7 +54,7 @@ public final class ApiClient: Sendable {
         urlSession: Networking.URLSession? = nil
     ) {
         self.init(
-            baseURL: baseURL,
+            environment: environment,
             headerAuth: nil,
             bearerAuth: token.map {
                 .init(token: .provider($0))
@@ -68,7 +68,7 @@ public final class ApiClient: Sendable {
     }
 
     init(
-        baseURL: String,
+        environment: ApiEnvironment,
         headerAuth: ClientConfig.HeaderAuth? = nil,
         bearerAuth: ClientConfig.BearerAuth? = nil,
         basicAuth: ClientConfig.BasicAuth? = nil,
@@ -78,7 +78,7 @@ public final class ApiClient: Sendable {
         urlSession: Networking.URLSession? = nil
     ) {
         let config = ClientConfig(
-            baseURL: baseURL,
+            baseURL: environment.base,
             headerAuth: headerAuth,
             bearerAuth: bearerAuth,
             basicAuth: basicAuth,
@@ -87,9 +87,36 @@ public final class ApiClient: Sendable {
             maxRetries: maxRetries,
             urlSession: urlSession
         )
-        self.items = ItemsClient(config: config)
-        self.auth = AuthClient(config: config)
-        self.files = FilesClient(config: config)
+        self.items = ItemsClient(config: ClientConfig(
+            baseURL: environment.base,
+            headerAuth: headerAuth,
+            bearerAuth: bearerAuth,
+            basicAuth: basicAuth,
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        ))
+        self.auth = AuthClient(config: ClientConfig(
+            baseURL: environment.auth,
+            headerAuth: headerAuth,
+            bearerAuth: bearerAuth,
+            basicAuth: basicAuth,
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        ))
+        self.files = FilesClient(config: ClientConfig(
+            baseURL: environment.upload,
+            headerAuth: headerAuth,
+            bearerAuth: bearerAuth,
+            basicAuth: basicAuth,
+            headers: headers,
+            timeout: timeout,
+            maxRetries: maxRetries,
+            urlSession: urlSession
+        ))
         self.httpClient = HTTPClient(config: config)
     }
 }

@@ -128,7 +128,5 @@ fixtures:
       outputFolder: with-custom-config
 
 allowedFailures:
-  - multi-url-environment-no-default
-  - multi-url-environment-reference
   # Server URL templating not yet supported in Swift SDK
   - server-url-templating
