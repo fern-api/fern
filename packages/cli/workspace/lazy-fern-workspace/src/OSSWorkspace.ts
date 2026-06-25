@@ -624,6 +624,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         const definition = await this.getDefinition({ context }, effectiveSettings);
+        // GraphQL specs convert directly to IR (not to a Fern definition), so carry the
+        // generated GraphQL IR on the FernWorkspace; generateIntermediateRepresentation()
+        // merges it. This makes GraphQL SDKs work via the standard `fern generate` pipeline
+        // without requiring the --from-openapi (direct-to-IR) path.
+        const additionalIrs = await this.generateAllGraphQLIRs({ context });
         return new FernWorkspace({
             absoluteFilePath: this.absoluteFilePath,
             workspaceName: this.workspaceName,
@@ -633,7 +638,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             },
             definition,
             cliVersion: this.cliVersion,
-            sources: this.sources
+            sources: this.sources,
+            additionalIrs
         });
     }
 
