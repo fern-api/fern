@@ -971,6 +971,17 @@ types:
         docs: |
           If `mobile-toc` is set to true, a sticky collapsible table of contents bar will be shown on mobile viewports for guide and overview layout pages.
 
+      changelog-layout:
+        type: optional<ChangelogLayout>
+        availability: in-development
+        docs: |
+          Sets which layout to use for changelog pages.
+
+          @default: `timeline`
+
+          - `timeline` renders the searchable timeline-of-cards layout.
+          - `classic` renders the legacy stacked-entries layout with a per-page table of contents.
+
   DocsSettingsConfig:
     properties:
       search-text:
@@ -1201,6 +1212,11 @@ types:
     enum:
       - fixed
       - static
+
+  ChangelogLayout:
+    enum:
+      - timeline
+      - classic
 
   AudienceId:
     type: string
