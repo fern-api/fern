@@ -160,12 +160,22 @@ function getGithubPublishConfig(
                       apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
                       workspaceIdEnvironmentVariable: EnvironmentVariable(value.workspaceId ?? "")
                   }),
-              nuget: (value) =>
-                  FernGeneratorExec.GithubPublishInfo.nuget({
+              nuget: (value) => {
+                  const apiKey = (value.apiKey ?? "").trim();
+                  const useOidc = apiKey === "<USE_OIDC>" || apiKey === "OIDC";
+                  return FernGeneratorExec.GithubPublishInfo.nuget({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
-                  }),
+                      apiKeyEnvironmentVariable: EnvironmentVariable(
+                          useOidc
+                              ? "<USE_OIDC>"
+                              : apiKey.startsWith("${") && apiKey.endsWith("}")
+                                ? apiKey.slice(2, -1).trim()
+                                : ""
+                      ),
+                      shouldGeneratePublishWorkflow: useOidc ? true : undefined
+                  });
+              },
               crates: (value) =>
                   FernGeneratorExec.GithubPublishInfo.crates({
                       registryUrl: value.registryUrl,

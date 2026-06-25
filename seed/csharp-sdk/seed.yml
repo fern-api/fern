@@ -242,6 +242,12 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: use-undiscriminated-unions
+    - publishConfig:
+        type: nuget
+        registryUrl: ""
+        packageName: Fern.Exhaustive
+        apiKey: OIDC
+      outputFolder: oidc-token
   optional:
     - customConfig: null
       outputFolder: no-custom-config
