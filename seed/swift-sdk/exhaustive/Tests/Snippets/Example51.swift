@@ -8,6 +8,6 @@ enum Example51 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.primitive.getAndReturnDate(request: CalendarDate("2023-01-15")!)
+        _ = try await client.endpoints.primitive.getAndReturnDatetime(request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))
     }
 }

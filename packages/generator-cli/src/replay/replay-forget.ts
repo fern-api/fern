@@ -9,6 +9,6 @@ export interface ReplayForgetParams {
     options?: ForgetOptions;
 }
 
-export function replayForget(params: ReplayForgetParams): ForgetResult {
+export async function replayForget(params: ReplayForgetParams): Promise<ForgetResult> {
     return forget(params.outputDir, params.options);
 }

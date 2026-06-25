@@ -495,6 +495,19 @@
             }
         },
         {
+            "example_identifier": "4426602d",
+            "id": {
+                "method": "POST",
+                "path": "/params/body-and-query",
+                "identifier_override": "endpoint_endpoints/params.createWithBodyAndQuery"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().createWithBodyAndQuery(\n            CreateWithBodyAndQuery\n                .builder()\n                .body(\n                    ObjectWithRequiredField\n                        .builder()\n                        .string(\"string\")\n                        .build()\n                )\n                .fields(\"_fields\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().createWithBodyAndQuery(\n            CreateWithBodyAndQuery\n                .builder()\n                .body(\n                    ObjectWithRequiredField\n                        .builder()\n                        .string(\"string\")\n                        .build()\n                )\n                .fields(\"_fields\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "b08339be",
             "id": {
                 "method": "GET",

@@ -1,4 +1,4 @@
-import { Stream } from "../../../src/core/stream/Stream";
+import { type ServerSentEvent, Stream } from "../../../src/core/stream/Stream";
 
 describe("Stream", () => {
     describe("JSON streaming", () => {
@@ -363,6 +363,315 @@ describe("Stream", () => {
             }
 
             expect(messages).toEqual([{ type: "", content: "hello" }]);
+        });
+    });
+
+    describe("withMetadata()", () => {
+        it("should yield ServerSentEvent with per-event id and retry", async () => {
+            const mockStream = createReadableStream([
+                'id: evt-1\nretry: 5000\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { value: 1 }, id: "evt-1", retry: 5000, event: undefined },
+                { data: { value: 2 }, id: "evt-2", retry: 5000, event: undefined },
+            ]);
+        });
+
+        it("should persist id across events per SSE spec", async () => {
+            const mockStream = createReadableStream(['id: evt-1\ndata: {"value": 1}\ndata: {"value": 2}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { value: 1 }, id: "evt-1", retry: undefined, event: undefined },
+                { data: { value: 2 }, id: "evt-1", retry: undefined, event: undefined },
+            ]);
+        });
+
+        it("should ignore id field containing null character", async () => {
+            const mockStream = createReadableStream([
+                'id: valid\ndata: {"value": 1}\nid: bad\0id\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.id).toBe("valid");
+            expect(events[1]?.id).toBe("valid");
+        });
+
+        it("should ignore retry field with non-integer value", async () => {
+            const mockStream = createReadableStream(['retry: abc\ndata: {"value": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.retry).toBeUndefined();
+        });
+
+        it("should include event type and metadata with discriminator", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: msg-001\nretry: 3000\ndata: {"content": "hello"}\n\nevent: completion\nid: msg-002\ndata: {"content": "world"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { type: "completion", content: "hello" }, id: "msg-001", retry: 3000, event: "completion" },
+                { data: { type: "completion", content: "world" }, id: "msg-002", retry: 3000, event: "completion" },
+            ]);
+        });
+
+        it("should persist id across discriminated events per SSE spec", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: msg-001\ndata: {"content": "first"}\n\nevent: completion\ndata: {"content": "second"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.id).toBe("msg-001");
+            expect(events[1]?.id).toBe("msg-001");
+        });
+
+        it("should yield undefined metadata for JSON streams", async () => {
+            const mockStream = createReadableStream(['{"value": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "json", messageTerminator: "\n" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([{ data: { value: 1 }, id: undefined, retry: undefined, event: undefined }]);
+        });
+
+        it("should stop at stream terminator via withMetadata (non-discriminator)", async () => {
+            const mockStream = createReadableStream([
+                'id: evt-1\ndata: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([{ data: { value: 1 }, id: "evt-1", retry: undefined, event: undefined }]);
+        });
+
+        it("should stop at stream terminator via withMetadata (discriminator)", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: msg-001\ndata: {"content": "hi"}\n\nevent: done\ndata: [DONE]\n\nevent: completion\ndata: {"content": "bye"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type", streamTerminator: "[DONE]" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { type: "completion", content: "hi" }, id: "msg-001", retry: undefined, event: "completion" },
+            ]);
+        });
+
+        it("should reject retry with decimal value", async () => {
+            const mockStream = createReadableStream(['retry: 3.5\ndata: {"value": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.retry).toBeUndefined();
+        });
+
+        it("should accept retry value of zero", async () => {
+            const mockStream = createReadableStream(['retry: 0\ndata: {"value": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.retry).toBe(0);
+        });
+
+        it("should set empty string id when id field has no value", async () => {
+            const mockStream = createReadableStream(['id:\ndata: {"value": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.id).toBe("");
+        });
+
+        it("should yield undefined event field for non-discriminator SSE even with event lines", async () => {
+            const mockStream = createReadableStream(['event: completion\nid: evt-1\ndata: {"value": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.event).toBeUndefined();
+            expect(events[0]?.id).toBe("evt-1");
+            expect(events[0]?.data).toEqual({ value: 1 });
+        });
+
+        it("should preserve metadata across chunked data", async () => {
+            const mockStream = createReadableStream(["id: ev", "t-1\nretry: 30", '00\ndata: {"val', 'ue": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const events: ServerSentEvent<{ value: number }>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([{ data: { value: 1 }, id: "evt-1", retry: 3000, event: undefined }]);
+        });
+
+        it("should update id between events in discriminator path", async () => {
+            const mockStream = createReadableStream([
+                'event: msg\nid: first\ndata: {"n": 1}\n\nevent: msg\nid: second\ndata: {"n": 2}\n\nevent: msg\ndata: {"n": 3}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events[0]?.id).toBe("first");
+            expect(events[1]?.id).toBe("second");
+            expect(events[2]?.id).toBe("second");
+        });
+
+        it("should attach metadata on last event without trailing blank line", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\nid: last-1\nretry: 1000\ndata: {"content": "hi"}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const events: ServerSentEvent<unknown>[] = [];
+            for await (const event of stream.withMetadata()) {
+                events.push(event);
+            }
+
+            expect(events).toEqual([
+                { data: { type: "completion", content: "hi" }, id: "last-1", retry: 1000, event: "completion" },
+            ]);
+        });
+
+        it("should not affect default iteration which still yields T", async () => {
+            const mockStream = createReadableStream(['id: evt-1\nretry: 3000\ndata: {"value": 1}\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as { value: number },
+                eventShape: { type: "sse" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ value: 1 }]);
         });
     });
 

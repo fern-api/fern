@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "User and Token API",
   "description": "API for retrieving user information and authentication tokens",
   "servers": [

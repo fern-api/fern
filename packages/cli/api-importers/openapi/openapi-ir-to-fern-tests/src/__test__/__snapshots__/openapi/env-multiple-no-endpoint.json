@@ -83,4 +83,5 @@ environments:
 default-environment: Prod
 ",
   },
+  "specVersion": "1.0.0",
 }

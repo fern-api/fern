@@ -129,6 +129,39 @@ public final class ParamsClient: Sendable {
         )
     }
 
+    /// POST with referenced body + query params
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func createWithBodyAndQuery(fields: String? = nil, request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/params/body-and-query",
+            queryParams: [
+                "_fields": fields.map { .string($0) }
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithOptionalField.self
+        )
+    }
+
+    /// POST bytes body + query params
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func uploadBytesWithQuery(fields: String? = nil, request: Data, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/params/bytes-and-query",
+            contentType: .applicationOctetStream,
+            queryParams: [
+                "_fields": fields.map { .string($0) }
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithOptionalField.self
+        )
+    }
+
     /// GET with boolean path param
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.

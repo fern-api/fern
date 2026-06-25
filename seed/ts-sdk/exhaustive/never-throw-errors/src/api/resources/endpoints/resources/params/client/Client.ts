@@ -686,6 +686,184 @@ export class ParamsClient {
     }
 
     /**
+     * POST with referenced body + query params
+     *
+     * @param {SeedExhaustive.endpoints.CreateWithBodyAndQuery} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.createWithBodyAndQuery({
+     *         _fields: "_fields",
+     *         body: {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    public createWithBodyAndQuery(
+        request: SeedExhaustive.endpoints.CreateWithBodyAndQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<
+            SeedExhaustive.types.ObjectWithOptionalField,
+            SeedExhaustive.endpoints.params.createWithBodyAndQuery.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__createWithBodyAndQuery(request, requestOptions));
+    }
+
+    private async __createWithBodyAndQuery(
+        request: SeedExhaustive.endpoints.CreateWithBodyAndQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedExhaustive.types.ObjectWithOptionalField,
+                SeedExhaustive.endpoints.params.createWithBodyAndQuery.Error
+            >
+        >
+    > {
+        const { _fields: fields, body: _body } = request;
+        const _queryParams: Record<string, unknown> = {
+            _fields: fields,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/params/body-and-query",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedExhaustive.endpoints.params.createWithBodyAndQuery.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
+     * POST bytes body + query params
+     *
+     * @param {core.file.Uploadable} uploadable
+     * @param {SeedExhaustive.endpoints.UploadBytesWithQuery} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    public uploadBytesWithQuery(
+        uploadable: core.file.Uploadable,
+        request: SeedExhaustive.endpoints.UploadBytesWithQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<
+            SeedExhaustive.types.ObjectWithOptionalField,
+            SeedExhaustive.endpoints.params.uploadBytesWithQuery.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__uploadBytesWithQuery(uploadable, request, requestOptions));
+    }
+
+    private async __uploadBytesWithQuery(
+        uploadable: core.file.Uploadable,
+        request: SeedExhaustive.endpoints.UploadBytesWithQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedExhaustive.types.ObjectWithOptionalField,
+                SeedExhaustive.endpoints.params.uploadBytesWithQuery.Error
+            >
+        >
+    > {
+        const _queryParams: Record<string, unknown> = {
+            _fields: request._fields,
+        };
+        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            _binaryUploadRequest.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/params/bytes-and-query",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            requestType: "bytes",
+            duplex: "half",
+            body: _binaryUploadRequest.body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedExhaustive.endpoints.params.uploadBytesWithQuery.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
      * GET with boolean path param
      *
      * @param {boolean} param

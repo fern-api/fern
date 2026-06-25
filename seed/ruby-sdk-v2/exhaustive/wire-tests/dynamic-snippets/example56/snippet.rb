@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.urls.with_mixed_case
+client.endpoints.union.get_and_return_union

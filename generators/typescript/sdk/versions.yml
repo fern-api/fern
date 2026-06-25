@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.73.0
+  changelogEntry:
+    - summary: |
+        Add support for SSE `id` and `retry` fields in the TypeScript SDK Stream class.
+        A new `withMetadata()` method returns an `AsyncIterable<ServerSentEvent<T>>`
+        exposing per-event `id`, `retry`, and `event` fields alongside the parsed `data`.
+        Default iteration still yields `T`, so this is fully backward compatible.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
 - version: 3.72.10
   changelogEntry:
     - summary: |

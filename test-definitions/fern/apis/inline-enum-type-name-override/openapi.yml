@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: Inline Enum Type Name Override
+  version: 1.0.0
+paths:
+  /load:
+    post:
+      operationId: load
+      tags:
+        - reporting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/V1LoadRequest"
+      responses:
+        "200":
+          description: ok
+components:
+  schemas:
+    V1LoadRequest:
+      x-fern-type-name: LoadRequest
+      type: object
+      properties:
+        cache:
+          type: string
+          enum:
+            - stale-if-slow
+            - no-cache
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - pending

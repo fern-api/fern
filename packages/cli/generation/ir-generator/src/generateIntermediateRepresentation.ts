@@ -141,6 +141,7 @@ export function generateIntermediateRepresentation({
             file: rootApiFileContext,
             rawApiFileSchema: workspace.definition.rootApiFile.contents
         }),
+        specVersion: workspace.definition.specVersion,
         apiName: casingsGenerator.generateName(workspace.definition.rootApiFile.contents.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
         apiDocs: formatDocs(workspace.definition.rootApiFile.contents.docs),

@@ -211,4 +211,5 @@ error-discrimination:
 display-name: Discriminator Base Class Test
 ",
   },
+  "specVersion": "1.0.0",
 }

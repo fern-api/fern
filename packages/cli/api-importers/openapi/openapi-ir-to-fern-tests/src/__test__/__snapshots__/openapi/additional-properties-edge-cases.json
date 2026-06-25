@@ -660,4 +660,5 @@ error-discrimination:
 display-name: Additional Properties Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -6394,4 +6394,5 @@ auth-schemes:
 auth: apiKeyAuth
 ",
   },
+  "specVersion": "1.0.0 (v1)",
 }

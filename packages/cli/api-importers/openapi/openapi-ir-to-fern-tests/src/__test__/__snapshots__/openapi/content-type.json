@@ -220,4 +220,5 @@ error-discrimination:
 display-name: Test content-type parsing.
 ",
   },
+  "specVersion": "1.0.0",
 }
