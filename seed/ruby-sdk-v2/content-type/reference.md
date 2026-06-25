@@ -94,13 +94,21 @@ client.service.patch_complex(
   name: "name",
   age: 1,
   active: true,
-  metadata: {},
+  metadata: {
+    metadata: {
+      key: "value"
+    }
+  },
   tags: %w[tags tags],
   email: "email",
   nickname: "nickname",
   bio: "bio",
   profile_image_url: "profileImageUrl",
-  settings: {}
+  settings: {
+    settings: {
+      key: "value"
+    }
+  }
 )
 ```
 </dd>
