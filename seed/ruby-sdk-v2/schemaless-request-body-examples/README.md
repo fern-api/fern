@@ -30,7 +30,16 @@ require "seed"
 
 client = Seed::Client.new
 
-client.create_plant
+client.create_plant(request: {
+  name: "Venus Flytrap",
+  species: "Dionaea muscipula",
+  care: {
+    light: "full sun",
+    water: "distilled only",
+    humidity: "high"
+  },
+  tags: %w[carnivorous tropical]
+})
 ```
 
 ## Environments
