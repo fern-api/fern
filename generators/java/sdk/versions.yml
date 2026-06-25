@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.19
+  changelogEntry:
+    - summary: |
+        Remove duplicate JavaDoc descriptions in staged builder implementation methods.
+        Previously, builder methods would display the field description twice in IDE
+        inline documentation.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
 - version: 4.10.18
   changelogEntry:
     - summary: |
