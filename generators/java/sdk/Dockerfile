@@ -34,17 +34,17 @@ RUN rm -f /opt/gradle/lib/plugins/plexus-utils-*.jar && \
 # Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
 # (async parser bypasses maxNumberLength constraint, leading to potential DoS)
 RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.8/jackson-core-2.18.8.jar \
-      -o /opt/gradle/lib/jackson-core-2.18.8.jar && \
-    echo "ab865e39f01403598748b090a3bf528616e701913a71afc37a227daa0fabb4ae  /opt/gradle/lib/jackson-core-2.18.8.jar" | sha256sum -c -
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.0/jackson-core-2.22.0.jar \
+      -o /opt/gradle/lib/jackson-core-2.22.0.jar && \
+    echo "d2e8dd4df1e0f61b786ea06792f5bf4235d8278f158f3be6e997e955931c0c98  /opt/gradle/lib/jackson-core-2.22.0.jar" | sha256sum -c -
 
 # Replace vulnerable jackson-databind in Gradle distribution to fix
 # CVE-2026-54514 (InetSocketAddress deserialization triggers DNS lookup / SSRF)
-# CVE-2026-54515 backport is pending 2.18.9 release
+# CVE-2026-54515 (2.18.9 backport not yet published; using 2.22.0)
 RUN rm -f /opt/gradle/lib/jackson-databind-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.18.8/jackson-databind-2.18.8.jar \
-      -o /opt/gradle/lib/jackson-databind-2.18.8.jar && \
-    echo "06ea5950905263fac3e1730de6a21a023151626af6bb3cb099f88644a0fa04f0  /opt/gradle/lib/jackson-databind-2.18.8.jar" | sha256sum -c -
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.0/jackson-databind-2.22.0.jar \
+      -o /opt/gradle/lib/jackson-databind-2.22.0.jar && \
+    echo "3520a0351f294699e3e1b7a37c7a726afd81e1a89ae702ac7d47ff347fd2ecbf  /opt/gradle/lib/jackson-databind-2.22.0.jar" | sha256sum -c -
 
 # Replace vulnerable Bouncy Castle jars in Gradle distribution to fix CVE-2026-3505
 # (bcpg unbounded PGP AEAD chunk size leads to pre-auth resource exhaustion; fixed in 1.84).
