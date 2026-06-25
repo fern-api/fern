@@ -39,6 +39,37 @@ describe("no-conflicting-parameter-names", () => {
         expect(violations[0]?.nodePath).toEqual(["paths", "/plants/{plant_id}", "get"]);
     }, 10_000);
 
+    it("should detect path parameter vs request body property name collision", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoConflictingParameterNamesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("path-body-collision")
+            )
+        });
+
+        expect(violations.length).toBe(1);
+        expect(violations[0]?.severity).toBe("error");
+        expect(violations[0]?.message).toContain("idType");
+        expect(violations[0]?.message).toContain("path parameter");
+        expect(violations[0]?.message).toContain("request body property");
+        expect(violations[0]?.nodePath).toEqual(["paths", "/identifiers/{idType}", "patch"]);
+    }, 10_000);
+
+    it("should not report violations when x-fern-property-name resolves a path/body collision", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoConflictingParameterNamesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("path-body-property-name-override")
+            )
+        });
+
+        expect(violations).toEqual([]);
+    }, 10_000);
+
     it("should not report violations when x-fern-parameter-name resolves the collision", async () => {
         const violations = await getViolationsForRule({
             rule: NoConflictingParameterNamesRule,

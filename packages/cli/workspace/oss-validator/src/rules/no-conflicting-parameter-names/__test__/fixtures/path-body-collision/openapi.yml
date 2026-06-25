@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /identifiers/{idType}:
+    patch:
+      operationId: patchIdentifier
+      parameters:
+        - name: idType
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdentifierUpdate"
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    IdentifierUpdate:
+      type: object
+      required:
+        - idType
+        - oldValue
+        - newValue
+      properties:
+        idType:
+          type: string
+        oldValue:
+          type: string
+        newValue:
+          type: string

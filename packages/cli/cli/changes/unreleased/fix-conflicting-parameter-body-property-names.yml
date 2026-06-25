@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Extend the `no-conflicting-parameter-names` validation rule to also flag
+    collisions between a path/query/header parameter and an inlined request body
+    property that normalize to the same camelCase name (e.g. an `idType` path
+    parameter and an `idType` body property). SDK generators flatten parameters
+    and object request-body properties into a single request wrapper, so such a
+    collision previously produced broken code (duplicate keyword arguments in
+    Python, a silently-shadowed duplicate property in TypeScript). The rule now
+    fails validation with an actionable message suggesting `x-fern-parameter-name`
+    or `x-fern-property-name` to disambiguate.
+  type: fix

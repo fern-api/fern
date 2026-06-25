@@ -6,13 +6,15 @@ import { Rule } from "../../Rule.js";
 import { ValidationViolation } from "../../ValidationViolation.js";
 
 /**
- * Validates that OpenAPI specs don't define header parameters whose
- * camelCase-normalized names collide with query or path parameters on
- * the same endpoint.
+ * Validates that OpenAPI specs don't define header, query, or path parameters
+ * whose camelCase-normalized names collide with each other — or with an inlined
+ * request body property — on the same endpoint.
  *
- * When a path-level or operation-level header (e.g. `Organization-Id`)
- * normalizes to the same camelCase name as a query or path parameter
- * (e.g. `organization_id`), SDK generators produce broken code:
+ * SDK generators flatten path/query/header parameters and the properties of an
+ * (object) request body into a single request wrapper. When two of these
+ * normalize to the same camelCase name (e.g. a `Organization-Id` header and an
+ * `organization_id` query param, or an `idType` path parameter and an `idType`
+ * body property), generators produce broken code:
  *   - Python: SyntaxError from duplicate keyword arguments
  *   - TypeScript: duplicate interface property that silently shadows one value
  */
@@ -48,7 +50,9 @@ export const NoConflictingParameterNamesRule: Rule = {
 
                 // Check each operation
                 for (const method of ["get", "put", "post", "delete", "options", "head", "patch", "trace"]) {
-                    const operation = pathItemObj[method] as { parameters?: unknown[] } | undefined;
+                    const operation = pathItemObj[method] as
+                        | { parameters?: unknown[]; requestBody?: unknown }
+                        | undefined;
                     if (operation == null) {
                         continue;
                     }
@@ -60,11 +64,16 @@ export const NoConflictingParameterNamesRule: Rule = {
                     // Operation-level params override path-level params with the same `in` + `name`.
                     const mergedParams = mergeParameters(pathLevelParams, operationParams);
 
+                    // Collect inlined request body properties. Generators flatten an object
+                    // request body's properties into the same wrapper as the parameters, so a
+                    // body property that normalizes to a parameter name produces broken code.
+                    const bodyProperties = resolveRequestBodyProperties(operation.requestBody, apiToValidate);
+
                     // Group parameters by their camelCase-normalized name.
                     // Prefer x-fern-parameter-name when present, since SDK generators
                     // use that override instead of the raw OpenAPI `name`.
                     const nameToParams: Record<string, ResolvedParam[]> = {};
-                    for (const param of mergedParams) {
+                    for (const param of [...mergedParams, ...bodyProperties]) {
                         const normalizedName = toCamelCase(param.fernParameterName ?? param.name);
                         if (normalizedName === "") {
                             continue;
@@ -89,7 +98,9 @@ export const NoConflictingParameterNamesRule: Rule = {
                         const paramDescriptions = params
                             .map((p) => {
                                 const effectiveName = p.fernParameterName ?? p.name;
-                                return `${p.in} parameter '${effectiveName}'`;
+                                return p.in === "body"
+                                    ? `request body property '${effectiveName}'`
+                                    : `${p.in} parameter '${effectiveName}'`;
                             })
                             .join(", ");
 
@@ -99,9 +110,10 @@ export const NoConflictingParameterNamesRule: Rule = {
                             relativeFilepath,
                             nodePath: ["paths", path, method],
                             message:
-                                `Parameters ${paramDescriptions} all normalize to '${normalizedName}' in generated SDKs. ` +
+                                `${paramDescriptions} all normalize to '${normalizedName}' in generated SDKs. ` +
                                 `This causes broken code (duplicate keyword arguments in Python, duplicate properties in TypeScript). ` +
-                                `Rename one of the parameters to avoid the collision.`
+                                `Rename one of them to avoid the collision ` +
+                                `(use x-fern-parameter-name on a parameter, or x-fern-property-name on a body property).`
                         });
                     }
                 }
@@ -191,6 +203,115 @@ function resolveParam(
     }
 
     return undefined;
+}
+
+/**
+ * Resolves the inlined properties of an operation's request body into
+ * ResolvedParam objects with `in: "body"`. SDK generators flatten an object
+ * request body's properties into the same request wrapper as the path, query,
+ * and header parameters, so these participate in the same name-collision check.
+ *
+ * Handles `$ref` request bodies, `$ref` schemas, and `allOf` composition. Only
+ * top-level object properties are collected (these are what get flattened).
+ */
+function resolveRequestBodyProperties(
+    requestBody: unknown,
+    // biome-ignore lint/suspicious/noExplicitAny: OpenAPI document type
+    api: any,
+    visited: Set<string> = new Set()
+): ResolvedParam[] {
+    if (typeof requestBody !== "object" || requestBody == null) {
+        return [];
+    }
+    const requestBodyObj = requestBody as Record<string, unknown>;
+
+    // Resolve a $ref to a component request body.
+    if (typeof requestBodyObj.$ref === "string") {
+        const refPath = requestBodyObj.$ref;
+        if (visited.has(refPath)) {
+            return [];
+        }
+        if (refPath.startsWith("#/components/requestBodies/")) {
+            const name = refPath.substring("#/components/requestBodies/".length);
+            const components = api.components as { requestBodies?: Record<string, unknown> } | undefined;
+            const resolved = components?.requestBodies?.[name];
+            if (resolved != null) {
+                visited.add(refPath);
+                return resolveRequestBodyProperties(resolved, api, visited);
+            }
+        }
+        return [];
+    }
+
+    const content = requestBodyObj.content;
+    if (typeof content !== "object" || content == null) {
+        return [];
+    }
+
+    const properties = new Map<string, ResolvedParam>();
+    for (const mediaType of Object.values(content as Record<string, unknown>)) {
+        if (typeof mediaType !== "object" || mediaType == null) {
+            continue;
+        }
+        const schema = (mediaType as Record<string, unknown>).schema;
+        collectSchemaProperties(schema, api, properties, new Set());
+    }
+    return Array.from(properties.values());
+}
+
+/**
+ * Collects the top-level object property names of a schema (resolving `$ref`
+ * and merging `allOf` members) into `out`, keyed by property name.
+ */
+function collectSchemaProperties(
+    schema: unknown,
+    // biome-ignore lint/suspicious/noExplicitAny: OpenAPI document type
+    api: any,
+    out: Map<string, ResolvedParam>,
+    visited: Set<string>
+): void {
+    if (typeof schema !== "object" || schema == null) {
+        return;
+    }
+    const schemaObj = schema as Record<string, unknown>;
+
+    if (typeof schemaObj.$ref === "string") {
+        const refPath = schemaObj.$ref;
+        if (visited.has(refPath)) {
+            return;
+        }
+        if (refPath.startsWith("#/components/schemas/")) {
+            const name = refPath.substring("#/components/schemas/".length);
+            const components = api.components as { schemas?: Record<string, unknown> } | undefined;
+            const resolved = components?.schemas?.[name];
+            if (resolved != null) {
+                visited.add(refPath);
+                collectSchemaProperties(resolved, api, out, visited);
+            }
+        }
+        return;
+    }
+
+    // Merge properties contributed by allOf members (inheritance/composition).
+    const allOf = schemaObj.allOf;
+    if (Array.isArray(allOf)) {
+        for (const member of allOf) {
+            collectSchemaProperties(member, api, out, visited);
+        }
+    }
+
+    const properties = schemaObj.properties;
+    if (typeof properties === "object" && properties != null) {
+        for (const [propName, propSchema] of Object.entries(properties as Record<string, unknown>)) {
+            const fernParameterName =
+                typeof propSchema === "object" &&
+                propSchema != null &&
+                typeof (propSchema as Record<string, unknown>)["x-fern-property-name"] === "string"
+                    ? ((propSchema as Record<string, unknown>)["x-fern-property-name"] as string)
+                    : undefined;
+            out.set(propName, { in: "body", name: propName, fernParameterName });
+        }
+    }
 }
 
 /**
