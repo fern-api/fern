@@ -17,7 +17,12 @@ export { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
 export { type IrSummary, readIrSummary } from "./ir.js";
 export { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "./patchCargoToml.js";
-export { addWorkspaceMember, applyDistWorkspacePatch, patchDistWorkspaceToml, stripNpmInstaller } from "./patchDistWorkspace.js";
+export {
+    addWorkspaceMember,
+    applyDistWorkspacePatch,
+    patchDistWorkspaceToml,
+    stripNpmInstaller
+} from "./patchDistWorkspace.js";
 export {
     type ResolvedNpmPublishInfo,
     type ResolvedOutputConfig,

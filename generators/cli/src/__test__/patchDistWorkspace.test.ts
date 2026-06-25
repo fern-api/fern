@@ -76,7 +76,7 @@ describe("addWorkspaceMember", () => {
     });
 
     it("creates [workspace] section with cargo: prefix when none exists", () => {
-        const input = "[dist]\ncargo-dist-version = \"0.31.0\"\n";
+        const input = '[dist]\ncargo-dist-version = "0.31.0"\n';
         const result = addWorkspaceMember(input, "my-types");
         expect(result).toContain('[workspace]\nmembers = ["cargo:my-types"]');
     });
