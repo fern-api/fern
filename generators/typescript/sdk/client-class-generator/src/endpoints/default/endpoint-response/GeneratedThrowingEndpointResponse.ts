@@ -16,7 +16,7 @@ import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImp
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation.js";
 import { getAbortSignalExpression } from "../../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
-import { maybeUnwrapGraphqlResponseBody } from "./graphqlResponseBody.js";
+import { getGraphqlErrorGuardStatements, maybeUnwrapGraphqlResponseBody } from "./graphqlResponseBody.js";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
@@ -1172,8 +1172,30 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnStatementsForOkResponse(context: FileContext): ts.Statement[] {
+        const graphqlErrorGuardStatements = getGraphqlErrorGuardStatements({
+            endpoint: this.endpoint,
+            referenceToRawResponseBody: ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+            ),
+            buildErrorHandlerStatements: (referenceToGraphqlBody) => [
+                ts.factory.createThrowStatement(
+                    context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                        message: undefined,
+                        // GraphQL errors are returned with HTTP 200; surface the actual transport status.
+                        statusCode: ts.factory.createPropertyAccessExpression(
+                            this.getReferenceToRawResponse(context),
+                            ts.factory.createIdentifier("status")
+                        ),
+                        responseBody: referenceToGraphqlBody,
+                        rawResponse: this.getReferenceToRawResponse(context)
+                    })
+                )
+            ]
+        });
+
         if (this.endpoint.response?.body != null) {
-            return this.getReturnStatementsForOkResponseBody(context);
+            return [...graphqlErrorGuardStatements, ...this.getReturnStatementsForOkResponseBody(context)];
         }
 
         const dataInitializer =

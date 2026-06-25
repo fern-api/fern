@@ -7,7 +7,7 @@ import { ts } from "ts-morph";
 
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import { getSuccessReturnType } from "./getSuccessReturnType.js";
-import { maybeUnwrapGraphqlResponseBody } from "./graphqlResponseBody.js";
+import { getGraphqlErrorGuardStatements, maybeUnwrapGraphqlResponseBody } from "./graphqlResponseBody.js";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
@@ -104,6 +104,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
             ),
             ts.factory.createBlock(
                 [
+                    ...this.getGraphqlErrorGuardStatements(context),
                     ts.factory.createReturnStatement(
                         ts.factory.createObjectLiteralExpression(
                             [
@@ -129,6 +130,74 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                 true
             )
         );
+    }
+
+    private getGraphqlErrorGuardStatements(context: FileContext): ts.Statement[] {
+        const rawResponseAccessor = ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+            context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.rawResponse
+        );
+        return getGraphqlErrorGuardStatements({
+            endpoint: this.endpoint,
+            referenceToRawResponseBody: ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+            ),
+            // Mirror the unknown-error failure shape: build a synthetic `status-code` Fetcher error from
+            // the GraphQL body (GraphQL errors arrive as HTTP 200) and feed it through the same
+            // `FailedResponse._build(buildUnknown(...))` path used by `getReturnResponseForUnknownError`.
+            buildErrorHandlerStatements: (referenceToGraphqlBody) => {
+                const syntheticFetcherError = ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(context.coreUtilities.fetcher.Fetcher.Error.reason),
+                            ts.factory.createStringLiteral(
+                                context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError._reasonLiteralValue
+                            )
+                        ),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(
+                                context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
+                            ),
+                            ts.factory.createPropertyAccessExpression(
+                                rawResponseAccessor,
+                                ts.factory.createIdentifier("status")
+                            )
+                        ),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier(
+                                context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
+                            ),
+                            referenceToGraphqlBody
+                        )
+                    ],
+                    false
+                );
+                return [
+                    ts.factory.createReturnStatement(
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("data"),
+                                    context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                                        this.getGeneratedEndpointErrorUnion(context).getErrorUnion().buildUnknown({
+                                            existingValue: syntheticFetcherError,
+                                            context
+                                        }),
+                                        rawResponseAccessor
+                                    )
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("rawResponse"),
+                                    rawResponseAccessor
+                                )
+                            ],
+                            false
+                        )
+                    )
+                ];
+            }
+        });
     }
 
     private getOkResponseBody(context: FileContext): ts.Expression {
