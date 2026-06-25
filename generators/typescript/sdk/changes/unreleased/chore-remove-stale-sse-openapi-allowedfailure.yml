@@ -1,0 +1,3 @@
+- summary: |
+    Removed the stale `server-sent-events-openapi:no-custom-config` entry from the ts-sdk seed `allowedFailures` list. The fixture's generated SSE wire tests already compile and pass, so seed now enforces it.
+  type: chore

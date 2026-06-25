@@ -1,3 +1,0 @@
-- summary: |
-    Generated wire tests for Server-Sent Events (SSE) endpoints defined via OpenAPI now compile and pass, so the server-sent-events-openapi fixture no longer needs to be allow-listed as a seed failure.
-  type: fix
