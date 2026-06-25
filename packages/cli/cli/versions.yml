@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.54.0
+  changelogEntry:
+    - summary: |
+        Detect `api-key: OIDC` in NuGet output config and pass OIDC marker to
+        the C# generator for Trusted Publishing workflow generation.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
 - version: 5.53.1
   changelogEntry:
     - summary: |
