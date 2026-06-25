@@ -492,6 +492,11 @@ function convertTransportToEncoding(transport: Transport, service: RawSchemas.Ht
                 json: undefined,
                 proto: {}
             };
+        case "graphql":
+            return {
+                json: {},
+                proto: undefined
+            };
         default:
             assertNever(transport);
     }
