@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.69.0
+  changelogEntry:
+    - summary: |
+        Add NuGet Trusted Publishing (OIDC) support as a config-gated publish
+        strategy. Set `api-key: OIDC` in generators.yml to emit a GitHub Actions
+        workflow that uses NuGet/login for short-lived OIDC tokens instead of a
+        long-lived API key secret.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 66
 - version: 2.68.12
   changelogEntry:
     - summary: |
