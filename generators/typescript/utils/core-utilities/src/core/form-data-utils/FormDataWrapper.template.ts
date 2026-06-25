@@ -79,11 +79,11 @@ export class Node18FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const part = await toMultipartDataPart(value);
-        if (part == null) {
+        if (value == null) {
+            console.warn(`File upload for "${key}" received ${value === null ? "null" : "undefined"}, skipping.`);
             return;
         }
-        const { data, filename } = part;
+        const { data, filename } = await toMultipartDataPart(value);
 
         if (data instanceof Blob) {
             this.fd?.append(key, data, filename);
@@ -144,11 +144,11 @@ export class Node16FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const part = await toMultipartDataPart(value);
-        if (part == null) {
+        if (value == null) {
+            console.warn(`File upload for "${key}" received ${value === null ? "null" : "undefined"}, skipping.`);
             return;
         }
-        const { data, filename } = part;
+        const { data, filename } = await toMultipartDataPart(value);
 
         let bufferedValue;
         if (data instanceof Blob) {
@@ -189,11 +189,11 @@ export class WebFormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const part = await toMultipartDataPart(value);
-        if (part == null) {
+        if (value == null) {
+            console.warn(`File upload for "${key}" received ${value === null ? "null" : "undefined"}, skipping.`);
             return;
         }
-        const { data, filename, contentType } = part;
+        const { data, filename, contentType } = await toMultipartDataPart(value);
 
         if (data instanceof Blob) {
             this.fd?.append(key, data, filename);
@@ -233,11 +233,11 @@ export class FormDataWrapper {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const part = await toMultipartDataPart(value);
-        if (part == null) {
+        if (value == null) {
+            console.warn(`File upload for "${key}" received ${value === null ? "null" : "undefined"}, skipping.`);
             return;
         }
-        const { data, filename, contentType } = part;
+        const { data, filename, contentType } = await toMultipartDataPart(value);
         const blob = await convertToBlob(data, contentType);
         if (filename) {
             this.fd.append(key, blob, filename);

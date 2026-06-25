@@ -22,11 +22,7 @@ export async function toBinaryUploadRequest(
 
 export async function toMultipartDataPart(
     file: Uploadable,
-): Promise<{ data: Uploadable.FileLike; filename?: string; contentType?: string } | undefined> {
-    if (file == null) {
-        console.warn(`File upload received ${file === null ? "null" : "undefined"}, skipping.`);
-        return undefined;
-    }
+): Promise<{ data: Uploadable.FileLike; filename?: string; contentType?: string }> {
     const { data, filename, contentType } = await getFileWithMetadata(file, {
         noSniffFileSize: true,
     });
@@ -42,7 +38,7 @@ async function getFileWithMetadata(
     { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
 ): Promise<Uploadable.WithMetadata> {
     if (file == null) {
-        throw new TypeError(
+        throw new Error(
             `Expected file to be a Blob, Buffer, ReadableStream, or an object with a "path" or "data" property, but received ${file === null ? "null" : "undefined"}.`,
         );
     }

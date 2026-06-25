@@ -24,11 +24,11 @@ export class FormDataWrapper {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const part = await toMultipartDataPart(value);
-        if (part == null) {
+        if (value == null) {
+            console.warn(`File upload for "${key}" received ${value === null ? "null" : "undefined"}, skipping.`);
             return;
         }
-        const { data, filename, contentType } = part;
+        const { data, filename, contentType } = await toMultipartDataPart(value);
         const blob = await convertToBlob(data, contentType);
         if (filename) {
             this.fd.append(key, blob, filename);
