@@ -249,8 +249,19 @@ function getRegistryInfoFromPublishOutputMode(publishOutputMode: FernFiddle.Publ
 }
 
 /**
- * Gets the existing version of a package from registries or GitHub releases.
- * Tries package registries first, then falls back to GitHub releases.
+ * Gets the existing version of a package by consulting every available source and
+ * returning the highest semver among them.
+ *
+ * Sources consulted:
+ * 1. The package registry (npm, PyPI, Maven, etc.)
+ * 2. The latest GitHub release tag
+ * 3. The `sdkVersion` recorded in `.fern/metadata.json` in the GitHub repo
+ *
+ * Returning the highest version (rather than the first source that responds) prevents
+ * the next version from regressing below what Fern last generated. For example, when
+ * auto-versioning has pushed `5.0.0` into `.fern/metadata.json` but the package registry
+ * still reports a stale `0.0.199`, we must base the bump on `5.0.0` (→ `5.0.1`) instead of
+ * the stale registry value (→ `0.0.200`).
  *
  * Registry URL and token from the output mode are used as the primary source.
  * Environment variables (NPM_TOKEN, GITHUB_TOKEN) are used as fallbacks.
@@ -260,7 +271,7 @@ function getRegistryInfoFromPublishOutputMode(publishOutputMode: FernFiddle.Publ
  * @param language - The programming language of the SDK
  * @param githubRepository - Optional GitHub repository in "owner/repo" format
  * @param registryInfo - Registry URL and token from the output mode
- * @returns The existing version string, or undefined if not found
+ * @returns The highest existing version string, or undefined if none was found
  */
 async function getExistingVersion({
     packageName,
@@ -273,57 +284,77 @@ async function getExistingVersion({
     githubRepository: string | undefined;
     registryInfo: RegistryInfo;
 }): Promise<string | undefined> {
-    let version: string | undefined = undefined;
+    const candidates: Array<string | undefined> = [];
 
-    // Step 1: Fetch from package registries
+    // Source 1: package registry
     switch (language) {
         case "typescript":
-            version = await getLatestVersionFromNpm(packageName, registryInfo);
+            candidates.push(await getLatestVersionFromNpm(packageName, registryInfo));
             break;
         case "python":
-            version = await getLatestVersionFromPypi(packageName, registryInfo);
+            candidates.push(await getLatestVersionFromPypi(packageName, registryInfo));
             break;
         case "java":
-            version = await getLatestVersionFromMaven(packageName, registryInfo);
+            candidates.push(await getLatestVersionFromMaven(packageName, registryInfo));
             break;
         case "csharp":
-            version = await getLatestVersionFromNuget(packageName, registryInfo);
+            candidates.push(await getLatestVersionFromNuget(packageName, registryInfo));
             break;
         case "ruby":
-            version = await getLatestVersionFromRubyGems(packageName, registryInfo);
+            candidates.push(await getLatestVersionFromRubyGems(packageName, registryInfo));
             break;
         case "go":
-            version = await getLatestVersionFromGoProxy(packageName, registryInfo);
+            candidates.push(await getLatestVersionFromGoProxy(packageName, registryInfo));
             break;
         case "rust":
-            version = await getLatestVersionFromCrates(packageName, registryInfo);
+            candidates.push(await getLatestVersionFromCrates(packageName, registryInfo));
             break;
         case "php":
         case "swift":
             // PHP and Swift do not have standard public registry APIs for version lookup.
-            // They rely on the GitHub releases fallback below.
+            // They rely on the GitHub sources below.
             break;
     }
 
-    if (version != null) {
-        return version;
-    }
-
-    // Step 2: Fall back to GitHub releases
+    // Sources 2 & 3: GitHub releases and .fern/metadata.json from the GitHub repo
     if (githubRepository != null) {
-        version = await getLatestRelease(githubRepository);
+        candidates.push(await getLatestRelease(githubRepository));
+        candidates.push(await getVersionFromMetadataJson(githubRepository));
     }
 
-    if (version != null) {
-        return version;
+    return selectHighestVersion(candidates);
+}
+
+/**
+ * Selects the highest valid semver from a list of candidate version strings.
+ *
+ * Candidates that are null, empty, or not valid semver (leading "v" is tolerated) are
+ * ignored. The original string of the winning candidate is returned so that downstream
+ * `semver.inc` calls operate on the exact value reported by the source.
+ *
+ * @param candidates - Version strings gathered from the registry, GitHub releases, and metadata
+ * @returns The highest version string, or undefined if no candidate is valid semver
+ */
+/** @internal Exported for testing */
+export function selectHighestVersion(candidates: Array<string | undefined>): string | undefined {
+    let highest: string | undefined = undefined;
+    let highestParsed: semver.SemVer | undefined = undefined;
+
+    for (const candidate of candidates) {
+        if (candidate == null) {
+            continue;
+        }
+        const parsed = semver.parse(candidate, { loose: true });
+        if (parsed == null) {
+            continue;
+        }
+        if (highestParsed == null || semver.gt(parsed, highestParsed)) {
+            highest = candidate;
+            highestParsed = parsed;
+        }
     }
 
-    // Step 3: Fall back to .fern/metadata.json from the GitHub repo
-    if (githubRepository != null) {
-        version = await getVersionFromMetadataJson(githubRepository);
-    }
-
-    return version;
+    return highest;
 }
 
 /**
