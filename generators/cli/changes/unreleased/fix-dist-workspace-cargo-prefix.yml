@@ -1,0 +1,4 @@
+- summary: |
+    Add `cargo:` prefix to workspace members in generated `dist-workspace.toml`
+    so that `dist plan` can parse the file correctly.
+  type: fix

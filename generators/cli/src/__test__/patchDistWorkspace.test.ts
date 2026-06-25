@@ -3,7 +3,7 @@ import os from "os";
 import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { applyDistWorkspacePatch, patchDistWorkspaceToml } from "../index.js";
+import { addWorkspaceMember, applyDistWorkspacePatch, patchDistWorkspaceToml } from "../index.js";
 
 const SDK_DIST_WORKSPACE_PATH = path.resolve(
     path.dirname(url.fileURLToPath(import.meta.url)),
@@ -56,6 +56,35 @@ describe("applyDistWorkspacePatch", () => {
     it("returns input unchanged when the anchors aren't present", () => {
         const minimal = '[workspace]\nmembers = ["cargo:."]\n';
         expect(applyDistWorkspacePatch(minimal)).toBe(minimal);
+    });
+});
+
+describe("addWorkspaceMember", () => {
+    it("prepends cargo: prefix to workspace member names", () => {
+        const input = '[workspace]\nmembers = ["cargo:.", "cargo:crates/pipeline-fixture"]\n';
+        const result = addWorkspaceMember(input, "my-api-types");
+        expect(result).toContain('"cargo:my-api-types"');
+        expect(result).not.toMatch(/"my-api-types"(?!])/);
+    });
+
+    it("adds multiple members with cargo: prefix", () => {
+        let toml = '[workspace]\nmembers = ["cargo:."]\n';
+        toml = addWorkspaceMember(toml, "close-api-types");
+        toml = addWorkspaceMember(toml, "close-api-sdk");
+        expect(toml).toContain('"cargo:close-api-types"');
+        expect(toml).toContain('"cargo:close-api-sdk"');
+    });
+
+    it("creates [workspace] section with cargo: prefix when none exists", () => {
+        const input = "[dist]\ncargo-dist-version = \"0.31.0\"\n";
+        const result = addWorkspaceMember(input, "my-types");
+        expect(result).toContain('[workspace]\nmembers = ["cargo:my-types"]');
+    });
+
+    it("adds members array with cargo: prefix to existing [workspace] without members", () => {
+        const input = "[workspace]\n[dist]\n";
+        const result = addWorkspaceMember(input, "my-types");
+        expect(result).toContain('members = ["cargo:my-types"]');
     });
 });
 

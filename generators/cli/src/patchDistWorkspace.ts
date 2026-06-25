@@ -87,7 +87,7 @@ export function stripNpmInstaller(distToml: string): string {
  * `[workspace]` section.
  */
 export function addWorkspaceMember(distToml: string, typesCrateName: string): string {
-    const memberLine = `"${typesCrateName}"`;
+    const memberLine = `"cargo:${typesCrateName}"`;
     // Look for existing [workspace] with members = [...]
     const workspaceMatch = distToml.match(/(\[workspace\]\s*\nmembers\s*=\s*\[)([^\]]*)\]/);
     if (workspaceMatch != null) {
