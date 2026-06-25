@@ -387,6 +387,59 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+    /// Execute a multipart/form-data request and return a streaming response (ByteStream).
+    ///
+    /// This method is used for file uploads that return binary data (e.g., audio conversion).
+    /// Note: Multipart requests are not retried because they cannot be cloned.
+    #[cfg(feature = "multipart")]
+    pub async fn execute_multipart_stream_request(
+        &self,
+        method: Method,
+        path: &str,
+        form: reqwest::multipart::Form,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<ByteStream, ApiError> {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Use reqwest's built-in multipart support
+        request = request.multipart(form);
+
+        // Build the request
+        let req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Multipart requests cannot be cloned, so they skip retries
+        let response = if let Some(executor) = &self.executor {
+            executor.execute(req).await.map_err(ApiError::Executor)?
+        } else {
+            let mut req = req;
+            self.apply_auth_headers(&mut req, &options).await?;
+            self.apply_custom_headers(&mut req, &options)?;
+            let response = self.client.execute(req).await.map_err(ApiError::Network)?;
+            if !response.status().is_success() {
+                let status_code = response.status().as_u16();
+                let body = response.text().await.ok();
+                return Err(ApiError::from_response(status_code, body.as_deref()));
+            }
+            response
+        };
+
+        Ok(ByteStream::new(response))
+    }
+
     /// Applies auth/headers and executes the request, choosing between
     /// the injected executor path (no SDK-level auth/headers/retries)
     /// and the default path (full SDK behavior).
