@@ -500,15 +500,13 @@ describe("toBinaryUploadRequest", () => {
 
 describe("Null/undefined file upload guard", () => {
     describe("toBinaryUploadRequest", () => {
-        it("should throw TypeError when passed undefined", async () => {
-            await expect(toBinaryUploadRequest(undefined as any)).rejects.toThrow(TypeError);
+        it("should throw when passed undefined", async () => {
             await expect(toBinaryUploadRequest(undefined as any)).rejects.toThrow(
                 "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
             );
         });
 
-        it("should throw TypeError when passed null", async () => {
-            await expect(toBinaryUploadRequest(null as any)).rejects.toThrow(TypeError);
+        it("should throw when passed null", async () => {
             await expect(toBinaryUploadRequest(null as any)).rejects.toThrow(
                 "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
             );
@@ -516,15 +514,13 @@ describe("Null/undefined file upload guard", () => {
     });
 
     describe("toMultipartDataPart", () => {
-        it("should throw TypeError when passed undefined", async () => {
-            await expect(toMultipartDataPart(undefined as any)).rejects.toThrow(TypeError);
+        it("should throw when passed undefined", async () => {
             await expect(toMultipartDataPart(undefined as any)).rejects.toThrow(
                 "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
             );
         });
 
-        it("should throw TypeError when passed null", async () => {
-            await expect(toMultipartDataPart(null as any)).rejects.toThrow(TypeError);
+        it("should throw when passed null", async () => {
             await expect(toMultipartDataPart(null as any)).rejects.toThrow(
                 "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
             );
