@@ -164,15 +164,17 @@ export class OperationConverter extends AbstractOperationConverter {
             }
         }
 
-        // When there are still no endpoint-level examples but the per-content-type
-        // request bodies have v2Examples (from native OAS per-mediaType examples on
-        // bodies WITH schemas), elevate them to endpoint-level examples tagged with
-        // their content type. This enables docs to display per-content-type examples.
+        // When there are still no endpoint-level examples but multiple content types
+        // have per-body v2Examples (from native OAS per-mediaType examples on bodies
+        // WITH schemas), elevate them to endpoint-level examples tagged with their
+        // content type. This enables docs to display per-content-type examples.
+        // Only fires for multi-content-type endpoints; single-content-type endpoints
+        // are handled by the normal v1→v2 example synthesis pipeline.
         if (
             Object.keys(fernExamples.examples).length === 0 &&
             Object.keys(fernExamples.streamExamples).length === 0 &&
             convertedRequestBodies != null &&
-            convertedRequestBodies.length > 0
+            convertedRequestBodies.length > 1
         ) {
             const perContentTypeExamples = this.synthesizeEndpointExamplesFromPerContentTypeRequestBodies({
                 convertedRequestBodies,
