@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.53.0
+  changelogEntry:
+    - summary: |
+        Add support for remote git sources in generators.yml. API specs can now reference
+        files in git repositories using a `git` block with `repo`, `ref`, and `path` fields.
+        The CLI shallow-clones the repository at generation time using native git credentials.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
 - version: 5.52.0
   changelogEntry:
     - summary: |
