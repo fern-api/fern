@@ -817,7 +817,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     ...(sse.terminator != null
                         ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
                         : {}),
-                    ...this.getEventDiscriminator(sse.payload, context)
+                    ...this.getEventDiscriminator(sse.payload, context),
+                    ...(sse.resumable === true ? { resumable: ts.factory.createTrue() } : {})
                 }),
                 json: (json) => ({
                     type: "json",

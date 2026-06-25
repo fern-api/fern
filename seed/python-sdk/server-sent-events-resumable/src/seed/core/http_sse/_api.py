@@ -14,8 +14,9 @@ MAX_LINE_SIZE: int = 1_048_576  # 1 MiB
 
 
 class EventSource:
-    def __init__(self, response: httpx.Response) -> None:
+    def __init__(self, response: httpx.Response, *, resumable: bool = False) -> None:
         self._response = response
+        self._resumable = resumable
 
     def _check_content_type(self) -> None:
         content_type = self._response.headers.get("content-type", "").partition(";")[0]

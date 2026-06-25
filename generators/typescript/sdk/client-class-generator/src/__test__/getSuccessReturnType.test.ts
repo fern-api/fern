@@ -304,6 +304,7 @@ describe("getSuccessReturnType", () => {
                     }),
                     docs: undefined,
                     terminator: undefined,
+                    resumable: undefined,
                     v2Examples: undefined
                 })
             );

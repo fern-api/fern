@@ -28,6 +28,7 @@ export declare namespace Stream {
         type: "sse";
         streamTerminator?: string;
         eventDiscriminator?: string;
+        resumable?: boolean;
     }
 }
 

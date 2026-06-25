@@ -54,7 +54,7 @@ class RawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         def _iter():
-                            _event_source = EventSource(_response)
+                            _event_source = EventSource(_response, resumable=True)
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
@@ -205,7 +205,7 @@ class AsyncRawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         async def _iter():
-                            _event_source = EventSource(_response)
+                            _event_source = EventSource(_response, resumable=True)
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return

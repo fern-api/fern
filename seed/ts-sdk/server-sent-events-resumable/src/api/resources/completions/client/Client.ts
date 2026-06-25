@@ -61,6 +61,7 @@ export class CompletionsClient {
                     eventShape: {
                         type: "sse",
                         streamTerminator: "[[DONE]]",
+                        resumable: true,
                     },
                 }),
                 rawResponse: _response.rawResponse,

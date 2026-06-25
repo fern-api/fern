@@ -32,6 +32,7 @@ export declare namespace Stream {
         type: "sse";
         streamTerminator?: ts.Expression;
         eventDiscriminator?: ts.Expression;
+        resumable?: ts.Expression;
     }
 
     export interface MessageEventShape {
@@ -91,6 +92,14 @@ export class StreamImpl extends CoreUtility implements Stream {
                                 ts.factory.createPropertyAssignment(
                                     ts.factory.createIdentifier("eventDiscriminator"),
                                     eventShape.eventDiscriminator
+                                )
+                            );
+                        }
+                        if (eventShape.resumable != null) {
+                            eventShapeProperties.push(
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("resumable"),
+                                    eventShape.resumable
                                 )
                             );
                         }
