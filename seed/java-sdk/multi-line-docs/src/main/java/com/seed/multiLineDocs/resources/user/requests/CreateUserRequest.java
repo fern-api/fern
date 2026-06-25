@@ -127,8 +127,6 @@ public final class CreateUserRequest {
         /**
          * <p>The name of the user to create.
          * This name is unique to each user.</p>
-         * <p>The name of the user to create.
-         * This name is unique to each user.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

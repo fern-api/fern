@@ -117,7 +117,6 @@ public final class CreateUserWithRequiredQueryRequest {
 
         /**
          * <p>Required tenant ID</p>
-         * <p>Required tenant ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

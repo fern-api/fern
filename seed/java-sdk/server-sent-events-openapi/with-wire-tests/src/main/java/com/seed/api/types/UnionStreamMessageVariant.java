@@ -148,7 +148,6 @@ public final class UnionStreamMessageVariant implements IUnionStreamRequestBase 
 
         /**
          * <p>The input prompt.</p>
-         * <p>The input prompt.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -159,7 +158,6 @@ public final class UnionStreamMessageVariant implements IUnionStreamRequestBase 
         }
 
         /**
-         * <p>The message content.</p>
          * <p>The message content.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

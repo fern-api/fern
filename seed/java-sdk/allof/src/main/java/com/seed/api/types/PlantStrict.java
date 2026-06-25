@@ -144,7 +144,6 @@ public final class PlantStrict implements IPlantStrict {
 
         /**
          * <p>The botanical species name.</p>
-         * <p>The botanical species name.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -156,7 +155,6 @@ public final class PlantStrict implements IPlantStrict {
 
         /**
          * <p>The botanical family.</p>
-         * <p>The botanical family.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -167,7 +165,6 @@ public final class PlantStrict implements IPlantStrict {
         }
 
         /**
-         * <p>The botanical genus.</p>
          * <p>The botanical genus.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
