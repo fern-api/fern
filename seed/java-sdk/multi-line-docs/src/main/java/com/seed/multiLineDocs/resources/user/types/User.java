@@ -159,12 +159,6 @@ public final class User {
          * <li>Bob</li>
          * <li>Charlie</li>
          * </ul>
-         * <p>The user's name. This name is unique to each user. A few examples are included below:</p>
-         * <ul>
-         * <li>Alice</li>
-         * <li>Bob</li>
-         * <li>Charlie</li>
-         * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

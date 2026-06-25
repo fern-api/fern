@@ -219,7 +219,6 @@ public final class TreeRecord {
 
         /**
          * <p>Unique tree identifier.</p>
-         * <p>Unique tree identifier.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -231,7 +230,6 @@ public final class TreeRecord {
 
         /**
          * <p>Display name of the tree.</p>
-         * <p>Display name of the tree.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -242,7 +240,6 @@ public final class TreeRecord {
         }
 
         /**
-         * <p>The species of tree.</p>
          * <p>The species of tree.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
