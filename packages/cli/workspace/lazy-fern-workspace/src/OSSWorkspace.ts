@@ -37,6 +37,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
 import { loadOpenRpc } from "./loaders/index.js";
 import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
+import { GraphQLIRGenerator } from "./graphql/GraphQLIRGenerator.js";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator.js";
 import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs.js";
 
@@ -313,6 +314,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         // Start protobuf IR generation in parallel with OpenAPI processing
         const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
 
+        // Start GraphQL IR generation in parallel with OpenAPI processing
+        const graphqlIRResultsPromise = this.generateAllGraphQLIRs({ context });
+
         const specs = await this.getOpenAPISpecsCached({ context });
         const documents = await this.loader.loadDocuments({ context, specs });
 
@@ -479,6 +483,18 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 mergedIr === undefined ? ir : mergeIntermediateRepresentation(mergedIr, ir, protobufCasingsGenerator);
         }
 
+        // Await and merge GraphQL IR results (generated in parallel with OpenAPI processing)
+        const graphqlIRResults = await graphqlIRResultsPromise;
+        const graphqlCasingsGenerator = constructCasingsGenerator({
+            generationLanguage: "typescript",
+            keywords: undefined,
+            smartCasing: false
+        });
+        for (const ir of graphqlIRResults) {
+            mergedIr =
+                mergedIr === undefined ? ir : mergeIntermediateRepresentation(mergedIr, ir, graphqlCasingsGenerator);
+        }
+
         for (const errorCollector of errorCollectors) {
             if (errorCollector.hasErrors()) {
                 const errorStats = errorCollector.getErrorStats();
@@ -551,6 +567,29 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 }
             } catch (error) {
                 context.logger.log("warn", "Failed to parse protobuf IR: " + error);
+            }
+        }
+
+        return results;
+    }
+
+    private async generateAllGraphQLIRs({ context }: { context: TaskContext }): Promise<IntermediateRepresentation[]> {
+        const graphqlSpecs = this.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+        if (graphqlSpecs.length === 0) {
+            return [];
+        }
+
+        const results: IntermediateRepresentation[] = [];
+        for (const spec of graphqlSpecs) {
+            try {
+                const graphqlIRGenerator = new GraphQLIRGenerator({ context });
+                const ir = await graphqlIRGenerator.generate({
+                    absoluteFilepath: spec.absoluteFilepath,
+                    namespace: spec.namespace
+                });
+                results.push(ir);
+            } catch (error) {
+                context.logger.log("warn", "Failed to generate GraphQL IR: " + error);
             }
         }
 

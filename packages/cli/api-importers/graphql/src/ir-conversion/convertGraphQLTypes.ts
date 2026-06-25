@@ -1,33 +1,323 @@
+import { FernIr } from "@fern-api/ir-sdk";
 import {
     GraphQLEnumType,
     GraphQLInputObjectType,
+    GraphQLInputType,
     GraphQLInterfaceType,
+    GraphQLList,
+    GraphQLNonNull,
     GraphQLObjectType,
+    GraphQLOutputType,
     GraphQLScalarType,
     GraphQLSchema,
     GraphQLUnionType
 } from "graphql";
 
+import { graphqlCasingsGenerator, ROOT_FERN_FILEPATH } from "./shared.js";
+
+const BUILT_IN_SCALARS = new Set(["String", "Int", "Float", "Boolean", "ID"]);
+
+export function isBuiltInScalar(typeName: string): boolean {
+    return BUILT_IN_SCALARS.has(typeName);
+}
+
+/**
+ * Applies the optional namespace prefix to a type name, mirroring
+ * GraphQLConverter.getNamespacedTypeId.
+ */
+export function getNamespacedTypeId(originalName: string, namespace: string | undefined): string {
+    return namespace ? `${namespace}_${originalName}` : originalName;
+}
+
+function isActualSubscriptionRootType(type: GraphQLObjectType): boolean {
+    return type.getInterfaces().length === 0;
+}
+
+/**
+ * A type is treated as a namespace (operation-grouping type) when ALL of its fields
+ * accept arguments. Mirrors GraphQLConverter.isNamespaceType.
+ */
+function isNamespaceType(type: GraphQLObjectType): boolean {
+    const fields = Object.values(type.getFields());
+    if (fields.length === 0) {
+        return false;
+    }
+    return fields.every((field) => field.args.length > 0);
+}
+
+function unwrapNonNullOutput(type: GraphQLOutputType): GraphQLOutputType {
+    if (type instanceof GraphQLNonNull) {
+        return type.ofType;
+    }
+    return type;
+}
+
+/**
+ * Returns the names of object types consumed as namespace groupings (return types of
+ * zero-arg root fields whose own fields all accept arguments). Mirrors
+ * GraphQLConverter.collectNamespaceTypeNames.
+ */
+export function collectNamespaceTypeNames(schema: GraphQLSchema): Set<string> {
+    const namespaceTypeNames = new Set<string>();
+    const rootTypes: GraphQLObjectType[] = [];
+
+    const queryType = schema.getQueryType();
+    if (queryType != null) {
+        rootTypes.push(queryType);
+    }
+    const mutationType = schema.getMutationType();
+    if (mutationType != null) {
+        rootTypes.push(mutationType);
+    }
+    const subscriptionType = schema.getSubscriptionType();
+    if (subscriptionType != null && isActualSubscriptionRootType(subscriptionType)) {
+        rootTypes.push(subscriptionType);
+    }
+
+    for (const rootType of rootTypes) {
+        for (const field of Object.values(rootType.getFields())) {
+            const returnRawType = unwrapNonNullOutput(field.type);
+            if (
+                returnRawType instanceof GraphQLObjectType &&
+                field.args.length === 0 &&
+                isNamespaceType(returnRawType)
+            ) {
+                namespaceTypeNames.add(returnRawType.name);
+            }
+        }
+    }
+    return namespaceTypeNames;
+}
+
+function namedTypeReference(name: string, namespace: string | undefined): FernIr.TypeReference {
+    const typeId = getNamespacedTypeId(name, namespace);
+    return FernIr.TypeReference.named({
+        typeId,
+        fernFilepath: ROOT_FERN_FILEPATH,
+        name: getNamespacedTypeId(name, namespace),
+        displayName: undefined,
+        default: undefined,
+        inline: undefined
+    });
+}
+
+function primitiveReference(v1: FernIr.PrimitiveTypeV1): FernIr.TypeReference {
+    return FernIr.TypeReference.primitive({ v1, v2: undefined });
+}
+
+/**
+ * Maps a built-in GraphQL scalar to its IR primitive. Custom scalars are referenced
+ * as named alias types.
+ */
+function convertScalarReference(type: GraphQLScalarType, namespace: string | undefined): FernIr.TypeReference {
+    if (!isBuiltInScalar(type.name)) {
+        return namedTypeReference(type.name, namespace);
+    }
+    switch (type.name) {
+        case "String":
+        case "ID":
+            return primitiveReference(FernIr.PrimitiveTypeV1.String);
+        case "Int":
+            return primitiveReference(FernIr.PrimitiveTypeV1.Integer);
+        case "Float":
+            return primitiveReference(FernIr.PrimitiveTypeV1.Double);
+        case "Boolean":
+            return primitiveReference(FernIr.PrimitiveTypeV1.Boolean);
+        default:
+            return primitiveReference(FernIr.PrimitiveTypeV1.String);
+    }
+}
+
+/**
+ * Converts a GraphQL output type into an IR TypeReference.
+ * - NonNull(inner) -> inner mapped as required (not wrapped in optional)
+ * - nullable -> optional wrapper around the non-null mapping
+ * - List(inner) -> list of the (output) mapping of inner
+ */
+export function convertOutputTypeToTypeReference(
+    type: GraphQLOutputType,
+    namespace: string | undefined
+): FernIr.TypeReference {
+    if (type instanceof GraphQLNonNull) {
+        return convertNonNullOutputType(type.ofType, namespace);
+    }
+    return FernIr.TypeReference.container(FernIr.ContainerType.optional(convertNonNullOutputType(type, namespace)));
+}
+
+function convertNonNullOutputType(type: GraphQLOutputType, namespace: string | undefined): FernIr.TypeReference {
+    if (type instanceof GraphQLList) {
+        return FernIr.TypeReference.container(
+            FernIr.ContainerType.list(convertOutputTypeToTypeReference(type.ofType, namespace))
+        );
+    }
+    if (type instanceof GraphQLScalarType) {
+        return convertScalarReference(type, namespace);
+    }
+    if (
+        type instanceof GraphQLEnumType ||
+        type instanceof GraphQLObjectType ||
+        type instanceof GraphQLInterfaceType ||
+        type instanceof GraphQLUnionType
+    ) {
+        return namedTypeReference(type.name, namespace);
+    }
+    return FernIr.TypeReference.unknown();
+}
+
+/**
+ * Converts a GraphQL input type into an IR TypeReference (same shape rules as output).
+ */
+export function convertInputTypeToTypeReference(
+    type: GraphQLInputType,
+    namespace: string | undefined
+): FernIr.TypeReference {
+    if (type instanceof GraphQLNonNull) {
+        return convertNonNullInputType(type.ofType, namespace);
+    }
+    return FernIr.TypeReference.container(FernIr.ContainerType.optional(convertNonNullInputType(type, namespace)));
+}
+
+function convertNonNullInputType(type: GraphQLInputType, namespace: string | undefined): FernIr.TypeReference {
+    if (type instanceof GraphQLList) {
+        return FernIr.TypeReference.container(
+            FernIr.ContainerType.list(convertInputTypeToTypeReference(type.ofType, namespace))
+        );
+    }
+    if (type instanceof GraphQLScalarType) {
+        return convertScalarReference(type, namespace);
+    }
+    if (type instanceof GraphQLEnumType || type instanceof GraphQLInputObjectType) {
+        return namedTypeReference(type.name, namespace);
+    }
+    return FernIr.TypeReference.unknown();
+}
+
+function makeTypeDeclaration({
+    name,
+    namespace,
+    shape,
+    docs
+}: {
+    name: string;
+    namespace: string | undefined;
+    shape: FernIr.Type;
+    docs: string | undefined;
+}): FernIr.TypeDeclaration {
+    const namespacedName = getNamespacedTypeId(name, namespace);
+    return {
+        name: {
+            typeId: namespacedName,
+            fernFilepath: ROOT_FERN_FILEPATH,
+            name: namespacedName,
+            displayName: undefined
+        },
+        shape,
+        autogeneratedExamples: [],
+        userProvidedExamples: [],
+        v2Examples: undefined,
+        referencedTypes: new Set<string>(),
+        encoding: undefined,
+        source: undefined,
+        inline: undefined,
+        docs,
+        availability: undefined
+    };
+}
+
+function convertObjectType(type: GraphQLObjectType, namespace: string | undefined): FernIr.Type {
+    const properties: FernIr.ObjectProperty[] = Object.entries(type.getFields()).map(([fieldName, field]) => ({
+        name: graphqlCasingsGenerator.generateNameAndWireValue({ name: fieldName, wireValue: fieldName }),
+        valueType: convertOutputTypeToTypeReference(field.type, namespace),
+        propertyAccess: undefined,
+        defaultValue: undefined,
+        v2Examples: undefined,
+        docs: field.description ?? undefined,
+        availability: undefined
+    }));
+    return FernIr.Type.object({
+        extends: [],
+        properties,
+        extendedProperties: undefined,
+        extraProperties: false
+    });
+}
+
+function convertInterfaceType(type: GraphQLInterfaceType, namespace: string | undefined): FernIr.Type {
+    const properties: FernIr.ObjectProperty[] = Object.entries(type.getFields()).map(([fieldName, field]) => ({
+        name: graphqlCasingsGenerator.generateNameAndWireValue({ name: fieldName, wireValue: fieldName }),
+        valueType: convertOutputTypeToTypeReference(field.type, namespace),
+        propertyAccess: undefined,
+        defaultValue: undefined,
+        v2Examples: undefined,
+        docs: field.description ?? undefined,
+        availability: undefined
+    }));
+    return FernIr.Type.object({
+        extends: [],
+        properties,
+        extendedProperties: undefined,
+        extraProperties: false
+    });
+}
+
+function convertInputObjectType(type: GraphQLInputObjectType, namespace: string | undefined): FernIr.Type {
+    const properties: FernIr.ObjectProperty[] = Object.entries(type.getFields()).map(([fieldName, field]) => ({
+        name: graphqlCasingsGenerator.generateNameAndWireValue({ name: fieldName, wireValue: fieldName }),
+        valueType: convertInputTypeToTypeReference(field.type, namespace),
+        propertyAccess: undefined,
+        defaultValue: undefined,
+        v2Examples: undefined,
+        docs: field.description ?? undefined,
+        availability: undefined
+    }));
+    return FernIr.Type.object({
+        extends: [],
+        properties,
+        extendedProperties: undefined,
+        extraProperties: false
+    });
+}
+
+function convertEnumType(type: GraphQLEnumType): FernIr.Type {
+    const values: FernIr.EnumValue[] = type.getValues().map((value) => ({
+        name: graphqlCasingsGenerator.generateNameAndWireValue({ name: value.name, wireValue: value.name }),
+        docs: value.description ?? undefined,
+        availability: undefined
+    }));
+    return FernIr.Type.enum({
+        default: undefined,
+        values,
+        forwardCompatible: undefined
+    });
+}
+
+function convertUnionType(type: GraphQLUnionType, namespace: string | undefined): FernIr.Type {
+    const members: FernIr.UndiscriminatedUnionMember[] = type.getTypes().map((member) => ({
+        type: namedTypeReference(member.name, namespace),
+        docs: member.description ?? undefined
+    }));
+    return FernIr.Type.undiscriminatedUnion({
+        members,
+        baseProperties: undefined
+    });
+}
+
+/**
+ * Custom scalars are emitted as aliases to the string primitive. Mirrors
+ * GraphQLConverter's default scalar handling (string is the safe default).
+ */
+function convertCustomScalar(): FernIr.Type {
+    return FernIr.Type.alias({
+        aliasOf: primitiveReference(FernIr.PrimitiveTypeV1.String),
+        resolvedType: FernIr.ResolvedTypeReference.primitive({
+            v1: FernIr.PrimitiveTypeV1.String,
+            v2: undefined
+        })
+    });
+}
+
 /**
  * Converts all user-defined types in a GraphQL schema to IR TypeDeclarations.
- *
- * Handles:
- * - Object types → IR object type with properties
- * - Enum types → IR enum type with values
- * - Union types → IR undiscriminated union
- * - Interface types → IR object type (with extended properties from implementors)
- * - Input object types → IR object type (used for request variable types)
- * - Custom scalars → IR alias to primitive (string by default)
- *
- * Skips:
- * - Built-in scalars (String, Int, Float, Boolean, ID)
- * - Introspection types (__Type, __Field, etc.)
- * - Root types (Query, Mutation, Subscription) — these become services, not types
- * - Namespace types (arg-less fields whose return types group operations)
- *
- * @param schema - The parsed GraphQL schema
- * @param namespace - Optional namespace prefix for type IDs (for multi-schema support)
- * @returns Record<TypeId, TypeDeclaration> ready for the IR
  */
 export function convertGraphQLTypes({
     schema,
@@ -35,97 +325,72 @@ export function convertGraphQLTypes({
 }: {
     schema: GraphQLSchema;
     namespace: string | undefined;
-}): Record<string, unknown> {
-    // TODO: Implement type conversion
-    //
-    // High-level steps:
-    // 1. Iterate schema.getTypeMap()
-    // 2. Skip built-in/introspection types (names starting with "__")
-    // 3. Skip root types (Query, Mutation, Subscription)
-    // 4. Skip namespace types (detected via isNamespaceType heuristic)
-    // 5. For each remaining type, convert based on its kind:
-    //    - GraphQLObjectType → convertObjectType()
-    //    - GraphQLEnumType → convertEnumType()
-    //    - GraphQLUnionType → convertUnionType()
-    //    - GraphQLInterfaceType → convertInterfaceType()
-    //    - GraphQLInputObjectType → convertInputObjectType()
-    //    - GraphQLScalarType → convertCustomScalar()
-    //
-    // NOTE: This reuses logic from the existing GraphQLConverter's collectTypeDefinitions(),
-    // but produces IR TypeDeclarations (from @fern-api/ir-sdk) instead of FDR types.
+}): Record<string, FernIr.TypeDeclaration> {
+    const result: Record<string, FernIr.TypeDeclaration> = {};
 
-    void schema;
-    void namespace;
-    return {};
-}
+    const namespaceTypeNames = collectNamespaceTypeNames(schema);
+    const queryType = schema.getQueryType();
+    const mutationType = schema.getMutationType();
+    const subscriptionType = schema.getSubscriptionType();
 
-/**
- * Converts a GraphQL object type to an IR TypeDeclaration.
- * Each field becomes a property with its corresponding IR TypeReference.
- */
-function convertObjectType(_type: GraphQLObjectType, _namespace: string | undefined): unknown {
-    // TODO: Implement
-    // - Map each field to an ObjectProperty with:
-    //   - name (with casings)
-    //   - valueType: convertOutputTypeToTypeReference(field.type)
-    //   - docs: field.description
-    // - Handle field arguments (rare for non-root fields, but valid in GraphQL)
-    return undefined;
-}
+    for (const [typeName, type] of Object.entries(schema.getTypeMap())) {
+        if (typeName.startsWith("__")) {
+            continue;
+        }
+        if (type === queryType || type === mutationType) {
+            continue;
+        }
+        if (
+            type === subscriptionType &&
+            type instanceof GraphQLObjectType &&
+            isActualSubscriptionRootType(type)
+        ) {
+            continue;
+        }
+        if (type instanceof GraphQLObjectType && namespaceTypeNames.has(typeName)) {
+            continue;
+        }
+        if (type instanceof GraphQLScalarType && isBuiltInScalar(typeName)) {
+            continue;
+        }
 
-/**
- * Converts a GraphQL enum type to an IR TypeDeclaration.
- */
-function convertEnumType(_type: GraphQLEnumType, _namespace: string | undefined): unknown {
-    // TODO: Implement
-    // - Map each enum value to an EnumValue with name and docs
-    return undefined;
-}
+        const typeId = getNamespacedTypeId(typeName, namespace);
+        const docs = type.description ?? undefined;
 
-/**
- * Converts a GraphQL union type to an IR TypeDeclaration.
- * Uses __typename as the discriminant field.
- */
-function convertUnionType(_type: GraphQLUnionType, _namespace: string | undefined): unknown {
-    // TODO: Implement
-    // - Each union member becomes a variant
-    // - __typename is the discriminant
-    return undefined;
-}
+        if (type instanceof GraphQLEnumType) {
+            result[typeId] = makeTypeDeclaration({ name: typeName, namespace, shape: convertEnumType(type), docs });
+        } else if (type instanceof GraphQLInterfaceType) {
+            result[typeId] = makeTypeDeclaration({
+                name: typeName,
+                namespace,
+                shape: convertInterfaceType(type, namespace),
+                docs
+            });
+        } else if (type instanceof GraphQLObjectType) {
+            result[typeId] = makeTypeDeclaration({
+                name: typeName,
+                namespace,
+                shape: convertObjectType(type, namespace),
+                docs
+            });
+        } else if (type instanceof GraphQLInputObjectType) {
+            result[typeId] = makeTypeDeclaration({
+                name: typeName,
+                namespace,
+                shape: convertInputObjectType(type, namespace),
+                docs
+            });
+        } else if (type instanceof GraphQLUnionType) {
+            result[typeId] = makeTypeDeclaration({
+                name: typeName,
+                namespace,
+                shape: convertUnionType(type, namespace),
+                docs
+            });
+        } else if (type instanceof GraphQLScalarType) {
+            result[typeId] = makeTypeDeclaration({ name: typeName, namespace, shape: convertCustomScalar(), docs });
+        }
+    }
 
-/**
- * Converts a GraphQL interface type to an IR TypeDeclaration.
- */
-function convertInterfaceType(_type: GraphQLInterfaceType, _namespace: string | undefined): unknown {
-    // TODO: Implement
-    // - Convert interface fields as base properties
-    // - May also generate discriminated union for implementing types
-    return undefined;
-}
-
-/**
- * Converts a GraphQL input object type to an IR TypeDeclaration.
- * Input types are used for request variable types (operation arguments).
- */
-function convertInputObjectType(_type: GraphQLInputObjectType, _namespace: string | undefined): unknown {
-    // TODO: Implement
-    // - Map each input field to an ObjectProperty
-    // - Handles nested input objects, lists, enums, scalars
-    return undefined;
-}
-
-/**
- * Converts a custom GraphQL scalar to an IR TypeDeclaration.
- * Maps known scalars (DateTime, JSON, etc.) to appropriate primitives.
- * Unknown custom scalars default to string.
- */
-function convertCustomScalar(_type: GraphQLScalarType, _namespace: string | undefined): unknown {
-    // TODO: Implement
-    // Known scalar mappings:
-    //   DateTime/Date → string (with format hint)
-    //   JSON/JSONObject → unknown/map
-    //   BigInt/Long → long
-    //   URL/URI → string
-    //   Everything else → string (safest default)
-    return undefined;
+    return result;
 }

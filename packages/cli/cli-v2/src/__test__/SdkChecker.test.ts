@@ -224,7 +224,7 @@ sdks:
     });
 
     describe("GraphQL spec validation", () => {
-        it("warns when an SDK target references an API with a GraphQL spec", async () => {
+        it("does not warn when an SDK target references an API with a GraphQL spec (GraphQL SDKs are supported)", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -252,12 +252,10 @@ sdks:
 
             const result = await checker.check({ workspace });
 
-            expect(result.warningCount).toBe(1);
             expect(result.errorCount).toBe(0);
-            expect(result.violations.some((v) => v.severity === "warning" && v.message.includes("GraphQL"))).toBe(true);
             expect(
                 result.violations.some((v) => v.message.includes("graphql specs will be skipped for this target"))
-            ).toBe(true);
+            ).toBe(false);
         });
 
         it("does not warn for an SDK target whose API has no GraphQL spec", async () => {

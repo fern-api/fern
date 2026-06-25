@@ -1,9 +1,18 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
-import { buildSchema, GraphQLSchema } from "graphql";
+import { buildSchema, GraphQLNonNull, GraphQLObjectType, GraphQLOutputType, GraphQLSchema } from "graphql";
+
 import { convertGraphQLTypes } from "./ir-conversion/convertGraphQLTypes.js";
+import { convertRootFieldToEndpoint } from "./ir-conversion/convertRootFieldToEndpoint.js";
+import { graphqlCasingsGenerator, ROOT_FERN_FILEPATH } from "./ir-conversion/shared.js";
+import { QueryGenerationConfig } from "./query-generation/generateSelectionQuery.js";
+
+type OperationType = "QUERY" | "MUTATION" | "SUBSCRIPTION";
+
+const DEFAULT_QUERY_GENERATION_CONFIG: QueryGenerationConfig = { maxDepth: 4 };
 
 /**
  * Converts a GraphQL schema into Fern's IntermediateRepresentation.
@@ -20,24 +29,27 @@ export class GraphQLToIRConverter {
     private filePath: AbsoluteFilePath;
     private namespace: string | undefined;
     private schema: GraphQLSchema | undefined;
+    private queryGenerationConfig: QueryGenerationConfig;
 
     constructor({
         context,
         filePath,
-        namespace
-    }: { context: TaskContext; filePath: AbsoluteFilePath; namespace?: string }) {
+        namespace,
+        queryGenerationConfig
+    }: {
+        context: TaskContext;
+        filePath: AbsoluteFilePath;
+        namespace?: string;
+        queryGenerationConfig?: QueryGenerationConfig;
+    }) {
         this.context = context;
         this.filePath = filePath;
         this.namespace = namespace;
+        this.queryGenerationConfig = queryGenerationConfig ?? DEFAULT_QUERY_GENERATION_CONFIG;
     }
 
     /**
-     * Parses the GraphQL schema and produces a complete IntermediateRepresentation
-     * containing:
-     * - Types: all schema object/enum/union/input types converted to IR TypeDeclarations
-     * - Services: one HttpService per operation group (Query, Mutation, Subscription),
-     *   each containing HttpEndpoints for root fields
-     * - Each endpoint has Transport.graphql with a pre-built query string
+     * Parses the GraphQL schema and produces a complete IntermediateRepresentation.
      *
      * @returns IntermediateRepresentation ready to be merged via mergeIntermediateRepresentation()
      */
@@ -45,72 +57,253 @@ export class GraphQLToIRConverter {
         const sdlContent = await readFile(this.filePath, "utf-8");
         this.schema = buildSchema(sdlContent);
 
-        // TODO: Step 1 - Convert all schema types to IR TypeDeclarations
-        // Uses convertGraphQLTypes() to produce Record<TypeId, TypeDeclaration>
-        // Handles: objects, enums, unions, interfaces, input objects, scalars
         const types = convertGraphQLTypes({
             schema: this.schema,
             namespace: this.namespace
         });
 
-        // TODO: Step 2 - Convert root fields to HttpServices with HttpEndpoints
-        // Each Query/Mutation/Subscription root type becomes an HttpService
-        // Each field on those root types becomes an HttpEndpoint with:
-        //   - method: POST, path: /graphql
-        //   - requestBody: typed variables from field arguments
-        //   - response: the field's return type (fully resolved)
-        //   - transport: Transport.graphql({ query, operationType, operationName })
         const services = this.convertRootTypesToServices();
 
-        // TODO: Step 3 - Assemble the IntermediateRepresentation
-        // Fill in all required fields (many with sensible defaults for a GraphQL source)
         return this.assembleIR({ types, services });
+    }
+
+    private isActualSubscriptionRootType(type: GraphQLObjectType): boolean {
+        return type.getInterfaces().length === 0;
+    }
+
+    private isNamespaceType(type: GraphQLObjectType): boolean {
+        const fields = Object.values(type.getFields());
+        if (fields.length === 0) {
+            return false;
+        }
+        return fields.every((field) => field.args.length > 0);
+    }
+
+    private unwrapNonNull(type: GraphQLOutputType): GraphQLOutputType {
+        if (type instanceof GraphQLNonNull) {
+            return type.ofType;
+        }
+        return type;
+    }
+
+    private namespacedServiceId(operationType: OperationType): string {
+        const base = `service_${operationType.toLowerCase()}`;
+        return this.namespace ? `${this.namespace}_${base}` : base;
+    }
+
+    private subpackageId(operationType: OperationType): string {
+        const base = `subpackage_${operationType.toLowerCase()}`;
+        return this.namespace ? `${this.namespace}_${base}` : base;
+    }
+
+    /**
+     * Collects all endpoints for a single root operation type, recursing into namespace
+     * types (arg-less fields returning a type whose fields are the real operations).
+     */
+    private collectEndpointsForRootType(
+        rootType: GraphQLObjectType,
+        operationType: OperationType,
+        schema: GraphQLSchema
+    ): FernIr.HttpEndpoint[] {
+        const endpoints: FernIr.HttpEndpoint[] = [];
+        for (const field of Object.values(rootType.getFields())) {
+            const returnRawType = this.unwrapNonNull(field.type);
+            if (
+                returnRawType instanceof GraphQLObjectType &&
+                field.args.length === 0 &&
+                this.isNamespaceType(returnRawType)
+            ) {
+                for (const namespaceField of Object.values(returnRawType.getFields())) {
+                    endpoints.push(
+                        convertRootFieldToEndpoint({
+                            field: namespaceField,
+                            operationType,
+                            schema,
+                            namespace: this.namespace,
+                            config: this.queryGenerationConfig
+                        })
+                    );
+                }
+            } else {
+                endpoints.push(
+                    convertRootFieldToEndpoint({
+                        field,
+                        operationType,
+                        schema,
+                        namespace: this.namespace,
+                        config: this.queryGenerationConfig
+                    })
+                );
+            }
+        }
+        return endpoints;
     }
 
     /**
      * Converts Query, Mutation, and Subscription root types into HttpServices.
-     * Handles namespace detection (arg-less fields returning "namespace types"
-     * whose fields are the real operations).
      */
-    private convertRootTypesToServices(): Record<string, unknown> {
-        if (!this.schema) {
+    private convertRootTypesToServices(): Record<string, FernIr.HttpService> {
+        if (this.schema == null) {
             return {};
         }
+        const schema = this.schema;
+        const services: Record<string, FernIr.HttpService> = {};
 
-        // TODO: Implement root type → service conversion
-        // 1. Get Query/Mutation/Subscription root types
-        // 2. For each root type, detect namespace types (reuse isNamespaceType logic from GraphQLConverter)
-        // 3. For each root field (or namespace sub-field), call convertRootFieldToEndpoint()
-        // 4. Group endpoints into HttpService objects
-        // 5. Return Record<ServiceId, HttpService>
+        const rootTypes: Array<{ type: GraphQLObjectType | null | undefined; operationType: OperationType }> = [
+            { type: schema.getQueryType(), operationType: "QUERY" },
+            { type: schema.getMutationType(), operationType: "MUTATION" },
+            { type: schema.getSubscriptionType(), operationType: "SUBSCRIPTION" }
+        ];
 
-        const queryType = this.schema.getQueryType();
-        const mutationType = this.schema.getMutationType();
-        const subscriptionType = this.schema.getSubscriptionType();
+        for (const { type, operationType } of rootTypes) {
+            if (type == null) {
+                continue;
+            }
+            if (operationType === "SUBSCRIPTION" && !this.isActualSubscriptionRootType(type)) {
+                continue;
+            }
+            const endpoints = this.collectEndpointsForRootType(type, operationType, schema);
+            if (endpoints.length === 0) {
+                continue;
+            }
+            const groupName = operationType.toLowerCase();
+            services[this.namespacedServiceId(operationType)] = {
+                availability: undefined,
+                name: {
+                    fernFilepath: {
+                        allParts: [groupName],
+                        packagePath: [],
+                        file: groupName
+                    }
+                },
+                displayName: undefined,
+                basePath: constructHttpPath(""),
+                endpoints,
+                headers: [],
+                pathParameters: [],
+                encoding: undefined,
+                transport: undefined,
+                audiences: undefined
+            };
+        }
 
-        // TODO: Process each root type
-        void queryType;
-        void mutationType;
-        void subscriptionType;
-
-        return {};
+        return services;
     }
 
     /**
-     * Assembles a minimal IntermediateRepresentation from converted types and services.
-     * Sets sensible defaults for fields not applicable to GraphQL sources.
+     * Assembles a complete IntermediateRepresentation from converted types and services.
      */
-    private assembleIR(_args: {
-        types: Record<string, unknown>;
-        services: Record<string, unknown>;
+    private assembleIR({
+        types,
+        services
+    }: {
+        types: Record<string, FernIr.TypeDeclaration>;
+        services: Record<string, FernIr.HttpService>;
     }): IntermediateRepresentation {
-        // TODO: Construct a valid IntermediateRepresentation with:
-        // - types: converted GraphQL types
-        // - services: converted root field services
-        // - auth: ApiAuth.none (GraphQL auth is typically header-based, handled separately)
-        // - rootPackage: a Package with service references
-        // - subpackages: one per service group
-        // - All other fields: sensible defaults (empty arrays, undefined, etc.)
-        throw new Error("GraphQLToIRConverter.assembleIR() not yet implemented");
+        const operationTypes: OperationType[] = ["QUERY", "MUTATION", "SUBSCRIPTION"];
+        const subpackages: Record<string, FernIr.Subpackage> = {};
+        const subpackageIds: string[] = [];
+
+        for (const operationType of operationTypes) {
+            const serviceId = this.namespacedServiceId(operationType);
+            if (services[serviceId] == null) {
+                continue;
+            }
+            const groupName = operationType.toLowerCase();
+            const subpackageId = this.subpackageId(operationType);
+            subpackageIds.push(subpackageId);
+            subpackages[subpackageId] = {
+                name: graphqlCasingsGenerator.generateName(groupName),
+                displayName: undefined,
+                fernFilepath: {
+                    allParts: [groupName],
+                    packagePath: [],
+                    file: groupName
+                },
+                service: serviceId,
+                types: [],
+                errors: [],
+                webhooks: undefined,
+                websocket: undefined,
+                subpackages: [],
+                hasEndpointsInTree: true,
+                hasWebSocketInTree: undefined,
+                navigationConfig: undefined,
+                docs: undefined
+            };
+        }
+
+        const rootPackage: FernIr.Package = {
+            fernFilepath: ROOT_FERN_FILEPATH,
+            service: undefined,
+            types: Object.keys(types),
+            errors: [],
+            webhooks: undefined,
+            websocket: undefined,
+            subpackages: subpackageIds,
+            hasEndpointsInTree: subpackageIds.length > 0,
+            hasWebSocketInTree: undefined,
+            navigationConfig: undefined,
+            docs: undefined
+        };
+
+        return {
+            apiName: graphqlCasingsGenerator.generateName(this.namespace ?? ""),
+            apiDisplayName: undefined,
+            apiDocs: undefined,
+            auth: {
+                docs: undefined,
+                requirement: FernIr.AuthSchemesRequirement.All,
+                schemes: []
+            },
+            selfHosted: false,
+            apiVersion: undefined,
+            headers: [],
+            idempotencyHeaders: [],
+            types,
+            services,
+            errors: {},
+            webhookGroups: {},
+            websocketChannels: undefined,
+            constants: {
+                errorInstanceIdKey: graphqlCasingsGenerator.generateNameAndWireValue({
+                    name: "errorInstanceId",
+                    wireValue: "errorInstanceId"
+                })
+            },
+            environments: undefined,
+            basePath: undefined,
+            pathParameters: [],
+            errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
+            sdkConfig: {
+                hasFileDownloadEndpoints: false,
+                hasPaginatedEndpoints: false,
+                hasStreamingEndpoints: false,
+                isAuthMandatory: false,
+                platformHeaders: {
+                    language: "",
+                    sdkName: "",
+                    sdkVersion: "",
+                    userAgent: undefined
+                }
+            },
+            variables: [],
+            serviceTypeReferenceInfo: {
+                sharedTypes: [],
+                typesReferencedOnlyByService: {}
+            },
+            readmeConfig: undefined,
+            sourceConfig: undefined,
+            publishConfig: undefined,
+            dynamic: undefined,
+            fdrApiDefinitionId: undefined,
+            rootPackage,
+            subpackages,
+            audiences: undefined,
+            generationMetadata: undefined,
+            apiPlayground: undefined,
+            casingsConfig: undefined,
+            specVersion: undefined
+        };
     }
 }

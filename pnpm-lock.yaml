@@ -3887,6 +3887,9 @@ importers:
 
   packages/cli/api-importers/graphql:
     dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../../commons/casings-generator
       '@fern-api/fdr-sdk':
         specifier: 1.2.36-1f77b99cda
         version: 1.2.36-1f77b99cda(@opentelemetry/api@1.9.1)(typescript@5.9.3)
@@ -3896,6 +3899,9 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../../commons/ir-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context

@@ -3,12 +3,14 @@
 import * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { GraphqlTransport } from "../../graphql/types/GraphqlTransport.js";
 import { GrpcTransport } from "./GrpcTransport.js";
 
 export const Transport: core.serialization.Schema<serializers.Transport.Raw, FernIr.Transport> = core.serialization
     .union("type", {
         http: core.serialization.object({}),
         grpc: GrpcTransport,
+        graphql: GraphqlTransport,
     })
     .transform<FernIr.Transport>({
         transform: (value) => {
@@ -17,6 +19,8 @@ export const Transport: core.serialization.Schema<serializers.Transport.Raw, Fer
                     return FernIr.Transport.http();
                 case "grpc":
                     return FernIr.Transport.grpc(value);
+                case "graphql":
+                    return FernIr.Transport.graphql(value);
                 default:
                     return value as FernIr.Transport;
             }
@@ -25,7 +29,7 @@ export const Transport: core.serialization.Schema<serializers.Transport.Raw, Fer
     });
 
 export declare namespace Transport {
-    export type Raw = Transport.Http | Transport.Grpc;
+    export type Raw = Transport.Http | Transport.Grpc | Transport.Graphql;
 
     export interface Http {
         type: "http";
@@ -33,5 +37,9 @@ export declare namespace Transport {
 
     export interface Grpc extends GrpcTransport.Raw {
         type: "grpc";
+    }
+
+    export interface Graphql extends GraphqlTransport.Raw {
+        type: "graphql";
     }
 }
