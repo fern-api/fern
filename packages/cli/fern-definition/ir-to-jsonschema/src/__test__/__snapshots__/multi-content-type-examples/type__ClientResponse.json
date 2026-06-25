@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "client": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ClientWithId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ClientWithId": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
