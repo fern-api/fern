@@ -14,6 +14,10 @@ client.service.create_movie(
   type: "movie",
   tag: "tag",
   book: "book",
-  metadata: {},
+  metadata: {
+    metadata: {
+      key: "value"
+    }
+  },
   revenue: 1000000
 )
