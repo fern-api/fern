@@ -121,6 +121,7 @@ export function buildLedgerInput({
     apiDefinitions,
     fileManifest,
     fileIdToPath,
+    editThisPage,
     locale = "en"
 }: {
     docsDefinition: DocsDefinition;
@@ -135,6 +136,8 @@ export function buildLedgerInput({
      * path-based references (e.g. `ImageRef { path, width, height }`).
      */
     fileIdToPath?: Map<string, string>;
+    /** Raw edit-this-page config from docs.yml, forwarded to LedgerConfig. */
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Locale to stamp on segments. Defaults to "en". */
     locale?: string;
 }): { localeEntry: LocaleEntry; blobs: Map<string, Buffer> } {
@@ -175,7 +178,8 @@ export function buildLedgerInput({
     const ledgerConfig = mapDocsConfigToLedgerConfig({
         docsConfig: docsDefinition.config,
         fileManifest,
-        fileIdToPath
+        fileIdToPath,
+        editThisPage
     });
 
     // API manifest: serialize all API definitions as a single JSON blob.
@@ -262,6 +266,7 @@ export async function publishDocsViaLedger({
     fileManifest,
     filePaths,
     fileIdToPath,
+    editThisPage,
     resolver
 }: {
     docsDefinition: DocsDefinition;
@@ -280,6 +285,8 @@ export async function publishDocsViaLedger({
     /** Hash → absolute file path for lazy on-demand reads during upload. */
     filePaths?: Map<string, AbsoluteFilePath>;
     fileIdToPath?: Map<string, string>;
+    /** Raw edit-this-page config from docs.yml. */
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
 }): Promise<LedgerPublishResult> {
@@ -292,7 +299,8 @@ export async function publishDocsViaLedger({
         git,
         apiDefinitions,
         fileManifest,
-        fileIdToPath
+        fileIdToPath,
+        editThisPage
     });
 
     const builtTranslations = await buildAllTranslationInputs({
@@ -301,6 +309,7 @@ export async function publishDocsViaLedger({
         apiDefinitions,
         fileManifest,
         fileIdToPath,
+        editThisPage,
         resolver,
         context
     });
@@ -582,6 +591,7 @@ export async function buildAllTranslationInputs({
     apiDefinitions,
     fileManifest,
     fileIdToPath,
+    editThisPage,
     resolver,
     context
 }: {
@@ -590,6 +600,7 @@ export async function buildAllTranslationInputs({
     apiDefinitions: Map<string, APIV1Write.ApiDefinition>;
     fileManifest?: Record<string, FileManifestEntry>;
     fileIdToPath?: Map<string, string>;
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     resolver?: DocsDefinitionResolver;
     context: TaskContext;
 }): Promise<BuiltTranslation[]> {
@@ -677,6 +688,7 @@ export async function buildAllTranslationInputs({
                 apiDefinitions: localeApiDefinitions,
                 fileManifest,
                 fileIdToPath,
+                editThisPage,
                 locale
             });
 

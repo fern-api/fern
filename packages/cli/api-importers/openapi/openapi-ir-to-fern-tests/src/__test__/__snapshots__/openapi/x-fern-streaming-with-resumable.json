@@ -256,4 +256,5 @@ display-name: >-
   override.
 ",
   },
+  "specVersion": "1.0.0",
 }

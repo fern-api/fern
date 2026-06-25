@@ -9,6 +9,6 @@ public class Example45 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().primitive().getAndReturnString("string");
+        client.endpoints().params().getWithPathAndErrors("param");
     }
 }

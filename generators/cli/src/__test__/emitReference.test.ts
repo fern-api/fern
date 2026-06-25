@@ -322,6 +322,187 @@ describe("emitReference", () => {
         expect(reference).toContain("`my-api store items`");
     });
 
+    // ── $ref parameter resolution ───────────────────────────────────
+
+    it("resolves $ref parameters from components.parameters", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "Close API", version: "1.0.0" },
+            paths: {
+                "/activity/": {
+                    get: {
+                        operationId: "activity_list",
+                        tags: ["Activity"],
+                        summary: "List activities",
+                        parameters: [
+                            { $ref: "#/components/parameters/LimitParam" },
+                            { $ref: "#/components/parameters/SkipParam" },
+                            { $ref: "#/components/parameters/FieldsParam" }
+                        ],
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            },
+            components: {
+                parameters: {
+                    LimitParam: {
+                        in: "query",
+                        name: "_limit",
+                        required: false,
+                        schema: { type: "integer", default: 100 }
+                    },
+                    SkipParam: {
+                        in: "query",
+                        name: "_skip",
+                        required: false,
+                        schema: { type: "integer", default: 0 }
+                    },
+                    FieldsParam: {
+                        description: "Comma-separated list of fields to include in the response.",
+                        in: "query",
+                        name: "_fields",
+                        required: false,
+                        schema: { type: "string" }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "close",
+            apiDisplayName: "Close API",
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("`--limit`");
+        expect(reference).toContain("`--skip`");
+        expect(reference).toContain("`--fields`");
+        expect(reference).toContain("Comma-separated list of fields");
+    });
+
+    it("resolves path-level $ref parameters", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "API", version: "1.0.0" },
+            paths: {
+                "/items/{itemId}": {
+                    parameters: [{ $ref: "#/components/parameters/ItemIdParam" }],
+                    get: {
+                        operationId: "items_get",
+                        tags: ["Items"],
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            },
+            components: {
+                parameters: {
+                    ItemIdParam: {
+                        in: "path",
+                        name: "itemId",
+                        required: true,
+                        schema: { type: "string" }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "my-api",
+            apiDisplayName: "My API",
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("`--item-id`");
+    });
+
+    it("skips unresolvable $ref parameters gracefully", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "API", version: "1.0.0" },
+            paths: {
+                "/things": {
+                    get: {
+                        operationId: "things_list",
+                        tags: ["Things"],
+                        parameters: [
+                            { $ref: "#/components/parameters/DoesNotExist" },
+                            { name: "status", in: "query", schema: { type: "string" } }
+                        ],
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            },
+            components: { parameters: {} }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "my-api",
+            apiDisplayName: "My API",
+            authBindings: [],
+            specsDir
+        });
+
+        // The inline param should still appear; the bad $ref is silently dropped.
+        expect(reference).toContain("`--status`");
+        expect(reference).not.toContain("DoesNotExist");
+    });
+
+    it("handles mixed inline and $ref parameters in the same operation", async () => {
+        const spec = {
+            openapi: "3.0.0",
+            info: { title: "API", version: "1.0.0" },
+            paths: {
+                "/search": {
+                    get: {
+                        operationId: "search",
+                        tags: ["Search"],
+                        parameters: [
+                            { name: "q", in: "query", required: true, schema: { type: "string" } },
+                            { $ref: "#/components/parameters/LimitParam" },
+                            { name: "sort", in: "query", schema: { type: "string" } }
+                        ],
+                        responses: { "200": { description: "ok" } }
+                    }
+                }
+            },
+            components: {
+                parameters: {
+                    LimitParam: {
+                        in: "query",
+                        name: "_limit",
+                        required: false,
+                        schema: { type: "integer" }
+                    }
+                }
+            }
+        };
+        const specPath = await writeSpec("openapi0.json", spec);
+        await writeManifest([{ type: "openapi", specPath }]);
+
+        const reference = await emitAndRead({
+            outputDir,
+            binaryName: "my-api",
+            apiDisplayName: "My API",
+            authBindings: [],
+            specsDir
+        });
+
+        expect(reference).toContain("`--q`");
+        expect(reference).toContain("`--limit`");
+        expect(reference).toContain("`--sort`");
+    });
+
     // ── Fallback to binaryName when no apiDisplayName ────────────────
 
     it("falls back to binaryName in header when apiDisplayName is undefined", async () => {

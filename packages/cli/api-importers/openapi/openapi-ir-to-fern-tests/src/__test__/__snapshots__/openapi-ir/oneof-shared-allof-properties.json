@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Lift shared allOf properties from oneOf variants",
   "servers": [],
   "websocketServers": [],

@@ -17,13 +17,21 @@ Command-line interface for the allOf Composition API.
 
 ## Installation
 
-Install the [Rust toolchain](https://rustup.rs/) if you don't have it:
+### Shell (macOS / Linux)
 
 ```bash
-curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/<org>/<repo>/releases/latest/download/allof-composition-installer.sh | sh
 ```
 
-Then build from source:
+### PowerShell (Windows)
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://github.com/<org>/<repo>/releases/latest/download/allof-composition-installer.ps1 | iex"
+```
+
+### Build from source
+
+If you prefer to build from source, install the [Rust toolchain](https://rustup.rs/) and run:
 
 ```bash
 cargo build --release

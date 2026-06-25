@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": "0.0.1",
     "apiName": "api",
     "apiDisplayName": "\"\"",
     "apiDocs": null,

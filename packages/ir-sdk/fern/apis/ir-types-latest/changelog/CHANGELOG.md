@@ -5,13 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v67.6.0] - 2026-06-22
+## [v67.7.0] - 2026-06-22
 
 - Feature: Add optional `clientDefault` field to the dynamic IR's `NamedParameter`.
   Carries a path parameter's client-side default (`clientDefault`) literal through to
   the dynamic IR so dynamic-snippet generators can treat the parameter as optional and
   order it after required parameters (e.g. after the request body), matching the
   generated SDK signature. Defaults to `undefined` for backward compatibility.
+
+## [v67.6.0] - 2026-06-23
+
+- Feature: Add optional `specVersion` field to `IntermediateRepresentation`.
+  Preserves the OpenAPI `info.version` value as-is through the IR, supporting
+  semver, CalVer (e.g. `2026-06-23`), or any free-form version string. This
+  allows downstream consumers (docs rendering, FDR) to display the original
+  spec version instead of defaulting to `1.0.0`.
 
 ## [v67.5.0] - 2026-06-12
 

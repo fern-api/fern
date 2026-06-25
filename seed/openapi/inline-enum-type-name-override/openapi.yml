@@ -1,0 +1,48 @@
+openapi: 3.1.0
+info:
+  title: Inline Enum Type Name Override
+  version: 0.0.0
+paths:
+  /load:
+    post:
+      operationId: reporting_load
+      tags:
+        - Reporting
+      parameters: []
+      responses:
+        '204':
+          description: No content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cache:
+                  anyOf:
+                    - $ref: '#/components/schemas/LoadRequestCache'
+                    - type: 'null'
+                status:
+                  anyOf:
+                    - $ref: '#/components/schemas/LoadRequestStatus'
+                    - type: 'null'
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    LoadRequestCache:
+      title: LoadRequestCache
+      type: string
+      enum:
+        - stale-if-slow
+        - no-cache
+    LoadRequestStatus:
+      title: LoadRequestStatus
+      type: string
+      enum:
+        - active
+        - inactive
+        - pending
+  securitySchemes: {}

@@ -25,6 +25,11 @@ types:
         type: optional<string>
         docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
       apiVersion: optional<ApiVersionScheme>
+      specVersion:
+        type: optional<string>
+        docs: |
+          The document version from the OpenAPI `info.version` field.
+          Preserved as-is (supports semver, CalVer, or any free-form string).
       apiName:
         type: commons.NameOrString
         docs: This is the human readable unique id for the API.

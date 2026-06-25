@@ -318,4 +318,5 @@ error-discrimination:
 display-name: Enum Array Reference Test API
 ",
   },
+  "specVersion": "1.0.0",
 }

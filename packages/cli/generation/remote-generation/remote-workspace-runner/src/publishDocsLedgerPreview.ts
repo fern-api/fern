@@ -45,6 +45,7 @@ export async function publishDocsViaLedgerPreview({
     fileManifest,
     filePaths,
     fileIdToPath,
+    editThisPage,
     resolver
 }: {
     docsDefinition: DocsDefinition;
@@ -61,6 +62,8 @@ export async function publishDocsViaLedgerPreview({
     /** Hash → absolute file path for lazy on-demand reads during upload. */
     filePaths?: Map<string, AbsoluteFilePath>;
     fileIdToPath?: Map<string, string>;
+    /** Raw edit-this-page config from docs.yml. */
+    editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
 }): Promise<LedgerPreviewResult> {
@@ -74,7 +77,8 @@ export async function publishDocsViaLedgerPreview({
         git,
         apiDefinitions,
         fileManifest,
-        fileIdToPath
+        fileIdToPath,
+        editThisPage
     });
 
     const builtTranslations = await buildAllTranslationInputs({
@@ -83,6 +87,7 @@ export async function publishDocsViaLedgerPreview({
         apiDefinitions,
         fileManifest,
         fileIdToPath,
+        editThisPage,
         resolver,
         context
     });

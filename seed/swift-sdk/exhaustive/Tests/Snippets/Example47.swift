@@ -8,6 +8,6 @@ enum Example47 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
+        _ = try await client.endpoints.primitive.getAndReturnInt(request: 1)
     }
 }

@@ -701,6 +701,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_types": {
       "displayName": undefined,

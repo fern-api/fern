@@ -3636,7 +3636,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
             try {
                 // --all mode
                 if (argv.all) {
-                    const result = replayForget({ outputDir, options: { all: true, dryRun } });
+                    const result = await replayForget({ outputDir, options: { all: true, dryRun } });
 
                     if (!result.initialized) {
                         cliContext.logger.info("Replay is not initialized. Nothing to forget.");
@@ -3664,7 +3664,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
 
                 // Patch ID mode: all args start with "patch-"
                 if (args.length > 0 && args.every((a) => a.startsWith("patch-"))) {
-                    const result = replayForget({ outputDir, options: { patchIds: args, dryRun } });
+                    const result = await replayForget({ outputDir, options: { patchIds: args, dryRun } });
 
                     if (!result.initialized) {
                         cliContext.logger.info("Replay is not initialized. Nothing to forget.");
@@ -3688,7 +3688,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
 
                 // Search/pattern mode or no-args mode
                 const pattern = args.length === 1 ? args[0] : undefined;
-                const result = replayForget({ outputDir, options: { pattern } });
+                const result = await replayForget({ outputDir, options: { pattern } });
 
                 if (!result.initialized) {
                     cliContext.logger.info("Replay is not initialized. Nothing to forget.");
@@ -3741,7 +3741,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
 
                 // Actually remove the matched patches
                 const patchIds = matched.map((p) => p.id);
-                const removeResult = replayForget({ outputDir, options: { patchIds, dryRun: false } });
+                const removeResult = await replayForget({ outputDir, options: { patchIds, dryRun: false } });
 
                 cliContext.logger.info(
                     `Removed ${removeResult.removed.length} patch(es). ${removeResult.remaining} remaining.`

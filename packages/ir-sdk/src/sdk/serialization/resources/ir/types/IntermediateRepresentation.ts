@@ -42,6 +42,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     fdrApiDefinitionId: core.serialization.string().optional(),
     apiVersion: ApiVersionScheme.optional(),
+    specVersion: core.serialization.string().optional(),
     apiName: NameOrString,
     apiDisplayName: core.serialization.string().optional(),
     apiDocs: core.serialization.string().optional(),
@@ -78,6 +79,7 @@ export declare namespace IntermediateRepresentation {
     export interface Raw {
         fdrApiDefinitionId?: string | null;
         apiVersion?: ApiVersionScheme.Raw | null;
+        specVersion?: string | null;
         apiName: NameOrString.Raw;
         apiDisplayName?: string | null;
         apiDocs?: string | null;

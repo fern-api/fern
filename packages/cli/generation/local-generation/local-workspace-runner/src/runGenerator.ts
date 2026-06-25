@@ -5,6 +5,8 @@ import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import {
     AutoVersioningCache,
     extractLanguageFromGeneratorName,
+    isAutoVersion,
+    MAGIC_VERSION,
     mapMagicVersionForLanguage
 } from "@fern-api/generator-cli/autoversion";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
@@ -135,6 +137,11 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningNewVersion?: string;
     autoVersioningPreviousVersion?: string;
 }> {
+    // When version is AUTO, pass the magic placeholder to the IR so that any
+    // version strings embedded in generated code (e.g., User-Agent header) use
+    // the safe placeholder that will be correctly replaced post-generation.
+    const irVersion = version ?? outputVersionOverride;
+    const effectiveIrVersion = irVersion != null && isAutoVersion(irVersion) ? MAGIC_VERSION : irVersion;
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
@@ -142,7 +149,7 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
-        version: version ?? outputVersionOverride,
+        version: effectiveIrVersion,
         sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
         ir
@@ -213,10 +220,16 @@ export async function writeFilesToDiskAndRunGenerator({
     const generatorLanguage =
         generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const mappedVersion = version != null ? mapMagicVersionForLanguage(version, generatorLanguage) : version;
+    // When outputVersionOverride is AUTO, substitute the magic version constant so the
+    // generator produces code with a safe placeholder ("0.0.0-fern-placeholder") instead
+    // of the literal "AUTO" string — which would corrupt identifiers containing "AUTO"
+    // during the post-generation sed replacement.
+    const effectiveOutputVersion =
+        outputVersionOverride != null && isAutoVersion(outputVersionOverride) ? MAGIC_VERSION : outputVersionOverride;
     const mappedOutputVersionOverride =
-        outputVersionOverride != null
-            ? mapMagicVersionForLanguage(outputVersionOverride, generatorLanguage)
-            : outputVersionOverride;
+        effectiveOutputVersion != null
+            ? mapMagicVersionForLanguage(effectiveOutputVersion, generatorLanguage)
+            : effectiveOutputVersion;
 
     const config = getGeneratorConfig({
         generatorInvocation,

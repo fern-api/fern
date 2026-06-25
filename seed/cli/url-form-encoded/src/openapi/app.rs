@@ -1326,6 +1326,14 @@ impl CliApp {
             }
         }
 
+        cli = cli.arg(
+            clap::Arg::new("debug")
+                .long("debug")
+                .action(clap::ArgAction::SetTrue)
+                .global(true)
+                .help("Dump HTTP request and response to stderr")
+        );
+
         // Compose the root --help footer. Preserves the section order
         // from the old run_async path: global headers → auth → env vars.
         let existing_after_help = cli.get_after_help().map(|s| s.to_string());
@@ -1489,11 +1497,14 @@ pub struct AppContext {
     /// Whether `--quiet` was passed on the command line. Threaded into
     /// `OutputPipeline` by [`AppContext::execute`] so custom commands
     /// honor the flag.
-    quiet: bool,
+    pub(crate) quiet: bool,
     /// Base URL override resolved from `--base-url` / `{NAME}_BASE_URL`.
     /// Threaded into `invoke()` so custom command handlers respect the
     /// override the same way direct CLI dispatch does.
-    base_url_override: Option<String>,
+    pub(crate) base_url_override: Option<String>,
+    /// Whether `--debug` was passed on the command line. Stored for
+    /// use by the executor (DBO-1.3) to dump HTTP traffic to stderr.
+    pub(crate) debug: bool,
 }
 
 impl AppContext {
@@ -1507,6 +1518,7 @@ impl AppContext {
             entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
             quiet: false,
             base_url_override: None,
+            debug: false,
         }
     }
 
@@ -1517,6 +1529,11 @@ impl AppContext {
 
     pub(crate) fn with_base_url_override(mut self, base_url_override: Option<String>) -> Self {
         self.base_url_override = base_url_override;
+        self
+    }
+
+    pub(crate) fn with_debug(mut self, debug: bool) -> Self {
+        self.debug = debug;
         self
     }
 
@@ -1661,6 +1678,7 @@ impl AppContext {
                 // streaming default; only the CLI front-end exposes the
                 // opt-in buffered toggle.
                 false,
+                self.debug,
                 &extra_headers,
             ))
         })
@@ -1732,6 +1750,9 @@ impl AppContext {
                 // buffered semantics so the captured value mirrors the
                 // unary-response shape callers already handle.
                 true,
+                // Programmatic callers (invoke) never use the debug dump —
+                // debug mode is a CLI-only surface.
+                false,
                 &extra_headers,
             ))
         })?;
@@ -2116,11 +2137,24 @@ pub(crate) fn collect_multipart_parts(
                 });
                 continue;
             }
-            let stripped = executor::strip_or_escape_at(raw);
-            let stripped_ref: &str = stripped.as_ref();
-            if stripped_ref != "-" {
+            // Validate the inner filesystem path — the same string the executor
+            // will eventually pass to `tokio::fs::read`. `parse_at_ref` strips
+            // the `@`, `@file://`, or `@data://` prefix so an adversarial
+            // `@file://evil\x00path` is rejected before disk I/O regardless of
+            // which encoding mode was requested (FER-10532). Stdin is only the
+            // `Auto`-mode `-` sentinel; an explicit-scheme `-` is a literal
+            // filename and still gets validated.
+            let (inner, mode) = match executor::parse_at_ref(raw) {
+                executor::AtRef::File { path, mode } => (path, mode),
+                executor::AtRef::Plain(s) => (std::borrow::Cow::Borrowed(s), executor::AtMode::Auto),
+                // `\@literal` was handled above; reachable only as a defensive
+                // fallback if the escape branch is ever skipped.
+                executor::AtRef::Escaped(_) => continue,
+            };
+            let is_stdin = mode == executor::AtMode::Auto && inner.as_ref() == "-";
+            if !is_stdin {
                 crate::output::reject_dangerous_chars(
-                    stripped_ref,
+                    inner.as_ref(),
                     &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
                 )?;
             }
@@ -2479,7 +2513,7 @@ mod tests {
         // must be flagged as colliding so the global registration site
         // can skip them with a warning instead of letting clap panic.
         // Cover the names that are most likely to be picked accidentally.
-        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json"] {
+        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json", "debug"] {
             assert!(
                 sdk_variable_collides_with_builtin(builtin),
                 "expected '{builtin}' to collide with a built-in flag",

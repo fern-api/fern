@@ -887,4 +887,5 @@ default-environment: PRD
 default-url: fintech
 ",
   },
+  "specVersion": "1.0.0",
 }

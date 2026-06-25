@@ -861,6 +861,7 @@ export async function publishDocs({
                     fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    editThisPage,
                     resolver
                 });
                 if (deployMode === "ledger") {
@@ -884,6 +885,7 @@ export async function publishDocs({
                     fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    editThisPage,
                     resolver
                 });
                 context.logger.info(
