@@ -833,22 +833,24 @@ export class AutoVersioningService {
         this.logger.debug(`Replacing placeholder version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
         const files = await this.walkDirectory(workingDirectory, () => true);
-        let replacedCount = 0;
 
-        for (const filePath of files) {
+        const replaceInFile = async (filePath: string): Promise<boolean> => {
             if (await this.isBinaryFile(filePath)) {
-                continue;
+                return false;
             }
 
             const content = await readFile(filePath, "utf-8");
             if (!content.includes(mappedMagicVersion)) {
-                continue;
+                return false;
             }
 
             const updated = content.split(mappedMagicVersion).join(finalVersion);
             await writeFile(filePath, updated, "utf-8");
-            replacedCount++;
-        }
+            return true;
+        };
+
+        const results = await this.processInParallel(files, replaceInFile);
+        const replacedCount = results.filter(Boolean).length;
 
         this.logger.debug(`Placeholder version replaced successfully in ${replacedCount} file(s)`);
     }
@@ -996,15 +998,25 @@ export class AutoVersioningService {
         return results;
     }
 
+    private static readonly CONCURRENCY_LIMIT = 32;
+
+    private async processInParallel<T>(items: string[], fn: (item: string) => Promise<T>): Promise<T[]> {
+        const results: T[] = [];
+        for (let i = 0; i < items.length; i += AutoVersioningService.CONCURRENCY_LIMIT) {
+            const batch = items.slice(i, i + AutoVersioningService.CONCURRENCY_LIMIT);
+            const batchResults = await Promise.all(batch.map(fn));
+            results.push(...batchResults);
+        }
+        return results;
+    }
+
     /**
      * Adds a version suffix to import paths in all .go files in the repository.
      */
     private async addSuffixToGoFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
         const goFiles = await this.walkDirectory(repoRoot, (filePath) => extname(filePath) === ".go");
 
-        for (const filePath of goFiles) {
-            await this.addSuffixToGoFile(filePath, modulePath, suffix);
-        }
+        await this.processInParallel(goFiles, (filePath) => this.addSuffixToGoFile(filePath, modulePath, suffix));
     }
 
     /**

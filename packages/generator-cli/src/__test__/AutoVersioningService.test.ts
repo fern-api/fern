@@ -1034,6 +1034,98 @@ describe("AutoVersioningService", () => {
         }
     });
 
+    // --- Tests for replaceMagicVersion: parallel processing ---
+
+    it("testReplaceMagicVersion_manyFilesProcessedCorrectly", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const fileCount = 100;
+            const filesWithMagic: string[] = [];
+            const filesWithoutMagic: string[] = [];
+
+            // Create 100 files across nested directories — more than the concurrency limit (32)
+            for (let i = 0; i < fileCount; i++) {
+                const subDir = path.join(tempDir, `dir-${i % 10}`);
+                await fs.mkdir(subDir, { recursive: true });
+                const filePath = path.join(subDir, `file-${i}.txt`);
+
+                if (i % 3 === 0) {
+                    // Every 3rd file has the magic version
+                    await fs.writeFile(filePath, `version=0.0.0-fern-placeholder\nindex=${i}`);
+                    filesWithMagic.push(filePath);
+                } else {
+                    await fs.writeFile(filePath, `no-magic-here\nindex=${i}`);
+                    filesWithoutMagic.push(filePath);
+                }
+            }
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "3.2.1"
+            );
+
+            // All files with magic version should be updated
+            for (const filePath of filesWithMagic) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("3.2.1");
+                expect(content).not.toContain("0.0.0-fern-placeholder");
+            }
+
+            // Files without magic version should be unchanged
+            for (const filePath of filesWithoutMagic) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("no-magic-here");
+                expect(content).not.toContain("3.2.1");
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_mixedBinaryAndTextInParallel", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const textFiles: string[] = [];
+            const binaryFiles: string[] = [];
+
+            // Create a mix of 50 text and 50 binary files to exercise parallel binary detection
+            for (let i = 0; i < 50; i++) {
+                const textPath = path.join(tempDir, `text-${i}.txt`);
+                await fs.writeFile(textPath, `version=0.0.0-fern-placeholder file=${i}`);
+                textFiles.push(textPath);
+
+                const binaryPath = path.join(tempDir, `binary-${i}.bin`);
+                const binContent = Buffer.alloc(128);
+                binContent[0] = 0; // null byte → binary
+                binContent.write("0.0.0-fern-placeholder", 10);
+                await fs.writeFile(binaryPath, binContent);
+                binaryFiles.push(binaryPath);
+            }
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "5.0.0"
+            );
+
+            // All text files should be updated
+            for (const filePath of textFiles) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("5.0.0");
+                expect(content).not.toContain("0.0.0-fern-placeholder");
+            }
+
+            // All binary files should remain unchanged (still contain null byte at position 0)
+            for (const filePath of binaryFiles) {
+                const content = await fs.readFile(filePath);
+                expect(content[0]).toBe(0);
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
     // --- Tests for extractPreviousVersion: exception path ---
 
     it("testExtractPreviousVersion_noMagicVersionInDiff_throws", () => {
