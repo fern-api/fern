@@ -76,6 +76,8 @@ describe("resolveRemoteSpecs", () => {
         expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
             "--depth",
             "1",
+            "--config",
+            "core.symlinks=false",
             "--branch",
             "main"
         ]);
@@ -188,7 +190,9 @@ describe("resolveRemoteSpecs", () => {
 
         expect(__mockClone).toHaveBeenCalledWith("https://github.com/org/specs.git", "/tmp/mock-clone-dir", [
             "--depth",
-            "1"
+            "1",
+            "--config",
+            "core.symlinks=false"
         ]);
     });
 

@@ -73,7 +73,7 @@ export async function resolveRemoteSpecs({
         const clonePath = AbsoluteFilePath.of(tmpDir.path);
 
         const git = simpleGit();
-        const cloneArgs = ["--depth", "1"];
+        const cloneArgs = ["--depth", "1", "--config", "core.symlinks=false"];
         if (target.ref != null) {
             cloneArgs.push("--branch", target.ref);
         }
