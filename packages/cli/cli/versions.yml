@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.52.0
+  changelogEntry:
+    - summary: |
+        Add a `layout.changelog-layout` option to docs.yml. Set it to `classic` to render the
+        legacy stacked changelog layout, or `timeline` (the default) for the searchable
+        timeline-of-cards layout.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
 - version: 5.51.2
   changelogEntry:
     - summary: |
