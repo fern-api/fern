@@ -1034,6 +1034,62 @@ describe("AutoVersioningService", () => {
         }
     });
 
+    it("testReplaceMagicVersion_excludedDirectoriesIgnored", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const excludedDirs = [
+                "node_modules",
+                "__pycache__",
+                ".venv",
+                "build",
+                "dist",
+                "target",
+                ".gradle",
+                ".next",
+                ".idea",
+                ".dart_tool",
+                "Pods"
+            ];
+
+            // Create a file inside each excluded directory
+            for (const dir of excludedDirs) {
+                const dirPath = path.join(tempDir, dir, "nested");
+                await fs.mkdir(dirPath, { recursive: true });
+                await fs.writeFile(
+                    path.join(dirPath, "file.txt"),
+                    "version=0.0.0-fern-placeholder"
+                );
+            }
+
+            // Create a regular file
+            const regularFile = path.join(tempDir, "main.txt");
+            await fs.writeFile(regularFile, "version=0.0.0-fern-placeholder");
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "2.0.0"
+            );
+
+            // Regular file should be updated
+            const regularContent = await fs.readFile(regularFile, "utf-8");
+            expect(regularContent).toContain("2.0.0");
+            expect(regularContent).not.toContain("0.0.0-fern-placeholder");
+
+            // All excluded directories should be untouched
+            for (const dir of excludedDirs) {
+                const content = await fs.readFile(
+                    path.join(tempDir, dir, "nested", "file.txt"),
+                    "utf-8"
+                );
+                expect(content).toContain("0.0.0-fern-placeholder");
+                expect(content).not.toContain("2.0.0");
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
     // --- Tests for replaceMagicVersion: parallel processing ---
 
     it("testReplaceMagicVersion_manyFilesProcessedCorrectly", async () => {

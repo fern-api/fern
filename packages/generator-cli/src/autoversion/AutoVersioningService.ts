@@ -98,6 +98,56 @@ interface FileSection {
 }
 
 /**
+ * Directory names to skip entirely during file-tree traversal.
+ * These are dependency caches, build outputs, IDE configs, and tool caches
+ * that never contain generated source files requiring version replacement.
+ */
+const EXCLUDED_DIRECTORIES: ReadonlySet<string> = new Set([
+    // Version control
+    ".git",
+
+    // Dependency directories
+    "vendor",
+    "node_modules",
+    "Pods",
+
+    // Python environments and caches
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".tox",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+
+    // Build output directories
+    "build",
+    "dist",
+    "out",
+    "target",
+    "bin",
+    "obj",
+
+    // Build tool caches
+    ".gradle",
+    ".mvn",
+
+    // Framework build caches
+    ".next",
+    ".nuxt",
+    ".cache",
+
+    // IDE directories
+    ".idea",
+    ".vscode",
+    ".eclipse",
+
+    // Language-specific tool caches
+    ".dart_tool",
+    ".swiftpm",
+]);
+
+/**
  * Glob-like patterns for files that should be completely excluded from the
  * cleaned diff sent to AI analysis. These files add noise (lock files,
  * generated docs, test fixtures, CI config) without carrying meaningful
@@ -984,8 +1034,7 @@ export class AutoVersioningService {
             }
 
             if (entryStat.isDirectory()) {
-                // Skip .git and vendor directories
-                if (entry === ".git" || entry === "vendor") {
+                if (EXCLUDED_DIRECTORIES.has(entry)) {
                     continue;
                 }
                 const subResults = await this.walkDirectory(fullPath, filter);
