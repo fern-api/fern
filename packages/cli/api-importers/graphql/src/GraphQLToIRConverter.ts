@@ -281,9 +281,9 @@ export class GraphQLToIRConverter {
                 hasStreamingEndpoints: false,
                 isAuthMandatory: false,
                 platformHeaders: {
-                    language: "",
-                    sdkName: "",
-                    sdkVersion: "",
+                    language: "X-Fern-Language",
+                    sdkName: "X-Fern-SDK-Name",
+                    sdkVersion: "X-Fern-SDK-Version",
                     userAgent: undefined
                 }
             },

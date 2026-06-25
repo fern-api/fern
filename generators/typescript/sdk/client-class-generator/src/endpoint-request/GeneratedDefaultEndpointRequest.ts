@@ -11,6 +11,10 @@ import {
 } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+import {
+    GraphqlTransport,
+    getGraphqlTransport
+} from "../endpoints/default/endpoint-response/graphqlResponseBody.js";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
 import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
@@ -205,13 +209,40 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         context: FileContext
     ): Pick<Fetcher.Args, "headers" | "body" | "contentType" | "requestType" | "queryString"> {
         const queryParams = this.getQueryParams(context);
+        const graphqlTransport = getGraphqlTransport(this.endpoint);
+        const serializedBody = this.getSerializedRequestBodyWithNullCheck(context);
         return {
             headers: ts.factory.createIdentifier(HEADERS_VAR_NAME),
             queryString: queryParams.getQueryStringExpression(context),
-            body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
-            requestType: this.getRequestType()
+            body:
+                graphqlTransport != null
+                    ? this.wrapBodyInGraphqlEnvelope(graphqlTransport, serializedBody)
+                    : serializedBody,
+            contentType:
+                graphqlTransport != null
+                    ? "application/json"
+                    : (this.requestBody?.contentType ?? this.getFallbackContentType()),
+            requestType: graphqlTransport != null ? "json" : this.getRequestType()
         };
+    }
+
+    private wrapBodyInGraphqlEnvelope(
+        graphqlTransport: GraphqlTransport,
+        serializedBody: ts.Expression | undefined
+    ): ts.Expression {
+        return ts.factory.createObjectLiteralExpression(
+            [
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("query"),
+                    ts.factory.createStringLiteral(graphqlTransport.query)
+                ),
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("variables"),
+                    serializedBody ?? ts.factory.createObjectLiteralExpression([], false)
+                )
+            ],
+            true
+        );
     }
 
     private getFallbackContentType(): string | undefined {

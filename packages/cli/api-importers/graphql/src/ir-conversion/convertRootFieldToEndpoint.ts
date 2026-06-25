@@ -67,19 +67,38 @@ export function convertRootFieldToEndpoint({
         availability: undefined
     }));
 
-    const requestBody: FernIr.HttpRequestBody | undefined =
-        field.args.length > 0
-            ? FernIr.HttpRequestBody.inlinedRequestBody({
-                  name: graphqlCasingsGenerator.generateName(`${pascalCase(field.name)}Request`),
-                  extends: [],
-                  properties: requestBodyProperties,
-                  extendedProperties: undefined,
-                  extraProperties: false,
-                  contentType: undefined,
-                  docs: undefined,
-                  v2Examples: undefined
-              })
-            : undefined;
+    const hasRequestBody = field.args.length > 0;
+    // Shared name for both the inlined request body type and the SDK request wrapper, so
+    // the generated `${Field}Request` wrapper interface lines up with the request parameter.
+    const requestWrapperName = graphqlCasingsGenerator.generateName(`${pascalCase(field.name)}Request`);
+
+    const requestBody: FernIr.HttpRequestBody | undefined = hasRequestBody
+        ? FernIr.HttpRequestBody.inlinedRequestBody({
+              name: requestWrapperName,
+              extends: [],
+              properties: requestBodyProperties,
+              extendedProperties: undefined,
+              extraProperties: false,
+              contentType: undefined,
+              docs: undefined,
+              v2Examples: undefined
+          })
+        : undefined;
+
+    // A wrapper SdkRequest is what makes the generator emit a `request` parameter on the
+    // method; its serialized value becomes the GraphQL `variables` object at runtime.
+    const sdkRequest: FernIr.SdkRequest | undefined = hasRequestBody
+        ? {
+              shape: FernIr.SdkRequestShape.wrapper({
+                  wrapperName: requestWrapperName,
+                  bodyKey: graphqlCasingsGenerator.generateName("body"),
+                  includePathParameters: false,
+                  onlyPathParameters: false
+              }),
+              requestParameterName: graphqlCasingsGenerator.generateName("request"),
+              streamParameter: undefined
+          }
+        : undefined;
 
     const responseBodyType = convertOutputTypeToTypeReference(field.type, namespace);
     const response: FernIr.HttpResponse = {
@@ -115,7 +134,7 @@ export function convertRootFieldToEndpoint({
         queryParameters: [],
         requestBody,
         v2RequestBodies: undefined,
-        sdkRequest: undefined,
+        sdkRequest,
         response,
         v2Responses: undefined,
         errors: [],

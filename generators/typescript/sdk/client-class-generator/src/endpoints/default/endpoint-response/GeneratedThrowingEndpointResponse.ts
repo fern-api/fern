@@ -16,6 +16,7 @@ import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImp
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation.js";
 import { getAbortSignalExpression } from "../../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
+import { maybeUnwrapGraphqlResponseBody } from "./graphqlResponseBody.js";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
     CONTENT_LENGTH_VARIABLE_NAME,
@@ -922,10 +923,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ];
         }
         const deserializeToResponse = generatedEndpointTypeSchemas.deserializeResponse(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-            ),
+            maybeUnwrapGraphqlResponseBody({
+                endpoint: this.endpoint,
+                referenceToRawBody: ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                    context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                )
+            }),
             context
         );
         return [

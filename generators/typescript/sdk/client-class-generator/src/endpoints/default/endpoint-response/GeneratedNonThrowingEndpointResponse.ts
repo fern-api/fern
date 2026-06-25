@@ -7,6 +7,7 @@ import { ts } from "ts-morph";
 
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import { getSuccessReturnType } from "./getSuccessReturnType.js";
+import { maybeUnwrapGraphqlResponseBody } from "./graphqlResponseBody.js";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
@@ -133,10 +134,13 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private getOkResponseBody(context: FileContext): ts.Expression {
         const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
         return generatedEndpointTypeSchemas.deserializeResponse(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-            ),
+            maybeUnwrapGraphqlResponseBody({
+                endpoint: this.endpoint,
+                referenceToRawBody: ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                    context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                )
+            }),
             context
         );
     }
