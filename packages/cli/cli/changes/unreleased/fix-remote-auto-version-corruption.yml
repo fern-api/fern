@@ -1,0 +1,3 @@
+- summary: |
+    Prevent --version AUTO from embedding literal 'AUTO' in generated SDK code during remote generation. The magic placeholder is now substituted before IR generation in the remote path (matching the local generation fix). Also fix macOS BSD sed 'illegal byte sequence' error when generated output contains binary files.
+  type: fix

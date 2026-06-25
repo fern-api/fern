@@ -13,7 +13,7 @@ import { createFdrService, createVenusService } from "@fern-api/core";
 import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
+import { isAutoVersion, MAGIC_VERSION } from "@fern-api/generator-cli/autoversion";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getOriginalName } from "@fern-api/ir-utils";
@@ -162,6 +162,13 @@ export async function runRemoteGenerationForGenerator({
         }
     }
 
+    // When the version is AUTO, pass the magic placeholder to the IR so that any
+    // version strings embedded in generated code (e.g., User-Agent header,
+    // X-Fern-SDK-Version) use the safe placeholder that Fiddle's AutoVersionStep
+    // will correctly replace post-generation.
+    const effectiveIrVersion =
+        resolvedVersion != null && isAutoVersion(resolvedVersion) ? MAGIC_VERSION : resolvedVersion;
+
     const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
@@ -175,7 +182,7 @@ export async function runRemoteGenerationForGenerator({
         audiences,
         readme,
         packageName,
-        version: resolvedVersion,
+        version: effectiveIrVersion,
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
         dynamicGeneratorConfig,

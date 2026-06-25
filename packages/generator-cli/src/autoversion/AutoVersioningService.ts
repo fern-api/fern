@@ -853,8 +853,9 @@ export class AutoVersioningService {
             // GNU sed (Linux, DevBox on Mac)
             command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '${sedCommand}' {} +`;
         } else {
-            // BSD sed (native macOS)
-            command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '' '${sedCommand}' {} +`;
+            // BSD sed (native macOS) — LC_ALL=C prevents "illegal byte sequence" errors
+            // when generated output contains binary files (e.g., .jar, .class).
+            command = `LC_ALL=C find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '' '${sedCommand}' {} +`;
         }
 
         try {
