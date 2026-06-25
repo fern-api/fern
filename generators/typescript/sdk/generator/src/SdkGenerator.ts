@@ -1199,6 +1199,12 @@ export class SdkGenerator {
                 return;
             }
 
+            // Skip services with no wire test cases (e.g. GraphQL services, whose endpoints have
+            // no examples) so we don't emit an empty test file that vitest fails on.
+            if (!this.testGenerator.serviceHasWireTests(service)) {
+                return;
+            }
+
             this.withSourceFile({
                 filepath: this.testGenerator.getTestFile(service),
                 run: ({ sourceFile, importsManager }) => {
