@@ -1,12 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { buildSchema, GraphQLField, GraphQLObjectType, GraphQLSchema } from "graphql";
 import { readFile } from "fs/promises";
-
-import { generateSelectionQuery } from "./query-generation/generateSelectionQuery.js";
+import { buildSchema, GraphQLSchema } from "graphql";
 import { convertGraphQLTypes } from "./ir-conversion/convertGraphQLTypes.js";
-import { convertRootFieldToEndpoint } from "./ir-conversion/convertRootFieldToEndpoint.js";
 
 /**
  * Converts a GraphQL schema into Fern's IntermediateRepresentation.
@@ -24,7 +21,11 @@ export class GraphQLToIRConverter {
     private namespace: string | undefined;
     private schema: GraphQLSchema | undefined;
 
-    constructor({ context, filePath, namespace }: { context: TaskContext; filePath: AbsoluteFilePath; namespace?: string }) {
+    constructor({
+        context,
+        filePath,
+        namespace
+    }: { context: TaskContext; filePath: AbsoluteFilePath; namespace?: string }) {
         this.context = context;
         this.filePath = filePath;
         this.namespace = namespace;
@@ -99,7 +100,10 @@ export class GraphQLToIRConverter {
      * Assembles a minimal IntermediateRepresentation from converted types and services.
      * Sets sensible defaults for fields not applicable to GraphQL sources.
      */
-    private assembleIR(_args: { types: Record<string, unknown>; services: Record<string, unknown> }): IntermediateRepresentation {
+    private assembleIR(_args: {
+        types: Record<string, unknown>;
+        services: Record<string, unknown>;
+    }): IntermediateRepresentation {
         // TODO: Construct a valid IntermediateRepresentation with:
         // - types: converted GraphQL types
         // - services: converted root field services

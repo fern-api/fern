@@ -1,10 +1,7 @@
 import {
     GraphQLEnumType,
     GraphQLField,
-    GraphQLInputType,
     GraphQLInterfaceType,
-    GraphQLList,
-    GraphQLNonNull,
     GraphQLObjectType,
     GraphQLOutputType,
     GraphQLScalarType,
@@ -135,11 +132,7 @@ export class SelectionSetBuilder {
      * @param visitedTypes - Set of type names in the current path (for cycle detection)
      * @returns The selection set string (e.g., "{ id name posts { id title } }")
      */
-    public buildForType(
-        _type: GraphQLOutputType,
-        _currentDepth: number,
-        _visitedTypes: Set<string>
-    ): string {
+    public buildForType(_type: GraphQLOutputType, _currentDepth: number, _visitedTypes: Set<string>): string {
         // TODO: Implement recursive selection building
         //
         // Algorithm:
@@ -167,7 +160,9 @@ export class SelectionSetBuilder {
     /**
      * Unwraps NonNull and List wrappers to get the underlying named type.
      */
-    private unwrapType(_type: GraphQLOutputType): GraphQLObjectType | GraphQLUnionType | GraphQLInterfaceType | GraphQLScalarType | GraphQLEnumType {
+    private unwrapType(
+        _type: GraphQLOutputType
+    ): GraphQLObjectType | GraphQLUnionType | GraphQLInterfaceType | GraphQLScalarType | GraphQLEnumType {
         // TODO: Implement type unwrapping
         // Strip GraphQLNonNull and GraphQLList wrappers recursively
         throw new Error("Not yet implemented");
