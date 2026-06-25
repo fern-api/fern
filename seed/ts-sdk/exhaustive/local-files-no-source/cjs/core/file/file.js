@@ -78,6 +78,9 @@ function toMultipartDataPart(file) {
 function getFileWithMetadata(file_1) {
     return __awaiter(this, arguments, void 0, function* (file, { noSniffFileSize } = {}) {
         var _a, _b, _c, _d, _e;
+        if (file == null) {
+            throw new TypeError("Cannot upload null or undefined as a file. Ensure the file parameter is provided.");
+        }
         if (isFileLike(file)) {
             return getFileWithMetadata({
                 data: file,

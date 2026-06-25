@@ -37,6 +37,9 @@ async function getFileWithMetadata(
     file: Uploadable,
     { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
 ): Promise<Uploadable.WithMetadata> {
+    if (file == null) {
+        throw new TypeError("Cannot upload null or undefined as a file. Ensure the file parameter is provided.");
+    }
     if (isFileLike(file)) {
         return getFileWithMetadata(
             {

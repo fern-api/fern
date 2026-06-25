@@ -74,6 +74,9 @@ export class Node18FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
+        if (value == null) {
+            return;
+        }
         const { data, filename } = await toMultipartDataPart(value);
 
         if (data instanceof Blob) {
@@ -135,6 +138,9 @@ export class Node16FormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
+        if (value == null) {
+            return;
+        }
         const { data, filename } = await toMultipartDataPart(value);
 
         let bufferedValue;
@@ -176,6 +182,9 @@ export class WebFormData implements CrossPlatformFormData {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
+        if (value == null) {
+            return;
+        }
         const { data, filename, contentType } = await toMultipartDataPart(value);
 
         if (data instanceof Blob) {

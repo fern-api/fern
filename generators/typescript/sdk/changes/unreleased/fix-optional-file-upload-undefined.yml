@@ -1,0 +1,5 @@
+- summary: |
+    Fix TypeError when passing null or undefined to optional multipart file upload fields.
+    The `appendFile` method now silently skips null/undefined values, and `getFileWithMetadata`
+    throws a clear error message instead of crashing with `Cannot use 'in' operator to search for 'path' in undefined`.
+  type: fix
