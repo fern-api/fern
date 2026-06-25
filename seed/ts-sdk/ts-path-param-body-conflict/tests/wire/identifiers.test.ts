@@ -12,7 +12,7 @@ describe("IdentifiersClient", () => {
 
         server
             .mockEndpoint()
-            .patch("/identifiers/email")
+            .patch("/identifiers/phone")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)

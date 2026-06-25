@@ -44,7 +44,7 @@ import { SeedTsPathParamBodyConflictClient } from "@fern/ts-path-param-body-conf
 
 const client = new SeedTsPathParamBodyConflictClient({ environment: "YOUR_BASE_URL" });
 await client.identifiers.update({
-    idType: "email",
+    idType: "phone",
     idType: "phone",
     oldValue: "+13175556789",
     newValue: "+13175556798"

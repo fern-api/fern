@@ -3,7 +3,7 @@
 /**
  * @example
  *     {
- *         idType: "email",
+ *         idType: "phone",
  *         idType: "phone",
  *         oldValue: "+13175556789",
  *         newValue: "+13175556798"

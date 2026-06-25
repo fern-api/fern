@@ -22,7 +22,7 @@ service:
       response: IdentifierUpdateResponse
       examples:
         - path-parameters:
-            idType: email
+            idType: phone
           request:
             idType: phone
             oldValue: "+13175556789"

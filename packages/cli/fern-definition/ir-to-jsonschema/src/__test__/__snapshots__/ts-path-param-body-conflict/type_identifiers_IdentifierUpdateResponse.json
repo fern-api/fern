@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "idType": {
+      "type": "string"
+    },
+    "oldValue": {
+      "type": "string"
+    },
+    "newValue": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "idType",
+    "oldValue",
+    "newValue"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
