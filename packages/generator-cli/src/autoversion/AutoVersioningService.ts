@@ -1,7 +1,7 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { existsSync } from "fs";
-import { lstat, readdir, readFile, writeFile } from "fs/promises";
+import { lstat, open, readdir, readFile, writeFile } from "fs/promises";
 import { extname, join } from "path";
 import semver from "semver";
 
@@ -854,14 +854,19 @@ export class AutoVersioningService {
     }
 
     private async isBinaryFile(filePath: string): Promise<boolean> {
-        const buffer = await readFile(filePath);
-        const headerSize = Math.min(buffer.length, 8192);
-        for (let i = 0; i < headerSize; i++) {
-            if (buffer[i] === 0) {
-                return true;
+        const fileHandle = await open(filePath, "r");
+        try {
+            const header = Buffer.alloc(8192);
+            const { bytesRead } = await fileHandle.read(header, 0, 8192, 0);
+            for (let i = 0; i < bytesRead; i++) {
+                if (header[i] === 0) {
+                    return true;
+                }
             }
+            return false;
+        } finally {
+            await fileHandle.close();
         }
-        return false;
     }
 
     /**
