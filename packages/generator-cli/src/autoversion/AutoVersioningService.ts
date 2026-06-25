@@ -144,7 +144,7 @@ const EXCLUDED_DIRECTORIES: ReadonlySet<string> = new Set([
 
     // Language-specific tool caches
     ".dart_tool",
-    ".swiftpm",
+    ".swiftpm"
 ]);
 
 /**

@@ -1078,10 +1078,7 @@ describe("AutoVersioningService", () => {
 
             // All excluded directories should be untouched
             for (const dir of excludedDirs) {
-                const content = await fs.readFile(
-                    path.join(tempDir, dir, "nested", "file.txt"),
-                    "utf-8"
-                );
+                const content = await fs.readFile(path.join(tempDir, dir, "nested", "file.txt"), "utf-8");
                 expect(content).toContain("0.0.0-fern-placeholder");
                 expect(content).not.toContain("2.0.0");
             }
