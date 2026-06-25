@@ -179,4 +179,5 @@ error-discrimination:
 display-name: Test extension `x-fern-ignore`
 ",
   },
+  "specVersion": "1.0.0",
 }

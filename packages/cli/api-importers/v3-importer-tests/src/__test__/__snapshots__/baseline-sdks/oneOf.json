@@ -1,5 +1,6 @@
 {
   "selfHosted": false,
+  "specVersion": "0.0.1",
   "apiName": "api",
   "apiDisplayName": "OneOfService API",
   "auth": {

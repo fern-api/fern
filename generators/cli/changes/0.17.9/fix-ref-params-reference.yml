@@ -1,0 +1,6 @@
+- summary: |
+    Fix crash in reference.md generation when OpenAPI specs contain `$ref`
+    parameter references (e.g. `$ref: "#/components/parameters/LimitParam"`).
+    The generator now resolves these references from `components.parameters`
+    instead of crashing with "Cannot read properties of undefined".
+  type: fix

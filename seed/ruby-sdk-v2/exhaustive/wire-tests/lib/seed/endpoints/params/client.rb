@@ -328,6 +328,88 @@ module Seed
           end
         end
 
+        # POST with referenced body + query params
+        #
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String, nil] :fields
+        #
+        # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        def create_with_body_and_query(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          query_param_names = %i[fields]
+          query_params = {}
+          query_params["_fields"] = params[:fields] if params.key?(:fields)
+          params = params.except(*query_param_names)
+
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/params/body-and-query",
+            query: query_params,
+            body: Seed::Types::Object_::Types::ObjectWithRequiredField.new(params).to_h,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # POST bytes body + query params
+        #
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String, nil] :fields
+        #
+        # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        def upload_bytes_with_query(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          query_param_names = %i[fields]
+          query_params = {}
+          query_params["_fields"] = params[:fields] if params.key?(:fields)
+          params = params.except(*query_param_names)
+
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/params/bytes-and-query",
+            query: query_params,
+            body: params,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Types::Object_::Types::ObjectWithOptionalField.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
         # GET with boolean path param
         #
         # @param request_options [Hash]

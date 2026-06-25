@@ -34,9 +34,17 @@ RUN rm -f /opt/gradle/lib/plugins/plexus-utils-*.jar && \
 # Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
 # (async parser bypasses maxNumberLength constraint, leading to potential DoS)
 RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar \
-      -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
-    echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.8/jackson-core-2.18.8.jar \
+      -o /opt/gradle/lib/jackson-core-2.18.8.jar && \
+    echo "ab865e39f01403598748b090a3bf528616e701913a71afc37a227daa0fabb4ae  /opt/gradle/lib/jackson-core-2.18.8.jar" | sha256sum -c -
+
+# Replace vulnerable jackson-databind in Gradle distribution to fix
+# CVE-2026-54514 (InetSocketAddress deserialization triggers DNS lookup / SSRF)
+# CVE-2026-54515 backport is pending 2.18.9 release
+RUN rm -f /opt/gradle/lib/jackson-databind-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.18.8/jackson-databind-2.18.8.jar \
+      -o /opt/gradle/lib/jackson-databind-2.18.8.jar && \
+    echo "06ea5950905263fac3e1730de6a21a023151626af6bb3cb099f88644a0fa04f0  /opt/gradle/lib/jackson-databind-2.18.8.jar" | sha256sum -c -
 
 # Replace vulnerable Bouncy Castle jars in Gradle distribution to fix CVE-2026-3505
 # (bcpg unbounded PGP AEAD chunk size leads to pre-auth resource exhaustion; fixed in 1.84).
@@ -81,6 +89,10 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # 1.21.3-7.amzn2023.0.1)
 # Security update 2026-06-10: add perl-* (CVE-2026-8376, CVE-2026-7010),
 # libsolv (CVE-2026-48863, CVE-2026-48864, CVE-2026-9149, CVE-2026-9150)
+# Security update 2026-06-24: add graphite2 (CVE-2026-50593, integer
+# underflow OOB write; fixed in 1.3.15 via ALAS2023-2026-1856),
+# giflib (CVE-2026-26740, heap buffer overflow in EGifGCBToExtension;
+# fixed via ALAS2023-2026-1883)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -107,7 +119,9 @@ RUN dnf --releasever=latest update -y \
     libgcrypt \
     krb5-libs \
     'perl-*' \
-    libsolv && \
+    libsolv \
+    graphite2 \
+    giflib && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf

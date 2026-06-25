@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "OAuth Token API",
   "description": "A simple API with an OAuth token endpoint accepting JSON input",
   "servers": [

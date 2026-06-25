@@ -278,6 +278,37 @@ pub fn is_dot_segment(segment: &str) -> bool {
     matches!(segment, "." | "..")
 }
 
+// -- Query-component encoding ------------------------------------------------
+//
+// The set below mirrors `QUERY_COMPONENT` in `src/openapi/executor.rs`. Per
+// the architecture rule (`AGENTS.md` "Code Generation Model") asyncapi may
+// not import from openapi, so the asyncapi executor calls this shared
+// helper instead. The set is duplicated by design; if the openapi set
+// changes, audit this one for parity.
+
+/// Percent-encode set for a query-string component (key or value).
+///
+/// RFC 3986 unreserved characters (`A-Za-z0-9-_.~`) are left intact; the comma
+/// is also kept literal so a form/no-explode array reads `ids=1,2` rather than
+/// `ids=1%2C2`. Everything else — including space (`%20`, *not* the form
+/// `+`), `|` (`%7C`), `&`, `=`, `#`, and `[` `]` — is percent-encoded.
+const QUERY_COMPONENT: &AsciiSet = &percent_encoding::NON_ALPHANUMERIC
+    .remove(b'-')
+    .remove(b'_')
+    .remove(b'.')
+    .remove(b'~')
+    .remove(b',');
+
+/// Percent-encode `s` for use as a URL query-string component (key or value).
+///
+/// Encodes space as `%20` (not `+`), and all reserved characters that would
+/// otherwise terminate or split the component (`&`, `=`, `#`, `+`, `/`, `?`,
+/// control chars). RFC 3986 unreserved (`A-Za-z0-9-_.~`) and `,` pass through
+/// unchanged.
+pub fn encode_query_component(s: &str) -> String {
+    percent_encoding::utf8_percent_encode(s, QUERY_COMPONENT).to_string()
+}
+
 /// Percent-encode a value for use in URI path templates where `/` should stay
 /// as a path separator (e.g., RFC 6570 `{+name}` expansions).
 ///
@@ -907,6 +938,47 @@ mod tests {
 
             assert!(result.is_err(), "symlink escape should be rejected");
         }
+    }
+
+    // -- encode_query_component ----------------------------------------------
+
+    #[test]
+    fn encode_query_component_encodes_space_as_percent20() {
+        assert_eq!(encode_query_component("a b"), "a%20b");
+    }
+
+    #[test]
+    fn encode_query_component_encodes_reserved_chars() {
+        assert_eq!(encode_query_component("a&b=c#d"), "a%26b%3Dc%23d");
+        assert_eq!(encode_query_component("a+b"), "a%2Bb");
+        assert_eq!(encode_query_component("a/b"), "a%2Fb");
+        assert_eq!(encode_query_component("a?b"), "a%3Fb");
+        assert_eq!(encode_query_component("a|b"), "a%7Cb");
+    }
+
+    #[test]
+    fn encode_query_component_unreserved_passes_through() {
+        // RFC 3986 unreserved set plus `,` — all should be literal.
+        assert_eq!(encode_query_component("Aa0-_.~,"), "Aa0-_.~,");
+    }
+
+    #[test]
+    fn encode_query_component_encodes_control_chars() {
+        let encoded = encode_query_component("a\x01\x1Fb");
+        assert!(encoded.contains("%01"));
+        assert!(encoded.contains("%1F"));
+        assert!(!encoded.contains('\x01'));
+    }
+
+    #[test]
+    fn encode_query_component_encodes_adversarial_agent_id() {
+        // The signature edge case from the acceptance criteria — agent_id
+        // with `/`, `?`, `&` must encode to `bad%2Fid%3Ffoo%26bar` so it
+        // cannot leak extra query parameters into the connect URL.
+        assert_eq!(
+            encode_query_component("bad/id?foo&bar"),
+            "bad%2Fid%3Ffoo%26bar",
+        );
     }
 
     #[test]

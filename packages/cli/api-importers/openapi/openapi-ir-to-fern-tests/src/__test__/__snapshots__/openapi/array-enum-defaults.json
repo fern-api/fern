@@ -224,4 +224,5 @@ error-discrimination:
 display-name: Array enum defaults
 ",
   },
+  "specVersion": "1.0.0",
 }

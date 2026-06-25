@@ -215,4 +215,5 @@ error-discrimination:
 display-name: Readonly Ref Shared Schema API
 ",
   },
+  "specVersion": "1.0.0",
 }

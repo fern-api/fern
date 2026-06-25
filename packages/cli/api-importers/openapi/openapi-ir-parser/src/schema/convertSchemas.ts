@@ -380,6 +380,13 @@ export function convertSchemaObject(
     groupName = context.resolveGroupName(groupName);
 
     const generatedName = getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds);
+
+    // When x-fern-type-name (or title) overrides the schema name, propagate to
+    // breadcrumbs so inline child types derive names from the overridden name.
+    if (nameOverride != null) {
+        breadcrumbs = [nameOverride];
+    }
+
     const title = schema.title;
     const description = schema.description;
     const availability = convertAvailability(schema);

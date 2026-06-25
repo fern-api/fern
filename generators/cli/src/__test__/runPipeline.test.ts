@@ -333,6 +333,49 @@ describe("runPipeline", () => {
         expect(ciYml).not.toContain("npm");
     });
 
+    it("emits .github/workflows/release.yml for github output (unconditionally)", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfigNoNpm,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("name: Release");
+        expect(releaseYml).toContain("cargo-dist");
+        expect(releaseYml).toContain("v0.31.0");
+        expect(releaseYml).toContain("build-local-artifacts");
+        expect(releaseYml).toContain("build-global-artifacts");
+        expect(releaseYml).toContain("Create GitHub Release");
+    });
+
+    it("emits release.yml alongside ci.yml when npm publish info is present", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        // Both ci.yml and release.yml should be present
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        expect(ciYml).toContain("name: ci");
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("name: Release");
+    });
+
     it("emits .github/workflows/ci.yml when github mode with npm publish info", async () => {
         await stageSdkTemplate();
         await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);

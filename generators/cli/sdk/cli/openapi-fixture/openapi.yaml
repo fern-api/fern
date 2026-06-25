@@ -150,6 +150,21 @@ paths:
           schema:
             type: integer
             default: 25
+        # `token` and `page` are used by `tests/openapi_debug_wire.rs` to
+        # verify that sensitive query-param names are redacted in the
+        # `--debug` HTTP dump. `token` matches the EXACT sensitive stem list
+        # in `src/debug.rs`; `page` is an innocuous control param that must
+        # pass through unredacted.
+        - name: token
+          in: query
+          description: Debug-test sensitive query param (redacted in --debug dump).
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Debug-test innocuous page cursor.
+          schema:
+            type: integer
         # A header parameter exercising the alias on the wire-header form.
         # On the CLI it must be `--api-version` (kebab of `apiVersion`);
         # on the wire it must be the original `X-Fern-Version` header.

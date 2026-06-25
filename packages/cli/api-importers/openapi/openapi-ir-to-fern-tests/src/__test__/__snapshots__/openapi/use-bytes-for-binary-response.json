@@ -134,4 +134,5 @@ error-discrimination:
 display-name: Streaming API w/ use-bytes-for-binary-response
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -391,4 +391,5 @@ path-parameters:
     client-default: v1beta
 ",
   },
+  "specVersion": "1.0",
 }

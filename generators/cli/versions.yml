@@ -1,4 +1,55 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.18.0
+  changelogEntry:
+    - summary: |
+        Add curl|bash installation support for generated CLIs via cargo-dist
+        release assets. Emits `.github/workflows/release.yml` unconditionally
+        for GitHub output, removes npm from dist-workspace.toml installers,
+        and updates the README Installation section to lead with shell/powershell
+        installer one-liners.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.12
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.8 updates.
+      type: fix
+    - summary: |
+        Suppress `unused import: super::*` warnings in generated type files by adding
+        `#[allow(unused_imports)]` before the injected `use super::*;` statement.
+      type: fix
+    - summary: |
+        Suppress `dead_code` warnings in the generated `sdk_glue.rs` module, which
+        contains utilities for custom command handlers that may not be used yet.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.11
+  changelogEntry:
+    - summary: |
+        Show credential source hints (e.g. env var names) in `--help` for custom auth
+        providers instead of the opaque "custom auth provider" label.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.10
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.7 updates.
+      type: fix
+  createdAt: "2026-06-23"
+  irVersion: 67
+- version: 0.17.9
+  changelogEntry:
+    - summary: |
+        Fix crash in reference.md generation when OpenAPI specs contain `$ref`
+        parameter references (e.g. `$ref: "#/components/parameters/LimitParam"`).
+        The generator now resolves these references from `components.parameters`
+        instead of crashing with "Cannot read properties of undefined".
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
 - version: 0.17.8
   changelogEntry:
     - summary: |

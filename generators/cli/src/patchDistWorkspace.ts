@@ -54,11 +54,31 @@ export async function patchDistWorkspaceToml(args: {
 /**
  * Pure transformation, exported for unit-test access. Removes the two
  * Fern-branded lines (and their preceding `#` comments, when those
- * comments would otherwise dangle without context). Leaves the file
- * unchanged when neither anchor is present.
+ * comments would otherwise dangle without context), and strips `"npm"`
+ * from the `installers` array so cargo-dist only produces shell +
+ * powershell installers. Leaves the file unchanged when no anchors
+ * match and installers doesn't contain npm.
  */
 export function applyDistWorkspacePatch(distToml: string): string {
-    return distToml.replace(NPM_SCOPE_BLOCK, "").replace(NPM_PACKAGE_BLOCK, "");
+    let result = distToml.replace(NPM_SCOPE_BLOCK, "").replace(NPM_PACKAGE_BLOCK, "");
+    result = stripNpmInstaller(result);
+    return result;
+}
+
+/**
+ * Defensively removes `"npm"` from the `installers = [...]` line in
+ * dist-workspace.toml. This ensures that even if an older or manually
+ * edited template still lists npm, the generated output won't include
+ * it — npm publishing is handled by the separate ci.yml pipeline.
+ */
+export function stripNpmInstaller(distToml: string): string {
+    return distToml.replace(/^(installers\s*=\s*\[)([^\]]*)\]/m, (_match, prefix: string, inner: string) => {
+        const items = inner
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0 && s !== '"npm"');
+        return `${prefix}${items.join(", ")}]`;
+    });
 }
 
 /**

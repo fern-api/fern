@@ -638,4 +638,5 @@ error-discrimination:
 display-name: AllOf/OneOf/AnyOf Edge Cases
 ",
   },
+  "specVersion": "1.0.0",
 }

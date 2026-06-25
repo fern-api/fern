@@ -53,13 +53,75 @@ export class GoTypeMapper {
             case "set":
                 return go.Type.slice(this.convert({ reference: container.set }));
             case "optional":
-                return go.Type.optional(this.convert({ reference: container.optional }));
+                return this.convertOptionalOrNullable(container.optional);
             case "nullable":
-                return go.Type.optional(this.convert({ reference: container.nullable }));
+                return this.convertOptionalOrNullable(container.nullable);
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:
                 assertNever(container);
+        }
+    }
+
+    private convertOptionalOrNullable(innerReference: FernIr.TypeReference): go.Type {
+        if (this.isPointerAliasReference(innerReference)) {
+            return this.convert({ reference: innerReference });
+        }
+        return go.Type.optional(this.convert({ reference: innerReference }));
+    }
+
+    /**
+     * Returns true if the type reference resolves to a named alias that already
+     * generates as a pointer type in Go (i.e., the alias target is nullable or optional).
+     * Also handles the collapse case where optional(nullable(named(alias))) should
+     * collapse without producing a double pointer.
+     */
+    private isPointerAliasReference(reference: FernIr.TypeReference): boolean {
+        if (reference.type === "named") {
+            return this.isAliasToPointerType(reference.typeId);
+        }
+        if (
+            reference.type === "container" &&
+            (reference.container.type === "optional" || reference.container.type === "nullable")
+        ) {
+            const inner =
+                reference.container.type === "optional" ? reference.container.optional : reference.container.nullable;
+            if (inner.type === "named") {
+                return this.isAliasToPointerType(inner.typeId);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a named type is an alias that already generates as a pointer in Go
+     * (e.g. a nullable primitive like *time.Time). This prevents double pointers when
+     * nullable(named(NullableDateAlias)) would otherwise produce *NullableDateAlias = **time.Time.
+     */
+    private isAliasToPointerType(typeId: FernIr.TypeId): boolean {
+        const seen = new Set<FernIr.TypeId>();
+        let currentTypeId: FernIr.TypeId = typeId;
+        while (true) {
+            if (seen.has(currentTypeId)) {
+                return false;
+            }
+            seen.add(currentTypeId);
+            const typeDeclaration = this.context.ir.types[currentTypeId];
+            if (typeDeclaration == null || typeDeclaration.shape.type !== "alias") {
+                return false;
+            }
+            const aliasOf = typeDeclaration.shape.aliasOf;
+            if (
+                aliasOf.type === "container" &&
+                (aliasOf.container.type === "optional" || aliasOf.container.type === "nullable")
+            ) {
+                return true;
+            }
+            if (aliasOf.type === "named") {
+                currentTypeId = aliasOf.typeId;
+                continue;
+            }
+            return false;
         }
     }
 

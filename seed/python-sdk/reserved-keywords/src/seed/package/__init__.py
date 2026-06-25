@@ -6,8 +6,38 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Package, Record
-_dynamic_imports: typing.Dict[str, str] = {"Package": ".types", "Record": ".types"}
+    from .types import (
+        BackupConfig,
+        BackupConfig_Fallback,
+        BackupConfig_Override,
+        BackupOverride,
+        CustomSipHeader,
+        DependencyItem,
+        DependencyItem_Known,
+        DependencyItem_Unknown,
+        KnownDependency,
+        Package,
+        Record,
+        SipHeaderAction,
+        SipHeaderAction_Dynamic,
+        SipHeaderAction_Static,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "BackupConfig": ".types",
+    "BackupConfig_Fallback": ".types",
+    "BackupConfig_Override": ".types",
+    "BackupOverride": ".types",
+    "CustomSipHeader": ".types",
+    "DependencyItem": ".types",
+    "DependencyItem_Known": ".types",
+    "DependencyItem_Unknown": ".types",
+    "KnownDependency": ".types",
+    "Package": ".types",
+    "Record": ".types",
+    "SipHeaderAction": ".types",
+    "SipHeaderAction_Dynamic": ".types",
+    "SipHeaderAction_Static": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +61,19 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Package", "Record"]
+__all__ = [
+    "BackupConfig",
+    "BackupConfig_Fallback",
+    "BackupConfig_Override",
+    "BackupOverride",
+    "CustomSipHeader",
+    "DependencyItem",
+    "DependencyItem_Known",
+    "DependencyItem_Unknown",
+    "KnownDependency",
+    "Package",
+    "Record",
+    "SipHeaderAction",
+    "SipHeaderAction_Dynamic",
+    "SipHeaderAction_Static",
+]

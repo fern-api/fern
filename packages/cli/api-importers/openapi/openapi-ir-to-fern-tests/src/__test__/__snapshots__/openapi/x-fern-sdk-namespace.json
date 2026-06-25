@@ -221,4 +221,5 @@ error-discrimination:
 display-name: Test extension `x-fern-sdk-namespace` and `x-fern-sdk-group-name` for schemas.
 ",
   },
+  "specVersion": "1.0.0",
 }
