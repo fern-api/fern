@@ -93,6 +93,22 @@ impl ServiceClient {
             .await
     }
 
+    pub async fn get_speech_to_speech_settings(
+        &self,
+        request: &SpeechToSpeechRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/speech-to-speech/settings",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
             .execute_request(Method::POST, "/snippet", None, None, options)

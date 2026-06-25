@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ApiClient, ServiceClient, TypesClient};
+pub use resources::{ApiClient, ServiceClient};
 pub use types::*;

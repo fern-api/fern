@@ -11,6 +11,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
+- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -50,7 +51,16 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.service.simple(None).await;
+    client
+        .service
+        .get_speech_to_speech_settings(
+            &SpeechToSpeechRequest {
+                voice_id: "voice_id".to_string(),
+                model_id: Some("model_id".to_string()),
+            },
+            None,
+        )
+        .await;
 }
 ```
 
@@ -59,7 +69,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.service.simple(None)?.await {
+match client.service.get_speech_to_speech_settings(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -70,6 +80,18 @@ match client.service.simple(None)?.await {
         println!("Other error: {:?}", e);
     }
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
+use seed_api::prelude::{*};
+
+let request = SpeechToSpeechRequest {
+    ...
+};
 ```
 
 ## Advanced
@@ -94,7 +116,7 @@ The `retryStatusCodes` configuration controls which [5XX](https://developer.mozi
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.service.simple(
+let response = client.service.get_speech_to_speech_settings(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -104,7 +126,7 @@ let response = client.service.simple(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.service.simple(
+let response = client.service.get_speech_to_speech_settings(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -114,7 +136,7 @@ let response = client.service.simple(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.service.simple(
+let response = client.service.get_speech_to_speech_settings(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -129,7 +151,7 @@ let response = client.service.simple(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.service.simple(
+let response = client.service.get_speech_to_speech_settings(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")
