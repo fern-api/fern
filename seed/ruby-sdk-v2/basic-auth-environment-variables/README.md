@@ -33,7 +33,9 @@ client = Seed::Client.new(
   access_token: "YOUR_PASSWORD"
 )
 
-client.basic_auth.post_with_basic_auth
+client.basic_auth.post_with_basic_auth(request: {
+  key: "value"
+})
 ```
 
 ## Environments

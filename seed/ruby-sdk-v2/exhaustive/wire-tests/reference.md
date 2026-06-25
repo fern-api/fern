@@ -1261,7 +1261,9 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_unknown_field
+client.endpoints.object.get_and_return_with_unknown_field(unknown: {
+  "$ref" => "https://example.com/schema"
+})
 ```
 </dd>
 </dl>
@@ -1309,7 +1311,9 @@ client.endpoints.object.get_and_return_with_unknown_field
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_documented_unknown_type
+client.endpoints.object.get_and_return_with_documented_unknown_type(documented_unknown_type: {
+  key: "value"
+})
 ```
 </dd>
 </dl>
@@ -1357,7 +1361,11 @@ client.endpoints.object.get_and_return_with_documented_unknown_type
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {})
+client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {
+  string: {
+    key: "value"
+  }
+})
 ```
 </dd>
 </dl>
@@ -3386,7 +3394,9 @@ POST request with no auth
 <dd>
 
 ```ruby
-client.no_auth.post_with_no_auth
+client.no_auth.post_with_no_auth(request: {
+  key: "value"
+})
 ```
 </dd>
 </dl>
