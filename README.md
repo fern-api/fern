@@ -161,3 +161,4 @@ devbox shell
 DevBox automatically installs all required dependencies including Node.js, pnpm, Go, Python, Poetry, JDK, and buf with pinned versions matching CI.
 
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
+
