@@ -16,8 +16,8 @@ export declare class ReqWithHeadersClient {
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
-     *         "X-TEST-SERVICE-HEADER": "service`value",
-     *         "X-TEST-ENDPOINT-HEADER": "endpoint\"value",
+     *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+     *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */

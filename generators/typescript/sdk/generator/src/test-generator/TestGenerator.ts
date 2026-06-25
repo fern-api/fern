@@ -2080,7 +2080,7 @@ describe("${serviceName}", () => {
     }
 }
 
-function getHeaderValueStringLiteral(jsonExample: unknown): string {
+export function getHeaderValueStringLiteral(jsonExample: unknown): string {
     return JSON.stringify(String(jsonExample));
 }
 

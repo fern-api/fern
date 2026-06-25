@@ -12,8 +12,3 @@ service:
         headers:
           X-TEST-ENDPOINT-HEADER: string
         body: string
-      examples:
-        - headers:
-            X-TEST-SERVICE-HEADER: "service`value"
-            X-TEST-ENDPOINT-HEADER: 'endpoint"value'
-          request: "string"
