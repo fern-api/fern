@@ -1,0 +1,127 @@
+using SeedExhaustive;
+using SeedExhaustive.Types;
+
+namespace SeedExhaustive.Endpoints;
+
+public partial interface IParamsClient
+{
+    /// <summary>
+    /// GET with path param
+    /// </summary>
+    WithRawResponseTask<string> GetWithPathAsync(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with path param
+    /// </summary>
+    WithRawResponseTask<string> GetWithInlinePathAsync(
+        GetWithInlinePath request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with query param
+    /// </summary>
+    WithRawResponseTask GetWithQueryAsync(
+        GetWithQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with multiple of same query param
+    /// </summary>
+    WithRawResponseTask GetWithAllowMultipleQueryAsync(
+        GetWithMultipleQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with path and query params
+    /// </summary>
+    WithRawResponseTask GetWithPathAndQueryAsync(
+        string param,
+        GetWithPathAndQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with path and query params
+    /// </summary>
+    WithRawResponseTask GetWithInlinePathAndQueryAsync(
+        GetWithInlinePathAndQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// PUT to update with path param
+    /// </summary>
+    WithRawResponseTask<string> ModifyWithPathAsync(
+        string param,
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// PUT to update with path param
+    /// </summary>
+    WithRawResponseTask<string> ModifyWithInlinePathAsync(
+        ModifyResourceAtInlinedPath request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// POST bytes with path param returning object
+    /// </summary>
+    WithRawResponseTask<ObjectWithRequiredField> UploadWithPathAsync(
+        string param,
+        Stream request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// POST with referenced body + query params
+    /// </summary>
+    WithRawResponseTask<ObjectWithOptionalField> CreateWithBodyAndQueryAsync(
+        CreateWithBodyAndQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// POST bytes body + query params
+    /// </summary>
+    WithRawResponseTask<ObjectWithOptionalField> UploadBytesWithQueryAsync(
+        UploadBytesWithQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with boolean path param
+    /// </summary>
+    WithRawResponseTask<string> GetWithBooleanPathAsync(
+        bool param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with path param that can throw errors
+    /// </summary>
+    WithRawResponseTask<string> GetWithPathAndErrorsAsync(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+}

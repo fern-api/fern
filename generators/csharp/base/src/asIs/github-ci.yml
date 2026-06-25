@@ -1,3 +1,22 @@
+<% if (useOidc) { -%>
+# This workflow filename (ci.yml) is part of the nuget.org Trusted Publishing
+# trust-policy contract. Do not rename it without updating the trust policy.
+#
+# Trusted Publishing setup:
+#   1. Go to nuget.org → user menu → Trusted Publishing → create policy.
+#   2. Set Repository Owner to your GitHub org/user, Repository to the repo name,
+#      Workflow File to "ci.yml" (filename only, no path).
+#   3. Choose the policy owner (org or personal account); it applies to all
+#      packages owned by that owner.
+#   4. Add a NUGET_USER secret to this repo containing your nuget.org profile
+#      name (not your email).
+#   5. Private-repo policies are temporarily active for 7 days. Run the workflow
+#      once inside that window so the first successful login binds the repo/owner
+#      IDs and makes the policy permanent.
+#   6. After migrating, remove any old NUGET_API_KEY secret (a stale key can
+#      interfere with OIDC login).
+
+<% } -%>
 name: ci
 
 on: [push]
@@ -39,7 +58,8 @@ jobs:
 
       - name: Test
         run: dotnet test <%= testProjectFilePath %> --no-restore --no-build -c Release
-<% if (shouldWritePublishBlock) { %>
+<% if (shouldWritePublishBlock && !useOidc) { -%>
+
       - name: Pack
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         run: dotnet pack <%= libraryProjectFilePath %> --no-build --no-restore -c Release
@@ -49,4 +69,43 @@ jobs:
         env:
           NUGET_API_KEY: ${{ secrets.<%= nugetTokenEnvvar%> }}
         run: dotnet nuget push <%= libraryPath %>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
-<% } %>
+<% } -%>
+<% if (shouldWritePublishBlock && useOidc) { -%>
+
+  publish:
+    needs: [ci]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read    # Required for checkout
+      id-token: write   # Required for NuGet Trusted Publishing (OIDC)
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.x
+
+      - name: Install tools
+        run: dotnet tool restore
+
+      - name: Restore dependencies
+        run: dotnet restore <%= libraryProjectFilePath %>
+
+      - name: Build
+        run: dotnet build <%= libraryProjectFilePath %> --no-restore -c Release
+
+      - name: Pack
+        run: dotnet pack <%= libraryProjectFilePath %> --no-build --no-restore -c Release
+
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      - name: Publish to NuGet.org
+        run: dotnet nuget push <%= libraryPath %>/bin/Release/*.nupkg --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source "nuget.org" --skip-duplicate
+<% } -%>

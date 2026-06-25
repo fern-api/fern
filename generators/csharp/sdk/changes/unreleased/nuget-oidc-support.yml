@@ -1,0 +1,6 @@
+- summary: |
+    Add NuGet Trusted Publishing (OIDC) support as a config-gated publish
+    strategy. Set `api-key: OIDC` in generators.yml to emit a GitHub Actions
+    workflow that uses NuGet/login for short-lived OIDC tokens instead of a
+    long-lived API key secret.
+  type: feat
