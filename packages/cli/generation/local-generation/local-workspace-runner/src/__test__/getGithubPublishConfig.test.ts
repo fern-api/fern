@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { describe, expect, it } from "vitest";
 import { getGithubPublishConfig } from "../getGeneratorConfig.js";
 
 describe("getGithubPublishConfig — NuGet OIDC detection", () => {
@@ -12,7 +12,7 @@ describe("getGithubPublishConfig — NuGet OIDC detection", () => {
             })
         );
         expect(result).toBeDefined();
-        expect(result!.type).toBe("nuget");
+        expect(result?.type).toBe("nuget");
         if (result?.type === "nuget") {
             expect(result.apiKeyEnvironmentVariable).toBe("<USE_OIDC>");
             expect(result.shouldGeneratePublishWorkflow).toBe(true);
