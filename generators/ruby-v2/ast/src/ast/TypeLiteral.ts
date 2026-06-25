@@ -331,6 +331,16 @@ export class TypeLiteral extends AstNode {
             writer.write("[]");
             return;
         }
+        // Use %w[] for arrays where every element is a simple string with no
+        // spaces, backslashes, or brackets that would break the syntax. Mirrors
+        // the list case so rubocop's Style/WordArray is satisfied.
+        if (
+            value.length >= 2 &&
+            value.every((element): element is string => typeof element === "string" && !/[\s\\[\]]/.test(element))
+        ) {
+            writer.write(`%w[${value.join(" ")}]`);
+            return;
+        }
         writer.write("[");
         value.forEach((element, index) => {
             if (index > 0) {
