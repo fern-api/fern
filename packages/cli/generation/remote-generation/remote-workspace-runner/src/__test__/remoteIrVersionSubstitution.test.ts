@@ -1,6 +1,5 @@
-import { describe, expect, it } from "vitest";
-
 import { isAutoVersion, MAGIC_VERSION } from "@fern-api/generator-cli/autoversion";
+import { describe, expect, it } from "vitest";
 
 /**
  * Tests for the IR version substitution logic in runRemoteGenerationForGenerator.
