@@ -99,7 +99,7 @@ export declare namespace getGeneratorConfig {
     }
 }
 
-function getGithubPublishConfig(
+export function getGithubPublishConfig(
     githubPublishInfo: FernFiddle.GithubPublishInfo | undefined
 ): FernGeneratorExec.GithubPublishInfo | undefined {
     return githubPublishInfo != null
