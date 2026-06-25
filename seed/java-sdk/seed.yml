@@ -386,11 +386,5 @@ scripts:
       - ./gradlew compileJava spotlessCheck
 
 allowedFailures:
-  # The generated publish build.gradle applies the
-  # cl.franciscosolis.sonatype-central-upload plugin, which requires a JVM 11+
-  # runtime. Seed CI compiles generated SDKs with a Java 8 JVM, so Gradle cannot
-  # resolve the plugin classpath and the project fails to configure.
-  - exhaustive:signed_publish
-
   # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
   - file-upload:inline-file-properties
