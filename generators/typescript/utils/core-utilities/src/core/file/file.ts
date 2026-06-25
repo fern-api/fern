@@ -22,7 +22,11 @@ export async function toBinaryUploadRequest(
 
 export async function toMultipartDataPart(
     file: Uploadable,
-): Promise<{ data: Uploadable.FileLike; filename?: string; contentType?: string }> {
+): Promise<{ data: Uploadable.FileLike; filename?: string; contentType?: string } | undefined> {
+    if (file == null) {
+        console.warn(`File upload received ${file === null ? "null" : "undefined"}, skipping.`);
+        return undefined;
+    }
     const { data, filename, contentType } = await getFileWithMetadata(file, {
         noSniffFileSize: true,
     });

@@ -24,7 +24,11 @@ export class FormDataWrapper {
     }
 
     public async appendFile(key: string, value: Uploadable): Promise<void> {
-        const { data, filename, contentType } = await toMultipartDataPart(value);
+        const part = await toMultipartDataPart(value);
+        if (part == null) {
+            return;
+        }
+        const { data, filename, contentType } = part;
         const blob = await convertToBlob(data, contentType);
         if (filename) {
             this.fd.append(key, blob, filename);

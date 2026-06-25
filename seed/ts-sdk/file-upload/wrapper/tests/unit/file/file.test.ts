@@ -431,14 +431,14 @@ describe("toBinaryUploadRequest", () => {
     });
 
     describe("null and undefined input", () => {
-        it("should throw TypeError for undefined", async () => {
+        it("should throw TypeError for undefined in binary upload", async () => {
             await expect(toBinaryUploadRequest(undefined as unknown as Uploadable)).rejects.toThrow(TypeError);
             await expect(toBinaryUploadRequest(undefined as unknown as Uploadable)).rejects.toThrow(
                 /but received undefined/,
             );
         });
 
-        it("should throw TypeError for null", async () => {
+        it("should throw TypeError for null in binary upload", async () => {
             await expect(toBinaryUploadRequest(null as unknown as Uploadable)).rejects.toThrow(TypeError);
             await expect(toBinaryUploadRequest(null as unknown as Uploadable)).rejects.toThrow(
                 /but received null/,
