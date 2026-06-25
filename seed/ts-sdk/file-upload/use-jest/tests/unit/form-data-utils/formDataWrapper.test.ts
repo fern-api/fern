@@ -281,6 +281,32 @@ describe("FormDataWrapper", () => {
             expect(serialized).toContain('name="text"');
             expect(serialized).not.toContain('filename="text"');
         });
+
+        it("silently skips appendFile when value is undefined", async () => {
+            await formData.appendFile("file", undefined as any);
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).not.toContain('name="file"');
+        });
+
+        it("silently skips appendFile when value is null", async () => {
+            await formData.appendFile("file", null as any);
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).not.toContain('name="file"');
+        });
+
+        it("does not throw when optional file fields are omitted", async () => {
+            await formData.appendFile("requiredFile", {
+                data: new Blob(["content"], { type: "text/plain" }),
+                filename: "required.txt",
+            });
+            await formData.appendFile("optionalFile", undefined as any);
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).toContain('filename="required.txt"');
+            expect(serialized).not.toContain('name="optionalFile"');
+        });
     });
 
     describe("Request structure", () => {

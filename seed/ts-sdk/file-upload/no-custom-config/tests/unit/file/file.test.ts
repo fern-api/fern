@@ -1,7 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import { Readable } from "stream";
-import { toBinaryUploadRequest, type Uploadable } from "../../../src/core/file/index";
+import { toBinaryUploadRequest, toMultipartDataPart, type Uploadable } from "../../../src/core/file/index";
 
 describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "..", "test-file.txt");
@@ -494,6 +494,40 @@ describe("toBinaryUploadRequest", () => {
                 "Content-Length": "4",
                 // No Content-Type since contentType is undefined
             });
+        });
+    });
+});
+
+describe("Null/undefined file upload guard", () => {
+    describe("toBinaryUploadRequest", () => {
+        it("should throw TypeError when passed undefined", async () => {
+            await expect(toBinaryUploadRequest(undefined as any)).rejects.toThrow(TypeError);
+            await expect(toBinaryUploadRequest(undefined as any)).rejects.toThrow(
+                "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
+            );
+        });
+
+        it("should throw TypeError when passed null", async () => {
+            await expect(toBinaryUploadRequest(null as any)).rejects.toThrow(TypeError);
+            await expect(toBinaryUploadRequest(null as any)).rejects.toThrow(
+                "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
+            );
+        });
+    });
+
+    describe("toMultipartDataPart", () => {
+        it("should throw TypeError when passed undefined", async () => {
+            await expect(toMultipartDataPart(undefined as any)).rejects.toThrow(TypeError);
+            await expect(toMultipartDataPart(undefined as any)).rejects.toThrow(
+                "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
+            );
+        });
+
+        it("should throw TypeError when passed null", async () => {
+            await expect(toMultipartDataPart(null as any)).rejects.toThrow(TypeError);
+            await expect(toMultipartDataPart(null as any)).rejects.toThrow(
+                "Cannot upload null or undefined as a file. Ensure the file parameter is provided.",
+            );
         });
     });
 });

@@ -95,6 +95,30 @@ describe("CrossPlatformFormData", () => {
             }
             expect(data).toContain(`Content-Disposition: form-data; name="file"; filename="${expectedFileName}"`);
         });
+
+        it("should silently skip when value is undefined", async () => {
+            await formData.appendFile("file", undefined as any);
+
+            const request = await formData.getRequest();
+            const decoder = new TextDecoder("utf-8");
+            let data = "";
+            for await (const chunk of request.body) {
+                data += decoder.decode(chunk);
+            }
+            expect(data).not.toContain("file");
+        });
+
+        it("should silently skip when value is null", async () => {
+            await formData.appendFile("file", null as any);
+
+            const request = await formData.getRequest();
+            const decoder = new TextDecoder("utf-8");
+            let data = "";
+            for await (const chunk of request.body) {
+                data += decoder.decode(chunk);
+            }
+            expect(data).not.toContain("file");
+        });
     });
 
     describe("WebFormData", () => {
@@ -153,6 +177,20 @@ describe("CrossPlatformFormData", () => {
 
             const request = formData.getRequest();
             expect(request.body.get("file").name).toBe("test.txt");
+        });
+
+        it("should silently skip when value is undefined", async () => {
+            await formData.appendFile("file", undefined as any);
+
+            const request = formData.getRequest();
+            expect(request.body.get("file")).toBeNull();
+        });
+
+        it("should silently skip when value is null", async () => {
+            await formData.appendFile("file", null as any);
+
+            const request = formData.getRequest();
+            expect(request.body.get("file")).toBeNull();
         });
     });
 });
@@ -439,6 +477,32 @@ describe("FormDataWrapper", () => {
             expect(serialized).toContain('filename="file2.txt"');
             expect(serialized).toContain('name="text"');
             expect(serialized).not.toContain('filename="text"');
+        });
+
+        it("silently skips appendFile when value is undefined", async () => {
+            await formData.appendFile("file", undefined as any);
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).not.toContain('name="file"');
+        });
+
+        it("silently skips appendFile when value is null", async () => {
+            await formData.appendFile("file", null as any);
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).not.toContain('name="file"');
+        });
+
+        it("does not throw when optional file fields are omitted", async () => {
+            await formData.appendFile("requiredFile", {
+                data: new Blob(["content"], { type: "text/plain" }),
+                filename: "required.txt"
+            });
+            await formData.appendFile("optionalFile", undefined as any);
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).toContain('filename="required.txt"');
+            expect(serialized).not.toContain('name="optionalFile"');
         });
     });
 
