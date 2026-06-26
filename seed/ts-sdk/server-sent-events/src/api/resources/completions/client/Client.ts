@@ -62,6 +62,11 @@ export class CompletionsClient {
                         type: "sse",
                         streamTerminator: "[[DONE]]",
                     },
+                    reconnectionEnabled:
+                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
+                    maxReconnectionAttempts:
+                        requestOptions?.stream?.maxReconnectionAttempts ??
+                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -118,6 +123,11 @@ export class CompletionsClient {
                     eventShape: {
                         type: "sse",
                     },
+                    reconnectionEnabled:
+                        requestOptions?.stream?.reconnectionEnabled ?? this._options?.stream?.reconnectionEnabled,
+                    maxReconnectionAttempts:
+                        requestOptions?.stream?.maxReconnectionAttempts ??
+                        this._options?.stream?.maxReconnectionAttempts,
                 }),
                 rawResponse: _response.rawResponse,
             };

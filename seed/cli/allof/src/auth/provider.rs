@@ -120,6 +120,14 @@ pub trait AuthProvider: Send + Sync + std::fmt::Debug {
         request: reqwest::RequestBuilder,
         endpoint: &EndpointAuthMetadata,
     ) -> Result<reqwest::RequestBuilder, CliError>;
+
+    /// Post-construction hook: inject the on-disk token cache for
+    /// cross-invocation persistence. Called by [`CliApp`] in
+    /// `propagate_root_auth` once it knows the binary name.
+    ///
+    /// Default is a no-op. [`OAuth2TokenProvider`](crate::auth::OAuth2TokenProvider)
+    /// overrides this to wire [`TokenCache`](crate::auth::oauth2::TokenCache).
+    fn inject_token_cache(&self, _cli_name: &str) {}
 }
 
 /// Boxed handle the rest of the codebase passes around.

@@ -38,6 +38,12 @@ class SeedExhaustive:
     max_retries : typing.Optional[int]
         The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
     
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+    
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+    
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
     
@@ -56,11 +62,11 @@ class SeedExhaustive:
         base_url="https://yourhost.com/path/to/api",
     )
     """
-    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, headers: typing.Optional[typing.Dict[str, str]] = None, timeout: typing.Optional[float] = None, max_retries: typing.Optional[int] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.Client] = None, logging: typing.Optional[typing.Union[LogConfig, Logger]] = None):
+    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, headers: typing.Optional[typing.Dict[str, str]] = None, timeout: typing.Optional[float] = None, max_retries: typing.Optional[int] = None, stream_reconnection_enabled: typing.Optional[bool] = None, max_stream_reconnection_attempts: typing.Optional[int] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.Client] = None, logging: typing.Optional[typing.Union[LogConfig, Logger]] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = SyncClientWrapper(base_url=base_url, token=token, headers=headers, httpx_client=httpx_client if httpx_client is not None else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects) if follow_redirects is not None else httpx.Client(timeout=_defaulted_timeout)
-        , timeout=_defaulted_timeout, max_retries=_defaulted_max_retries, logging=logging)
+        , timeout=_defaulted_timeout, max_retries=_defaulted_max_retries, stream_reconnection_enabled=stream_reconnection_enabled, max_stream_reconnection_attempts=max_stream_reconnection_attempts, logging=logging)
         self._endpoints: typing.Optional[EndpointsClient] = None
         self._inlined_requests: typing.Optional[InlinedRequestsClient] = None
         self._no_auth: typing.Optional[NoAuthClient] = None
@@ -139,6 +145,12 @@ class AsyncSeedExhaustive:
     max_retries : typing.Optional[int]
         The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
     
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+    
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+    
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
     
@@ -157,11 +169,11 @@ class AsyncSeedExhaustive:
         base_url="https://yourhost.com/path/to/api",
     )
     """
-    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, headers: typing.Optional[typing.Dict[str, str]] = None, async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None, timeout: typing.Optional[float] = None, max_retries: typing.Optional[int] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.AsyncClient] = None, logging: typing.Optional[typing.Union[LogConfig, Logger]] = None):
+    def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, headers: typing.Optional[typing.Dict[str, str]] = None, async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None, timeout: typing.Optional[float] = None, max_retries: typing.Optional[int] = None, stream_reconnection_enabled: typing.Optional[bool] = None, max_stream_reconnection_attempts: typing.Optional[int] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.AsyncClient] = None, logging: typing.Optional[typing.Union[LogConfig, Logger]] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = AsyncClientWrapper(base_url=base_url, token=token, headers=headers, async_token=async_token, httpx_client=httpx_client if httpx_client is not None else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-        , timeout=_defaulted_timeout, max_retries=_defaulted_max_retries, logging=logging)
+        , timeout=_defaulted_timeout, max_retries=_defaulted_max_retries, stream_reconnection_enabled=stream_reconnection_enabled, max_stream_reconnection_attempts=max_stream_reconnection_attempts, logging=logging)
         self._endpoints: typing.Optional[AsyncEndpointsClient] = None
         self._inlined_requests: typing.Optional[AsyncInlinedRequestsClient] = None
         self._no_auth: typing.Optional[AsyncNoAuthClient] = None

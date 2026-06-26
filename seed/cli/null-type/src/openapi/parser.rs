@@ -371,14 +371,12 @@ struct OpenApiOperation {
     parameters: Vec<OpenApiParamOrRef>,
     #[serde(rename = "requestBody")]
     request_body: Option<OpenApiRequestBody>,
-    /// OpenAPI `responses` map (status code → response object). Only the
-    /// content media types are consumed — we look at the 2xx entries to
-    /// decide whether the operation can return a binary body, which gates
-    /// whether `--output PATH` is surfaced on the CLI command. Status keys
-    /// follow OpenAPI conventions: `"200"`, `"201"`, …, the `"2XX"`
-    /// wildcard, or `"default"` (which we ignore — it's an error fallback).
+    /// `responses` map, keyed by status code (`"200"`, `"201"`, …) or
+    /// `"default"`. Values may be inline response objects or `$ref`s to
+    /// `components/responses/<name>`. Consumed by [`extract_response`]
+    /// (after resolving refs) to select the primary success response.
     #[serde(default)]
-    responses: HashMap<String, OpenApiResponse>,
+    responses: HashMap<String, OpenApiResponseOrRef>,
     #[serde(default)]
     servers: Vec<OpenApiServer>,
     #[serde(default)]
@@ -559,6 +557,12 @@ struct OpenApiParamSchema {
     enum_values: Option<Vec<String>>,
     default: Option<serde_yaml::Value>,
     format: Option<String>,
+    /// JSON Schema numeric bounds on the parameter's schema. Surfaced
+    /// in `--schema` output via `MethodParameter::minimum`/`maximum`.
+    #[serde(default)]
+    minimum: Option<f64>,
+    #[serde(default)]
+    maximum: Option<f64>,
     /// Raw `x-fern-enum` map keyed by wire value, deserialized straight
     /// off the YAML schema. Lowered to `discovery::FernEnumValue` in
     /// `convert_fern_enum`.
@@ -589,12 +593,25 @@ struct OpenApiRequestBody {
     x_fern_parameter_name: Option<String>,
 }
 
-/// The slice of OpenAPI's Response object we care about — only `content`,
-/// the media-type → schema map, since that's what tells us whether the
-/// operation's response is JSON or binary.
-#[derive(Debug, Deserialize)]
+/// A single response entry under `responses` on an operation, e.g.
+/// `responses.200.content.application/json.schema`. Only the `content`
+/// sub-map is consumed today — descriptions and headers aren't surfaced.
+#[derive(Debug, Deserialize, Default)]
 struct OpenApiResponse {
+    #[serde(default)]
     content: Option<HashMap<String, OpenApiMediaType>>,
+}
+
+/// A response value that can be either an inline response object or a
+/// `$ref` to `components/responses/<name>`.
+#[derive(Debug, Deserialize)]
+#[serde(untagged)]
+enum OpenApiResponseOrRef {
+    Ref {
+        #[serde(rename = "$ref")]
+        ref_path: String,
+    },
+    Inline(OpenApiResponse),
 }
 
 #[derive(Debug, Deserialize)]
@@ -797,6 +814,13 @@ struct OpenApiSchemaObject {
     format: Option<String>,
     #[serde(default)]
     read_only: bool,
+    /// OpenAPI's standard `default:` keyword on a schema (documentation hint
+    /// for what the server uses when the field is omitted). Captured as raw
+    /// YAML so we preserve the wire type — numbers stay numbers, booleans
+    /// stay booleans — and lowered to `serde_json::Value` at IR conversion
+    /// so `--schema` can surface it without re-quoting. Empty / absent ⇒ None.
+    #[serde(default)]
+    default: Option<serde_yaml::Value>,
     #[serde(
         default,
         deserialize_with = "deserialize_additional_properties"
@@ -991,6 +1015,8 @@ struct OpenApiComponents {
     schemas: HashMap<String, OpenApiSchemaObject>,
     #[serde(default)]
     parameters: HashMap<String, OpenApiParameter>,
+    #[serde(default)]
+    responses: HashMap<String, OpenApiResponse>,
     #[serde(default)]
     security_schemes: HashMap<String, OpenApiSecurityScheme>,
 }
@@ -1853,8 +1879,17 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
         format: obj.format.clone(),
         items: obj.items.as_ref().map(|i| Box::new(convert_schema_property(i))),
         properties,
+        required: obj.required.clone(),
         read_only: obj.read_only,
-        default: None,
+        // Lower the YAML `default:` to a serde_json::Value so wire type
+        // (number / bool / object) survives. YAML constructs not
+        // representable in JSON (sequence-keyed maps) round-trip to
+        // `None` — that's acceptable for what is fundamentally a
+        // documentation hint.
+        default: obj
+            .default
+            .as_ref()
+            .and_then(|v| serde_json::to_value(v).ok()),
         enum_values: effective_enum_values(obj),
         minimum: obj.inclusive_min(),
         maximum: obj.inclusive_max(),
@@ -2021,15 +2056,17 @@ fn convert_parameter(
     param: &OpenApiParameter,
     ref_site_default: Option<&serde_yaml::Value>,
 ) -> (String, MethodParameter) {
-    let (param_type, enum_values, schema_default, format, fern_enum) = match &param.schema {
+    let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum) = match &param.schema {
         Some(s) => (
             s.schema_type.clone(),
             s.enum_values.clone(),
             s.default.as_ref(),
             s.format.clone(),
             convert_fern_enum(s.x_fern_enum.as_ref()),
+            s.minimum,
+            s.maximum,
         ),
-        None => (None, None, None, None, None),
+        None => (None, None, None, None, None, None, None),
     };
 
     // `x-fern-default` is the only source of a client-side default —
@@ -2092,6 +2129,8 @@ fn convert_parameter(
         default_value,
         documentation_default_value,
         enum_values,
+        minimum,
+        maximum,
         style: param.style.clone(),
         explode: param.explode,
         deprecated: param.deprecated,
@@ -2443,6 +2482,14 @@ pub fn load_openapi_spec_from_value(
         .map(|c| &c.schemas)
         .unwrap_or(&empty_component_schemas);
 
+    // Build a reference to the component responses for $ref resolution.
+    let empty_component_responses: HashMap<String, OpenApiResponse> = HashMap::new();
+    let component_responses: &HashMap<String, OpenApiResponse> = spec
+        .components
+        .as_ref()
+        .map(|c| &c.responses)
+        .unwrap_or(&empty_component_responses);
+
     // Process each path + method
     #[allow(clippy::type_complexity)]
     let http_methods: &[(&str, fn(&OpenApiPathItem) -> &Option<OpenApiOperation>)] = &[
@@ -2568,6 +2615,18 @@ pub fn load_openapi_spec_from_value(
                 &mut doc.schemas,
                 component_schemas,
             );
+
+            // Extract the primary success response schema. Inline response
+            // schemas are registered in doc.schemas under a synthetic
+            // `{operation_id}_response` name so the help layer can look
+            // them up uniformly with named ($ref'd) responses.
+            let response = extract_response(
+                &operation.responses,
+                operation.operation_id.as_deref().unwrap_or("unknown"),
+                &mut doc.schemas,
+                component_responses,
+            );
+
             // Skip body fields whose names collide with existing path/query/header
             // params — those win, since the spec's `parameters` array is the
             // canonical source for non-body inputs.
@@ -2666,7 +2725,7 @@ pub fn load_openapi_spec_from_value(
                 operation.operation_id.as_deref().unwrap_or("unknown"),
             )?;
 
-            let has_binary_response = response_has_binary_media_type(&operation.responses);
+            let has_binary_response = response_has_binary_media_type(&operation.responses, component_responses);
 
             // Mutual exclusivity: an operation that's both streamed and
             // paginated is incoherent — pagination drives a loop of
@@ -2694,6 +2753,7 @@ pub fn load_openapi_spec_from_value(
                 path: path.clone(),
                 parameters: params,
                 request,
+                response,
                 root_url: method_root_url,
                 servers: method_servers,
                 binary_request_body,
@@ -2793,11 +2853,17 @@ type ExtractedRequestBody = (
 /// An empty `responses` map, or one whose 2xx entries have no `content`
 /// block (e.g. `204 No Content`), returns `false` — there's no body to
 /// write, so `--output` would be meaningless.
-fn response_has_binary_media_type(responses: &HashMap<String, OpenApiResponse>) -> bool {
-    for (status, response) in responses {
+fn response_has_binary_media_type(
+    responses: &HashMap<String, OpenApiResponseOrRef>,
+    component_responses: &HashMap<String, OpenApiResponse>,
+) -> bool {
+    for (status, response_or_ref) in responses {
         if !is_success_status(status) {
             continue;
         }
+        let Some(response) = resolve_response_ref(response_or_ref, component_responses) else {
+            continue;
+        };
         let Some(content) = response.content.as_ref() else {
             continue;
         };
@@ -2982,6 +3048,143 @@ fn extract_request_body(
         HashMap::new(),
         Vec::new(),
     )
+}
+
+/// Resolve a response-level `$ref` or return the inline response directly.
+fn resolve_response_ref<'a>(
+    r: &'a OpenApiResponseOrRef,
+    component_responses: &'a HashMap<String, OpenApiResponse>,
+) -> Option<&'a OpenApiResponse> {
+    match r {
+        OpenApiResponseOrRef::Inline(resp) => Some(resp),
+        OpenApiResponseOrRef::Ref { ref_path } => {
+            let name = strip_ref_prefix(ref_path);
+            component_responses.get(&name)
+        }
+    }
+}
+
+/// Pick the response entry for the primary success: numerically-lowest 2xx
+/// status code, falling back to `default`.
+fn select_primary_response<'a>(
+    responses: &'a HashMap<String, OpenApiResponseOrRef>,
+    component_responses: &'a HashMap<String, OpenApiResponse>,
+) -> Option<&'a OpenApiResponse> {
+    let mut twoxx: Vec<(u16, &str, &OpenApiResponse)> = responses
+        .iter()
+        .filter_map(|(code, r)| {
+            let n = status_code_sort_key(code)?;
+            if (200..300).contains(&n) {
+                let resolved = resolve_response_ref(r, component_responses)?;
+                Some((n, code.as_str(), resolved))
+            } else {
+                None
+            }
+        })
+        .collect();
+    if !twoxx.is_empty() {
+        twoxx.sort_by(|a, b| a.0.cmp(&b.0).then_with(|| a.1.cmp(b.1)));
+        return Some(twoxx[0].2);
+    }
+    responses
+        .get("default")
+        .and_then(|r| resolve_response_ref(r, component_responses))
+}
+
+/// Parse an OpenAPI status code key into a `u16` for band-membership checks
+/// and sorting. Wildcards (`"2XX"`) map to the highest code in their band
+/// so explicit codes sort before them.
+fn status_code_sort_key(code: &str) -> Option<u16> {
+    if let Ok(n) = code.parse::<u16>() {
+        return Some(n);
+    }
+    let mut digits = String::with_capacity(3);
+    for c in code.chars() {
+        if c.is_ascii_digit() {
+            digits.push(c);
+        } else if c == 'X' || c == 'x' {
+            digits.push('9');
+        } else {
+            return None;
+        }
+    }
+    if digits.is_empty() {
+        return None;
+    }
+    digits.parse::<u16>().ok()
+}
+
+/// Pick the response content type: `application/json` → `*/json` → first
+/// non-JSON. Sorted by key before picking for determinism.
+fn select_response_content_type(
+    content: &HashMap<String, OpenApiMediaType>,
+) -> Option<(&String, &OpenApiMediaType)> {
+    if let Some(entry) = content.get_key_value("application/json") {
+        return Some(entry);
+    }
+    let mut entries: Vec<_> = content.iter().collect();
+    entries.sort_by_key(|(k, _)| k.to_ascii_lowercase());
+    if let Some((k, v)) = entries.iter().find(|(ct, _)| ct.eq_ignore_ascii_case("application/json")) {
+        return Some((*k, *v));
+    }
+    let json_like = entries.iter().find(|(ct, _)| {
+        let lower = ct.to_ascii_lowercase();
+        lower.ends_with("/json") || lower.ends_with("+json")
+    });
+    if let Some((k, v)) = json_like {
+        return Some((*k, *v));
+    }
+    entries.into_iter().next()
+}
+
+/// Extract the primary success response's JSON schema as `Option<SchemaRef>`.
+/// Selects the lowest 2xx status code (falling back to `default`), resolves
+/// response-level `$ref`s against `components.responses`, picks the best
+/// content type, and returns the schema reference. Inline schemas are
+/// registered in `schemas` under a synthetic `{operation_id}_response` name.
+fn extract_response(
+    responses: &HashMap<String, OpenApiResponseOrRef>,
+    operation_id: &str,
+    schemas: &mut HashMap<String, JsonSchema>,
+    component_responses: &HashMap<String, OpenApiResponse>,
+) -> Option<SchemaRef> {
+    let response = select_primary_response(responses, component_responses)?;
+    let content = match response.content.as_ref() {
+        Some(c) if !c.is_empty() => c,
+        _ => return None,
+    };
+
+    let (content_type, media) = select_response_content_type(content)?;
+
+    let ct_lower = content_type.to_ascii_lowercase();
+    let is_event_stream = ct_lower == "text/event-stream";
+    let is_json_like = ct_lower == "application/json"
+        || ct_lower.ends_with("/json")
+        || ct_lower.ends_with("+json");
+
+    if !is_json_like && !is_event_stream {
+        return None;
+    }
+
+    let schema_obj = media.schema.as_ref()?;
+
+    if let Some(ref_path) = schema_obj.schema_ref.as_ref() {
+        Some(SchemaRef {
+            schema_ref: Some(strip_ref_prefix(ref_path)),
+            parameter_name: None,
+        })
+    } else {
+        let mut synthetic_name = format!("{operation_id}_response");
+        if schemas.contains_key(&synthetic_name) {
+            synthetic_name = format!("{operation_id}_inline_response");
+        }
+        let converted = convert_schema_object(schema_obj);
+        schemas.insert(synthetic_name.clone(), converted);
+        Some(SchemaRef {
+            schema_ref: Some(synthetic_name),
+            parameter_name: None,
+        })
+    }
 }
 
 /// Walk a `multipart/form-data` schema and emit one [`MultipartField`] per
@@ -3622,6 +3825,26 @@ fn flatten_body_params_prefix(
 mod tests {
     use super::*;
 
+    #[test]
+    fn test_convert_parameter_lowers_schema_min_max_into_method_parameter() {
+        // Parser must read `minimum:` / `maximum:` from the parameter's
+        // schema into MethodParameter — otherwise the new f64-typed
+        // fields are unreachable from real specs and ADR-0006's
+        // per-property bound promise only holds for body fields.
+        let raw = r#"
+            name: limit
+            in: query
+            schema:
+                type: integer
+                minimum: 1
+                maximum: 100
+        "#;
+        let p: OpenApiParameter = serde_yaml::from_str(raw).unwrap();
+        let (name, mp) = convert_parameter(&p, None);
+        assert_eq!(name, "limit");
+        assert_eq!(mp.minimum, Some(1.0), "minimum must lower from schema");
+        assert_eq!(mp.maximum, Some(100.0), "maximum must lower from schema");
+    }
 
     #[test]
     fn test_camel_to_kebab() {
@@ -10579,6 +10802,176 @@ components:
         assert_eq!(
             lowered_31.properties["email"].prop_type.as_deref(),
             Some("string"),
+        );
+    }
+
+    // -----------------------------------------------------------------------
+    // Response-level $ref resolution helpers
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn test_status_code_sort_key_numeric() {
+        assert_eq!(status_code_sort_key("200"), Some(200));
+        assert_eq!(status_code_sort_key("201"), Some(201));
+        assert_eq!(status_code_sort_key("404"), Some(404));
+    }
+
+    #[test]
+    fn test_status_code_sort_key_wildcard() {
+        assert_eq!(status_code_sort_key("2XX"), Some(299));
+        assert_eq!(status_code_sort_key("2xx"), Some(299));
+        assert_eq!(status_code_sort_key("20X"), Some(209));
+    }
+
+    #[test]
+    fn test_status_code_sort_key_default_returns_none() {
+        assert_eq!(status_code_sort_key("default"), None);
+    }
+
+    #[test]
+    fn test_resolve_response_ref_inline() {
+        let resp = OpenApiResponse {
+            content: Some(HashMap::new()),
+        };
+        let r = OpenApiResponseOrRef::Inline(resp);
+        let components = HashMap::new();
+        assert!(resolve_response_ref(&r, &components).is_some());
+    }
+
+    #[test]
+    fn test_resolve_response_ref_resolves_ref() {
+        let resp = OpenApiResponse {
+            content: Some(HashMap::new()),
+        };
+        let mut components = HashMap::new();
+        components.insert("Foo".to_string(), resp);
+
+        let r = OpenApiResponseOrRef::Ref {
+            ref_path: "#/components/responses/Foo".to_string(),
+        };
+        let resolved = resolve_response_ref(&r, &components);
+        assert!(resolved.is_some(), "should resolve $ref to component response");
+    }
+
+    #[test]
+    fn test_resolve_response_ref_missing_component() {
+        let r = OpenApiResponseOrRef::Ref {
+            ref_path: "#/components/responses/Missing".to_string(),
+        };
+        let components = HashMap::new();
+        assert!(resolve_response_ref(&r, &components).is_none());
+    }
+
+    #[test]
+    fn test_select_primary_response_picks_lowest_2xx() {
+        let resp_200 = OpenApiResponse {
+            content: Some(HashMap::new()),
+        };
+        let resp_201 = OpenApiResponse {
+            content: Some(HashMap::new()),
+        };
+        let mut responses = HashMap::new();
+        responses.insert(
+            "201".to_string(),
+            OpenApiResponseOrRef::Inline(resp_201),
+        );
+        responses.insert(
+            "200".to_string(),
+            OpenApiResponseOrRef::Inline(resp_200),
+        );
+        let components = HashMap::new();
+        let result = select_primary_response(&responses, &components);
+        assert!(result.is_some(), "should select a 2xx response");
+    }
+
+    #[test]
+    fn test_select_primary_response_falls_back_to_default() {
+        let resp = OpenApiResponse {
+            content: Some(HashMap::new()),
+        };
+        let mut responses = HashMap::new();
+        responses.insert(
+            "default".to_string(),
+            OpenApiResponseOrRef::Inline(resp),
+        );
+        let components = HashMap::new();
+        let result = select_primary_response(&responses, &components);
+        assert!(result.is_some(), "should fall back to 'default'");
+    }
+
+    #[test]
+    fn test_extract_response_with_ref_schema() {
+        let mut schemas = HashMap::new();
+        let mut component_responses = HashMap::new();
+
+        let mut content = HashMap::new();
+        content.insert(
+            "application/json".to_string(),
+            OpenApiMediaType {
+                schema: Some(OpenApiSchemaObject {
+                    schema_ref: Some("#/components/schemas/Widget".to_string()),
+                    ..Default::default()
+                }),
+                encoding: HashMap::new(),
+            },
+        );
+        component_responses.insert(
+            "WidgetResp".to_string(),
+            OpenApiResponse {
+                content: Some(content),
+            },
+        );
+
+        let mut responses = HashMap::new();
+        responses.insert(
+            "200".to_string(),
+            OpenApiResponseOrRef::Ref {
+                ref_path: "#/components/responses/WidgetResp".to_string(),
+            },
+        );
+
+        let result = extract_response(&responses, "test_op", &mut schemas, &component_responses);
+        assert!(result.is_some(), "should extract response schema from $ref'd response");
+        let sr = result.unwrap();
+        assert_eq!(sr.schema_ref.as_deref(), Some("Widget"));
+    }
+
+    #[test]
+    fn test_extract_response_inline_schema() {
+        let mut schemas = HashMap::new();
+        let component_responses = HashMap::new();
+
+        let mut content = HashMap::new();
+        content.insert(
+            "application/json".to_string(),
+            OpenApiMediaType {
+                schema: Some(OpenApiSchemaObject {
+                    type_field: TypeField { schema_type: Some("object".to_string()), null_in_array: false },
+                    ..Default::default()
+                }),
+                encoding: HashMap::new(),
+            },
+        );
+
+        let mut responses = HashMap::new();
+        responses.insert(
+            "200".to_string(),
+            OpenApiResponseOrRef::Inline(OpenApiResponse {
+                content: Some(content),
+            }),
+        );
+
+        let result = extract_response(&responses, "inline_op", &mut schemas, &component_responses);
+        assert!(result.is_some(), "should extract inline response schema");
+        let sr = result.unwrap();
+        assert_eq!(
+            sr.schema_ref.as_deref(),
+            Some("inline_op_response"),
+            "inline schema should be registered under synthetic name",
+        );
+        assert!(
+            schemas.contains_key("inline_op_response"),
+            "inline schema must be stored in schemas map",
         );
     }
 }

@@ -46,6 +46,12 @@ class SeedInferredAuthImplicit:
     max_retries : typing.Optional[int]
         The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
 
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
@@ -78,6 +84,8 @@ class SeedInferredAuthImplicit:
         scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -101,6 +109,8 @@ class SeedInferredAuthImplicit:
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             ),
         )
@@ -114,6 +124,8 @@ class SeedInferredAuthImplicit:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
             max_retries=_defaulted_max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
             auth_headers=inferred_auth_token_provider.get_headers,
         )
@@ -203,6 +215,12 @@ class AsyncSeedInferredAuthImplicit:
     max_retries : typing.Optional[int]
         The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
 
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
@@ -235,6 +253,8 @@ class AsyncSeedInferredAuthImplicit:
         scope: typing.Optional[str] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
@@ -256,6 +276,8 @@ class AsyncSeedInferredAuthImplicit:
                 else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
                 timeout=_defaulted_timeout,
                 max_retries=_defaulted_max_retries,
+                stream_reconnection_enabled=stream_reconnection_enabled,
+                max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
             ),
         )
@@ -267,6 +289,8 @@ class AsyncSeedInferredAuthImplicit:
             else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             max_retries=_defaulted_max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
             async_auth_headers=inferred_auth_token_provider.get_headers,
         )
