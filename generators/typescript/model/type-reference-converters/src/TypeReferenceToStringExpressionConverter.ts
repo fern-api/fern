@@ -120,7 +120,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             primitive: (type) => this.primitive(type, params),
             named: ({ shape }) => {
                 if (shape === FernIr.ShapeType.Enum) {
-                    return this.jsonStringify.bind(this);
+                    return (reference) => reference;
                 }
                 if (shape === FernIr.ShapeType.UndiscriminatedUnion) {
                     return this.jsonStringifyIfNotString.bind(this);
