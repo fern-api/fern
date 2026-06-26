@@ -8,8 +8,8 @@ import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
-import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers.js";
 import { FaiExampleEnhancer } from "./faiClient.js";
+import { filterRequestBody, isFdrTypedValueWrapper, unwrapExampleValue } from "./filterHelpers.js";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator.js";
 import {
     AIExampleEnhancerConfig,
