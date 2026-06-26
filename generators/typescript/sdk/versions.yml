@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.74.0
+  changelogEntry:
+    - summary: |
+        Support `resumable` flag in SSE streaming endpoints. When an endpoint has
+        `x-fern-streaming.resumable: true`, the generated SDK now includes `resumable: true`
+        in the stream event shape, plumbing the flag through to the runtime for use by
+        reconnection logic. Adds `stream: { reconnectionEnabled, maxReconnectionAttempts }`
+        request options for runtime control of reconnection behavior.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 3.73.4
   changelogEntry:
     - summary: |
