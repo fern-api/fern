@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.9.42
+  changelogEntry:
+    - summary: |
+        Replace sed-based magic version replacement with pure Node.js implementation.
+        Uses recursive directory walking and binary file detection instead of shelling
+        out to OS-specific sed commands, fixing "illegal byte sequence" errors on
+        binary files and eliminating platform-specific behavior.
+      type: fix
+  createdAt: "2026-06-26"
 - version: 0.9.41
   changelogEntry:
     - summary: |
