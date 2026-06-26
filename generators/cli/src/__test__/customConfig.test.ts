@@ -76,9 +76,7 @@ describe("validateCustomConfig", () => {
     });
 
     it("throws on rootGroup containing quotes (injection attempt)", () => {
-        expect(() => validateCustomConfig({ rootGroup: 'api")); panic!("' })).toThrow(
-            /contains invalid characters/
-        );
+        expect(() => validateCustomConfig({ rootGroup: 'api")); panic!("' })).toThrow(/contains invalid characters/);
     });
 
     it("throws on empty rootGroup", () => {
