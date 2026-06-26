@@ -57,10 +57,12 @@ class RawCompletionsClient:
                             _event_source = EventSource(
                                 _response,
                                 resumable=True,
-                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                with_max_stream_reconnect_attempts=request_options.get(
+                                    "with_max_stream_reconnect_attempts"
+                                )
                                 if request_options is not None
                                 else None,
-                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
                                 if request_options is not None
                                 else False,
                             )
@@ -138,10 +140,12 @@ class RawCompletionsClient:
                         def _iter():
                             _event_source = EventSource(
                                 _response,
-                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                with_max_stream_reconnect_attempts=request_options.get(
+                                    "with_max_stream_reconnect_attempts"
+                                )
                                 if request_options is not None
                                 else None,
-                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
                                 if request_options is not None
                                 else False,
                             )
@@ -225,10 +229,12 @@ class AsyncRawCompletionsClient:
                             _event_source = EventSource(
                                 _response,
                                 resumable=True,
-                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                with_max_stream_reconnect_attempts=request_options.get(
+                                    "with_max_stream_reconnect_attempts"
+                                )
                                 if request_options is not None
                                 else None,
-                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
                                 if request_options is not None
                                 else False,
                             )
@@ -306,10 +312,12 @@ class AsyncRawCompletionsClient:
                         async def _iter():
                             _event_source = EventSource(
                                 _response,
-                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                with_max_stream_reconnect_attempts=request_options.get(
+                                    "with_max_stream_reconnect_attempts"
+                                )
                                 if request_options is not None
                                 else None,
-                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
                                 if request_options is not None
                                 else False,
                             )

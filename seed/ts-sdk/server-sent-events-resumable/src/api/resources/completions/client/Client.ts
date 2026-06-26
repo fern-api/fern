@@ -63,8 +63,8 @@ export class CompletionsClient {
                         streamTerminator: "[[DONE]]",
                         resumable: true,
                     },
-                    maxStreamReconnectAttempts: requestOptions?.maxStreamReconnectAttempts,
-                    disableStreamReconnection: requestOptions?.disableStreamReconnection,
+                    withMaxStreamReconnectAttempts: requestOptions?.withMaxStreamReconnectAttempts,
+                    withoutStreamReconnection: requestOptions?.withoutStreamReconnection,
                 }),
                 rawResponse: _response.rawResponse,
             };
@@ -122,8 +122,8 @@ export class CompletionsClient {
                         type: "sse",
                         streamTerminator: "[[DONE]]",
                     },
-                    maxStreamReconnectAttempts: requestOptions?.maxStreamReconnectAttempts,
-                    disableStreamReconnection: requestOptions?.disableStreamReconnection,
+                    withMaxStreamReconnectAttempts: requestOptions?.withMaxStreamReconnectAttempts,
+                    withoutStreamReconnection: requestOptions?.withoutStreamReconnection,
                 }),
                 rawResponse: _response.rawResponse,
             };

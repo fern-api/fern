@@ -854,15 +854,15 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             this.clientClass
                                         )
                                     }),
-                                    maxStreamReconnectAttempts: ts.factory.createPropertyAccessChain(
+                                    withMaxStreamReconnectAttempts: ts.factory.createPropertyAccessChain(
                                         ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier("maxStreamReconnectAttempts")
+                                        ts.factory.createIdentifier("withMaxStreamReconnectAttempts")
                                     ),
-                                    disableStreamReconnection: ts.factory.createPropertyAccessChain(
+                                    withoutStreamReconnection: ts.factory.createPropertyAccessChain(
                                         ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier("disableStreamReconnection")
+                                        ts.factory.createIdentifier("withoutStreamReconnection")
                                     ),
                                     parse: context.includeSerdeLayer
                                         ? ts.factory.createArrowFunction(

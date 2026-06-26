@@ -21,12 +21,12 @@ export declare namespace Stream {
          * Maximum number of transparent mid-stream reconnect attempts on
          * resumable SSE endpoints. Has no effect on non-resumable endpoints.
          */
-        maxStreamReconnectAttempts?: number;
+        withMaxStreamReconnectAttempts?: number;
         /**
          * Disable transparent mid-stream reconnection on resumable SSE
          * endpoints. Has no effect on non-resumable endpoints.
          */
-        disableStreamReconnection?: boolean;
+        withoutStreamReconnection?: boolean;
     }
 
     interface JsonEvent {
@@ -69,9 +69,9 @@ export class Stream<T> implements AsyncIterable<T> {
     // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
     private resumable: boolean;
     // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
-    private maxStreamReconnectAttempts: number | undefined;
+    private withMaxStreamReconnectAttempts: number | undefined;
     // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
-    private disableStreamReconnection: boolean;
+    private withoutStreamReconnection: boolean;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
@@ -80,8 +80,8 @@ export class Stream<T> implements AsyncIterable<T> {
         parse,
         eventShape,
         signal,
-        maxStreamReconnectAttempts,
-        disableStreamReconnection,
+        withMaxStreamReconnectAttempts,
+        withoutStreamReconnection,
     }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
@@ -95,8 +95,8 @@ export class Stream<T> implements AsyncIterable<T> {
             this.messageTerminator = eventShape.messageTerminator;
             this.resumable = false;
         }
-        this.maxStreamReconnectAttempts = maxStreamReconnectAttempts;
-        this.disableStreamReconnection = disableStreamReconnection ?? false;
+        this.withMaxStreamReconnectAttempts = withMaxStreamReconnectAttempts;
+        this.withoutStreamReconnection = withoutStreamReconnection ?? false;
         signal?.addEventListener("abort", () => this.controller.abort());
 
         // Initialize shared TextDecoder

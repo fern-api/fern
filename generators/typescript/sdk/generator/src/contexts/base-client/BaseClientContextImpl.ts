@@ -393,7 +393,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     docs: ["Additional headers to include in the request."]
                 },
                 {
-                    name: "maxStreamReconnectAttempts",
+                    name: "withMaxStreamReconnectAttempts",
                     type: "number",
                     hasQuestionToken: true,
                     docs: [
@@ -401,7 +401,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     ]
                 },
                 {
-                    name: "disableStreamReconnection",
+                    name: "withoutStreamReconnection",
                     type: "boolean",
                     hasQuestionToken: true,
                     docs: [

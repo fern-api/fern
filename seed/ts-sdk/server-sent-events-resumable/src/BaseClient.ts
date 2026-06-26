@@ -31,9 +31,9 @@ export interface BaseRequestOptions {
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** Maximum number of transparent mid-stream reconnect attempts on resumable SSE endpoints. Has no effect on non-resumable endpoints. */
-    maxStreamReconnectAttempts?: number;
+    withMaxStreamReconnectAttempts?: number;
     /** Disable transparent mid-stream reconnection on resumable SSE endpoints. Has no effect on non-resumable endpoints. */
-    disableStreamReconnection?: boolean;
+    withoutStreamReconnection?: boolean;
 }
 
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {

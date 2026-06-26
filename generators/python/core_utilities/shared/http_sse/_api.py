@@ -17,13 +17,13 @@ class EventSource:
         response: httpx.Response,
         *,
         resumable: bool = False,
-        max_stream_reconnect_attempts: int | None = None,
-        disable_stream_reconnection: bool = False,
+        with_max_stream_reconnect_attempts: int | None = None,
+        without_stream_reconnection: bool = False,
     ) -> None:
         self._response = response
         self._resumable = resumable
-        self._max_stream_reconnect_attempts = max_stream_reconnect_attempts
-        self._disable_stream_reconnection = disable_stream_reconnection
+        self._with_max_stream_reconnect_attempts = with_max_stream_reconnect_attempts
+        self._without_stream_reconnection = without_stream_reconnection
 
     def _check_content_type(self) -> None:
         content_type = self._response.headers.get("content-type", "").partition(";")[0]
