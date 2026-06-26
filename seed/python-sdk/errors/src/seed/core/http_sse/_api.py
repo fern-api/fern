@@ -3,7 +3,7 @@
 import codecs
 import re
 from contextlib import asynccontextmanager, contextmanager
-from typing import Any, AsyncGenerator, AsyncIterator, Iterator
+from typing import Any, AsyncGenerator, AsyncIterator, Iterator, Optional
 
 import httpx
 from ._decoders import SSEDecoder
@@ -14,8 +14,18 @@ MAX_LINE_SIZE: int = 1_048_576  # 1 MiB
 
 
 class EventSource:
-    def __init__(self, response: httpx.Response) -> None:
+    def __init__(
+        self,
+        response: httpx.Response,
+        *,
+        resumable: bool = False,
+        stream_reconnection_enabled: bool = True,
+        max_stream_reconnection_attempts: Optional[int] = None,
+    ) -> None:
         self._response = response
+        self._resumable = resumable
+        self._stream_reconnection_enabled = stream_reconnection_enabled
+        self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
 
     def _check_content_type(self) -> None:
         content_type = self._response.headers.get("content-type", "").partition(";")[0]

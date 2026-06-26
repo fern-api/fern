@@ -156,6 +156,21 @@ impl AuthCredentialSource {
         }
     }
 
+    /// The environment-variable name backing this source, if it is an
+    /// [`Env`](Self::Env) source. Returns `None` for every other variant.
+    ///
+    /// Used by the OAuth2 lowering ([`OAuth2Auth`](crate::auth::OAuth2Auth)),
+    /// whose [`OAuth2Grant`](crate::auth::OAuth2Grant) resolves client
+    /// credentials from env-var *names* at token-refresh time. Non-env
+    /// sources can't feed that grant, so the OAuth2 path treats them as
+    /// missing config and fails fast rather than authenticating silently.
+    pub fn env_var_name(&self) -> Option<&str> {
+        match self {
+            AuthCredentialSource::Env(name) => Some(name),
+            _ => None,
+        }
+    }
+
     /// Human-readable descriptions of where this source reads credentials
     /// from. Used by the auth-error path to tell the user which env var,
     /// flag, or file to set.

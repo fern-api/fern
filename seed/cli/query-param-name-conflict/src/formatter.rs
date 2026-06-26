@@ -28,6 +28,10 @@ pub enum FormatError {
     UnknownFormat(String),
     #[error("io error: {0}")]
     Io(#[from] std::io::Error),
+    #[error("invalid --query expression: {0}")]
+    InvalidQuery(String),
+    #[error("--query evaluation failed: {0}")]
+    QueryEvaluation(String),
 }
 
 /// Composable output pipeline.
@@ -44,6 +48,8 @@ pub struct OutputPipeline {
     pub color_mode: ColorMode,
     /// When true, suppress all stdout output. Errors still flow to stderr.
     pub quiet: bool,
+    /// Optional JMESPath expression applied to every response before formatting.
+    pub query: Option<String>,
 }
 
 impl OutputPipeline {
@@ -79,17 +85,72 @@ impl OutputPipeline {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let query = matches
+            .try_get_one::<String>("query")
+            .ok()
+            .flatten()
+            .cloned();
+        // Validate the expression eagerly so typos are caught before the
+        // request is sent.
+        if let Some(ref expr) = query {
+            jmespath::compile(expr)
+                .map_err(|e| FormatError::InvalidQuery(e.to_string()))?;
+        }
         Ok(Self {
             format,
             color_mode: ColorMode::Auto,
             quiet,
+            query,
         })
+    }
+
+    /// Whether the pipeline is in raw mode (bypass formatting).
+    pub fn is_raw(&self) -> bool {
+        self.format == OutputFormat::Raw
+    }
+
+    /// Whether the pipeline is in HTTP mode (full HTTP response output).
+    pub fn is_http(&self) -> bool {
+        self.format == OutputFormat::Http
     }
 
     /// Render `value` to `out`, appending a trailing newline.
     ///
     /// When `quiet` is set, this is a no-op — the value is silently discarded.
+    /// When a `--query` expression is set, it is applied before formatting.
     pub fn emit<W: std::io::Write>(
+        &self,
+        out: &mut W,
+        value: &Value,
+        paginated: bool,
+        is_first_page: bool,
+    ) -> Result<(), FormatError> {
+        if self.quiet {
+            return Ok(());
+        }
+        // Avoid cloning when no --query is set (the common path).
+        let owned;
+        let effective = match &self.query {
+            Some(_) => {
+                owned = self.apply_query(value)?;
+                &owned
+            }
+            None => value,
+        };
+        let rendered = if paginated {
+            format_value_paginated(effective, &self.format, is_first_page)
+        } else {
+            format_value(effective, &self.format)
+        };
+        writeln!(out, "{rendered}")?;
+        Ok(())
+    }
+
+    /// Render a pre-projected `value` to `out` without applying `--query`.
+    ///
+    /// Used by streaming paths that have already applied `apply_query_streaming`
+    /// and want to emit the result without re-projecting.
+    pub fn emit_raw<W: std::io::Write>(
         &self,
         out: &mut W,
         value: &Value,
@@ -106,6 +167,35 @@ impl OutputPipeline {
         };
         writeln!(out, "{rendered}")?;
         Ok(())
+    }
+
+    /// Apply the `--query` JMESPath expression to `value`.
+    ///
+    /// Returns the projected value, or the original value unchanged when no
+    /// query is configured.
+    pub fn apply_query(&self, value: &Value) -> Result<Value, FormatError> {
+        match &self.query {
+            None => Ok(value.clone()),
+            Some(expr_str) => apply_jmespath(value, expr_str),
+        }
+    }
+
+    /// Apply `--query` and return `None` when the projection is null.
+    ///
+    /// Used by streaming paths: events whose projection is `null` are
+    /// suppressed, enabling `--query` as a per-event filter.
+    pub fn apply_query_streaming(&self, value: &Value) -> Result<Option<Value>, FormatError> {
+        match &self.query {
+            None => Ok(Some(value.clone())),
+            Some(expr_str) => {
+                let result = apply_jmespath(value, expr_str)?;
+                if result.is_null() {
+                    Ok(None)
+                } else {
+                    Ok(Some(result))
+                }
+            }
+        }
     }
 }
 
@@ -144,6 +234,12 @@ pub enum OutputFormat {
     Yaml,
     /// Comma-separated values.
     Csv,
+    /// Raw server bytes — no parsing, no transformation.
+    Raw,
+    /// JSONL / NDJSON — one compact JSON value per line.
+    Jsonl,
+    /// Full HTTP response (status line + headers + body) — like `curl -i`.
+    Http,
 }
 
 impl OutputFormat {
@@ -158,6 +254,9 @@ impl OutputFormat {
             "table" => Ok(Self::Table),
             "yaml" | "yml" => Ok(Self::Yaml),
             "csv" => Ok(Self::Csv),
+            "raw" => Ok(Self::Raw),
+            "jsonl" | "ndjson" => Ok(Self::Jsonl),
+            "http" => Ok(Self::Http),
             other => Err(other.to_string()),
         }
     }
@@ -178,6 +277,11 @@ pub fn format_value(value: &Value, format: &OutputFormat) -> String {
         OutputFormat::Table => format_table(value),
         OutputFormat::Yaml => format_yaml(value),
         OutputFormat::Csv => format_csv(value),
+        // Defensive fallback; the executor normally bypasses format_value.
+        OutputFormat::Raw => serde_json::to_string(value).unwrap_or_default(),
+        OutputFormat::Jsonl => format_jsonl(value),
+        // Defensive fallback; the executor normally bypasses format_value for Http.
+        OutputFormat::Http => serde_json::to_string(value).unwrap_or_default(),
     }
 }
 
@@ -198,7 +302,40 @@ pub fn format_value_paginated(value: &Value, format: &OutputFormat, is_first_pag
         // Prefix every page with a YAML document separator so that the
         // concatenated stream is parseable as a multi-document YAML file.
         OutputFormat::Yaml => format!("---\n{}", format_yaml(value)),
+        OutputFormat::Raw => serde_json::to_string(value).unwrap_or_default(),
+        OutputFormat::Jsonl => format_jsonl(value),
+        OutputFormat::Http => serde_json::to_string(value).unwrap_or_default(),
     }
+}
+
+/// Format a JSON value as JSONL (one compact JSON line per element).
+///
+/// For array values (or list-shaped API responses with an extractable data
+/// array), each element is serialized as a single compact JSON line. For
+/// non-array values, the entire value is serialized as one compact line.
+fn format_jsonl(value: &Value) -> String {
+    // Try to extract a data array from a list-shaped response.
+    if let Some((_key, arr)) = extract_items(value) {
+        return format_jsonl_array(arr);
+    }
+    // Top-level array.
+    if let Value::Array(arr) = value {
+        return format_jsonl_array(arr);
+    }
+    // Single object/scalar: one compact line.
+    serde_json::to_string(value).unwrap_or_default()
+}
+
+/// Serialize each element as a compact JSON line, joined by newlines.
+fn format_jsonl_array(arr: &[Value]) -> String {
+    let mut out = String::new();
+    for (i, item) in arr.iter().enumerate() {
+        if i > 0 {
+            out.push('\n');
+        }
+        out.push_str(&serde_json::to_string(item).unwrap_or_default());
+    }
+    out
 }
 
 /// Extract a "data array" from a typical API list response.
@@ -563,6 +700,28 @@ fn value_to_cell(value: &Value) -> String {
         }
         Value::Object(_) => serde_json::to_string(value).unwrap_or_default(),
     }
+}
+
+/// Apply a JMESPath expression to a `serde_json::Value`.
+///
+/// Converts the value to the `jmespath::Variable` domain, searches, then
+/// converts the result back to `serde_json::Value`. Returns `Value::Null`
+/// when the expression does not match anything in the input.
+pub(crate) fn apply_jmespath(value: &Value, expr_str: &str) -> Result<Value, FormatError> {
+    let expr = jmespath::compile(expr_str)
+        .map_err(|e| FormatError::InvalidQuery(e.to_string()))?;
+    // Convert serde_json::Value → JSON string → jmespath::Variable.
+    let json_str =
+        serde_json::to_string(value).map_err(|e| FormatError::QueryEvaluation(e.to_string()))?;
+    let data = jmespath::Variable::from_json(&json_str)
+        .map_err(|e| FormatError::QueryEvaluation(e.to_string()))?;
+    let result = expr
+        .search(data)
+        .map_err(|e| FormatError::QueryEvaluation(e.to_string()))?;
+    // Convert jmespath::Variable → JSON string → serde_json::Value.
+    let result_json =
+        serde_json::to_string(&*result).map_err(|e| FormatError::QueryEvaluation(e.to_string()))?;
+    serde_json::from_str(&result_json).map_err(|e| FormatError::QueryEvaluation(e.to_string()))
 }
 
 #[cfg(test)]
@@ -1135,6 +1294,7 @@ mod tests {
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
+            query: None,
         };
         let val = json!({"name": "test", "n": 1});
         let mut buf: Vec<u8> = Vec::new();
@@ -1152,6 +1312,7 @@ mod tests {
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
+            query: None,
         };
         let val = json!({"name": "test", "n": 1});
         let mut buf: Vec<u8> = Vec::new();
@@ -1171,10 +1332,306 @@ mod tests {
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: true,
+            query: None,
         };
         let val = json!({"name": "test"});
         let mut buf: Vec<u8> = Vec::new();
         pipeline.emit(&mut buf, &val, false, true).unwrap();
         assert!(buf.is_empty(), "quiet mode should suppress all output");
+    }
+
+    #[test]
+    fn apply_jmespath_extracts_nested_field() {
+        let val = json!({"foo": {"bar": "hello"}});
+        let result = apply_jmespath(&val, "foo.bar").unwrap();
+        assert_eq!(result, json!("hello"));
+    }
+
+    #[test]
+    fn apply_jmespath_returns_null_for_missing_path() {
+        let val = json!({"foo": "bar"});
+        let result = apply_jmespath(&val, "nonexistent").unwrap();
+        assert_eq!(result, Value::Null);
+    }
+
+    #[test]
+    fn apply_jmespath_array_filter() {
+        let val = json!({"items": [{"name": "a", "active": true}, {"name": "b", "active": false}]});
+        let result = apply_jmespath(&val, "items[?active].name").unwrap();
+        assert_eq!(result, json!(["a"]));
+    }
+
+    #[test]
+    fn apply_jmespath_invalid_expression() {
+        let val = json!({});
+        let result = apply_jmespath(&val, "[");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn pipeline_emit_with_query_projects_value() {
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Json,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: Some("name".to_string()),
+        };
+        let val = json!({"name": "test", "extra": 123});
+        let mut buf: Vec<u8> = Vec::new();
+        pipeline.emit(&mut buf, &val, false, true).unwrap();
+        let s = String::from_utf8(buf).unwrap();
+        assert!(s.contains("\"test\""), "expected projected value, got: {s}");
+        assert!(!s.contains("extra"), "should not contain non-projected fields");
+    }
+
+    #[test]
+    fn pipeline_apply_query_streaming_suppresses_null() {
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Json,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: Some("nonexistent".to_string()),
+        };
+        let val = json!({"foo": "bar"});
+        let result = pipeline.apply_query_streaming(&val).unwrap();
+        assert!(result.is_none(), "null projection should be suppressed in streaming");
+    }
+
+    #[test]
+    fn pipeline_apply_query_streaming_passes_non_null() {
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Json,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: Some("foo".to_string()),
+        };
+        let val = json!({"foo": "bar"});
+        let result = pipeline.apply_query_streaming(&val).unwrap();
+        assert_eq!(result, Some(json!("bar")));
+    }
+
+    // -----------------------------------------------------------------------
+    // Raw format
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn parse_raw_format() {
+        assert_eq!(OutputFormat::parse("raw"), Ok(OutputFormat::Raw));
+        assert_eq!(OutputFormat::parse("RAW"), Ok(OutputFormat::Raw));
+        assert_eq!(OutputFormat::parse("Raw"), Ok(OutputFormat::Raw));
+    }
+
+    #[test]
+    fn is_raw_returns_true_for_raw_format() {
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Raw,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: None,
+        };
+        assert!(pipeline.is_raw());
+    }
+
+    #[test]
+    fn is_raw_returns_false_for_other_formats() {
+        for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Jsonl, OutputFormat::Http] {
+            let pipeline = OutputPipeline {
+                format: fmt,
+                color_mode: ColorMode::Never,
+                quiet: false,
+                query: None,
+            };
+            assert!(!pipeline.is_raw());
+        }
+    }
+
+    #[test]
+    fn resolve_default_format_env_raw() {
+        assert_eq!(resolve_default_format(Some("raw"), false), OutputFormat::Raw);
+    }
+
+    #[test]
+    fn pipeline_from_matches_explicit_raw_flag() {
+        let matches = matches_for(&["test", "--format", "raw"]);
+        let pipeline = OutputPipeline::from_matches(&matches, "test").unwrap();
+        assert_eq!(pipeline.format, OutputFormat::Raw);
+    }
+
+    #[test]
+    fn format_value_raw_fallback_is_compact_json() {
+        let val = json!({"name": "test", "n": 1});
+        let out = format_value(&val, &OutputFormat::Raw);
+        assert!(!out.contains('\n'), "raw fallback should be compact JSON");
+        assert!(out.contains("\"name\":\"test\""));
+    }
+
+    #[test]
+    fn format_value_paginated_raw_fallback_is_compact_json() {
+        let val = json!({"items": [1, 2]});
+        let first = format_value_paginated(&val, &OutputFormat::Raw, true);
+        let second = format_value_paginated(&val, &OutputFormat::Raw, false);
+        assert!(!first.contains('\n'));
+        assert_eq!(first, second, "raw paginated fallback ignores is_first_page");
+    }
+
+    // -----------------------------------------------------------------------
+    // JSONL format
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn parse_jsonl_format() {
+        assert_eq!(OutputFormat::parse("jsonl"), Ok(OutputFormat::Jsonl));
+        assert_eq!(OutputFormat::parse("JSONL"), Ok(OutputFormat::Jsonl));
+        assert_eq!(OutputFormat::parse("Jsonl"), Ok(OutputFormat::Jsonl));
+        assert_eq!(OutputFormat::parse("ndjson"), Ok(OutputFormat::Jsonl));
+        assert_eq!(OutputFormat::parse("NDJSON"), Ok(OutputFormat::Jsonl));
+    }
+
+    #[test]
+    fn jsonl_single_object_is_compact_one_line() {
+        let val = json!({"name": "test", "n": 1});
+        let out = format_value(&val, &OutputFormat::Jsonl);
+        assert!(!out.contains('\n'), "single object should be one line, got: {out}");
+        assert!(out.contains("\"name\":\"test\""), "should be compact JSON");
+    }
+
+    #[test]
+    fn jsonl_top_level_array_flattened() {
+        let val = json!([{"id": 1}, {"id": 2}, {"id": 3}]);
+        let out = format_value(&val, &OutputFormat::Jsonl);
+        let lines: Vec<&str> = out.lines().collect();
+        assert_eq!(lines.len(), 3, "each array element on its own line, got: {out}");
+        assert_eq!(lines[0], r#"{"id":1}"#);
+        assert_eq!(lines[1], r#"{"id":2}"#);
+        assert_eq!(lines[2], r#"{"id":3}"#);
+    }
+
+    #[test]
+    fn jsonl_list_response_extracts_and_flattens_data_array() {
+        let val = json!({
+            "items": [{"id": "a"}, {"id": "b"}],
+            "nextPageToken": "abc"
+        });
+        let out = format_value(&val, &OutputFormat::Jsonl);
+        let lines: Vec<&str> = out.lines().collect();
+        assert_eq!(lines.len(), 2, "should flatten extracted data array, got: {out}");
+        assert_eq!(lines[0], r#"{"id":"a"}"#);
+        assert_eq!(lines[1], r#"{"id":"b"}"#);
+    }
+
+    #[test]
+    fn jsonl_empty_array_is_empty_string() {
+        let val = json!([]);
+        let out = format_value(&val, &OutputFormat::Jsonl);
+        assert!(out.is_empty(), "empty array should produce empty string, got: {out}");
+    }
+
+    #[test]
+    fn jsonl_scalar_value() {
+        let val = json!(42);
+        let out = format_value(&val, &OutputFormat::Jsonl);
+        assert_eq!(out, "42");
+    }
+
+    #[test]
+    fn jsonl_paginated_flattens_array() {
+        let val = json!({"events": [{"id": 1}, {"id": 2}]});
+        let first = format_value_paginated(&val, &OutputFormat::Jsonl, true);
+        let second = format_value_paginated(&val, &OutputFormat::Jsonl, false);
+        let lines: Vec<&str> = first.lines().collect();
+        assert_eq!(lines.len(), 2);
+        assert_eq!(first, second, "jsonl paginated ignores is_first_page");
+    }
+
+    #[test]
+    fn resolve_default_format_env_jsonl() {
+        assert_eq!(resolve_default_format(Some("jsonl"), false), OutputFormat::Jsonl);
+    }
+
+    #[test]
+    fn pipeline_from_matches_explicit_jsonl_flag() {
+        let matches = matches_for(&["test", "--format", "jsonl"]);
+        let pipeline = OutputPipeline::from_matches(&matches, "test").unwrap();
+        assert_eq!(pipeline.format, OutputFormat::Jsonl);
+    }
+
+    #[test]
+    fn pipeline_emit_jsonl_flattens_array() {
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Jsonl,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: None,
+        };
+        let val = json!([{"a": 1}, {"a": 2}]);
+        let mut buf: Vec<u8> = Vec::new();
+        pipeline.emit(&mut buf, &val, false, true).unwrap();
+        let s = String::from_utf8(buf).unwrap();
+        let lines: Vec<&str> = s.trim_end().lines().collect();
+        assert_eq!(lines.len(), 2, "emit should flatten array to JSONL, got: {s}");
+    }
+
+    // -----------------------------------------------------------------------
+    // HTTP format
+    // -----------------------------------------------------------------------
+
+    #[test]
+    fn parse_http_format() {
+        assert_eq!(OutputFormat::parse("http"), Ok(OutputFormat::Http));
+        assert_eq!(OutputFormat::parse("HTTP"), Ok(OutputFormat::Http));
+        assert_eq!(OutputFormat::parse("Http"), Ok(OutputFormat::Http));
+    }
+
+    #[test]
+    fn is_http_returns_true_for_http_format() {
+        let pipeline = OutputPipeline {
+            format: OutputFormat::Http,
+            color_mode: ColorMode::Never,
+            quiet: false,
+            query: None,
+        };
+        assert!(pipeline.is_http());
+    }
+
+    #[test]
+    fn is_http_returns_false_for_other_formats() {
+        for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Raw, OutputFormat::Jsonl] {
+            let pipeline = OutputPipeline {
+                format: fmt,
+                color_mode: ColorMode::Never,
+                quiet: false,
+                query: None,
+            };
+            assert!(!pipeline.is_http());
+        }
+    }
+
+    #[test]
+    fn resolve_default_format_env_http() {
+        assert_eq!(resolve_default_format(Some("http"), false), OutputFormat::Http);
+    }
+
+    #[test]
+    fn pipeline_from_matches_explicit_http_flag() {
+        let matches = matches_for(&["test", "--format", "http"]);
+        let pipeline = OutputPipeline::from_matches(&matches, "test").unwrap();
+        assert_eq!(pipeline.format, OutputFormat::Http);
+    }
+
+    #[test]
+    fn format_value_http_fallback_is_compact_json() {
+        let val = json!({"name": "test", "n": 1});
+        let out = format_value(&val, &OutputFormat::Http);
+        assert!(!out.contains('\n'), "http fallback should be compact JSON");
+        assert!(out.contains("\"name\":\"test\""));
+    }
+
+    #[test]
+    fn format_value_paginated_http_fallback_is_compact_json() {
+        let val = json!({"items": [1, 2]});
+        let first = format_value_paginated(&val, &OutputFormat::Http, true);
+        let second = format_value_paginated(&val, &OutputFormat::Http, false);
+        assert!(!first.contains('\n'));
+        assert_eq!(first, second, "http paginated fallback ignores is_first_page");
     }
 }

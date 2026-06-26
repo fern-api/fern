@@ -41,6 +41,12 @@ impl AuthProvider for AnyAuthProvider {
         self.providers.iter().any(|p| p.has_credentials())
     }
 
+    fn inject_token_cache(&self, cli_name: &str) {
+        for p in &self.providers {
+            p.inject_token_cache(cli_name);
+        }
+    }
+
     fn credential_hints(&self) -> Vec<String> {
         self.providers
             .iter()
@@ -110,6 +116,12 @@ impl AuthProvider for AllAuthProvider {
         // All-auth means every scheme must contribute. If any is missing,
         // the request can't be authenticated as the API requires.
         !self.providers.is_empty() && self.providers.iter().all(|p| p.has_credentials())
+    }
+
+    fn inject_token_cache(&self, cli_name: &str) {
+        for p in &self.providers {
+            p.inject_token_cache(cli_name);
+        }
     }
 
     fn credential_hints(&self) -> Vec<String> {
@@ -191,6 +203,13 @@ impl AuthProvider for LayeredAuthProvider {
         // Optional layers don't gate satisfiability — the primary decides
         // whether the CLI can authenticate at all.
         self.primary.has_credentials()
+    }
+
+    fn inject_token_cache(&self, cli_name: &str) {
+        self.primary.inject_token_cache(cli_name);
+        for layer in &self.layers {
+            layer.inject_token_cache(cli_name);
+        }
     }
 
     fn credential_hints(&self) -> Vec<String> {
@@ -278,6 +297,15 @@ impl AuthProvider for RoutingAuthProvider {
     fn has_credentials(&self) -> bool {
         self.schemes.values().any(|p| p.has_credentials())
             || self.default.as_ref().is_some_and(|p| p.has_credentials())
+    }
+
+    fn inject_token_cache(&self, cli_name: &str) {
+        for p in self.schemes.values() {
+            p.inject_token_cache(cli_name);
+        }
+        if let Some(d) = &self.default {
+            d.inject_token_cache(cli_name);
+        }
     }
 
     fn credential_hints(&self) -> Vec<String> {

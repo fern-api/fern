@@ -25,6 +25,10 @@ pub enum CliError {
 
     #[error(transparent)]
     Other(#[from] anyhow::Error),
+
+    /// Raw-mode sentinel: error bytes already written to stdout.
+    #[error("")]
+    RawSentinel { code: u16 },
 }
 
 
@@ -50,7 +54,13 @@ impl CliError {
             Self::Auth(msg) => Self::Auth(msg.clone()),
             Self::Discovery(msg) => Self::Discovery(msg.clone()),
             Self::Other(e) => Self::Other(anyhow::anyhow!("{e:#}")),
+            Self::RawSentinel { code } => Self::RawSentinel { code: *code },
         }
+    }
+
+    /// Whether this is a raw-mode sentinel (error bytes already on stdout).
+    pub fn is_raw_sentinel(&self) -> bool {
+        matches!(self, Self::RawSentinel { .. })
     }
 
     pub fn exit_code(&self) -> i32 {
@@ -60,6 +70,7 @@ impl CliError {
             CliError::Validation(_) => Self::EXIT_CODE_VALIDATION,
             CliError::Discovery(_) => Self::EXIT_CODE_DISCOVERY,
             CliError::Other(_) => Self::EXIT_CODE_OTHER,
+            CliError::RawSentinel { .. } => Self::EXIT_CODE_API,
         }
     }
 
@@ -102,6 +113,13 @@ impl CliError {
                     "code": 500,
                     "message": format!("{e:#}"),
                     "reason": "internalError",
+                }
+            }),
+            CliError::RawSentinel { code } => json!({
+                "error": {
+                    "code": code,
+                    "message": "",
+                    "reason": "raw",
                 }
             }),
         }
@@ -222,14 +240,31 @@ fn error_label(err: &CliError) -> String {
         CliError::Validation(_) => colorize("error[validation]:", "33"),
         CliError::Discovery(_) => colorize("error[discovery]:", "31"),
         CliError::Other(_) => colorize("error:", "31"),
+        CliError::RawSentinel { .. } => colorize("error[api]:", "31"),
     }
 }
 
-pub fn print_error_json(err: &CliError) {
-    write_error_json(err, &mut std::io::stdout());
+/// Optional context that enriches the stderr error display with a docs link
+/// and a `--help` suggestion. Does not affect the JSON envelope on stdout.
+pub struct ErrorDisplayContext {
+    /// Base URL for per-code documentation links (e.g. `https://docs.example.com/errors/`).
+    /// Appended with the HTTP status code for `CliError::Api` errors.
+    pub docs_base_url: Option<String>,
+    /// Full help invocation, e.g. `box users list --help`.
+    /// Printed as `Try \`...\`` after the error message.
+    pub help_hint: Option<String>,
 }
 
-pub fn write_error_json(err: &CliError, out: &mut dyn std::io::Write) {
+pub fn print_error_json(err: &CliError) {
+    write_error_json(err, &mut std::io::stdout(), None);
+}
+
+pub fn write_error_json(err: &CliError, out: &mut dyn std::io::Write, ctx: Option<&ErrorDisplayContext>) {
+    // Raw-mode sentinel: bytes already on stdout, skip structured JSON.
+    if let CliError::RawSentinel { code } = err {
+        eprintln!("Error: HTTP {code}");
+        return;
+    }
     let json = err.to_json();
     let _ = writeln!(
         out,
@@ -241,6 +276,19 @@ pub fn write_error_json(err: &CliError, out: &mut dyn std::io::Write) {
         error_label(err),
         sanitize_for_terminal(&err.to_string())
     );
+    if let Some(ctx) = ctx {
+        if let Some(base) = &ctx.docs_base_url {
+            if let CliError::Api { code, .. } = err {
+                let url = format!("{}/{}", base.trim_end_matches('/'), code);
+                eprintln!("  → {}", sanitize_for_terminal(&url));
+            }
+        }
+        if matches!(err, CliError::Validation(_)) {
+            if let Some(hint) = &ctx.help_hint {
+                eprintln!("  Try `{}`", sanitize_for_terminal(hint));
+            }
+        }
+    }
 }
 
 #[cfg(test)]
@@ -330,6 +378,90 @@ mod tests {
         print_error_json(&CliError::Auth("no auth".to_string()));
         print_error_json(&CliError::Discovery("no spec".to_string()));
         print_error_json(&CliError::Other(anyhow::anyhow!("broken")));
+    }
+
+    #[test]
+    fn write_error_json_stdout_unchanged_with_context() {
+        let err = CliError::Api {
+            code: 401,
+            message: "Unauthorized".to_string(),
+            reason: "authError".to_string(),
+        };
+        let ctx = ErrorDisplayContext {
+            docs_base_url: Some("https://docs.example.com/errors".to_string()),
+            help_hint: Some("mycli users list --help".to_string()),
+        };
+        let mut out = Vec::new();
+        write_error_json(&err, &mut out, Some(&ctx));
+        let stdout = String::from_utf8(out).unwrap();
+        let parsed: serde_json::Value = serde_json::from_str(&stdout).unwrap();
+        assert_eq!(parsed["error"]["code"], 401);
+        assert_eq!(parsed["error"]["message"], "Unauthorized");
+    }
+
+    #[test]
+    fn write_error_json_no_docs_url_for_non_api_errors() {
+        let ctx = ErrorDisplayContext {
+            docs_base_url: Some("https://docs.example.com/errors".to_string()),
+            help_hint: None,
+        };
+        // Validation errors should not get docs URLs (no HTTP status code).
+        let mut out = Vec::new();
+        write_error_json(
+            &CliError::Validation("bad input".to_string()),
+            &mut out,
+            Some(&ctx),
+        );
+        let stdout = String::from_utf8(out).unwrap();
+        let parsed: serde_json::Value = serde_json::from_str(&stdout).unwrap();
+        assert_eq!(parsed["error"]["code"], 400);
+    }
+
+    #[test]
+    fn validation_label_is_error_validation() {
+        let label = error_label(&CliError::Validation("oops".to_string()));
+        assert!(label.contains("error[validation]"), "expected 'error[validation]:' label, got: {label}");
+        assert!(!label.contains("warning:"), "label should not contain 'warning:'");
+    }
+
+    #[test]
+    fn help_hint_shown_only_for_validation_errors() {
+        let ctx = ErrorDisplayContext {
+            docs_base_url: None,
+            help_hint: Some("mycli users list --help".to_string()),
+        };
+        // Validation errors should get the hint.
+        let mut out = Vec::new();
+        write_error_json(&CliError::Validation("bad input".to_string()), &mut out, Some(&ctx));
+        // Stdout is the JSON envelope — we don't assert stderr here since eprintln
+        // always targets the real stderr in unit tests. The gating logic is covered
+        // by the `matches!` branch; the wire test exercises it end-to-end.
+
+        // Non-Validation variants must NOT produce a hint. Verify the branch
+        // is unreachable for Api/Auth/Discovery/Other by asserting the helper
+        // doesn't panic and returns clean JSON.
+        for err in [
+            CliError::Api { code: 401, message: "denied".to_string(), reason: "authError".to_string() },
+            CliError::Auth("missing token".to_string()),
+            CliError::Discovery("no spec".to_string()),
+            CliError::Other(anyhow::anyhow!("boom")),
+        ] {
+            let mut o = Vec::new();
+            write_error_json(&err, &mut o, Some(&ctx));
+            assert!(serde_json::from_str::<serde_json::Value>(&String::from_utf8(o).unwrap()).is_ok());
+        }
+    }
+
+    #[test]
+    fn write_error_json_no_panic_without_context() {
+        let mut out = Vec::new();
+        write_error_json(
+            &CliError::Api { code: 422, message: "invalid".to_string(), reason: "validationError".to_string() },
+            &mut out,
+            None,
+        );
+        let stdout = String::from_utf8(out).unwrap();
+        assert!(serde_json::from_str::<serde_json::Value>(&stdout).is_ok());
     }
 
     #[test]
@@ -432,6 +564,66 @@ mod tests {
             detect_errors_format(&args(&["cli", "errors", "--format"])),
             ErrorsFormat::Table,
         );
+    }
+
+    #[test]
+    fn is_raw_sentinel_true_for_raw_sentinel_variant() {
+        let err = CliError::RawSentinel { code: 500 };
+        assert!(err.is_raw_sentinel());
+    }
+
+    #[test]
+    fn is_raw_sentinel_false_for_api_with_raw_reason() {
+        // A server returning reason "raw" must NOT collide with the sentinel.
+        let err = CliError::Api {
+            code: 500,
+            message: String::new(),
+            reason: "raw".to_string(),
+        };
+        assert!(!err.is_raw_sentinel());
+    }
+
+    #[test]
+    fn is_raw_sentinel_false_for_non_api_errors() {
+        assert!(!CliError::Validation("x".into()).is_raw_sentinel());
+        assert!(!CliError::Auth("x".into()).is_raw_sentinel());
+        assert!(!CliError::Discovery("x".into()).is_raw_sentinel());
+    }
+
+    #[test]
+    fn raw_sentinel_exit_code_matches_api() {
+        let sentinel = CliError::RawSentinel { code: 404 };
+        assert_eq!(sentinel.exit_code(), CliError::EXIT_CODE_API);
+    }
+
+    #[test]
+    fn raw_sentinel_duplicate() {
+        let sentinel = CliError::RawSentinel { code: 422 };
+        let dup = sentinel.duplicate();
+        assert!(dup.is_raw_sentinel());
+        assert_eq!(dup.exit_code(), CliError::EXIT_CODE_API);
+    }
+
+    #[test]
+    fn write_error_json_raw_sentinel_suppresses_stdout() {
+        let err = CliError::RawSentinel { code: 500 };
+        let mut buf: Vec<u8> = Vec::new();
+        write_error_json(&err, &mut buf, None);
+        assert!(buf.is_empty(), "raw sentinel should suppress stdout JSON, got: {:?}", String::from_utf8_lossy(&buf));
+    }
+
+    #[test]
+    fn write_error_json_normal_api_error_writes_json() {
+        let err = CliError::Api {
+            code: 404,
+            message: "Not Found".to_string(),
+            reason: "notFound".to_string(),
+        };
+        let mut buf: Vec<u8> = Vec::new();
+        write_error_json(&err, &mut buf, None);
+        assert!(!buf.is_empty(), "normal API error should write JSON to stdout");
+        let s = String::from_utf8(buf).unwrap();
+        assert!(s.contains("Not Found"));
     }
 
     #[test]

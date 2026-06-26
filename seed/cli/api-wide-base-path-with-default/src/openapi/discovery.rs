@@ -946,8 +946,13 @@ pub struct MethodParameter {
     /// array. Pure `type: array` params leave this `false`.
     #[serde(default)]
     pub scalar_or_array: bool,
-    pub minimum: Option<String>,
-    pub maximum: Option<String>,
+    /// Inclusive numeric lower bound (matches [`JsonSchemaProperty::minimum`]).
+    /// Typing the param side as `Option<f64>` keeps `--schema` output
+    /// emit min/max as JSON numbers regardless of whether the property
+    /// came from `parameters` or a request body schema.
+    pub minimum: Option<f64>,
+    /// Inclusive numeric upper bound. See [`Self::minimum`].
+    pub maximum: Option<f64>,
     #[serde(default)]
     pub deprecated: bool,
     /// OpenAPI serialization style (form, deepObject, etc.)
@@ -1100,9 +1105,21 @@ pub struct JsonSchemaProperty {
     pub items: Option<Box<JsonSchemaProperty>>,
     #[serde(default)]
     pub properties: HashMap<String, JsonSchemaProperty>,
+    /// Names of nested object properties that the source schema marks as
+    /// required. Lowered from the OpenAPI `required: [...]` keyword on
+    /// object-typed schemas. Empty when the source had no `required` list
+    /// or when this property is not an object (e.g. scalar / array).
+    /// Surfaced in `--schema` so agents constructing nested JSON bodies
+    /// can tell which sub-fields the spec mandates.
+    #[serde(default)]
+    pub required: Vec<String>,
     #[serde(default)]
     pub read_only: bool,
-    pub default: Option<String>,
+    /// OpenAPI's standard `default:` keyword. Stored as a `serde_json::Value`
+    /// (lowered from the raw YAML) so the wire type — number, boolean,
+    /// object, etc. — survives into the agent-facing `--schema` output
+    /// and is symmetric with [`MethodParameter::default_value`].
+    pub default: Option<serde_json::Value>,
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
     /// Inclusive numeric lower bound. Lowered by the parser so the OpenAPI

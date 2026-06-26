@@ -89,23 +89,33 @@ fn build_operation_schema(resource_path: &[&str], method_name: &str, method: &Gr
     }
     required.sort();
 
-    let (operation_type, field) = method
-        .graphql
-        .as_ref()
-        .map(|g| (g.operation_type.as_str(), g.field_name.as_str()))
-        .unwrap_or(("query", ""));
-
-    json!({
+    // Per ADR-0006: `--schema` is the agent-facing contract. Drop
+    // GraphQL execution detail (`operationType`, `field`) — agents drive
+    // the CLI, not the underlying GraphQL schema. Rename `parameters` →
+    // `input` for symmetry with `output` / `defaultSelection`.
+    //
+    // `output` is OpenAPI-only — the GraphQL IR has no lowered return-
+    // type schema yet. Instead we emit `defaultSelection`, the GraphQL
+    // fragment string the CLI will send by default; it tells the agent
+    // which fields it will receive without overpromising a JSON Schema.
+    let mut out = json!({
         "operation": format!("{}.{}", resource_path.join("."), method_name),
-        "operationType": operation_type,
-        "field": field,
         "description": method.description.as_deref().unwrap_or(""),
-        "parameters": {
+        "input": {
             "type": "object",
             "properties": properties,
             "required": required,
         },
-    })
+    });
+    if let Some(default_selection) = method
+        .graphql
+        .as_ref()
+        .map(|g| g.default_selection.as_str())
+        .filter(|s| !s.is_empty())
+    {
+        out["defaultSelection"] = json!(default_selection);
+    }
+    out
 }
 
 fn collect_resource_ops(res: &GraphQLResource, path: &[&str], ops: &mut Vec<Value>) {
@@ -113,15 +123,10 @@ fn collect_resource_ops(res: &GraphQLResource, path: &[&str], ops: &mut Vec<Valu
     method_names.sort();
     for method_name in method_names {
         let m = &res.methods[method_name];
-        let (operation_type, field) = m
-            .graphql
-            .as_ref()
-            .map(|g| (g.operation_type.as_str(), g.field_name.as_str()))
-            .unwrap_or(("query", ""));
+        // Per ADR-0006: drop `operationType` and `field` — GraphQL
+        // execution detail an agent driving the CLI never uses.
         ops.push(json!({
             "operation": format!("{}.{}", path.join("."), method_name),
-            "operationType": operation_type,
-            "field": field,
             "description": m.description.as_deref().unwrap_or(""),
         }));
     }
@@ -205,10 +210,63 @@ mod tests {
     fn test_render_operation_schema() {
         let doc = make_doc();
         let schema = operation_schema(&doc, &["users"], "get").unwrap();
-        assert_eq!(schema["operationType"], "query");
-        assert_eq!(schema["field"], "user");
-        let required = schema["parameters"]["required"].as_array().unwrap();
+        // Per ADR-0006: drop GraphQL execution detail; rename
+        // `parameters` → `input`.
+        assert!(schema.get("operationType").is_none(), "operationType should be dropped");
+        assert!(schema.get("field").is_none(), "field should be dropped");
+        assert!(schema.get("parameters").is_none(), "`parameters` should be renamed to `input`");
+        let required = schema["input"]["required"].as_array().unwrap();
         assert!(required.iter().any(|v| v == "user_id"));
+    }
+
+    #[test]
+    fn test_default_selection_emitted_on_per_op_schema() {
+        // Per ADR-0006: GraphQL ops carry `defaultSelection` as a
+        // sibling of `input` — the GraphQL fragment string telling the
+        // agent which fields it will get back by default.
+        let doc = make_doc();
+        let schema = operation_schema(&doc, &["users"], "get").unwrap();
+        assert_eq!(schema["defaultSelection"], "{ id name }");
+    }
+
+    #[test]
+    fn test_default_selection_omitted_when_empty() {
+        use crate::graphql::discovery::{
+            GraphQLMethodInfo, GraphQLOperation, GraphQLResource, MethodParameter,
+        };
+        let mut methods = HashMap::new();
+        methods.insert(
+            "ping".to_string(),
+            GraphQLOperation {
+                description: Some("Ping".to_string()),
+                parameters: HashMap::<String, MethodParameter>::new(),
+                graphql: Some(GraphQLMethodInfo {
+                    operation_type: "query".to_string(),
+                    field_name: "ping".to_string(),
+                    default_selection: String::new(),
+                    args: Vec::new(),
+                }),
+                ..Default::default()
+            },
+        );
+        let mut resources = HashMap::new();
+        resources.insert(
+            "ops".to_string(),
+            GraphQLResource {
+                methods,
+                resources: HashMap::new(),
+            },
+        );
+        let doc = GraphQLSchema {
+            name: "test".to_string(),
+            resources,
+            ..Default::default()
+        };
+        let schema = operation_schema(&doc, &["ops"], "ping").unwrap();
+        assert!(
+            schema.get("defaultSelection").is_none(),
+            "empty default_selection should be omitted: {schema}",
+        );
     }
 
     #[test]
@@ -287,8 +345,6 @@ mod tests {
 
         let schema = operation_schema(&doc, &["organizations", "memberships"], "get-membership").unwrap();
         assert_eq!(schema["operation"], "organizations.memberships.get-membership");
-        assert_eq!(schema["operationType"], "query");
-        assert_eq!(schema["field"], "membership");
     }
 
     #[test]
