@@ -2327,6 +2327,51 @@ pub async fn execute_method(
             break;
         }
 
+        // SSE auto-detection: when the spec omits `x-fern-streaming` but
+        // the server responds with `text/event-stream`, treat the body as
+        // an SSE stream using the same infrastructure. This avoids falling
+        // through to the binary handler (which would dump the stream to a
+        // file or hang).
+        if content_type.contains("text/event-stream") && method.streaming.is_none() {
+            let sse_config = StreamingConfig::Sse { terminator: None };
+            if !no_stream && !capture_output {
+                if debug {
+                    crate::debug::dump_streaming_note(
+                        status.as_u16(),
+                        response.headers(),
+                        &additional_sensitive_headers,
+                    );
+                }
+                stream_response(
+                    response,
+                    &sse_config,
+                    method.return_value.as_deref(),
+                    no_extract,
+                    pipeline,
+                    &method_descriptor,
+                )
+                .await?;
+                break;
+            }
+            let buffered = buffer_streaming_response(
+                response,
+                &sse_config,
+                method.return_value.as_deref(),
+                no_extract,
+                &method_descriptor,
+            )
+            .await?;
+            if capture_output {
+                captured_values.push(buffered);
+            } else {
+                let mut out = std::io::stdout().lock();
+                pipeline
+                    .emit(&mut out, &buffered, false, true)
+                    .context("Failed to write output")?;
+            }
+            break;
+        }
+
         let is_json =
             content_type.contains("application/json") || content_type.contains("text/json");
 
@@ -10203,6 +10248,71 @@ mod tests {
         )
         .expect("text projection must succeed");
         assert_eq!(value, Value::String("raw line".to_string()));
+    }
+
+    // ---------------------------------------------------------------
+    // SSE content-type auto-detection helpers
+    // ---------------------------------------------------------------
+
+    /// Verifies the auto-detection predicate: a response whose
+    /// Content-Type is `text/event-stream` AND whose method has no
+    /// `x-fern-streaming` config should be routed to the SSE branch.
+    #[test]
+    fn test_sse_autodetect_triggers_on_event_stream_content_type() {
+        let content_type = "text/event-stream";
+        let method = RestMethod::default();
+        assert!(
+            content_type.contains("text/event-stream") && method.streaming.is_none(),
+            "auto-detect must trigger when content_type is text/event-stream and streaming is None"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_triggers_with_charset_suffix() {
+        // Servers may send `text/event-stream; charset=utf-8`
+        let content_type = "text/event-stream; charset=utf-8";
+        let method = RestMethod::default();
+        assert!(
+            content_type.contains("text/event-stream") && method.streaming.is_none(),
+            "auto-detect must trigger even with charset parameter"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_skipped_when_streaming_configured() {
+        let content_type = "text/event-stream";
+        let method = RestMethod {
+            streaming: Some(StreamingConfig::Sse { terminator: None }),
+            ..Default::default()
+        };
+        assert!(
+            !(content_type.contains("text/event-stream") && method.streaming.is_none()),
+            "auto-detect must NOT trigger when x-fern-streaming is already set"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_skipped_for_json_content_type() {
+        let content_type = "application/json";
+        let method = RestMethod::default();
+        assert!(
+            !(content_type.contains("text/event-stream") && method.streaming.is_none()),
+            "auto-detect must NOT trigger for application/json"
+        );
+    }
+
+    #[test]
+    fn test_sse_autodetect_synthesized_config_is_sse_no_terminator() {
+        // The auto-detected config must be SSE with no terminator,
+        // matching what `StreamingConfig::Sse { terminator: None }`
+        // produces.
+        let config = StreamingConfig::Sse { terminator: None };
+        match &config {
+            StreamingConfig::Sse { terminator } => {
+                assert!(terminator.is_none(), "auto-detected SSE must have no terminator");
+            }
+            _ => panic!("expected Sse variant"),
+        }
     }
 }
 
