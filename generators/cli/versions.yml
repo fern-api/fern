@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.19.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.0 updates.
+      type: internal
+    - summary: |
+        Fix de-conflicted client names in generated sdk.rs (renamed from
+        sdk_glue.rs). Client names are now read directly from the Rust SDK
+        generator's context via in-process orchestration with backward IR
+        migration (v67→v66), eliminating independent re-derivation drift.
+        Also renames module sdk_glue→sdk, sdk_client()→client().
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 0.18.1
   changelogEntry:
     - summary: |
