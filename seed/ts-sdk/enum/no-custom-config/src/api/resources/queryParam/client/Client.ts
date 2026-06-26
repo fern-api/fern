@@ -45,8 +45,8 @@ export class QueryParamClient {
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
-            operand,
-            maybeOperand: maybeOperand != null ? maybeOperand : undefined,
+            operand: toJson(operand),
+            maybeOperand: maybeOperand != null ? toJson(maybeOperand) : undefined,
             operandOrColor: Array.isArray(operandOrColor)
                 ? operandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))
                 : typeof operandOrColor === "string"
@@ -120,11 +120,11 @@ export class QueryParamClient {
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
-            operand: Array.isArray(operand) ? operand.map((item) => item) : operand,
+            operand: Array.isArray(operand) ? operand.map((item) => toJson(item)) : toJson(operand),
             maybeOperand: Array.isArray(maybeOperand)
-                ? maybeOperand.map((item) => item)
+                ? maybeOperand.map((item) => toJson(item))
                 : maybeOperand != null
-                  ? maybeOperand
+                  ? toJson(maybeOperand)
                   : undefined,
             operandOrColor: Array.isArray(operandOrColor)
                 ? operandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))

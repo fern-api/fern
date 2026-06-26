@@ -1,0 +1,5 @@
+- summary: |
+    Fix enum query parameter serialization in noSerdeLayer mode. Enum values
+    passed as query parameters were not being stringified, causing APIs to
+    receive malformed values (e.g. empty strings or `[object Object]`).
+  type: fix
