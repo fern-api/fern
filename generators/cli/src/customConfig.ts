@@ -86,6 +86,12 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         if (typeof obj.rootGroup !== "string") {
             throw new Error(`Invalid customConfig.rootGroup: expected a string, got ${typeof obj.rootGroup}.`);
         }
+        if (!/^[a-z][a-z0-9_-]*$/.test(obj.rootGroup)) {
+            throw new Error(
+                `Invalid customConfig.rootGroup: "${obj.rootGroup}" contains invalid characters. ` +
+                    "Must start with a lowercase letter and contain only [a-z0-9_-]."
+            );
+        }
         result.rootGroup = obj.rootGroup;
     }
     return result;

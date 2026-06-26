@@ -62,4 +62,26 @@ describe("validateCustomConfig", () => {
     it("throws on non-string rootGroup (boolean)", () => {
         expect(() => validateCustomConfig({ rootGroup: true })).toThrow(/expected a string, got boolean/);
     });
+
+    it("accepts rootGroup with hyphens, underscores, and digits", () => {
+        expect(validateCustomConfig({ rootGroup: "my-api_v2" })).toEqual({ rootGroup: "my-api_v2" });
+    });
+
+    it("throws on rootGroup with uppercase letters", () => {
+        expect(() => validateCustomConfig({ rootGroup: "Api" })).toThrow(/contains invalid characters/);
+    });
+
+    it("throws on rootGroup starting with a digit", () => {
+        expect(() => validateCustomConfig({ rootGroup: "2api" })).toThrow(/contains invalid characters/);
+    });
+
+    it("throws on rootGroup containing quotes (injection attempt)", () => {
+        expect(() => validateCustomConfig({ rootGroup: 'api")); panic!("' })).toThrow(
+            /contains invalid characters/
+        );
+    });
+
+    it("throws on empty rootGroup", () => {
+        expect(() => validateCustomConfig({ rootGroup: "" })).toThrow(/contains invalid characters/);
+    });
 });
