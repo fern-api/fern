@@ -29,9 +29,14 @@ export interface DetectedAuthBinding {
  *   - `bearer` → `.auth(BearerAuth::new("<key>").env("<env>"))`
  *   - `header` → `.auth(ApiKeyAuth::new("<key>").source(...))` with a
  *     `--api-key` flag tried first, falling back to the env var
- *   - `basic` (both halves bound) → `.auth_basic_scheme(...)`
+ *   - `basic` (both halves bound) → `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))`
+ *     at root, so `auth status` enumerates the scheme [FER-11474]. The
+ *     root `BasicAuth` builder lowers to the same `SchemeBinding::Basic`
+ *     as the binding-level `.auth_basic_scheme(...)` and still propagates
+ *     to the binding via `set_root_auth`, so request-time auth is unchanged.
  *   - `basic` with `passwordOmit: true` →
- *     `.auth_provider("<key>", BasicAuthProvider::username_only(...))`
+ *     `.auth_provider("<key>", BasicAuthProvider::username_only(...))` —
+ *     stays binding-level; no root path exists for `BasicAuthProvider`.
  *   - `basic` with `usernameOmit: true` → symmetric
  *     `.auth_provider("<key>", BasicAuthProvider::password_only(...))`
  *   - `basic` with both omitted → skipped (nothing to bind)
@@ -133,11 +138,15 @@ function bindingForScheme(
                     kind: "basic"
                 };
             }
+            // Both halves bound → root-level typed builder. Placed at root
+            // (like bearer/header) so the framework `auth` subcommand can
+            // enumerate it; `set_root_auth` still propagates it down to the
+            // binding for request-time credential resolution [FER-11474].
             return {
                 schemeName: basic.key,
-                rustCall: `.auth_basic_scheme("${basic.key}", AuthCredentialSource::from_env("${usernameEnv}"), AuthCredentialSource::from_env("${passwordEnv}"))`,
-                placement: "binding",
-                authTypeImport: "AuthCredentialSource",
+                rustCall: `.auth(BasicAuth::new("${basic.key}").username_env("${usernameEnv}").password_env("${passwordEnv}"))`,
+                placement: "root",
+                authTypeImport: "BasicAuth",
                 envVars: [usernameEnv, passwordEnv],
                 kind: "basic"
             };
