@@ -1,5 +1,5 @@
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
-import { noop } from "@fern-api/core-utils";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     buildReplayTelemetryProps,
@@ -200,16 +200,21 @@ export class RemoteTaskHandler {
             );
         };
 
-        await remoteTask.status._visit<void | Promise<void>>({
-            notStarted: noop,
-            running: noop,
-            failed: ({ message, s3PreSignedReadUrl }) => {
+        const status = remoteTask.status;
+        switch (status.type) {
+            case "notStarted":
+            case "running":
+                break;
+            case "failed": {
+                const { message, s3PreSignedReadUrl } = status;
                 if (s3PreSignedReadUrl != null) {
                     logS3Url(s3PreSignedReadUrl);
                 }
                 this.context.failAndThrow(message, undefined, { code: CliError.Code.ContainerError });
-            },
-            finished: async (finishedStatus) => {
+                break;
+            }
+            case "finished": {
+                const finishedStatus = status;
                 if (finishedStatus.s3PreSignedReadUrlV2 != null) {
                     logS3Url(finishedStatus.s3PreSignedReadUrlV2);
                     const absolutePathToLocalOutput = this.getAbsolutePathToLocalOutput();
@@ -237,11 +242,14 @@ export class RemoteTaskHandler {
                 }
 
                 this.emitReplayTelemetryIfReady();
-            },
-            _other: () => {
-                this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
+                break;
             }
-        });
+            default:
+                // Forward-compatible: warn on unknown status types from newer server versions
+                assertNeverNoThrow(status);
+                this.context.logger.warn("Received unknown update type: " + (status as { type: string }).type);
+                break;
+        }
 
         return this.#isFinished
             ? {
@@ -480,6 +488,9 @@ async function downloadFilesForTask({
     }
 }
 
+/** Maximum time (ms) to wait for the S3 download to complete, including streaming. */
+const S3_DOWNLOAD_TIMEOUT_MS = 5 * 60 * 1_000;
+
 async function downloadZipForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput
@@ -489,7 +500,9 @@ async function downloadZipForTask({
 }): Promise<void> {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: "stream"
+        responseType: "stream",
+        timeout: 60_000,
+        signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
     });
 
     // pipe to zip
@@ -655,7 +668,9 @@ async function downloadAndExtractZipToDirectory({
     outputPath: AbsoluteFilePath;
 }): Promise<void> {
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: "stream"
+        responseType: "stream",
+        timeout: 60_000,
+        signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
     });
 
     const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
