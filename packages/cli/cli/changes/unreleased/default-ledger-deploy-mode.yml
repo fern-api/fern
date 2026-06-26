@@ -1,6 +1,6 @@
 - summary: |
     Default docs deploy mode is now "ledger", enabling faster incremental deployments
-    and faster first-time page renders for uncached pages. To opt in to the legacy
+    and faster first-time page renders for uncached pages. To revert back to the legacy
     flow, add `FERN_DOCS_DEPLOY_MODE: legacy` to the `env` section of your GitHub
-    Actions workflow. Legacy deploys will be removed in a future version.
+    Actions workflow. Legacy deploys will be removed in a future version of the CLI.
   type: feat
