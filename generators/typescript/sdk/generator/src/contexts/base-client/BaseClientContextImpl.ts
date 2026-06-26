@@ -318,6 +318,14 @@ export class BaseClientContextImpl implements BaseClientContext {
             docs: ["Configure logging for the client."]
         });
 
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "stream",
+            type: "{ reconnectionEnabled?: boolean; maxReconnectionAttempts?: number }",
+            hasQuestionToken: true,
+            docs: ["Default options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."]
+        });
+
         return {
             kind: StructureKind.Interface,
             name: OPTIONS_INTERFACE_NAME,
@@ -391,6 +399,12 @@ export class BaseClientContextImpl implements BaseClientContext {
                     type: `Record<string, string | ${getTextOfTsNode(supplier._getReferenceToType(ts.factory.createTypeReferenceNode("string | null | undefined")))} | null | undefined>`,
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]
+                },
+                {
+                    name: "stream",
+                    type: "{ reconnectionEnabled?: boolean; maxReconnectionAttempts?: number }",
+                    hasQuestionToken: true,
+                    docs: ["Options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."]
                 }
             ],
             isExported: true
