@@ -13,7 +13,7 @@ ci = "github"
 # musl builds.
 precise-builds = true
 # The installers to generate for each app
-installers = ["shell", "powershell"]
+installers = ["shell", "powershell", "npm"]
 # A namespace to use when publishing this package to the npm registry
 npm-scope = "@fern-api"
 # Whether to enable GitHub Attestations
