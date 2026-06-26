@@ -58,6 +58,24 @@ timestamp.
 
 ---
 
+## Prerequisites
+
+Before starting the methodology, ensure:
+
+1. **Repository**: clone or check out `fern-api/fern`. All commands and
+   file paths in this playbook assume the repo root as the working
+   directory.
+2. **Scope**: the CLI generator lives under `generators/cli/sdk/`. Only
+   files within this subtree are relevant to the agent.
+3. **Configuration**: read
+   `generators/cli/sdk/docs/architecture/automation/sources.yml` for
+   runtime parameters (repo, scope prefix, Linear project, Slack
+   channels, significant paths, output constraints).
+4. **Do not** clone or reference `fern-api/cli-sdk` — that repo is
+   archived and read-only.
+
+---
+
 ## Sources (read-only)
 
 Configured in [`sources.yml`](./sources.yml). All sources are queried in
