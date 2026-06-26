@@ -52,7 +52,7 @@ class EmptyArrayTest extends TestCase
 {
     public function testEmptyArray(): void
     {
-        $expectedJson = JsonEncoder::encode(
+        $inputJson = JsonEncoder::encode(
             [
                 'empty_string_array' => [],
                 'empty_map_array' => [],
@@ -60,12 +60,19 @@ class EmptyArrayTest extends TestCase
             ],
         );
 
-        $object = EmptyArray::fromJson($expectedJson);
+        $object = EmptyArray::fromJson($inputJson);
         $this->assertEmpty($object->emptyStringArray, 'empty_string_array should be empty.');
         $this->assertEmpty($object->emptyMapArray, 'empty_map_array should be empty.');
         $this->assertEmpty($object->emptyDatesArray, 'empty_dates_array should be empty.');
 
         $actualJson = $object->toJson();
-        $this->assertJsonStringEqualsJsonString($expectedJson, $actualJson, 'Serialized JSON does not match original JSON for EmptyArraysType.');
+        $expectedJson = JsonEncoder::encode(
+            [
+                'empty_string_array' => [],
+                'empty_map_array' => new \stdClass(),
+                'empty_dates_array' => []
+            ],
+        );
+        $this->assertJsonStringEqualsJsonString($expectedJson, $actualJson, 'Serialized JSON does not match expected JSON for EmptyArraysType.');
     }
 }

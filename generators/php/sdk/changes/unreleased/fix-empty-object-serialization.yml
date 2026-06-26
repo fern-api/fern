@@ -1,0 +1,4 @@
+- summary: |
+    Fix empty object and empty map serialization to produce `{}` instead of `[]`.
+    This applies to top-level objects, nested objects, and empty map-typed properties.
+  type: fix
