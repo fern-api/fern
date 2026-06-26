@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.69.2
+  changelogEntry:
+    - summary: |
+        Fix shell injection code scanning alert in OIDC publish workflow by passing
+        API key through env block instead of direct interpolation.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
 - version: 2.69.1
   changelogEntry:
     - summary: |
