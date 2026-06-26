@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.41.2
+  changelogEntry:
+    - summary: |
+        Add a robust resolution chain for core as-is template files so the
+        generator works in standalone Docker, embedded CLI Docker, and
+        monorepo dev layouts. Supports FERN_RUST_ASIS_DIR env var override.
+      type: fix
+    - summary: |
+        Escape Rust reserved keywords in generated client method names. An
+        endpoint named e.g. "move" now generates `pub async fn r#move` instead
+        of the unparseable `pub async fn move`.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 66
 - version: 0.41.1
   changelogEntry:
     - summary: |
