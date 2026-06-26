@@ -138,17 +138,7 @@ class RawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         def _iter():
-                            _event_source = EventSource(
-                                _response,
-                                with_max_stream_reconnect_attempts=request_options.get(
-                                    "with_max_stream_reconnect_attempts"
-                                )
-                                if request_options is not None
-                                else None,
-                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
-                                if request_options is not None
-                                else False,
-                            )
+                            _event_source = EventSource(_response)
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
@@ -310,17 +300,7 @@ class AsyncRawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         async def _iter():
-                            _event_source = EventSource(
-                                _response,
-                                with_max_stream_reconnect_attempts=request_options.get(
-                                    "with_max_stream_reconnect_attempts"
-                                )
-                                if request_options is not None
-                                else None,
-                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
-                                if request_options is not None
-                                else False,
-                            )
+                            _event_source = EventSource(_response)
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return

@@ -1,7 +1,7 @@
 import codecs
 import re
 from contextlib import asynccontextmanager, contextmanager
-from typing import Any, AsyncGenerator, AsyncIterator, Iterator
+from typing import Any, AsyncGenerator, AsyncIterator, Iterator, Optional
 
 import httpx
 from ._decoders import SSEDecoder
@@ -17,7 +17,7 @@ class EventSource:
         response: httpx.Response,
         *,
         resumable: bool = False,
-        with_max_stream_reconnect_attempts: int | None = None,
+        with_max_stream_reconnect_attempts: Optional[int] = None,
         without_stream_reconnection: bool = False,
     ) -> None:
         self._response = response
