@@ -117,6 +117,22 @@ class EndpointResponseCodeWriter:
             event_source_kwargs: list[tuple[str, AST.Expression]] = []
             if stream_response_union.resumable is True:
                 event_source_kwargs.append(("resumable", AST.Expression("True")))
+            event_source_kwargs.append(
+                (
+                    "max_stream_reconnect_attempts",
+                    AST.Expression(
+                        'request_options.get("max_stream_reconnect_attempts") if request_options is not None else None'
+                    ),
+                )
+            )
+            event_source_kwargs.append(
+                (
+                    "disable_stream_reconnection",
+                    AST.Expression(
+                        'request_options.get("disable_stream_reconnection", False) if request_options is not None else False'
+                    ),
+                )
+            )
             iter_func_body.extend(
                 [
                     AST.VariableDeclaration(

@@ -14,7 +14,10 @@ import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl.js";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation.js";
-import { getAbortSignalExpression } from "../../utils/requestOptionsParameter.js";
+import {
+    getAbortSignalExpression,
+    REQUEST_OPTIONS_PARAMETER_NAME
+} from "../../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
@@ -854,6 +857,16 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             this.clientClass
                                         )
                                     }),
+                                    maxStreamReconnectAttempts: ts.factory.createPropertyAccessChain(
+                                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                        ts.factory.createIdentifier("maxStreamReconnectAttempts")
+                                    ),
+                                    disableStreamReconnection: ts.factory.createPropertyAccessChain(
+                                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                        ts.factory.createIdentifier("disableStreamReconnection")
+                                    ),
                                     parse: context.includeSerdeLayer
                                         ? ts.factory.createArrowFunction(
                                               [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],

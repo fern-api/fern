@@ -10,6 +10,8 @@ export interface Stream {
             parse: ts.Expression;
             eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
             signal: ts.Expression;
+            maxStreamReconnectAttempts?: ts.Expression;
+            disableStreamReconnection?: ts.Expression;
         }) => ts.Expression;
         _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
     };
@@ -64,12 +66,16 @@ export class StreamImpl extends CoreUtility implements Stream {
                     stream,
                     parse,
                     eventShape,
-                    signal
+                    signal,
+                    maxStreamReconnectAttempts,
+                    disableStreamReconnection
                 }: {
                     stream: ts.Expression;
                     parse: ts.Expression;
                     eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
                     signal: ts.Expression;
+                    maxStreamReconnectAttempts?: ts.Expression;
+                    disableStreamReconnection?: ts.Expression;
                 }): ts.Expression => {
                     const eventShapeProperties: ts.ObjectLiteralElementLike[] = [];
                     if (eventShape.type === "sse") {
@@ -117,19 +123,33 @@ export class StreamImpl extends CoreUtility implements Stream {
                             )
                         );
                     }
-                    return ts.factory.createNewExpression(Stream.getExpression(), undefined, [
-                        ts.factory.createObjectLiteralExpression(
-                            [
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("stream"), stream),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("signal"), signal),
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier("eventShape"),
-                                    ts.factory.createObjectLiteralExpression(eventShapeProperties, true)
-                                )
-                            ],
-                            true
+                    const constructorProperties: ts.ObjectLiteralElementLike[] = [
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("stream"), stream),
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("signal"), signal),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("eventShape"),
+                            ts.factory.createObjectLiteralExpression(eventShapeProperties, true)
                         )
+                    ];
+                    if (maxStreamReconnectAttempts != null) {
+                        constructorProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("maxStreamReconnectAttempts"),
+                                maxStreamReconnectAttempts
+                            )
+                        );
+                    }
+                    if (disableStreamReconnection != null) {
+                        constructorProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createIdentifier("disableStreamReconnection"),
+                                disableStreamReconnection
+                            )
+                        );
+                    }
+                    return ts.factory.createNewExpression(Stream.getExpression(), undefined, [
+                        ts.factory.createObjectLiteralExpression(constructorProperties, true)
                     ]);
                 }
         ),

@@ -54,7 +54,16 @@ class RawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         def _iter():
-                            _event_source = EventSource(_response, resumable=True)
+                            _event_source = EventSource(
+                                _response,
+                                resumable=True,
+                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                if request_options is not None
+                                else None,
+                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                if request_options is not None
+                                else False,
+                            )
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
@@ -127,7 +136,15 @@ class RawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         def _iter():
-                            _event_source = EventSource(_response)
+                            _event_source = EventSource(
+                                _response,
+                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                if request_options is not None
+                                else None,
+                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                if request_options is not None
+                                else False,
+                            )
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
@@ -205,7 +222,16 @@ class AsyncRawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         async def _iter():
-                            _event_source = EventSource(_response, resumable=True)
+                            _event_source = EventSource(
+                                _response,
+                                resumable=True,
+                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                if request_options is not None
+                                else None,
+                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                if request_options is not None
+                                else False,
+                            )
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return
@@ -278,7 +304,15 @@ class AsyncRawCompletionsClient:
                     if 200 <= _response.status_code < 300:
 
                         async def _iter():
-                            _event_source = EventSource(_response)
+                            _event_source = EventSource(
+                                _response,
+                                max_stream_reconnect_attempts=request_options.get("max_stream_reconnect_attempts")
+                                if request_options is not None
+                                else None,
+                                disable_stream_reconnection=request_options.get("disable_stream_reconnection", False)
+                                if request_options is not None
+                                else False,
+                            )
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":
                                     return

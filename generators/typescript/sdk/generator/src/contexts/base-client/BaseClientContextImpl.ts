@@ -391,6 +391,22 @@ export class BaseClientContextImpl implements BaseClientContext {
                     type: `Record<string, string | ${getTextOfTsNode(supplier._getReferenceToType(ts.factory.createTypeReferenceNode("string | null | undefined")))} | null | undefined>`,
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]
+                },
+                {
+                    name: "maxStreamReconnectAttempts",
+                    type: "number",
+                    hasQuestionToken: true,
+                    docs: [
+                        "Maximum number of transparent mid-stream reconnect attempts on resumable SSE endpoints. Has no effect on non-resumable endpoints."
+                    ]
+                },
+                {
+                    name: "disableStreamReconnection",
+                    type: "boolean",
+                    hasQuestionToken: true,
+                    docs: [
+                        "Disable transparent mid-stream reconnection on resumable SSE endpoints. Has no effect on non-resumable endpoints."
+                    ]
                 }
             ],
             isExported: true
