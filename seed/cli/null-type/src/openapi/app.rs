@@ -997,6 +997,78 @@ impl CliApp {
         Ok(doc)
     }
 
+    /// Return embedded spec(s) as a YAML string.
+    ///
+    /// - `raw == true` → byte-exact `SpecEntry.yaml` for each entry.
+    /// - `raw == false` → effective spec with overlays + overrides merged
+    ///   (same pipeline as `build_doc`, but stops before parsing to
+    ///   `RestDescription` to preserve full OpenAPI fidelity).
+    ///
+    /// Multi-spec binaries emit a YAML stream (`---`-delimited).
+    pub(crate) fn spec_yaml(&self, raw: bool) -> Result<Option<String>, crate::error::CliError> {
+        if self.specs.is_empty() {
+            return Ok(None);
+        }
+
+        let mut documents: Vec<String> = Vec::new();
+
+        for entry in &self.specs {
+            if raw {
+                documents.push(entry.yaml.clone());
+            } else {
+                // Reproduce the overlay + override merge from build_doc,
+                // stopping before parsing to RestDescription.
+                let effective = crate::openapi::overlay::apply_overlays_to_spec(
+                    &entry.yaml,
+                    &entry.overlays,
+                )?;
+
+                if entry.overrides.is_empty() {
+                    documents.push(effective);
+                } else {
+                    let mut value: serde_yaml::Value =
+                        serde_yaml::from_str(&effective).map_err(|e| {
+                            crate::error::CliError::Discovery(format!(
+                                "Failed to parse OpenAPI spec: {e}"
+                            ))
+                        })?;
+                    for ovr in &entry.overrides {
+                        let override_value: serde_yaml::Value =
+                            serde_yaml::from_str(ovr).map_err(|e| {
+                                crate::error::CliError::Discovery(format!(
+                                    "Failed to parse overrides YAML: {e}"
+                                ))
+                            })?;
+                        value = crate::openapi::deep_merge_yaml(value, override_value);
+                    }
+                    let merged = serde_yaml::to_string(&value).map_err(|e| {
+                        crate::error::CliError::Discovery(format!(
+                            "Failed to serialize merged spec: {e}"
+                        ))
+                    })?;
+                    documents.push(merged);
+                }
+            }
+        }
+
+        // Join as a YAML stream with document separators.
+        let yaml = if documents.len() == 1 {
+            documents.into_iter().next().unwrap()
+        } else {
+            let mut yaml = documents[0].clone();
+            for doc in &documents[1..] {
+                if !yaml.ends_with('\n') {
+                    yaml.push('\n');
+                }
+                yaml.push_str("---\n");
+                yaml.push_str(doc);
+            }
+            yaml
+        };
+
+        Ok(Some(yaml))
+    }
+
     /// Shorthand for `auth_scheme(name, AuthCredentialSource::from_env(env))`.
     /// Covers the 80% case — most callers bind a scheme to one env var.
     ///
@@ -1626,12 +1698,15 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let pipeline = formatter::OutputPipeline {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
+            query: None,
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
 
@@ -1713,6 +1788,8 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
@@ -2182,6 +2259,7 @@ pub(crate) fn collect_multipart_parts(
 pub(crate) fn build_pagination_config(
     matches: &clap::ArgMatches,
     doc: &RestDescription,
+    cli_name: &str,
 ) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
@@ -2201,6 +2279,8 @@ pub(crate) fn build_pagination_config(
             .pagination_token_response_path
             .clone()
             .unwrap_or_else(|| "nextPageToken".to_string()),
+        no_pager: matches.get_flag("no-pager"),
+        cli_name: cli_name.to_string(),
     }
 }
 
@@ -3596,13 +3676,18 @@ paths:
                     .long("page-delay")
                     .value_parser(clap::value_parser!(u64)),
             )
+            .arg(
+                clap::Arg::new("no-pager")
+                    .long("no-pager")
+                    .action(clap::ArgAction::SetTrue),
+            )
     }
 
     #[test]
     fn test_build_pagination_config_defaults() {
         let doc = RestDescription::default();
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert!(!config.page_all);
         assert_eq!(config.page_limit, 10);
         assert_eq!(config.page_delay_ms, 100);
@@ -3618,7 +3703,7 @@ paths:
             ..Default::default()
         };
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert_eq!(config.token_query_param, "cursor");
         assert_eq!(config.token_response_path, "meta.next_cursor");
     }

@@ -318,6 +318,20 @@ impl Binding for AsyncApiBinding {
             let resolved_init_payload = self.inner.select_init_payload(&binding_args);
             let resolved_autoresponder = self.inner.select_autoresponder(&binding_args);
 
+            // --format http is HTTP-specific; reject for AsyncAPI/WebSocket.
+            // Use OutputPipeline::from_matches so both --format flag and
+            // <NAME>_OUTPUT env var are resolved.
+            let pipeline = crate::formatter::OutputPipeline::from_matches(
+                root_matches,
+                &self.inner.name,
+            )
+            .map_err(|e| CliError::Validation(e.to_string()))?;
+            if pipeline.is_http() {
+                return Err(CliError::Validation(
+                    "the `http` output format is only supported for OpenAPI-based CLIs".to_string(),
+                ));
+            }
+
             executor::execute(
                 &prepared.doc,
                 channel_name,
