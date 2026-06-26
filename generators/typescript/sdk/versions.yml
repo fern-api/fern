@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.73.2
+  changelogEntry:
+    - summary: |
+        Fix a request-wrapper collision when an inlined path parameter (`inlinePathParameters: true`)
+        shares its property name with an inlined request-body property (e.g. a `{idType}` path
+        parameter and an `idType` body field). Previously the generated interface emitted a duplicate
+        member and the client destructured the path parameter out of the request, dropping the body
+        property from the payload. The colliding property is now emitted once and used for both the
+        URL path and the request body.
+      type: fix
+    - summary: |
+        Fix a naming collision in generated wire tests when the configured client class
+        name (`naming.client`) matches the error namespace export. Previously the client
+        class import and the error namespace import shared a single binding, which shadowed
+        each other and made error references (e.g. `Client.namespace.SomeError`) unresolvable.
+        The error namespace is now imported under an alternate alias when a collision is detected.
+        The same collision also produced a duplicate identifier in the root `index.ts` (the client
+        class re-export clashed with `export * as <name> from "./api/index.js"`); the colliding root
+        client re-export is now omitted (the client remains importable from `./Client.js`).
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 3.73.1
   changelogEntry:
     - summary: |
