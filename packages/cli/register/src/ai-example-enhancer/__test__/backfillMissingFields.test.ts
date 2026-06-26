@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { backfillMissingFields, unwrapLambdaBodyEnvelope } from "../enhanceExamplesWithAI.js";
+import { backfillMissingFields, unwrapBodyEnvelope } from "../enhanceExamplesWithAI.js";
 
 describe("backfillMissingFields", () => {
     it("backfills missing fields from original into enhanced", () => {
@@ -79,30 +79,30 @@ describe("backfillMissingFields", () => {
     });
 });
 
-describe("unwrapLambdaBodyEnvelope", () => {
+describe("unwrapBodyEnvelope", () => {
     it("unwraps {body: {...}} envelope", () => {
         const wrapped = { body: { channelIds: [101, 202] } };
-        const result = unwrapLambdaBodyEnvelope(wrapped);
+        const result = unwrapBodyEnvelope(wrapped);
         expect(result.wasWrapped).toBe(true);
         expect(result.inner).toEqual({ channelIds: [101, 202] });
     });
 
     it("unwraps even when body is not the only key", () => {
         const multiKey = { body: { a: 1 }, statusCode: 200 };
-        const result = unwrapLambdaBodyEnvelope(multiKey);
+        const result = unwrapBodyEnvelope(multiKey);
         expect(result.wasWrapped).toBe(true);
         expect(result.inner).toEqual({ a: 1 });
     });
 
     it("does not unwrap non-objects", () => {
-        expect(unwrapLambdaBodyEnvelope("hello")).toEqual({ wasWrapped: false, inner: "hello" });
-        expect(unwrapLambdaBodyEnvelope(null)).toEqual({ wasWrapped: false, inner: null });
-        expect(unwrapLambdaBodyEnvelope(42)).toEqual({ wasWrapped: false, inner: 42 });
+        expect(unwrapBodyEnvelope("hello")).toEqual({ wasWrapped: false, inner: "hello" });
+        expect(unwrapBodyEnvelope(null)).toEqual({ wasWrapped: false, inner: null });
+        expect(unwrapBodyEnvelope(42)).toEqual({ wasWrapped: false, inner: 42 });
     });
 
     it("does not unwrap arrays", () => {
         const arr = [1, 2, 3];
-        expect(unwrapLambdaBodyEnvelope(arr)).toEqual({ wasWrapped: false, inner: arr });
+        expect(unwrapBodyEnvelope(arr)).toEqual({ wasWrapped: false, inner: arr });
     });
 
     it("backfills correctly through body envelope", () => {
@@ -114,7 +114,7 @@ describe("unwrapLambdaBodyEnvelope", () => {
             channelIds: [1]
         };
 
-        const unwrapped = unwrapLambdaBodyEnvelope(wrapped);
+        const unwrapped = unwrapBodyEnvelope(wrapped);
         expect(unwrapped.wasWrapped).toBe(true);
 
         const backfilled = backfillMissingFields(unwrapped.inner, original);
@@ -127,11 +127,11 @@ describe("unwrapLambdaBodyEnvelope", () => {
     });
 
     it("treats body as envelope only when original does NOT have body key", () => {
-        // Lambda envelope case: original has no "body" key → unwrap
+        // Envelope case: original has no "body" key → unwrap
         const envelopeEnhanced = { body: { channelIds: [101] } };
         const originalNoBody = { channelIds: [1], firstName: "string" };
 
-        const unwrapped = unwrapLambdaBodyEnvelope(envelopeEnhanced);
+        const unwrapped = unwrapBodyEnvelope(envelopeEnhanced);
         expect(unwrapped.wasWrapped).toBe(true);
         // Caller should check originalHasBody=false → treat as envelope
 
@@ -139,8 +139,8 @@ describe("unwrapLambdaBodyEnvelope", () => {
         const schemaEnhanced = { body: "Hello world", subject: "Greetings" };
         const originalWithBody = { body: "string", subject: "string", to: "string" };
 
-        const unwrappedSchema = unwrapLambdaBodyEnvelope(schemaEnhanced);
-        // unwrapLambdaBodyEnvelope still returns wasWrapped=true (it's a detection helper),
+        const unwrappedSchema = unwrapBodyEnvelope(schemaEnhanced);
+        // unwrapBodyEnvelope still returns wasWrapped=true (it's a detection helper),
         // but the caller checks originalHasBody and skips the envelope path.
         expect(unwrappedSchema.wasWrapped).toBe(true);
 
