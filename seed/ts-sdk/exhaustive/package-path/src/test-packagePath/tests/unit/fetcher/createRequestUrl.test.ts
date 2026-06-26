@@ -1,4 +1,4 @@
-import { createRequestUrl } from "../../../src/core/fetcher/createRequestUrl";
+import { createRequestUrl } from "../../../core/fetcher/createRequestUrl";
 
 describe("Test createRequestUrl", () => {
     const BASE_URL = "https://api.example.com";
@@ -162,8 +162,6 @@ describe("Test createRequestUrl", () => {
     });
 
     it("should default to repeat format for arrays", () => {
-        expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe(
-            "https://api.example.com?items=a&items=b"
-        );
+        expect(createRequestUrl(BASE_URL, { items: ["a", "b"] })).toBe("https://api.example.com?items=a&items=b");
     });
 });
