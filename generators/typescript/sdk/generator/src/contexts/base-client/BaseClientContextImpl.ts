@@ -396,9 +396,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     name: "stream",
                     type: "{ reconnectionEnabled?: boolean; maxReconnectionAttempts?: number }",
                     hasQuestionToken: true,
-                    docs: [
-                        "Options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."
-                    ]
+                    docs: ["Options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."]
                 }
             ],
             isExported: true
