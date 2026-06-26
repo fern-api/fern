@@ -121,7 +121,8 @@ Each scheme in the IR's `auth.schemes` is visited via
 |---|---|---|
 | `bearer` | `.auth_scheme_env("<key>", "<env>")` | `scheme.tokenEnvVar` ?? `<BIN>_TOKEN` |
 | `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
-| `basic` | `.auth_basic_scheme("<key>", <user>, <pass>)` | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}`; `*Omit: true` becomes `AuthCredentialSource::literal("")` |
+| `basic` (both halves bound) | `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))` at root, so `auth status` enumerates it [FER-11474] | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}` |
+| `basic` (`usernameOmit`/`passwordOmit`) | `.auth_provider("<key>", BasicAuthProvider::…)` — stays binding-level; no root path for `BasicAuthProvider` | the bound half's env var; omitted half is a literal `""` |
 | `oauth`, `inferred`, `_other` | Skipped — the SDK has no runtime provider yet | — |
 
 Env-var names come from the IR first because that's where the user's
