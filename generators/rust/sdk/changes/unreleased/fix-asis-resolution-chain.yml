@@ -1,0 +1,5 @@
+- summary: |
+    Add a robust resolution chain for core as-is template files so the
+    generator works in standalone Docker, embedded CLI Docker, and
+    monorepo dev layouts. Supports FERN_RUST_ASIS_DIR env var override.
+  type: fix

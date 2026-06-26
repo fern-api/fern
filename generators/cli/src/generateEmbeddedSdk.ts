@@ -117,6 +117,13 @@ export async function generateEmbeddedSdk(args: {
     await writeFile(configPath, JSON.stringify(generatorConfig, null, 2));
 
     // 5. Invoke the Rust SDK generator in-process and capture context.
+    //    Set FERN_RUST_ASIS_DIR so the rust-sdk's AsIs resolver finds templates
+    //    at the bundled `rust-sdk-dist/asIs/` path without relying solely on
+    //    __dirname fallback heuristics.
+    const scriptDir: string = import.meta.dirname ?? (typeof __dirname !== "undefined" ? __dirname : ".");
+    const previousAsIsDir = process.env.FERN_RUST_ASIS_DIR;
+    process.env.FERN_RUST_ASIS_DIR = path.resolve(scriptDir, "rust-sdk-dist", "asIs");
+
     let sdkContext: SdkGeneratorContext;
     try {
         const cli = new SdkGeneratorCli();
@@ -125,6 +132,12 @@ export async function generateEmbeddedSdk(args: {
         const message = err instanceof Error ? err.message : String(err);
         throw new Error(`Embedded SDK generation failed: ${message}`);
     } finally {
+        // Restore env to avoid leaking state.
+        if (previousAsIsDir != null) {
+            process.env.FERN_RUST_ASIS_DIR = previousAsIsDir;
+        } else {
+            delete process.env.FERN_RUST_ASIS_DIR;
+        }
         await unlink(configPath).catch((_e: unknown) => undefined);
         await unlink(migratedIrPath).catch((_e: unknown) => undefined);
     }
