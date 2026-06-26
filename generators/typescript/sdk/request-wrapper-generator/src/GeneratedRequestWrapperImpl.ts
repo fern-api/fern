@@ -1096,8 +1096,23 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         }
                     }
                 },
-                reference: () => {
-                    // noop — reference body types do not produce individual property names
+                reference: (referenceToRequestBody) => {
+                    // When flattenRequestParameters is enabled, a named object reference body is
+                    // flattened into the request wrapper, so its properties contribute names that
+                    // can collide with path/query parameters. This mirrors
+                    // getFlattenedReferencedRequestBodyProperties.
+                    if (this.flattenRequestParameters && referenceToRequestBody.requestBodyType.type === "named") {
+                        const typeDeclaration = this.getTypeDeclaration(
+                            referenceToRequestBody.requestBodyType,
+                            context
+                        );
+                        if (typeDeclaration?.shape.type === "object") {
+                            for (const property of typeDeclaration.shape.properties) {
+                                const propName = this.getPropertyNameOfTypeDeclarationProperty(property);
+                                bodyPropertyNames.add(propName.propertyName);
+                            }
+                        }
+                    }
                 },
                 fileUpload: () => {
                     // noop

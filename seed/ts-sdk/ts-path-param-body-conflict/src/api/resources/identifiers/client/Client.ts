@@ -30,7 +30,6 @@ export class IdentifiersClient {
      * @example
      *     await client.identifiers.update({
      *         idType: "phone",
-     *         idType: "phone",
      *         oldValue: "+13175556789",
      *         newValue: "+13175556798"
      *     })

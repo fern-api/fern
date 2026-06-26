@@ -70,6 +70,7 @@ function literalShape(value: string): FernIr.ExampleTypeReferenceShape {
 function createMockContext(opts?: {
     inlineFileProperties?: boolean;
     shouldInlinePathParameters?: boolean;
+    collidingPathParameterPropertyNames?: string[];
     generatedTypeOverride?: (decl: FernIr.DeclaredTypeName) => {
         type: string;
         getSinglePropertyKey?: (prop: FernIr.SingleUnionTypeProperty) => string;
@@ -93,7 +94,8 @@ function createMockContext(opts?: {
         }),
         getInlinedRequestBodyPropertyKeyFromName: (name: FernIr.NameAndWireValueOrString) => ({
             propertyName: caseConverter.camelUnsafe(name)
-        })
+        }),
+        getCollidingPathParameterPropertyNames: () => new Set<string>(opts?.collidingPathParameterPropertyNames ?? [])
     };
 
     return {
@@ -995,6 +997,38 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
             expect(text).toContain("orgId");
             expect(text).toContain("search");
             expect(text).toContain("content");
+        });
+
+        it("omits path params that collide with a body property to avoid duplicate keys", () => {
+            const impl = createImpl({
+                example: createExampleEndpointCall({
+                    endpointPathParameters: [
+                        {
+                            name: casingsGenerator.generateName("idType"),
+                            value: createExampleTypeReference(stringPrimitive("phone"), "phone")
+                        }
+                    ],
+                    request: FernIr.ExampleRequestBody.inlinedRequestBody({
+                        properties: [
+                            {
+                                name: createNameAndWireValue("idType", "idType"),
+                                value: createExampleTypeReference(stringPrimitive("phone"), "phone"),
+                                originalTypeDeclaration: undefined
+                            }
+                        ],
+                        jsonExample: undefined,
+                        extraProperties: undefined
+                    })
+                })
+            });
+            const context = createMockContext({
+                shouldInlinePathParameters: true,
+                collidingPathParameterPropertyNames: ["idType"]
+            });
+            const result = impl.build(context, DEFAULT_OPTS);
+            const text = getTextOfTsNode(result);
+
+            expect(text.match(/idType:/g)?.length ?? 0).toBe(1);
         });
     });
 

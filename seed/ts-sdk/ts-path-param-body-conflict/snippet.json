@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTsPathParamBodyConflictClient } from \"@fern/ts-path-param-body-conflict\";\n\nconst client = new SeedTsPathParamBodyConflictClient({ environment: \"YOUR_BASE_URL\" });\nawait client.identifiers.update({\n    idType: \"phone\",\n    idType: \"phone\",\n    oldValue: \"+13175556789\",\n    newValue: \"+13175556798\"\n});\n"
+                "client": "import { SeedTsPathParamBodyConflictClient } from \"@fern/ts-path-param-body-conflict\";\n\nconst client = new SeedTsPathParamBodyConflictClient({ environment: \"YOUR_BASE_URL\" });\nawait client.identifiers.update({\n    idType: \"phone\",\n    oldValue: \"+13175556789\",\n    newValue: \"+13175556798\"\n});\n"
             }
         }
     ],
