@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.19.3
+  changelogEntry:
+    - summary: |
+        Add `cargo:` prefix to workspace members in generated `dist-workspace.toml`
+        so that `dist plan` can parse the file correctly.
+      type: fix
+    - summary: |
+        Strip the `cargo:crates/pipeline-fixture` workspace member from generated
+        `dist-workspace.toml`. That member is a cli-sdk-only release-pipeline fixture
+        that is never vendored into a user's CLI, so leaving it in made `cargo dist
+        plan` / `cargo metadata` fail with "failed to load manifest for workspace
+        member `crates/pipeline-fixture`".
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 0.19.2
   changelogEntry:
     - summary: |
