@@ -10,38 +10,47 @@ version: 1
 # GitHub: where the code lives.
 # ---------------------------------------------------------------------------
 github:
-  repo: fern-api/cli-sdk
+  repo: fern-api/fern
+  # The CLI generator lives under this prefix in the monorepo.
+  # Only PRs touching files under this path are relevant.
+  scope_prefix: generators/cli/sdk/
   base_branch: main
   # PRs opened by the agent target this branch:
   target_branch: main
   # Architecturally-significant paths get extra weight when classifying PRs.
   # Source of truth — keep in sync with PLAYBOOK.md §"Architecturally significant paths".
   significant_paths:
-    - src/lib.rs
-    - src/openapi/app.rs
-    - src/openapi/parser.rs
-    - src/openapi/discovery.rs
-    - src/openapi/executor.rs
-    - src/openapi/overlay.rs
-    - src/openapi/commands.rs
-    - src/graphql/app.rs
-    - src/graphql/parser.rs
-    - src/graphql/discovery.rs
-    - src/graphql/executor.rs
-    - src/graphql/commands.rs
-    - src/auth/provider.rs
-    - src/auth/credential.rs
-    - src/auth/compose.rs
-    - src/auth/oauth2.rs
-    - src/http.rs
-    - src/websocket/**
-    - src/formatter.rs
-    - src/validate.rs
-    - src/error.rs
-    - src/custom_commands.rs
-    - src/early_intercept.rs
-    - Cargo.toml
-    - docs/adr/**
+    - generators/cli/sdk/src/lib.rs
+    - generators/cli/sdk/src/openapi/app.rs
+    - generators/cli/sdk/src/openapi/parser.rs
+    - generators/cli/sdk/src/openapi/discovery.rs
+    - generators/cli/sdk/src/openapi/executor.rs
+    - generators/cli/sdk/src/openapi/overlay.rs
+    - generators/cli/sdk/src/openapi/commands.rs
+    - generators/cli/sdk/src/graphql/app.rs
+    - generators/cli/sdk/src/graphql/parser.rs
+    - generators/cli/sdk/src/graphql/discovery.rs
+    - generators/cli/sdk/src/graphql/executor.rs
+    - generators/cli/sdk/src/graphql/commands.rs
+    - generators/cli/sdk/src/asyncapi/app.rs
+    - generators/cli/sdk/src/asyncapi/parser.rs
+    - generators/cli/sdk/src/asyncapi/discovery.rs
+    - generators/cli/sdk/src/asyncapi/executor.rs
+    - generators/cli/sdk/src/asyncapi/overlay.rs
+    - generators/cli/sdk/src/asyncapi/commands.rs
+    - generators/cli/sdk/src/auth/provider.rs
+    - generators/cli/sdk/src/auth/credential.rs
+    - generators/cli/sdk/src/auth/compose.rs
+    - generators/cli/sdk/src/auth/oauth2.rs
+    - generators/cli/sdk/src/http.rs
+    - generators/cli/sdk/src/websocket/**
+    - generators/cli/sdk/src/formatter.rs
+    - generators/cli/sdk/src/validate.rs
+    - generators/cli/sdk/src/error.rs
+    - generators/cli/sdk/src/custom_commands.rs
+    - generators/cli/sdk/src/early_intercept.rs
+    - generators/cli/sdk/Cargo.toml
+    - generators/cli/sdk/docs/adr/**
 
 # ---------------------------------------------------------------------------
 # Linear: where tickets live.
@@ -110,10 +119,10 @@ window:
 output:
   # Files the agent is permitted to modify:
   allowed_paths:
-    - docs/architecture/ARCHITECTURE.md
-    - docs/architecture/CHANGELOG-ARCH.md
-    - docs/architecture/decisions/INDEX.md
-    - docs/architecture/diagrams/**
+    - generators/cli/sdk/docs/architecture/ARCHITECTURE.md
+    - generators/cli/sdk/docs/architecture/CHANGELOG-ARCH.md
+    - generators/cli/sdk/docs/architecture/decisions/INDEX.md
+    - generators/cli/sdk/docs/architecture/diagrams/**
   # The agent must not touch anything outside these paths.
   pr_settings:
     branch_prefix: arch-doc-refresh

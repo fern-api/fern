@@ -245,19 +245,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug(`Generated ${projectFiles.length} project files`);
         context.project.addSourceFiles(...projectFiles);
 
-        context.logger.debug("Generating README.md with code examples...");
-        // Generate README if configured
-        await this.generateReadme(context);
+        // Standalone doc generation requires static assets (features.yml, asIs/)
+        // that are only available in the standalone Docker image. Skip when running
+        // as an embedded SDK inside the CLI generator.
+        if (!context.customConfig.cliEmbedded) {
+            context.logger.debug("Generating README.md with code examples...");
+            await this.generateReadme(context);
 
-        context.logger.debug("Generating reference.md documentation...");
-        // Generate reference.md if configured
-        await this.generateReference(context);
+            context.logger.debug("Generating reference.md documentation...");
+            await this.generateReference(context);
 
-        if (!context.config.whitelabel) {
-            try {
-                await this.generateContributing(context);
-            } catch (error) {
-                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+            if (!context.config.whitelabel) {
+                try {
+                    await this.generateContributing(context);
+                } catch (error) {
+                    throw GeneratorError.internalError(
+                        `Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`
+                    );
+                }
             }
         }
 

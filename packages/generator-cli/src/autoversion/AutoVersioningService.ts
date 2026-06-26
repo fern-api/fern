@@ -1,8 +1,7 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { existsSync } from "fs";
-import { readdir, readFile, stat, writeFile } from "fs/promises";
+import { lstat, open, readdir, readFile, writeFile } from "fs/promises";
 import { extname, join } from "path";
 import semver from "semver";
 
@@ -97,6 +96,56 @@ export function formatSizeKB(charLength: number): string {
 interface FileSection {
     lines: string[];
 }
+
+/**
+ * Directory names to skip entirely during file-tree traversal.
+ * These are dependency caches, build outputs, IDE configs, and tool caches
+ * that never contain generated source files requiring version replacement.
+ */
+const EXCLUDED_DIRECTORIES: ReadonlySet<string> = new Set([
+    // Version control
+    ".git",
+
+    // Dependency directories
+    "vendor",
+    "node_modules",
+    "Pods",
+
+    // Python environments and caches
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".tox",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+
+    // Build output directories
+    "build",
+    "dist",
+    "out",
+    "target",
+    "bin",
+    "obj",
+
+    // Build tool caches
+    ".gradle",
+    ".mvn",
+
+    // Framework build caches
+    ".next",
+    ".nuxt",
+    ".cache",
+
+    // IDE directories
+    ".idea",
+    ".vscode",
+    ".eclipse",
+
+    // Language-specific tool caches
+    ".dart_tool",
+    ".swiftpm"
+]);
 
 /**
  * Glob-like patterns for files that should be completely excluded from the
@@ -833,43 +882,43 @@ export class AutoVersioningService {
     ): Promise<void> {
         this.logger.debug(`Replacing placeholder version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
-        const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
+        const files = await this.walkDirectory(workingDirectory, () => true);
 
-        // Detect sed version by attempting to get version info
-        // GNU sed supports --version, BSD sed does not
-        let isGNUSed = false;
+        const replaceInFile = async (filePath: string): Promise<boolean> => {
+            if (await this.isBinaryFile(filePath)) {
+                return false;
+            }
+
+            const content = await readFile(filePath, "utf-8");
+            if (!content.includes(mappedMagicVersion)) {
+                return false;
+            }
+
+            const updated = content.split(mappedMagicVersion).join(finalVersion);
+            await writeFile(filePath, updated, "utf-8");
+            return true;
+        };
+
+        const results = await this.processInParallel(files, replaceInFile);
+        const replacedCount = results.filter(Boolean).length;
+
+        this.logger.debug(`Placeholder version replaced successfully in ${replacedCount} file(s)`);
+    }
+
+    private async isBinaryFile(filePath: string): Promise<boolean> {
+        const fileHandle = await open(filePath, "r");
         try {
-            await loggingExeca(this.logger, "sed", ["--version"], {
-                doNotPipeOutput: true
-            });
-            isGNUSed = true;
-        } catch {
-            // BSD sed will fail with --version
-            isGNUSed = false;
+            const header = Buffer.alloc(8192);
+            const { bytesRead } = await fileHandle.read(header, 0, 8192, 0);
+            for (let i = 0; i < bytesRead; i++) {
+                if (header[i] === 0) {
+                    return true;
+                }
+            }
+            return false;
+        } finally {
+            await fileHandle.close();
         }
-
-        let command: string;
-        if (isGNUSed) {
-            // GNU sed (Linux, DevBox on Mac)
-            command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '${sedCommand}' {} +`;
-        } else {
-            // BSD sed (native macOS)
-            command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '' '${sedCommand}' {} +`;
-        }
-
-        try {
-            await loggingExeca(this.logger, "bash", ["-c", command], {
-                cwd: workingDirectory,
-                doNotPipeOutput: true
-            });
-        } catch (error) {
-            throw new CliError({
-                message: `Failed to replace placeholder version in generated files: ${extractErrorMessage(error)}`,
-                code: CliError.Code.UserError
-            });
-        }
-
-        this.logger.debug("Placeholder version replaced successfully");
     }
 
     /**
@@ -978,11 +1027,14 @@ export class AutoVersioningService {
 
         for (const entry of entries) {
             const fullPath = join(dir, entry);
-            const entryStat = await stat(fullPath);
+            const entryStat = await lstat(fullPath);
+
+            if (entryStat.isSymbolicLink()) {
+                continue;
+            }
 
             if (entryStat.isDirectory()) {
-                // Skip .git and vendor directories
-                if (entry === ".git" || entry === "vendor") {
+                if (EXCLUDED_DIRECTORIES.has(entry)) {
                     continue;
                 }
                 const subResults = await this.walkDirectory(fullPath, filter);
@@ -995,15 +1047,25 @@ export class AutoVersioningService {
         return results;
     }
 
+    private static readonly CONCURRENCY_LIMIT = 32;
+
+    private async processInParallel<T>(items: string[], fn: (item: string) => Promise<T>): Promise<T[]> {
+        const results: T[] = [];
+        for (let i = 0; i < items.length; i += AutoVersioningService.CONCURRENCY_LIMIT) {
+            const batch = items.slice(i, i + AutoVersioningService.CONCURRENCY_LIMIT);
+            const batchResults = await Promise.all(batch.map(fn));
+            results.push(...batchResults);
+        }
+        return results;
+    }
+
     /**
      * Adds a version suffix to import paths in all .go files in the repository.
      */
     private async addSuffixToGoFiles(repoRoot: string, modulePath: string, suffix: string): Promise<void> {
         const goFiles = await this.walkDirectory(repoRoot, (filePath) => extname(filePath) === ".go");
 
-        for (const filePath of goFiles) {
-            await this.addSuffixToGoFile(filePath, modulePath, suffix);
-        }
+        await this.processInParallel(goFiles, (filePath) => this.addSuffixToGoFile(filePath, modulePath, suffix));
     }
 
     /**
@@ -1059,13 +1121,6 @@ export class AutoVersioningService {
             await writeFile(filePath, lines.join("\n"), "utf-8");
             this.logger.debug(`Updated Go imports in ${filePath}`);
         }
-    }
-
-    /**
-     * Escapes special characters for use in sed command.
-     */
-    private escapeForSed(str: string): string {
-        return str.replace(/[/&]/g, "\\$&");
     }
 
     /**

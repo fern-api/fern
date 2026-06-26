@@ -118,11 +118,12 @@ and by `src/websocket/`.
 | [`src/auth/`](../../src/auth/) | Auth scheme model (`provider.rs`, `schemes.rs`, `oauth2.rs`), credential sources (`credential.rs`), provider composition + routing (`compose.rs`), layered auth (`LayeredAuthProvider` — [§8.11](#811-auth-layering)), builder methods bound to `CliApp` (`builder.rs`), error mapping (`error.rs`). Login flows (`login.rs`, `oauth_login.rs` — PKCE / device-code / token-paste; [§8.21](#821-first-class-oauth-login-support)), consolidated OAuth2 primitives (`oauth_common.rs`), OS keyring + file fallback storage (`keyring_store.rs`; [ADR-0008](./decisions/0008-credential-precedence-and-storage-fallback.md)). [ADR-0001](./decisions/0001-auth-provider-no-cred-extraction.md) forbids `AuthProvider` from returning resolved credentials. |
 | [`src/http.rs`](../../src/http.rs) | reqwest client builder + shared retry infrastructure (`RetryPolicy`, `decide_retry`, `parse_retry_after`, `compute_backoff_delay`, `generate_idempotency_key` — [FER-10521](https://linear.app/buildwithfern/issue/FER-10521)); `HttpConfig::resolve() → ResolvedTlsConfig` is the transport-neutral seam. Wires `<NAME>_*` env vars (CA bundle, insecure, proxy, timeouts) and User-Agent. |
 | [`src/websocket/`](../../src/websocket/) | `tokio-tungstenite` bidirectional client. NDJSON framing, app-level Ping/Pong, base64 audio extraction, graceful Ctrl+C. First non-reqwest transport. |
-| [`src/formatter.rs`](../../src/formatter.rs) | `OutputFormat` enum + `OutputPipeline` ([FER-10517](https://linear.app/buildwithfern/issue/FER-10517) step 1) — JSON / table / YAML / CSV. TTY-aware default format: `--format` flag > `<NAME>_OUTPUT` env var > TTY-aware default (table when stdout is interactive, JSON when piped; [FER-10543](https://linear.app/buildwithfern/issue/FER-10543), [PR #143](https://github.com/fern-api/cli-sdk/pull/143), [§8.22](#822-tty-aware-default-output)). Subsequent steps add `--json` projection, `--jq` via `jaq`, `--template`, `NO_COLOR` handling. |
+| [`src/formatter.rs`](../../src/formatter.rs) | `OutputFormat` enum + `OutputPipeline` ([FER-10517](https://linear.app/buildwithfern/issue/FER-10517) step 1) — JSON / table / YAML / CSV / raw / JSONL / HTTP. TTY-aware default format: `--format` flag > `<NAME>_OUTPUT` env var > TTY-aware default (table when stdout is interactive, JSON when piped; [FER-10543](https://linear.app/buildwithfern/issue/FER-10543), [PR #143](https://github.com/fern-api/cli-sdk/pull/143), [§8.22](#822-tty-aware-default-output)). `--format raw` bypasses JSON parsing entirely via `RawSentinel` ([PR #199](https://github.com/fern-api/cli-sdk/pull/199), [§8.27](#827-format-raw-and-format-jsonl)). `--format http` renders the full HTTP response envelope ([PR #214](https://github.com/fern-api/cli-sdk/pull/214), [FER-11348](https://linear.app/buildwithfern/issue/FER-11348), [§8.29](#829-format-http)). `--query` applies JMESPath filtering before formatting ([PR #197](https://github.com/fern-api/cli-sdk/pull/197), [FER-10533](https://linear.app/buildwithfern/issue/FER-10533), [§8.28](#828-query-jmespath-response-filtering)). |
 | [`src/validate.rs`](../../src/validate.rs) | LLM-adversarial input validation: path traversal, control-char rejection, percent-encoding for URL path segments, resource-name validators. |
-| [`src/error.rs`](../../src/error.rs) | `CliError` + JSON-on-stdout error contract. `<cli> errors` subcommand prints the table ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518)). |
+| [`src/error.rs`](../../src/error.rs) | `CliError` + JSON-on-stdout error contract. `<cli> errors` subcommand prints the table ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518)). Rich stderr display: color-coded `error[category]:` labels, optional docs-URL link for API errors (`ErrorDisplayContext.docs_base_url`), `--help` hint for validation errors ([PR #212](https://github.com/fern-api/cli-sdk/pull/212), [FER-11381](https://linear.app/buildwithfern/issue/FER-11381), [§8.26](#826-rich-stderr-error-display)). `RawSentinel` variant for `--format raw` error passthrough ([PR #199](https://github.com/fern-api/cli-sdk/pull/199)). |
 | [`src/logging.rs`](../../src/logging.rs) | Org-scoped `tracing` setup. `<NAME>_LOG` for stderr filter; `<NAME>_LOG_FILE` for JSON-line file with daily rotation. Off by default. |
-| [`src/debug.rs`](../../src/debug.rs) | Debug HTTP dump and rich error display (`dump_request`, `dump_response`, `dump_error_response`, `dump_streaming_note`). Invoked when `--debug` is passed; redacts sensitive headers and body keys before printing curl-style request/response to stderr. |
+| [`src/debug.rs`](../../src/debug.rs) | Debug HTTP dump (`dump_request`, `dump_response`, `dump_error_response`, `dump_streaming_note`, `dump_graphql_request`). Invoked when `--debug` is passed; redacts sensitive headers and body keys before printing curl-style request/response to stderr. GraphQL-aware formatting shows raw query text and redacted variables ([PR #210](https://github.com/fern-api/cli-sdk/pull/210), [FER-11380](https://linear.app/buildwithfern/issue/FER-11380)). |
+| [`src/pager.rs`](../../src/pager.rs) | External pager support. `PagerConfig` resolves `$<BINARY>_PAGER` > `$PAGER` > platform default (`less`/`more`). `spawn_pager()` pipes output through the pager when `--page-all` is active on an interactive TTY; suppressed by `--no-pager` or non-TTY stdout. Wired into both OpenAPI and GraphQL pagination loops ([PR #200](https://github.com/fern-api/cli-sdk/pull/200), [FER-9858](https://linear.app/buildwithfern/issue/FER-9858), [§8.30](#830-external-pager-support)). |
 | [`src/cli_args.rs`](../../src/cli_args.rs), [`src/early_intercept.rs`](../../src/early_intercept.rs) | Shared CLI helpers — version flag, `--base-url`, `--schema` (machine-readable surface for agents — [FER-11050](https://linear.app/buildwithfern/issue/FER-11050), [PR #169](https://github.com/fern-api/cli-sdk/pull/169)), pre-parse interception for special subcommands (`completion`, `man`, `errors`, `generate-skills`). |
 | [`src/custom_commands.rs`](../../src/custom_commands.rs) | Registry + dispatch for `.command(...)` / `.command_under(...)` / `.command_typed(...)` / `.command_under_typed(...)` extensions a binary author can attach. Typed variants enforce compile-time arg↔handler agreement via `#[derive(clap::Args)]` ([FER-11009](https://linear.app/buildwithfern/issue/FER-11009), [PR #175](https://github.com/fern-api/cli-sdk/pull/175)). |
 | [`src/sdk_executor.rs`](../../src/sdk_executor.rs) | `CliExecutor` — implements the generated SDK's `RequestExecutor` trait, routing SDK-originated HTTP requests through the CLI's transport stack (same `HttpConfig`, `DynAuthProvider`, retry logic, global headers). ADR-0001 compliant. `block_on()` helper for sync→async bridging; `SdkError → CliError` error bridge. ([FER-11027](https://linear.app/buildwithfern/issue/FER-11027), [PR #168](https://github.com/fern-api/cli-sdk/pull/168).) |
@@ -151,7 +152,7 @@ See [`diagrams/05-component-graphql.mmd`](./diagrams/05-component-graphql.mmd).
 | `parser.rs` | Introspection JSON → `GraphQLSchema`. |
 | `discovery.rs` | Internal representation: schema, operations (`Query`/`Mutation`), input types. |
 | `commands.rs` | `clap::Command` builder from operations. Dot-notation body flags ([FER-10435](https://linear.app/buildwithfern/issue/FER-10435)). |
-| `executor.rs` | GraphQL request construction (variables map, auth, response handling, `HttpConfig` honored as of [FER-10448](https://linear.app/buildwithfern/issue/FER-10448)). |
+| `executor.rs` | GraphQL request construction (variables map, auth, response handling, `HttpConfig` honored as of [FER-10448](https://linear.app/buildwithfern/issue/FER-10448)). Debug HTTP dump via `src/debug.rs` when `--debug` is passed — uses `dump_graphql_request` for GraphQL-aware formatting ([PR #210](https://github.com/fern-api/cli-sdk/pull/210), [FER-11380](https://linear.app/buildwithfern/issue/FER-11380), [§8.25](#825-debug-http-dump-with-redaction)). |
 | `app.rs` | `CliApp` builder for GraphQL — mirror of the OpenAPI builder. |
 | `help.rs` | Help rendering. |
 
@@ -692,11 +693,26 @@ File references in body flags read file contents and embed them inline
 [PR #164](https://github.com/fern-api/cli-sdk/pull/164),
 [PR #201](https://github.com/fern-api/cli-sdk/pull/201)):
 
-- `@<path>` — read file; embed as UTF-8 string if valid, base64 otherwise.
-- `\@<path>` — escape; send the literal string without reading.
+- `@<path>` — **auto mode**: read file; embed as UTF-8 string if valid,
+  base64 otherwise.
+- `@file://<path>` — **text mode**: read file; **require valid UTF-8 or
+  error** with a hint pointing at `@data://` and the field/flag location.
+  ([FER-10532](https://linear.app/buildwithfern/issue/FER-10532),
+  [PR #202](https://github.com/fern-api/cli-sdk/pull/202).)
+- `@data://<path>` — **data mode**: read file; **always base64-encode**,
+  even when the file is valid UTF-8 (for APIs that expect base64 of a text
+  payload). ([FER-10532](https://linear.app/buildwithfern/issue/FER-10532),
+  [PR #202](https://github.com/fern-api/cli-sdk/pull/202).)
+- `\@<path>`, `\@file://…`, `\@data://…` — escape; send the literal
+  string without reading.
 - Works at every `@`-aware site: binary body flag, multipart file field,
   nested string inside object-shorthand JSON (`--profile '{"pic":"@./img.jpg"}'`),
   and `--json` whole-body path.
+- Under an explicit URI scheme (`@file://`, `@data://`), `-` is a literal
+  filename — only auto-mode `@-` remains the stdin sentinel, so retries
+  stay enabled for explicit-scheme paths.
+- Dry-run JSON reports `binary_body.source.mode` (`"auto"` / `"text"` /
+  `"data"`) so agents can audit the resolved encoding mode.
 - Blocking I/O wrapped in `tokio::task::block_in_place` to avoid starving
   the async runtime.
 
@@ -716,9 +732,9 @@ forms ([PR #188](https://github.com/fern-api/cli-sdk/pull/188)):
 
 ### 8.25 Debug HTTP dump with redaction
 
-Every OpenAPI CLI exposes a global `--debug` flag that dumps the outgoing
-HTTP request and incoming response to stderr in curl-style format, useful for
-troubleshooting and agent integration verification:
+Every OpenAPI and GraphQL CLI exposes a global `--debug` flag that dumps the
+outgoing HTTP request and incoming response to stderr in curl-style format,
+useful for troubleshooting and agent integration verification:
 
 ```
 > POST https://api.example.com/v1/users
@@ -735,11 +751,12 @@ troubleshooting and agent integration verification:
 <
 ```
 
-The module `src/debug.rs` provides four functions:
+The module `src/debug.rs` provides five functions:
 
 | Function | Use |
 |---|---|
 | `dump_request()` | Print outgoing request (method, URL, headers, body) with redactions. Uses `>` prefix. |
+| `dump_graphql_request()` | GraphQL-aware variant — shows raw query text (not JSON-escaped) and redacted variables. Uses `>` prefix. ([PR #210](https://github.com/fern-api/cli-sdk/pull/210), [FER-11380](https://linear.app/buildwithfern/issue/FER-11380).) |
 | `dump_response()` | Print response status, timing, headers, and body preview. Uses `*` and `<` prefixes. |
 | `dump_error_response()` | Rich error display for non-2xx responses — status badges, body indented. |
 | `dump_streaming_note()` | Metadata note for streaming responses (chunk count, final status). |
@@ -758,12 +775,106 @@ The module `src/debug.rs` provides four functions:
 The executor invokes these helpers only when `ctx.debug` is true (set by
 `AppContext::with_debug(true)` when the `--debug` flag is parsed).
 
+### 8.26 Rich stderr error display
+
+The `write_error_json()` function in `src/error.rs` enriches stderr error
+output beyond the structured JSON envelope on stdout
+([PR #212](https://github.com/fern-api/cli-sdk/pull/212),
+[FER-11381](https://linear.app/buildwithfern/issue/FER-11381)):
+
+- **Color-coded category labels:** `error[api]:`, `error[auth]:`,
+  `error[validation]:`, `error[discovery]:` — styled via ANSI when stderr
+  is a TTY.
+- **Docs URL for API errors:** When `ErrorDisplayContext.docs_base_url` is
+  set, API errors print `→ <base>/<status_code>` as a clickable link to
+  per-status-code documentation.
+- **`--help` hint for validation errors:** When
+  `ErrorDisplayContext.help_hint` is set, validation errors print
+  `Try \`<command> --help\`` to guide the user toward correct usage.
+- **Terminal safety:** All messages are sanitized via
+  `sanitize_for_terminal()` before printing.
+
+The `ErrorDisplayContext` is built by the executor from the spec's
+`x-fern-docs` URL (if present) and the matched command path. It does not
+affect the JSON envelope on stdout — the structured contract is unchanged.
+
+### 8.27 `--format raw` and `--format jsonl`
+
+Two new output formats extend the `OutputFormat` enum
+([PR #199](https://github.com/fern-api/cli-sdk/pull/199)):
+
+- **`--format raw`**: Bypasses JSON parsing entirely. The HTTP response
+  body is streamed directly to stdout as raw bytes. On error responses,
+  the error body is written to stdout and the executor returns
+  `CliError::RawSentinel { code }` — a sentinel variant that skips the
+  JSON error envelope (the bytes are already on stdout). This enables
+  piping binary or non-JSON API responses without transformation.
+- **`--format jsonl`** (alias `ndjson`): Renders each top-level array
+  element as a single-line JSON object, one per line. Non-array values
+  fall back to compact single-line JSON.
+
+Both formats honor the existing `OutputPipeline` precedence:
+`--format` flag > `<NAME>_OUTPUT` env var > TTY-aware default.
+
+### 8.28 `--query` — JMESPath response filtering
+
+A global `--query` flag applies a [JMESPath](https://jmespath.org/)
+expression to every response before formatting
+([PR #197](https://github.com/fern-api/cli-sdk/pull/197),
+[FER-10533](https://linear.app/buildwithfern/issue/FER-10533)):
+
+- Expression is compiled once per invocation via `jmespath::compile()`.
+- Applied after response parsing, before `OutputPipeline` formatting —
+  works with all `--format` variants.
+- For paginated/streaming responses, each page/event is filtered
+  independently; null results are suppressed (enabling `--query` as a
+  per-event filter).
+- Dependency: `jmespath = "0.3"` (added to `Cargo.toml`).
+
+### 8.29 `--format http`
+
+Renders the full HTTP response envelope — status line, headers, blank
+line, body — in standard HTTP/1.1 message format
+([PR #214](https://github.com/fern-api/cli-sdk/pull/214),
+[FER-11348](https://linear.app/buildwithfern/issue/FER-11348)):
+
+```
+HTTP/1.1 200 OK
+content-type: application/json
+
+{"id":"user_123","name":"Alice"}
+```
+
+The executor captures status, headers, and body before handing off to
+the formatter. Like `--format raw`, the `Http` variant is a
+pass-through — no JSON pretty-printing or table rendering. Currently
+wired in the OpenAPI path only (`src/openapi/executor.rs`).
+
+### 8.30 External pager support
+
+Paginated output can be piped through an external pager (`less`, `more`,
+or a user-chosen program) for scrollable, searchable display
+([PR #200](https://github.com/fern-api/cli-sdk/pull/200),
+[FER-9858](https://linear.app/buildwithfern/issue/FER-9858)):
+
+- **Activation:** `--page-all` on an interactive TTY. Suppressed by
+  `--no-pager` or non-TTY stdout.
+- **Resolution:** `$<BINARY>_PAGER` > `$PAGER` > platform default
+  (`less` on Unix, `more` on Windows).
+- **Module:** `src/pager.rs` — `PagerConfig::from_env()` resolves the
+  program, `spawn_pager()` returns a `PagerHandle` wrapping a child
+  process with a piped stdin. Each formatted page is written to the
+  pager; on completion the handle waits for the child.
+- **Wired into both paths:** OpenAPI (`src/openapi/executor.rs`) and
+  GraphQL (`src/graphql/executor.rs`) pagination loops spawn the pager
+  identically.
+
 ---
 
 ## 9. Architecture decisions
 
 The decisions index lives in [`decisions/INDEX.md`](./decisions/INDEX.md).
-Seven formal ADRs to date:
+Eight formal ADRs to date:
 
 - [ADR-0001](./decisions/0001-auth-provider-no-cred-extraction.md) — `AuthProvider` never exposes resolved credentials
 - [ADR-0002](./decisions/0002-transport-neutral-http-config-resolve.md) — Transport-neutral `HttpConfig::resolve()` pattern
@@ -792,6 +903,7 @@ ADRs over time.
 | 7 | **Verbose generated command names** when specs lack `x-fern-sdk-*` extensions (e.g. vendored Twilio specs). [FER-10449](https://linear.app/buildwithfern/issue/FER-10449) Fern-overrides addresses this but isn't wired into every demo CLI yet. | Low | Per-CLI overrides directory pattern documented. |
 | 8 | **`generate-skills` validation gap.** Emitted SKILL.md references are not automatically validated against the command tree; drift is caught by manual re-generation and diff. | Low | [FER-9863](https://linear.app/buildwithfern/issue/FER-9863) acceptance criterion 6 covers this. |
 | 9 | **`OAuth2Auth` silent credential drop.** When client-credentials are missing, `OAuth2Auth` may send unauthenticated requests instead of failing fast — a silent-auth-bypass risk. | Medium | [FER-10745](https://linear.app/buildwithfern/issue/FER-10745). Fix in flight ([PR #127](https://github.com/fern-api/cli-sdk/pull/127)) — wires client-credentials flow instead of silent unauth. |
+| 10 | **`jmespath` crate staleness.** The `jmespath = "0.3"` dependency (added for `--query` support, [PR #197](https://github.com/fern-api/cli-sdk/pull/197)) was last published in 2021. No known vulnerabilities, but the crate is unmaintained — a future Rust edition bump or MSRV raise may require a fork or replacement (e.g. `jmespatch` or hand-rolled subset). | Low | Monitor for CVEs; replacement candidate if it blocks a toolchain upgrade. |
 
 ---
 

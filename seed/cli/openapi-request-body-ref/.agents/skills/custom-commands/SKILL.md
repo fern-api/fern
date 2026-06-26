@@ -16,7 +16,7 @@ auth, retries, TLS, base URL, and global headers — zero configuration required
 
 ```
 cli/openapi-request-body-ref/custom.rs    ← Your command handlers (protected by .fernignore)
-cli/openapi-request-body-ref/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
+cli/openapi-request-body-ref/sdk.rs       ← Generated bridge: client() + block_on()
 cli/openapi-request-body-ref/main.rs      ← Generated entrypoint (calls custom::register)
 openapi-request-body-ref-sdk/             ← Co-generated typed SDK crate
 openapi-request-body-ref-types/           ← Co-generated typed model crate
@@ -40,8 +40,8 @@ pub fn register(app: CliApp) -> CliApp {
         ,
         |matches, ctx| {
             let image_id = matches.get_one::<String>("image_id").unwrap();
-            let client = super::sdk_glue::sdk_client(ctx);
-            let result = super::sdk_glue::block_on(
+            let client = super::sdk::client(ctx);
+            let result = super::sdk::block_on(
                 client.catalog.get_catalog_image(image_id),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
@@ -60,7 +60,7 @@ openapi-request-body-ref get-catalog-image <image_id>
 
 ### 2. Available SDK Clients
 
-The `sdk_glue::sdk_client(ctx)` call returns a `openapi_request_body_ref_sdk::api::Client`
+The `super::sdk::client(ctx)` call returns a `openapi_request_body_ref_sdk::api::Client`
 with the following sub-clients:
 
 | Field | Type | Description |
@@ -73,12 +73,12 @@ with the following sub-clients:
 
 **Get the SDK client** (execution-sharing, fully authenticated):
 ```rust
-let client = super::sdk_glue::sdk_client(ctx);
+let client = super::sdk::client(ctx);
 ```
 
 **Run an async SDK call from a sync handler:**
 ```rust
-let result = super::sdk_glue::block_on(
+let result = super::sdk::block_on(
     client.some_resource.some_method(args),
 )?;
 ```
@@ -93,7 +93,7 @@ use openapi_request_body_ref_sdk::api::*;
 | File | Regenerated? | Notes |
 |------|-------------|-------|
 | `cli/openapi-request-body-ref/custom.rs` | **No** | Protected by `.fernignore` |
-| `cli/openapi-request-body-ref/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
+| `cli/openapi-request-body-ref/sdk.rs` | Yes | Bridges AppContext → SDK client |
 | `cli/openapi-request-body-ref/main.rs` | Yes | Calls `custom::register(app)` |
 | `openapi-request-body-ref-sdk/` | Yes | Co-generated typed SDK crate |
 | `openapi-request-body-ref-types/` | Yes | Co-generated typed models |

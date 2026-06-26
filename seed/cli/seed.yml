@@ -190,7 +190,8 @@ allowedFailures:
   - query-parameters
   - query-parameters-openapi
   - query-parameters-openapi:github-npm
-  - query-parameters-openapi:no-custom-config
+  # query-parameters-openapi:no-custom-config graduated as a regression test
+  # for embedded SDK asIs template resolution (FER-11453).
   - query-parameters-openapi-as-objects
   - request-parameters
   - required-nullable

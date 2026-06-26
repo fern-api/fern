@@ -1,4 +1,61 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.19.4
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.3
+  changelogEntry:
+    - summary: |
+        Add `cargo:` prefix to workspace members in generated `dist-workspace.toml`
+        so that `dist plan` can parse the file correctly.
+      type: fix
+    - summary: |
+        Strip the `cargo:crates/pipeline-fixture` workspace member from generated
+        `dist-workspace.toml`. That member is a cli-sdk-only release-pipeline fixture
+        that is never vendored into a user's CLI, so leaving it in made `cargo dist
+        plan` / `cargo metadata` fail with "failed to load manifest for workspace
+        member `crates/pipeline-fixture`".
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.2 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure (ENOENT on asIs templates like
+        prelude.rs, http_client.rs) by setting FERN_RUST_ASIS_DIR before
+        invoking the Rust SDK generator in-process, ensuring the bundled
+        rust-sdk-dist/asIs/ directory is discovered correctly.
+      type: fix
+    - summary: |
+        Fix embedded SDK compilation failures caused by type-name casing
+        divergence between the co-generated types and SDK crates. The embedded
+        SDK IR is now migrated to exactly v66 (the rust generators' pinned IR
+        version) instead of all the way down the migration chain; the v66→v65
+        migration inflated bare-string names into language-agnostic casing
+        (e.g. "OrderId" → "OrderID"), which only the SDK crate echoed, breaking
+        references to the types crate.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.1 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure ("failed to read feature configuration")
+        by skipping standalone doc generation (README, CONTRIBUTING, reference.md)
+        when the Rust SDK generator runs in cliEmbedded mode. Also stage features.yml
+        into the CLI dist for future extensibility.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 0.19.0
   changelogEntry:
     - summary: |

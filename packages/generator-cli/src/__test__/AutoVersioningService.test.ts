@@ -866,6 +866,316 @@ describe("AutoVersioningService", () => {
         }
     });
 
+    // --- Tests for replaceMagicVersion: binary file handling ---
+
+    it("testReplaceMagicVersion_skipsBinaryFiles", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a text file with the magic version
+            const textFile = path.join(tempDir, "version.txt");
+            await fs.writeFile(textFile, "version=0.0.0-fern-placeholder");
+
+            // Create a binary file (contains null bytes) with the magic version string embedded
+            const binaryFile = path.join(tempDir, "library.jar");
+            const binaryContent = Buffer.alloc(256);
+            binaryContent.write("PK\x03\x04", 0); // ZIP/JAR magic bytes
+            binaryContent[10] = 0; // null byte
+            // Embed magic version string after null bytes
+            binaryContent.write("0.0.0-fern-placeholder", 20);
+            await fs.writeFile(binaryFile, binaryContent);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Text file should be updated
+            const textContent = await fs.readFile(textFile, "utf-8");
+            expect(textContent).not.toContain("0.0.0-fern-placeholder");
+            expect(textContent).toContain("1.0.0");
+
+            // Binary file should remain unchanged
+            const binaryResult = await fs.readFile(binaryFile);
+            expect(binaryResult.equals(binaryContent)).toBe(true);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_skipsBinaryFileWithNullByteInFirst8KB", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a file that looks like text initially but has a null byte within the 8KB header
+            const compiledFile = path.join(tempDir, "compiled.class");
+            const content = Buffer.alloc(4096);
+            content.write("// 0.0.0-fern-placeholder appears here", 0);
+            content[100] = 0; // null byte within the 8KB detection window
+            await fs.writeFile(compiledFile, content);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "2.0.0"
+            );
+
+            // Binary file should remain unchanged
+            const result = await fs.readFile(compiledFile);
+            expect(result.equals(content)).toBe(true);
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for replaceMagicVersion: symlink handling (security fix) ---
+
+    it("testReplaceMagicVersion_skipsSymlinks", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a real file with the magic version
+            const realFile = path.join(tempDir, "version.txt");
+            await fs.writeFile(realFile, "version=0.0.0-fern-placeholder");
+
+            // Create a target file outside the working directory
+            const outsideDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "outside-"));
+            const outsideFile = path.join(outsideDir, "secret.txt");
+            await fs.writeFile(outsideFile, "secret=0.0.0-fern-placeholder");
+
+            // Create a symlink pointing to the outside file
+            const symlinkPath = path.join(tempDir, "link-to-secret.txt");
+            await fs.symlink(outsideFile, symlinkPath);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Real file should be updated
+            const realContent = await fs.readFile(realFile, "utf-8");
+            expect(realContent).toContain("1.0.0");
+            expect(realContent).not.toContain("0.0.0-fern-placeholder");
+
+            // File outside the directory (target of symlink) should NOT be modified
+            const outsideContent = await fs.readFile(outsideFile, "utf-8");
+            expect(outsideContent).toContain("0.0.0-fern-placeholder");
+            expect(outsideContent).not.toContain("1.0.0");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_skipsSymlinkedDirectories", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create a real file
+            const realFile = path.join(tempDir, "version.txt");
+            await fs.writeFile(realFile, "version=0.0.0-fern-placeholder");
+
+            // Create an external directory with files containing the magic version
+            const externalDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "external-"));
+            const externalFile = path.join(externalDir, "config.txt");
+            await fs.writeFile(externalFile, "version=0.0.0-fern-placeholder");
+
+            // Create a symlink to the external directory
+            const symlinkDir = path.join(tempDir, "linked-dir");
+            await fs.symlink(externalDir, symlinkDir);
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Real file should be updated
+            const realContent = await fs.readFile(realFile, "utf-8");
+            expect(realContent).toContain("1.0.0");
+
+            // External file (behind symlinked directory) should NOT be modified
+            const externalContent = await fs.readFile(externalFile, "utf-8");
+            expect(externalContent).toContain("0.0.0-fern-placeholder");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for replaceMagicVersion: vendor directory exclusion ---
+
+    it("testReplaceMagicVersion_vendorDirectoryIgnored", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            // Create vendor directory with a file containing magic version
+            const vendorDir = path.join(tempDir, "vendor", "github.com", "other");
+            await fs.mkdir(vendorDir, { recursive: true });
+            const vendorFile = path.join(vendorDir, "lib.go");
+            const vendorContent = 'package other\n\nconst Version = "0.0.0-fern-placeholder"\n';
+            await fs.writeFile(vendorFile, vendorContent);
+
+            // Create a regular file with magic version
+            const regularFile = path.join(tempDir, "version.go");
+            await fs.writeFile(regularFile, 'package main\n\nconst Version = "0.0.0-fern-placeholder"\n');
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "1.0.0"
+            );
+
+            // Vendor file should NOT be changed
+            const vendorResult = await fs.readFile(vendorFile, "utf-8");
+            expect(vendorResult).toBe(vendorContent);
+
+            // Regular file should be updated
+            const regularContent = await fs.readFile(regularFile, "utf-8");
+            expect(regularContent).not.toContain("0.0.0-fern-placeholder");
+            expect(regularContent).toContain("1.0.0");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_excludedDirectoriesIgnored", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const excludedDirs = [
+                "node_modules",
+                "__pycache__",
+                ".venv",
+                "build",
+                "dist",
+                "target",
+                ".gradle",
+                ".next",
+                ".idea",
+                ".dart_tool",
+                "Pods"
+            ];
+
+            // Create a file inside each excluded directory
+            for (const dir of excludedDirs) {
+                const dirPath = path.join(tempDir, dir, "nested");
+                await fs.mkdir(dirPath, { recursive: true });
+                await fs.writeFile(path.join(dirPath, "file.txt"), "version=0.0.0-fern-placeholder");
+            }
+
+            // Create a regular file
+            const regularFile = path.join(tempDir, "main.txt");
+            await fs.writeFile(regularFile, "version=0.0.0-fern-placeholder");
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "2.0.0"
+            );
+
+            // Regular file should be updated
+            const regularContent = await fs.readFile(regularFile, "utf-8");
+            expect(regularContent).toContain("2.0.0");
+            expect(regularContent).not.toContain("0.0.0-fern-placeholder");
+
+            // All excluded directories should be untouched
+            for (const dir of excludedDirs) {
+                const content = await fs.readFile(path.join(tempDir, dir, "nested", "file.txt"), "utf-8");
+                expect(content).toContain("0.0.0-fern-placeholder");
+                expect(content).not.toContain("2.0.0");
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for replaceMagicVersion: parallel processing ---
+
+    it("testReplaceMagicVersion_manyFilesProcessedCorrectly", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const fileCount = 100;
+            const filesWithMagic: string[] = [];
+            const filesWithoutMagic: string[] = [];
+
+            // Create 100 files across nested directories — more than the concurrency limit (32)
+            for (let i = 0; i < fileCount; i++) {
+                const subDir = path.join(tempDir, `dir-${i % 10}`);
+                await fs.mkdir(subDir, { recursive: true });
+                const filePath = path.join(subDir, `file-${i}.txt`);
+
+                if (i % 3 === 0) {
+                    // Every 3rd file has the magic version
+                    await fs.writeFile(filePath, `version=0.0.0-fern-placeholder\nindex=${i}`);
+                    filesWithMagic.push(filePath);
+                } else {
+                    await fs.writeFile(filePath, `no-magic-here\nindex=${i}`);
+                    filesWithoutMagic.push(filePath);
+                }
+            }
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "3.2.1"
+            );
+
+            // All files with magic version should be updated
+            for (const filePath of filesWithMagic) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("3.2.1");
+                expect(content).not.toContain("0.0.0-fern-placeholder");
+            }
+
+            // Files without magic version should be unchanged
+            for (const filePath of filesWithoutMagic) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("no-magic-here");
+                expect(content).not.toContain("3.2.1");
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_mixedBinaryAndTextInParallel", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const textFiles: string[] = [];
+            const binaryFiles: string[] = [];
+
+            // Create a mix of 50 text and 50 binary files to exercise parallel binary detection
+            for (let i = 0; i < 50; i++) {
+                const textPath = path.join(tempDir, `text-${i}.txt`);
+                await fs.writeFile(textPath, `version=0.0.0-fern-placeholder file=${i}`);
+                textFiles.push(textPath);
+
+                const binaryPath = path.join(tempDir, `binary-${i}.bin`);
+                const binContent = Buffer.alloc(128);
+                binContent[0] = 0; // null byte → binary
+                binContent.write("0.0.0-fern-placeholder", 10);
+                await fs.writeFile(binaryPath, binContent);
+                binaryFiles.push(binaryPath);
+            }
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "0.0.0-fern-placeholder",
+                "5.0.0"
+            );
+
+            // All text files should be updated
+            for (const filePath of textFiles) {
+                const content = await fs.readFile(filePath, "utf-8");
+                expect(content).toContain("5.0.0");
+                expect(content).not.toContain("0.0.0-fern-placeholder");
+            }
+
+            // All binary files should remain unchanged (still contain null byte at position 0)
+            for (const filePath of binaryFiles) {
+                const content = await fs.readFile(filePath);
+                expect(content[0]).toBe(0);
+            }
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
     // --- Tests for extractPreviousVersion: exception path ---
 
     it("testExtractPreviousVersion_noMagicVersionInDiff_throws", () => {

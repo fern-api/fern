@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.55.1
+  changelogEntry:
+    - summary: |
+        Fix `--instance` flag silently publishing to the wrong docs instance when the provided URL does not match any configured instance. Previously the CLI would fall back to the first configured instance; now it fails with an error listing available instances.
+      type: fix
+    - summary: |
+        Replace sed-based magic version replacement with pure Node.js implementation
+        in local generation mode. Fixes "illegal byte sequence" errors on binary files
+        and eliminates platform-specific behavior.
+      type: fix
+    - summary: |
+        Fix a 500 (PruneEmptyError) in localized docs when a translated OpenAPI spec changed a
+        structural identifier (e.g. an OpenAPI tag name, which derives subpackage and endpoint ids)
+        relative to the default-locale spec. API-reference navigation nodes are now matched to the
+        translated definition by a stable locator (HTTP method + path) in addition to id, so localized
+        sidebar titles still apply and the renderer can resolve the served API. When a node cannot be
+        matched at all, the affected API falls back to the default-locale definition with a warning
+        instead of crashing.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 5.55.0
+  changelogEntry:
+    - summary: |
+        Default docs deploy mode is now "ledger", enabling faster incremental deployments
+        and faster first-time page renders for uncached pages. To take advantage of this,
+        bump the `version` field in your `fern/fern.config.json` to this release or
+        later — the CLI auto-redirects to the pinned version, so older pins will not pick
+        up the new default. You can also bump the version in one click from the Fern
+        dashboard. To revert back to the legacy flow, add `FERN_DOCS_DEPLOY_MODE: legacy`
+        to the `env` section of your GitHub Actions workflow. Legacy deploys will be
+        removed in a future version of the CLI.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 5.54.0
   changelogEntry:
     - summary: |

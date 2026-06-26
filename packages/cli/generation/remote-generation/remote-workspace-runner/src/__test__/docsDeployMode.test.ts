@@ -18,13 +18,18 @@ describe("getDocsDeployMode", () => {
         }
     });
 
-    it("defaults to legacy when env var is unset", () => {
+    it("defaults to ledger when env var is unset", () => {
         delete process.env.FERN_DOCS_DEPLOY_MODE;
-        expect(getDocsDeployMode()).toBe("legacy");
+        expect(getDocsDeployMode()).toBe("ledger");
     });
 
-    it("defaults to legacy when env var is empty", () => {
+    it("defaults to ledger when env var is empty", () => {
         process.env.FERN_DOCS_DEPLOY_MODE = "";
+        expect(getDocsDeployMode()).toBe("ledger");
+    });
+
+    it("returns legacy when explicitly set", () => {
+        process.env.FERN_DOCS_DEPLOY_MODE = "legacy";
         expect(getDocsDeployMode()).toBe("legacy");
     });
 
@@ -43,9 +48,9 @@ describe("getDocsDeployMode", () => {
         expect(getDocsDeployMode()).toBe("ledger");
     });
 
-    it("falls back to legacy for unrecognized values", () => {
+    it("falls back to ledger for unrecognized values", () => {
         process.env.FERN_DOCS_DEPLOY_MODE = "banana";
-        expect(getDocsDeployMode()).toBe("legacy");
+        expect(getDocsDeployMode()).toBe("ledger");
     });
 
     it("forces legacy when FERN_SELF_HOSTED=true, even if deploy mode is ledger", () => {
