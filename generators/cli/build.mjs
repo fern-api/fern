@@ -69,6 +69,14 @@ try {
     const rustSdkPkg = path.resolve(path.dirname(sdkSymlink), sdkTarget);
     const rustSdkDistDir = path.join(rustSdkPkg, "dist");
     await cp(rustSdkDistDir, path.join(dirname, "dist", "rust-sdk-dist"), { recursive: true });
+    // Stage features.yml from the package root (not in dist/) into a
+    // path the AbstractGeneratorAgent's FEATURES_CONFIG_PATHS can find.
+    // Currently doc generation is skipped in cliEmbedded mode, but
+    // staging the asset keeps the option open for future use.
+    const { mkdir: mkdirAssets } = await import("fs/promises");
+    const assetsDir = path.join(dirname, "dist", "rust-sdk-dist", "assets");
+    await mkdirAssets(assetsDir, { recursive: true });
+    await cp(path.join(rustSdkPkg, "features.yml"), path.join(assetsDir, "features.yml"));
 } catch (_e) {
     // Non-fatal: the rust-sdk dist may not exist during a plain
     // `pnpm compile`. It's only required for `dist:cli` / Docker.
