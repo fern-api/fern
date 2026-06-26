@@ -1,3 +1,6 @@
 - summary: |
-    Default docs deploy mode is now "ledger", enabling faster first-time page renders for uncached pages. Set FERN_DOCS_DEPLOY_MODE=legacy to opt in to the legacy flow, which will be removed in a future version.
+    Default docs deploy mode is now "ledger", enabling faster incremental deployments
+    and faster first-time page renders for uncached pages. Set
+    FERN_DOCS_DEPLOY_MODE=legacy to opt in to the legacy flow, which will be removed
+    in a future version.
   type: feat
