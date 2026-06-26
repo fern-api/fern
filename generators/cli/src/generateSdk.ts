@@ -1,31 +1,32 @@
 /**
- * Generate `cli/<binaryName>/sdk_glue.rs` — the adapter that bridges
- * the CLI's runtime (`AppContext`, `CliExecutor`) to the co-generated
- * SDK crate's typed client.
+ * Generate `cli/<binaryName>/sdk.rs` — the adapter that bridges the
+ * CLI's runtime (`AppContext`, `CliExecutor`) to the co-generated SDK
+ * crate's typed client.
  *
  * Provides two public helpers for custom command handlers:
  *
- *   - `sdk_client(ctx)` — construct a fully-wired SDK root client that
+ *   - `client(ctx)` — construct a fully-wired SDK root client that
  *     routes through the CLI's auth/retry/TLS stack.
  *   - `block_on(future)` — run an async SDK call from synchronous
  *     handler context (bridges `ApiError` → `CliError`).
  *
- * The generated code reads the SDK crate's `src/api/resources/` tree
- * to discover client structs and their sub-client fields recursively,
- * so the construction code is always in sync with the generated SDK —
- * including specs with nested `x-fern-sdk-group-name` groups.
+ * Client names and the sub-client tree are read directly from the Rust
+ * SDK generator's `SdkGeneratorContext` — the authoritative source for
+ * de-conflicted names (including `SimpleClient2`, `PoolsClient3`).
+ * No independent re-derivation: zero drift possible.
  */
 
-import { readFile, writeFile } from "fs/promises";
+import { SdkGeneratorContext } from "@fern-api/rust-sdk";
+import { writeFile } from "fs/promises";
 import path from "path";
 
-/** A sub-client field parsed from a client struct (possibly nested). */
+/** A sub-client field (possibly nested). */
 export interface SubClientField {
     fieldName: string;
     typeName: string;
 }
 
-/** Recursive tree of client fields discovered from the generated SDK. */
+/** Recursive tree of client fields derived from the SDK context. */
 interface ClientNode {
     fieldName: string;
     typeName: string;
@@ -34,7 +35,7 @@ interface ClientNode {
     children: ClientNode[];
 }
 
-/** Root client info parsed from the generated SDK. */
+/** Root client info read from the SDK generator context. */
 export interface RootClientInfo {
     name: string;
     subClients: ClientNode[];
@@ -42,83 +43,57 @@ export interface RootClientInfo {
 }
 
 // ---------------------------------------------------------------------------
-// Struct parsing
+// Context-based client tree resolution
 // ---------------------------------------------------------------------------
 
-/** Fields that are not sub-clients — skip these when discovering sub-clients. */
-const SKIP_TYPES = new Set(["ClientConfig", "HttpClient"]);
-
 /**
- * Parse a client struct from Rust source to extract its typed fields.
- *
- * Returns the struct name and all `pub <field>: <Type>` entries,
- * filtering out config/http_client infrastructure fields.
+ * Build the recursive client tree by reading directly from the Rust
+ * SDK generator context. Names are authoritative — they come from the
+ * same `RustFilenameRegistry` that produced the generated SDK crate.
  */
-function parseClientStruct(
-    source: string
-): { name: string; fields: SubClientField[]; hasHttpClient: boolean } | undefined {
-    const structMatch = source.match(/pub struct (\w+Client)\s*\{([^}]+)\}/);
-    if (structMatch == null) {
-        return undefined;
-    }
-
-    const name = structMatch[1] ?? "";
-    const body = structMatch[2] ?? "";
-    const fields: SubClientField[] = [];
-    let hasHttpClient = false;
-
-    const fieldRegex = /pub\s+(\w+)\s*:\s*(\w+)\s*,?/g;
-    let match;
-    while ((match = fieldRegex.exec(body)) !== null) {
-        const fieldName = match[1] ?? "";
-        const typeName = match[2] ?? "";
-        if (typeName === "HttpClient") {
-            hasHttpClient = true;
-            continue;
-        }
-        if (SKIP_TYPES.has(typeName)) {
-            continue;
-        }
-        fields.push({ fieldName, typeName });
-    }
-
-    return { name, fields, hasHttpClient };
-}
-
-/**
- * Recursively discover the client tree starting from `resources/mod.rs`.
- *
- * For each sub-client field, attempts to read
- * `resources/<fieldName>/mod.rs` to discover nested sub-clients.
- * Leaf clients (no sub-directory or no nested struct) have empty children.
- */
-async function discoverClientTree(
-    resourcesDir: string,
-    fields: SubClientField[],
+function buildClientTreeFromContext(
+    context: SdkGeneratorContext,
+    subpackageIds: string[],
     parentModulePath: string[]
-): Promise<ClientNode[]> {
+): ClientNode[] {
     const nodes: ClientNode[] = [];
 
-    for (const { fieldName, typeName } of fields) {
-        const modulePath = [...parentModulePath, fieldName];
-        let children: ClientNode[] = [];
+    for (const subpackageId of subpackageIds) {
+        const subpackage = context.getSubpackageOrThrow(subpackageId);
 
-        // Try to read the sub-client's mod.rs for nested sub-clients.
-        const subModRsPath = path.join(resourcesDir, fieldName, "mod.rs");
-        try {
-            const subModRs = await readFile(subModRsPath, "utf-8");
-            const subStruct = parseClientStruct(subModRs);
-            if (subStruct != null && subStruct.fields.length > 0) {
-                children = await discoverClientTree(path.join(resourcesDir, fieldName), subStruct.fields, modulePath);
-            }
-        } catch (_e: unknown) {
-            // No sub-directory — leaf client.
+        // Only include subpackages that contribute client struct fields
+        // (matches ClientGeneratorContext.getSubClients() filter).
+        if (subpackage.service == null && !subpackage.hasEndpointsInTree) {
+            continue;
         }
+
+        const fieldName = context.case.snakeSafe(subpackage.name);
+        const typeName = context.getUniqueClientNameForSubpackage(subpackage);
+        const modulePath = [...parentModulePath, fieldName];
+
+        const children = buildClientTreeFromContext(context, subpackage.subpackages, modulePath);
 
         nodes.push({ fieldName, typeName, modulePath, children });
     }
 
     return nodes;
+}
+
+/**
+ * Resolve the full client tree from the SDK generator context.
+ * All names are authoritative — read directly from the Rust SDK
+ * generator's filename registry.
+ */
+export function resolveClientTreeFromContext(context: SdkGeneratorContext): RootClientInfo {
+    const rootClientName = context.getClientName();
+    const subClients = buildClientTreeFromContext(context, context.ir.rootPackage.subpackages, []);
+
+    // The root struct has an `http_client` field when the root package
+    // itself has a service (i.e., root-level endpoints exist alongside
+    // sub-client groups).
+    const hasHttpClient = context.ir.rootPackage.service != null;
+
+    return { name: rootClientName, subClients, hasHttpClient };
 }
 
 // ---------------------------------------------------------------------------
@@ -172,9 +147,9 @@ function qualifyType(sdkCrate: string, node: ClientNode): string {
 }
 
 /**
- * Generate the `sdk_glue.rs` module content.
+ * Generate the `sdk.rs` module content.
  */
-function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): string {
+function renderSdk(sdkCrateSnake: string, rootClient: RootClientInfo): string {
     const subClientInits = rootClient.subClients
         .map((node) => {
             const init = renderClientInit(sdkCrateSnake, node, "        ");
@@ -187,7 +162,7 @@ function renderSdkGlue(sdkCrateSnake: string, rootClient: RootClientInfo): strin
     const httpClientInit = rootClient.hasHttpClient ? "\n        http_client: http_client.clone()," : "";
 
     return `\
-//! Generated SDK client glue — bridges AppContext to the co-generated SDK.
+//! Generated SDK client adapter — bridges AppContext to the co-generated SDK.
 //!
 //! Auto-generated by @fern-api/cli-generator. Do not edit by hand.
 
@@ -227,14 +202,14 @@ impl ${sdkCrateSnake}::RequestExecutor for CliExecutorAdapter {
 }
 
 // ---------------------------------------------------------------------------
-// sdk_client — construct a fully-wired SDK root client
+// client — construct a fully-wired SDK root client
 // ---------------------------------------------------------------------------
 
 /// Build the SDK root client from the CLI's runtime context.
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn sdk_client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name} {
+pub fn client(ctx: &AppContext) -> ${sdkCrateSnake}::api::${rootClient.name} {
     let executor = ctx.build_sdk_executor();
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = ${sdkCrateSnake}::ClientConfig::default();
@@ -304,39 +279,30 @@ fn http_status_reason(status: u16) -> &'static str {
 }
 
 /**
- * Generate `cli/<binaryName>/sdk_glue.rs`.
+ * Generate `cli/<binaryName>/sdk.rs`.
  *
- * Must be called AFTER `generateEmbeddedSdk` so the SDK crate's source
- * files are on disk.
+ * Reads client names directly from the Rust SDK generator context —
+ * the single authoritative source for de-conflicted names. No
+ * independent re-derivation, no drift.
  */
-export async function generateSdkGlue(args: {
+export async function generateSdk(args: {
     outputDir: string;
     binaryName: string;
     sdkCrateName: string;
+    sdkContext: SdkGeneratorContext;
 }): Promise<SubClientField[]> {
-    const { outputDir, binaryName, sdkCrateName } = args;
+    const { outputDir, binaryName, sdkCrateName, sdkContext } = args;
     const sdkCrateSnake = sdkCrateName.replace(/-/g, "_");
 
-    // Read the SDK's root client definition.
-    const resourcesDir = path.join(outputDir, sdkCrateName, "src", "api", "resources");
-    const modRsPath = path.join(resourcesDir, "mod.rs");
-    const modRsContent = await readFile(modRsPath, "utf-8");
-    const rootStruct = parseClientStruct(modRsContent);
-    if (rootStruct == null) {
-        throw new Error("Could not find root client struct in SDK's api/resources/mod.rs");
-    }
+    const rootClient = resolveClientTreeFromContext(sdkContext);
 
-    // Recursively discover nested sub-clients from the SDK's resource tree.
-    const subClients = await discoverClientTree(resourcesDir, rootStruct.fields, []);
-    const rootClient: RootClientInfo = { name: rootStruct.name, subClients, hasHttpClient: rootStruct.hasHttpClient };
-
-    // Write the glue module.
+    // Write the sdk module.
     const binDir = path.join(outputDir, "cli", binaryName);
-    const content = renderSdkGlue(sdkCrateSnake, rootClient);
-    await writeFile(path.join(binDir, "sdk_glue.rs"), content);
+    const content = renderSdk(sdkCrateSnake, rootClient);
+    await writeFile(path.join(binDir, "sdk.rs"), content);
 
     // Return flat sub-client list for agent skill generation.
-    return flattenSubClients(subClients);
+    return flattenSubClients(rootClient.subClients);
 }
 
 /** Flatten the recursive tree into a flat list (preserves the public interface). */

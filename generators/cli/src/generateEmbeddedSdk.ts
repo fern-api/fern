@@ -1,59 +1,100 @@
 /**
- * Invoke the Rust SDK generator against the same IR to produce a
- * `<api>-sdk` library crate that the CLI crate uses as a path
- * dependency.
+ * Invoke the Rust SDK generator in-process to produce a `<api>-sdk`
+ * library crate that the CLI crate uses as a path dependency.
  *
  * The generated crate contains an HTTP client with the
  * `RequestExecutor` trait — the transport seam that lets the CLI's
  * native executor handle all HTTP while the SDK provides typed
  * request/response helpers. Custom command handlers use
- * `ctx.sdk_client()` to get a fully-wired SDK instance.
+ * `super::sdk::client(ctx)` to get a fully-wired SDK instance.
  *
  * Single type identity: the SDK crate declares a path dependency on
  * the co-generated `<api>-types` crate and re-exports all types via
  * `pub use <types_crate>::*;`. This means `<api>_sdk::Pet` and
  * `<api>_types::Pet` are the same type — no `From`/`Into` shims.
  *
- * Implementation note: We invoke the rust-sdk generator as a child
- * process (same pattern as `generateEmbeddedTypes`) because the CLI
- * generator and the rust-sdk generator pin different IR SDK versions.
+ * Implementation: The CLI generator down-migrates the IR from v67 to
+ * v66 (the Rust SDK's pinned version) using
+ * `migrateIntermediateRepresentationForGenerator`, then invokes the
+ * Rust SDK generator in-process. JSON serialization bridges the two
+ * IR SDK versions — no shared in-memory types or version-lockstep
+ * requirement. The returned `SdkGeneratorContext` provides
+ * authoritative de-conflicted client names for `sdk.rs` generation.
  */
 
-import { execFile } from "child_process";
-import { accessSync, constants } from "fs";
+import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
+import { SdkGeneratorCli, SdkGeneratorContext } from "@fern-api/rust-sdk";
+import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, readFile, rm, unlink, writeFile } from "fs/promises";
-import { createRequire } from "module";
 import path from "path";
-import { promisify } from "util";
 
-const execFileAsync = promisify(execFile);
+/** Name used for IR migration target resolution. */
+const RUST_SDK_GENERATOR_NAME = "fernapi/fern-rust-sdk";
+/** Version used for IR migration target resolution. */
+const RUST_SDK_GENERATOR_VERSION = "0.0.0";
+
+export interface EmbeddedSdkResult {
+    sdkCrateName: string;
+    sdkContext: SdkGeneratorContext;
+}
 
 /**
  * Generate the embedded `<api>-sdk` Rust library crate.
  *
- * @param irFilepath      Path to the IR JSON file on disk.
+ * @param irFilepath      Path to the IR JSON file on disk (v67).
  * @param outputDir       Absolute path to the CLI generator's output root.
  *                        The SDK crate will be written to `<outputDir>/<sdkCrateName>/`.
  * @param binaryName      Kebab-case CLI binary name (used to derive crate name).
  * @param typesCrateName  Name of the co-generated types crate (e.g. `"my-api-types"`).
- * @returns The generated crate name (e.g. `"my-api-sdk"`).
+ * @returns The generated crate name and the Rust SDK generator context
+ *          (used to read authoritative de-conflicted client names).
  */
 export async function generateEmbeddedSdk(args: {
     irFilepath: string;
     outputDir: string;
     binaryName: string;
     typesCrateName: string;
-}): Promise<string> {
+}): Promise<EmbeddedSdkResult> {
     const { irFilepath, outputDir, binaryName, typesCrateName } = args;
     const sdkCrateName = `${binaryName}-sdk`;
     const sdkOutputDir = path.join(outputDir, sdkCrateName);
     await mkdir(sdkOutputDir, { recursive: true });
 
-    // Write a minimal generator config that the rust-sdk CLI reads.
-    // `cliEmbedded: true` tells the SDK generator to skip model/type
-    // generation (types come from the co-generated types crate).
+    // 1. Read and parse the IR at v67 using the workspace IR SDK.
+    const irContent = await readFile(irFilepath, "utf-8");
+    const irJson = JSON.parse(irContent);
+    const parsedIr = IrSerialization.IntermediateRepresentation.parse(irJson, {
+        unrecognizedObjectKeys: "passthrough",
+        allowUnrecognizedEnumValues: true,
+        allowUnrecognizedUnionMembers: true
+    });
+    if (!parsedIr.ok) {
+        throw new Error(`Failed to parse IR v67: ${JSON.stringify(parsedIr.errors, null, 2)}`);
+    }
+
+    // 2. Down-migrate IR v67 → v66 for the Rust SDK generator.
+    //    This closes a latent correctness gap: previously, the subprocess
+    //    received IR v67 directly with no migration (relying on lenient
+    //    unknown-key stripping). The explicit migration ensures the Rust
+    //    generator receives IR at its pinned version.
+    const taskContext = createMockTaskContext();
+    const migratedIrJson = await migrateIntermediateRepresentationForGenerator({
+        intermediateRepresentation: parsedIr.value,
+        context: taskContext,
+        targetGenerator: {
+            name: RUST_SDK_GENERATOR_NAME,
+            version: RUST_SDK_GENERATOR_VERSION
+        }
+    });
+
+    // 3. Write migrated IR to a temp file for the in-process generator.
+    const migratedIrPath = path.join(sdkOutputDir, ".migrated-ir.json");
+    await writeFile(migratedIrPath, JSON.stringify(migratedIrJson));
+
+    // 4. Write generator config for in-process invocation.
     const generatorConfig = {
-        irFilepath,
+        irFilepath: migratedIrPath,
         output: {
             path: sdkOutputDir,
             mode: { type: "downloadFiles" as const }
@@ -75,27 +116,23 @@ export async function generateEmbeddedSdk(args: {
     const configPath = path.join(sdkOutputDir, ".generator-config.json");
     await writeFile(configPath, JSON.stringify(generatorConfig, null, 2));
 
-    const cliEntryPoint = resolveRustSdkCli();
-
+    // 5. Invoke the Rust SDK generator in-process and capture context.
+    let sdkContext: SdkGeneratorContext;
     try {
-        await execFileAsync("node", ["--enable-source-maps", cliEntryPoint, configPath], {
-            cwd: sdkOutputDir,
-            timeout: 120_000,
-            env: { ...process.env }
-        });
+        const cli = new SdkGeneratorCli();
+        sdkContext = await cli.generateAndReturnContext(configPath);
     } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
         throw new Error(`Embedded SDK generation failed: ${message}`);
     } finally {
         await unlink(configPath).catch((_e: unknown) => undefined);
+        await unlink(migratedIrPath).catch((_e: unknown) => undefined);
     }
 
-    // The rust-sdk generator produces a full crate including Cargo.toml.
-    // Patch it to add the types crate as a path dependency and write
-    // the prelude re-export for single type identity.
+    // 6. Patch the SDK crate (types dependency, prelude, .fern cleanup).
     await patchSdkCrate({ sdkOutputDir, sdkCrateName, typesCrateName });
 
-    return sdkCrateName;
+    return { sdkCrateName, sdkContext };
 }
 
 /**
@@ -188,47 +225,4 @@ async function patchSdkCrate(args: {
     // 4. Remove the .fern/ metadata directory written by the base
     //    generator framework — not needed inside a workspace member.
     await rm(path.join(sdkOutputDir, ".fern"), { recursive: true, force: true });
-}
-
-/**
- * Resolve the rust-sdk generator's CLI entry point.
- *
- * Resolution order:
- *   1. Bundled `rust-sdk-cli.cjs` next to the CLI generator's own
- *      bundled entry (Docker image, after `build.mjs` copies it).
- *   2. Monorepo workspace — `@fern-api/rust-sdk` package's compiled
- *      `lib/cli.js` (development, after `pnpm compile`).
- */
-function resolveRustSdkCli(): string {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const scriptDir: string = import.meta.dirname ?? (typeof __dirname !== "undefined" ? __dirname : ".");
-
-    // 1. Docker / dist:cli build — bundled in dist/rust-sdk-dist/
-    const bundled = path.resolve(scriptDir, "rust-sdk-dist", "cli.cjs");
-    try {
-        accessSync(bundled, constants.R_OK);
-        return bundled;
-    } catch (_e: unknown) {
-        // Not found — fall through to monorepo resolution.
-    }
-
-    // 2. Monorepo dev — resolve via pnpm workspace link.
-    try {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        const base = import.meta.url || (typeof __filename !== "undefined" ? `file://${__filename}` : "file:///");
-        const require = createRequire(base);
-        const sdkPkg = require.resolve("@fern-api/rust-sdk/package.json");
-        const sdkRoot = path.dirname(sdkPkg);
-        const devEntry = path.join(sdkRoot, "lib", "cli.js");
-        accessSync(devEntry, constants.R_OK);
-        return devEntry;
-    } catch (_e: unknown) {
-        // fall through
-    }
-
-    throw new Error(
-        "Could not resolve the @fern-api/rust-sdk CLI. " +
-            "Ensure `pnpm turbo run dist:cli --filter @fern-api/rust-sdk` has been run, " +
-            "or that @fern-api/rust-sdk is installed in the workspace."
-    );
 }

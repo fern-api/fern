@@ -18,8 +18,8 @@ export interface FernCliCustomConfig {
      * When true (the default), the generator produces the full custom
      * command infrastructure alongside the CLI binary:
      *   - `<binaryName>-types` library crate (typed serde structs)
-     *   - `<binaryName>-sdk` library crate (HTTP client with `ctx.sdk_client()`)
-     *   - `sdk_glue.rs` (bridges CLI's AppContext to the SDK client)
+     *   - `<binaryName>-sdk` library crate (HTTP client with `ctx.client()`)
+     *   - `sdk.rs` (bridges CLI's AppContext to the SDK client)
      *   - `custom.rs` scaffold (user-authored command handlers)
      *
      * Set to `false` to produce a spec-only CLI with no custom command

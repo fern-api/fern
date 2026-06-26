@@ -14,8 +14,10 @@ export { emitPublishWorkflow } from "./emitPublishWorkflow.js";
 export { emitReadme } from "./emitReadme.js";
 export { emitReference } from "./emitReference.js";
 export { emitReleaseWorkflow } from "./emitReleaseWorkflow.js";
+export { type EmbeddedSdkResult, generateEmbeddedSdk } from "./generateEmbeddedSdk.js";
+export { generateSdk, type RootClientInfo, resolveClientTreeFromContext, type SubClientField } from "./generateSdk.js";
 export { deriveBinaryName, TEMPLATE_BINARY_NAME, toEnvVarPrefix, toKebabCase } from "./identity.js";
-export { type IrSummary, readIrSummary } from "./ir.js";
+export { type IrSummary, readIr } from "./ir.js";
 export { applyCargoTomlPatch, patchCargoLockVersion, patchCargoToml } from "./patchCargoToml.js";
 export { applyDistWorkspacePatch, patchDistWorkspaceToml, stripNpmInstaller } from "./patchDistWorkspace.js";
 export {
