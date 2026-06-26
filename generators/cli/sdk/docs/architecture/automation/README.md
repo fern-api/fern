@@ -22,7 +22,7 @@ A scheduled agent runs **weekly** (Mondays, 14:00 UTC). Each run, it:
 4. Posts a digest to `#project-cli-generator`.
 
 Humans review and merge. No auto-merge. The agent stays inside
-`docs/architecture/**`.
+`generators/cli/sdk/docs/architecture/**`.
 
 ## Where the schedule lives
 
@@ -74,7 +74,7 @@ devin run --playbook arch-doc-refresh --since 2026-05-01
 ```
 
 Or, locally, by feeding `PLAYBOOK.md` to a Claude Code session along
-with the current state of `docs/architecture/`. Useful for testing
+with the current state of `generators/cli/sdk/docs/architecture/`. Useful for testing
 playbook edits before they land on the schedule.
 
 ## How to update the playbook
