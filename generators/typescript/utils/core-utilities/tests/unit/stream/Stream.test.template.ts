@@ -105,7 +105,7 @@ describe("Stream", () => {
 
         it("should parse multiple SSE events", async () => {
             const mockStream = createReadableStream([
-                'data: {"value": 1}\ndata: {"value": 2}\ndata: {"value": 3}\n',
+                'data: {"value": 1}\n\ndata: {"value": 2}\n\ndata: {"value": 3}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -123,7 +123,7 @@ describe("Stream", () => {
 
         it("should stop at stream terminator", async () => {
             const mockStream = createReadableStream([
-                'data: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n',
+                'data: {"value": 1}\n\ndata: [DONE]\n\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -141,7 +141,7 @@ describe("Stream", () => {
 
         it("should skip lines without data prefix", async () => {
             const mockStream = createReadableStream([
-                'event: message\ndata: {"value": 1}\nid: 123\ndata: {"value": 2}\n',
+                'event: message\ndata: {"value": 1}\nid: 123\n\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -391,7 +391,7 @@ describe("Stream", () => {
     describe("withMetadata()", () => {
         it("should yield ServerSentEvent with per-event id and retry", async () => {
             const mockStream = createReadableStream([
-                'id: evt-1\nretry: 5000\ndata: {"value": 1}\nid: evt-2\ndata: {"value": 2}\n',
+                'id: evt-1\nretry: 5000\ndata: {"value": 1}\n\nid: evt-2\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -412,7 +412,7 @@ describe("Stream", () => {
 
         it("should persist id across events per SSE spec", async () => {
             const mockStream = createReadableStream([
-                'id: evt-1\ndata: {"value": 1}\ndata: {"value": 2}\n',
+                'id: evt-1\ndata: {"value": 1}\n\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -433,7 +433,7 @@ describe("Stream", () => {
 
         it("should ignore id field containing null character", async () => {
             const mockStream = createReadableStream([
-                'id: valid\ndata: {"value": 1}\nid: bad\0id\ndata: {"value": 2}\n',
+                'id: valid\ndata: {"value": 1}\n\nid: bad\0id\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,
@@ -528,7 +528,7 @@ describe("Stream", () => {
 
         it("should stop at stream terminator via withMetadata (non-discriminator)", async () => {
             const mockStream = createReadableStream([
-                'id: evt-1\ndata: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n',
+                'id: evt-1\ndata: {"value": 1}\n\ndata: [DONE]\n\ndata: {"value": 2}\n',
             ]);
             const stream = new Stream({
                 stream: mockStream,

@@ -88,18 +88,27 @@ export class Stream<T> implements AsyncIterable<T> {
     private async *iterDataMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
-        let prefixSeen = false;
         let lastId: string | undefined;
         let lastRetry: number | undefined;
+        let dataValue: string | undefined;
+
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
 
             let terminatorIndex: number;
             while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
-                let line = buf.slice(0, terminatorIndex);
+                const line = buf.slice(0, terminatorIndex);
                 buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
+                    if (this.prefix != null && dataValue != null) {
+                        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                            return;
+                        }
+                        const data = await this.parse(fromJson(dataValue));
+                        yield { data, id: lastId, retry: lastRetry, event: undefined };
+                        dataValue = undefined;
+                    }
                     continue;
                 }
 
@@ -119,21 +128,27 @@ export class Stream<T> implements AsyncIterable<T> {
                     continue;
                 }
 
-                if (!prefixSeen && this.prefix != null) {
+                if (this.prefix != null) {
                     const prefixIndex = line.indexOf(this.prefix);
                     if (prefixIndex === -1) {
                         continue;
                     }
-                    prefixSeen = true;
-                    line = line.slice(prefixIndex + this.prefix.length);
+                    const val = line.slice(prefixIndex + this.prefix.length).trim();
+                    dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                } else {
+                    if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
+                        return;
+                    }
+                    const data = await this.parse(fromJson(line));
+                    yield { data, id: lastId, retry: lastRetry, event: undefined };
                 }
+            }
+        }
 
-                if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
-                    return;
-                }
-                const data = await this.parse(fromJson(line));
+        if (this.prefix != null && dataValue != null) {
+            if (this.streamTerminator == null || !dataValue.includes(this.streamTerminator)) {
+                const data = await this.parse(fromJson(dataValue));
                 yield { data, id: lastId, retry: lastRetry, event: undefined };
-                prefixSeen = false;
             }
         }
     }
