@@ -1,4 +1,4 @@
-# `docs/architecture/automation/`
+# `generators/cli/sdk/docs/architecture/automation/`
 
 The architecture docs in this directory don't keep themselves up to date.
 This subdirectory describes the *automation contract* that does:
@@ -45,8 +45,8 @@ The Devin schedule is **not yet activated**. To activate:
    ```bash
    devin playbook create \
      --name arch-doc-refresh \
-     --description "Weekly architecture-doc refresh for fern-api/cli-sdk" \
-     --content "$(cat docs/architecture/automation/PLAYBOOK.md)"
+     --description "Weekly architecture-doc refresh for CLI generator in fern-api/fern" \
+     --content "$(cat generators/cli/sdk/docs/architecture/automation/PLAYBOOK.md)"
    ```
 
 2. Create the scheduled Devin session:
@@ -55,7 +55,7 @@ The Devin schedule is **not yet activated**. To activate:
      --playbook arch-doc-refresh \
      --cron '0 14 * * 1' \
      --tz UTC \
-     --repo fern-api/cli-sdk
+     --repo fern-api/fern
    ```
 
 3. Verify on the next Monday that the digest lands in
@@ -79,10 +79,10 @@ playbook edits before they land on the schedule.
 
 ## How to update the playbook
 
-Open a PR that modifies [`PLAYBOOK.md`](./PLAYBOOK.md) or
-[`sources.yml`](./sources.yml). The Devin schedule re-reads both files
-on every run, so changes apply on the next scheduled run — no schedule
-restart needed.
+Open a PR against `fern-api/fern` that modifies
+[`PLAYBOOK.md`](./PLAYBOOK.md) or [`sources.yml`](./sources.yml). The
+Devin schedule re-reads both files on every run, so changes apply on the
+next scheduled run — no schedule restart needed.
 
 When editing the prompt, also update the corresponding section in
 `PLAYBOOK.md` (the prompt template is embedded there). The
@@ -130,9 +130,9 @@ The human review step is where:
 
 ## Relationship to the bootstrap
 
-The bootstrap of `docs/architecture/` (everything outside this
-subdirectory) was authored by hand from `AGENTS.md`, existing ADRs,
-Linear, and commit history. The agent picks up from there — its job
-is to keep the bootstrap fresh, not to redo it. If the bootstrap is
-materially wrong, fix it directly in a human-authored PR; don't wait
-for the agent to notice.
+The bootstrap of `generators/cli/sdk/docs/architecture/` (everything
+outside this subdirectory) was authored by hand from `AGENTS.md`,
+existing ADRs, Linear, and commit history. The agent picks up from
+there — its job is to keep the bootstrap fresh, not to redo it. If the
+bootstrap is materially wrong, fix it directly in a human-authored PR
+against `fern-api/fern`; don't wait for the agent to notice.
