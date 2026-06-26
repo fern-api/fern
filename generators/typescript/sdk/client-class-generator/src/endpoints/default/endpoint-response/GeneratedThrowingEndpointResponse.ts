@@ -14,10 +14,7 @@ import { ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl.js";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation.js";
-import {
-    getAbortSignalExpression,
-    REQUEST_OPTIONS_PARAMETER_NAME
-} from "../../utils/requestOptionsParameter.js";
+import { getAbortSignalExpression, REQUEST_OPTIONS_PARAMETER_NAME } from "../../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse.js";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
