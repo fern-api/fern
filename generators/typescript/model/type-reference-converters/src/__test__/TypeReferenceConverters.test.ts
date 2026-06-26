@@ -1308,7 +1308,7 @@ describe("TypeReferenceToStringExpressionConverter", () => {
             expect(result).toBe("val.toString()");
         });
 
-        it("wraps with !== undefined check for nullable reference", () => {
+        it("wraps with != null check for nullable reference", () => {
             const converter = createConverter({
                 isNullable: () => true
             });
@@ -1316,7 +1316,7 @@ describe("TypeReferenceToStringExpressionConverter", () => {
                 typeReference: nullableRef(primitiveRef("INTEGER"))
             });
             const result = getTextOfTsNode(fn(ts.factory.createIdentifier("val")));
-            expect(result).toContain("!== undefined");
+            expect(result).toContain("!= null");
             expect(result).toContain("toString");
         });
 
