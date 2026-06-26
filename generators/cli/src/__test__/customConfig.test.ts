@@ -46,4 +46,20 @@ describe("validateCustomConfig", () => {
     it("throws on non-boolean customCommands", () => {
         expect(() => validateCustomConfig({ customCommands: "yes" })).toThrow(/expected a boolean, got string/);
     });
+
+    it("accepts a string rootGroup", () => {
+        expect(validateCustomConfig({ rootGroup: "api" })).toEqual({ rootGroup: "api" });
+    });
+
+    it("ignores undefined rootGroup explicitly set", () => {
+        expect(validateCustomConfig({ rootGroup: undefined })).toEqual({});
+    });
+
+    it("throws on non-string rootGroup (number)", () => {
+        expect(() => validateCustomConfig({ rootGroup: 42 })).toThrow(/expected a string, got number/);
+    });
+
+    it("throws on non-string rootGroup (boolean)", () => {
+        expect(() => validateCustomConfig({ rootGroup: true })).toThrow(/expected a string, got boolean/);
+    });
 });

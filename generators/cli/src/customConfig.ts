@@ -26,6 +26,20 @@ export interface FernCliCustomConfig {
      * support.
      */
     customCommands?: boolean;
+
+    /**
+     * Mount all spec-derived commands under a namespace prefix.
+     *
+     * Without `rootGroup`, generated commands are top-level:
+     *   `cli users list`, `cli files get`
+     *
+     * With `rootGroup: "api"`, they nest one level:
+     *   `cli api users list`, `cli api files get`
+     *
+     * Custom commands grafted at root (`command_under(&["recipes"], …)`)
+     * sit beside the namespace node.
+     */
+    rootGroup?: string;
 }
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
@@ -67,6 +81,12 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.customCommands = obj.customCommands;
+    }
+    if ("rootGroup" in obj && obj.rootGroup !== undefined) {
+        if (typeof obj.rootGroup !== "string") {
+            throw new Error(`Invalid customConfig.rootGroup: expected a string, got ${typeof obj.rootGroup}.`);
+        }
+        result.rootGroup = obj.rootGroup;
     }
     return result;
 }

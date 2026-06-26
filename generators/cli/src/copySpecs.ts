@@ -66,8 +66,10 @@ export async function copySpecs(args: {
     specsDir?: string;
     /** When true, emit `mod custom;` + `mod sdk;` + `custom::register(app)` in main.rs. */
     customCommands?: boolean;
+    /** When set, emit `.command_namespace("<rootGroup>")` on the OpenApiBinding chain. */
+    rootGroup?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
+    const { outputDir, binaryName, authBindings, specsDir, customCommands, rootGroup } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -94,7 +96,8 @@ export async function copySpecs(args: {
             binaryName,
             entries,
             authBindings,
-            customCommands: customCommands ?? false
+            customCommands: customCommands ?? false,
+            rootGroup
         })
     );
 
@@ -180,8 +183,9 @@ function renderMainRs(args: {
     entries: SpecEntry[];
     authBindings: DetectedAuthBinding[];
     customCommands: boolean;
+    rootGroup?: string;
 }): string {
-    const { binaryName, entries, authBindings, customCommands } = args;
+    const { binaryName, entries, authBindings, customCommands, rootGroup } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -233,6 +237,9 @@ function renderMainRs(args: {
     }
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
+    }
+    if (rootGroup != null && rootGroup !== "") {
+        lines.push(`                .command_namespace("${rootGroup}")`);
     }
     // Close the binding
     lines.push("        );");
