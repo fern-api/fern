@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.73.3
+  changelogEntry:
+    - summary: |
+        Fix SSE event parsing to buffer data and yield on blank lines per the SSE spec.
+        Previously, the parser yielded events immediately on `data:` lines, causing
+        `id:` and `retry:` fields that follow the `data:` line to be missed or
+        associated with the wrong event.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 3.73.2
   changelogEntry:
     - summary: |
