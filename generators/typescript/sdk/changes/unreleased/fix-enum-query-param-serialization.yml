@@ -1,0 +1,7 @@
+- summary: |
+    Fix nullable enum query parameters being serialized as empty strings.
+    Changed null-check from strict equality (`!== undefined`) to loose equality
+    (`!= null`) so that both `null` and `undefined` are correctly omitted from
+    query parameters. Also updated the runtime `qs.ts` serializer to skip `null`
+    values instead of encoding them as empty strings.
+  type: fix

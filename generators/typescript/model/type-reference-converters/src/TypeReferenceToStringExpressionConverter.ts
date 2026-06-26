@@ -24,8 +24,8 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 ts.factory.createConditionalExpression(
                     ts.factory.createBinaryExpression(
                         reference,
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
-                        ts.factory.createIdentifier("undefined")
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
                     ),
                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                     this.convert(params)(reference),
