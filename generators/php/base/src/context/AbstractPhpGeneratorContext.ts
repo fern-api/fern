@@ -681,7 +681,6 @@ export abstract class AbstractPhpGeneratorContext<
             AsIsFiles.AdditionalPropertiesTest,
             AsIsFiles.DateArrayTest,
             AsIsFiles.EmptyArrayTest,
-            AsIsFiles.EmptyObjectEdgeCasesTest,
             AsIsFiles.EmptyObjectTest,
             AsIsFiles.EnumTest,
             AsIsFiles.ExhaustiveTest,
