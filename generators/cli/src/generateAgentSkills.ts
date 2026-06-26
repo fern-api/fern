@@ -19,7 +19,7 @@ import path from "path";
 
 import { readSpecsManifest } from "./copySpecs.js";
 import type { DetectedAuthBinding } from "./detectAuth.js";
-import type { SubClientField } from "./generateSdkGlue.js";
+import type { SubClientField } from "./generateSdk.js";
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -241,7 +241,7 @@ function renderSkill(args: {
     lines.push("");
     lines.push("```");
     lines.push(`cli/${binaryName}/custom.rs    ← Your command handlers (protected by .fernignore)`);
-    lines.push(`cli/${binaryName}/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()`);
+    lines.push(`cli/${binaryName}/sdk.rs       ← Generated bridge: client() + block_on()`);
     lines.push(`cli/${binaryName}/main.rs      ← Generated entrypoint (calls custom::register)`);
     lines.push(`${binaryName}-sdk/             ← Co-generated typed SDK crate`);
     lines.push(`${binaryName}-types/           ← Co-generated typed model crate`);
@@ -271,7 +271,7 @@ function renderSkill(args: {
     // Available sub-clients
     lines.push("### 2. Available SDK Clients");
     lines.push("");
-    lines.push(`The \`sdk_glue::sdk_client(ctx)\` call returns a \`${sdkCrateSnake}::api::Client\``);
+    lines.push(`The \`super::sdk::client(ctx)\` call returns a \`${sdkCrateSnake}::api::Client\``);
     lines.push("with the following sub-clients:");
     lines.push("");
     if (visibleClients.length > 0) {
@@ -292,12 +292,12 @@ function renderSkill(args: {
     lines.push("");
     lines.push("**Get the SDK client** (execution-sharing, fully authenticated):");
     lines.push("```rust");
-    lines.push("let client = super::sdk_glue::sdk_client(ctx);");
+    lines.push("let client = super::sdk::client(ctx);");
     lines.push("```");
     lines.push("");
     lines.push("**Run an async SDK call from a sync handler:**");
     lines.push("```rust");
-    lines.push("let result = super::sdk_glue::block_on(");
+    lines.push("let result = super::sdk::block_on(");
     lines.push("    client.some_resource.some_method(args),");
     lines.push(")?;");
     lines.push("```");
@@ -330,7 +330,7 @@ function renderSkill(args: {
     lines.push("| File | Regenerated? | Notes |");
     lines.push("|------|-------------|-------|");
     lines.push(`| \`cli/${binaryName}/custom.rs\` | **No** | Protected by \`.fernignore\` |`);
-    lines.push(`| \`cli/${binaryName}/sdk_glue.rs\` | Yes | Bridges AppContext → SDK client |`);
+    lines.push(`| \`cli/${binaryName}/sdk.rs\` | Yes | Bridges AppContext → SDK client |`);
     lines.push(`| \`cli/${binaryName}/main.rs\` | Yes | Calls \`custom::register(app)\` |`);
     lines.push(`| \`${binaryName}-sdk/\` | Yes | Co-generated typed SDK crate |`);
     lines.push(`| \`${binaryName}-types/\` | Yes | Co-generated typed models |`);
@@ -389,8 +389,8 @@ function renderExampleWithEndpoint(
     for (const read of argReads) {
         lines.push(read);
     }
-    lines.push("            let client = super::sdk_glue::sdk_client(ctx);");
-    lines.push("            let result = super::sdk_glue::block_on(");
+    lines.push("            let client = super::sdk::client(ctx);");
+    lines.push("            let result = super::sdk::block_on(");
     lines.push(`                client.${example.subClientField}.${example.sdkMethod}(${sdkCallArgs}),`);
     lines.push("            )?;");
     lines.push('            println!("{}", serde_json::to_string_pretty(&result).unwrap());');
@@ -428,8 +428,8 @@ function renderGenericExample(
     lines.push('            .arg(clap::Arg::new("id").required(true)),');
     lines.push("        |matches, ctx| {");
     lines.push('            let id = matches.get_one::<String>("id").unwrap();');
-    lines.push("            let client = super::sdk_glue::sdk_client(ctx);");
-    lines.push("            let result = super::sdk_glue::block_on(");
+    lines.push("            let client = super::sdk::client(ctx);");
+    lines.push("            let result = super::sdk::block_on(");
     lines.push(`                client.${clientField}.get(id),`);
     lines.push("            )?;");
     lines.push('            println!("{}", serde_json::to_string_pretty(&result).unwrap());');

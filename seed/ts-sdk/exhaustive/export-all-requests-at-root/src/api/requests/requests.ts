@@ -87,6 +87,24 @@ export interface ModifyResourceAtInlinedPath {
 /**
  * @example
  *     {
+ *         _fields: "_fields",
+ *         body: {
+ *             string: "string"
+ *         }
+ *     }
+ */
+export interface CreateWithBodyAndQuery {
+    _fields?: string;
+    body: SeedExhaustive.types.ObjectWithRequiredField;
+}
+
+export interface UploadBytesWithQuery {
+    _fields?: string;
+}
+
+/**
+ * @example
+ *     {
  *         id: "id"
  *     }
  */

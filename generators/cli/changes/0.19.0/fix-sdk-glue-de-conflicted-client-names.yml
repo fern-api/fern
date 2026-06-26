@@ -1,0 +1,7 @@
+- summary: |
+    Fix de-conflicted client names in generated sdk.rs (renamed from
+    sdk_glue.rs). Client names are now read directly from the Rust SDK
+    generator's context via in-process orchestration with backward IR
+    migration (v67→v66), eliminating independent re-derivation drift.
+    Also renames module sdk_glue→sdk, sdk_client()→client().
+  type: fix

@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Readonly Endpoint Response API",
   "description": "Tests that when a schema with readOnly properties is used as the direct response type of an endpoint (not just nested within another schema), the endpoint response type reference is correctly remapped to the Read variant.\n",
   "servers": [],

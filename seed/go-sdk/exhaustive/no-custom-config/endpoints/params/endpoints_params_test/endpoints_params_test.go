@@ -10,9 +10,11 @@ import (
 	os "os"
 	testing "testing"
 
+	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	option "github.com/exhaustive/fern/option"
+	types "github.com/exhaustive/fern/types"
 	require "github.com/stretchr/testify/require"
 )
 
@@ -279,6 +281,37 @@ func TestEndpointsParamsModifyWithPathWithWireMock2(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsParamsModifyWithPathWithWireMock2", "PUT", "/params/path/param", nil, 1)
+}
+
+func TestEndpointsParamsCreateWithBodyAndQueryWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &endpoints.CreateWithBodyAndQuery{
+		Fields: fern.String(
+			"_fields",
+		),
+		Body: &types.ObjectWithRequiredField{
+			FieldString: "string",
+		},
+	}
+	_, invocationErr := client.Endpoints.Params.CreateWithBodyAndQuery(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsCreateWithBodyAndQueryWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsParamsCreateWithBodyAndQueryWithWireMock", "POST", "/params/body-and-query", map[string]interface{}{"_fields": "_fields"}, 1)
 }
 
 func TestEndpointsParamsGetWithBooleanPathWithWireMock(

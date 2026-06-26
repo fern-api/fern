@@ -1,4 +1,5 @@
 {
+  "specVersion": "0.0.7",
   "title": "Superagent",
   "description": "Bring your agents to production",
   "servers": [],

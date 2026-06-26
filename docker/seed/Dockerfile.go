@@ -9,13 +9,13 @@ RUN apk add --no-cache curl && \
 # go1.26.4 so the embedded stdlib clears vulnerability scanners. The
 # containerd/runc rebuild also picks up dependency bumps from the v2.3.x line.
 FROM golang:1.26.4-alpine3.23 AS overlay-binaries
-ARG CONTAINERD_VERSION=2.3.1
-ARG RUNC_VERSION=1.3.5
+ARG CONTAINERD_VERSION=2.3.2
+ARG RUNC_VERSION=1.3.6
 ARG MOBY_VERSION=29.5.2
 ARG DOCKER_CLI_VERSION=29.5.2
 ARG XNET_VERSION=0.55.0
-ARG XCRYPTO_VERSION=0.52.0
-ARG XSYS_VERSION=0.45.0
+ARG XCRYPTO_VERSION=0.53.0
+ARG XSYS_VERSION=0.46.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.4

@@ -20,7 +20,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -44,7 +52,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -68,7 +84,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -91,7 +115,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -113,7 +145,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -136,7 +176,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -159,7 +207,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -187,7 +243,15 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -225,7 +289,15 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -259,7 +331,15 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -304,7 +384,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -323,7 +411,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -346,7 +442,15 @@ import Testing
         )
 
         do {
-            _ = try await client.folderA.service.getDirectThread(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.folderA.service.getDirectThread(
+                ids: [
+                    "ids"
+                ],
+                tags: [
+                    "tags"
+                ],
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }

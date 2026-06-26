@@ -397,7 +397,14 @@ client.service.create_movie(
   rating: 8,
   type: "movie",
   tag: "tag-wf9as23d",
-  metadata: {},
+  metadata: {
+    actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+    releaseDate: "2023-12-08",
+    ratings: {
+      rottenTomatoes: 97,
+      imdb: 7.6
+    }
+  },
   revenue: 1000000
 )
 ```
@@ -529,7 +536,11 @@ client.service.create_big_entity(
     type: "movie",
     tag: "tag",
     book: "book",
-    metadata: {},
+    metadata: {
+      metadata: {
+        key: "value"
+      }
+    },
     revenue: 1000000
   },
   entity: {

@@ -10,6 +10,23 @@ import path from "path";
 
 import { addDefaultDockerOrgIfNotPresent, correctIncorrectDockerOrgWithWarning } from "./getGeneratorName.js";
 
+function parseSpecSource(source: generatorsYml.SpecSourceSchema): {
+    path: string;
+    gitSource: generatorsYml.GitSource | undefined;
+} {
+    if (typeof source === "string") {
+        return { path: source, gitSource: undefined };
+    }
+    return {
+        path: source.git.path,
+        gitSource: {
+            repo: source.git.repo,
+            ref: source.git.ref,
+            path: source.git.path
+        }
+    };
+}
+
 /**
  * Union type representing any spec-level settings schema.
  * Used for parsing global api.settings which may contain settings from any spec type.
@@ -249,10 +266,11 @@ async function parseAPIConfigurationToApiLocations(
                 settings: rootSettings
             });
         } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
+            const { path: rootPath, gitSource } = parseSpecSource(apiConfiguration.proto.root);
             apiDefinitions.push({
                 schema: {
                     type: "protobuf",
-                    root: apiConfiguration.proto.root,
+                    root: rootPath,
                     target: apiConfiguration.proto.target ?? "",
                     localGeneration: apiConfiguration.proto["local-generation"] ?? false,
                     fromOpenAPI: apiConfiguration.proto["from-openapi"] ?? false,
@@ -262,7 +280,8 @@ async function parseAPIConfigurationToApiLocations(
                 overrides: apiConfiguration.proto.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: rootSettings
+                settings: rootSettings,
+                gitSource
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -279,10 +298,11 @@ async function parseAPIConfigurationToApiLocations(
                         settings: rootSettings
                     });
                 } else if (generatorsYml.isRawProtobufAPIDefinitionSchema(definition)) {
+                    const { path: rootPath, gitSource } = parseSpecSource(definition.proto.root);
                     apiDefinitions.push({
                         schema: {
                             type: "protobuf",
-                            root: definition.proto.root,
+                            root: rootPath,
                             target: definition.proto.target ?? "",
                             localGeneration: definition.proto["local-generation"] ?? false,
                             fromOpenAPI: definition.proto["from-openapi"] ?? false,
@@ -292,7 +312,8 @@ async function parseAPIConfigurationToApiLocations(
                         overrides: definition.proto.overrides,
                         overlays: undefined,
                         audiences: [],
-                        settings: rootSettings
+                        settings: rootSettings,
+                        gitSource
                     });
                 } else {
                     apiDefinitions.push({
@@ -411,34 +432,39 @@ async function parseApiConfigurationV2Schema({
     for (const spec of apiConfiguration.specs ?? []) {
         let definitionLocation: generatorsYml.APIDefinitionLocation;
         if (generatorsYml.isOpenApiSpecSchema(spec)) {
+            const { path: specPath, gitSource } = parseSpecSource(spec.openapi);
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: spec.openapi
+                    path: specPath
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
                 overlays: spec.overlays,
                 audiences: [],
-                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings)),
+                gitSource
             };
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {
+            const { path: specPath, gitSource } = parseSpecSource(spec.asyncapi);
             definitionLocation = {
                 schema: {
                     type: "oss",
-                    path: spec.asyncapi
+                    path: specPath
                 },
                 origin: spec.origin,
                 overrides: spec.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings))
+                settings: mergeSettings(apiSettings, parseAsyncApiDefinitionSettingsSchema(spec.settings)),
+                gitSource
             };
         } else if (generatorsYml.isProtoSpecSchema(spec)) {
+            const { path: rootPath, gitSource } = parseSpecSource(spec.proto.root);
             definitionLocation = {
                 schema: {
                     type: "protobuf",
-                    root: spec.proto.root,
+                    root: rootPath,
                     target: spec.proto.target ?? "",
                     localGeneration: spec.proto["local-generation"] ?? false,
                     fromOpenAPI: spec.proto["from-openapi"] ?? false,
@@ -448,7 +474,8 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.proto.overrides,
                 overlays: undefined,
                 audiences: [],
-                settings: apiSettings
+                settings: apiSettings,
+                gitSource
             };
         } else if (generatorsYml.isOpenRpcSpecSchema(spec)) {
             definitionLocation = {

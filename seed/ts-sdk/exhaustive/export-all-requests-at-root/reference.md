@@ -2332,6 +2332,74 @@ await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">createWithBodyAndQuery</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.createWithBodyAndQuery({
+    _fields: "_fields",
+    body: {
+        string: "string"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.CreateWithBodyAndQuery` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithBooleanPath</a>(param) -> string</code></summary>
 <dl>
 <dd>

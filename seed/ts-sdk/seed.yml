@@ -518,6 +518,16 @@ fixtures:
     - outputFolder: .
       customConfig:
         noSerdeLayer: false
+  ts-error-name-collision:
+    - outputFolder: .
+      customConfig:
+        namespaceExport: SeedErrors
+        naming:
+          client: SeedErrors
+  ts-path-param-body-conflict:
+    - outputFolder: .
+      customConfig:
+        inlinePathParameters: true
   server-sent-events-openapi:
     - outputFolder: no-custom-config
       customConfig: null
@@ -568,10 +578,4 @@ scripts:
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
 allowedFailures:
-  - cross-package-type-names:serde-layer
-  - exhaustive:never-throw-errors
-  - exhaustive:multiple-exports
-  - oauth-client-credentials-custom
-  - inferred-auth-implicit-reference
-  - unions:serde-layer
   - server-sent-events-openapi:no-custom-config # tmp  - wire test generation is failing

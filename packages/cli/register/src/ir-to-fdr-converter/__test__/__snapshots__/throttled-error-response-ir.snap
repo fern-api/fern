@@ -327,6 +327,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "GetResourceRequestTooManyRequestsError": {

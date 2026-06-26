@@ -142,7 +142,6 @@ public final class UserProfile {
 
         /**
          * <p>The name of the user.</p>
-         * <p>The name of the user.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -154,7 +153,6 @@ public final class UserProfile {
 
         /**
          * <p>User profile verification object</p>
-         * <p>User profile verification object</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -165,7 +163,6 @@ public final class UserProfile {
         }
 
         /**
-         * <p>The social security number of the user.</p>
          * <p>The social security number of the user.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

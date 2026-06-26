@@ -30,7 +30,9 @@ require "seed"
 
 client = Seed::Client.new(username: "<username>")
 
-client.basic_auth.post_with_basic_auth
+client.basic_auth.post_with_basic_auth(request: {
+  key: "value"
+})
 ```
 
 ## Environments

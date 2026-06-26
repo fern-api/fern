@@ -49,13 +49,13 @@ public final class ParamsClient: Sendable {
     /// GET with multiple of same query param
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getWithAllowMultipleQuery(query: String, number: Int, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func getWithAllowMultipleQuery(query: [String], number: [Int], requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/params",
             queryParams: [
-                "query": .string(query), 
-                "number": .int(number)
+                "query": .stringArray(query), 
+                "number": .unknown(number)
             ],
             requestOptions: requestOptions
         )
@@ -126,6 +126,39 @@ public final class ParamsClient: Sendable {
             body: request,
             requestOptions: requestOptions,
             responseType: ObjectWithRequiredField.self
+        )
+    }
+
+    /// POST with referenced body + query params
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func createWithBodyAndQuery(fields: String? = nil, request: ObjectWithRequiredField, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/params/body-and-query",
+            queryParams: [
+                "_fields": fields.map { .string($0) }
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithOptionalField.self
+        )
+    }
+
+    /// POST bytes body + query params
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func uploadBytesWithQuery(fields: String? = nil, request: Data, requestOptions: RequestOptions? = nil) async throws -> ObjectWithOptionalField {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/params/bytes-and-query",
+            contentType: .applicationOctetStream,
+            queryParams: [
+                "_fields": fields.map { .string($0) }
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithOptionalField.self
         )
     }
 

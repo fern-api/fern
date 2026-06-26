@@ -96,10 +96,11 @@ export class EndpointMethodGenerator {
         });
 
         endpoint.queryParameters.forEach((queryParam) => {
-            const swiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
+            const baseSwiftType = this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(
                 queryParam.valueType,
                 this.parentClassSymbol
             );
+            const swiftType = queryParam.allowMultiple ? this.wrapTypeForAllowMultiple(baseSwiftType) : baseSwiftType;
             const queryParamName = this.sdkGeneratorContext.caseConverter.camelUnsafe(queryParam.name);
             params.push(
                 swift.functionParameter({
@@ -300,7 +301,10 @@ export class EndpointMethodGenerator {
                     value: swift.Expression.dictionaryLiteral({
                         entries: endpoint.queryParameters.map((queryParam) => {
                             const key = swift.Expression.stringLiteral(getOriginalName(queryParam.name));
-                            const swiftType = this.getResolvedSwiftTypeForTypeReference(queryParam.valueType);
+                            const baseSwiftType = this.getResolvedSwiftTypeForTypeReference(queryParam.valueType);
+                            const swiftType = queryParam.allowMultiple
+                                ? this.wrapTypeForAllowMultiple(baseSwiftType)
+                                : baseSwiftType;
                             const queryParamName = this.sdkGeneratorContext.caseConverter.camelUnsafe(queryParam.name);
                             if (swiftType.variant.type === "optional") {
                                 return [
@@ -441,6 +445,19 @@ export class EndpointMethodGenerator {
 
     private getSwiftTypeForTypeReference(typeReference: FernIr.TypeReference) {
         return this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(typeReference, this.parentClassSymbol);
+    }
+
+    /**
+     * `allow-multiple` query parameters accept a list of values. The outer `optional`
+     * wrapper (which marks the parameter as omittable) is preserved, and the array wraps
+     * the remaining element type so the signature matches the generated example values
+     * (e.g. `optional<nullable<string>>` becomes `[Nullable<String>]?`).
+     */
+    private wrapTypeForAllowMultiple(swiftType: swift.TypeReference): swift.TypeReference {
+        if (swiftType.variant.type === "optional") {
+            return swift.TypeReference.optional(this.wrapTypeForAllowMultiple(swiftType.nonOptional()));
+        }
+        return swift.TypeReference.array(swiftType);
     }
 
     private getAllHeaders(endpoint: FernIr.HttpEndpoint): FernIr.HttpHeader[] {

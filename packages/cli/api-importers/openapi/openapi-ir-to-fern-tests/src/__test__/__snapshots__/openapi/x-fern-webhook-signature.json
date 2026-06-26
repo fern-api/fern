@@ -328,4 +328,5 @@ error-discrimination:
 display-name: Webhook Signature Verification Test
 ",
   },
+  "specVersion": "1.0.0",
 }

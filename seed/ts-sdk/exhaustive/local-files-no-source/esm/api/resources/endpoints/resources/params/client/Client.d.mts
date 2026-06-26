@@ -130,6 +130,31 @@ export declare class ParamsClient {
     uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
     private __uploadWithPath;
     /**
+     * POST with referenced body + query params
+     *
+     * @param {SeedExhaustive.endpoints.CreateWithBodyAndQuery} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.createWithBodyAndQuery({
+     *         _fields: "_fields",
+     *         body: {
+     *             string: "string"
+     *         }
+     *     })
+     */
+    createWithBodyAndQuery(request: SeedExhaustive.endpoints.CreateWithBodyAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    private __createWithBodyAndQuery;
+    /**
+     * POST bytes body + query params
+     *
+     * @param {core.file.Uploadable} uploadable
+     * @param {SeedExhaustive.endpoints.UploadBytesWithQuery} request
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     */
+    uploadBytesWithQuery(uploadable: core.file.Uploadable, request: SeedExhaustive.endpoints.UploadBytesWithQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    private __uploadBytesWithQuery;
+    /**
      * GET with boolean path param
      *
      * @param {boolean} param

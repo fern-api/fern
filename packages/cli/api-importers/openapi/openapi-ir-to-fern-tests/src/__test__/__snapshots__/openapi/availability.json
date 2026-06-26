@@ -661,4 +661,5 @@ imports:
   root: __package__.yml
 ",
   },
+  "specVersion": "1.0.0",
 }

@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Preserve Schema IDs Edge Cases",
   "servers": [],
   "websocketServers": [],

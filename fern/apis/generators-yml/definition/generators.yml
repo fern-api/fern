@@ -316,8 +316,8 @@ types:
         type: optional<string>
         docs: The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`).
       root:
-        type: string
-        docs: The path to the `.proto` directory root (e.g. `proto`).
+        type: SpecSourceSchema
+        docs: The path to the `.proto` directory root (e.g. `proto`), or a git remote reference.
       overrides:
         type: optional<OverridesSchema>
         docs: Paths to the overrides configuration. Can be a single path or an array of paths applied sequentially.
@@ -602,9 +602,40 @@ types:
         docs: Endpoints to include in the generated SDK (e.g. "POST /users").
         type: optional<list<string>>
 
+  GitRemoteSchema:
+    docs: |
+      A reference to a file or directory in a remote git repository.
+      The CLI will shallow-clone the repo at the specified ref and resolve the path locally.
+    properties:
+      repo:
+        type: string
+        docs: The git repository URL (e.g., https://github.com/org/repo.git).
+      ref:
+        type: optional<string>
+        docs: Branch, tag, or commit SHA. Defaults to the repository's default branch.
+      path:
+        type: string
+        docs: Path to the spec file or directory within the repository.
+
+  SpecGitSourceSchema:
+    docs: |
+      A wrapper that identifies the spec source as a remote git reference.
+      Contains the git repository details under the `git` key.
+    properties:
+      git: GitRemoteSchema
+
+  SpecSourceSchema:
+    discriminated: false
+    docs: |
+      A spec source can be either a local file path (string) or a remote git reference.
+    union:
+      - type: string
+        docs: A local file path relative to the Fern workspace.
+      - SpecGitSourceSchema
+
   OpenAPISpecSchema:
     properties:
-      openapi: string
+      openapi: SpecSourceSchema
       origin: optional<string>
       overrides: optional<OverridesSchema>
       overlays: optional<string>
@@ -627,7 +658,7 @@ types:
 
   AsyncAPISpecSchema:
     properties:
-      asyncapi: string
+      asyncapi: SpecSourceSchema
       origin: optional<string>
       overrides: optional<OverridesSchema>
       namespace: optional<string>

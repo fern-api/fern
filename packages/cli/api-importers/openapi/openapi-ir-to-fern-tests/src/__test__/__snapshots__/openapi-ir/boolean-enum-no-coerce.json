@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Boolean Enum No Coerce Test",
   "description": "Tests that boolean single-value enums are NOT coerced to literals when coerce-enums-to-literals is false, consistent with string enums.",
   "servers": [],

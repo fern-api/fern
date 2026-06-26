@@ -1,3 +1,4 @@
+pub mod create_with_body_and_query_request;
 pub mod endpoints_pagination_paginated_response;
 pub mod endpoints_put_error;
 pub mod endpoints_put_error_category;
@@ -31,7 +32,9 @@ pub mod types_object_object_with_unknown_field;
 pub mod types_object_optional_alias;
 pub mod types_union_animal;
 pub mod types_union_mixed_type;
+pub mod upload_bytes_with_query_request;
 
+pub use create_with_body_and_query_request::CreateWithBodyAndQueryRequest;
 pub use endpoints_pagination_paginated_response::PaginatedResponse;
 pub use endpoints_put_error::Error;
 pub use endpoints_put_error_category::ErrorCategory;
@@ -65,3 +68,4 @@ pub use types_object_object_with_unknown_field::ObjectWithUnknownField;
 pub use types_object_optional_alias::OptionalAlias;
 pub use types_union_animal::Animal;
 pub use types_union_mixed_type::MixedType;
+pub use upload_bytes_with_query_request::UploadBytesWithQueryRequest;

@@ -1,4 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.41.0
+  changelogEntry:
+    - summary: |
+        Expose `generateAndReturnContext()` on `SdkGeneratorCli` for
+        in-process invocation by the CLI generator. Returns the populated
+        `SdkGeneratorContext` after generation completes.
+      type: internal
+  createdAt: "2026-06-26"
+  irVersion: 66
+- version: 0.40.9
+  changelogEntry:
+    - summary: |
+        Fix multipart file-upload endpoints with binary responses to use streaming method,
+        and fix file-upload endpoints with query parameters to bind the query-folded envelope
+        type instead of the bare body type. Both issues caused cargo build failures on
+        endpoints like ElevenLabs speech-to-speech (multipart + binary response + query params).
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 66
+- version: 0.40.8
+  changelogEntry:
+    - summary: |
+        Fix `unreachable pattern` warnings in generated request structs by using
+        `#[serde(skip)]` instead of `#[serde(skip_serializing)]` for query parameter
+        fields that share serde rename targets with body fields.
+      type: fix
+    - summary: |
+        Remove unused `ReqwestExecutor` struct and impl from the generated HTTP
+        client template.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 66
+- version: 0.40.7
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords (`static`, `override`, etc.) in generated
+        union variant constructor function names using `r#` raw identifier syntax.
+        Also skip generating the catch-all `unknown()` constructor when a union
+        already has a variant named "unknown" to avoid duplicate definitions.
+      type: fix
+  createdAt: "2026-06-23"
+  irVersion: 66
 - version: 0.40.6
   changelogEntry:
     - summary: |

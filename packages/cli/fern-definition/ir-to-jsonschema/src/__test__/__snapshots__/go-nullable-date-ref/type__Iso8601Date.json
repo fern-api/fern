@@ -1,0 +1,6 @@
+{
+  "type": "string",
+  "format": "date",
+  "description": "A date in YYYY-MM-DD format.",
+  "definitions": {}
+}

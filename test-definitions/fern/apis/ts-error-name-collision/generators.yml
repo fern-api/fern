@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: latest
+        config:
+          generateWireTests: true

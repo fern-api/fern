@@ -12,8 +12,8 @@ public partial class Examples
         );
 
         await client.Endpoints.Params.ModifyWithPathAsync(
-            "param",
-            "string"
+            param: "param",
+            request: "string"
         );
     }
 

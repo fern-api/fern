@@ -30,7 +30,9 @@ require "seed"
 
 client = Seed::Client.new
 
-client.unknown.post
+client.unknown.post(request: {
+  key: "value"
+})
 ```
 
 ## Environments

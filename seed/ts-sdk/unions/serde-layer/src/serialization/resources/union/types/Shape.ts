@@ -5,11 +5,13 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Circle } from "./Circle.js";
 import { Square } from "./Square.js";
-import type { WithName } from "./WithName.js";
+import { WithName } from "./WithName.js";
 
-const _Base = core.serialization.object({
-    id: core.serialization.string(),
-});
+const _Base = core.serialization
+    .object({
+        id: core.serialization.string(),
+    })
+    .extend(WithName);
 export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.Shape> = core.serialization
     .union("type", {
         circle: Circle.extend(_Base),

@@ -40,11 +40,16 @@ class BasicAuthWireTest < WireMockTestCase
   def test_basic_auth_post_with_basic_auth_with_wiremock
     test_id = "basic_auth.post_with_basic_auth.0"
 
-    @client.basic_auth.post_with_basic_auth(request_options: {
-      additional_headers: {
-        "X-Test-Id" => "basic_auth.post_with_basic_auth.0"
+    @client.basic_auth.post_with_basic_auth(
+      request: {
+        key: "value"
+      },
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "basic_auth.post_with_basic_auth.0"
+        }
       }
-    })
+    )
 
     verify_request_count(
       test_id: test_id,

@@ -354,6 +354,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_commentsService": {
       "displayName": undefined,

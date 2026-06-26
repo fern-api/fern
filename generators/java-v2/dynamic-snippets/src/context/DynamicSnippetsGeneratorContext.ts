@@ -37,17 +37,26 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
+    /**
+     * The set of type IDs that the v1 generator emits as nested (inline) classes rather than
+     * top-level types. The dynamic IR does not carry the `inline` flag, so the v2 SDK generator
+     * computes this from the full IR and threads it through. Used to mirror v1's nested-class
+     * naming when referencing inline types in snippets.
+     */
+    public inlineTypeIds: Set<string>;
 
     constructor({
         ir,
         config,
         options,
-        sharedCustomConfig
+        sharedCustomConfig,
+        inlineTypeIds
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
         sharedCustomConfig?: BaseJavaCustomConfigSchema;
+        inlineTypeIds?: Set<string>;
     }) {
         super({ ir, config, options });
         this.ir = ir;
@@ -55,6 +64,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
+        this.inlineTypeIds = inlineTypeIds ?? new Set();
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -62,8 +72,39 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             ir: this.ir,
             config: this.config,
             options: this.options,
-            sharedCustomConfig: this.customConfig
+            sharedCustomConfig: this.customConfig,
+            inlineTypeIds: this.inlineTypeIds
         });
+    }
+
+    public isInlineType(typeId: string): boolean {
+        return this.inlineTypeIds.has(typeId);
+    }
+
+    /**
+     * Builds a reference to a class nested within `enclosing`. The resulting reference imports the
+     * outermost enclosing class and is written using the dotted path (e.g. `PostRootRequest.Bar`).
+     */
+    public getNestedInlineClassReference({
+        enclosing,
+        name
+    }: {
+        enclosing: java.ClassReference;
+        name: string;
+    }): java.ClassReference {
+        return java.classReference({
+            name,
+            packageName: enclosing.packageName,
+            enclosingClasses: [...enclosing.enclosingClasses, enclosing.name]
+        });
+    }
+
+    public wrappedAliases(): boolean {
+        return this.customConfig?.["wrapped-aliases"] ?? false;
+    }
+
+    public enableInlineTypes(): boolean {
+        return this.customConfig?.["enable-inline-types"] ?? false;
     }
 
     public getClassName(name: FernIr.Name): string {
@@ -424,6 +465,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public shouldInlineFileProperties(): boolean {
         return this.customConfig?.["inline-file-properties"] ?? false;
+    }
+
+    public usesNullableAnnotation(): boolean {
+        return this.customConfig?.["use-nullable-annotation"] === true;
+    }
+
+    public usesOptionalNullable(): boolean {
+        return this.customConfig?.["collapse-optional-nullable"] === true;
     }
 
     private getPackageNameSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {

@@ -92,11 +92,14 @@ fixtures:
       outputFolder: custom-client-class-name
       readmeConfig:
         exampleStyle: minimal
+    # local_files mode emits source-only output (no Gradle project/wrapper),
+    # so the gradle compile/spotless scripts can't run against it.
     - customConfig:
         inline-path-parameters: true
         package-prefix: com.fern.sdk
       outputMode: local_files
       outputFolder: local-files
+      skipScripts: true
     - customConfig:
         inline-path-parameters: true
         enable-public-constructors: true
@@ -383,41 +386,5 @@ scripts:
       - ./gradlew compileJava spotlessCheck
 
 allowedFailures:
-  # Extending an alias (that resolves to an object) is not yet supported by the
-  # generator: "Non-objects cannot be extended". Tracked for a follow-up PR.
-  - alias-extends
-  - examples:default
-  - examples:inline-file-properties
-  - examples:no-custom-config
-  - examples:readme-config
-  - exhaustive:local-files
-  - java-inline-types:no-wrapped-aliases
-  - nullable-optional:with-nullable-annotation
-  - nullable-optional:collapse-optional-nullable
-  - oauth-client-credentials-custom
-  - request-parameters
-  - inferred-auth-implicit-reference
-
-  # Generated raw client / publish fixtures fail to compile in CI
-  # (e.g. endpoint-security-auth's RawUserClient "cannot find symbol").
-  # Tracked for a follow-up PR.
-  - endpoint-security-auth
-  - exhaustive:publish-to
-  - exhaustive:signed_publish
-
-  # Snippet failures; many of these failures are due to the fact that a
-  # required list of query parameters is not actually required by the builder.
-  - java-inline-types:inline
-  - java-inline-types:enable-forward-compatible-enums
-  - nullable:wrapped-aliases
-  - pagination-custom
-
-  - java-pagination-deep-cursor-path:wire-tests
-
-  # Bug with how java-sdk creates nightly balanced files
-  - java-pagination-deep-cursor-path
-
-  # Optional wire tests have snippet generation bug with optional(nullable(T))
-  # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
-  - optional:wire-tests
-
+  # Staged builder snippets don't provide required file arguments (separate from positional shift fix)
+  - file-upload:inline-file-properties

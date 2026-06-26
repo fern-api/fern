@@ -101,6 +101,12 @@ export interface APIDefinitionSettings {
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
 }
 
+export interface GitSource {
+    repo: string;
+    ref?: string;
+    path: string;
+}
+
 export interface APIDefinitionLocation {
     schema: APIDefinitionSchema;
     origin: string | undefined;
@@ -108,6 +114,9 @@ export interface APIDefinitionLocation {
     overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
+    gitSource?: GitSource;
+    /** Set to true when the path was resolved from a remote git source and is an absolute local path. */
+    resolvedAbsolutePath?: boolean;
 }
 
 export type APIDefinitionSchema =

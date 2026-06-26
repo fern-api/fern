@@ -24,6 +24,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     FernOpenapiIr.OpenApiIntermediateRepresentation
 > = core.serialization.objectWithoutOptionalProperties({
     apiVersion: core.serialization.unknown().optional(),
+    specVersion: core.serialization.string().optional(),
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
     basePath: core.serialization.string().optional(),
@@ -48,6 +49,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
 export declare namespace OpenApiIntermediateRepresentation {
     export interface Raw {
         apiVersion?: unknown | null;
+        specVersion?: string | null;
         title?: string | null;
         description?: string | null;
         basePath?: string | null;

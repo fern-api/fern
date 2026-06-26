@@ -5,6 +5,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
   "apiName": "",
   "basePath": null,
   "selfHosted": false,
+  "specVersion": null,
   "apiDisplayName": null,
   "apiDocs": null,
   "auth": {

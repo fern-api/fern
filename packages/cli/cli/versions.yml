@@ -1,4 +1,117 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.54.0
+  changelogEntry:
+    - summary: |
+        Detect `api-key: OIDC` in NuGet output config and pass OIDC marker to
+        the C# generator for Trusted Publishing workflow generation.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
+- version: 5.53.1
+  changelogEntry:
+    - summary: |
+        Fix the next SDK version regressing to a stale baseline (e.g. `0.0.200`) when
+        `--version AUTO` is omitted. When computing the next version, Fern now consults
+        every available source (package registry, GitHub release, and the `sdkVersion`
+        recorded in `.fern/metadata.json`) and bumps the highest one, so a stale registry
+        version can no longer override the version Fern last generated. For example,
+        `5.0.0` now correctly bumps to `5.0.1`.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 67
+- version: 5.53.0
+  changelogEntry:
+    - summary: |
+        Add support for remote git sources in generators.yml. API specs can now reference
+        files in git repositories using a `git` block with `repo`, `ref`, and `path` fields.
+        The CLI shallow-clones the repository at generation time using native git credentials.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
+- version: 5.52.0
+  changelogEntry:
+    - summary: |
+        Add a `layout.changelog-layout` option to docs.yml. Set it to `classic` to render the
+        legacy stacked changelog layout, or `timeline` (the default) for the searchable
+        timeline-of-cards layout.
+      type: feat
+  createdAt: "2026-06-25"
+  irVersion: 67
+- version: 5.51.2
+  changelogEntry:
+    - summary: |
+        Fix inline enum type names ignoring parent schema's `x-fern-type-name` override.
+        When a parent schema was renamed via `x-fern-type-name`, inline enum properties
+        still derived their type name from the original parent name instead of the override.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 5.51.1
+  changelogEntry:
+    - summary: |
+        Fix `--version AUTO` corrupting generated SDK code by replacing all occurrences
+        of the literal string "AUTO" (e.g. `SENSOR_MODE_AUTO`, `CORRELATION_TYPE_AUTOMATED`)
+        with the version number. The generator now receives the safe magic placeholder
+        version (`0.0.0-fern-placeholder`) instead of "AUTO", and the post-generation
+        sed replacement targets only that placeholder.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 5.51.0
+  changelogEntry:
+    - summary: |
+        Preserve OpenAPI `info.version` through the IR as `specVersion`. This allows
+        non-semver version formats (e.g. CalVer `2026-06-23`) to be carried through
+        the pipeline instead of being replaced with the default `1.0.0`.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 5.50.6
+  changelogEntry:
+    - summary: |
+        Forward edit-this-page GitHub config (owner/repo/branch/host) from docs.yml
+        into the ledger manifest so the docs reader can synthesize the correct
+        "Edit this page" URL without depending on runtime git provenance.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 5.50.5
+  changelogEntry:
+    - summary: |
+        `fern check` no longer reports valid examples as invalid when a schema uses
+        `patternProperties` (OpenAPI 3.1 / JSON Schema). When a schema declares
+        `patternProperties`, example keys are no longer flagged as unexpected additional
+        properties — including under `additionalProperties: false`.
+      type: fix
+  createdAt: "2026-06-23"
+  irVersion: 67
+- version: 5.50.4
+  changelogEntry:
+    - summary: |
+        Fixed the local C# dynamic-snippet test runner so it strips the docs-only
+        `exported-client-class-name` override before generating snippet tests. The compiled snippets now
+        reference the generated client class instead of the customer-provided wrapper, which is not part
+        of generator output.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 5.50.3
+  changelogEntry:
+    - summary: |
+        Fixes translated locales in ledger publishing mode (currently opt-in).
+      type: fix
+  createdAt: "2026-06-19"
+  irVersion: 67
+- version: 5.50.2
+  changelogEntry:
+    - summary: |
+        Add retry with exponential backoff to registerApiDefinition during docs
+        publish. Large docs sites (e.g. 30+ API versions) could hit transient
+        connection aborts from FDR; the CLI now retries up to 3 times with
+        1 s / 2 s / 4 s delays before failing.
+      type: fix
+  createdAt: "2026-06-18"
+  irVersion: 67
 - version: 5.50.1
   changelogEntry:
     - summary: |

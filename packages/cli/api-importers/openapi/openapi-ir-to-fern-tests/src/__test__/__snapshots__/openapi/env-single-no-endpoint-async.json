@@ -171,4 +171,5 @@ default-environment: Prod
 default-url: Base
 ",
   },
+  "specVersion": "1.0.0",
 }

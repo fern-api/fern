@@ -1,4 +1,100 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.73.2
+  changelogEntry:
+    - summary: |
+        Fix a request-wrapper collision when an inlined path parameter (`inlinePathParameters: true`)
+        shares its property name with an inlined request-body property (e.g. a `{idType}` path
+        parameter and an `idType` body field). Previously the generated interface emitted a duplicate
+        member and the client destructured the path parameter out of the request, dropping the body
+        property from the payload. The colliding property is now emitted once and used for both the
+        URL path and the request body.
+      type: fix
+    - summary: |
+        Fix a naming collision in generated wire tests when the configured client class
+        name (`naming.client`) matches the error namespace export. Previously the client
+        class import and the error namespace import shared a single binding, which shadowed
+        each other and made error references (e.g. `Client.namespace.SomeError`) unresolvable.
+        The error namespace is now imported under an alternate alias when a collision is detected.
+        The same collision also produced a duplicate identifier in the root `index.ts` (the client
+        class re-export clashed with `export * as <name> from "./api/index.js"`); the colliding root
+        client re-export is now omitted (the client remains importable from `./Client.js`).
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing to parse when a header example value contains
+        special characters (e.g. double quotes or backticks). Header values in the
+        generated mock-server `.header(...)` calls are now emitted as properly escaped
+        string literals via `JSON.stringify`, instead of being interpolated raw into a
+        double-quoted string.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.0
+  changelogEntry:
+    - summary: |
+        Add support for SSE `id` and `retry` fields in the TypeScript SDK Stream class.
+        A new `withMetadata()` method returns an `AsyncIterable<ServerSentEvent<T>>`
+        exposing per-event `id`, `retry`, and `event` fields alongside the parsed `data`.
+        Default iteration still yields `T`, so this is fully backward compatible.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 3.72.10
+  changelogEntry:
+    - summary: |
+        Fix inferred auth providers generating an invalid token request when the token
+        endpoint uses a referenced request body. The generated provider now sends the
+        request body keys using the same casing as the generated request type (the wire
+        value when the serde layer is disabled) instead of always camelCasing them.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.9
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials providers when the token endpoint request body has
+        required properties beyond the client id and secret (e.g. a scopes mapping or
+        other custom fields). Those required, non-literal properties are now surfaced on
+        the client-credentials options and forwarded to the token request, so the
+        generated provider compiles and sends a complete request.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.8
+  changelogEntry:
+    - summary: |
+        Fix the serialization layer for discriminated unions that both `extend` another
+        type and declare `base-properties`. The generated `_Base` schema now extends the
+        parent type schemas (in addition to the base properties), so its inferred raw
+        type matches the declared `Raw` type and the union schema compiles.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.7
+  changelogEntry:
+    - summary: |
+        Fixed a runtime error in the serialization layer when a type references a
+        same-named type in another package. Such references are now wrapped with
+        `lazy()`/`lazyObject()` so they are resolved through the `serializers`
+        namespace barrel after all modules have initialized, instead of being read
+        eagerly during module load (which could throw "Cannot read properties of
+        undefined").
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.6
+  changelogEntry:
+    - summary: |
+        Fixed the generated wire test for paginated endpoints when `neverThrowErrors`
+        is enabled. In that mode the SDK returns a wrapped `APIResponse` instead of a
+        `Page`, so the test no longer calls `page.data`/`page.hasNextPage()`/
+        `page.getNextPage()`; it now asserts the returned `APIResponse` directly.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
 - version: 3.72.5
   changelogEntry:
     - summary: |

@@ -54,6 +54,465 @@ func TestSettersMarkExplicitTestRequest(t *testing.T) {
 
 }
 
+func TestGettersBackupConfig(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupConfig{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BackupConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetOverride", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupConfig{}
+		var expected *BackupOverride
+		obj.Override = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetOverride(), "getter should return the property value")
+	})
+
+	t.Run("GetOverride_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupConfig{}
+		obj.Override = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetOverride(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetOverride_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BackupConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOverride() // Should return zero value
+	})
+
+	t.Run("GetFallback", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupConfig{}
+		var expected *BackupOverride
+		obj.Fallback = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetFallback(), "getter should return the property value")
+	})
+
+	t.Run("GetFallback_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupConfig{}
+		obj.Fallback = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetFallback(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetFallback_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BackupConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFallback() // Should return zero value
+	})
+
+}
+
+func TestSettersBackupOverride(t *testing.T) {
+	t.Run("SetModel", func(t *testing.T) {
+		obj := &BackupOverride{}
+		var fernTestValueModel string
+		obj.SetModel(fernTestValueModel)
+		assert.Equal(t, fernTestValueModel, obj.Model)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersBackupOverride(t *testing.T) {
+	t.Run("GetModel", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupOverride{}
+		var expected string
+		obj.Model = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetModel(), "getter should return the property value")
+	})
+
+	t.Run("GetModel_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BackupOverride
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetModel() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitBackupOverride(t *testing.T) {
+	t.Run("SetModel_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupOverride{}
+		var fernTestValueModel string
+
+		// Act
+		obj.SetModel(fernTestValueModel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCustomSipHeader(t *testing.T) {
+	t.Run("SetKey", func(t *testing.T) {
+		obj := &CustomSipHeader{}
+		var fernTestValueKey string
+		obj.SetKey(fernTestValueKey)
+		assert.Equal(t, fernTestValueKey, obj.Key)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetValue", func(t *testing.T) {
+		obj := &CustomSipHeader{}
+		var fernTestValueValue string
+		obj.SetValue(fernTestValueValue)
+		assert.Equal(t, fernTestValueValue, obj.Value)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCustomSipHeader(t *testing.T) {
+	t.Run("GetKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CustomSipHeader{}
+		var expected string
+		obj.Key = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetKey(), "getter should return the property value")
+	})
+
+	t.Run("GetKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CustomSipHeader
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKey() // Should return zero value
+	})
+
+	t.Run("GetValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CustomSipHeader{}
+		var expected string
+		obj.Value = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+	})
+
+	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CustomSipHeader
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetValue() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCustomSipHeader(t *testing.T) {
+	t.Run("SetKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CustomSipHeader{}
+		var fernTestValueKey string
+
+		// Act
+		obj.SetKey(fernTestValueKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CustomSipHeader{}
+		var fernTestValueValue string
+
+		// Act
+		obj.SetValue(fernTestValueValue)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestGettersDependencyItem(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &DependencyItem{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *DependencyItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetKnown", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &DependencyItem{}
+		var expected *KnownDependency
+		obj.Known = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetKnown(), "getter should return the property value")
+	})
+
+	t.Run("GetKnown_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &DependencyItem{}
+		obj.Known = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetKnown(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetKnown_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *DependencyItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKnown() // Should return zero value
+	})
+
+	t.Run("GetUnknown", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &DependencyItem{}
+		var expected *KnownDependency
+		obj.Unknown = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetUnknown(), "getter should return the property value")
+	})
+
+	t.Run("GetUnknown_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &DependencyItem{}
+		obj.Unknown = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetUnknown(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetUnknown_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *DependencyItem
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUnknown() // Should return zero value
+	})
+
+}
+
+func TestSettersKnownDependency(t *testing.T) {
+	t.Run("SetName", func(t *testing.T) {
+		obj := &KnownDependency{}
+		var fernTestValueName string
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersKnownDependency(t *testing.T) {
+	t.Run("GetName", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &KnownDependency{}
+		var expected string
+		obj.Name = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
+	})
+
+	t.Run("GetName_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *KnownDependency
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetName() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitKnownDependency(t *testing.T) {
+	t.Run("SetName_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &KnownDependency{}
+		var fernTestValueName string
+
+		// Act
+		obj.SetName(fernTestValueName)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersPackage(t *testing.T) {
 	t.Run("SetName", func(t *testing.T) {
 		obj := &Package{}
@@ -268,6 +727,197 @@ func TestSettersMarkExplicitRecord(t *testing.T) {
 
 }
 
+func TestGettersSipHeaderAction(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SipHeaderAction{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SipHeaderAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetStatic", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SipHeaderAction{}
+		var expected *CustomSipHeader
+		obj.Static = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStatic(), "getter should return the property value")
+	})
+
+	t.Run("GetStatic_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SipHeaderAction{}
+		obj.Static = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetStatic(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetStatic_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SipHeaderAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStatic() // Should return zero value
+	})
+
+	t.Run("GetDynamic", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SipHeaderAction{}
+		var expected *CustomSipHeader
+		obj.Dynamic = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDynamic(), "getter should return the property value")
+	})
+
+	t.Run("GetDynamic_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SipHeaderAction{}
+		obj.Dynamic = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDynamic(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDynamic_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SipHeaderAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDynamic() // Should return zero value
+	})
+
+}
+
+func TestJSONMarshalingBackupOverride(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &BackupOverride{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled BackupOverride
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj BackupOverride
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj BackupOverride
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCustomSipHeader(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CustomSipHeader{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CustomSipHeader
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CustomSipHeader
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CustomSipHeader
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingKnownDependency(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &KnownDependency{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled KnownDependency
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj KnownDependency
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj KnownDependency
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingPackage(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -334,6 +984,54 @@ func TestJSONMarshalingRecord(t *testing.T) {
 	})
 }
 
+func TestStringBackupOverride(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &BackupOverride{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BackupOverride
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCustomSipHeader(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CustomSipHeader{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CustomSipHeader
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringKnownDependency(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &KnownDependency{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *KnownDependency
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringPackage(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -363,6 +1061,75 @@ func TestStringRecord(t *testing.T) {
 		var obj *Record
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestExtraPropertiesBackupOverride(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &BackupOverride{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BackupOverride
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCustomSipHeader(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CustomSipHeader{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CustomSipHeader
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesKnownDependency(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &KnownDependency{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *KnownDependency
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
 }
 

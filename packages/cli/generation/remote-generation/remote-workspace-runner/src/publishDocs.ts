@@ -67,11 +67,16 @@ import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
+import { retryWithBackoff } from "./retryWithBackoff.js";
 import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
+
+const REGISTER_MAX_RETRIES = 3;
+const REGISTER_BASE_DELAY_MS = 1_000;
+const REGISTER_JITTER_FACTOR = 0.5;
 
 /**
  * Sanitizes a preview ID to be valid in a DNS subdomain label.
@@ -445,13 +450,24 @@ export async function publishDocs({
                 }
             }
 
+            const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
+
             let response;
             try {
-                response = await fdr.api.register.registerApiDefinition({
-                    orgId: CjsFdrSdk.OrgId(organization),
-                    apiId: CjsFdrSdk.ApiId(apiName ?? getOriginalName(ir.apiName)),
-                    definition: apiDefinition,
-                    dynamicIRs: dynamicIRsByLanguage
+                response = await retryWithBackoff({
+                    fn: () =>
+                        fdr.api.register.registerApiDefinition({
+                            orgId: CjsFdrSdk.OrgId(organization),
+                            apiId: CjsFdrSdk.ApiId(effectiveApiName),
+                            definition: apiDefinition,
+                            dynamicIRs: dynamicIRsByLanguage
+                        }),
+                    maxRetries: REGISTER_MAX_RETRIES,
+                    baseDelayMs: REGISTER_BASE_DELAY_MS,
+                    jitterFactor: REGISTER_JITTER_FACTOR,
+                    isRetryable: isTransientError,
+                    logger: context.logger,
+                    label: `registerApiDefinition failed for ${effectiveApiName}`
                 });
             } catch (error) {
                 const errorDetails = extractErrorDetails(error);
@@ -845,6 +861,7 @@ export async function publishDocs({
                     fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    editThisPage,
                     resolver
                 });
                 if (deployMode === "ledger") {
@@ -868,6 +885,7 @@ export async function publishDocs({
                     fileManifest: Object.keys(ledgerFileManifest).length > 0 ? ledgerFileManifest : undefined,
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
+                    editThisPage,
                     resolver
                 });
                 context.logger.info(
@@ -1973,6 +1991,22 @@ function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string
         requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
         styleInstructions
     };
+}
+
+/**
+ * Returns true when the error looks transient and is worth retrying
+ * (no HTTP status, 429, or 5xx). Fails fast on client errors like
+ * 400 (bad request), 401 (auth), 403 (forbidden).
+ */
+function isTransientError(error: unknown): boolean {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+    const status = (errorObj?.statusCode ?? content?.statusCode) as number | undefined;
+
+    if (status == null) {
+        return true;
+    }
+    return status === 429 || status >= 500;
 }
 
 /**

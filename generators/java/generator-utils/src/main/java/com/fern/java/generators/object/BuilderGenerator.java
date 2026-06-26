@@ -211,14 +211,16 @@ public final class BuilderGenerator {
                         nestedBuilderClassName,
                         _unused -> {},
                         builderImplTypeSpec::addField,
-                        builderImplTypeSpec::addMethod);
+                        builderImplTypeSpec::addMethod,
+                        false);
             } else {
                 addSimpleFieldSetter(
                         enrichedProperty,
                         nestedBuilderClassName,
                         _unused -> {},
                         builderImplTypeSpec::addField,
-                        builderImplTypeSpec::addMethod);
+                        builderImplTypeSpec::addMethod,
+                        false);
             }
         }
 
@@ -330,8 +332,6 @@ public final class BuilderGenerator {
         methodBuilder.addStatement("return this");
 
         if (enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
-            methodBuilder.addJavadoc(JavaDocUtils.render(
-                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             methodBuilder.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()
@@ -491,21 +491,23 @@ public final class BuilderGenerator {
                         finalStageBuilder::addMethod,
                         builderImpl::addReversedFields,
                         builderImpl::addReversedMethods,
-                        false);
+                        true);
             } else if (isNullable) {
                 addNullableFieldSetter(
                         enrichedProperty,
                         finalStageClassName,
                         finalStageBuilder::addMethod,
                         builderImpl::addReversedFields,
-                        builderImpl::addReversedMethods);
+                        builderImpl::addReversedMethods,
+                        true);
             } else {
                 addSimpleFieldSetter(
                         enrichedProperty,
                         finalStageClassName,
                         finalStageBuilder::addMethod,
                         builderImpl::addReversedFields,
-                        builderImpl::addReversedMethods);
+                        builderImpl::addReversedMethods,
+                        true);
             }
         }
         return PoetTypeWithClassName.of(finalStageClassName, finalStageBuilder.build());
@@ -868,6 +870,17 @@ public final class BuilderGenerator {
             boolean implsOverride) {
         FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec;
 
+        implFieldConsumer.accept(FieldSpec.builder(fieldSpec.type, fieldSpec.name, Modifier.PRIVATE)
+                .build());
+
+        interfaceSetterConsumer.accept(getDefaultSetter(enrichedObjectProperty, stageClassName, false)
+                .addModifiers(Modifier.ABSTRACT)
+                .build());
+        implSetterConsumer.accept(getDefaultSetterForImpl(enrichedObjectProperty, stageClassName, implsOverride)
+                .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
+                .addStatement("return this")
+                .build());
+
         interfaceSetterConsumer.accept(createNullableItemTypeNameSetter(
                         enrichedObjectProperty,
                         nullableClassName,
@@ -1043,7 +1056,8 @@ public final class BuilderGenerator {
             ClassName returnClass,
             Consumer<MethodSpec> interfaceSetterConsumer,
             Consumer<FieldSpec> implFieldConsumer,
-            Consumer<MethodSpec> implSetterConsumer) {
+            Consumer<MethodSpec> implSetterConsumer,
+            boolean isOverridden) {
         FieldSpec fieldSpec = enrichedProperty.fieldSpec;
         TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
 
@@ -1065,8 +1079,10 @@ public final class BuilderGenerator {
         MethodSpec.Builder implSetter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass)
-                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .addParameter(poetTypeName, fieldSpec.name);
+        if (isOverridden) {
+            implSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
 
         if (enrichedProperty.enrichedObjectProperty.wireKey().isPresent()
                 && !enrichedProperty.enrichedObjectProperty.wireKey().get().isEmpty()) {
@@ -1095,7 +1111,8 @@ public final class BuilderGenerator {
             ClassName returnClass,
             Consumer<MethodSpec> interfaceSetterConsumer,
             Consumer<FieldSpec> implFieldConsumer,
-            Consumer<MethodSpec> implSetterConsumer) {
+            Consumer<MethodSpec> implSetterConsumer,
+            boolean isOverridden) {
         FieldSpec fieldSpec = enrichedProperty.fieldSpec;
         TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
 
@@ -1124,8 +1141,10 @@ public final class BuilderGenerator {
 
         MethodSpec.Builder implSetter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
-                .returns(returnClass)
-                .addAnnotation(ClassName.get("", "java.lang.Override"));
+                .returns(returnClass);
+        if (isOverridden) {
+            implSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
 
         implSetter.addParameter(paramBuilder.build());
 

@@ -144,7 +144,6 @@ public final class ObjectPayloadWithEventField {
 
         /**
          * <p>An event type field inside the data payload that collides with the SSE envelope's event field used for discrimination.</p>
-         * <p>An event type field inside the data payload that collides with the SSE envelope's event field used for discrimination.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
