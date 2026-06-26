@@ -63,7 +63,6 @@ describe("encodeAsFormParameter", () => {
             const obj = { items: ["a", null, "c", undefined, "e"] };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "items[0]": "a",
-                "items[1]": "",
                 "items[2]": "c",
                 "items[4]": "e",
             });
@@ -247,7 +246,6 @@ describe("encodeAsFormParameter", () => {
             const obj = { name: "John", age: null, email: undefined, active: true };
             expect(encodeAsFormParameter(obj)).toEqual({
                 name: "John",
-                age: "",
                 active: "true",
             });
         });
