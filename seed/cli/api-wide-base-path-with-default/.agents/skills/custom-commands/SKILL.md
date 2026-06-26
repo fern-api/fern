@@ -16,7 +16,7 @@ auth, retries, TLS, base URL, and global headers — zero configuration required
 
 ```
 cli/api-wide-base-path-with-default/custom.rs    ← Your command handlers (protected by .fernignore)
-cli/api-wide-base-path-with-default/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
+cli/api-wide-base-path-with-default/sdk.rs       ← Generated bridge: client() + block_on()
 cli/api-wide-base-path-with-default/main.rs      ← Generated entrypoint (calls custom::register)
 api-wide-base-path-with-default-sdk/             ← Co-generated typed SDK crate
 api-wide-base-path-with-default-types/           ← Co-generated typed model crate
@@ -40,8 +40,8 @@ pub fn register(app: CliApp) -> CliApp {
         ,
         |matches, ctx| {
             let api_version = matches.get_one::<String>("apiVersion").unwrap();
-            let client = super::sdk_glue::sdk_client(ctx);
-            let result = super::sdk_glue::block_on(
+            let client = super::sdk::client(ctx);
+            let result = super::sdk::block_on(
                 client.widgets.widgets_create(api_version),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
@@ -60,7 +60,7 @@ api-wide-base-path-with-default widgets-create <apiVersion>
 
 ### 2. Available SDK Clients
 
-The `sdk_glue::sdk_client(ctx)` call returns a `api_wide_base_path_with_default_sdk::api::Client`
+The `super::sdk::client(ctx)` call returns a `api_wide_base_path_with_default_sdk::api::Client`
 with the following sub-clients:
 
 | Field | Type | Description |
@@ -71,12 +71,12 @@ with the following sub-clients:
 
 **Get the SDK client** (execution-sharing, fully authenticated):
 ```rust
-let client = super::sdk_glue::sdk_client(ctx);
+let client = super::sdk::client(ctx);
 ```
 
 **Run an async SDK call from a sync handler:**
 ```rust
-let result = super::sdk_glue::block_on(
+let result = super::sdk::block_on(
     client.some_resource.some_method(args),
 )?;
 ```
@@ -91,7 +91,7 @@ use api_wide_base_path_with_default_sdk::api::*;
 | File | Regenerated? | Notes |
 |------|-------------|-------|
 | `cli/api-wide-base-path-with-default/custom.rs` | **No** | Protected by `.fernignore` |
-| `cli/api-wide-base-path-with-default/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
+| `cli/api-wide-base-path-with-default/sdk.rs` | Yes | Bridges AppContext → SDK client |
 | `cli/api-wide-base-path-with-default/main.rs` | Yes | Calls `custom::register(app)` |
 | `api-wide-base-path-with-default-sdk/` | Yes | Co-generated typed SDK crate |
 | `api-wide-base-path-with-default-types/` | Yes | Co-generated typed models |

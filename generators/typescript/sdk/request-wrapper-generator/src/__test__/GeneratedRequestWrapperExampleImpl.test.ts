@@ -512,6 +512,7 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                         docs: undefined,
                         availability: undefined,
+                        defaultValue: undefined,
                         v2Examples: undefined,
                         propertyAccess: undefined,
                         contentType: undefined,

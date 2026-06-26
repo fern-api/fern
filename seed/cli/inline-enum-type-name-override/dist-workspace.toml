@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:crates/pipeline-fixture", "inline-enum-type-name-override-types", "inline-enum-type-name-override-sdk"]
+members = ["cargo:.", "cargo:inline-enum-type-name-override-types", "cargo:inline-enum-type-name-override-sdk"]
 
 # Config for 'dist'
 [dist]

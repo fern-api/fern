@@ -16,7 +16,7 @@ auth, retries, TLS, base URL, and global headers — zero configuration required
 
 ```
 cli/acme-versioned/custom.rs    ← Your command handlers (protected by .fernignore)
-cli/acme-versioned/sdk_glue.rs  ← Generated bridge: sdk_client() + block_on()
+cli/acme-versioned/sdk.rs       ← Generated bridge: client() + block_on()
 cli/acme-versioned/main.rs      ← Generated entrypoint (calls custom::register)
 acme-versioned-sdk/             ← Co-generated typed SDK crate
 acme-versioned-types/           ← Co-generated typed model crate
@@ -39,8 +39,8 @@ pub fn register(app: CliApp) -> CliApp {
             .arg(clap::Arg::new("id").required(true)),
         |matches, ctx| {
             let id = matches.get_one::<String>("id").unwrap();
-            let client = super::sdk_glue::sdk_client(ctx);
-            let result = super::sdk_glue::block_on(
+            let client = super::sdk::client(ctx);
+            let result = super::sdk::block_on(
                 client.v1.get(id),
             )?;
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
@@ -53,7 +53,7 @@ pub fn register(app: CliApp) -> CliApp {
 
 ### 2. Available SDK Clients
 
-The `sdk_glue::sdk_client(ctx)` call returns a `acme_versioned_sdk::api::Client`
+The `super::sdk::client(ctx)` call returns a `acme_versioned_sdk::api::Client`
 with the following sub-clients:
 
 | Field | Type | Description |
@@ -65,12 +65,12 @@ with the following sub-clients:
 
 **Get the SDK client** (execution-sharing, fully authenticated):
 ```rust
-let client = super::sdk_glue::sdk_client(ctx);
+let client = super::sdk::client(ctx);
 ```
 
 **Run an async SDK call from a sync handler:**
 ```rust
-let result = super::sdk_glue::block_on(
+let result = super::sdk::block_on(
     client.some_resource.some_method(args),
 )?;
 ```
@@ -94,7 +94,7 @@ No manual auth wiring is needed in custom command handlers.
 | File | Regenerated? | Notes |
 |------|-------------|-------|
 | `cli/acme-versioned/custom.rs` | **No** | Protected by `.fernignore` |
-| `cli/acme-versioned/sdk_glue.rs` | Yes | Bridges AppContext → SDK client |
+| `cli/acme-versioned/sdk.rs` | Yes | Bridges AppContext → SDK client |
 | `cli/acme-versioned/main.rs` | Yes | Calls `custom::register(app)` |
 | `acme-versioned-sdk/` | Yes | Co-generated typed SDK crate |
 | `acme-versioned-types/` | Yes | Co-generated typed models |

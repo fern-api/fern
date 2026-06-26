@@ -8,6 +8,7 @@ import {
     applyTranslatedFrontmatterToNavTree,
     applyTranslatedNavigationOverlays,
     DocsDefinitionResolver,
+    findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
@@ -1126,6 +1127,34 @@ export async function publishDocs({
                                     translatedApisForTitles[baseApiId] = translatedRead;
                                 }
                             }
+
+                            // A translated spec that drifts from the base — a changed OpenAPI tag
+                            // name (which derives subpackage/endpoint ids), a missing/added
+                            // endpoint, or a changed path — produces an API whose nav nodes can't
+                            // all be resolved against it. Repointing the nav at such a definition
+                            // would make the docs renderer fail to resolve a node and 500. For those
+                            // APIs we keep the nav pointed at the base (default-locale) definition,
+                            // but still localize the sidebar titles we can match by locator.
+                            const incompatibleApiIds = findIncompatibleTranslatedApiIds(
+                                updatedRoot,
+                                baseApisForTitles,
+                                translatedApisForTitles
+                            );
+                            if (incompatibleApiIds.size > 0) {
+                                context.logger.warn(
+                                    `Translated API definition(s) [${Array.from(incompatibleApiIds).join(", ")}] for ` +
+                                        `locale "${locale}" diverge from the default-locale spec (e.g. changed OpenAPI ` +
+                                        `tag names, operationIds, or paths, or a missing/added endpoint), so they can't ` +
+                                        `be fully matched to the navigation tree. Serving the default-locale API for ` +
+                                        `those (localized sidebar titles are still applied where they can be matched). ` +
+                                        `For fully localized API reference content, translate only human-readable text ` +
+                                        `and keep tag names/operationIds/paths identical to the base spec.`
+                                );
+                            }
+                            const rewritableApiIds = new Set(
+                                Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
+                            );
+
                             // Work on a deep clone before the in-place id rewrite below, since
                             // locales run concurrently off the shared base nav tree. Title
                             // patching already clones, so only clone explicitly when it's skipped.
@@ -1134,10 +1163,16 @@ export async function publishDocs({
                                     ? applyTranslatedApiTitlesToNavTree(
                                           updatedRoot,
                                           baseApisForTitles,
-                                          translatedApisForTitles
+                                          translatedApisForTitles,
+                                          { rewritableApiIds }
                                       )
                                     : structuredClone(updatedRoot);
                             for (const [baseApiId, translatedApiId] of localeApiIdMap) {
+                                // Keep the base apiDefinitionId for incompatible APIs so the nav
+                                // resolves against the base definition instead of the divergent one.
+                                if (incompatibleApiIds.has(baseApiId)) {
+                                    continue;
+                                }
                                 updateApiDefinitionIdInTree(updatedRoot, baseApiId, translatedApiId);
                             }
                         }
