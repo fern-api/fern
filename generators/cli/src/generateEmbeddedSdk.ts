@@ -22,7 +22,7 @@
  * authoritative de-conflicted client names for `sdk.rs` generation.
  */
 
-import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
+import { migrateIntermediateRepresentationToVersionForGenerator } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { SdkGeneratorCli, SdkGeneratorContext } from "@fern-api/rust-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -77,15 +77,29 @@ export async function generateEmbeddedSdk(args: {
     //    This closes a latent correctness gap: previously, the subprocess
     //    received IR v67 directly with no migration (relying on lenient
     //    unknown-key stripping). The explicit migration ensures the Rust
-    //    generator receives IR at its pinned version.
+    //    generator receives IR at its pinned version (v66).
+    //
+    //    We migrate to EXACTLY v66 (the rust generators' pinned IR version,
+    //    @fern-fern/ir-sdk 66.x) rather than using
+    //    migrateIntermediateRepresentationForGenerator, which resolves the
+    //    target IR version from the generator version (0.0.0 here) and would
+    //    migrate all the way down the chain. The v66→v65 migration inflates
+    //    bare-string names into full Name objects using language-agnostic
+    //    casing (initialisms uppercased: "OrderId" → "OrderID"), which the
+    //    rust-sdk generator then echoes verbatim — while the rust-model
+    //    generator (which reads the un-migrated v67 IR and recomputes names
+    //    with rust casing) emits "OrderId". The mismatch breaks compilation
+    //    of the embedded crates. Stopping at v66 keeps names as bare strings
+    //    so both embedded generators recompute identical idiomatic names.
     const taskContext = createMockTaskContext();
-    const migratedIrJson = await migrateIntermediateRepresentationForGenerator({
+    const migratedIrJson = await migrateIntermediateRepresentationToVersionForGenerator({
         intermediateRepresentation: parsedIr.value,
         context: taskContext,
         targetGenerator: {
             name: RUST_SDK_GENERATOR_NAME,
             version: RUST_SDK_GENERATOR_VERSION
-        }
+        },
+        irVersion: "v66"
     });
 
     // 3. Write migrated IR to a temp file for the in-process generator.
