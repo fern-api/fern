@@ -23,6 +23,16 @@ export declare namespace Stream {
          * An abort signal to stop the stream.
          */
         signal?: AbortSignal;
+        /**
+         * Whether transparent mid-stream reconnection is enabled on resumable
+         * SSE endpoints. Defaults to true. Has no effect on non-resumable endpoints.
+         */
+        reconnectionEnabled?: boolean;
+        /**
+         * Maximum number of transparent mid-stream reconnect attempts on
+         * resumable SSE endpoints. Has no effect on non-resumable endpoints.
+         */
+        maxReconnectionAttempts?: number;
     }
 
     interface JsonEvent {
@@ -34,6 +44,7 @@ export declare namespace Stream {
         type: "sse";
         streamTerminator?: string;
         eventDiscriminator?: string;
+        resumable?: boolean;
     }
 }
 
@@ -64,10 +75,16 @@ export class Stream<T> implements AsyncIterable<T> {
     private messageTerminator: string;
     private streamTerminator: string | undefined;
     private eventDiscriminator: string | undefined;
+    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
+    private resumable: boolean;
+    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
+    private reconnectionEnabled: boolean;
+    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
+    private maxReconnectionAttempts: number | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
-    constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
+    constructor({ stream, parse, eventShape, signal, reconnectionEnabled, maxReconnectionAttempts }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
         if (eventShape.type === "sse") {
@@ -75,9 +92,13 @@ export class Stream<T> implements AsyncIterable<T> {
             this.messageTerminator = "\n";
             this.streamTerminator = eventShape.streamTerminator;
             this.eventDiscriminator = eventShape.eventDiscriminator;
+            this.resumable = eventShape.resumable ?? false;
         } else {
             this.messageTerminator = eventShape.messageTerminator;
+            this.resumable = false;
         }
+        this.reconnectionEnabled = reconnectionEnabled ?? true;
+        this.maxReconnectionAttempts = maxReconnectionAttempts;
         signal?.addEventListener("abort", () => this.controller.abort());
 
         // Initialize shared TextDecoder
@@ -97,18 +118,27 @@ export class Stream<T> implements AsyncIterable<T> {
     private async *iterDataMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
-        let prefixSeen = false;
         let lastId: string | undefined;
         let lastRetry: number | undefined;
+        let dataValue: string | undefined;
+
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
 
             let terminatorIndex: number;
             while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
-                let line = buf.slice(0, terminatorIndex);
+                const line = buf.slice(0, terminatorIndex);
                 buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
+                    if (this.prefix != null && dataValue != null) {
+                        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                            return;
+                        }
+                        const data = await this.parse(fromJson(dataValue));
+                        yield { data, id: lastId, retry: lastRetry, event: undefined };
+                        dataValue = undefined;
+                    }
                     continue;
                 }
 
@@ -128,21 +158,27 @@ export class Stream<T> implements AsyncIterable<T> {
                     continue;
                 }
 
-                if (!prefixSeen && this.prefix != null) {
+                if (this.prefix != null) {
                     const prefixIndex = line.indexOf(this.prefix);
                     if (prefixIndex === -1) {
                         continue;
                     }
-                    prefixSeen = true;
-                    line = line.slice(prefixIndex + this.prefix.length);
+                    const val = line.slice(prefixIndex + this.prefix.length).trim();
+                    dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                } else {
+                    if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
+                        return;
+                    }
+                    const data = await this.parse(fromJson(line));
+                    yield { data, id: lastId, retry: lastRetry, event: undefined };
                 }
+            }
+        }
 
-                if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
-                    return;
-                }
-                const data = await this.parse(fromJson(line));
+        if (this.prefix != null && dataValue != null) {
+            if (this.streamTerminator == null || !dataValue.includes(this.streamTerminator)) {
+                const data = await this.parse(fromJson(dataValue));
                 yield { data, id: lastId, retry: lastRetry, event: undefined };
-                prefixSeen = false;
             }
         }
     }

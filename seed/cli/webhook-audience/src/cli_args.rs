@@ -39,18 +39,55 @@ pub fn wants_schema(args: &[String]) -> bool {
     args.iter().any(|a| a == "--schema")
 }
 
-/// Extracts the subcommand path from raw args — the leading non-flag tokens
-/// after the binary name, stopping at the first flag.
+/// True when raw args contain the `--spec` flag.
+///
+/// `--spec` emits the effective OpenAPI spec (source + overlays + overrides
+/// merged) to stdout. Sniffed pre-clap like `--schema` so that required-arg
+/// validation does not block root-only flags.
+pub fn wants_spec(args: &[String]) -> bool {
+    args.iter().any(|a| a == "--spec")
+}
+
+/// True when raw args contain the `--spec-raw` flag.
+///
+/// `--spec-raw` emits the byte-exact embedded source spec(s) to stdout,
+/// before any overlay or override processing. Sniffed pre-clap like
+/// `--schema`.
+pub fn wants_spec_raw(args: &[String]) -> bool {
+    args.iter().any(|a| a == "--spec-raw")
+}
+
+/// Extracts the subcommand path from raw args — non-flag tokens after the
+/// binary name, skipping over global flag+value pairs wherever they appear.
 ///
 /// `["box", "users", "get", "--schema"]` → `["users", "get"]`
 /// `["box", "--schema"]` → `[]`
+/// `["box", "--base-url", "http://...", "users", "get"]` → `["users", "get"]`
 /// `["box", "users", "get", "--user-id", "X", "--schema"]` → `["users", "get"]`
 pub fn extract_subcommand_path(args: &[String]) -> Vec<String> {
-    args.iter()
-        .skip(1) // skip binary name
-        .take_while(|a| !a.starts_with('-'))
-        .cloned()
-        .collect()
+    // Boolean (no-value) global flags. The token immediately after one of
+    // these is NOT consumed as a value — it may be a subcommand name.
+    const BOOL_FLAGS: &[&str] = &["--schema", "--spec", "--spec-raw", "--debug", "--version", "-V", "--help", "-h"];
+
+    let mut path = Vec::new();
+    let mut iter = args.iter().skip(1).peekable(); // skip binary name
+
+    while let Some(arg) = iter.next() {
+        if !arg.starts_with('-') {
+            path.push(arg.clone());
+        } else if arg.contains('=') {
+            // --flag=value: value is embedded, nothing extra to consume.
+        } else if !BOOL_FLAGS.contains(&arg.as_str()) {
+            // Value-taking flag: skip the immediately following token if it
+            // doesn't look like a flag itself (it's the flag's value).
+            if iter.peek().map(|a| !a.starts_with('-')).unwrap_or(false) {
+                iter.next();
+            }
+        }
+        // Boolean flags: consumed above; the next token is NOT their value.
+    }
+
+    path
 }
 
 /// True when the user invoked the bare `errors` subcommand.
@@ -125,6 +162,9 @@ fn is_format_value(s: &str) -> bool {
         || s.eq_ignore_ascii_case("yaml")
         || s.eq_ignore_ascii_case("table")
         || s.eq_ignore_ascii_case("csv")
+        || s.eq_ignore_ascii_case("raw")
+        || s.eq_ignore_ascii_case("jsonl")
+        || s.eq_ignore_ascii_case("ndjson")
 }
 
 /// Read stdin to a string. Returns `Err` if stdin is a TTY or empty.
@@ -195,6 +235,35 @@ mod tests {
     }
 
     #[test]
+    fn test_wants_spec_present() {
+        assert!(wants_spec(&args(&["cli", "--spec"])));
+        assert!(wants_spec(&args(&["cli", "users", "--spec"])));
+        assert!(wants_spec(&args(&["cli", "users", "get", "--user-id", "X", "--spec"])));
+    }
+
+    #[test]
+    fn test_wants_spec_absent() {
+        assert!(!wants_spec(&args(&["cli"])));
+        assert!(!wants_spec(&args(&["cli", "users", "--help"])));
+        assert!(!wants_spec(&args(&["cli", "--specification"])));
+        assert!(!wants_spec(&args(&["cli", "--spec-raw"])));
+    }
+
+    #[test]
+    fn test_wants_spec_raw_present() {
+        assert!(wants_spec_raw(&args(&["cli", "--spec-raw"])));
+        assert!(wants_spec_raw(&args(&["cli", "users", "--spec-raw"])));
+        assert!(wants_spec_raw(&args(&["cli", "users", "get", "--user-id", "X", "--spec-raw"])));
+    }
+
+    #[test]
+    fn test_wants_spec_raw_absent() {
+        assert!(!wants_spec_raw(&args(&["cli"])));
+        assert!(!wants_spec_raw(&args(&["cli", "users", "--help"])));
+        assert!(!wants_spec_raw(&args(&["cli", "--spec"])));
+    }
+
+    #[test]
     fn test_extract_subcommand_path_root() {
         assert_eq!(
             extract_subcommand_path(&args(&["cli", "--schema"])),
@@ -220,11 +289,39 @@ mod tests {
 
     #[test]
     fn test_extract_subcommand_path_stops_at_first_flag() {
-        // Anything starting with `-` is treated as a flag and terminates path
-        // extraction — including flags that consume values like `--user-id X`.
-        // The flag's value (`X`) is not in the path either.
+        // Flags that appear after the subcommand tokens do not end up in the
+        // path. Value-taking flags consume their following argument too.
         assert_eq!(
             extract_subcommand_path(&args(&["cli", "users", "get", "--user-id", "X", "--schema"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_skips_global_value_flag_before_subcommand() {
+        // A value-taking global flag (--base-url <url>) before the subcommand
+        // names must not swallow them.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "--base-url", "http://mock:9999", "users", "get"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_skips_bool_flag_before_subcommand() {
+        // Boolean global flags (--debug) before the subcommand names must not
+        // consume the following subcommand token as their value.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "--debug", "users", "get"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_embedded_value_flag() {
+        // --flag=value form: the `=` embeds the value; nothing extra consumed.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "--base-url=http://mock:9999", "users", "get"])),
             vec!["users", "get"],
         );
     }

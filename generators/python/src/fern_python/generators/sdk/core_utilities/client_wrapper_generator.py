@@ -67,12 +67,16 @@ class ClientWrapperGenerator:
     GET_TIMEOUT_METHOD_NAME = "get_timeout"
     GET_MAX_RETRIES_METHOD_NAME = "get_max_retries"
     GET_ENVIRONMENT_METHOD_NAME = "get_environment"
+    GET_STREAM_RECONNECTION_ENABLED_METHOD_NAME = "get_stream_reconnection_enabled"
+    GET_MAX_STREAM_RECONNECTION_ATTEMPTS_METHOD_NAME = "get_max_stream_reconnection_attempts"
 
     BASE_URL_PARAMETER_NAME = "base_url"
     ENVIRONMENT_PARAMETER_NAME = "environment"
 
     TIMEOUT_PARAMETER_NAME = "timeout"
     MAX_RETRIES_PARAMETER_NAME = "max_retries"
+    STREAM_RECONNECTION_ENABLED_PARAMETER_NAME = "stream_reconnection_enabled"
+    MAX_STREAM_RECONNECTION_ATTEMPTS_PARAMETER_NAME = "max_stream_reconnection_attempts"
 
     HTTPX_CLIENT_MEMBER_NAME = "httpx_client"
 
@@ -113,6 +117,10 @@ class ClientWrapperGenerator:
         constructor_parameters.append(url_constructor_param)
         constructor_parameters.append(timeout_param)
         constructor_parameters.append(max_retries_param)
+        stream_reconnection_enabled_param = self._get_stream_reconnection_enabled_constructor_parameter()
+        max_stream_reconnection_attempts_param = self._get_max_stream_reconnection_attempts_constructor_parameter()
+        constructor_parameters.append(stream_reconnection_enabled_param)
+        constructor_parameters.append(max_stream_reconnection_attempts_param)
         constructor_parameters.append(logging_param)
 
         source_file.add_class_declaration(
@@ -184,6 +192,34 @@ class ClientWrapperGenerator:
                 name=ClientWrapperGenerator.GET_MAX_RETRIES_METHOD_NAME,
                 signature=AST.FunctionSignature(return_type=AST.TypeHint.int_()),
                 body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.MAX_RETRIES_PARAMETER_NAME}"),
+            ),
+        )
+
+    def _get_stream_reconnection_enabled_constructor_parameter(self) -> ConstructorParameter:
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.STREAM_RECONNECTION_ENABLED_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
+            private_member_name=f"_{ClientWrapperGenerator.STREAM_RECONNECTION_ENABLED_PARAMETER_NAME}",
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_STREAM_RECONNECTION_ENABLED_METHOD_NAME,
+                signature=AST.FunctionSignature(return_type=AST.TypeHint.bool_()),
+                body=AST.CodeWriter(
+                    f"return self._{ClientWrapperGenerator.STREAM_RECONNECTION_ENABLED_PARAMETER_NAME} if self._{ClientWrapperGenerator.STREAM_RECONNECTION_ENABLED_PARAMETER_NAME} is not None else True"
+                ),
+            ),
+        )
+
+    def _get_max_stream_reconnection_attempts_constructor_parameter(self) -> ConstructorParameter:
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
+            private_member_name=f"_{ClientWrapperGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_PARAMETER_NAME}",
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_MAX_STREAM_RECONNECTION_ATTEMPTS_METHOD_NAME,
+                signature=AST.FunctionSignature(return_type=AST.TypeHint.optional(AST.TypeHint.int_())),
+                body=AST.CodeWriter(
+                    f"return self._{ClientWrapperGenerator.MAX_STREAM_RECONNECTION_ATTEMPTS_PARAMETER_NAME}"
+                ),
             ),
         )
 

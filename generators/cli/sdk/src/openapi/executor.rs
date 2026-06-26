@@ -332,6 +332,10 @@ pub struct PaginationConfig {
     /// Dotted path in JSON response to find the next page token (default: "nextPageToken").
     /// Supports nested paths like "pagination.next_page_token".
     pub token_response_path: String,
+    /// Disable the pager even on interactive terminals (`--no-pager`).
+    pub no_pager: bool,
+    /// CLI binary name, used for the `<NAME>_PAGER` env var lookup.
+    pub cli_name: String,
 }
 
 impl Default for PaginationConfig {
@@ -342,6 +346,8 @@ impl Default for PaginationConfig {
             page_delay_ms: 100,
             token_query_param: "pageToken".to_string(),
             token_response_path: "nextPageToken".to_string(),
+            no_pager: false,
+            cli_name: String::new(),
         }
     }
 }
@@ -1236,6 +1242,7 @@ async fn handle_json_response(
     return_path: Option<&str>,
     no_extract: bool,
     method_descriptor: &str,
+    pager: &mut Option<crate::pager::PagerHandle>,
 ) -> Result<bool, CliError> {
     if let Ok(json_val) = serde_json::from_str::<Value>(body_text) {
         let output_val =
@@ -1253,10 +1260,16 @@ async fn handle_json_response(
             captured.push(output_val);
         } else if pagination.page_all {
             let is_first_page = *pages_fetched == 1;
-            let mut out = std::io::stdout().lock();
-            pipeline
-                .emit(&mut out, &output_val, true, is_first_page)
-                .context("Failed to write output")?;
+            if let Some(ref mut pager_handle) = pager {
+                pipeline
+                    .emit(pager_handle, &output_val, true, is_first_page)
+                    .context("Failed to write output")?;
+            } else {
+                let mut out = std::io::stdout().lock();
+                pipeline
+                    .emit(&mut out, &output_val, true, is_first_page)
+                    .context("Failed to write output")?;
+            }
         } else {
             let mut out = std::io::stdout().lock();
             pipeline
@@ -1667,6 +1680,11 @@ fn project_stream_event(
 /// Stream the response body line-by-line, emitting one formatted event
 /// per dispatched payload to stdout. Stops at the configured
 /// terminator (when the spec declared one) or at end-of-body.
+///
+/// When a `--query` expression is set on the pipeline, each event is
+/// projected through the JMESPath expression before formatting. Events
+/// whose projection evaluates to `null` are suppressed, enabling
+/// `--query` as a per-event streaming filter.
 async fn stream_response(
     response: reqwest::Response,
     streaming: &StreamingConfig,
@@ -1683,10 +1701,21 @@ async fn stream_response(
             no_extract,
             method_descriptor,
         )?;
-        let mut out = std::io::stdout().lock();
-        pipeline
-            .emit(&mut out, &value, false, true)
-            .context("Failed to write output")?;
+        // When no --query is set, skip the clone + projection entirely.
+        if pipeline.query.is_none() {
+            let mut out = std::io::stdout().lock();
+            pipeline
+                .emit_raw(&mut out, &value, false, true)
+                .context("Failed to write output")?;
+        } else if let Some(projected) = pipeline
+            .apply_query_streaming(&value)
+            .context("--query evaluation failed")?
+        {
+            let mut out = std::io::stdout().lock();
+            pipeline
+                .emit_raw(&mut out, &projected, false, true)
+                .context("Failed to write output")?;
+        }
         Ok(())
     })
     .await
@@ -2000,6 +2029,20 @@ pub async fn execute_method(
     let mut captured_values = Vec::new();
     let auth_metadata = endpoint_metadata_for(method);
 
+    // Spawn an external pager when --page-all is active on a TTY.
+    let fallback_label = format!(
+        "{} {}",
+        method.http_method.to_ascii_uppercase(),
+        method.path
+    );
+    let pager_label = method.id.as_deref().unwrap_or(&fallback_label);
+    let mut pager_handle = if pagination.page_all && !pagination.no_pager && !capture_output {
+        let pager_config = crate::pager::PagerConfig::from_env(&pagination.cli_name);
+        crate::pager::spawn_pager(&pager_config, pager_label)
+    } else {
+        None
+    };
+
     // Derive spec-declared sensitive names for the debug dump.
     let additional_sensitive_headers: Vec<&str> = if debug {
         doc.security_schemes
@@ -2226,8 +2269,6 @@ pub async fn execute_method(
             .to_string();
 
         if !status.is_success() {
-            let response_headers = response.headers().clone();
-            let error_body = response.text().await.unwrap_or_default();
             tracing::warn!(
                 api_method = method_id,
                 http_method = %method.http_method,
@@ -2235,6 +2276,35 @@ pub async fn execute_method(
                 latency_ms = latency_ms,
                 "API error"
             );
+            // Raw mode: emit error body verbatim, return sentinel.
+            if pipeline.is_raw() && !capture_output {
+                if !pipeline.quiet {
+                    let bytes = response.bytes().await.unwrap_or_default();
+                    let mut stdout = std::io::stdout().lock();
+                    let _ = std::io::Write::write_all(&mut stdout, &bytes);
+                    let _ = std::io::Write::flush(&mut stdout);
+                }
+                return Err(CliError::RawSentinel {
+                    code: status.as_u16(),
+                });
+            }
+            // HTTP mode: emit status line + headers + body, return sentinel.
+            if pipeline.is_http() && !capture_output {
+                if !pipeline.quiet {
+                    let version = response.version();
+                    let resp_headers = response.headers().clone();
+                    let bytes = response.bytes().await.unwrap_or_default();
+                    let mut stdout = std::io::stdout().lock();
+                    let _ = write_http_preamble(&mut stdout, version, status, &resp_headers);
+                    let _ = std::io::Write::write_all(&mut stdout, &bytes);
+                    let _ = std::io::Write::flush(&mut stdout);
+                }
+                return Err(CliError::RawSentinel {
+                    code: status.as_u16(),
+                });
+            }
+            let response_headers = response.headers().clone();
+            let error_body = response.text().await.unwrap_or_default();
             if debug {
                 crate::debug::dump_error_response(
                     status.as_u16(),
@@ -2262,6 +2332,59 @@ pub async fn execute_method(
             page = pages_fetched,
             "API request"
         );
+
+        // Raw mode: stream response bytes to stdout verbatim.
+        if pipeline.is_raw() && !capture_output {
+            if pipeline.quiet {
+                let _ = response.bytes().await;
+            } else {
+                use std::io::Write;
+                let mut stream = response.bytes_stream();
+                while let Some(chunk) = stream.next().await {
+                    let chunk = chunk.context("Failed to read response chunk")?;
+                    // StdoutLock is !Send — re-acquire per chunk.
+                    std::io::stdout()
+                        .lock()
+                        .write_all(&chunk)
+                        .context("Failed to write to stdout")?;
+                }
+                std::io::stdout()
+                    .flush()
+                    .context("Failed to flush stdout")?;
+            }
+            break;
+        }
+
+        // HTTP mode: emit status line + headers + raw body.
+        if pipeline.is_http() && !capture_output {
+            if pipeline.quiet {
+                let _ = response.bytes().await;
+            } else {
+                use std::io::Write;
+                let version = response.version();
+                let resp_headers = response.headers().clone();
+                // Write preamble in its own scope so StdoutLock (!Send) is
+                // dropped before the streaming await below.
+                {
+                    let mut stdout = std::io::stdout().lock();
+                    write_http_preamble(&mut stdout, version, status, &resp_headers)
+                        .context("Failed to write HTTP preamble")?;
+                }
+                let mut stream = response.bytes_stream();
+                while let Some(chunk) = stream.next().await {
+                    let chunk = chunk.context("Failed to read response chunk")?;
+                    // StdoutLock is !Send — re-acquire per chunk.
+                    std::io::stdout()
+                        .lock()
+                        .write_all(&chunk)
+                        .context("Failed to write to stdout")?;
+                }
+                std::io::stdout()
+                    .flush()
+                    .context("Failed to flush stdout")?;
+            }
+            break;
+        }
 
         // Streaming response branch. Selected when:
         // - the operation declares `x-fern-streaming`, AND
@@ -2406,6 +2529,7 @@ pub async fn execute_method(
                 method.return_value.as_deref(),
                 no_extract,
                 &method_descriptor,
+                &mut pager_handle,
             )
             .await?;
 
@@ -2437,6 +2561,9 @@ pub async fn execute_method(
         break;
     }
 
+    // Close the pager pipe and wait for it to exit before returning.
+    drop(pager_handle);
+
     if capture_output && !captured_values.is_empty() {
         if captured_values.len() == 1 {
             return Ok(Some(captured_values.pop().unwrap()));
@@ -2446,6 +2573,43 @@ pub async fn execute_method(
     }
 
     Ok(None)
+}
+
+/// Format an HTTP version enum as a string (e.g. `HTTP/1.1`).
+fn format_http_version(version: reqwest::Version) -> &'static str {
+    match version {
+        reqwest::Version::HTTP_09 => "HTTP/0.9",
+        reqwest::Version::HTTP_10 => "HTTP/1.0",
+        reqwest::Version::HTTP_11 => "HTTP/1.1",
+        reqwest::Version::HTTP_2 => "HTTP/2",
+        reqwest::Version::HTTP_3 => "HTTP/3",
+        _ => "HTTP/1.1",
+    }
+}
+
+/// Write the HTTP status line and headers preamble to `out`.
+///
+/// Produces output like:
+/// ```text
+/// HTTP/1.1 200 OK\r\n
+/// Content-Type: application/json\r\n
+/// \r\n
+/// ```
+fn write_http_preamble(
+    out: &mut dyn std::io::Write,
+    version: reqwest::Version,
+    status: reqwest::StatusCode,
+    headers: &reqwest::header::HeaderMap,
+) -> std::io::Result<()> {
+    let version_str = format_http_version(version);
+    let reason = status.canonical_reason().unwrap_or("");
+    write!(out, "{} {} {}\r\n", version_str, status.as_u16(), reason)?;
+    for (name, value) in headers.iter() {
+        let val_str = value.to_str().unwrap_or("<binary>");
+        write!(out, "{}: {}\r\n", name, val_str)?;
+    }
+    write!(out, "\r\n")?;
+    Ok(())
 }
 
 /// Serialize a query parameter value according to its OpenAPI style.
@@ -8722,6 +8886,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"data":[{"id":1}],"meta":{"total":1}}"#,
@@ -8737,6 +8902,7 @@ mod tests {
             Some("data"),
             false,
             "things.list",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8757,6 +8923,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let body = r#"{"data":[{"id":1}],"meta":{"total":1}}"#;
         let result = handle_json_response(
@@ -8773,6 +8940,7 @@ mod tests {
             Some("data"),
             true, // no_extract
             "things.list",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8788,6 +8956,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let err = handle_json_response(
             r#"{"foo":1}"#,
@@ -8803,6 +8972,7 @@ mod tests {
             Some("data"),
             false,
             "things.list",
+            &mut pager_none,
         )
         .await
         .expect_err("unresolved extract path must surface as a validation error");
@@ -8832,6 +9002,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"data":[{"id":1},{"id":2}],"next":"page-2"}"#,
@@ -8847,6 +9018,7 @@ mod tests {
             Some("data"),
             false,
             "things.list",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8871,6 +9043,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"items":["a"]}"#,
@@ -8886,6 +9059,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8902,6 +9076,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             "not json at all",
@@ -8917,6 +9092,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -8938,6 +9114,7 @@ mod tests {
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
 
+        let mut pager = None;
         let result = handle_json_response(
             r#"{"items":[],"nextPageToken":"next-tok"}"#,
             &pagination,
@@ -8952,6 +9129,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager,
         )
         .await
         .unwrap();
@@ -8976,6 +9154,7 @@ mod tests {
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
 
+        let mut pager = None;
         let result = handle_json_response(
             r#"{"items":[],"nextPageToken":"would-be-next"}"#,
             &pagination,
@@ -8990,6 +9169,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager,
         )
         .await
         .unwrap();
@@ -9023,6 +9203,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"entries":[{"id":"1"}],"next_marker":"abc"}"#,
@@ -9038,6 +9219,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9061,6 +9243,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Cursor(None);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"entries":[{"id":"2"}],"next_marker":""}"#,
@@ -9076,6 +9259,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9096,6 +9280,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"users":[{"id":1},{"id":2},{"id":3}],"meta":{"has_more":true}}"#,
@@ -9111,6 +9296,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9135,6 +9321,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
 
         let result = handle_json_response(
             r#"{"users":[{"id":1}],"meta":{"has_more":false}}"#,
@@ -9150,6 +9337,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9175,6 +9363,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
         let request_query_params = vec![("limit".to_string(), "50".to_string())];
 
         let result = handle_json_response(
@@ -9191,6 +9380,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -9216,6 +9406,7 @@ mod tests {
         let mut pages_fetched = 0u32;
         let mut page_state = PageState::Offset(0);
         let mut captured = Vec::new();
+        let mut pager_none: Option<crate::pager::PagerHandle> = None;
         let request_query_params = vec![("limit".to_string(), "3".to_string())];
 
         let result = handle_json_response(
@@ -9232,6 +9423,7 @@ mod tests {
             None,
             false,
             "test-op",
+            &mut pager_none,
         )
         .await
         .unwrap();
@@ -10633,4 +10825,146 @@ async fn test_bearer_header_sends_bearer_prefix() {
     let built = request.build().unwrap();
     let header_val = built.headers().get("x-auth").and_then(|v| v.to_str().ok());
     assert_eq!(header_val, Some("Bearer mytoken"));
+}
+
+// ---------------------------------------------------------------
+// HTTP format helpers
+// ---------------------------------------------------------------
+
+#[test]
+fn format_http_version_known_versions() {
+    assert_eq!(format_http_version(reqwest::Version::HTTP_09), "HTTP/0.9");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_10), "HTTP/1.0");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_11), "HTTP/1.1");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_2), "HTTP/2");
+    assert_eq!(format_http_version(reqwest::Version::HTTP_3), "HTTP/3");
+}
+
+#[test]
+fn write_http_preamble_basic() {
+    let mut buf = Vec::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    headers.insert("content-type", "application/json".parse().unwrap());
+    headers.insert("x-request-id", "abc123".parse().unwrap());
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::OK,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.starts_with("HTTP/1.1 200 OK\r\n"),
+        "should start with status line, got: {output}"
+    );
+    assert!(
+        output.contains("content-type: application/json\r\n"),
+        "should include content-type header, got: {output}"
+    );
+    assert!(
+        output.contains("x-request-id: abc123\r\n"),
+        "should include custom header, got: {output}"
+    );
+    assert!(
+        output.ends_with("\r\n\r\n"),
+        "should end with blank line separator, got: {output}"
+    );
+}
+
+#[test]
+fn write_http_preamble_error_status() {
+    let mut buf = Vec::new();
+    let headers = reqwest::header::HeaderMap::new();
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::NOT_FOUND,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.starts_with("HTTP/1.1 404 Not Found\r\n"),
+        "should show 404 status line, got: {output}"
+    );
+}
+
+#[test]
+fn write_http_preamble_no_headers() {
+    let mut buf = Vec::new();
+    let headers = reqwest::header::HeaderMap::new();
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_2,
+        reqwest::StatusCode::NO_CONTENT,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert_eq!(
+        output, "HTTP/2 204 No Content\r\n\r\n",
+        "empty headers should produce status line + blank line"
+    );
+}
+
+#[test]
+fn write_http_preamble_binary_header_value() {
+    let mut buf = Vec::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    // Insert a header value containing non-visible ASCII (bytes that
+    // fail `HeaderValue::to_str`).  `HeaderValue::from_bytes` accepts
+    // any bytes in the 0x20..=0xFF range plus TAB, so we use a raw
+    // byte sequence that includes characters outside the visible ASCII
+    // range accepted by `to_str` (which requires only 0x20..=0x7E
+    // plus TAB).
+    let raw_val =
+        reqwest::header::HeaderValue::from_bytes(&[0x80, 0xAB, 0xFF]).unwrap();
+    headers.insert("x-binary", raw_val);
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::OK,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.contains("x-binary: <binary>\r\n"),
+        "non-UTF8 header value should fall back to <binary>, got: {output}"
+    );
+}
+
+#[test]
+fn write_http_preamble_duplicate_headers() {
+    let mut buf = Vec::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    headers.append("set-cookie", "a=1".parse().unwrap());
+    headers.append("set-cookie", "b=2".parse().unwrap());
+
+    write_http_preamble(
+        &mut buf,
+        reqwest::Version::HTTP_11,
+        reqwest::StatusCode::OK,
+        &headers,
+    )
+    .unwrap();
+
+    let output = String::from_utf8(buf).unwrap();
+    assert!(
+        output.contains("set-cookie: a=1\r\n"),
+        "should include first set-cookie value, got: {output}"
+    );
+    assert!(
+        output.contains("set-cookie: b=2\r\n"),
+        "should include second set-cookie value, got: {output}"
+    );
 }

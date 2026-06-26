@@ -16,7 +16,7 @@ function stringifyObject(obj, prefix = "", options) {
     const parts = [];
     for (const [key, value] of Object.entries(obj)) {
         const fullKey = prefix ? `${prefix}[${key}]` : key;
-        if (value === undefined) {
+        if (value == null) {
             continue;
         }
         if (Array.isArray(value)) {
@@ -36,7 +36,7 @@ function stringifyObject(obj, prefix = "", options) {
             else {
                 for (let i = 0; i < value.length; i++) {
                     const item = value[i];
-                    if (item === undefined) {
+                    if (item == null) {
                         continue;
                     }
                     if (typeof item === "object" && !Array.isArray(item) && item !== null) {

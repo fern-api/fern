@@ -347,7 +347,7 @@ pub struct OAuth2TokenProvider {
     scheme_name: String,
     token_url: String,
     grant: OAuth2Grant,
-    cache: Option<TokenCache>,
+    cache: OnceLock<TokenCache>,
     cached_token: OnceLock<Result<SecretString, String>>,
 }
 
@@ -371,22 +371,29 @@ impl OAuth2TokenProvider {
             scheme_name: scheme_name.into(),
             token_url: token_url.into(),
             grant,
-            cache: None,
+            cache: OnceLock::new(),
             cached_token: OnceLock::new(),
         }
     }
 
     /// Enable on-disk token persistence. `cli_name` is the binary name
     /// (e.g., `"xero"`) — tokens are stored under the platform config dir.
-    pub fn with_cache(mut self, cli_name: &str) -> Self {
-        self.cache = TokenCache::for_cli(cli_name);
+    pub fn with_cache(self, cli_name: &str) -> Self {
+        if let Some(tc) = TokenCache::for_cli(cli_name) {
+            let _ = self.cache.set(tc);
+        }
         self
     }
 
     /// Enable on-disk token persistence with a pre-built [`TokenCache`].
-    pub fn with_token_cache(mut self, cache: TokenCache) -> Self {
-        self.cache = Some(cache);
+    pub fn with_token_cache(self, cache: TokenCache) -> Self {
+        let _ = self.cache.set(cache);
         self
+    }
+
+    /// Returns `true` if on-disk token caching has been wired.
+    pub fn has_cache(&self) -> bool {
+        self.cache.get().is_some()
     }
 
     fn resolve_token(&self) -> Result<&SecretString, CliError> {
@@ -406,7 +413,7 @@ impl OAuth2TokenProvider {
 
     async fn resolve_token_async(&self) -> Result<String, CliError> {
         // 1. Check on-disk cache for a valid access token
-        if let Some(cache) = &self.cache {
+        if let Some(cache) = self.cache.get() {
             if let Some(cached) = cache.load(&self.token_url) {
                 tracing::debug!("Using cached OAuth2 access token for {}", self.token_url);
                 return Ok(cached.access_token);
@@ -493,7 +500,7 @@ impl OAuth2TokenProvider {
     }
 
     fn persist_response(&self, resp: &TokenResponse) {
-        if let Some(cache) = &self.cache {
+        if let Some(cache) = self.cache.get() {
             if let Err(e) = cache.store(
                 &self.token_url,
                 &resp.access_token,
@@ -513,7 +520,7 @@ impl AuthProvider for OAuth2TokenProvider {
 
     fn has_credentials(&self) -> bool {
         // Check disk cache first — if we have a cached token, we have creds
-        if let Some(cache) = &self.cache {
+        if let Some(cache) = self.cache.get() {
             if cache.load(&self.token_url).is_some() {
                 return true;
             }
@@ -580,12 +587,71 @@ impl AuthProvider for OAuth2TokenProvider {
         header.set_sensitive(true);
         Ok(request.header(reqwest::header::AUTHORIZATION, header))
     }
+
+    fn inject_token_cache(&self, cli_name: &str) {
+        if let Some(tc) = TokenCache::for_cli(cli_name) {
+            let _ = self.cache.set(tc);
+        }
+    }
 }
 
 fn env_is_set(var: &str) -> bool {
     std::env::var(var)
         .map(|v| !v.trim().is_empty())
         .unwrap_or(false)
+}
+
+/// Fail-fast provider for an OAuth2 scheme that was declared (via
+/// [`OAuth2Auth`](crate::auth::OAuth2Auth)) but is missing the config needed
+/// to obtain a token — e.g. no `token_url`, or client credentials supplied
+/// from a non-env source the [`OAuth2Grant`] env-var model can't read.
+///
+/// The point is to **never silently send an unauthenticated request**
+/// (FER-10745). [`has_credentials`](AuthProvider::has_credentials) returns
+/// `true` so composition wrappers select this provider rather than skipping
+/// it, and [`apply`](AuthProvider::apply) then errors with a clear message
+/// instead of letting the request go out with no `Authorization` header.
+#[derive(Debug)]
+pub(crate) struct MisconfiguredOAuth2Provider {
+    scheme_name: String,
+    reason: String,
+}
+
+impl MisconfiguredOAuth2Provider {
+    pub(crate) fn new(scheme_name: impl Into<String>, reason: impl Into<String>) -> Self {
+        Self {
+            scheme_name: scheme_name.into(),
+            reason: reason.into(),
+        }
+    }
+}
+
+impl AuthProvider for MisconfiguredOAuth2Provider {
+    fn name(&self) -> &str {
+        &self.scheme_name
+    }
+
+    // Report credentials as present so wrappers don't skip this provider
+    // (skipping would fall through to an unauthenticated request — the bug).
+    fn has_credentials(&self) -> bool {
+        true
+    }
+
+    fn credential_hints(&self) -> Vec<String> {
+        vec![self.reason.clone()]
+    }
+
+    fn apply(
+        &self,
+        _request: reqwest::RequestBuilder,
+        _endpoint: &EndpointAuthMetadata,
+    ) -> Result<reqwest::RequestBuilder, CliError> {
+        Err(CliError::Auth(format!(
+            "OAuth2 scheme '{}' is configured but cannot obtain a token: {}. \
+             Refusing to send an unauthenticated request.",
+            self.scheme_name, self.reason,
+        )))
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -1091,5 +1157,80 @@ mod tests {
 
         // has_credentials is true because of disk cache, even though env vars are unset
         assert!(provider.has_credentials());
+    }
+
+    #[test]
+    fn with_cache_sets_oncelock() {
+        let p = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "X".to_string(),
+                client_secret_env: "Y".to_string(),
+                scope: None,
+            },
+        );
+        assert!(!p.has_cache());
+        let p = p.with_cache("my-test-cli");
+        assert!(p.has_cache());
+    }
+
+    #[test]
+    fn inject_token_cache_sets_cache_via_trait() {
+        use crate::auth::provider::AuthProvider;
+        let p = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "X".to_string(),
+                client_secret_env: "Y".to_string(),
+                scope: None,
+            },
+        );
+        assert!(!p.has_cache());
+        p.inject_token_cache("my-test-cli");
+        assert!(p.has_cache());
+    }
+
+    #[test]
+    fn inject_token_cache_idempotent() {
+        use crate::auth::provider::AuthProvider;
+        let p = OAuth2TokenProvider::new(
+            "oauth2",
+            "https://example.com/token",
+            OAuth2Grant::ClientCredentials {
+                client_id_env: "X".to_string(),
+                client_secret_env: "Y".to_string(),
+                scope: None,
+            },
+        );
+        p.inject_token_cache("first-cli");
+        assert!(p.has_cache());
+        // Second call is a no-op (OnceLock already set)
+        p.inject_token_cache("second-cli");
+        assert!(p.has_cache());
+    }
+
+    // FER-10745: a misconfigured OAuth2 scheme must error loudly, never let an
+    // unauthenticated request through.
+    #[tokio::test(flavor = "multi_thread")]
+    async fn misconfigured_oauth2_provider_errors_instead_of_silent_unauth() {
+        let provider = MisconfiguredOAuth2Provider::new(
+            "OAuth2Security",
+            "missing OAuth2 config: token_url",
+        );
+
+        // Selected by composition (not skipped) so the failure surfaces.
+        assert!(provider.has_credentials());
+
+        let request = reqwest::Client::new().get("https://api.example.com/v1/thing");
+        let result = provider.apply(request, &EndpointAuthMetadata::unspecified());
+        let err = result.expect_err("misconfigured OAuth2 must refuse to send");
+        assert!(matches!(err, CliError::Auth(_)));
+        let msg = err.to_string();
+        assert!(
+            msg.contains("OAuth2Security") && msg.contains("token_url"),
+            "error should name the scheme and the missing config: {msg}",
+        );
     }
 }
