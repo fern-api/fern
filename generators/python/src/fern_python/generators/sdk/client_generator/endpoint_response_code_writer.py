@@ -119,17 +119,17 @@ class EndpointResponseCodeWriter:
                 event_source_kwargs.append(("resumable", AST.Expression("True")))
                 event_source_kwargs.append(
                     (
-                        "with_max_stream_reconnect_attempts",
+                        "stream_reconnection_enabled",
                         AST.Expression(
-                            'request_options.get("with_max_stream_reconnect_attempts") if request_options is not None else None'
+                            'request_options.get("stream_reconnection_enabled", True) if request_options is not None else True'
                         ),
                     )
                 )
                 event_source_kwargs.append(
                     (
-                        "without_stream_reconnection",
+                        "max_stream_reconnection_attempts",
                         AST.Expression(
-                            'request_options.get("without_stream_reconnection", False) if request_options is not None else False'
+                            'request_options.get("max_stream_reconnection_attempts") if request_options is not None else None'
                         ),
                     )
                 )

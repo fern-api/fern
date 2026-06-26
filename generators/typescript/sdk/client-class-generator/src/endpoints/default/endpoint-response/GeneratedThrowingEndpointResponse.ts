@@ -854,15 +854,23 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             this.clientClass
                                         )
                                     }),
-                                    withMaxStreamReconnectAttempts: ts.factory.createPropertyAccessChain(
-                                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                    reconnectionEnabled: ts.factory.createPropertyAccessChain(
+                                        ts.factory.createPropertyAccessChain(
+                                            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                            ts.factory.createIdentifier("stream")
+                                        ),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier("withMaxStreamReconnectAttempts")
+                                        ts.factory.createIdentifier("reconnectionEnabled")
                                     ),
-                                    withoutStreamReconnection: ts.factory.createPropertyAccessChain(
-                                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                    maxReconnectionAttempts: ts.factory.createPropertyAccessChain(
+                                        ts.factory.createPropertyAccessChain(
+                                            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                            ts.factory.createIdentifier("stream")
+                                        ),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier("withoutStreamReconnection")
+                                        ts.factory.createIdentifier("maxReconnectionAttempts")
                                     ),
                                     parse: context.includeSerdeLayer
                                         ? ts.factory.createArrowFunction(

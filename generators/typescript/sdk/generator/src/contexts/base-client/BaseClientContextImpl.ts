@@ -393,19 +393,11 @@ export class BaseClientContextImpl implements BaseClientContext {
                     docs: ["Additional headers to include in the request."]
                 },
                 {
-                    name: "withMaxStreamReconnectAttempts",
-                    type: "number",
+                    name: "stream",
+                    type: "{ reconnectionEnabled?: boolean; maxReconnectionAttempts?: number }",
                     hasQuestionToken: true,
                     docs: [
-                        "Maximum number of transparent mid-stream reconnect attempts on resumable SSE endpoints. Has no effect on non-resumable endpoints."
-                    ]
-                },
-                {
-                    name: "withoutStreamReconnection",
-                    type: "boolean",
-                    hasQuestionToken: true,
-                    docs: [
-                        "Disable transparent mid-stream reconnection on resumable SSE endpoints. Has no effect on non-resumable endpoints."
+                        "Options for SSE stream reconnection behavior. Has no effect on non-resumable endpoints."
                     ]
                 }
             ],

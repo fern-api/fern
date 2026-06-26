@@ -57,14 +57,12 @@ class RawCompletionsClient:
                             _event_source = EventSource(
                                 _response,
                                 resumable=True,
-                                with_max_stream_reconnect_attempts=request_options.get(
-                                    "with_max_stream_reconnect_attempts"
-                                )
+                                stream_reconnection_enabled=request_options.get("stream_reconnection_enabled", True)
+                                if request_options is not None
+                                else True,
+                                max_stream_reconnection_attempts=request_options.get("max_stream_reconnection_attempts")
                                 if request_options is not None
                                 else None,
-                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
-                                if request_options is not None
-                                else False,
                             )
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == "[[DONE]]":
@@ -219,14 +217,12 @@ class AsyncRawCompletionsClient:
                             _event_source = EventSource(
                                 _response,
                                 resumable=True,
-                                with_max_stream_reconnect_attempts=request_options.get(
-                                    "with_max_stream_reconnect_attempts"
-                                )
+                                stream_reconnection_enabled=request_options.get("stream_reconnection_enabled", True)
+                                if request_options is not None
+                                else True,
+                                max_stream_reconnection_attempts=request_options.get("max_stream_reconnection_attempts")
                                 if request_options is not None
                                 else None,
-                                without_stream_reconnection=request_options.get("without_stream_reconnection", False)
-                                if request_options is not None
-                                else False,
                             )
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == "[[DONE]]":

@@ -10,8 +10,8 @@ export interface Stream {
             parse: ts.Expression;
             eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
             signal: ts.Expression;
-            withMaxStreamReconnectAttempts?: ts.Expression;
-            withoutStreamReconnection?: ts.Expression;
+            reconnectionEnabled?: ts.Expression;
+            maxReconnectionAttempts?: ts.Expression;
         }) => ts.Expression;
         _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
     };
@@ -67,15 +67,15 @@ export class StreamImpl extends CoreUtility implements Stream {
                     parse,
                     eventShape,
                     signal,
-                    withMaxStreamReconnectAttempts,
-                    withoutStreamReconnection
+                    reconnectionEnabled,
+                    maxReconnectionAttempts
                 }: {
                     stream: ts.Expression;
                     parse: ts.Expression;
                     eventShape: Stream.SSEEventShape | Stream.MessageEventShape;
                     signal: ts.Expression;
-                    withMaxStreamReconnectAttempts?: ts.Expression;
-                    withoutStreamReconnection?: ts.Expression;
+                    reconnectionEnabled?: ts.Expression;
+                    maxReconnectionAttempts?: ts.Expression;
                 }): ts.Expression => {
                     const eventShapeProperties: ts.ObjectLiteralElementLike[] = [];
                     if (eventShape.type === "sse") {
@@ -132,19 +132,19 @@ export class StreamImpl extends CoreUtility implements Stream {
                             ts.factory.createObjectLiteralExpression(eventShapeProperties, true)
                         )
                     ];
-                    if (withMaxStreamReconnectAttempts != null) {
+                    if (reconnectionEnabled != null) {
                         constructorProperties.push(
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier("withMaxStreamReconnectAttempts"),
-                                withMaxStreamReconnectAttempts
+                                ts.factory.createIdentifier("reconnectionEnabled"),
+                                reconnectionEnabled
                             )
                         );
                     }
-                    if (withoutStreamReconnection != null) {
+                    if (maxReconnectionAttempts != null) {
                         constructorProperties.push(
                             ts.factory.createPropertyAssignment(
-                                ts.factory.createIdentifier("withoutStreamReconnection"),
-                                withoutStreamReconnection
+                                ts.factory.createIdentifier("maxReconnectionAttempts"),
+                                maxReconnectionAttempts
                             )
                         );
                     }

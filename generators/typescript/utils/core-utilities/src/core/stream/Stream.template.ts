@@ -24,15 +24,15 @@ export declare namespace Stream {
          */
         signal?: AbortSignal;
         /**
+         * Whether transparent mid-stream reconnection is enabled on resumable
+         * SSE endpoints. Defaults to true. Has no effect on non-resumable endpoints.
+         */
+        reconnectionEnabled?: boolean;
+        /**
          * Maximum number of transparent mid-stream reconnect attempts on
          * resumable SSE endpoints. Has no effect on non-resumable endpoints.
          */
-        withMaxStreamReconnectAttempts?: number;
-        /**
-         * Disable transparent mid-stream reconnection on resumable SSE
-         * endpoints. Has no effect on non-resumable endpoints.
-         */
-        withoutStreamReconnection?: boolean;
+        maxReconnectionAttempts?: number;
     }
 
     interface JsonEvent {
@@ -78,13 +78,13 @@ export class Stream<T> implements AsyncIterable<T> {
     // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
     private resumable: boolean;
     // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
-    private withMaxStreamReconnectAttempts: number | undefined;
+    private reconnectionEnabled: boolean;
     // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
-    private withoutStreamReconnection: boolean;
+    private maxReconnectionAttempts: number | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
-    constructor({ stream, parse, eventShape, signal, withMaxStreamReconnectAttempts, withoutStreamReconnection }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
+    constructor({ stream, parse, eventShape, signal, reconnectionEnabled, maxReconnectionAttempts }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
         if (eventShape.type === "sse") {
@@ -97,8 +97,8 @@ export class Stream<T> implements AsyncIterable<T> {
             this.messageTerminator = eventShape.messageTerminator;
             this.resumable = false;
         }
-        this.withMaxStreamReconnectAttempts = withMaxStreamReconnectAttempts;
-        this.withoutStreamReconnection = withoutStreamReconnection ?? false;
+        this.reconnectionEnabled = reconnectionEnabled ?? true;
+        this.maxReconnectionAttempts = maxReconnectionAttempts;
         signal?.addEventListener("abort", () => this.controller.abort());
 
         // Initialize shared TextDecoder

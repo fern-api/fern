@@ -33,5 +33,5 @@ class RequestOptions(typing.TypedDict, total=False):
     additional_query_parameters: NotRequired[typing.Dict[str, typing.Any]]
     additional_body_parameters: NotRequired[typing.Dict[str, typing.Any]]
     chunk_size: NotRequired[int]
-    with_max_stream_reconnect_attempts: NotRequired[int]
-    without_stream_reconnection: NotRequired[bool]
+    stream_reconnection_enabled: NotRequired[bool]
+    max_stream_reconnection_attempts: NotRequired[int]

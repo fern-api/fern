@@ -2,7 +2,7 @@
     Support `resumable` flag in SSE streaming endpoints. When an endpoint has
     `x-fern-streaming.resumable: true`, the generated SDK now passes `resumable=True`
     to `EventSource`, plumbing the flag through to the runtime for use by
-    reconnection logic. Adds `with_max_stream_reconnect_attempts` and
-    `without_stream_reconnection` request options for runtime control of
+    reconnection logic. Adds `stream_reconnection_enabled` and
+    `max_stream_reconnection_attempts` request options for runtime control of
     reconnection behavior.
   type: feat
