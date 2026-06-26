@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.19.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.1 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure ("failed to read feature configuration")
+        by skipping standalone doc generation (README, CONTRIBUTING, reference.md)
+        when the Rust SDK generator runs in cliEmbedded mode. Also stage features.yml
+        into the CLI dist for future extensibility.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
 - version: 0.19.0
   changelogEntry:
     - summary: |
