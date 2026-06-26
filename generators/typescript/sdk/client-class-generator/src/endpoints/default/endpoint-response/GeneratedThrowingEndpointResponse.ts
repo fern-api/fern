@@ -854,23 +854,47 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                             this.clientClass
                                         )
                                     }),
-                                    reconnectionEnabled: ts.factory.createPropertyAccessChain(
+                                    reconnectionEnabled: ts.factory.createBinaryExpression(
                                         ts.factory.createPropertyAccessChain(
-                                            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                            ts.factory.createPropertyAccessChain(
+                                                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                ts.factory.createIdentifier("stream")
+                                            ),
                                             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                            ts.factory.createIdentifier("stream")
+                                            ts.factory.createIdentifier("reconnectionEnabled")
                                         ),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier("reconnectionEnabled")
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                        ts.factory.createPropertyAccessChain(
+                                            ts.factory.createPropertyAccessChain(
+                                                this.clientClass.getReferenceToOptions(),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                ts.factory.createIdentifier("stream")
+                                            ),
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                            ts.factory.createIdentifier("reconnectionEnabled")
+                                        )
                                     ),
-                                    maxReconnectionAttempts: ts.factory.createPropertyAccessChain(
+                                    maxReconnectionAttempts: ts.factory.createBinaryExpression(
                                         ts.factory.createPropertyAccessChain(
-                                            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                            ts.factory.createPropertyAccessChain(
+                                                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                ts.factory.createIdentifier("stream")
+                                            ),
                                             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                            ts.factory.createIdentifier("stream")
+                                            ts.factory.createIdentifier("maxReconnectionAttempts")
                                         ),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier("maxReconnectionAttempts")
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                        ts.factory.createPropertyAccessChain(
+                                            ts.factory.createPropertyAccessChain(
+                                                this.clientClass.getReferenceToOptions(),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                ts.factory.createIdentifier("stream")
+                                            ),
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                            ts.factory.createIdentifier("maxReconnectionAttempts")
+                                        )
                                     ),
                                     parse: context.includeSerdeLayer
                                         ? ts.factory.createArrowFunction(

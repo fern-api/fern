@@ -121,7 +121,7 @@ class EndpointResponseCodeWriter:
                     (
                         "stream_reconnection_enabled",
                         AST.Expression(
-                            'request_options.get("stream_reconnection_enabled", True) if request_options is not None else True'
+                            f'request_options.get("stream_reconnection_enabled", self.{self._client_wrapper_member_name}.get_stream_reconnection_enabled()) if request_options is not None else self.{self._client_wrapper_member_name}.get_stream_reconnection_enabled()'
                         ),
                     )
                 )
@@ -129,7 +129,7 @@ class EndpointResponseCodeWriter:
                     (
                         "max_stream_reconnection_attempts",
                         AST.Expression(
-                            'request_options.get("max_stream_reconnection_attempts") if request_options is not None else None'
+                            f'request_options.get("max_stream_reconnection_attempts", self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()) if request_options is not None else self.{self._client_wrapper_member_name}.get_max_stream_reconnection_attempts()'
                         ),
                     )
                 )
