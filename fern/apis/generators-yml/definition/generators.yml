@@ -566,8 +566,8 @@ types:
           If true, disambiguate generated request wrapper names that collide with
           component schema names by replacing the "Request" suffix with "Body".
           If false, keep the original "Request" suffix regardless of collisions.
-          Defaults to false.
-        default: false
+          Defaults to true.
+        default: true
 
   ResolveAliases:
     discriminated: false

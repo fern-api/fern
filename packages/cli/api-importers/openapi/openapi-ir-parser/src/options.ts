@@ -146,7 +146,7 @@ export interface ParseOpenAPIOptions {
      * If true, disambiguate generated request wrapper names that collide with
      * component schema names by replacing the "Request" suffix with "Body".
      * If false, keep the original "Request" suffix regardless of collisions.
-     * Defaults to false.
+     * Defaults to true.
      */
     disambiguateRequestNames: boolean;
 }
@@ -189,7 +189,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceConstsTo: "enums-coerceable-to-literals",
     respectByteFormat: false,
     shouldInferDiscriminatedUnionBaseProperties: false,
-    disambiguateRequestNames: false
+    disambiguateRequestNames: true
 };
 
 function mergeOptions<T extends object>(params: {

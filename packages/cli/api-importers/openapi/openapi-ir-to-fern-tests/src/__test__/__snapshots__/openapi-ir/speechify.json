@@ -188,7 +188,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "GetSpeechRequest",
+      "generatedRequestName": "GetSpeechBody",
       "request": {
         "schema": {
           "generatedName": "GetSpeechRequest",
@@ -454,7 +454,7 @@
           }
         }
       ],
-      "generatedRequestName": "GetStreamRequest",
+      "generatedRequestName": "GetStreamBody",
       "request": {
         "schema": {
           "generatedName": "GetStreamRequestBody",
@@ -626,7 +626,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "CreateAccessTokenRequest",
+      "generatedRequestName": "CreateAccessTokenBody",
       "request": {
         "schema": {
           "generatedName": "CreateAccessTokenRequest",

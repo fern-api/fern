@@ -1,7 +1,8 @@
 - summary: |
     Add `disambiguate-request-names` setting to control whether generated request
     wrapper names that collide with component schema names are renamed from
-    "*Request" to "*Body". Defaults to false (preserving original names). A CLI
-    migration for version 4.106.1 is included to explicitly set the flag to false
-    for existing projects.
+    "*Request" to "*Body". Defaults to true (current behavior). A CLI migration
+    for version 4.106.1 is included to explicitly set the flag to false for
+    projects that existed before disambiguation was introduced, preserving their
+    original "*Request" names.
   type: feat

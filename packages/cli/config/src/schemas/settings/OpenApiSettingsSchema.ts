@@ -98,7 +98,7 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
      * If true, disambiguate generated request wrapper names that collide with
      * component schema names by replacing the "Request" suffix with "Body".
      * If false, keep the original "Request" suffix regardless of collisions.
-     * Defaults to false.
+     * Defaults to true.
      */
     "disambiguate-request-names": z.boolean().optional()
 });

@@ -2448,7 +2448,7 @@
               "type": "null"
             }
           ],
-          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to false."
+          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
         }
       },
       "additionalProperties": false
@@ -3097,7 +3097,7 @@
               "type": "null"
             }
           ],
-          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to false."
+          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to true."
         },
         "respect-nullable-schemas": {
           "oneOf": [

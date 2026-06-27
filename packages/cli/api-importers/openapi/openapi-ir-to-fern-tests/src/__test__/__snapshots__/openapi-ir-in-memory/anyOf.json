@@ -109,6 +109,6 @@
     "coerceConstsTo": "enums-coerceable-to-literals",
     "respectByteFormat": false,
     "shouldInferDiscriminatedUnionBaseProperties": false,
-    "disambiguateRequestNames": false
+    "disambiguateRequestNames": true
   }
 }
