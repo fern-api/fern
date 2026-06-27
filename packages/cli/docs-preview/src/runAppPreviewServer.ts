@@ -40,8 +40,8 @@ import { type BunServer, createBunServer } from "./createBunServer.js";
 import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
-import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
+import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {

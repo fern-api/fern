@@ -1,5 +1,5 @@
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 
 /**
  * Collects directories containing docs pages that are outside the fern folder.
