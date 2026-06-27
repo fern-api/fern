@@ -341,7 +341,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "ExtensionsPostBody",
+      "generatedRequestName": "ExtensionsPostRequest",
       "request": {
         "schema": {
           "generatedName": "ExtensionsPostRequest",
@@ -3830,7 +3830,7 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "PromptContentBody",
+      "generatedRequestName": "PromptContentRequest",
       "request": {
         "schema": {
           "generatedName": "PromptContentRequestBody",
@@ -4442,7 +4442,7 @@
       ],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "SummarizeContentBody",
+      "generatedRequestName": "SummarizeContentRequest",
       "request": {
         "schema": {
           "generatedName": "SummarizeContentRequestBody",

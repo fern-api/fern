@@ -1200,7 +1200,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "ExecuteWorkflowStreamBody",
+      "generatedRequestName": "ExecuteWorkflowStreamRequest",
       "request": {
         "schema": {
           "generatedName": "ExecuteWorkflowStreamRequest",
@@ -1438,7 +1438,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "GenerateBody",
+      "generatedRequestName": "GenerateRequest",
       "request": {
         "schema": {
           "generatedName": "GenerateRequest",
@@ -3697,7 +3697,7 @@
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "SubmitCompletionActualsBody",
+      "generatedRequestName": "SubmitCompletionActualsRequest",
       "request": {
         "schema": {
           "generatedName": "SubmitCompletionActualsRequest",

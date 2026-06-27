@@ -263,7 +263,7 @@
           }
         }
       ],
-      "generatedRequestName": "ChatBody",
+      "generatedRequestName": "ChatRequest",
       "request": {
         "schema": {
           "allOf": [],

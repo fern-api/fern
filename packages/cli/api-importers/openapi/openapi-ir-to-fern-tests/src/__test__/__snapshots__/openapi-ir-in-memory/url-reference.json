@@ -75,6 +75,7 @@
     "inferForwardCompatible": false,
     "coerceConstsTo": "enums-coerceable-to-literals",
     "respectByteFormat": false,
-    "shouldInferDiscriminatedUnionBaseProperties": false
+    "shouldInferDiscriminatedUnionBaseProperties": false,
+    "disambiguateRequestNames": false
   }
 }
