@@ -2438,6 +2438,17 @@
             }
           ],
           "description": "If true, properties shared by every variant of a discriminated `oneOf`\n(including via `allOf`/`$ref`) are lifted into the union's base properties\nso SDKs can expose them directly on the union type without casting.\nDefaults to false."
+        },
+        "disambiguate-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to false."
         }
       },
       "additionalProperties": false
@@ -3076,6 +3087,17 @@
             }
           ],
           "description": "If true, properties shared by every variant of a discriminated `oneOf`\n(including via `allOf`/`$ref`) are lifted into the union's base properties\nso SDKs can expose them directly on the union type without casting.\nDefaults to false."
+        },
+        "disambiguate-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, disambiguate generated request wrapper names that collide with\ncomponent schema names by replacing the \"Request\" suffix with \"Body\".\nIf false, keep the original \"Request\" suffix regardless of collisions.\nDefaults to false."
         },
         "respect-nullable-schemas": {
           "oneOf": [

@@ -3992,6 +3992,9 @@
                       },
                       "inferDiscriminatedUnionBaseProperties": {
                         "type": "boolean"
+                      },
+                      "disambiguate-request-names": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -4565,6 +4568,9 @@
                           ]
                         },
                         "inferDiscriminatedUnionBaseProperties": {
+                          "type": "boolean"
+                        },
+                        "disambiguate-request-names": {
                           "type": "boolean"
                         }
                       },
