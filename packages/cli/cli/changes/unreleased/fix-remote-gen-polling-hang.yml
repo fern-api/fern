@@ -1,7 +1,6 @@
 - summary: |
-    Fix remote generation hanging indefinitely after task completion. The async
-    "finished" handler in processUpdate() was invoked via the fiddle-sdk's
-    _visit() method which does not await async visitor results, causing the
-    polling loop to never detect completion. Replaced with a direct switch
-    statement and added download timeouts to prevent indefinite hangs.
+    Fix remote generation CLI hanging indefinitely when S3 download stalls.
+    Added connection timeout (60s) and overall download timeout (5 min) to
+    both downloadZipForTask and downloadAndExtractZipToDirectory, so the CLI
+    fails with a clear error instead of blocking forever.
   type: fix

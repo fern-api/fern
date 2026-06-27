@@ -1,5 +1,5 @@
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
-import { assertNeverNoThrow } from "@fern-api/core-utils";
+import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     buildReplayTelemetryProps,
@@ -200,21 +200,16 @@ export class RemoteTaskHandler {
             );
         };
 
-        const status = remoteTask.status;
-        switch (status.type) {
-            case "notStarted":
-            case "running":
-                break;
-            case "failed": {
-                const { message, s3PreSignedReadUrl } = status;
+        await remoteTask.status._visit<void | Promise<void>>({
+            notStarted: noop,
+            running: noop,
+            failed: ({ message, s3PreSignedReadUrl }) => {
                 if (s3PreSignedReadUrl != null) {
                     logS3Url(s3PreSignedReadUrl);
                 }
                 this.context.failAndThrow(message, undefined, { code: CliError.Code.ContainerError });
-                break;
-            }
-            case "finished": {
-                const finishedStatus = status;
+            },
+            finished: async (finishedStatus) => {
                 if (finishedStatus.s3PreSignedReadUrlV2 != null) {
                     logS3Url(finishedStatus.s3PreSignedReadUrlV2);
                     const absolutePathToLocalOutput = this.getAbsolutePathToLocalOutput();
@@ -242,14 +237,11 @@ export class RemoteTaskHandler {
                 }
 
                 this.emitReplayTelemetryIfReady();
-                break;
+            },
+            _other: () => {
+                this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
             }
-            default:
-                // Forward-compatible: warn on unknown status types from newer server versions
-                assertNeverNoThrow(status);
-                this.context.logger.warn("Received unknown update type: " + (status as { type: string }).type);
-                break;
-        }
+        });
 
         return this.#isFinished
             ? {
