@@ -71,7 +71,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveSchemaCollisions: undefined,
     inferForwardCompatible: undefined,
     coerceConstsTo: undefined,
-    shouldInferDiscriminatedUnionBaseProperties: undefined
+    shouldInferDiscriminatedUnionBaseProperties: undefined,
+    disambiguateRequestNames: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -170,7 +171,8 @@ function parseOpenApiDefinitionSettingsSchema(
         multiServerStrategy: settings?.["multi-server-strategy"],
         defaultIntegerFormat: settings?.["default-integer-format"],
         pathParameterOrder: settings?.["path-parameter-order"],
-        shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"]
+        shouldInferDiscriminatedUnionBaseProperties: settings?.["infer-discriminated-union-base-properties"],
+        disambiguateRequestNames: settings?.["disambiguate-request-names"]
     };
 }
 
