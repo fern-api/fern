@@ -40,6 +40,7 @@ import { type BunServer, createBunServer } from "./createBunServer.js";
 import { createDocsPreviewWatcher } from "./createDocsPreviewWatcher.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { getExternalDocsWatchPaths } from "./getExternalDocsWatchPaths.js";
 import { writeNodePolyfillScript } from "./nodePolyfills.js";
 import { getPreviewDocsDefinition, type PreviewDocsResult } from "./previewDocs.js";
 
@@ -1048,6 +1049,16 @@ export async function runAppPreviewServer({
     }
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
+
+    // Watch directories containing docs pages referenced from outside the fern folder
+    // (e.g., `path: ../docs/page.mdx` in docs.yml)
+    if (previewResult != null) {
+        const externalDocsPaths = getExternalDocsWatchPaths(absoluteFilePathToFern, previewResult.docsDefinition);
+        if (externalDocsPaths.length > 0) {
+            context.logger.debug(`Watching external docs directories: ${externalDocsPaths.join(", ")}`);
+            additionalFilepaths.push(...externalDocsPaths);
+        }
+    }
 
     // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
     const watcher = await createDocsPreviewWatcher({
