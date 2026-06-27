@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.55.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` hot-reload for pages referenced outside the fern/ directory.
+        Previously, only changes to files inside the fern/ folder triggered preview refreshes.
+        Now, external directories containing referenced docs pages are also watched.
+      type: fix
+  createdAt: "2026-06-27"
+  irVersion: 67
 - version: 5.55.1
   changelogEntry:
     - summary: |
