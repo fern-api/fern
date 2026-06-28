@@ -99,6 +99,7 @@ export interface APIDefinitionSettings {
     inferForwardCompatible: boolean | undefined;
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
+    disambiguateRequestNames: boolean | undefined;
 }
 
 export interface GitSource {

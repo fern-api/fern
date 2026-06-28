@@ -560,6 +560,14 @@ types:
           so SDKs can expose them directly on the union type without casting.
           Defaults to false.
         default: false
+      disambiguate-request-names:
+        type: optional<boolean>
+        docs: |
+          If true, disambiguate generated request wrapper names that collide with
+          component schema names by replacing the "Request" suffix with "Body".
+          If false, keep the original "Request" suffix regardless of collisions.
+          Defaults to true.
+        default: true
 
   ResolveAliases:
     discriminated: false
