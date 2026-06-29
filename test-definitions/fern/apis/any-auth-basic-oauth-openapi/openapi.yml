@@ -1,0 +1,106 @@
+openapi: 3.0.1
+info:
+  title: Basic Auth + OAuth Client Credentials Example
+  version: 1.0.0
+security:
+  - BasicAuth: []
+  - BearerAuth: []
+paths:
+  /oauth/token:
+    post:
+      operationId: auth_getToken
+      tags:
+        - Auth
+      summary: Exchange client credentials for an access token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                grant_type:
+                  type: string
+                  enum:
+                    - client_credentials
+              required:
+                - client_id
+                - client_secret
+                - grant_type
+      responses:
+        "200":
+          description: Successful token response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+  /resources:
+    get:
+      operationId: resources_list
+      tags:
+        - Resources
+      summary: List all resources
+      responses:
+        "200":
+          description: A list of resources
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Resource"
+  /resources/{resourceId}:
+    get:
+      operationId: resources_get
+      tags:
+        - Resources
+      summary: Get a resource by ID
+      parameters:
+        - name: resourceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A single resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Resource"
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        expires_in:
+          type: integer
+      required:
+        - access_token
+        - expires_in
+    Resource:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - id
+        - name
