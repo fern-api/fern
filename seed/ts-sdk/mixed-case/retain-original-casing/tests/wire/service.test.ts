@@ -4,44 +4,48 @@ import { SeedMixedCaseClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ServiceClient", () => {
+    
     test("getResource", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedCaseClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedMixedCaseClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "resource_type" : "user" , "status" : "ACTIVE" , "userName" : "username" , "metadata_tags" : [ "tag1" , "tag2" ] , "EXTRA_PROPERTIES" : { "foo" : "bar" , "baz" : "qux" } };
+        
+        server
+            .mockEndpoint()
+            .get("/resource/rsc-xyz").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = {
-            resource_type: "user",
-            status: "ACTIVE",
-            userName: "username",
-            metadata_tags: ["tag1", "tag2"],
-            EXTRA_PROPERTIES: { foo: "bar", baz: "qux" },
-        };
-
-        server.mockEndpoint().get("/resource/rsc-xyz").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.service.getResource("rsc-xyz");
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.service.getResource("rsc-xyz");
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("listResources", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedCaseClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedMixedCaseClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = [ { "resource_type" : "user" , "status" : "ACTIVE" , "userName" : "username" , "metadata_tags" : [ "tag1" , "tag2" ] , "EXTRA_PROPERTIES" : { "foo" : "bar" , "baz" : "qux" } } ];
+        
+        server
+            .mockEndpoint()
+            .get("/resource").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = [
-            {
-                resource_type: "user",
-                status: "ACTIVE",
-                userName: "username",
-                metadata_tags: ["tag1", "tag2"],
-                EXTRA_PROPERTIES: { foo: "bar", baz: "qux" },
-            },
-        ];
-
-        server.mockEndpoint().get("/resource").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.service.listResources({
-            page_limit: 10,
-            beforeDate: "2023-01-01",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.service.listResources({
+    page_limit: 10,
+    beforeDate: "2023-01-01"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

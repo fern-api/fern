@@ -4,29 +4,29 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("FilesClient", () => {
+    
     test("upload", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({
-            maxRetries: 0,
-            token: "test",
-            environment: { base: server.baseUrl, auth: server.baseUrl, upload: server.baseUrl },
-        });
-        const rawRequestBody = { name: "name", parent_id: "parent_id" };
+        const client = new SeedApiClient({ "maxRetries" : 0 , "token" : "test" , "environment" : { "base" : server.baseUrl , "auth" : server.baseUrl , "upload" : server.baseUrl } });
+        const rawRequestBody = { "name" : "name" , "parent_id" : "parent_id" };
         const rawResponseBody = "string";
-
+        
         server
             .mockEndpoint()
-            .post("/files/content")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/files/content").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.files.upload({
-            name: "name",
-            parent_id: "parent_id",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.files.upload({
+    name: "name",
+    parent_id: "parent_id"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

@@ -4,18 +4,28 @@ import { SeedUnionQueryParametersClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("EventsClient", () => {
+    
     test("subscribe", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionQueryParametersClient({ maxRetries: 0, environment: server.baseUrl });
-
+        const client = new SeedUnionQueryParametersClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
         const rawResponseBody = "string";
+        
+        server
+            .mockEndpoint()
+            .get("/events").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        server.mockEndpoint().get("/events").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.events.subscribe({
-            event_type: "group.created",
-            tags: "tags",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.events.subscribe({
+    event_type: "group.created",
+    tags: "tags"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

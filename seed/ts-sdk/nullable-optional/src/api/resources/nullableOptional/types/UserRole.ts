@@ -2,9 +2,9 @@
 
 /** Test enum for nullable enum fields */
 export const UserRole = {
-    Admin: "ADMIN",
-    User: "USER",
-    Guest: "GUEST",
-    Moderator: "MODERATOR",
-} as const;
-export type UserRole = (typeof UserRole)[keyof typeof UserRole];
+        Admin: "ADMIN",
+        User: "USER",
+        Guest: "GUEST",
+        Moderator: "MODERATOR"
+    } as const;
+export type UserRole = typeof UserRole[keyof typeof UserRole];

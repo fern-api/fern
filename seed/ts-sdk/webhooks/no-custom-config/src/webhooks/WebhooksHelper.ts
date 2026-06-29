@@ -12,12 +12,7 @@ const SIGNATURE_PREFIX = "sha256=";
  * Extract the timestamp from the "x-webhook-timestamp" header and pass it as the timestampHeader parameter.
  */
 export class WebhooksHelper {
-    public static async verifySignature(
-        requestBody: string,
-        signatureHeader: string,
-        signatureKey: string,
-        timestampHeader: string,
-    ): Promise<boolean> {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, timestampHeader: string): Promise<boolean> {
         if (requestBody == null || signatureHeader == null || signatureKey == null) {
             throw new Error("Missing required parameters for webhook signature verification");
         }
@@ -42,12 +37,7 @@ export class WebhooksHelper {
 
         const payload = [timestampHeader, requestBody].join(".");
 
-        const expected = await core.computeHmacSignature({
-            payload: payload,
-            secret: signatureKey,
-            algorithm: "sha256",
-            encoding: "hex",
-        });
+        const expected = await core.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
 
         return await core.timingSafeEqual(sig, expected);
     }

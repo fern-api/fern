@@ -11,7 +11,7 @@
  *     SeedEnum.ForwardCompatibleEnum.Inactive
  */
 export const ForwardCompatibleEnum = {
-    Active: "active",
-    Inactive: "inactive",
-} as const;
-export type ForwardCompatibleEnum = (typeof ForwardCompatibleEnum)[keyof typeof ForwardCompatibleEnum];
+        Active: "active",
+        Inactive: "inactive"
+    } as const;
+export type ForwardCompatibleEnum = typeof ForwardCompatibleEnum[keyof typeof ForwardCompatibleEnum];

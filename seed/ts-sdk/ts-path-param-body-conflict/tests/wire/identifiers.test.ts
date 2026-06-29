@@ -4,26 +4,30 @@ import { SeedTsPathParamBodyConflictClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("IdentifiersClient", () => {
+    
     test("update", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTsPathParamBodyConflictClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { idType: "phone", oldValue: "+13175556789", newValue: "+13175556798" };
-        const rawResponseBody = { idType: "phone", oldValue: "+13175556789", newValue: "+13175556798" };
-
+        const client = new SeedTsPathParamBodyConflictClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "idType" : "phone" , "oldValue" : "+13175556789" , "newValue" : "+13175556798" };
+        const rawResponseBody = { "idType" : "phone" , "oldValue" : "+13175556789" , "newValue" : "+13175556798" };
+        
         server
             .mockEndpoint()
-            .patch("/identifiers/phone")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .patch("/identifiers/phone").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.identifiers.update({
-            idType: "phone",
-            oldValue: "+13175556789",
-            newValue: "+13175556798",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.identifiers.update({
+    idType: "phone",
+    oldValue: "+13175556789",
+    newValue: "+13175556798"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

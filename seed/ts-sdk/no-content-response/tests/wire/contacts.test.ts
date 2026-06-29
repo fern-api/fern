@@ -4,38 +4,50 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ContactsClient", () => {
+    
     test("create", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { name: "name" };
-        const rawResponseBody = { id: "id", name: "name", email: "email" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "name" : "name" };
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
+        
         server
             .mockEndpoint()
-            .post("/contacts")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/contacts").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.contacts.create({
-            name: "name",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.contacts.create({
+    name: "name"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
+        
+        server
+            .mockEndpoint()
+            .get("/contacts/id").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = { id: "id", name: "name", email: "email" };
-
-        server.mockEndpoint().get("/contacts/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.contacts.get({
-            id: "id",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.contacts.get({
+    id: "id"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

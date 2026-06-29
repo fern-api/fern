@@ -38,9 +38,7 @@ describe("computeHmacSignature", () => {
             algorithm: "sha384",
             encoding: "hex",
         });
-        expect(result).toBe(
-            "7e1e620ca0068fd1fce00c1ad3f5c6dbb12874dd2fb9c26502d09d0d804f2c0ba1d921b9458416cba480417571001e18",
-        );
+        expect(result).toBe("7e1e620ca0068fd1fce00c1ad3f5c6dbb12874dd2fb9c26502d09d0d804f2c0ba1d921b9458416cba480417571001e18");
     });
 
     it("computes SHA-512 HMAC with hex encoding", async () => {
