@@ -4,7 +4,7 @@ import type { IrSummary } from "../ir.js";
 
 const emptyIr = (apiDisplayName: string | undefined = undefined): IrSummary => ({
     apiDisplayName,
-    auth: { schemes: [] }
+    auth: { requirement: "ANY", schemes: [] }
 });
 
 describe("toKebabCase", () => {

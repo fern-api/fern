@@ -2,6 +2,15 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { toEnvVarPrefix } from "./identity.js";
 
 /**
+ * A generation-time warning about the IR's auth configuration.
+ * Emitted by `validateAuthSchemes` so the orchestrator can surface
+ * them to the user.
+ */
+export interface AuthWarning {
+    message: string;
+}
+
+/**
  * One auth binding to emit in the generated `main.rs`. The `rustCall`
  * string is the literal method-chain fragment; the rendering layer
  * splices these into the `CliApp::new(...)` builder at either root level
@@ -159,4 +168,65 @@ function bindingForScheme(
         // Future IR auth variants we don't know about yet.
         _other: () => null
     });
+}
+
+/**
+ * Validate the IR's auth configuration and return warnings for
+ * patterns the spec author should address:
+ *
+ *   1. AND-ed HTTP auth schemes — bearer and basic both ride the
+ *      `Authorization` header, so requiring both simultaneously is
+ *      unsatisfiable and almost always a spec authoring error.
+ *
+ *   2. Partially-wired requirements — when `requirement === "ALL"`
+ *      and some declared schemes can't be wired (oauth, inferred,
+ *      etc.), the generated CLI can only partially authenticate.
+ *
+ * The function compares the full set of declared schemes against the
+ * bindings `detectAuthBindings` actually produced, so it naturally
+ * picks up any scheme the binding stage had to skip.
+ */
+export function validateAuthSchemes(args: {
+    auth: { requirement: FernIr.AuthSchemesRequirement; schemes: FernIr.AuthScheme[] };
+    bindings: DetectedAuthBinding[];
+}): AuthWarning[] {
+    const { auth, bindings } = args;
+    const warnings: AuthWarning[] = [];
+
+    // Collect the distinct HTTP auth types (bearer / basic). Both use
+    // the Authorization header, so AND-ing them on a single request is
+    // physically impossible.
+    const httpAuthTypes: string[] = [];
+    for (const scheme of auth.schemes) {
+        if (scheme.type === "bearer" || scheme.type === "basic") {
+            if (!httpAuthTypes.includes(scheme.type)) {
+                httpAuthTypes.push(scheme.type);
+            }
+        }
+    }
+
+    if (auth.requirement === "ALL" && httpAuthTypes.length > 1) {
+        warnings.push({
+            message:
+                `Security configuration AND-s multiple HTTP auth schemes (${httpAuthTypes.sort().join(" + ")}). ` +
+                "These share the Authorization header and cannot be satisfied simultaneously — " +
+                "this is almost always a spec authoring error. Consider separating them into " +
+                "distinct security requirements (OR)."
+        });
+    }
+
+    // Detect schemes that detectAuthBindings could not wire.
+    const wiredKeys = new Set(bindings.map((b) => b.schemeName));
+    const unwired = auth.schemes.filter((s) => !wiredKeys.has(s.key));
+
+    if (unwired.length > 0 && auth.requirement === "ALL") {
+        const names = unwired.map((s) => `'${s.key}' (${s.type})`).join(", ");
+        warnings.push({
+            message:
+                `Security configuration requires all auth schemes, but the CLI cannot wire: ${names}. ` +
+                "Requests needing these schemes will be partially authenticated."
+        });
+    }
+
+    return warnings;
 }

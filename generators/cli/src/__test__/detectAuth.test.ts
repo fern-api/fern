@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { describe, expect, it } from "vitest";
-import { detectAuthBindings } from "../detectAuth.js";
+import { detectAuthBindings, validateAuthSchemes } from "../detectAuth.js";
 
 /**
  * Coverage for the IR → auth binding mapping. The IR SDK's
@@ -192,4 +192,103 @@ describe("detectAuthBindings", () => {
     // just to assert "we returned null". If we ever start binding
     // those variants, the visitor's type signature will force the
     // test to come back.
+});
+
+/**
+ * Coverage for generation-time auth validation [FER-11477].
+ *
+ * `validateAuthSchemes` cross-references the declared IR schemes
+ * against the bindings `detectAuthBindings` actually produced and
+ * warns about two patterns:
+ *   (a) AND-ed HTTP auth schemes (bearer + basic share Authorization)
+ *   (b) partially-wired requirements (requirement: ALL but some
+ *       schemes can't be bound)
+ */
+describe("validateAuthSchemes", () => {
+    const authWithReq = (requirement: FernIr.AuthSchemesRequirement, ...schemes: FernIr.AuthScheme[]) => ({
+        requirement,
+        schemes
+    });
+
+    it("no warnings for clean ANY config with all schemes wired", () => {
+        const a = authWithReq("ANY", bearer({ key: "Bearer" }), header({ key: "ApiKey" }));
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        expect(validateAuthSchemes({ auth: a, bindings })).toEqual([]);
+    });
+
+    it("no warnings for clean ALL config with all schemes wired", () => {
+        const a = authWithReq("ALL", bearer({ key: "Bearer" }), header({ key: "ApiKey" }));
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        expect(validateAuthSchemes({ auth: a, bindings })).toEqual([]);
+    });
+
+    it("warns when requirement=ALL AND-s bearer + basic (Mailchimp pattern)", () => {
+        const a = authWithReq("ALL", bearer({ key: "BearerToken" }), basic({ key: "BasicAuth" }));
+        const bindings = detectAuthBindings({ auth: a, binaryName: "mailchimp" });
+        const warnings = validateAuthSchemes({ auth: a, bindings });
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]?.message).toContain("AND-s multiple HTTP auth schemes");
+        expect(warnings[0]?.message).toContain("basic + bearer");
+    });
+
+    it("no AND-ed warning when requirement=ANY (schemes are alternatives, not co-required)", () => {
+        const a = authWithReq("ANY", bearer({ key: "BearerToken" }), basic({ key: "BasicAuth" }));
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        const warnings = validateAuthSchemes({ auth: a, bindings });
+        expect(warnings).toEqual([]);
+    });
+
+    it("no AND-ed warning when ALL has bearer + header (different HTTP headers, can coexist)", () => {
+        const a = authWithReq("ALL", bearer({ key: "Bearer" }), header({ key: "ApiKey" }));
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        expect(validateAuthSchemes({ auth: a, bindings })).toEqual([]);
+    });
+
+    it("warns on partially-wired requirement=ALL when a scheme cannot be bound", () => {
+        // basic with both halves omitted is skipped by detectAuthBindings.
+        // Pair it with header (not bearer) to avoid also triggering the
+        // AND-ed HTTP auth warning.
+        const a = authWithReq(
+            "ALL",
+            header({ key: "ApiKey" }),
+            basic({ key: "UnbindableAuth", usernameOmit: true, passwordOmit: true })
+        );
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        const warnings = validateAuthSchemes({ auth: a, bindings });
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]?.message).toContain("cannot wire");
+        expect(warnings[0]?.message).toContain("'UnbindableAuth' (basic)");
+    });
+
+    it("no partial-wiring warning when requirement=ANY and some schemes are unwired", () => {
+        const a = authWithReq(
+            "ANY",
+            bearer({ key: "Bearer" }),
+            basic({ key: "Skipped", usernameOmit: true, passwordOmit: true })
+        );
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        // ANY only needs one wired scheme — bearer is enough.
+        expect(validateAuthSchemes({ auth: a, bindings })).toEqual([]);
+    });
+
+    it("emits both warnings when requirement=ALL AND-s HTTP auth types AND has unwired schemes", () => {
+        const a = authWithReq(
+            "ALL",
+            bearer({ key: "BearerToken" }),
+            basic({ key: "BasicAuth" }),
+            basic({ key: "Phantom", usernameOmit: true, passwordOmit: true })
+        );
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        const warnings = validateAuthSchemes({ auth: a, bindings });
+        expect(warnings).toHaveLength(2);
+        expect(warnings[0]?.message).toContain("AND-s multiple HTTP auth schemes");
+        expect(warnings[1]?.message).toContain("cannot wire");
+        expect(warnings[1]?.message).toContain("'Phantom' (basic)");
+    });
+
+    it("no warnings when no schemes are declared", () => {
+        const a = authWithReq("ALL");
+        const bindings = detectAuthBindings({ auth: a, binaryName: "acme" });
+        expect(validateAuthSchemes({ auth: a, bindings })).toEqual([]);
+    });
 });

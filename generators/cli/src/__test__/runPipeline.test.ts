@@ -102,7 +102,7 @@ describe("runPipeline", () => {
 
     const ir = (overrides: Partial<IrSummary> = {}): IrSummary => ({
         apiDisplayName: overrides.apiDisplayName,
-        auth: overrides.auth ?? { schemes: [] }
+        auth: overrides.auth ?? { requirement: "ANY", schemes: [] }
     });
 
     const localFilesConfig: ResolvedOutputConfig = {
@@ -211,6 +211,7 @@ describe("runPipeline", () => {
             ir: ir({
                 apiDisplayName: "Close API",
                 auth: {
+                    requirement: "ANY",
                     schemes: [
                         FernIr.AuthScheme.basic({
                             key: "ApiKeyAuth",

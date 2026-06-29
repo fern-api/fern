@@ -3,7 +3,7 @@ import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, hasOpenApiSpecs } from "./copySpecs.js";
 import type { FernCliCustomConfig } from "./customConfig.js";
-import { detectAuthBindings } from "./detectAuth.js";
+import { detectAuthBindings, validateAuthSchemes } from "./detectAuth.js";
 import { emitCiWorkflow, emitPublishWorkflow } from "./emitPublishWorkflow.js";
 import { emitReadme } from "./emitReadme.js";
 import { emitReference } from "./emitReference.js";
@@ -60,6 +60,15 @@ export async function runPipeline(args: {
     // rather than half-producing output.
     const binaryName = deriveBinaryName({ customConfig, ir });
     const authBindings = detectAuthBindings({ auth: ir.auth, binaryName });
+
+    // Generation-time auth validation [FER-11477]: surface warnings
+    // for AND-ed HTTP auth schemes and partially-wired requirements
+    // so spec authors can fix their security configuration before
+    // hitting confusing runtime 401s.
+    for (const warning of validateAuthSchemes({ auth: ir.auth, bindings: authBindings })) {
+        // biome-ignore lint/suspicious/noConsole: generator CLI output
+        console.warn(`[cli-generator] WARNING: ${warning.message}`);
+    }
 
     await mkdir(outputDir, { recursive: true });
 

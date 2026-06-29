@@ -1,0 +1,7 @@
+- summary: |
+    Add generation-time validation warnings for AND-ed HTTP auth schemes
+    and partially-wired security requirements. Warns when a security
+    configuration AND-s multiple HTTP auth schemes (bearer + basic) that
+    share the Authorization header, and when requirement=ALL but some
+    declared schemes cannot be wired by the generated CLI.
+  type: feat
