@@ -597,6 +597,7 @@ overrides:
   js-yaml: '>=4.2.0'
 
 patchedDependencies:
+  '@fern-fern/ir-sdk@67.2.0': a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a
   gray-matter@4.0.3: 0e2b238ee6601ee9b92d68bebc85640d09c5c5fb08f0d4d1b832a6084098ff73
 
 importers:
@@ -1120,7 +1121,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1211,7 +1212,7 @@ importers:
         version: link:../base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1262,7 +1263,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -2663,7 +2664,7 @@ importers:
         version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2703,7 +2704,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2740,7 +2741,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2777,7 +2778,7 @@ importers:
         version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2823,7 +2824,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2854,7 +2855,7 @@ importers:
         version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -2909,7 +2910,7 @@ importers:
         version: link:../../../typescript-v2/base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-generator-cli':
         specifier: workspace:*
         version: link:../../utils/abstract-generator-cli
@@ -2939,7 +2940,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -2988,7 +2989,7 @@ importers:
         version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3031,7 +3032,7 @@ importers:
         version: link:../../../base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3086,7 +3087,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3211,7 +3212,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -3251,7 +3252,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3294,7 +3295,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-error-class-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-error-class-generator
@@ -3334,7 +3335,7 @@ importers:
         version: link:../../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3371,7 +3372,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3424,7 +3425,7 @@ importers:
         version: link:../../../../packages/configs
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -3441,7 +3442,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/abstract-schema-generator':
         specifier: workspace:*
         version: link:../../utils/abstract-schema-generator
@@ -3524,7 +3525,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -3595,7 +3596,7 @@ importers:
         version: link:../../../typescript-v2/base
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       decompress:
         specifier: 'catalog:'
         version: 4.2.1
@@ -3674,7 +3675,7 @@ importers:
         version: 0.0.1167
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -3699,7 +3700,7 @@ importers:
     dependencies:
       '@fern-fern/ir-sdk':
         specifier: 67.2.0
-        version: 67.2.0
+        version: 67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../commons
@@ -16622,7 +16623,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@67.0.0': {}
 
-  '@fern-fern/ir-sdk@67.2.0': {}
+  '@fern-fern/ir-sdk@67.2.0(patch_hash=a2af07e35ea7b09d9bd23fc3243448690aeec7a40f8422e36c11d338867db19a)': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
