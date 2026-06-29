@@ -3,6 +3,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { buildGraphqlReadmeSections } from "./buildGraphqlReadmeSections.js";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder.js";
 
 export class ReadmeConfigBuilder {
@@ -103,6 +104,7 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
             content: section.content
         });
     }
+    sections.push(...buildGraphqlReadmeSections(context.ir));
     return sections.length > 0 ? sections : undefined;
 }
 

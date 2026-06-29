@@ -9,6 +9,11 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 
 - [Installation](#installation)
 - [Reference](#reference)
+- [Graphql Field Selection](#graphql-field-selection)
+- [Graphql Pagination](#graphql-pagination)
+- [Graphql Subscriptions](#graphql-subscriptions)
+- [Handling Graphql Errors](#handling-graphql-errors)
+- [Raw Graphql Queries](#raw-graphql-queries)
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
@@ -28,6 +33,59 @@ pip install fern_python-graphql
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
+
+## GraphQL Field Selection
+
+Operations take a fluent **field selection** — chain field methods on the builder to choose exactly which fields come back in a single GraphQL document (deeply, in one request). Omit `selection` to fetch a safe default. Nested objects take their own selection lambda; use `.all_()` to select every scalar at a level.
+
+```python
+data = client.query.viewer(selection=lambda x: x.id().name())
+```
+
+## GraphQL Pagination
+
+Relay connections expose auto-pagination under `paginate`. The returned pager follows `pageInfo.endCursor` across pages, fetching lazily as you iterate, and yields each node. Use the async client for an `async for` pager.
+
+```python
+for node in client.query.paginate.feed(first=50):
+    print(node)
+```
+
+## GraphQL Subscriptions
+
+Subscription operations stream over a WebSocket (`graphql-transport-ws`) on the **async** client and return an `AsyncIterator` of events typed to your selection. Breaking out of the loop tears down the socket.
+
+```python
+async for event in async_client.subscription.post_added(
+    selection=lambda x: x.id().title(),
+):
+    print(event)
+```
+
+## Handling GraphQL Errors
+
+GraphQL is a partial-success protocol: a response can carry both data and errors. Operations raise a `GraphqlError` (carrying `.errors` and any partial `.data`) when the response contains errors.
+
+```python
+from .core.graphql import GraphqlError
+
+try:
+    data = client.query.viewer()
+except GraphqlError as error:
+    print(error.errors)  # operation errors
+    print(error.data)  # partial data, if any
+```
+
+## Raw GraphQL Queries
+
+Power users can send a hand-written GraphQL document with `client.raw`, bypassing the typed operation surface. It reuses the SDK's auth, retries, and base URL, and returns the response `data` (or the full `{data, errors}` envelope with `throw_on_error=False`).
+
+```python
+data = client.raw(
+    "query ($id: ID!) { order(id: $id) { id } }",
+    variables={"id": "order-123"},
+)
+```
 
 ## Usage
 
