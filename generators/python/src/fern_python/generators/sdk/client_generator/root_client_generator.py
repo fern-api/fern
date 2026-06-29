@@ -23,6 +23,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
+from fern_python.cli.graphql_transport import GraphqlTransportRegistry
 from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 from typing_extensions import Unpack
 
@@ -451,9 +452,91 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                     class_declaration.add_method(wrapper_method)
 
+        if GraphqlTransportRegistry.has_any():
+            class_declaration.add_method(self._create_graphql_raw_method(is_async=is_async))
+
         self._generate_lazy_import_properties(class_declaration=class_declaration, is_async=is_async)
 
         return class_declaration
+
+    def _create_graphql_raw_method(self, *, is_async: bool) -> AST.FunctionDeclaration:
+        """
+        A `raw` escape hatch on the root client: send a hand-written GraphQL document and
+        variables, reusing the SDK's auth/retries/base URL. Returns the untyped `data` (or the
+        full `{data, errors}` envelope when `throw_on_error=False`).
+        """
+        request_options_ref = self._context.core_utilities.get_reference_to_request_options()
+        graphql_error_ref = self._context.core_utilities.get_reference_to_graphql_error()
+        client_wrapper_member = self._get_client_wrapper_member_name()
+
+        def write_body(writer: AST.NodeWriter) -> None:
+            writer.write("_response = ")
+            if is_async:
+                writer.write("await ")
+            writer.write_line(f"self.{client_wrapper_member}.httpx_client.request(")
+            with writer.indent():
+                writer.write_line('"graphql",')
+                writer.write_line('method="POST",')
+                writer.write_line('json={"query": query, "variables": variables if variables is not None else {}},')
+                writer.write_line("request_options=request_options,")
+            writer.write_line(")")
+            writer.write_line("if 200 <= _response.status_code < 300:")
+            with writer.indent():
+                writer.write_line("_response_json = _response.json()")
+                writer.write_line(
+                    '_graphql_errors = _response_json.get("errors") if isinstance(_response_json, dict) else None'
+                )
+                writer.write_line(
+                    '_graphql_data = _response_json.get("data") if isinstance(_response_json, dict) else None'
+                )
+                writer.write_line("if _graphql_errors and throw_on_error:")
+                with writer.indent():
+                    writer.write("raise ")
+                    writer.write_reference(graphql_error_ref)
+                    writer.write_line(
+                        "(errors=_graphql_errors, data=_graphql_data, "
+                        "status_code=_response.status_code, headers=dict(_response.headers))"
+                    )
+                writer.write_line("if not throw_on_error:")
+                with writer.indent():
+                    writer.write_line("return _response_json")
+                writer.write_line("return _graphql_data")
+            writer.write("raise ")
+            writer.write_node(
+                self._context.core_utilities.instantiate_api_error(
+                    headers=AST.Expression("_response.headers"),
+                    status_code=AST.Expression("_response.status_code"),
+                    body=AST.Expression("_response.text"),
+                )
+            )
+            writer.write_newline_if_last_line_not()
+
+        return AST.FunctionDeclaration(
+            name="raw",
+            is_async=is_async,
+            signature=AST.FunctionSignature(
+                parameters=[AST.FunctionParameter(name="query", type_hint=AST.TypeHint.str_())],
+                named_parameters=[
+                    AST.NamedFunctionParameter(
+                        name="variables",
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any())),
+                        initializer=AST.Expression("None"),
+                    ),
+                    AST.NamedFunctionParameter(
+                        name="throw_on_error",
+                        type_hint=AST.TypeHint.bool_(),
+                        initializer=AST.Expression("True"),
+                    ),
+                    AST.NamedFunctionParameter(
+                        name="request_options",
+                        type_hint=AST.TypeHint.optional(AST.TypeHint(type=request_options_ref)),
+                        initializer=AST.Expression("None"),
+                    ),
+                ],
+                return_type=AST.TypeHint.any(),
+            ),
+            body=AST.CodeWriter(write_body),
+        )
 
     def _get_base_url_function_declaration(self) -> AST.FunctionDeclaration:
         return AST.FunctionDeclaration(

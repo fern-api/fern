@@ -5,8 +5,11 @@ from __future__ import annotations
 import typing
 
 import httpx
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.graphql import GraphqlError
 from .core.logging import LogConfig, Logger
+from .core.request_options import RequestOptions
 
 if typing.TYPE_CHECKING:
     from .mutation.client import AsyncMutationClient, MutationClient
@@ -84,6 +87,36 @@ class SeedApi:
         self._query: typing.Optional[QueryClient] = None
         self._mutation: typing.Optional[MutationClient] = None
         self._subscription: typing.Optional[SubscriptionClient] = None
+
+    def raw(
+        self,
+        query: str,
+        *,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        throw_on_error: bool = True,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        _response = self._client_wrapper.httpx_client.request(
+            "graphql",
+            method="POST",
+            json={"query": query, "variables": variables if variables is not None else {}},
+            request_options=request_options,
+        )
+        if 200 <= _response.status_code < 300:
+            _response_json = _response.json()
+            _graphql_errors = _response_json.get("errors") if isinstance(_response_json, dict) else None
+            _graphql_data = _response_json.get("data") if isinstance(_response_json, dict) else None
+            if _graphql_errors and throw_on_error:
+                raise GraphqlError(
+                    errors=_graphql_errors,
+                    data=_graphql_data,
+                    status_code=_response.status_code,
+                    headers=dict(_response.headers),
+                )
+            if not throw_on_error:
+                return _response_json
+            return _graphql_data
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
 
     @property
     def query(self):
@@ -201,6 +234,36 @@ class AsyncSeedApi:
         self._query: typing.Optional[AsyncQueryClient] = None
         self._mutation: typing.Optional[AsyncMutationClient] = None
         self._subscription: typing.Optional[AsyncSubscriptionClient] = None
+
+    async def raw(
+        self,
+        query: str,
+        *,
+        variables: typing.Optional[typing.Dict[str, typing.Any]] = None,
+        throw_on_error: bool = True,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        _response = await self._client_wrapper.httpx_client.request(
+            "graphql",
+            method="POST",
+            json={"query": query, "variables": variables if variables is not None else {}},
+            request_options=request_options,
+        )
+        if 200 <= _response.status_code < 300:
+            _response_json = _response.json()
+            _graphql_errors = _response_json.get("errors") if isinstance(_response_json, dict) else None
+            _graphql_data = _response_json.get("data") if isinstance(_response_json, dict) else None
+            if _graphql_errors and throw_on_error:
+                raise GraphqlError(
+                    errors=_graphql_errors,
+                    data=_graphql_data,
+                    status_code=_response.status_code,
+                    headers=dict(_response.headers),
+                )
+            if not throw_on_error:
+                return _response_json
+            return _graphql_data
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
 
     @property
     def query(self):
