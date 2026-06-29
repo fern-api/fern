@@ -45,6 +45,12 @@ struct CliCommand {
     path: Vec<String>,
     cmd: clap::Command,
     handler: CliCommandHandler,
+    /// Optional handler invoked when `--dry-run` is active. When `None`
+    /// and `--dry-run` is requested, the dispatcher errors before
+    /// running anything (default-deny).
+    dry_run_handler: Option<CliCommandHandler>,
+    /// Human-readable command name for error messages.
+    command_name: String,
 }
 
 /// Outcome of the dispatch pipeline — separates success from
@@ -249,10 +255,13 @@ impl CliApp {
     /// [`OpenApiBinding::handler()`]: crate::openapi::OpenApiBinding::handler
     /// [`GraphqlBinding::handler()`]: crate::graphql::GraphqlBinding::handler
     pub fn command(mut self, cmd: clap::Command, handler: CliCommandHandler) -> Self {
+        let command_name = cmd.get_name().to_string();
         self.cli_commands.push(CliCommand {
             path: Vec::new(),
             cmd,
             handler,
+            dry_run_handler: None,
+            command_name,
         });
         self
     }
@@ -325,6 +334,7 @@ impl CliApp {
         A: clap::Args + 'static,
         C: 'static,
     {
+        let command_name = cmd.get_name().to_string();
         let augmented = A::augment_args(cmd);
         let erased: CliCommandHandler = Box::new(move |matches, ctx| {
             let args = A::from_arg_matches(matches)
@@ -338,6 +348,8 @@ impl CliApp {
             path: Vec::new(),
             cmd: augmented,
             handler: erased,
+            dry_run_handler: None,
+            command_name,
         });
         self
     }
@@ -364,10 +376,13 @@ impl CliApp {
         cmd: clap::Command,
         handler: CliCommandHandler,
     ) -> Self {
+        let command_name = cmd.get_name().to_string();
         self.cli_commands.push(CliCommand {
             path: path.iter().map(|s| s.to_string()).collect(),
             cmd,
             handler,
+            dry_run_handler: None,
+            command_name,
         });
         self
     }
@@ -413,6 +428,7 @@ impl CliApp {
         A: clap::Args + 'static,
         C: 'static,
     {
+        let command_name = cmd.get_name().to_string();
         let augmented = A::augment_args(cmd);
         let erased: CliCommandHandler = Box::new(move |matches, ctx| {
             let args = A::from_arg_matches(matches)
@@ -426,8 +442,39 @@ impl CliApp {
             path: path.iter().map(|s| s.to_string()).collect(),
             cmd: augmented,
             handler: erased,
+            dry_run_handler: None,
+            command_name,
         });
         self
+    }
+
+    /// Start building a typed custom command via the fluent builder.
+    ///
+    /// Returns a [`CustomCommandBuilder`] that must be finalized with
+    /// `.handler(h).register()`. The builder supports optional
+    /// `.about()`, `.under()`, and `.dry_run()` steps.
+    ///
+    /// ```rust,ignore
+    /// app.custom_typed::<AdoptArgs>("adopt")
+    ///     .about("Adopt a pet")
+    ///     .under(&["garden"])
+    ///     .handler(handle_adopt)
+    ///     .dry_run(handle_adopt_dry_run)
+    ///     .register()
+    /// ```
+    pub fn custom_typed<A>(self, name: &str) -> CustomCommandBuilder<A>
+    where
+        A: clap::Args + 'static,
+    {
+        CustomCommandBuilder {
+            app: self,
+            name: name.to_string(),
+            about: None,
+            path: Vec::new(),
+            handler: None,
+            dry_run_handler: None,
+            _marker: std::marker::PhantomData,
+        }
     }
 
     // ── Tier 1: Declarative ─────────────────────────────────────────
@@ -990,6 +1037,13 @@ impl CliApp {
             if let Some(target) = crate::custom_commands::walk_matches_to_custom(
                 &matches, &cc.path, cc.cmd.get_name(),
             ) {
+                let dry_run = matches
+                    .try_get_one::<bool>("dry-run")
+                    .ok()
+                    .flatten()
+                    .copied()
+                    .unwrap_or(false);
+
                 // Collect contexts from ALL bindings so the handler can
                 // invoke operations from any binding transparently.
                 let mut ctx: Option<Box<dyn Any + Send + Sync>> = None;
@@ -997,7 +1051,20 @@ impl CliApp {
                     ctx = b.merge_binding_context(&matches, ctx)?;
                 }
                 let ctx = ctx.unwrap_or_else(|| Box::new(()));
-                (cc.handler)(target, ctx.as_ref())?;
+
+                if dry_run {
+                    match &cc.dry_run_handler {
+                        Some(handler) => (handler)(target, ctx.as_ref())?,
+                        None => {
+                            return Err(CliError::Validation(format!(
+                                "dry-run is not supported for command '{}'",
+                                cc.command_name,
+                            )));
+                        }
+                    }
+                } else {
+                    (cc.handler)(target, ctx.as_ref())?;
+                }
                 return Ok(PipelineOutcome::Success);
             }
         }
@@ -1057,6 +1124,96 @@ impl CliApp {
                 }
             }
         }
+    }
+}
+
+// ── Per-command builder ─────────────────────────────────────────────
+
+/// Fluent builder for typed custom commands.
+///
+/// Created by [`CliApp::custom_typed`]. Call `.handler(h).register()`
+/// to finalize; optionally chain `.about()`, `.under()`, and
+/// `.dry_run()` before registering.
+#[must_use]
+pub struct CustomCommandBuilder<A: clap::Args + 'static> {
+    app: CliApp,
+    name: String,
+    about: Option<String>,
+    path: Vec<String>,
+    handler: Option<CliCommandHandler>,
+    dry_run_handler: Option<CliCommandHandler>,
+    _marker: std::marker::PhantomData<A>,
+}
+
+impl<A: clap::Args + 'static> CustomCommandBuilder<A> {
+    /// Set the `--help` description for this command.
+    pub fn about(mut self, about: &str) -> Self {
+        self.about = Some(about.to_string());
+        self
+    }
+
+    /// Nest this command under a custom path (e.g. `&["admin"]`).
+    pub fn under(mut self, path: &[&str]) -> Self {
+        self.path = path.iter().map(|s| s.to_string()).collect();
+        self
+    }
+
+    /// Set the main handler. `C` is the binding context type (e.g.
+    /// `AppContext`).
+    pub fn handler<C: 'static>(
+        mut self,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self {
+        self.handler = Some(Box::new(move |matches, ctx| {
+            let args = A::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler(args, ctx)
+        }));
+        self
+    }
+
+    /// Set the `--dry-run` handler. When provided, `--dry-run` invokes
+    /// this handler instead of the normal one. When absent, `--dry-run`
+    /// produces a "not supported" error (default-deny).
+    pub fn dry_run<C: 'static>(
+        mut self,
+        handler: fn(A, &C) -> Result<(), CliError>,
+    ) -> Self {
+        self.dry_run_handler = Some(Box::new(move |matches, ctx| {
+            let args = A::from_arg_matches(matches)
+                .map_err(|e| CliError::Validation(e.to_string()))?;
+            let ctx = ctx.downcast_ref::<C>().ok_or_else(|| {
+                CliError::Validation("binding context type mismatch".into())
+            })?;
+            handler(args, ctx)
+        }));
+        self
+    }
+
+    /// Finalize the builder, registering the command on the `CliApp`.
+    pub fn register(self) -> CliApp {
+        let handler = self
+            .handler
+            .expect("CustomCommandBuilder requires .handler() before .register()");
+
+        let mut cmd = clap::Command::new(self.name.clone());
+        if let Some(about) = &self.about {
+            cmd = cmd.about(about.clone());
+        }
+        let augmented = A::augment_args(cmd);
+
+        let mut app = self.app;
+        app.cli_commands.push(CliCommand {
+            path: self.path,
+            cmd: augmented,
+            handler,
+            dry_run_handler: self.dry_run_handler,
+            command_name: self.name,
+        });
+        app
     }
 }
 

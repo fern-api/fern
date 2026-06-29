@@ -45,19 +45,19 @@ impl x_fern_default_test_sdk::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> x_fern_default_test_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<x_fern_default_test_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = x_fern_default_test_sdk::ClientConfig::default();
     let http_client = x_fern_default_test_sdk::HttpClient::with_executor(
         adapter as Arc<dyn x_fern_default_test_sdk::RequestExecutor>,
         config.clone(),
     );
-    x_fern_default_test_sdk::api::ApiClient {
+    Ok(x_fern_default_test_sdk::api::ApiClient {
         config,
         http_client: http_client.clone(),
 
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

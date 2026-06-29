@@ -45,19 +45,19 @@ impl acme_cli_sdk::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> acme_cli_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<acme_cli_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = acme_cli_sdk::ClientConfig::default();
     let http_client = acme_cli_sdk::HttpClient::with_executor(
         adapter as Arc<dyn acme_cli_sdk::RequestExecutor>,
         config.clone(),
     );
-    acme_cli_sdk::api::ApiClient {
+    Ok(acme_cli_sdk::api::ApiClient {
         config,
         http_client: http_client.clone(),
 
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

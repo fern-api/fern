@@ -45,18 +45,18 @@ impl api_wide_base_path_with_default_sdk::RequestExecutor for CliExecutorAdapter
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> api_wide_base_path_with_default_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<api_wide_base_path_with_default_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = api_wide_base_path_with_default_sdk::ClientConfig::default();
     let http_client = api_wide_base_path_with_default_sdk::HttpClient::with_executor(
         adapter as Arc<dyn api_wide_base_path_with_default_sdk::RequestExecutor>,
         config.clone(),
     );
-    api_wide_base_path_with_default_sdk::api::ApiClient {
+    Ok(api_wide_base_path_with_default_sdk::api::ApiClient {
         config,
         widgets: api_wide_base_path_with_default_sdk::api::WidgetsClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

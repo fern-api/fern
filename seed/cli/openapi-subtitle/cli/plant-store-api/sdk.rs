@@ -45,19 +45,19 @@ impl plant_store_api_sdk::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> plant_store_api_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<plant_store_api_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = plant_store_api_sdk::ClientConfig::default();
     let http_client = plant_store_api_sdk::HttpClient::with_executor(
         adapter as Arc<dyn plant_store_api_sdk::RequestExecutor>,
         config.clone(),
     );
-    plant_store_api_sdk::api::ApiClient {
+    Ok(plant_store_api_sdk::api::ApiClient {
         config,
         http_client: http_client.clone(),
 
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

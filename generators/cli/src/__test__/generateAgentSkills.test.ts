@@ -88,9 +88,11 @@ describe("generateAgentSkills", () => {
         // References actual SDK crate
         expect(content).toContain("petstore_sdk");
 
-        // References real endpoint from spec
-        expect(content).toContain("get_pet");
-        expect(content).toContain("petId");
+        // Documents typed authoring and builder pattern
+        expect(content).toContain("custom_typed");
+        expect(content).toContain("#[derive(clap::Args)]");
+        expect(content).toContain(".handler(");
+        expect(content).toContain(".register()");
 
         // References real sub-clients
         expect(content).toContain("client.pets");
@@ -98,6 +100,13 @@ describe("generateAgentSkills", () => {
 
         // Documents auth
         expect(content).toContain("PETSTORE_TOKEN");
+
+        // Documents dry-run pattern
+        expect(content).toContain("dry-run");
+        expect(content).toContain(".dry_run(");
+
+        // Documents output cohesion
+        expect(content).toContain("output_pipeline");
 
         // Documents .fernignore protection
         expect(content).toContain(".fernignore");
@@ -124,7 +133,7 @@ describe("generateAgentSkills", () => {
         expect(target).toBe(".agents");
     });
 
-    it("picks a GET endpoint with path params as the example", async () => {
+    it("uses the first sub-client in typed example when spec has endpoints", async () => {
         await stageSpec({
             openapi: "3.0.0",
             paths: {
@@ -159,12 +168,14 @@ describe("generateAgentSkills", () => {
             "utf-8"
         );
 
-        // Should pick the GET with path param, not the POST
-        expect(content).toContain("get_widget");
-        expect(content).toContain("widgetId");
+        // Uses first sub-client in the typed example
+        expect(content).toContain("client.widgets");
+        expect(content).toContain("WidgetsClient");
+        // Documents the builder pattern
+        expect(content).toContain("custom_typed");
     });
 
-    it("renders a generic example when no spec endpoints are available", async () => {
+    it("uses sub-client field in typed example even without spec endpoints", async () => {
         await stageSpec({ openapi: "3.0.0", paths: {} });
 
         await generateAgentSkills({
@@ -181,12 +192,14 @@ describe("generateAgentSkills", () => {
             "utf-8"
         );
 
-        // Falls back to generic example
-        expect(content).toContain("my-command");
+        // Uses sub-client in typed example
         expect(content).toContain("client.items");
+        // Documents the typed builder
+        expect(content).toContain("custom_typed");
+        expect(content).toContain(".handler(");
     });
 
-    it("sanitizes malicious spec content that could escape markdown code blocks", async () => {
+    it("does not include raw spec content that could inject instructions", async () => {
         await stageSpec({
             openapi: "3.0.0",
             paths: {
@@ -215,16 +228,12 @@ describe("generateAgentSkills", () => {
             "utf-8"
         );
 
-        // Newlines in summary must be collapsed so it stays inside the code block
+        // The new skill format uses generic typed examples, not raw spec content,
+        // so malicious spec content cannot escape into the markdown.
         expect(content).not.toMatch(/^# Injected instructions$/m);
         expect(content).not.toMatch(/^Do something malicious$/m);
-        // Triple-backtick sequences must be defused
-        expect(content).not.toMatch(/```\s*\n# Injected/);
-        // Malicious chars in param name must be stripped
         expect(content).not.toContain('id")');
         expect(content).not.toMatch(/^# Evil$/m);
-        // The sanitized param name should still appear
-        expect(content).toContain("idEvil");
     });
 
     it("includes sub-client table with all discovered clients", async () => {

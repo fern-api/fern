@@ -45,18 +45,18 @@ impl no_content_response_sdk::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> no_content_response_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<no_content_response_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = no_content_response_sdk::ClientConfig::default();
     let http_client = no_content_response_sdk::HttpClient::with_executor(
         adapter as Arc<dyn no_content_response_sdk::RequestExecutor>,
         config.clone(),
     );
-    no_content_response_sdk::api::ApiClient {
+    Ok(no_content_response_sdk::api::ApiClient {
         config,
         contacts: no_content_response_sdk::api::ContactsClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

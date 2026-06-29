@@ -45,19 +45,19 @@ impl null_type_sdk::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> null_type_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<null_type_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = null_type_sdk::ClientConfig::default();
     let http_client = null_type_sdk::HttpClient::with_executor(
         adapter as Arc<dyn null_type_sdk::RequestExecutor>,
         config.clone(),
     );
-    null_type_sdk::api::ApiClient {
+    Ok(null_type_sdk::api::ApiClient {
         config,
         conversations: null_type_sdk::api::ConversationsClient { http_client: http_client.clone() },
         users: null_type_sdk::api::UsersClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

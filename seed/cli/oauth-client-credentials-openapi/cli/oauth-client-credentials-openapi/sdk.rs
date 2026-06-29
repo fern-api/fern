@@ -45,19 +45,19 @@ impl oauth_client_credentials_openapi_sdk::RequestExecutor for CliExecutorAdapte
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> oauth_client_credentials_openapi_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<oauth_client_credentials_openapi_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = oauth_client_credentials_openapi_sdk::ClientConfig::default();
     let http_client = oauth_client_credentials_openapi_sdk::HttpClient::with_executor(
         adapter as Arc<dyn oauth_client_credentials_openapi_sdk::RequestExecutor>,
         config.clone(),
     );
-    oauth_client_credentials_openapi_sdk::api::ApiClient {
+    Ok(oauth_client_credentials_openapi_sdk::api::ApiClient {
         config,
         identity: oauth_client_credentials_openapi_sdk::api::IdentityClient { http_client: http_client.clone() },
         plants: oauth_client_credentials_openapi_sdk::api::PlantsClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

@@ -7,10 +7,11 @@ description: How to author custom commands for the api-wide-base-path-with-defau
 
 ## Overview
 
-The `api-wide-base-path-with-default` CLI supports user-authored custom commands that are
-compiled into the binary alongside the auto-generated API commands.
-Custom commands get a fully-wired SDK client that inherits the CLI's
-auth, retries, TLS, base URL, and global headers — zero configuration required.
+The `api-wide-base-path-with-default` CLI supports user-authored custom commands compiled
+into the binary alongside auto-generated API commands. Commands use
+**typed arguments** (`#[derive(clap::Args)]`) and the **per-command builder**
+for compile-time safety. The SDK client inherits auth, retries, TLS,
+base URL, and global headers — zero configuration required.
 
 ## Architecture
 
@@ -19,72 +20,150 @@ cli/api-wide-base-path-with-default/custom.rs    ← Your command handlers (prot
 cli/api-wide-base-path-with-default/sdk.rs       ← Generated bridge: client() + block_on()
 cli/api-wide-base-path-with-default/main.rs      ← Generated entrypoint (calls custom::register)
 api-wide-base-path-with-default-sdk/             ← Co-generated typed SDK crate
-api-wide-base-path-with-default-types/           ← Co-generated typed model crate
 ```
 
-## Adding a Custom Command
+## Typed Authoring (Default)
 
-### 1. Edit `cli/api-wide-base-path-with-default/custom.rs`
-
-This file is protected by `.fernignore` — `fern generate` will never
-overwrite it. Register commands in the `register()` function:
+Define arguments with `#[derive(clap::Args)]` and register via the
+per-command builder. The handler receives parsed typed args + `AppContext`:
 
 ```rust
-use api_wide_base_path_with_default_sdk::api::*;
+use fern_cli_sdk::app::CliApp;
+use fern_cli_sdk::error::CliError;
+use fern_cli_sdk::openapi::AppContext;
 
-pub fn register(app: CliApp) -> CliApp {
-    let app = app.command(
-        clap::Command::new("widgets-create")
-            .about("Run widgets widgets-create")
-            .arg(clap::Arg::new("apiVersion").required(true))
-        ,
-        |matches, ctx| {
-            let api_version = matches.get_one::<String>("apiVersion").unwrap();
-            let client = super::sdk::client(ctx);
-            let result = super::sdk::block_on(
-                client.widgets.widgets_create(api_version),
-            )?;
-            println!("{}", serde_json::to_string_pretty(&result).unwrap());
-            Ok(())
-        },
-    );
-    app
+#[derive(clap::Args)]
+struct FetchArgs {
+    /// Resource ID to fetch.
+    id: String,
+    /// Output format override.
+    #[arg(long)]
+    raw: bool,
+}
+
+fn handle_fetch(args: FetchArgs, ctx: &AppContext) -> Result<(), CliError> {
+    let client = super::sdk::client(ctx)?;
+    let result = super::sdk::block_on(
+        client.widgets.get(&args.id),
+    )?;
+    let pipeline = ctx.output_pipeline();
+    pipeline.emit(&mut std::io::stdout(), &serde_json::to_value(&result).unwrap(), false, true)
+        .map_err(|e| CliError::Other(e.into()))?;
+    Ok(())
 }
 ```
 
-Then build and test:
-```bash
-cargo build
-api-wide-base-path-with-default widgets-create <apiVersion>
-```
+## Per-Command Builder
 
-### 2. Available SDK Clients
+Register commands in `custom.rs`'s `register()` function using the
+fluent builder API:
 
-The `super::sdk::client(ctx)` call returns a `api_wide_base_path_with_default_sdk::api::Client`
-with the following sub-clients:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `client.widgets` | `api_wide_base_path_with_default_sdk::api::WidgetsClient` | widgets operations |
-
-### 3. Key Patterns
-
-**Get the SDK client** (execution-sharing, fully authenticated):
 ```rust
-let client = super::sdk::client(ctx);
+pub fn register(app: CliApp) -> CliApp {
+    app
+        .custom_typed::<FetchArgs>("fetch")
+        .about("Fetch a resource by ID")
+        .handler(handle_fetch)
+        .dry_run(handle_fetch_dry_run)  // optional
+        .register()
+}
 ```
 
-**Run an async SDK call from a sync handler:**
+Builder methods (all optional except `.handler()`):
+
+| Method | Purpose |
+|--------|---------|
+| `.about("...")` | Help text shown in `--help` |
+| `.under(&["ns", "sub"])` | Nest under a custom namespace path |
+| `.handler(fn)` | **Required.** Main handler |
+| `.dry_run(fn)` | Handler for `--dry-run` (optional) |
+| `.register()` | Finalize and return the `CliApp` |
+
+## Custom-Only Nesting (Namespaces)
+
+Commands can be nested under custom namespace paths using `.under()`.
+The path elements are custom command groups (not generated API groups):
+
 ```rust
-let result = super::sdk::block_on(
-    client.some_resource.some_method(args),
-)?;
+// Registers as: my-cli admin users list
+app.custom_typed::<ListUsersArgs>("list")
+    .about("List all users")
+    .under(&["admin", "users"])
+    .handler(handle_list_users)
+    .register()
 ```
 
-**Use typed models for request/response serialization:**
+The namespace groups (`admin`, `admin users`) are created automatically.
+Multiple commands can share a namespace path.
+
+## Output Cohesion (`--format`, `--quiet`)
+
+Route output through `ctx.output_pipeline()` so `--format` and `--quiet`
+work without per-command boilerplate:
+
 ```rust
-use api_wide_base_path_with_default_sdk::api::*;
+let pipeline = ctx.output_pipeline();
+pipeline.emit(&mut std::io::stdout(), &json_value, false, true)
+    .map_err(|e| CliError::Other(e.into()))?;
 ```
+
+- `table` and `csv` formats assume an array-of-objects; `json`/`yaml` always work.
+- A handler that doesn't use the pipeline implicitly opts out (owns its output).
+- Check `ctx.is_quiet()` when emitting non-pipeline output.
+
+## Dry-Run Safety
+
+The CLI enforces a **default-deny** dry-run model:
+
+- `--dry-run` with **no** `.dry_run()` handler → error before execution.
+- `--dry-run` **with** a `.dry_run()` handler → runs the dry-run handler
+  instead of the normal handler.
+- `ctx.build_sdk_executor()` (via `super::sdk::client(ctx)?`) **refuses**
+  under `--dry-run` — the SDK constructs requests opaquely and cannot preview them.
+
+Dry-run handlers should render a preview of what *would* happen:
+
+```rust
+fn handle_fetch_dry_run(args: FetchArgs, ctx: &AppContext) -> Result<(), CliError> {
+    // ctx.preview(method, params, body) builds a request preview with no HTTP.
+    eprintln!("[dry-run] would fetch resource '{}'", args.id);
+    Ok(())
+}
+```
+
+## SDK Client
+
+```rust
+let client = super::sdk::client(ctx)?;  // fails under --dry-run
+let result = super::sdk::block_on(client.resource.method(arg))?;
+```
+
+Available sub-clients:
+
+| Field | Type |
+|-------|------|
+| `client.widgets` | `api_wide_base_path_with_default_sdk::api::WidgetsClient` |
+
+## Non-Typed Escape Hatch
+
+For dynamic or generated-at-runtime commands, the non-typed API
+(`command()` / `command_under()`) with raw `&ArgMatches` still works:
+
+```rust
+app.command(
+    clap::Command::new("dynamic")
+        .about("A command with dynamic arguments")
+        .arg(clap::Arg::new("input").required(true)),
+    |matches, ctx| {
+        let input = matches.get_one::<String>("input").unwrap();
+        // ...
+        Ok(())
+    },
+)
+```
+
+Prefer the typed builder for new commands — it catches argument
+mismatches at compile time.
 
 ## Regeneration Safety
 
@@ -94,22 +173,13 @@ use api_wide_base_path_with_default_sdk::api::*;
 | `cli/api-wide-base-path-with-default/sdk.rs` | Yes | Bridges AppContext → SDK client |
 | `cli/api-wide-base-path-with-default/main.rs` | Yes | Calls `custom::register(app)` |
 | `api-wide-base-path-with-default-sdk/` | Yes | Co-generated typed SDK crate |
-| `api-wide-base-path-with-default-types/` | Yes | Co-generated typed models |
-
-After running `fern generate`, your `custom.rs` is preserved. All
-generated code (SDK, types, glue, main.rs) is updated to match the
-latest API spec. If the SDK surface changes (renamed methods, new
-sub-clients), update your `custom.rs` to match.
 
 ## Build & Test
 
 ```bash
-# Build the CLI (includes custom commands)
 cargo build
-
-# Run your custom command
-api-wide-base-path-with-default <your-command> [args]
-
-# Run with verbose output for debugging
-RUST_LOG=debug api-wide-base-path-with-default <your-command> [args]
+api-wide-base-path-with-default hello world              # top-level custom command
+api-wide-base-path-with-default admin users list --limit 5  # nested under custom namespace
+api-wide-base-path-with-default fetch my-id --format json   # output cohesion
+api-wide-base-path-with-default fetch my-id --dry-run       # dry-run preview
 ```

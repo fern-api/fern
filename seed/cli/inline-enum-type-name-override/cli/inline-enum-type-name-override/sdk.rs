@@ -45,18 +45,18 @@ impl inline_enum_type_name_override_sdk::RequestExecutor for CliExecutorAdapter 
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> inline_enum_type_name_override_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<inline_enum_type_name_override_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = inline_enum_type_name_override_sdk::ClientConfig::default();
     let http_client = inline_enum_type_name_override_sdk::HttpClient::with_executor(
         adapter as Arc<dyn inline_enum_type_name_override_sdk::RequestExecutor>,
         config.clone(),
     );
-    inline_enum_type_name_override_sdk::api::ApiClient {
+    Ok(inline_enum_type_name_override_sdk::api::ApiClient {
         config,
         reporting: inline_enum_type_name_override_sdk::api::ReportingClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

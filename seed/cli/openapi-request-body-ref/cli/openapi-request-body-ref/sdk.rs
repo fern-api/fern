@@ -45,20 +45,20 @@ impl openapi_request_body_ref_sdk::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> openapi_request_body_ref_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<openapi_request_body_ref_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = openapi_request_body_ref_sdk::ClientConfig::default();
     let http_client = openapi_request_body_ref_sdk::HttpClient::with_executor(
         adapter as Arc<dyn openapi_request_body_ref_sdk::RequestExecutor>,
         config.clone(),
     );
-    openapi_request_body_ref_sdk::api::ApiClient {
+    Ok(openapi_request_body_ref_sdk::api::ApiClient {
         config,
         vendor: openapi_request_body_ref_sdk::api::VendorClient { http_client: http_client.clone() },
         catalog: openapi_request_body_ref_sdk::api::CatalogClient { http_client: http_client.clone() },
         team_member: openapi_request_body_ref_sdk::api::TeamMemberClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

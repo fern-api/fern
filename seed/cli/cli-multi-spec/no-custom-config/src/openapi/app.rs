@@ -1577,6 +1577,14 @@ pub struct AppContext {
     /// Whether `--debug` was passed on the command line. Stored for
     /// use by the executor (DBO-1.3) to dump HTTP traffic to stderr.
     pub(crate) debug: bool,
+    /// Resolved output format from `--format` / env / TTY default.
+    pub(crate) output_format: formatter::OutputFormat,
+    /// Whether `--dry-run` was passed on the command line.
+    pub(crate) dry_run: bool,
+    /// Optional `--query` JMESPath expression.
+    pub(crate) query: Option<String>,
+    /// CLI binary name (for env-var prefix resolution).
+    pub(crate) app_name: String,
 }
 
 impl AppContext {
@@ -1591,6 +1599,10 @@ impl AppContext {
             quiet: false,
             base_url_override: None,
             debug: false,
+            output_format: formatter::OutputFormat::default(),
+            dry_run: false,
+            query: None,
+            app_name: String::new(),
         }
     }
 
@@ -1606,6 +1618,26 @@ impl AppContext {
 
     pub(crate) fn with_debug(mut self, debug: bool) -> Self {
         self.debug = debug;
+        self
+    }
+
+    pub(crate) fn with_output_format(mut self, format: formatter::OutputFormat) -> Self {
+        self.output_format = format;
+        self
+    }
+
+    pub(crate) fn with_dry_run(mut self, dry_run: bool) -> Self {
+        self.dry_run = dry_run;
+        self
+    }
+
+    pub(crate) fn with_query(mut self, query: Option<String>) -> Self {
+        self.query = query;
+        self
+    }
+
+    pub(crate) fn with_app_name(mut self, name: String) -> Self {
+        self.app_name = name;
         self
     }
 
@@ -1676,12 +1708,14 @@ impl AppContext {
 
     /// Execute an API method by name, using the same executor as built-in
     /// commands. Automatically routes to the binding that owns `method`.
+    ///
+    /// Output format, quiet, and query are read from the context (set at
+    /// construction from `--format`, `--quiet`, `--query`).
     pub fn execute(
         &self,
         method: &RestMethod,
         params_json: Option<&str>,
         body_json: Option<&str>,
-        output_format: &formatter::OutputFormat,
     ) -> Result<(), CliError> {
         let entry = self.entry_for_method(method);
         let pagination = executor::PaginationConfig {
@@ -1702,12 +1736,7 @@ impl AppContext {
             cli_name: String::new(),
         };
 
-        let pipeline = formatter::OutputPipeline {
-            format: output_format.clone(),
-            color_mode: formatter::ColorMode::default(),
-            quiet: self.quiet,
-            query: None,
-        };
+        let pipeline = self.output_pipeline();
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
 
         // Custom commands dispatch from inside `run_async`, which is itself
@@ -1903,19 +1932,107 @@ impl AppContext {
         self.base_url_override.as_deref()
     }
 
+    /// Returns an [`OutputPipeline`](formatter::OutputPipeline) built
+    /// from the global `--format`, `--quiet`, and `--query` flags.
+    ///
+    /// Custom command handlers should route output through this pipeline
+    /// so `--format` and `--quiet` work without per-command boilerplate.
+    pub fn output_pipeline(&self) -> formatter::OutputPipeline {
+        formatter::OutputPipeline {
+            format: self.output_format.clone(),
+            color_mode: formatter::ColorMode::default(),
+            quiet: self.quiet,
+            query: self.query.clone(),
+        }
+    }
+
+    /// Returns `true` when the user passed `--quiet`.
+    pub fn is_quiet(&self) -> bool {
+        self.quiet
+    }
+
+    /// Returns `true` when the user passed `--dry-run`.
+    pub fn is_dry_run(&self) -> bool {
+        self.dry_run
+    }
+
+    /// Build a request preview for dry-run output.
+    ///
+    /// Validates inputs and constructs the URL, params, headers, and
+    /// body that *would* be sent — without making any HTTP call.
+    /// Returns the preview as a JSON value suitable for
+    /// `output_pipeline().emit(...)`.
+    pub fn preview(
+        &self,
+        method: &RestMethod,
+        params_json: Option<&str>,
+        body_json: Option<&str>,
+    ) -> Result<serde_json::Value, CliError> {
+        let entry = self.entry_for_method(method);
+        let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
+
+        let pipeline = formatter::OutputPipeline::default();
+        tokio::task::block_in_place(|| {
+            tokio::runtime::Handle::current().block_on(executor::execute_method(
+                &entry.doc,
+                method,
+                params_json,
+                body_json,
+                &entry.auth_provider,
+                None,
+                None,
+                None,
+                None,
+                true,  // dry_run = true
+                &executor::PaginationConfig {
+                    page_all: false,
+                    page_limit: 10,
+                    page_delay_ms: 100,
+                    token_query_param: entry.doc.pagination_token_query_param
+                        .clone().unwrap_or_else(|| "pageToken".to_string()),
+                    token_response_path: entry.doc.pagination_token_response_path
+                        .clone().unwrap_or_else(|| "nextPageToken".to_string()),
+                    no_pager: true,
+                    cli_name: String::new(),
+                },
+                &pipeline,
+                true,  // capture_output = true
+                self.base_url_override.as_deref(),
+                &entry.http_config,
+                false,
+                false,
+                false,
+                false,
+                &extra_headers,
+            ))
+        })?
+        .ok_or_else(|| {
+            CliError::Other(anyhow::anyhow!("dry-run preview produced no output"))
+        })
+    }
+
     /// Build a [`CliExecutor`] wired to this context's HTTP/auth/retry stack.
     ///
     /// The executor is constructed from the first binding entry's config
     /// and shared via `Arc` across all SDK client instances. This method
     /// keeps `auth_provider` and `global_headers` internal to `AppContext`,
     /// satisfying ADR-0001 (no credential exposure via public getters).
-    pub fn build_sdk_executor(&self) -> std::sync::Arc<crate::sdk_executor::CliExecutor> {
-        std::sync::Arc::new(crate::sdk_executor::CliExecutor::new(
+    ///
+    /// Returns `Err` under `--dry-run` — the SDK client constructs
+    /// requests opaquely and cannot be previewed.
+    pub fn build_sdk_executor(&self) -> Result<std::sync::Arc<crate::sdk_executor::CliExecutor>, CliError> {
+        if self.dry_run {
+            return Err(CliError::Validation(
+                "SDK client cannot be used under --dry-run (request construction is opaque \
+                 and cannot be previewed). Use ctx.preview() for dry-run output.".into(),
+            ));
+        }
+        Ok(std::sync::Arc::new(crate::sdk_executor::CliExecutor::new(
             self.entries[0].http_config.clone(),
             self.entries[0].auth_provider.clone(),
             self.entries[0].global_headers.clone(),
             self.base_url_override.as_ref().map(|s| s.to_string()),
-        ))
+        )))
     }
 }
 

@@ -45,20 +45,20 @@ impl multi_url_environment_reference_sdk::RequestExecutor for CliExecutorAdapter
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> multi_url_environment_reference_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<multi_url_environment_reference_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = multi_url_environment_reference_sdk::ClientConfig::default();
     let http_client = multi_url_environment_reference_sdk::HttpClient::with_executor(
         adapter as Arc<dyn multi_url_environment_reference_sdk::RequestExecutor>,
         config.clone(),
     );
-    multi_url_environment_reference_sdk::api::ApiClient {
+    Ok(multi_url_environment_reference_sdk::api::ApiClient {
         config,
         items: multi_url_environment_reference_sdk::api::ItemsClient { http_client: http_client.clone() },
         auth: multi_url_environment_reference_sdk::api::AuthClient { http_client: http_client.clone() },
         files: multi_url_environment_reference_sdk::api::FilesClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

@@ -45,18 +45,18 @@ impl api_sdk::RequestExecutor for CliExecutorAdapter {
 ///
 /// The returned client routes all HTTP through the CLI's executor, so
 /// it inherits auth, retries, TLS, and global headers automatically.
-pub fn client(ctx: &AppContext) -> api_sdk::api::ApiClient {
-    let executor = ctx.build_sdk_executor();
+pub fn client(ctx: &AppContext) -> Result<api_sdk::api::ApiClient, CliError> {
+    let executor = ctx.build_sdk_executor()?;
     let adapter = Arc::new(CliExecutorAdapter(executor));
     let config = api_sdk::ClientConfig::default();
     let http_client = api_sdk::HttpClient::with_executor(
         adapter as Arc<dyn api_sdk::RequestExecutor>,
         config.clone(),
     );
-    api_sdk::api::ApiClient {
+    Ok(api_sdk::api::ApiClient {
         config,
         imdb: api_sdk::api::ImdbClient { http_client: http_client.clone() },
-    }
+    })
 }
 
 // ---------------------------------------------------------------------------

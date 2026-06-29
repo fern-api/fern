@@ -695,8 +695,22 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
+        let dry_run = matches
+            .try_get_one::<bool>("dry-run")
+            .ok()
+            .flatten()
+            .copied()
+            .unwrap_or(false);
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let output_format = crate::formatter::OutputPipeline::from_matches(matches, &self.inner.name)
+            .map(|p| p.format)
+            .unwrap_or_default();
+        let query = matches
+            .try_get_one::<String>("query")
+            .ok()
+            .flatten()
+            .cloned();
         let ctx = super::AppContext::new(
             entry.doc,
             entry.auth_provider,
@@ -704,7 +718,11 @@ impl Binding for OpenApiBinding {
             entry.global_headers,
         ).with_quiet(quiet)
          .with_base_url_override(base_url_override)
-         .with_debug(debug);
+         .with_debug(debug)
+         .with_output_format(output_format)
+         .with_dry_run(dry_run)
+         .with_query(query)
+         .with_app_name(self.inner.name.clone());
         Ok(Some(Box::new(ctx)))
     }
 
@@ -721,20 +739,36 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
+        let dry_run = matches
+            .try_get_one::<bool>("dry-run")
+            .ok()
+            .flatten()
+            .copied()
+            .unwrap_or(false);
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let output_format = crate::formatter::OutputPipeline::from_matches(matches, &self.inner.name)
+            .map(|p| p.format)
+            .unwrap_or_default();
+        let query = matches
+            .try_get_one::<String>("query")
+            .ok()
+            .flatten()
+            .cloned();
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {
                     ctx.add_entry(entry);
                     ctx.debug = debug;
                     ctx.quiet = quiet;
+                    ctx.dry_run = dry_run;
                     ctx.base_url_override = base_url_override;
+                    ctx.output_format = output_format;
+                    ctx.query = query;
+                    ctx.app_name = self.inner.name.clone();
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
-                    // Different binding type — start a new AppContext,
-                    // discard the incompatible context.
                     let ctx = super::AppContext::new(
                         entry.doc,
                         entry.auth_provider,
@@ -742,7 +776,11 @@ impl Binding for OpenApiBinding {
                         entry.global_headers,
                     ).with_quiet(quiet)
                      .with_base_url_override(base_url_override)
-                     .with_debug(debug);
+                     .with_debug(debug)
+                     .with_output_format(output_format)
+                     .with_dry_run(dry_run)
+                     .with_query(query)
+                     .with_app_name(self.inner.name.clone());
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
@@ -755,7 +793,11 @@ impl Binding for OpenApiBinding {
                     entry.global_headers,
                 ).with_quiet(quiet)
                  .with_base_url_override(base_url_override)
-                 .with_debug(debug);
+                 .with_debug(debug)
+                 .with_output_format(output_format)
+                 .with_dry_run(dry_run)
+                 .with_query(query)
+                 .with_app_name(self.inner.name.clone());
                 Ok(Some(Box::new(ctx)))
             }
         }
