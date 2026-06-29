@@ -311,8 +311,8 @@ describe("copySpecs", () => {
         expect(main).toContain('.docs_url("https://elevenlabs.io/docs")');
         expect(main).not.toContain(".docs_mcp_url");
         // Verify docs_url appears before .binding() (part of the same builder chain)
-        const docsIdx = main.indexOf('.docs_url(');
-        const bindingIdx = main.indexOf('.binding(');
+        const docsIdx = main.indexOf(".docs_url(");
+        const bindingIdx = main.indexOf(".binding(");
         expect(docsIdx).toBeGreaterThan(0);
         expect(bindingIdx).toBeGreaterThan(docsIdx);
     });
