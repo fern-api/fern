@@ -1,0 +1,3 @@
+- summary: |
+    Revert AI example enhancement routing from FAI back to fdr-lambda-docs.
+  type: internal
