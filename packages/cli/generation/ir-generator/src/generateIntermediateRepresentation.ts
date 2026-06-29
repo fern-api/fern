@@ -76,6 +76,8 @@ export declare namespace generateIntermediateRepresentation {
         audiences: Audiences;
         readme: generatorsYml.ReadmeSchema | undefined;
         packageName: string | undefined;
+        /** When set, used in place of packageName for the User-Agent header value. */
+        userAgentPrefix?: string;
         version: string | undefined;
         context: TaskContext;
         sourceResolver: SourceResolver;
@@ -95,6 +97,7 @@ export function generateIntermediateRepresentation({
     audiences,
     readme,
     packageName,
+    userAgentPrefix,
     version,
     fdrApiDefinitionId,
     sourceResolver,
@@ -549,10 +552,10 @@ export function generateIntermediateRepresentation({
             sdkName: "X-Fern-SDK-Name",
             sdkVersion: "X-Fern-SDK-Version",
             userAgent:
-                !hasCustomUserAgentHeader && version != null && packageName != null
+                !hasCustomUserAgentHeader && version != null && (userAgentPrefix != null || packageName != null)
                     ? {
                           header: "User-Agent",
-                          value: `${packageName}/${version}`
+                          value: `${userAgentPrefix ?? packageName}/${version}`
                       }
                     : undefined
         }

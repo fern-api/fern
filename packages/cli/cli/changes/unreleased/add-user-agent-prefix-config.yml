@@ -1,0 +1,6 @@
+- summary: |
+    Add `user-agent-prefix` generator config option to decouple the User-Agent
+    header value from the published package name. When set in `generators.yml`
+    under `config.user-agent-prefix`, the generated SDK will send
+    `User-Agent: <prefix>/<version>` instead of `<package-name>/<version>`.
+  type: feat

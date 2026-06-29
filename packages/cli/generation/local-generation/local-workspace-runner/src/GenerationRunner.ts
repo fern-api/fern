@@ -4,6 +4,7 @@ import {
     FernWorkspace,
     getOriginGitCommit,
     getOriginGitCommitIsDirty,
+    getUserAgentPrefixFromGeneratorConfig,
     type Spec
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -232,6 +233,7 @@ export class GenerationRunner {
             readme: generatorInvocation.readme,
             version: outputVersionOverride,
             packageName: generatorsYml.getPackageName({ generatorInvocation }),
+            userAgentPrefix: getUserAgentPrefixFromGeneratorConfig(generatorInvocation),
             context,
             sourceResolver: new SourceResolverImpl(context, workspace),
             generationMetadata: {

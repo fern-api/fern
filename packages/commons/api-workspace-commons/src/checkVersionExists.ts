@@ -51,6 +51,27 @@ export function getPackageNameFromGeneratorConfig(
     return undefined;
 }
 
+/**
+ * Resolves the user-agent prefix from the raw generator configuration.
+ *
+ * When set, this value is used in place of the package name when constructing
+ * the `User-Agent` header value (`<prefix>/<version>`). This allows customers
+ * to decouple the user-agent identity from the published package name.
+ *
+ * Lookup: `config["user-agent-prefix"]`
+ */
+export function getUserAgentPrefixFromGeneratorConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): string | undefined {
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const prefix = (generatorInvocation.raw.config as { "user-agent-prefix"?: string })["user-agent-prefix"];
+        if (prefix != null) {
+            return prefix;
+        }
+    }
+    return undefined;
+}
+
 // ─── Constants ──────────────────────────────────────────────────────
 
 /** Timeout for registry HTTP calls (ms). Prevents slow registries from delaying generation start. */
