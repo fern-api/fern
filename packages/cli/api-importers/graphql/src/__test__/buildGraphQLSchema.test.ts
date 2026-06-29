@@ -1,4 +1,4 @@
-import { getIntrospectionQuery, graphqlSync, GraphQLObjectType } from "graphql";
+import { GraphQLObjectType, getIntrospectionQuery, graphqlSync } from "graphql";
 import { describe, expect, it } from "vitest";
 
 import { buildGraphQLSchemaFromString } from "../ir-conversion/buildGraphQLSchema.js";

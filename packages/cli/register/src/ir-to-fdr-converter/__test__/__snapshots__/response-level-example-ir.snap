@@ -72,6 +72,7 @@
   },
   "fdrApiDefinitionId": undefined,
   "generationMetadata": undefined,
+  "graphqlFieldArguments": undefined,
   "headers": [],
   "idempotencyHeaders": [],
   "pathParameters": [],

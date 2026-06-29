@@ -21,9 +21,7 @@ import * as FernIr from "@fern-api/ir-sdk";
  * To revert GraphQL auth support, delete this file and its call sites. The converter's `auth: false`
  * default is left untouched, so GraphQL endpoints simply go back to never being authed.
  */
-export function applyAuthToGraphqlEndpoints(
-    ir: FernIr.IntermediateRepresentation
-): FernIr.IntermediateRepresentation {
+export function applyAuthToGraphqlEndpoints(ir: FernIr.IntermediateRepresentation): FernIr.IntermediateRepresentation {
     if (ir.auth?.schemes == null || ir.auth.schemes.length === 0) {
         return ir;
     }

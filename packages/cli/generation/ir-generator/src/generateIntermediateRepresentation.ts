@@ -16,8 +16,8 @@ import {
     Webhook
 } from "@fern-api/ir-sdk";
 import {
-    constructHttpPath,
     applyAuthToGraphqlEndpoints,
+    constructHttpPath,
     convertEnvironments,
     filterIntermediateRepresentationForAudiences,
     getOriginalName,
