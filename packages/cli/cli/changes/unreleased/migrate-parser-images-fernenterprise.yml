@@ -1,0 +1,3 @@
+- summary: |
+    Migrate library docs parser Docker images from `fernapi` to `fernenterprise` registry.
+  type: chore
