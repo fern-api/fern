@@ -505,8 +505,9 @@ export async function emitPrUrlAnnotationAndSummary({
         if (stepSummaryPath != null && stepSummaryPath.length > 0) {
             try {
                 await appendFile(stepSummaryPath, `🔀 **${generatorName}** → [PR](${pullRequestUrl})\n`, "utf8");
-            } catch {
+            } catch (error: unknown) {
                 // Best-effort — don't fail generation for a step summary write error.
+                process.stderr.write(`[warn] Failed to append to GITHUB_STEP_SUMMARY: ${error}\n`);
             }
         }
     }
