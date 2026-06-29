@@ -4,14 +4,15 @@ import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { FilesClient } from "./api/resources/files/client/Client.js";
 import { ItemsClient } from "./api/resources/items/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 import * as environments from "./environments.js";
 
 export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedApiClient {
@@ -21,7 +22,10 @@ export class SeedApiClient {
     protected _files: FilesClient | undefined;
 
     constructor(options: SeedApiClient.Options = {}) {
-        this._options = normalizeClientOptionsWithAuth(options);
+
+
+                        this._options = normalizeClientOptionsWithAuth(options);
+                    
     }
 
     public get items(): ItemsClient {
@@ -46,32 +50,19 @@ export class SeedApiClient {
      * @param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).
      * @returns {Promise<Response>} A standard Response object.
      */
-    public async fetch(
-        input: Request | string | URL,
-        init?: RequestInit,
-        requestOptions?: core.PassthroughRequest.RequestOptions,
-    ): Promise<Response> {
-        return core.makePassthroughRequest(
-            input,
-            init,
-            {
-                baseUrl:
-                    this._options.baseUrl ??
-                    (async () => {
-                        const env = await core.Supplier.get(this._options.environment);
-                        return typeof env === "string"
-                            ? env
-                            : ((env as Record<string, string>)?.base ??
-                                  environments.SeedApiEnvironment.Production.base);
-                    }),
-                headers: this._options.headers,
-                timeoutInSeconds: this._options.timeoutInSeconds,
-                maxRetries: this._options.maxRetries,
-                fetch: this._options.fetch,
-                logging: this._options.logging,
-                getAuthHeaders: async () => (await this._options.authProvider.getAuthRequest()).headers,
-            },
-            requestOptions,
-        );
+    public async fetch(input: Request | string | URL, init?: RequestInit, requestOptions?: core.PassthroughRequest.RequestOptions): Promise<Response> {
+
+        return core.makePassthroughRequest(input, init, {
+            baseUrl: this._options.baseUrl ?? (async () => {
+                const env = await core.Supplier.get(this._options.environment);
+                return typeof env === "string" ? env : (env as Record<string, string>)?.base ?? environments.SeedApiEnvironment.Production.base;
+            }),
+            headers: this._options.headers,
+            timeoutInSeconds: this._options.timeoutInSeconds,
+            maxRetries: this._options.maxRetries,
+            fetch: this._options.fetch,
+            logging: this._options.logging,
+            getAuthHeaders: async () => (await this._options.authProvider.getAuthRequest()).headers,
+        }, requestOptions);
     }
 }

@@ -4,101 +4,85 @@ import { SeedUnionsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("BigunionClient", () => {
+    
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedUnionsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "type" : "normalSweet" , "id" : "id" , "created-at" : "2024-01-15T09:30:00Z" , "archived-at" : "2024-01-15T09:30:00Z" , "value" : "value" };
+        
+        server
+            .mockEndpoint()
+            .get("/id").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = {
-            type: "normalSweet",
-            id: "id",
-            "created-at": "2024-01-15T09:30:00Z",
-            "archived-at": "2024-01-15T09:30:00Z",
-            value: "value",
-        };
-
-        server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.bigunion.get("id");
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.bigunion.get("id");
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("update", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = {
-            type: "normalSweet",
-            id: "id",
-            "created-at": "2024-01-15T09:30:00Z",
-            "archived-at": "2024-01-15T09:30:00Z",
-            value: "value",
-        };
+        const client = new SeedUnionsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "type" : "normalSweet" , "id" : "id" , "created-at" : "2024-01-15T09:30:00Z" , "archived-at" : "2024-01-15T09:30:00Z" , "value" : "value" };
         const rawResponseBody = true;
-
+        
         server
             .mockEndpoint()
-            .patch("")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .patch("").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.bigunion.update({
-            type: "normalSweet",
-            id: "id",
-            "created-at": "2024-01-15T09:30:00Z",
-            "archived-at": "2024-01-15T09:30:00Z",
-            value: "value",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.bigunion.update({
+    type: "normalSweet",
+    id: "id",
+    "created-at": "2024-01-15T09:30:00Z",
+    "archived-at": "2024-01-15T09:30:00Z",
+    value: "value"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("update-many", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = [
-            {
-                type: "normalSweet",
-                id: "id",
-                "created-at": "2024-01-15T09:30:00Z",
-                "archived-at": "2024-01-15T09:30:00Z",
-                value: "value",
-            },
-            {
-                type: "normalSweet",
-                id: "id",
-                "created-at": "2024-01-15T09:30:00Z",
-                "archived-at": "2024-01-15T09:30:00Z",
-                value: "value",
-            },
-        ];
-        const rawResponseBody = { string: true };
-
+        const client = new SeedUnionsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = [ { "type" : "normalSweet" , "id" : "id" , "created-at" : "2024-01-15T09:30:00Z" , "archived-at" : "2024-01-15T09:30:00Z" , "value" : "value" } , { "type" : "normalSweet" , "id" : "id" , "created-at" : "2024-01-15T09:30:00Z" , "archived-at" : "2024-01-15T09:30:00Z" , "value" : "value" } ];
+        const rawResponseBody = { "string" : true };
+        
         server
             .mockEndpoint()
-            .patch("/many")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .patch("/many").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.bigunion.updateMany([
-            {
-                type: "normalSweet",
-                id: "id",
-                "created-at": "2024-01-15T09:30:00Z",
-                "archived-at": "2024-01-15T09:30:00Z",
-                value: "value",
-            },
-            {
-                type: "normalSweet",
-                id: "id",
-                "created-at": "2024-01-15T09:30:00Z",
-                "archived-at": "2024-01-15T09:30:00Z",
-                value: "value",
-            },
-        ]);
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.bigunion.updateMany([{
+        type: "normalSweet",
+        id: "id",
+        "created-at": "2024-01-15T09:30:00Z",
+        "archived-at": "2024-01-15T09:30:00Z",
+        value: "value"
+    }, {
+        type: "normalSweet",
+        id: "id",
+        "created-at": "2024-01-15T09:30:00Z",
+        "archived-at": "2024-01-15T09:30:00Z",
+        value: "value"
+    }]);
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

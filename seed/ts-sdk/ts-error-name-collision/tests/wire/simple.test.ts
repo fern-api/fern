@@ -5,264 +5,263 @@ import { SeedErrors } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SimpleClient", () => {
+    
     test("fooWithoutEndpointError (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { bar: "bar" };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "bar" : "bar" };
+        
         server
             .mockEndpoint()
-            .post("/foo1")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo1").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.simple.fooWithoutEndpointError({
-            bar: "bar",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.simple.fooWithoutEndpointError({
+    bar: "bar"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("fooWithoutEndpointError (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "message" : "message" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo1")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo1").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(404).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.fooWithoutEndpointError({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.NotFoundError);
+        
+            await expect(async () => {
+                return await client.simple.fooWithoutEndpointError({
+    bar: "bar"
+})
+            }).rejects.toThrow(SeedErrorsTypes.NotFoundError);
     });
-
+          
     test("fooWithoutEndpointError (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "message" : "message" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo1")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo1").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(400).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.fooWithoutEndpointError({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.BadRequestError);
+        
+            await expect(async () => {
+                return await client.simple.fooWithoutEndpointError({
+    bar: "bar"
+})
+            }).rejects.toThrow(SeedErrorsTypes.BadRequestError);
     });
-
+          
     test("fooWithoutEndpointError (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "message" : "message" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo1")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo1").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(500).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.fooWithoutEndpointError({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.InternalServerError);
+        
+            await expect(async () => {
+                return await client.simple.fooWithoutEndpointError({
+    bar: "bar"
+})
+            }).rejects.toThrow(SeedErrorsTypes.InternalServerError);
     });
-
+          
     test("foo (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { bar: "bar" };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "bar" : "bar" };
+        
         server
             .mockEndpoint()
-            .post("/foo2")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo2").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.simple.foo({
-            bar: "bar",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.simple.foo({
+    bar: "bar"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("foo (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "message" : "message" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo2")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(429)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo2").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(429).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.foo({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.FooTooMuch);
+        
+            await expect(async () => {
+                return await client.simple.foo({
+    bar: "bar"
+})
+            }).rejects.toThrow(SeedErrorsTypes.FooTooMuch);
     });
-
+          
     test("foo (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "message" : "message" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo2")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo2").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(500).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.foo({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.FooTooLittle);
+        
+            await expect(async () => {
+                return await client.simple.foo({
+    bar: "bar"
+})
+            }).rejects.toThrow(SeedErrorsTypes.FooTooLittle);
     });
-
+          
     test("foo (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "message" : "message" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo2")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo2").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(404).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.foo({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.NotFoundError);
+        
+            await expect(async () => {
+                return await client.simple.foo({
+    bar: "bar"
+})
+            }).rejects.toThrow(SeedErrorsTypes.NotFoundError);
     });
-
+          
     test("foo (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "bar" };
+        const rawResponseBody = { "message" : "message" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo2")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo2").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(400).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.foo({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.BadRequestError);
+        
+            await expect(async () => {
+                return await client.simple.foo({
+    bar: "bar"
+})
+            }).rejects.toThrow(SeedErrorsTypes.BadRequestError);
     });
-
+          
     test("fooWithExamples (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "hello" };
-        const rawResponseBody = { bar: "hello" };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "hello" };
+        const rawResponseBody = { "bar" : "hello" };
+        
         server
             .mockEndpoint()
-            .post("/foo3")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo3").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.simple.fooWithExamples({
-            bar: "hello",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.simple.fooWithExamples({
+    bar: "hello"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
-
+          
     test("fooWithExamples (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "hello" };
-        const rawResponseBody = { message: "Too much foo", code: 1 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "hello" };
+        const rawResponseBody = { "message" : "Too much foo" , "code" : 1 };
+        
         server
             .mockEndpoint()
-            .post("/foo3")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(429)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo3").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(429).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.fooWithExamples({
-                bar: "hello",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.FooTooMuch);
+        
+            await expect(async () => {
+                return await client.simple.fooWithExamples({
+    bar: "hello"
+})
+            }).rejects.toThrow(SeedErrorsTypes.FooTooMuch);
     });
-
+          
     test("fooWithExamples (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrors({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "hello" };
-        const rawResponseBody = { message: "Too little foo", code: 2 };
-
+        const client = new SeedErrors({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "bar" : "hello" };
+        const rawResponseBody = { "message" : "Too little foo" , "code" : 2 };
+        
         server
             .mockEndpoint()
-            .post("/foo3")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/foo3").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(500).jsonBody(rawResponseBody)
+                .build();
 
-        await expect(async () => {
-            return await client.simple.fooWithExamples({
-                bar: "hello",
-            });
-        }).rejects.toThrow(SeedErrorsTypes.FooTooLittle);
+        
+            await expect(async () => {
+                return await client.simple.fooWithExamples({
+    bar: "hello"
+})
+            }).rejects.toThrow(SeedErrorsTypes.FooTooLittle);
     });
+          
 });

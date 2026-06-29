@@ -11,14 +11,14 @@ export interface LoadRequest {
 
 export namespace LoadRequest {
     export const Cache = {
-        StaleIfSlow: "stale-if-slow",
-        NoCache: "no-cache",
-    } as const;
-    export type Cache = (typeof Cache)[keyof typeof Cache];
+            StaleIfSlow: "stale-if-slow",
+            NoCache: "no-cache"
+        } as const;
+    export type Cache = typeof Cache[keyof typeof Cache];
     export const Status = {
-        Active: "active",
-        Inactive: "inactive",
-        Pending: "pending",
-    } as const;
-    export type Status = (typeof Status)[keyof typeof Status];
+            Active: "active",
+            Inactive: "inactive",
+            Pending: "pending"
+        } as const;
+    export type Status = typeof Status[keyof typeof Status];
 }

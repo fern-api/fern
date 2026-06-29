@@ -31,17 +31,17 @@ export interface PlantPost {
 
 export namespace PlantPost {
     export const WateringFrequency = {
-        Daily: "daily",
-        Weekly: "weekly",
-        Biweekly: "biweekly",
-        Monthly: "monthly",
-    } as const;
-    export type WateringFrequency = (typeof WateringFrequency)[keyof typeof WateringFrequency];
+            Daily: "daily",
+            Weekly: "weekly",
+            Biweekly: "biweekly",
+            Monthly: "monthly"
+        } as const;
+    export type WateringFrequency = typeof WateringFrequency[keyof typeof WateringFrequency];
     /** Required sun exposure level. */
     export const SunExposure = {
-        Full: "full",
-        Partial: "partial",
-        Shade: "shade",
-    } as const;
-    export type SunExposure = (typeof SunExposure)[keyof typeof SunExposure];
+            Full: "full",
+            Partial: "partial",
+            Shade: "shade"
+        } as const;
+    export type SunExposure = typeof SunExposure[keyof typeof SunExposure];
 }

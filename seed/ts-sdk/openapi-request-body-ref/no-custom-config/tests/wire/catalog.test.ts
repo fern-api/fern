@@ -4,28 +4,27 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("CatalogClient", () => {
+    
     test("getCatalogImage", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-
-        const rawResponseBody = {
-            id: "id",
-            caption: "caption",
-            url: "url",
-            create_request: { caption: "caption", catalog_object_id: "catalog_object_id" },
-        };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "caption" : "caption" , "url" : "url" , "create_request" : { "caption" : "caption" , "catalog_object_id" : "catalog_object_id" } };
+        
         server
             .mockEndpoint()
-            .get("/catalog/images/image_id")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .get("/catalog/images/image_id").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.catalog.getCatalogImage({
-            image_id: "image_id",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.catalog.getCatalogImage({
+    image_id: "image_id"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });
