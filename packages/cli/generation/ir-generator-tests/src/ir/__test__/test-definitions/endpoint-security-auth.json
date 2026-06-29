@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "endpoint-security-auth",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -524,6 +525,7 @@
                     "id": "endpoint_auth.getToken",
                     "name": "getToken",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -962,6 +964,7 @@
                     "id": "endpoint_user.getWithBearer",
                     "name": "getWithBearer",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1264,6 +1267,7 @@
                     "id": "endpoint_user.getWithApiKey",
                     "name": "getWithApiKey",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1566,6 +1570,7 @@
                     "id": "endpoint_user.getWithOAuth",
                     "name": "getWithOAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -1870,6 +1875,7 @@
                     "id": "endpoint_user.getWithBasic",
                     "name": "getWithBasic",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -2172,6 +2178,7 @@
                     "id": "endpoint_user.getWithInferredAuth",
                     "name": "getWithInferredAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -2474,6 +2481,7 @@
                     "id": "endpoint_user.getWithAnyAuth",
                     "name": "getWithAnyAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {
@@ -2790,6 +2798,7 @@
                     "id": "endpoint_user.getWithAllAuth",
                     "name": "getWithAllAuth",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": true,
                     "security": [
                         {

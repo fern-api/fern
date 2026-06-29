@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">JustFileAsync</a>(JustFileRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">JustFileAsync</a>(JustFileRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -122,7 +122,7 @@ await client.Service.WithRefBodyAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">SimpleAsync</a>()</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedFileUpload/Service/ServiceClient.cs">SimpleAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

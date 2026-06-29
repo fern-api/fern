@@ -28,50 +28,66 @@ pub fn resolve_base_url_override(
     Ok(base_url_flag.or(base_url_env_var))
 }
 
-/// Returns true when raw args contain both a help flag and `--format json`.
+/// True when raw args contain the `--schema` flag.
 ///
-/// Triggered before clap parses so agents can request machine-readable help via
-/// `--help --format json` without clap intercepting.
-pub fn wants_json_help(args: &[String]) -> bool {
-    let has_help = args.iter().any(|a| a == "--help" || a == "-h");
-    let has_json_format = args.iter().enumerate().any(|(i, a)| {
-        a.eq_ignore_ascii_case("--format=json")
-            || (a == "--format"
-                && args.get(i + 1).map(|s| s.to_lowercase() == "json") == Some(true))
-    });
-    has_help && has_json_format
+/// `--schema` is the agent-facing machine-readable counterpart to `--help`:
+/// wherever a user could type `--help` for prose, they can type `--schema` for
+/// the same scope rendered as JSON. The flag is sniffed pre-clap because
+/// clap would otherwise demand required args for the matched leaf
+/// subcommand before our intercept runs.
+pub fn wants_schema(args: &[String]) -> bool {
+    args.iter().any(|a| a == "--schema")
 }
 
-/// Extracts the subcommand path from raw args (non-flag tokens after the binary
-/// name). Skips global flags (and their values) that may appear before the
-/// subcommand, so they don't terminate the `take_while(!starts_with('-'))`
-/// scan that follows.
+/// True when raw args contain the `--spec` flag.
 ///
-/// Currently elided global flags: `--format <VALUE>` (and its `--format=VALUE`
-/// equals form).
+/// `--spec` emits the effective OpenAPI spec (source + overlays + overrides
+/// merged) to stdout. Sniffed pre-clap like `--schema` so that required-arg
+/// validation does not block root-only flags.
+pub fn wants_spec(args: &[String]) -> bool {
+    args.iter().any(|a| a == "--spec")
+}
+
+/// True when raw args contain the `--spec-raw` flag.
 ///
-/// `["box", "users", "get", "--help", "--format", "json"]` → `["users", "get"]`
+/// `--spec-raw` emits the byte-exact embedded source spec(s) to stdout,
+/// before any overlay or override processing. Sniffed pre-clap like
+/// `--schema`.
+pub fn wants_spec_raw(args: &[String]) -> bool {
+    args.iter().any(|a| a == "--spec-raw")
+}
+
+/// Extracts the subcommand path from raw args — non-flag tokens after the
+/// binary name, skipping over global flag+value pairs wherever they appear.
+///
+/// `["box", "users", "get", "--schema"]` → `["users", "get"]`
+/// `["box", "--schema"]` → `[]`
+/// `["box", "--base-url", "http://...", "users", "get"]` → `["users", "get"]`
+/// `["box", "users", "get", "--user-id", "X", "--schema"]` → `["users", "get"]`
 pub fn extract_subcommand_path(args: &[String]) -> Vec<String> {
-    let mut skip_next = false;
-    args.iter()
-        .skip(1) // skip binary name
-        .filter(|a| {
-            if skip_next {
-                skip_next = false;
-                return false;
+    // Boolean (no-value) global flags. The token immediately after one of
+    // these is NOT consumed as a value — it may be a subcommand name.
+    const BOOL_FLAGS: &[&str] = &["--schema", "--spec", "--spec-raw", "--debug", "--version", "-V", "--help", "-h"];
+
+    let mut path = Vec::new();
+    let mut iter = args.iter().skip(1).peekable(); // skip binary name
+
+    while let Some(arg) = iter.next() {
+        if !arg.starts_with('-') {
+            path.push(arg.clone());
+        } else if arg.contains('=') {
+            // --flag=value: value is embedded, nothing extra to consume.
+        } else if !BOOL_FLAGS.contains(&arg.as_str()) {
+            // Value-taking flag: skip the immediately following token if it
+            // doesn't look like a flag itself (it's the flag's value).
+            if iter.peek().map(|a| !a.starts_with('-')).unwrap_or(false) {
+                iter.next();
             }
-            if a.as_str() == "--format" {
-                skip_next = true;
-                return false;
-            }
-            if a.starts_with("--format=") {
-                return false;
-            }
-            true
-        })
-        .take_while(|a| !a.starts_with('-'))
-        .cloned()
-        .collect()
+        }
+        // Boolean flags: consumed above; the next token is NOT their value.
+    }
+
+    path
 }
 
 /// True when the user invoked the bare `errors` subcommand.
@@ -146,6 +162,9 @@ fn is_format_value(s: &str) -> bool {
         || s.eq_ignore_ascii_case("yaml")
         || s.eq_ignore_ascii_case("table")
         || s.eq_ignore_ascii_case("csv")
+        || s.eq_ignore_ascii_case("raw")
+        || s.eq_ignore_ascii_case("jsonl")
+        || s.eq_ignore_ascii_case("ndjson")
 }
 
 /// Read stdin to a string. Returns `Err` if stdin is a TTY or empty.
@@ -202,77 +221,108 @@ mod tests {
     }
 
     #[test]
-    fn test_wants_json_help_space_separated() {
-        assert!(wants_json_help(&args(&[
-            "linear", "issues", "--help", "--format", "json",
-        ])));
+    fn test_wants_schema_present() {
+        assert!(wants_schema(&args(&["cli", "--schema"])));
+        assert!(wants_schema(&args(&["cli", "users", "--schema"])));
+        assert!(wants_schema(&args(&["cli", "users", "get", "--user-id", "X", "--schema"])));
     }
 
     #[test]
-    fn test_wants_json_help_equals() {
-        assert!(wants_json_help(&args(&["linear", "--help", "--format=json"])));
+    fn test_wants_schema_absent() {
+        assert!(!wants_schema(&args(&["cli"])));
+        assert!(!wants_schema(&args(&["cli", "users", "--help"])));
+        assert!(!wants_schema(&args(&["cli", "--specification"])));
     }
 
     #[test]
-    fn test_wants_json_help_short_flag() {
-        assert!(wants_json_help(&args(&["linear", "-h", "--format", "json"])));
+    fn test_wants_spec_present() {
+        assert!(wants_spec(&args(&["cli", "--spec"])));
+        assert!(wants_spec(&args(&["cli", "users", "--spec"])));
+        assert!(wants_spec(&args(&["cli", "users", "get", "--user-id", "X", "--spec"])));
     }
 
     #[test]
-    fn test_wants_json_help_case_insensitive() {
-        assert!(wants_json_help(&args(&[
-            "linear", "--help", "--format", "JSON",
-        ])));
-        assert!(wants_json_help(&args(&["linear", "--help", "--format=JSON"])));
+    fn test_wants_spec_absent() {
+        assert!(!wants_spec(&args(&["cli"])));
+        assert!(!wants_spec(&args(&["cli", "users", "--help"])));
+        assert!(!wants_spec(&args(&["cli", "--specification"])));
+        assert!(!wants_spec(&args(&["cli", "--spec-raw"])));
     }
 
     #[test]
-    fn test_no_json_help_without_format() {
-        assert!(!wants_json_help(&args(&["linear", "--help"])));
+    fn test_wants_spec_raw_present() {
+        assert!(wants_spec_raw(&args(&["cli", "--spec-raw"])));
+        assert!(wants_spec_raw(&args(&["cli", "users", "--spec-raw"])));
+        assert!(wants_spec_raw(&args(&["cli", "users", "get", "--user-id", "X", "--spec-raw"])));
     }
 
     #[test]
-    fn test_no_json_help_without_help_flag() {
-        assert!(!wants_json_help(&args(&[
-            "linear", "issues", "get", "--format", "json",
-        ])));
-    }
-
-    #[test]
-    fn test_extract_subcommand_path() {
-        assert_eq!(
-            extract_subcommand_path(&args(&[
-                "linear", "issues", "get", "--help", "--format", "json",
-            ])),
-            vec!["issues", "get"],
-        );
+    fn test_wants_spec_raw_absent() {
+        assert!(!wants_spec_raw(&args(&["cli"])));
+        assert!(!wants_spec_raw(&args(&["cli", "users", "--help"])));
+        assert!(!wants_spec_raw(&args(&["cli", "--spec"])));
     }
 
     #[test]
     fn test_extract_subcommand_path_root() {
         assert_eq!(
-            extract_subcommand_path(&args(&["linear", "--help", "--format", "json"])),
+            extract_subcommand_path(&args(&["cli", "--schema"])),
             Vec::<String>::new(),
         );
     }
 
     #[test]
-    fn test_extract_subcommand_path_format_before_subcommand() {
+    fn test_extract_subcommand_path_one_segment() {
         assert_eq!(
-            extract_subcommand_path(&args(&[
-                "linear", "--format", "json", "issues", "--help",
-            ])),
-            vec!["issues"],
+            extract_subcommand_path(&args(&["cli", "users", "--schema"])),
+            vec!["users"],
         );
     }
 
     #[test]
-    fn test_extract_subcommand_path_format_equals_before_subcommand() {
+    fn test_extract_subcommand_path_multi_segment() {
         assert_eq!(
-            extract_subcommand_path(&args(&[
-                "linear", "--format=json", "issues", "get", "--help",
-            ])),
-            vec!["issues", "get"],
+            extract_subcommand_path(&args(&["cli", "users", "get", "--schema"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_stops_at_first_flag() {
+        // Flags that appear after the subcommand tokens do not end up in the
+        // path. Value-taking flags consume their following argument too.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "users", "get", "--user-id", "X", "--schema"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_skips_global_value_flag_before_subcommand() {
+        // A value-taking global flag (--base-url <url>) before the subcommand
+        // names must not swallow them.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "--base-url", "http://mock:9999", "users", "get"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_skips_bool_flag_before_subcommand() {
+        // Boolean global flags (--debug) before the subcommand names must not
+        // consume the following subcommand token as their value.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "--debug", "users", "get"])),
+            vec!["users", "get"],
+        );
+    }
+
+    #[test]
+    fn test_extract_subcommand_path_embedded_value_flag() {
+        // --flag=value form: the `=` embeds the value; nothing extra consumed.
+        assert_eq!(
+            extract_subcommand_path(&args(&["cli", "--base-url=http://mock:9999", "users", "get"])),
+            vec!["users", "get"],
         );
     }
 

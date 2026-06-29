@@ -48,7 +48,7 @@ public partial class MigrationClient : IMigrationClient
                 return new WithRawResponse<IEnumerable<Migration>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedTrace.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -62,7 +62,13 @@ public partial class MigrationClient : IMigrationClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedTrace.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -73,7 +79,13 @@ public partial class MigrationClient : IMigrationClient
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

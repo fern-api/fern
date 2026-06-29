@@ -1,6 +1,6 @@
 # Stage 1: Java V2
 # Non-slim trixie because the patch RUN steps below shell out to curl and tar.
-FROM node:24.16-trixie AS node
+FROM node:24.17-trixie AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
@@ -34,9 +34,17 @@ RUN rm -f /opt/gradle/lib/plugins/plexus-utils-*.jar && \
 # Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
 # (async parser bypasses maxNumberLength constraint, leading to potential DoS)
 RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
-    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar \
-      -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
-    echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.0/jackson-core-2.22.0.jar \
+      -o /opt/gradle/lib/jackson-core-2.22.0.jar && \
+    echo "d2e8dd4df1e0f61b786ea06792f5bf4235d8278f158f3be6e997e955931c0c98  /opt/gradle/lib/jackson-core-2.22.0.jar" | sha256sum -c -
+
+# Replace vulnerable jackson-databind in Gradle distribution to fix
+# CVE-2026-54514 (InetSocketAddress deserialization triggers DNS lookup / SSRF)
+# CVE-2026-54515 (2.18.9 backport not yet published; using 2.22.0)
+RUN rm -f /opt/gradle/lib/jackson-databind-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.0/jackson-databind-2.22.0.jar \
+      -o /opt/gradle/lib/jackson-databind-2.22.0.jar && \
+    echo "3520a0351f294699e3e1b7a37c7a726afd81e1a89ae702ac7d47ff347fd2ecbf  /opt/gradle/lib/jackson-databind-2.22.0.jar" | sha256sum -c -
 
 # Replace vulnerable Bouncy Castle jars in Gradle distribution to fix CVE-2026-3505
 # (bcpg unbounded PGP AEAD chunk size leads to pre-auth resource exhaustion; fixed in 1.84).
@@ -79,6 +87,12 @@ RUN rm -f /opt/gradle/lib/plugins/bcpg-jdk18on-*.jar \
 # krb5-libs (CVE-2026-40356 integer underflow OOB read, CVE-2026-40355
 # NULL pointer dereference in gss_accept_sec_context; fixed in
 # 1.21.3-7.amzn2023.0.1)
+# Security update 2026-06-10: add perl-* (CVE-2026-8376, CVE-2026-7010),
+# libsolv (CVE-2026-48863, CVE-2026-48864, CVE-2026-9149, CVE-2026-9150)
+# Security update 2026-06-24: add graphite2 (CVE-2026-50593, integer
+# underflow OOB write; fixed in 1.3.15 via ALAS2023-2026-1856),
+# giflib (CVE-2026-26740, heap buffer overflow in EGifGCBToExtension;
+# fixed via ALAS2023-2026-1883)
 RUN dnf --releasever=latest update -y \
     openssl-fips-provider-latest \
     openssl-libs \
@@ -103,7 +117,11 @@ RUN dnf --releasever=latest update -y \
     glibc-common \
     glibc-minimal-langpack \
     libgcrypt \
-    krb5-libs && \
+    krb5-libs \
+    'perl-*' \
+    libsolv \
+    graphite2 \
+    giflib && \
     dnf remove -y git-lfs wget || true && \
     dnf clean all && \
     rm -rf /var/cache/dnf
@@ -162,6 +180,47 @@ RUN for dir in \
         tar -xzf ip-address-10.2.0.tgz && \
         mv package ip-address && \
         rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
+      fi; \
+    done
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tar; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/tar/-/tar-7.5.16.tgz -o tar-7.5.16.tgz && \
+        tar -xzf tar-7.5.16.tgz && \
+        mv package tar && \
+        rm tar-7.5.16.tgz; \
+      fi; \
+    done
+
+# Patch @sigstore/core to 3.2.1 to fix GHSA-jfc7-64v2-mr8c.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/@sigstore/core; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/@sigstore/core/-/core-3.2.1.tgz -o core-3.2.1.tgz && \
+        mkdir -p core && \
+        tar -xzf core-3.2.1.tgz --strip-components=1 -C core/ && \
+        rm core-3.2.1.tgz; \
       fi; \
     done
 

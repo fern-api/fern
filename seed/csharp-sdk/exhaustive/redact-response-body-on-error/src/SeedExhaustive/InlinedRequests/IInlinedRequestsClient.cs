@@ -12,4 +12,13 @@ public partial interface IInlinedRequestsClient
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// POST with root-level array body and header params
+    /// </summary>
+    WithRawResponseTask<string> PostWithArrayBodyAndHeadersAsync(
+        PostWithArrayBodyAndHeaders request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

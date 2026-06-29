@@ -6,7 +6,7 @@ import Trace
     @Test func createProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "type": "success",
@@ -27,10 +27,10 @@ import Trace
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         ),
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         )
                     ]
                 ),
@@ -69,15 +69,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     ),
                     TestCaseWithExpectedResult(
@@ -85,15 +85,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     )
                 ],
@@ -107,7 +107,7 @@ import Trace
     @Test func updateProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "problemVersion": 1
@@ -130,10 +130,10 @@ import Trace
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         ),
                         ProblemDescriptionBoard.html(
-
+                            "boards"
                         )
                     ]
                 ),
@@ -172,15 +172,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     ),
                     TestCaseWithExpectedResult(
@@ -188,15 +188,15 @@ import Trace
                             id: "id",
                             params: [
                                 VariableValue.integerValue(
-
+                                    1
                                 ),
                                 VariableValue.integerValue(
-
+                                    1
                                 )
                             ]
                         ),
                         expectedResult: VariableValue.integerValue(
-
+                            1
                         )
                     )
                 ],
@@ -210,7 +210,7 @@ import Trace
     @Test func getDefaultStarterFiles1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "files": {
@@ -242,7 +242,7 @@ import Trace
         )
         let expectedResponse = GetDefaultStarterFilesResponse(
             files: [
-                .java: ProblemFiles(
+                Language.java: ProblemFiles(
                     solutionFile: FileInfo(
                         filename: "filename",
                         contents: "contents"

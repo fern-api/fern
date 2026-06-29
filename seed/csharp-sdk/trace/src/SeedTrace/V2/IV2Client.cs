@@ -7,5 +7,8 @@ public partial interface IV2Client
 {
     public IProblemClient Problem { get; }
     public IV3Client V3 { get; }
-    Task TestAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
+    WithRawResponseTask TestAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

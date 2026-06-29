@@ -6,7 +6,7 @@ import Trace
     @Test func getLightweightProblems1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -43,13 +43,25 @@ import Trace
                 problemId: "problemId",
                 problemName: "problemName",
                 problemVersion: 1,
-                variableTypes: []
+                variableTypes: JSONValue.array([
+                    JSONValue.object(
+                        [
+                            "type": JSONValue.string("integerType")
+                        ]
+                    )
+                ])
             ),
             LightweightProblemInfoV2Type(
                 problemId: "problemId",
                 problemName: "problemName",
                 problemVersion: 1,
-                variableTypes: []
+                variableTypes: JSONValue.array([
+                    JSONValue.object(
+                        [
+                            "type": JSONValue.string("integerType")
+                        ]
+                    )
+                ])
             )
         ]
         let response = try await client.v2.v3.problem.getLightweightProblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
@@ -59,7 +71,7 @@ import Trace
     @Test func getProblems1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -664,7 +676,9 @@ import Trace
                 ),
                 problemName: "problemName",
                 problemVersion: 1,
-                supportedLanguages: [],
+                supportedLanguages: JSONValue.array([
+                    JSONValue.string("JAVA")
+                ]),
                 customFiles: CustomFilesType.basic(
                     .init(
                         methodName: "methodName",
@@ -684,7 +698,7 @@ import Trace
                             returnType: VariableType.integerType
                         ),
                         additionalFiles: [
-                            .java: FilesType(
+                            Language.java: FilesType(
                                 files: [
                                     FileInfoV2Type(
                                         filename: "filename",
@@ -719,7 +733,7 @@ import Trace
                 ),
                 generatedFiles: GeneratedFilesType(
                     generatedTestCaseFiles: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -737,7 +751,7 @@ import Trace
                         )
                     ],
                     generatedTemplateFiles: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -755,7 +769,7 @@ import Trace
                         )
                     ],
                     other: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -804,7 +818,7 @@ import Trace
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
-                                                .java: FunctionImplementationType(
+                                                Language.java: FunctionImplementationType(
                                                     impl: "impl"
                                                 )
                                             ]
@@ -855,7 +869,7 @@ import Trace
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
-                                                .java: FunctionImplementationType(
+                                                Language.java: FunctionImplementationType(
                                                     impl: "impl"
                                                 )
                                             ]
@@ -919,7 +933,9 @@ import Trace
                 ),
                 problemName: "problemName",
                 problemVersion: 1,
-                supportedLanguages: [],
+                supportedLanguages: JSONValue.array([
+                    JSONValue.string("JAVA")
+                ]),
                 customFiles: CustomFilesType.basic(
                     .init(
                         methodName: "methodName",
@@ -939,7 +955,7 @@ import Trace
                             returnType: VariableType.integerType
                         ),
                         additionalFiles: [
-                            .java: FilesType(
+                            Language.java: FilesType(
                                 files: [
                                     FileInfoV2Type(
                                         filename: "filename",
@@ -974,7 +990,7 @@ import Trace
                 ),
                 generatedFiles: GeneratedFilesType(
                     generatedTestCaseFiles: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -992,7 +1008,7 @@ import Trace
                         )
                     ],
                     generatedTemplateFiles: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -1010,7 +1026,7 @@ import Trace
                         )
                     ],
                     other: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -1059,7 +1075,7 @@ import Trace
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
-                                                .java: FunctionImplementationType(
+                                                Language.java: FunctionImplementationType(
                                                     impl: "impl"
                                                 )
                                             ]
@@ -1110,7 +1126,7 @@ import Trace
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
-                                                .java: FunctionImplementationType(
+                                                Language.java: FunctionImplementationType(
                                                     impl: "impl"
                                                 )
                                             ]
@@ -1172,7 +1188,7 @@ import Trace
     @Test func getLatestProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "problemId": "problemId",
@@ -1485,7 +1501,9 @@ import Trace
             ),
             problemName: "problemName",
             problemVersion: 1,
-            supportedLanguages: [],
+            supportedLanguages: JSONValue.array([
+                JSONValue.string("JAVA")
+            ]),
             customFiles: CustomFilesType.basic(
                 .init(
                     methodName: "methodName",
@@ -1505,7 +1523,7 @@ import Trace
                         returnType: VariableType.integerType
                     ),
                     additionalFiles: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -1540,7 +1558,7 @@ import Trace
             ),
             generatedFiles: GeneratedFilesType(
                 generatedTestCaseFiles: [
-                    .java: FilesType(
+                    Language.java: FilesType(
                         files: [
                             FileInfoV2Type(
                                 filename: "filename",
@@ -1558,7 +1576,7 @@ import Trace
                     )
                 ],
                 generatedTemplateFiles: [
-                    .java: FilesType(
+                    Language.java: FilesType(
                         files: [
                             FileInfoV2Type(
                                 filename: "filename",
@@ -1576,7 +1594,7 @@ import Trace
                     )
                 ],
                 other: [
-                    .java: FilesType(
+                    Language.java: FilesType(
                         files: [
                             FileInfoV2Type(
                                 filename: "filename",
@@ -1625,7 +1643,7 @@ import Trace
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
-                                            .java: FunctionImplementationType(
+                                            Language.java: FunctionImplementationType(
                                                 impl: "impl",
                                                 imports: Optional("imports")
                                             )
@@ -1677,7 +1695,7 @@ import Trace
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
-                                            .java: FunctionImplementationType(
+                                            Language.java: FunctionImplementationType(
                                                 impl: "impl",
                                                 imports: Optional("imports")
                                             )
@@ -1742,7 +1760,7 @@ import Trace
     @Test func getProblemVersion1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "problemId": "problemId",
@@ -2055,7 +2073,9 @@ import Trace
             ),
             problemName: "problemName",
             problemVersion: 1,
-            supportedLanguages: [],
+            supportedLanguages: JSONValue.array([
+                JSONValue.string("JAVA")
+            ]),
             customFiles: CustomFilesType.basic(
                 .init(
                     methodName: "methodName",
@@ -2075,7 +2095,7 @@ import Trace
                         returnType: VariableType.integerType
                     ),
                     additionalFiles: [
-                        .java: FilesType(
+                        Language.java: FilesType(
                             files: [
                                 FileInfoV2Type(
                                     filename: "filename",
@@ -2110,7 +2130,7 @@ import Trace
             ),
             generatedFiles: GeneratedFilesType(
                 generatedTestCaseFiles: [
-                    .java: FilesType(
+                    Language.java: FilesType(
                         files: [
                             FileInfoV2Type(
                                 filename: "filename",
@@ -2128,7 +2148,7 @@ import Trace
                     )
                 ],
                 generatedTemplateFiles: [
-                    .java: FilesType(
+                    Language.java: FilesType(
                         files: [
                             FileInfoV2Type(
                                 filename: "filename",
@@ -2146,7 +2166,7 @@ import Trace
                     )
                 ],
                 other: [
-                    .java: FilesType(
+                    Language.java: FilesType(
                         files: [
                             FileInfoV2Type(
                                 filename: "filename",
@@ -2195,7 +2215,7 @@ import Trace
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
-                                            .java: FunctionImplementationType(
+                                            Language.java: FunctionImplementationType(
                                                 impl: "impl",
                                                 imports: Optional("imports")
                                             )
@@ -2247,7 +2267,7 @@ import Trace
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
-                                            .java: FunctionImplementationType(
+                                            Language.java: FunctionImplementationType(
                                                 impl: "impl",
                                                 imports: Optional("imports")
                                             )

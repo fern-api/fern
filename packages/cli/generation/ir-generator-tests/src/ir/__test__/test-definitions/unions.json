@@ -2,6 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
+    "specVersion": null,
     "apiName": "unions",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -7337,7 +7338,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "/bigunion",
                 "parts": []
             },
             "headers": [],
@@ -7354,6 +7355,7 @@
                     "id": "endpoint_bigunion.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7371,7 +7373,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/",
+                        "head": "/bigunion/",
                         "parts": [
                             {
                                 "pathParameter": "id",
@@ -7469,7 +7471,7 @@
                         {
                             "example": {
                                 "id": "d2e0ccdd",
-                                "url": "/id",
+                                "url": "/bigunion/id",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
@@ -7649,6 +7651,7 @@
                     "id": "endpoint_bigunion.update",
                     "name": "update",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7661,7 +7664,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "",
+                        "head": "/bigunion",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -7748,7 +7751,7 @@
                         {
                             "example": {
                                 "id": "874c7742",
-                                "url": "",
+                                "url": "/bigunion",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -7910,6 +7913,7 @@
                     "id": "endpoint_bigunion.update-many",
                     "name": "update-many",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -7922,7 +7926,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/many",
+                        "head": "/bigunion/many",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -8038,7 +8042,7 @@
                         {
                             "example": {
                                 "id": "6bc8bf9d",
-                                "url": "/many",
+                                "url": "/bigunion/many",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [],
@@ -8434,6 +8438,7 @@
                     "id": "endpoint_union.get",
                     "name": "get",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -8710,6 +8715,7 @@
                     "id": "endpoint_union.update",
                     "name": "update",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,
@@ -20192,7 +20198,7 @@
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/{id}"
+                    "path": "/bigunion/{id}"
                 },
                 "request": {
                     "type": "body",
@@ -20303,7 +20309,7 @@
                 },
                 "location": {
                     "method": "PATCH",
-                    "path": "/"
+                    "path": "/bigunion"
                 },
                 "request": {
                     "type": "body",
@@ -20389,7 +20395,7 @@
                 },
                 "location": {
                     "method": "PATCH",
-                    "path": "/many"
+                    "path": "/bigunion/many"
                 },
                 "request": {
                     "type": "body",

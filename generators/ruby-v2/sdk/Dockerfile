@@ -29,19 +29,24 @@ RUN apk --no-cache upgrade && \
         libc-dev && \
     # Update the remaining vulnerable Ruby gems shipped with the base image:
     # - erb 4.0.3 -> 4.0.3.1 (GHSA-q339-8rmv-2mhv: deserialization guard bypass)
-    # - net-imap 0.4.21 -> 0.4.24 (GHSA-vcgp-9326-pqcp STARTTLS stripping,
-    #   GHSA-75xq-5h9v-w6px command injection, GHSA-87pf-fpwv-p7m7 SCRAM DoS,
-    #   GHSA-hm49-wcqc-g2xg "raw" command injection, GHSA-q2mw-fvj9-vvcw response DoS)
+    # - net-imap 0.4.21 -> 0.5.15 (0.4.24 fixed GHSA-vcgp-9326-pqcp STARTTLS
+    #   stripping, GHSA-75xq-5h9v-w6px command injection, GHSA-87pf-fpwv-p7m7
+    #   SCRAM DoS, GHSA-hm49-wcqc-g2xg "raw" command injection,
+    #   GHSA-q2mw-fvj9-vvcw response DoS; 0.5.15 additionally fixes
+    #   GHSA-46q3-7gv7-qmgg ID/ENABLE command injection,
+    #   GHSA-8p34-64r3-mwg8 non-sync literal command injection,
+    #   GHSA-c4fp-cxrr-mj66 incomplete raw argument validation DoS.
+    #   No 0.4.x patch exists for the June 2026 CVEs, so we jump to 0.5.15.)
     # Ruby ships erb as a default gem and net-imap as a preinstalled gem; simply
     # running `gem install` leaves the original gemspec on disk and SBOM scanners
     # (grype) still report the old version, so remove the stale gemspecs after
     # installing the patched versions.
     gem install --no-document \
         erb:4.0.3.1 \
-        net-imap:0.4.24 && \
+        net-imap:0.5.15 && \
     # Remove both the stale gemspecs and the legacy gem directories. Without
     # removing the directories, grype reports the unpatched versions even
-    # though Ruby is loading the patched 4.0.3.1 / 0.4.24 copies.
+    # though Ruby is loading the patched 4.0.3.1 / 0.5.15 copies.
     rm -f /usr/local/lib/ruby/gems/3.3.0/specifications/default/erb-*.gemspec \
           /usr/local/lib/ruby/gems/3.3.0/specifications/net-imap-0.4.21.gemspec && \
     rm -rf /usr/local/lib/ruby/gems/3.3.0/gems/erb-4.0.3 \
@@ -145,6 +150,19 @@ RUN for dir in \
         tar -xzf brace-expansion-5.0.6.tgz && \
         mv package brace-expansion && \
         rm brace-expansion-5.0.6.tgz; \
+      fi; \
+    done
+
+# - undici 6.25.0 -> 6.27.0 (CVE-2026-12151).
+RUN for dir in \
+      /usr/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
       fi; \
     done
 

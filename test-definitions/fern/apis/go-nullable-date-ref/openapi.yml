@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: go-nullable-date-ref
+  version: 1.0.0
+paths:
+  /reports:
+    post:
+      operationId: reports_create
+      tags:
+        - Reports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Report"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Report"
+components:
+  schemas:
+    ISO8601Date:
+      type: string
+      format: date
+      description: A date in YYYY-MM-DD format.
+    ISO8601DateNullable:
+      type:
+        - string
+        - "null"
+      format: date
+      description: A date in YYYY-MM-DD format, or null.
+    ISO8601DateTimeNullable:
+      type:
+        - string
+        - "null"
+      format: date-time
+      description: A date-time in ISO 8601 format, or null.
+    NullableString:
+      type:
+        - string
+        - "null"
+      description: A string or null.
+    Report:
+      type: object
+      properties:
+        created_date:
+          $ref: "#/components/schemas/ISO8601Date"
+        fraud_date:
+          $ref: "#/components/schemas/ISO8601DateNullable"
+        resolved_date:
+          $ref: "#/components/schemas/ISO8601DateTimeNullable"
+        description:
+          $ref: "#/components/schemas/NullableString"
+        title:
+          type: string
+      required:
+        - title
+        - created_date

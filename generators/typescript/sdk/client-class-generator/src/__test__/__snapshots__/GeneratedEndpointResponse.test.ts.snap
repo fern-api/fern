@@ -47,7 +47,7 @@ exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset paginati
 
 exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset pagination info without step 2`] = `"response?.items ?? []"`;
 
-exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset-step pagination info with step and item-index semantics 1`] = `"(response?.items ?? []).length >= Math.floor((request?.limit ?? 1))"`;
+exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > returns offset-step pagination info with step and item-index semantics 1`] = `"(response?.items ?? []).length > 0 && (request?.limit == null || (response?.items ?? []).length >= request?.limit)"`;
 
 exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > uses hasNextPage property when available 1`] = `"response?.hasMore ?? (response?.items ?? []).length > 0"`;
 

@@ -143,10 +143,10 @@ describe("generate() — full pipeline integration", () => {
 
         // Verify specific file paths exist
         const expectedFiles = [
-            `${SLUG}/nemo_rl.mdx`,
+            `${SLUG}/nemo_rl/index.mdx`,
             `${SLUG}/nemo_rl/distillation.mdx`,
             `${SLUG}/nemo_rl/package_info.mdx`,
-            `${SLUG}/nemo_rl/data.mdx`,
+            `${SLUG}/nemo_rl/data/index.mdx`,
             `${SLUG}/nemo_rl/data/aime.mdx`
         ];
         for (const relPath of expectedFiles) {
@@ -162,7 +162,7 @@ describe("generate() — full pipeline integration", () => {
         const ir = buildTestIr();
         const result = generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        expect(result.rootPageId).toBe("reference/python/nemo_rl.mdx");
+        expect(result.rootPageId).toBe("reference/python/nemo_rl/index.mdx");
     });
 
     it("every page has valid MDX frontmatter with slug and title", () => {
@@ -183,7 +183,7 @@ describe("generate() — full pipeline integration", () => {
         const ir = buildTestIr();
         generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        const rootPage = readFileSync(join(tmpDir, `${SLUG}/nemo_rl.mdx`), "utf-8");
+        const rootPage = readFileSync(join(tmpDir, `${SLUG}/nemo_rl/index.mdx`), "utf-8");
 
         // Has submodule links (package has submodules)
         expect(rootPage).toContain("## Subpackages");
@@ -231,7 +231,7 @@ describe("generate() — full pipeline integration", () => {
         const ir = buildTestIr();
         generate({ ir, outputDir: tmpDir, slug: SLUG, title: "Python SDK" });
 
-        const page = readFileSync(join(tmpDir, `${SLUG}/nemo_rl/data.mdx`), "utf-8");
+        const page = readFileSync(join(tmpDir, `${SLUG}/nemo_rl/data/index.mdx`), "utf-8");
 
         // Has submodule links but no content sections
         expect(page).toContain("## Submodules");
@@ -362,9 +362,9 @@ describe("generate() — edge cases", () => {
 
         // Pages: a (has submodules), b (has submodules), c (has submodules), deep (has content)
         expect(result.pageCount).toBe(4);
-        expect(existsSync(join(tmpDir, "ref/a.mdx"))).toBe(true);
-        expect(existsSync(join(tmpDir, "ref/a/b.mdx"))).toBe(true);
-        expect(existsSync(join(tmpDir, "ref/a/b/c.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/b/index.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "ref/a/b/c/index.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "ref/a/b/c/deep.mdx"))).toBe(true);
     });
 

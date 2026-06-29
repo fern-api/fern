@@ -55,7 +55,10 @@ internal partial class RawClient(ClientOptions clientOptions)
         return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
     }
 
-    private static async Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage request)
+    private static async Task<HttpRequestMessage> CloneRequestAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken = default
+    )
     {
         var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri)
         {
@@ -82,7 +85,11 @@ internal partial class RawClient(ClientOptions clientOptions)
                     foreach (var content in oldMultipartFormContent)
                     {
                         var ms = new MemoryStream();
+#if NET5_0_OR_GREATER
+                        await content.CopyToAsync(ms, cancellationToken).ConfigureAwait(false);
+#else
                         await content.CopyToAsync(ms).ConfigureAwait(false);
+#endif
                         ms.Position = 0;
                         var newPart = new StreamContent(ms);
                         foreach (var header in content.Headers)
@@ -97,7 +104,13 @@ internal partial class RawClient(ClientOptions clientOptions)
                     break;
                 default:
                     var bodyStream = new MemoryStream();
+#if NET5_0_OR_GREATER
+                    await request
+                        .Content.CopyToAsync(bodyStream, cancellationToken)
+                        .ConfigureAwait(false);
+#else
                     await request.Content.CopyToAsync(bodyStream).ConfigureAwait(false);
+#endif
                     bodyStream.Position = 0;
                     var clonedContent = new StreamContent(bodyStream);
                     foreach (var header in request.Content.Headers)
@@ -129,37 +142,45 @@ internal partial class RawClient(ClientOptions clientOptions)
     )
     {
         var httpClient = options?.HttpClient ?? Options.HttpClient;
-        var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
-        var response = await httpClient
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
+        var maxRetries = Math.Max(0, options?.MaxRetries ?? Options.MaxRetries);
         var isRetryableContent = IsRetryableContent(request);
 
-        if (!isRetryableContent)
+        if (!isRetryableContent || maxRetries == 0)
         {
+            var response = await httpClient
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
             return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
         }
 
-        for (var i = 0; i < maxRetries; i++)
+        // Always send a clone, never the original: HttpClient (e.g. under HTTP/2) disposes
+        // request.Content after sending, which would break the next attempt's clone.
+        HttpResponseMessage? retryResponse = null;
+        for (var attempt = 0; attempt <= maxRetries; attempt++)
         {
-            if (!ShouldRetry(response))
+            if (attempt > 0)
             {
-                break;
+                var delayMs = GetRetryDelayFromHeaders(retryResponse!, attempt - 1);
+                await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             }
 
-            var delayMs = GetRetryDelayFromHeaders(response, i);
-            await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
-            using var retryRequest = await CloneRequestAsync(request).ConfigureAwait(false);
-            response = await httpClient
+            using var attemptRequest = await CloneRequestAsync(request, cancellationToken)
+                .ConfigureAwait(false);
+            retryResponse = await httpClient
                 .SendAsync(
-                    retryRequest,
+                    attemptRequest,
                     HttpCompletionOption.ResponseHeadersRead,
                     cancellationToken
                 )
                 .ConfigureAwait(false);
+
+            if (!ShouldRetry(retryResponse))
+            {
+                break;
+            }
         }
 
-        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        return new ApiResponse { StatusCode = (int)retryResponse!.StatusCode, Raw = retryResponse };
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)

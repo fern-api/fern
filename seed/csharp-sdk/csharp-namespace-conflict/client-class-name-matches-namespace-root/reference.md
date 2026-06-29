@@ -1,6 +1,6 @@
 # Reference
 ## Tasktest
-<details><summary><code>client.Tasktest.<a href="/src/Seed.CsharpNamespaceConflict/Tasktest/TasktestClient.cs">HelloAsync</a>()</code></summary>
+<details><summary><code>client.Tasktest.<a href="/src/Seed.CsharpNamespaceConflict/Tasktest/TasktestClient.cs">HelloAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

@@ -12,7 +12,6 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -43,12 +42,7 @@ Instantiate and use the client with the following:
 using SeedPaginationUriPath;
 
 var client = new SeedPaginationUriPathClient("TOKEN");
-var items = await client.Users.ListWithUriPaginationAsync();
-
-await foreach (var item in items)
-{
-    // do something with item
-}
+await client.Users.ListWithUriPaginationAsync();
 ```
 
 ## Exception Handling
@@ -64,22 +58,17 @@ try {
 } catch (SeedPaginationUriPathApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
-}
-```
 
-## Pagination
-
-List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
-
-```csharp
-using SeedPaginationUriPath;
-
-var client = new SeedPaginationUriPathClient("TOKEN");
-var items = await client.Users.ListWithUriPaginationAsync();
-
-await foreach (var item in items)
-{
-    // do something with item
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 ```
 
@@ -155,6 +144,9 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 
 // For the default behavior, simply await without .WithRawResponse()
 var data = await client.Users.ListWithUriPaginationAsync(...);
+
+// .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
+// and on endpoints with no response body (returns RawResponse only).
 ```
 
 ### Additional Headers

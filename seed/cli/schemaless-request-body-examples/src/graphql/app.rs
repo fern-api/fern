@@ -167,7 +167,7 @@ impl CliApp {
         self
     }
 
-    /// Decorate a clap `Command` with the auth help section.
+    /// Decorate a clap `Command` with the auth help section and built-in debug flags.
     /// Called from `GraphqlBinding::build_command()`.
     pub(crate) fn decorate_command(&self, mut cli: clap::Command) -> clap::Command {
         let existing_after_help = cli.get_after_help().map(|s| s.to_string());
@@ -182,6 +182,13 @@ impl CliApp {
             }
             cli = cli.after_help(sections.join("\n\n"));
         }
+        cli = cli.arg(
+            clap::Arg::new("debug")
+                .long("debug")
+                .action(clap::ArgAction::SetTrue)
+                .global(true)
+                .help("Dump HTTP request and response to stderr"),
+        );
         cli
     }
 
@@ -230,7 +237,10 @@ pub(crate) struct BindingEntry {
 pub struct AppContext {
     entries: Vec<BindingEntry>,
     /// Whether `--quiet` was passed on the command line.
-    quiet: bool,
+    pub(crate) quiet: bool,
+    /// Whether `--debug` was passed on the command line. When true, the
+    /// executor dumps HTTP request/response traffic to stderr.
+    pub(crate) debug: bool,
 }
 
 impl AppContext {
@@ -242,11 +252,17 @@ impl AppContext {
         Self {
             entries: vec![BindingEntry { doc, auth_provider, http_config }],
             quiet: false,
+            debug: false,
         }
     }
 
     pub(crate) fn with_quiet(mut self, quiet: bool) -> Self {
         self.quiet = quiet;
+        self
+    }
+
+    pub(crate) fn with_debug(mut self, debug: bool) -> Self {
+        self.debug = debug;
         self
     }
 
@@ -280,7 +296,12 @@ impl AppContext {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
+            query: None,
         };
+
+        // Programmatic execution from custom command handlers honors the
+        // default retry policy; there is no `--no-retry` opt-out on this path.
+        let retry_policy = executor::resolve_retry_policy(false);
 
         tokio::runtime::Handle::current()
             .block_on(executor::execute_method(
@@ -295,7 +316,9 @@ impl AppContext {
                 false,
                 None,
                 &entry.http_config,
+                &retry_policy,
                 false,
+                false, // debug: programmatic callers never use the HTTP dump
             ))
             .map(|_| ())
     }
@@ -439,7 +462,10 @@ pub(crate) fn collect_params_from_flags(
     Ok(params)
 }
 
-pub(crate) fn build_pagination_config(matches: &clap::ArgMatches) -> executor::PaginationConfig {
+pub(crate) fn build_pagination_config(
+    matches: &clap::ArgMatches,
+    cli_name: &str,
+) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
         page_limit: matches
@@ -450,6 +476,8 @@ pub(crate) fn build_pagination_config(matches: &clap::ArgMatches) -> executor::P
             .get_one::<u64>("page-delay")
             .copied()
             .unwrap_or(100),
+        no_pager: matches.get_flag("no-pager"),
+        cli_name: cli_name.to_string(),
     }
 }
 

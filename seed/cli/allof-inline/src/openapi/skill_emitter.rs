@@ -91,9 +91,26 @@ fn render_shared_skill(
         render_auth_section(&mut out, doc, bin_name, auth_bindings);
     }
 
-    // Global flags
+    // Global + commonly-used flags.
+    //
+    // This table groups every flag an agent is likely to need into one
+    // place — both the *harness* globals (available on every op:
+    // `--schema`, `--dry-run`, `--format`, `--base-url`, `--quiet`) and
+    // *per-op* affordances added only when the spec supports them
+    // (`--page-all`, `--output`, `--params`, `--json`, etc.). The JSON
+    // `--schema` flag distinguishes the two via `globalFlags` vs
+    // per-op capability hints (`paginable`, `binaryResponse`); this
+    // SKILL.md table is for the human reader who just wants the
+    // affordance list. See ADR-0006 for the JSON contract.
     let _ = writeln!(out, "## Global Flags\n");
-    let _ = writeln!(out, "These flags are available on every command:\n");
+    let _ = writeln!(
+        out,
+        "These flags appear across the CLI. The harness-level ones (`--dry-run`, \
+         `--format`, `--base-url`, `--quiet`) are available on every command; the \
+         rest (`--page-all`, `--output`, ...) surface on operations whose spec \
+         supports the affordance — check the per-op `--schema` output's \
+         `paginable` / `binaryResponse` hints to know which ops carry them.\n"
+    );
     let _ = writeln!(out, "| Flag | Description | Default |");
     let _ = writeln!(out, "|------|-------------|---------|");
     let _ = writeln!(
@@ -102,7 +119,7 @@ fn render_shared_skill(
     );
     let _ = writeln!(
         out,
-        "| `--format <FMT>` | Output format: `json`, `table`, `yaml`, `csv` | `json` |"
+        "| `--format <FMT>` | Output format: `json`, `table`, `yaml`, `csv`, `raw`, `jsonl`, `http` | `json` |"
     );
     let _ = writeln!(
         out,
@@ -131,6 +148,10 @@ fn render_shared_skill(
     let _ = writeln!(
         out,
         "| `--page-delay <MS>` | Delay between page fetches | `100` |"
+    );
+    let _ = writeln!(
+        out,
+        "| `--no-pager` | Disable pager even on interactive terminals | |"
     );
     let _ = writeln!(
         out,
@@ -255,6 +276,9 @@ fn describe_credential_source(src: &AuthCredentialSource) -> String {
             .map(describe_credential_source)
             .collect::<Vec<_>>()
             .join(" or "),
+        AuthCredentialSource::Keyring { service, account } => {
+            format!("keyring `{service}:{account}` (populated by `auth login`)")
+        }
         AuthCredentialSource::Missing => "(unbound)".to_string(),
     }
 }
@@ -332,12 +356,17 @@ fn render_group_skill(
 
     // Discovering Commands
     let _ = writeln!(out, "## Discovering Commands\n");
-    let _ = writeln!(out, "Before calling any API method, inspect it:\n");
+    let _ = writeln!(
+        out,
+        "**Agents: always prefer `--schema` over `--help`** — `--schema` returns \
+         JSON; `--help` returns human prose.\n"
+    );
     let _ = writeln!(out, "```bash");
-    let _ = writeln!(out, "# Browse resources and methods");
-    let _ = writeln!(out, "{bin_name} {group_name} --help\n");
-    let _ = writeln!(out, "# Machine-readable operation list");
-    let _ = writeln!(out, "{bin_name} {group_name} --help --format json");
+    let _ = writeln!(out, "# Machine-readable surface (use this)");
+    let _ = writeln!(out, "{bin_name} {group_name} --schema");
+    let _ = writeln!(out, "{bin_name} {group_name} <method> --schema\n");
+    let _ = writeln!(out, "# Human-readable help (for humans)");
+    let _ = writeln!(out, "{bin_name} {group_name} --help");
     let _ = writeln!(out, "```\n");
 
     out
@@ -577,7 +606,7 @@ mod tests {
         let group = &files[1].1;
         assert!(group.contains("## Discovering Commands"));
         assert!(group.contains("testcli items --help"));
-        assert!(group.contains("--help --format json"));
+        assert!(group.contains("testcli items --schema"));
     }
 
     #[test]

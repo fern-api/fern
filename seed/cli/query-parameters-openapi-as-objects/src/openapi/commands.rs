@@ -97,11 +97,15 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
     "page-all",
     "page-limit",
     "page-delay",
+    "no-pager",
     "no-extract",
     "no-retry",
     "no-stream",
     "quiet",
+    "query",
     "help",
+    "debug",
+    "schema",
 ];
 
 /// The non-auth portion of the `--help` footer. Auth env vars are
@@ -144,7 +148,7 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .arg(
             clap::Arg::new("format")
                 .long("format")
-                .help("Output format: json (default), table, yaml, csv")
+                .help("Output format: json, table, yaml, csv, raw, jsonl, http. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON). http emits the full HTTP response (status line + headers + body).")
                 .value_name("FORMAT")
                 .global(true),
         )
@@ -161,6 +165,17 @@ pub fn build_cli(doc: &RestDescription) -> Command {
                 .short('q')
                 .help("Suppress stdout output on success (errors still go to stderr)")
                 .action(clap::ArgAction::SetTrue)
+                .global(true),
+        )
+        .arg(
+            clap::Arg::new("query")
+                .long("query")
+                .help(
+                    "JMESPath expression applied to the response before formatting. \
+                     For streaming responses, events whose projection is null are \
+                     suppressed (use as a per-event filter).",
+                )
+                .value_name("EXPR")
                 .global(true),
         );
 
@@ -293,14 +308,24 @@ fn build_resource_command(
                     .long("params")
                     .help("Additional parameters as JSON (overrides individual flags)")
                     .value_name("JSON"),
-            )
-            .arg(
+            );
+
+        // `-o, --output PATH` is only meaningful for operations that can
+        // return a binary body — the JSON path in `process_response` never
+        // consults `output_path`, so on pure-JSON ops the flag would
+        // silently no-op. Hide it where it does nothing rather than
+        // surface a misleading affordance in `--help`. Mixed-response ops
+        // (binary 2xx + JSON 4xx) still get the flag because the success
+        // path is what writes a file.
+        if method.has_binary_response {
+            method_cmd = method_cmd.arg(
                 Arg::new("output")
                     .long("output")
                     .short('o')
                     .help("Output file path for binary responses (use '-' to stream to stdout)")
                     .value_name("PATH"),
             );
+        }
 
         // Add --json flag for REST request bodies
         if method.request.is_some() {
@@ -318,17 +343,19 @@ fn build_resource_command(
         // `x-fern-parameter-name` on the requestBody, or defaults to `file`
         // for `format: binary` schemas (else `body`).
         //
-        // Accepts three forms: <PATH>, @<PATH> (curl-style), or `-` for stdin.
+        // Accepts four forms: <PATH>, @<PATH> (curl-style), `\@<REST>` (escape
+        // — send the literal value `@<REST>`), or `-` for stdin.
         if let Some(ref binary) = method.binary_request_body {
             method_cmd = method_cmd.arg(
                 Arg::new(binary.flag_name.clone())
                     .long(binary.flag_name.clone())
-                    .value_name("PATH|@PATH|-")
+                    .value_name("PATH|@PATH|\\@LITERAL|-")
                     .help(format!(
                         "Body for the request (Content-Type: {}). Accepts:\n  \
-                         <PATH>     plain filesystem path\n  \
-                         @<PATH>    same path (curl-style prefix)\n  \
-                         -          read from stdin (sent chunked)",
+                         <PATH>      plain filesystem path\n  \
+                         @<PATH>     same path (curl-style prefix)\n  \
+                         \\@<REST>    escape: send literal value @<REST>\n  \
+                         -           read from stdin (sent chunked)",
                         binary.content_type,
                     )),
             );
@@ -366,6 +393,12 @@ fn build_resource_command(
                     .help("Delay in milliseconds between page fetches (default: 100)")
                     .value_name("MS")
                     .value_parser(clap::value_parser!(u64)),
+            )
+            .arg(
+                Arg::new("no-pager")
+                    .long("no-pager")
+                    .help("Disable pager even on interactive terminals")
+                    .action(clap::ArgAction::SetTrue),
             )
             .arg(
                 Arg::new("no-extract")
@@ -658,12 +691,13 @@ fn build_possible_value(wire: &str, cfg: Option<&FernEnumValue>) -> PossibleValu
 }
 
 /// Build a `clap::Arg` for a single [`MultipartField`]. File fields
-/// accept a path (or `@path` / `-` for stdin); text fields accept a
-/// plain string value.
+/// accept a path (`<PATH>` / `@<PATH>` / `-` for stdin), or a `\@<REST>`
+/// escape that sends the literal text `@<REST>` as the part value;
+/// text fields accept a plain string value.
 fn build_multipart_field_arg(field: &MultipartField) -> Arg {
     let kebab = to_kebab_flag(&field.wire_name);
     let (value_name, help_prefix) = if field.is_file {
-        ("PATH|@PATH|-", "File to upload")
+        ("PATH|@PATH|\\@LITERAL|-", "File to upload")
     } else {
         ("VALUE", "")
     };

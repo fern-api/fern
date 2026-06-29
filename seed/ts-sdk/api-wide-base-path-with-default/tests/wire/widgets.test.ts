@@ -4,24 +4,28 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("WidgetsClient", () => {
+    
     test("create", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, apiVersion: "v1beta", environment: server.baseUrl });
-        const rawRequestBody = { name: "name" };
-        const rawResponseBody = { name: "name" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "apiVersion" : "v1beta" , "environment" : server.baseUrl });
+        const rawRequestBody = { "name" : "name" };
+        const rawResponseBody = { "name" : "name" };
+        
         server
             .mockEndpoint()
-            .post("/v1beta/widgets")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/v1beta/widgets").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.widgets.create({
-            name: "name",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.widgets.create({
+    name: "name"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

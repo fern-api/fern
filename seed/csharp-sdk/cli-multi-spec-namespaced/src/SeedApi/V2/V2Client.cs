@@ -53,7 +53,7 @@ public partial class V2Client : IV2Client
                 return new WithRawResponse<IEnumerable<UserV2>>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -67,7 +67,13 @@ public partial class V2Client : IV2Client
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -78,7 +84,13 @@ public partial class V2Client : IV2Client
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

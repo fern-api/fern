@@ -15,19 +15,32 @@ import java.util.function.Supplier;
 public final class InferredAuthTokenSupplier implements Supplier<Map<String, String>> {
     private static final long BUFFER_IN_MINUTES = 2;
 
+    private final String clientId;
+
+    private final String clientSecret;
+
+    private final String scope;
+
     private final AuthClient authClient;
 
     private Map<String, String> cachedHeaders;
 
     private Instant expiresAt;
 
-    public InferredAuthTokenSupplier(AuthClient authClient) {
+    public InferredAuthTokenSupplier(String clientId, String clientSecret, String scope, AuthClient authClient) {
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.scope = scope;
         this.authClient = authClient;
         this.expiresAt = Instant.now();
     }
 
     private TokenResponse fetchToken() {
-        GetTokenRequest getTokenRequest = GetTokenRequest.builder().build();
+        GetTokenRequest getTokenRequest = GetTokenRequest.builder()
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .scope(scope)
+                .build();
         return authClient.getTokenWithClientCredentials(getTokenRequest);
     }
 

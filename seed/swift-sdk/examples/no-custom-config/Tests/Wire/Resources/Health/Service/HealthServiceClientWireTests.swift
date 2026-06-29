@@ -6,7 +6,7 @@ import Examples
     @Test func ping1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8
@@ -25,7 +25,7 @@ import Examples
     @Test func ping2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8

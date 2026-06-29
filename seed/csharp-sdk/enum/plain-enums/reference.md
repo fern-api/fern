@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.<a href="/src/SeedEnum/Headers/HeadersClient.cs">SendAsync</a>(SendEnumAsHeaderRequest { ... })</code></summary>
+<details><summary><code>client.Headers.<a href="/src/SeedEnum/Headers/HeadersClient.cs">SendAsync</a>(SendEnumAsHeaderRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ await client.Headers.SendAsync(
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.InlinedRequest.<a href="/src/SeedEnum/InlinedRequest/InlinedRequestClient.cs">SendAsync</a>(SendEnumInlinedRequest { ... })</code></summary>
+<details><summary><code>client.InlinedRequest.<a href="/src/SeedEnum/InlinedRequest/InlinedRequestClient.cs">SendAsync</a>(SendEnumInlinedRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ await client.InlinedRequest.SendAsync(
 
 ## MultipartForm
 ## PathParam
-<details><summary><code>client.PathParam.<a href="/src/SeedEnum/PathParam/PathParamClient.cs">SendAsync</a>(operand, operandOrColor)</code></summary>
+<details><summary><code>client.PathParam.<a href="/src/SeedEnum/PathParam/PathParamClient.cs">SendAsync</a>(operand, operandOrColor) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -142,7 +142,7 @@ await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 </details>
 
 ## QueryParam
-<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendAsync</a>(SendEnumAsQueryParamRequest { ... })</code></summary>
+<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendAsync</a>(SendEnumAsQueryParamRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -184,7 +184,7 @@ await client.QueryParam.SendAsync(
 </dl>
 </details>
 
-<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendListAsync</a>(SendEnumListAsQueryParamRequest { ... })</code></summary>
+<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendListAsync</a>(SendEnumListAsQueryParamRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

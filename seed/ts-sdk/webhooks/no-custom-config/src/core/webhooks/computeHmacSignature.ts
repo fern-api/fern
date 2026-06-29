@@ -1,5 +1,5 @@
 import { RUNTIME } from "../runtime/index.js";
-import type { SignatureEncoding } from "./types.js";
+import { SignatureEncoding } from "./types.js";
 
 export type HmacAlgorithm = "sha256" | "sha1" | "sha384" | "sha512";
 
@@ -38,7 +38,7 @@ export async function computeHmacSignature(args: ComputeHmacSignatureArgs): Prom
         enc.encode(args.secret),
         { name: "HMAC", hash: hmacAlgorithmToSubtleName(args.algorithm) },
         false,
-        ["sign"],
+        ["sign"]
     );
     const signatureBuffer = await subtle.sign("HMAC", keyMaterial, enc.encode(args.payload));
     const bytes = new Uint8Array(signatureBuffer);

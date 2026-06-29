@@ -225,6 +225,7 @@
             "_visit": [Function],
             "type": "openapi",
           },
+          "subtitle": undefined,
           "transport": undefined,
           "userSpecifiedExamples": [],
           "v2BaseUrls": undefined,
@@ -370,6 +371,7 @@ func main() {
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "getUser_Response_200": {

@@ -2464,6 +2464,80 @@ client.Endpoints.Params.UploadWithPath(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Params.CreateWithBodyAndQuery(request) -> *types.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.CreateWithBodyAndQuery{
+        Fields: fern.String(
+            "_fields",
+        ),
+        Body: &types.ObjectWithRequiredField{
+            FieldString: "string",
+        },
+    }
+client.Endpoints.Params.CreateWithBodyAndQuery(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Params.GetWithBooleanPath(Param) -> string</code></summary>
 <dl>
 <dd>
@@ -3305,6 +3379,81 @@ client.InlinedRequests.PostWithObjectBodyandResponse(
 <dd>
 
 **nestedObject:** `*types.ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlinedRequests.PostWithArrayBodyAndHeaders(request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.PostWithArrayBodyAndHeaders{
+        XCustomHeader: fern.String(
+            "X-Custom-Header",
+        ),
+        Body: []string{
+            "string",
+            "string",
+        },
+    }
+client.InlinedRequests.PostWithArrayBodyAndHeaders(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xCustomHeader:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `[]string` 
     
 </dd>
 </dl>

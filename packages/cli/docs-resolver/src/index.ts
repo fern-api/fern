@@ -8,7 +8,10 @@ export {
     stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
-export { applyTranslatedApiTitlesToNavTree } from "./applyTranslatedApiTitlesToNavTree.js";
+export {
+    applyTranslatedApiTitlesToNavTree,
+    findIncompatibleTranslatedApiIds
+} from "./applyTranslatedApiTitlesToNavTree.js";
 export { applyTranslatedFrontmatterToNavTree } from "./applyTranslatedFrontmatterToNavTree.js";
 export {
     applyTranslatedNavigationOverlays,

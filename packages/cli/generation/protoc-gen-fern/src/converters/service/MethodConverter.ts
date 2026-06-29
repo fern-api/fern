@@ -71,6 +71,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 response: convertedResponseBody?.responseBody,
                 v2Responses: undefined,
                 displayName: this.context.maybeRemoveGrpcPackagePrefix(this.operation.name),
+                subtitle: undefined,
                 method: HttpMethod.Post,
                 baseUrl: undefined,
                 v2BaseUrls: undefined,

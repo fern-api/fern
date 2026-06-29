@@ -6,7 +6,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
+import { BaseJavaCustomConfigSchema, escapeJavaKeyword, java } from "@fern-api/java-ast";
 import { camelCase } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
@@ -37,17 +37,26 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
+    /**
+     * The set of type IDs that the v1 generator emits as nested (inline) classes rather than
+     * top-level types. The dynamic IR does not carry the `inline` flag, so the v2 SDK generator
+     * computes this from the full IR and threads it through. Used to mirror v1's nested-class
+     * naming when referencing inline types in snippets.
+     */
+    public inlineTypeIds: Set<string>;
 
     constructor({
         ir,
         config,
         options,
-        sharedCustomConfig
+        sharedCustomConfig,
+        inlineTypeIds
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
         sharedCustomConfig?: BaseJavaCustomConfigSchema;
+        inlineTypeIds?: Set<string>;
     }) {
         super({ ir, config, options });
         this.ir = ir;
@@ -55,6 +64,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
+        this.inlineTypeIds = inlineTypeIds ?? new Set();
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -62,8 +72,39 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             ir: this.ir,
             config: this.config,
             options: this.options,
-            sharedCustomConfig: this.customConfig
+            sharedCustomConfig: this.customConfig,
+            inlineTypeIds: this.inlineTypeIds
         });
+    }
+
+    public isInlineType(typeId: string): boolean {
+        return this.inlineTypeIds.has(typeId);
+    }
+
+    /**
+     * Builds a reference to a class nested within `enclosing`. The resulting reference imports the
+     * outermost enclosing class and is written using the dotted path (e.g. `PostRootRequest.Bar`).
+     */
+    public getNestedInlineClassReference({
+        enclosing,
+        name
+    }: {
+        enclosing: java.ClassReference;
+        name: string;
+    }): java.ClassReference {
+        return java.classReference({
+            name,
+            packageName: enclosing.packageName,
+            enclosingClasses: [...enclosing.enclosingClasses, enclosing.name]
+        });
+    }
+
+    public wrappedAliases(): boolean {
+        return this.customConfig?.["wrapped-aliases"] ?? false;
+    }
+
+    public enableInlineTypes(): boolean {
+        return this.customConfig?.["enable-inline-types"] ?? false;
     }
 
     public getClassName(name: FernIr.Name): string {
@@ -191,7 +232,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             java.codeblock((writer) => {
                 writer.write("new ");
                 writer.writeNode(this.getFileStreamClassReference());
-                writer.write("(");
+                writer.write("(new ");
                 writer.writeNode(this.getByteArrayInputStreamClassReference());
                 writer.write("(");
                 writer.writeNode(java.TypeLiteral.string(content));
@@ -200,6 +241,25 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 writer.write(".UTF_8)))");
             })
         );
+    }
+
+    public getJavaIoFileFromString(content: string): java.TypeLiteral {
+        return java.TypeLiteral.reference(
+            java.codeblock((writer) => {
+                writer.write("new ");
+                writer.writeNode(this.getJavaIoFileClassReference());
+                writer.write("(");
+                writer.writeNode(java.TypeLiteral.string(content));
+                writer.write(")");
+            })
+        );
+    }
+
+    public getJavaIoFileClassReference(): java.ClassReference {
+        return java.classReference({
+            name: "File",
+            packageName: "java.io"
+        });
     }
 
     public getFileStreamClassReference(): java.ClassReference {
@@ -407,6 +467,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.customConfig?.["inline-file-properties"] ?? false;
     }
 
+    public usesNullableAnnotation(): boolean {
+        return this.customConfig?.["use-nullable-annotation"] === true;
+    }
+
+    public usesOptionalNullable(): boolean {
+        return this.customConfig?.["collapse-optional-nullable"] === true;
+    }
+
     private getPackageNameSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {
         return fernFilepath.packagePath.map((segment: FernIr.dynamic.Name) => this.getPackageNameSegment(segment));
     }
@@ -451,7 +519,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? "_" + token : token;
+            return this.startsWithNumber(token) ? "_" + token : escapeJavaKeyword(token);
         });
         return sanitizedTokens.join(".");
     }

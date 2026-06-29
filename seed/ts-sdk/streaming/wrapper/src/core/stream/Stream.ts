@@ -1,4 +1,6 @@
-import type { Readable } from "stream";
+
+import { Readable } from "stream";
+
 
 import { fromJson } from "../json.js";
 import { RUNTIME } from "../runtime/index.js";
@@ -8,9 +10,9 @@ export declare namespace Stream {
         /**
          * The HTTP response stream to read from.
          */
-
+        
         stream: Readable | ReadableStream;
-
+        
         /**
          * The event shape to use for parsing the stream data.
          */
@@ -19,6 +21,16 @@ export declare namespace Stream {
          * An abort signal to stop the stream.
          */
         signal?: AbortSignal;
+        /**
+         * Whether transparent mid-stream reconnection is enabled on resumable
+         * SSE endpoints. Defaults to true. Has no effect on non-resumable endpoints.
+         */
+        reconnectionEnabled?: boolean;
+        /**
+         * Maximum number of transparent mid-stream reconnect attempts on
+         * resumable SSE endpoints. Has no effect on non-resumable endpoints.
+         */
+        maxReconnectionAttempts?: number;
     }
 
     interface JsonEvent {
@@ -30,15 +42,26 @@ export declare namespace Stream {
         type: "sse";
         streamTerminator?: string;
         eventDiscriminator?: string;
+        resumable?: boolean;
     }
+}
+
+export interface ServerSentEvent<T> {
+    data: T;
+    id?: string;
+    retry?: number;
+    event?: string;
 }
 
 const DATA_PREFIX = "data:";
 const EVENT_PREFIX = "event:";
+const ID_PREFIX = "id:";
+const RETRY_PREFIX = "retry:";
 
 export class Stream<T> implements AsyncIterable<T> {
+    
     private stream: Readable | ReadableStream;
-
+    
     private parse: (val: unknown) => Promise<T>;
     /**
      * The prefix to use for each message. For example,
@@ -48,10 +71,16 @@ export class Stream<T> implements AsyncIterable<T> {
     private messageTerminator: string;
     private streamTerminator: string | undefined;
     private eventDiscriminator: string | undefined;
+    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
+    private resumable: boolean;
+    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
+    private reconnectionEnabled: boolean;
+    // biome-ignore lint/correctness/noUnusedPrivateClassMembers: plumbed for future reconnection logic
+    private maxReconnectionAttempts: number | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
-    constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
+    constructor({ stream, parse, eventShape, signal, reconnectionEnabled, maxReconnectionAttempts }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
         if (eventShape.type === "sse") {
@@ -59,9 +88,13 @@ export class Stream<T> implements AsyncIterable<T> {
             this.messageTerminator = "\n";
             this.streamTerminator = eventShape.streamTerminator;
             this.eventDiscriminator = eventShape.eventDiscriminator;
+            this.resumable = eventShape.resumable ?? false;
         } else {
             this.messageTerminator = eventShape.messageTerminator;
+            this.resumable = false;
         }
+        this.reconnectionEnabled = reconnectionEnabled ?? true;
+        this.maxReconnectionAttempts = maxReconnectionAttempts;
         signal?.addEventListener("abort", () => this.controller.abort());
 
         // Initialize shared TextDecoder
@@ -70,7 +103,7 @@ export class Stream<T> implements AsyncIterable<T> {
         }
     }
 
-    private async *iterMessages(): AsyncGenerator<T, void> {
+    private async *iterMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         if (this.eventDiscriminator != null) {
             yield* this.iterSseEvents();
         } else {
@@ -78,46 +111,81 @@ export class Stream<T> implements AsyncIterable<T> {
         }
     }
 
-    private async *iterDataMessages(): AsyncGenerator<T, void> {
+    private async *iterDataMessages(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
-        let prefixSeen = false;
+        let lastId: string | undefined;
+        let lastRetry: number | undefined;
+        let dataValue: string | undefined;
+
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
 
             let terminatorIndex: number;
             while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
-                let line = buf.slice(0, terminatorIndex);
+                const line = buf.slice(0, terminatorIndex);
                 buf = buf.slice(terminatorIndex + this.messageTerminator.length);
 
                 if (!line.trim()) {
+                    if (this.prefix != null && dataValue != null) {
+                        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                            return;
+                        }
+                        const data = await this.parse(fromJson(dataValue));
+                        yield { data, id: lastId, retry: lastRetry, event: undefined };
+                        dataValue = undefined;
+                    }
                     continue;
                 }
 
-                if (!prefixSeen && this.prefix != null) {
+                if (line.startsWith(ID_PREFIX)) {
+                    const idValue = line.slice(ID_PREFIX.length).trim();
+                    if (!idValue.includes("\0")) {
+                        lastId = idValue;
+                    }
+                    continue;
+                }
+                if (line.startsWith(RETRY_PREFIX)) {
+                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                    const parsed = parseInt(retryValue, 10);
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                        lastRetry = parsed;
+                    }
+                    continue;
+                }
+
+                if (this.prefix != null) {
                     const prefixIndex = line.indexOf(this.prefix);
                     if (prefixIndex === -1) {
                         continue;
                     }
-                    prefixSeen = true;
-                    line = line.slice(prefixIndex + this.prefix.length);
+                    const val = line.slice(prefixIndex + this.prefix.length).trim();
+                    dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                } else {
+                    if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
+                        return;
+                    }
+                    const data = await this.parse(fromJson(line));
+                    yield { data, id: lastId, retry: lastRetry, event: undefined };
                 }
+            }
+        }
 
-                if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
-                    return;
-                }
-                const message = await this.parse(fromJson(line));
-                yield message;
-                prefixSeen = false;
+        if (this.prefix != null && dataValue != null) {
+            if (this.streamTerminator == null || !dataValue.includes(this.streamTerminator)) {
+                const data = await this.parse(fromJson(dataValue));
+                yield { data, id: lastId, retry: lastRetry, event: undefined };
             }
         }
     }
 
-    private async *iterSseEvents(): AsyncGenerator<T, void> {
+    private async *iterSseEvents(): AsyncGenerator<ServerSentEvent<T>, void> {
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let eventType: string | undefined;
         let dataValue: string | undefined;
+        let lastId: string | undefined;
+        let lastRetry: number | undefined;
 
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
@@ -129,11 +197,11 @@ export class Stream<T> implements AsyncIterable<T> {
 
                 if (!line.trim()) {
                     if (dataValue != null) {
-                        const message = await this.dispatchSseEvent(dataValue, eventType);
-                        if (message == null) {
+                        const data = await this.dispatchSseEvent(dataValue, eventType);
+                        if (data == null) {
                             return;
                         }
-                        yield message;
+                        yield { data, id: lastId, retry: lastRetry, event: eventType };
                     }
                     eventType = undefined;
                     dataValue = undefined;
@@ -145,14 +213,25 @@ export class Stream<T> implements AsyncIterable<T> {
                 } else if (line.startsWith(DATA_PREFIX)) {
                     const val = line.slice(DATA_PREFIX.length).trim();
                     dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
+                } else if (line.startsWith(ID_PREFIX)) {
+                    const idValue = line.slice(ID_PREFIX.length).trim();
+                    if (!idValue.includes("\0")) {
+                        lastId = idValue;
+                    }
+                } else if (line.startsWith(RETRY_PREFIX)) {
+                    const retryValue = line.slice(RETRY_PREFIX.length).trim();
+                    const parsed = parseInt(retryValue, 10);
+                    if (!Number.isNaN(parsed) && String(parsed) === retryValue) {
+                        lastRetry = parsed;
+                    }
                 }
             }
         }
 
         if (dataValue != null) {
-            const message = await this.dispatchSseEvent(dataValue, eventType);
-            if (message != null) {
-                yield message;
+            const data = await this.dispatchSseEvent(dataValue, eventType);
+            if (data != null) {
+                yield { data, id: lastId, retry: lastRetry, event: eventType };
             }
         }
     }
@@ -165,6 +244,15 @@ export class Stream<T> implements AsyncIterable<T> {
             return null;
         }
         return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));
+    }
+
+    public withMetadata(): AsyncIterable<ServerSentEvent<T>> {
+        const self = this;
+        return {
+            async *[Symbol.asyncIterator]() {
+                yield* self.iterMessages();
+            }
+        };
     }
 
     private injectDiscriminator(parsed: unknown, eventType: string | undefined): unknown {
@@ -182,8 +270,8 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
-        for await (const message of this.iterMessages()) {
-            yield message;
+        for await (const event of this.iterMessages()) {
+            yield event.data;
         }
     }
 
@@ -232,6 +320,6 @@ export function readableStreamAsyncIterable<T>(stream: any): AsyncIterableIterat
         },
         [Symbol.asyncIterator]() {
             return this;
-        },
+        }
     };
 }

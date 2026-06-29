@@ -81,7 +81,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -97,7 +97,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -108,7 +116,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -174,7 +188,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersMixedTypePaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -190,7 +204,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -201,7 +223,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -262,7 +290,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -278,7 +306,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -289,7 +325,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -360,7 +402,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersTopLevelCursorPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -376,7 +418,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -387,7 +437,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -455,7 +511,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -471,7 +527,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -482,7 +546,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -550,7 +620,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -566,7 +636,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -577,7 +655,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -638,7 +722,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -654,7 +738,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -665,7 +757,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -732,7 +830,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -748,7 +846,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -759,7 +865,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -830,7 +942,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -846,7 +958,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -857,7 +977,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -922,7 +1048,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersExtendedResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -938,7 +1064,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -949,7 +1083,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -1019,7 +1159,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersExtendedOptionalListResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -1035,7 +1175,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -1046,7 +1194,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -1107,7 +1261,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<UsernameCursor>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -1123,7 +1277,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -1134,7 +1296,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -1197,7 +1365,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<UsernameCursor?>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -1213,7 +1381,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -1224,7 +1400,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -1285,7 +1467,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<UsernameContainer>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -1301,7 +1483,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -1312,7 +1502,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -1378,7 +1574,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersOptionalDataPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -1394,7 +1590,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -1405,7 +1609,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -1473,7 +1683,7 @@ public partial class UsersClient : IUsersClient
                         return new WithRawResponse<ListUsersAliasedDataPaginationResponse>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedPagination.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -1489,7 +1699,15 @@ public partial class UsersClient : IUsersClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedPagination.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -1500,7 +1718,13 @@ public partial class UsersClient : IUsersClient
                     throw new SeedPaginationApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedPagination.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })

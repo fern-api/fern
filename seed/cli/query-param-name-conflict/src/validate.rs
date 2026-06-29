@@ -251,25 +251,62 @@ fn normalize_non_existing(path: &Path) -> Result<PathBuf, CliError> {
     Ok(resolved)
 }
 
-/// Characters to encode in a single URL path segment. Keeps RFC 3986 §2.3
-/// unreserved characters that commonly appear in resource IDs (`-` and `_`)
-/// unencoded; encodes everything else including `.` (dots appear in email-style
-/// calendar IDs and should not carry path semantics).
+/// Characters to encode in a single URL path segment. All RFC 3986 §2.3
+/// unreserved characters (`A-Z a-z 0-9 - . _ ~`) are left unencoded;
+/// everything else is percent-encoded.
 use percent_encoding::{AsciiSet, CONTROLS};
 const PATH_SEGMENT: &AsciiSet = &CONTROLS
     .add(b' ').add(b'!').add(b'"').add(b'#').add(b'$').add(b'%')
     .add(b'&').add(b'\'').add(b'(').add(b')').add(b'*').add(b'+')
-    .add(b',').add(b'.').add(b'/').add(b':').add(b';').add(b'<')
+    .add(b',').add(b'/').add(b':').add(b';').add(b'<')
     .add(b'=').add(b'>').add(b'?').add(b'@').add(b'[').add(b'\\')
-    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}')
-    .add(b'~');
+    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}');
 
 /// Percent-encode a value for use as a single URL path segment (e.g., file ID,
-/// calendar ID, message ID). Hyphens and underscores are left unencoded since
-/// they are unreserved per RFC 3986 and ubiquitous in resource IDs.
+/// calendar ID, message ID). All RFC 3986 §2.3 unreserved characters
+/// (`A-Z a-z 0-9 - . _ ~`) are left unencoded.
 pub fn encode_path_segment(s: &str) -> String {
     use percent_encoding::utf8_percent_encode;
     utf8_percent_encode(s, PATH_SEGMENT).to_string()
+}
+
+/// Returns `true` when `segment` is a WHATWG dot-segment that would be
+/// collapsed by `url::Url::parse()`. Encoding cannot prevent this —
+/// `%2E` and `%2e` are also collapsed — so the caller must reject
+/// rather than encode.
+pub fn is_dot_segment(segment: &str) -> bool {
+    matches!(segment, "." | "..")
+}
+
+// -- Query-component encoding ------------------------------------------------
+//
+// The set below mirrors `QUERY_COMPONENT` in `src/openapi/executor.rs`. Per
+// the architecture rule (`AGENTS.md` "Code Generation Model") asyncapi may
+// not import from openapi, so the asyncapi executor calls this shared
+// helper instead. The set is duplicated by design; if the openapi set
+// changes, audit this one for parity.
+
+/// Percent-encode set for a query-string component (key or value).
+///
+/// RFC 3986 unreserved characters (`A-Za-z0-9-_.~`) are left intact; the comma
+/// is also kept literal so a form/no-explode array reads `ids=1,2` rather than
+/// `ids=1%2C2`. Everything else — including space (`%20`, *not* the form
+/// `+`), `|` (`%7C`), `&`, `=`, `#`, and `[` `]` — is percent-encoded.
+const QUERY_COMPONENT: &AsciiSet = &percent_encoding::NON_ALPHANUMERIC
+    .remove(b'-')
+    .remove(b'_')
+    .remove(b'.')
+    .remove(b'~')
+    .remove(b',');
+
+/// Percent-encode `s` for use as a URL query-string component (key or value).
+///
+/// Encodes space as `%20` (not `+`), and all reserved characters that would
+/// otherwise terminate or split the component (`&`, `=`, `#`, `+`, `/`, `?`,
+/// control chars). RFC 3986 unreserved (`A-Za-z0-9-_.~`) and `,` pass through
+/// unchanged.
+pub fn encode_query_component(s: &str) -> String {
+    percent_encoding::utf8_percent_encode(s, QUERY_COMPONENT).to_string()
 }
 
 /// Percent-encode a value for use in URI path templates where `/` should stay
@@ -294,9 +331,9 @@ pub fn validate_resource_name(s: &str) -> Result<&str, CliError> {
             "Resource name must not be empty".to_string(),
         ));
     }
-    if s.split('/').any(|seg| seg == "..") {
+    if s.split('/').any(|seg| seg == ".." || seg == ".") {
         return Err(CliError::Validation(format!(
-            "Resource name must not contain path traversal ('..') segments: {s}"
+            "Resource name must not contain dot-segments ('.' or '..') : {s}"
         )));
     }
     if s.chars()
@@ -515,10 +552,25 @@ mod tests {
 
     #[test]
     fn test_encode_path_segment_email() {
-        // Calendar IDs are often email addresses
+        // Calendar IDs are often email addresses. `@` is a reserved
+        // character and must be encoded; `.` is unreserved per RFC 3986
+        // §2.3 and must NOT be encoded.
         let encoded = encode_path_segment("user@gmail.com");
-        assert!(!encoded.contains('@'));
-        assert!(!encoded.contains('.'));
+        assert!(!encoded.contains('@'), "@ must be percent-encoded");
+        assert!(encoded.contains('.'), ". is unreserved and must not be encoded");
+        assert_eq!(encoded, "user%40gmail.com");
+    }
+
+    #[test]
+    fn test_encode_path_segment_dot_and_tilde_unreserved() {
+        // `.` and `~` are RFC 3986 §2.3 unreserved characters and must
+        // not be percent-encoded in path segments.
+        assert_eq!(encode_path_segment("file.txt"), "file.txt");
+        assert_eq!(encode_path_segment("user~archive"), "user~archive");
+        assert_eq!(
+            encode_path_segment("codex-test@agentmail.to"),
+            "codex-test%40agentmail.to"
+        );
     }
 
     #[test]
@@ -536,11 +588,34 @@ mod tests {
     }
 
     #[test]
+    fn test_encode_path_segment_dot_segment_guard() {
+        // `.` and `~` pass through unencoded (RFC 3986 §2.3 unreserved).
+        assert_eq!(encode_path_segment("file.txt"), "file.txt");
+        assert_eq!(encode_path_segment("..."), "...");
+        assert_eq!(encode_path_segment(".hidden"), ".hidden");
+        // Bare `.` and `..` also pass through from the encoder — WHATWG
+        // dot-segment rejection must happen at the caller, not here.
+        assert_eq!(encode_path_segment("."), ".");
+        assert_eq!(encode_path_segment(".."), "..");
+    }
+
+    #[test]
+    fn test_is_dot_segment() {
+        assert!(is_dot_segment("."));
+        assert!(is_dot_segment(".."));
+        assert!(!is_dot_segment("..."));
+        assert!(!is_dot_segment(".hidden"));
+        assert!(!is_dot_segment("file.txt"));
+        assert!(!is_dot_segment(""));
+    }
+
+    #[test]
     fn test_encode_path_segment_path_traversal() {
-        // Encoding makes traversal segments harmless
+        // Encoding `/` makes traversal harmless — the path cannot escape
+        // the segment even though `.` is left unencoded (unreserved).
         let encoded = encode_path_segment("../../etc/passwd");
-        assert!(!encoded.contains('/'));
-        assert!(!encoded.contains(".."));
+        assert!(!encoded.contains('/'), "slashes must be encoded");
+        assert_eq!(encoded, "..%2F..%2Fetc%2Fpasswd");
     }
 
     #[test]
@@ -602,6 +677,15 @@ mod tests {
     }
 
     #[test]
+    fn test_validate_resource_name_single_dot() {
+        assert!(validate_resource_name(".").is_err());
+        assert!(validate_resource_name("projects/./topics/t1").is_err());
+        // Dots inside segment names are fine
+        assert!(validate_resource_name("file.txt").is_ok());
+        assert!(validate_resource_name("user@mail.co").is_ok());
+    }
+
+    #[test]
     fn test_validate_resource_name_control_chars() {
         assert!(validate_resource_name("spaces/\0bad").is_err());
         assert!(validate_resource_name("spaces/\nbad").is_err());
@@ -627,7 +711,7 @@ mod tests {
         assert!(err.to_string().contains("must not be empty"));
 
         let err = validate_resource_name("../bad").unwrap_err();
-        assert!(err.to_string().contains("path traversal"));
+        assert!(err.to_string().contains("dot-segment"));
 
         let err = validate_resource_name("bad\0id").unwrap_err();
         assert!(err.to_string().contains("invalid characters"));
@@ -854,6 +938,47 @@ mod tests {
 
             assert!(result.is_err(), "symlink escape should be rejected");
         }
+    }
+
+    // -- encode_query_component ----------------------------------------------
+
+    #[test]
+    fn encode_query_component_encodes_space_as_percent20() {
+        assert_eq!(encode_query_component("a b"), "a%20b");
+    }
+
+    #[test]
+    fn encode_query_component_encodes_reserved_chars() {
+        assert_eq!(encode_query_component("a&b=c#d"), "a%26b%3Dc%23d");
+        assert_eq!(encode_query_component("a+b"), "a%2Bb");
+        assert_eq!(encode_query_component("a/b"), "a%2Fb");
+        assert_eq!(encode_query_component("a?b"), "a%3Fb");
+        assert_eq!(encode_query_component("a|b"), "a%7Cb");
+    }
+
+    #[test]
+    fn encode_query_component_unreserved_passes_through() {
+        // RFC 3986 unreserved set plus `,` — all should be literal.
+        assert_eq!(encode_query_component("Aa0-_.~,"), "Aa0-_.~,");
+    }
+
+    #[test]
+    fn encode_query_component_encodes_control_chars() {
+        let encoded = encode_query_component("a\x01\x1Fb");
+        assert!(encoded.contains("%01"));
+        assert!(encoded.contains("%1F"));
+        assert!(!encoded.contains('\x01'));
+    }
+
+    #[test]
+    fn encode_query_component_encodes_adversarial_agent_id() {
+        // The signature edge case from the acceptance criteria — agent_id
+        // with `/`, `?`, `&` must encode to `bad%2Fid%3Ffoo%26bar` so it
+        // cannot leak extra query parameters into the connect URL.
+        assert_eq!(
+            encode_query_component("bad/id?foo&bar"),
+            "bad%2Fid%3Ffoo%26bar",
+        );
     }
 
     #[test]

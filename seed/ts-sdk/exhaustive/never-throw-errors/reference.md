@@ -2332,6 +2332,74 @@ await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">createWithBodyAndQuery</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithOptionalField, SeedExhaustive.endpoints.params.createWithBodyAndQuery.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.createWithBodyAndQuery({
+    _fields: "_fields",
+    body: {
+        string: "string"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.CreateWithBodyAndQuery` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithBooleanPath</a>(param) -> core.APIResponse&lt;string, SeedExhaustive.endpoints.params.getWithBooleanPath.Error&gt;</code></summary>
 <dl>
 <dd>
@@ -3236,6 +3304,72 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 <dd>
 
 **request:** `SeedExhaustive.PostWithObjectBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InlinedRequestsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlinedRequests.<a href="/src/api/resources/inlinedRequests/client/Client.ts">postWithArrayBodyAndHeaders</a>({ ...params }) -> core.APIResponse&lt;string, SeedExhaustive.inlinedRequests.postWithArrayBodyAndHeaders.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inlinedRequests.postWithArrayBodyAndHeaders({
+    "X-Custom-Header": "X-Custom-Header",
+    body: ["string", "string"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.PostWithArrayBodyAndHeaders` 
     
 </dd>
 </dl>

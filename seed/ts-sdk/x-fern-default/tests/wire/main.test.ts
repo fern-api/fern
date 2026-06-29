@@ -4,23 +4,27 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
+    
     test("test_get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, apiVersion: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { message: "message" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "apiVersion" : "test" , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "message" : "message" };
+        
         server
             .mockEndpoint()
-            .get("/test/region/resource")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .get("/test/region/resource").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.testGet({
-            region: "region",
-        });
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.testGet({
+    region: "region"
+});
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

@@ -5,7 +5,7 @@
 FROM rust:1.91-alpine3.23 AS rust
 RUN rustup component add rustfmt
 
-FROM node:24.16-alpine3.23
+FROM node:24.17-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 
@@ -15,7 +15,7 @@ RUN apk update && apk upgrade --no-cache
 # because in-place self-upgrade of the bundled npm in node:22.22-alpine3.23 fails with
 # a stale module-resolution error.
 RUN mkdir -p /tmp/npm-upgrade \
-    && npm install --prefix /tmp/npm-upgrade npm@11.13.0 \
+    && npm install --prefix /tmp/npm-upgrade npm@11.17.0 \
     && rm -rf /usr/local/lib/node_modules/npm \
     && mv /tmp/npm-upgrade/node_modules/npm /usr/local/lib/node_modules/npm \
     && rm -rf /tmp/npm-upgrade \
@@ -34,13 +34,31 @@ RUN mkdir -p /tmp/ip-address-upgrade \
     && mv package /usr/local/lib/node_modules/npm/node_modules/ip-address \
     && rm -rf /tmp/ip-address-upgrade
 
-# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.13.0 vendors 5.0.5).
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
+
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; npm 11.17.0 vendors 5.0.5).
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \
     tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
     rm brace-expansion-5.0.6.tgz
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack tar@7.5.16 && \
+    rm -rf tar && \
+    mkdir tar && \
+    tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
+    rm tar-7.5.16.tgz
 
 ARG SENTRY_DSN
 ARG SENTRY_ENVIRONMENT=production

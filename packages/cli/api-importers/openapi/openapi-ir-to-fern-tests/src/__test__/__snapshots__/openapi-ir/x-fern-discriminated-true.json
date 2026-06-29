@@ -1,4 +1,5 @@
 {
+  "specVersion": "1.0.0",
   "title": "Test x-fern-discriminated override with unions v1",
   "servers": [],
   "websocketServers": [],

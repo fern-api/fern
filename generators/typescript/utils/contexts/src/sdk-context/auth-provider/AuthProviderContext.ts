@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
 import { FileContext } from "../file-context/FileContext.js";
@@ -92,7 +93,7 @@ export class AuthProviderContext {
 
     public getPropertiesForAuthTokenParams(
         authScheme: FernIr.AuthScheme
-    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
+    ): Array<{ name: string; wireKey: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
         if (authScheme.type !== "inferred") {
             return [];
         }
@@ -115,6 +116,7 @@ export class AuthProviderContext {
             const requestProperties = generatedRequestWrapper.getRequestProperties(this.context);
             return requestProperties.map((property) => ({
                 name: property.safeName,
+                wireKey: property.name,
                 type: property.type,
                 isOptional: property.isOptional,
                 docs: property.docs
@@ -128,7 +130,7 @@ export class AuthProviderContext {
 
     private getPropertiesFromRequestBody(
         endpoint: FernIr.HttpEndpoint
-    ): Array<{ name: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
+    ): Array<{ name: string; wireKey: string; type: ts.TypeNode; isOptional: boolean; docs: string[] | undefined }> {
         const requestBody = endpoint.requestBody;
         if (requestBody == null) {
             return [];
@@ -136,6 +138,7 @@ export class AuthProviderContext {
 
         const properties: Array<{
             name: string;
+            wireKey: string;
             type: ts.TypeNode;
             isOptional: boolean;
             docs: string[] | undefined;
@@ -146,6 +149,7 @@ export class AuthProviderContext {
                 const typeRef = this.context.type.getReferenceToType(prop.valueType);
                 properties.push({
                     name: this.context.case.camelSafe(prop.name),
+                    wireKey: this.context.case.camelSafe(prop.name),
                     type: typeRef.typeNodeWithoutUndefined,
                     isOptional: typeRef.isOptional,
                     docs: prop.docs ? [prop.docs] : undefined
@@ -153,11 +157,20 @@ export class AuthProviderContext {
             }
         } else if (requestBody.type === "reference" && requestBody.requestBodyType.type === "named") {
             const typeDeclaration = this.context.type.getTypeDeclaration(requestBody.requestBodyType);
+            const generatedType = this.context.type.getGeneratedType(requestBody.requestBodyType);
             if (typeDeclaration.shape.type === "object") {
                 for (const prop of typeDeclaration.shape.properties) {
                     const typeRef = this.context.type.getReferenceToType(prop.valueType);
+                    // The key sent to the token endpoint must match the generated request body
+                    // type's property key, which is the wire value when the serde layer is
+                    // disabled (or original casing is retained) and camelCase otherwise.
+                    const wireKey =
+                        generatedType.type === "object"
+                            ? generatedType.getPropertyKey({ propertyWireKey: getWireValue(prop.name) })
+                            : this.context.case.camelSafe(prop.name);
                     properties.push({
                         name: this.context.case.camelSafe(prop.name),
+                        wireKey,
                         type: typeRef.typeNodeWithoutUndefined,
                         isOptional: typeRef.isOptional,
                         docs: prop.docs ? [prop.docs] : undefined

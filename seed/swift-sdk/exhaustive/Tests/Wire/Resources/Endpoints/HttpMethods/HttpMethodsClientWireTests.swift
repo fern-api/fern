@@ -6,7 +6,7 @@ import Exhaustive
     @Test func testGet1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 string
                 """#.utf8
@@ -28,7 +28,7 @@ import Exhaustive
     @Test func testPost1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -74,7 +74,9 @@ import Exhaustive
                 "list",
                 "list"
             ]),
-            set: Optional([]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
             map: Optional([
                 1: "map"
             ]),
@@ -92,7 +94,7 @@ import Exhaustive
     @Test func testPut1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -138,7 +140,9 @@ import Exhaustive
                 "list",
                 "list"
             ]),
-            set: Optional([]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
             map: Optional([
                 1: "map"
             ]),
@@ -157,7 +161,7 @@ import Exhaustive
     @Test func testPatch1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string",
@@ -203,7 +207,9 @@ import Exhaustive
                 "list",
                 "list"
             ]),
-            set: Optional([]),
+            set: Optional(JSONValue.array([
+                JSONValue.string("set")
+            ])),
             map: Optional([
                 1: "map"
             ]),
@@ -225,9 +231,13 @@ import Exhaustive
                     "list",
                     "list"
                 ],
+                set: .array([
+                    .string("set")
+                ]),
                 map: [
                     1: "map"
-                ]
+                ],
+                bigint: "1000000"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -237,7 +247,7 @@ import Exhaustive
     @Test func testDelete1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8

@@ -246,7 +246,7 @@ final class HTTPClient: Swift.Sendable {
     private func buildRequestBody(
         requestBody: HTTP.RequestBody,
         requestOptions: RequestOptions? = nil
-    ) -> Data {
+    ) -> Foundation.Data {
         switch requestBody {
         case .jsonEncodable(let encodableBody):
             do {

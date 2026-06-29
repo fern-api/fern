@@ -77,10 +77,10 @@ export class RawClient {
             {
                 name: "path",
                 assignment: php.codeblock(
-                    `"${this.getPathString({
+                    this.getPathString({
                         endpoint: args.endpoint,
                         pathParameterReferences: args.pathParameterReferences ?? {}
-                    })}"`
+                    })
                 )
             },
             {
@@ -132,7 +132,12 @@ export class RawClient {
         endpoint: FernIr.HttpEndpoint;
         pathParameterReferences: Record<string, string>;
     }): string {
-        let path = endpoint.fullPath.head;
+        // Build a double-quoted PHP string expression for the request path. Most path parameter
+        // references can be interpolated directly (e.g. "/users/{$id}"), but some are expressions
+        // (e.g. a boolean rendered as "true"/"false") that cannot be interpolated and must be
+        // concatenated onto the string literal instead.
+        const segments: string[] = [];
+        let literal = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts) {
             const reference = pathParameterReferences[part.pathParameter];
             if (reference == null) {
@@ -140,8 +145,30 @@ export class RawClient {
                     `Failed to find request parameter for the endpoint ${endpoint.id} with path parameter ${part.pathParameter}`
                 );
             }
-            path += `{${reference}}${part.tail}`;
+            if (RawClient.isInterpolatableReference(reference)) {
+                literal += `{${reference}}${part.tail}`;
+            } else {
+                segments.push(`"${literal}"`);
+                segments.push(`(${reference})`);
+                literal = part.tail;
+            }
         }
-        return path;
+        if (segments.length === 0) {
+            return `"${literal}"`;
+        }
+        if (literal.length > 0) {
+            segments.push(`"${literal}"`);
+        }
+        return segments.join(" . ");
+    }
+
+    /**
+     * Returns true when the reference is a simple variable, property, getter, or index access that
+     * can be embedded directly inside a double-quoted PHP string (e.g. `$id`, `$request->id`,
+     * `$request->getId()`, `$map['key']`). Anything else (e.g. a ternary expression) must be
+     * concatenated rather than interpolated.
+     */
+    private static isInterpolatableReference(reference: string): boolean {
+        return /^\$[A-Za-z_]\w*(?:->[A-Za-z_]\w*(?:\(\))?|\['[^']*'\]|\[\d+\])*$/.test(reference);
     }
 }

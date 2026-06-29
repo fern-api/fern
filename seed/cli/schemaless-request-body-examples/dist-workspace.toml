@@ -1,5 +1,5 @@
 [workspace]
-members = ["cargo:.", "cargo:crates/pipeline-fixture", "schemaless-request-body-examples-api-types", "schemaless-request-body-examples-api-sdk"]
+members = ["cargo:.", "cargo:schemaless-request-body-examples-api-types", "cargo:schemaless-request-body-examples-api-sdk"]
 
 # Config for 'dist'
 [dist]
@@ -13,7 +13,7 @@ ci = "github"
 # musl builds.
 precise-builds = true
 # The installers to generate for each app
-installers = ["shell", "powershell", "npm"]
+installers = ["shell", "powershell"]
 # Whether to enable GitHub Attestations
 github-attestations = true
 # Target platforms to build apps for (Rust target-triple syntax)

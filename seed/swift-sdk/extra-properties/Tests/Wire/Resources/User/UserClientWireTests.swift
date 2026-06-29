@@ -6,7 +6,7 @@ import ExtraProperties
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "Alice",
@@ -21,7 +21,11 @@ import ExtraProperties
             urlSession: stub.urlSession
         )
         let expectedResponse = User(
-            name: "Alice"
+            name: "Alice",
+            additionalProperties: [
+                "age": JSONValue.number(30), 
+                "location": JSONValue.string("Wonderland")
+            ]
         )
         let response = try await client.user.createUser(
             request: .init(
@@ -37,7 +41,7 @@ import ExtraProperties
     @Test func createUser2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name"

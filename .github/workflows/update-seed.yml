@@ -1121,7 +1121,7 @@ jobs:
             seed
 
       - name: Log PR Creation Failure
-        if: steps.cpr.outputs.pull-request-operation != 'created'
+        if: steps.cpr.outputs.pull-request-operation != 'created' && steps.cpr.outputs.pull-request-operation != 'updated'
         shell: bash
         run: |
           echo "PR was not created, likely due to no diff for the generated seed output"
@@ -1133,7 +1133,7 @@ jobs:
           echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
       - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.FERN_SUPPORT_GH_ACTIONS_PAT }}
@@ -1141,8 +1141,8 @@ jobs:
           merge-method: squash
 
       - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
         uses: ./.github/actions/auto-approve
         with:
-          approver-gh-token: ${{ secrets.FERN_GITHUB_TOKEN }}
+          approver-gh-token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

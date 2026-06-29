@@ -1,0 +1,5 @@
+- summary: |
+    Fix enum query parameters wrapped in Nullable<> to emit .rawValue for proper
+    Swift compilation. Previously, nullable enum query params generated .string($0)
+    instead of .string($0.rawValue), causing type errors.
+  type: fix

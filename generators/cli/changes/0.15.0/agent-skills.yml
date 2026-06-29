@@ -1,0 +1,8 @@
+- summary: |
+    Ship custom-command agent skills inside generated CLIs. A freshly
+    generated project now includes `.agents/skills/custom-commands/SKILL.md`
+    (symlinked into `.claude/`) with spec-aware guidance: real endpoint
+    names, typed SDK client fields, and crate names derived from the API
+    spec. Coding agents can follow the skill to author custom commands
+    without reverse-engineering the patterns.
+  type: feat

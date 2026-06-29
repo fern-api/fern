@@ -64,7 +64,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                         return new WithRawResponse<ObjectWithOptionalField>()
                         {
                             Data = responseData,
-                            RawResponse = new RawResponse()
+                            RawResponse = new SeedExhaustive.RawResponse()
                             {
                                 StatusCode = response.Raw.StatusCode,
                                 Url =
@@ -80,7 +80,15 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                             "Failed to deserialize response",
                             response.StatusCode,
                             responseBody,
-                            e
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                     }
                 }
@@ -94,7 +102,17 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                         {
                             case 400:
                                 throw new BadRequestBody(
-                                    JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
+                                    JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody),
+                                    rawResponse: new SeedExhaustive.RawResponse()
+                                    {
+                                        StatusCode = response.Raw.StatusCode,
+                                        Url =
+                                            response.Raw.RequestMessage?.RequestUri
+                                            ?? new Uri("about:blank"),
+                                        Headers = ResponseHeaders.FromHttpResponseMessage(
+                                            response.Raw
+                                        ),
+                                    }
                                 );
                         }
                     }
@@ -105,7 +123,101 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<string>> PostWithArrayBodyAndHeadersAsyncCore(
+        PostWithArrayBodyAndHeaders request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add("X-Custom-Header", request.XCustomHeader)
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            Method = HttpMethod.Post,
+                            Path = "/req-bodies/array-body-with-headers",
+                            Body = request.Body,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                        return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e,
+                            rawResponse: new SeedExhaustive.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody,
+                        rawResponse: new SeedExhaustive.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
@@ -148,6 +260,29 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
     {
         return new WithRawResponseTask<ObjectWithOptionalField>(
             PostWithObjectBodyandResponseAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// POST with root-level array body and header params
+    /// </summary>
+    /// <example><code>
+    /// await client.InlinedRequests.PostWithArrayBodyAndHeadersAsync(
+    ///     new PostWithArrayBodyAndHeaders
+    ///     {
+    ///         XCustomHeader = "X-Custom-Header",
+    ///         Body = new List&lt;string&gt;() { "string", "string" },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<string> PostWithArrayBodyAndHeadersAsync(
+        PostWithArrayBodyAndHeaders request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            PostWithArrayBodyAndHeadersAsyncCore(request, options, cancellationToken)
         );
     }
 }

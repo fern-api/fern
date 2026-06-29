@@ -2,6 +2,7 @@
 //! [`crate::binding::Binding`] trait so it can be composed into
 //! a root-level [`crate::app::CliApp`].
 
+use std::io::IsTerminal;
 use std::sync::Arc;
 
 use crate::auth::{AuthCredentialSource, DynAuthProvider};
@@ -180,6 +181,8 @@ impl GraphqlBinding {
             f(matches, ctx)
         })
     }
+
+
 }
 
 impl Binding for GraphqlBinding {
@@ -195,6 +198,11 @@ impl Binding for GraphqlBinding {
         let mut merged = bindings.to_vec();
         merged.extend(std::mem::take(&mut self.inner.auth_bindings));
         self.inner.auth_bindings = merged;
+    }
+
+    fn schema(&self, path: &[String]) -> Result<Option<serde_json::Value>, CliError> {
+        let prepared = self.ensure_prepared()?;
+        Ok(super::help::build_schema(&prepared.doc, path))
     }
 
     fn build_command(&self) -> Result<clap::Command, CliError> {
@@ -217,26 +225,6 @@ impl Binding for GraphqlBinding {
         }
 
         Ok(cli)
-    }
-
-    fn render_json_help(
-        &self,
-        subcommand_path: &[String],
-        out: &mut dyn std::io::Write,
-    ) -> Result<bool, CliError> {
-        let prepared = self.ensure_prepared()?;
-        match super::help::write_json_help(&prepared.doc, subcommand_path, out) {
-            Ok(()) => Ok(true),
-            // "Resource not found" / "Operation not found" means the path
-            // belongs to a different binding — return false so the
-            // dispatch_pipeline loop tries the next one.
-            Err(CliError::Validation(msg))
-                if msg.contains("not found") =>
-            {
-                Ok(false)
-            }
-            Err(e) => Err(e),
-        }
     }
 
     fn dispatch<'a>(
@@ -287,21 +275,51 @@ impl Binding for GraphqlBinding {
             let body_json_owned = crate::cli_args::resolve_body_json(matched_args)?;
             let body_json = body_json_owned.as_deref();
 
-            let dry_run = matched_args.get_flag("dry-run");
-            let pagination = super::app::build_pagination_config(matched_args);
-
-            // `--no-retry` is a global debug opt-out; read it safely so an
-            // unmatched flag is a clean `false` rather than a panic.
+            // Both `--dry-run` and `--no-retry` are global debug flags; read
+            // them with `try_get_one` so an unmatched flag yields a clean
+            // `false` rather than a panic (defensive against future callers
+            // that do not register every built-in flag).
+            let dry_run = matched_args
+                .try_get_one::<bool>("dry-run")
+                .ok()
+                .flatten()
+                .copied()
+                .unwrap_or(false);
+            let debug = root_matches
+                .try_get_one::<bool>("debug")
+                .ok()
+                .flatten()
+                .copied()
+                .unwrap_or(false);
+            let pagination = super::app::build_pagination_config(matched_args, &self.inner.name);
             let no_retry = matched_args
                 .try_get_one::<bool>("no-retry")
                 .ok()
                 .flatten()
                 .copied()
                 .unwrap_or(false);
+            let retry_policy = executor::resolve_retry_policy(no_retry);
 
             let base_url_override_owned =
                 crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
             let base_url_override = base_url_override_owned.as_deref();
+
+            // When --page-all is active on a TTY without --no-pager,
+            // let the executor write directly to the pager (capture_output
+            // = false). The executor spawns the pager and returns None,
+            // which maps to DispatchResult::Handled below.
+            let use_pager = pagination.page_all
+                && !pagination.no_pager
+                && std::io::stdout().is_terminal();
+            let capture_output = !use_pager;
+
+            let pipeline = crate::formatter::OutputPipeline::from_matches(root_matches, &self.inner.name)
+                    .map_err(|e| CliError::Validation(e.to_string()))?;
+            if pipeline.is_http() {
+                return Err(CliError::Validation(
+                    "the `http` output format is only supported for OpenAPI-based CLIs".to_string(),
+                ));
+            }
 
             let result = executor::execute_method(
                 &prepared.doc,
@@ -311,11 +329,13 @@ impl Binding for GraphqlBinding {
                 &auth_provider,
                 dry_run,
                 &pagination,
-                &crate::formatter::OutputPipeline::default(),
-                true, // capture_output
+                &pipeline,
+                capture_output,
                 base_url_override,
                 &prepared.http_config,
+                &retry_policy,
                 no_retry,
+                debug,
             )
             .await?;
 
@@ -337,11 +357,12 @@ impl Binding for GraphqlBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let debug = matches.get_flag("debug");
         let ctx = super::AppContext::new(
             entry.doc,
             entry.auth_provider,
             entry.http_config,
-        ).with_quiet(quiet);
+        ).with_quiet(quiet).with_debug(debug);
         Ok(Some(Box::new(ctx)))
     }
 
@@ -357,10 +378,13 @@ impl Binding for GraphqlBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let debug = matches.get_flag("debug");
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {
                     ctx.add_entry(entry);
+                    ctx.debug = debug;
+                    ctx.quiet = quiet;
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -368,7 +392,7 @@ impl Binding for GraphqlBinding {
                         entry.doc,
                         entry.auth_provider,
                         entry.http_config,
-                    ).with_quiet(quiet);
+                    ).with_quiet(quiet).with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
@@ -378,7 +402,7 @@ impl Binding for GraphqlBinding {
                     entry.doc,
                     entry.auth_provider,
                     entry.http_config,
-                ).with_quiet(quiet);
+                ).with_quiet(quiet).with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
         }

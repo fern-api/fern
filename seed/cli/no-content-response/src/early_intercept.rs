@@ -9,12 +9,16 @@
 /// (`action(SetTrue)`) and therefore do NOT consume the next token.
 /// Kept in sync with the flags registered in `commands::build_cli`.
 pub(crate) const BOOLEAN_FLAGS: &[&str] = &[
+    "debug",
     "dry-run",
-    "page-all",
+    "help",
     "no-extract",
+    "no-pager",
     "no-retry",
     "no-stream",
-    "help",
+    "page-all",
+    "q",
+    "quiet",
 ];
 
 /// Returns `true` when `args` contains `target` as the first positional
@@ -127,6 +131,52 @@ mod tests {
             &args(&["box", "--dry-run", "completion", "bash"]),
             "completion",
         ));
+    }
+
+    #[test]
+    fn first_positional_true_after_debug_flag() {
+        // `--debug` is boolean (SetTrue); "completion" must remain positional #0.
+        assert!(first_positional_is(
+            &args(&["box", "--debug", "completion", "bash"]),
+            "completion",
+        ));
+    }
+
+    #[test]
+    fn nth_positional_with_debug_flag() {
+        // `--debug` must not swallow "completion"; "bash" is positional #1.
+        assert_eq!(
+            nth_positional(&args(&["box", "--debug", "completion", "bash"]), 1),
+            Some("bash"),
+        );
+    }
+
+    #[test]
+    fn first_positional_true_after_quiet_flag() {
+        // `--quiet` is boolean (SetTrue); "completion" must remain positional #0.
+        assert!(first_positional_is(
+            &args(&["box", "--quiet", "completion", "bash"]),
+            "completion",
+        ));
+        // Short form `-q` must behave identically.
+        assert!(first_positional_is(
+            &args(&["box", "-q", "completion", "bash"]),
+            "completion",
+        ));
+    }
+
+    #[test]
+    fn nth_positional_with_quiet_flag() {
+        // `--quiet` must not swallow "completion"; "bash" is positional #1.
+        assert_eq!(
+            nth_positional(&args(&["box", "--quiet", "completion", "bash"]), 1),
+            Some("bash"),
+        );
+        // Short form `-q` must behave identically.
+        assert_eq!(
+            nth_positional(&args(&["box", "-q", "completion", "bash"]), 1),
+            Some("bash"),
+        );
     }
 
     #[test]

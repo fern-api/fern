@@ -1,3 +1,4 @@
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -5,13 +6,13 @@ namespace SeedExhaustive.Endpoints;
 
 public partial interface IContentTypeClient
 {
-    Task PostJsonPatchContentTypeAsync(
+    WithRawResponseTask PostJsonPatchContentTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    Task PostJsonPatchContentWithCharsetTypeAsync(
+    WithRawResponseTask PostJsonPatchContentWithCharsetTypeAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

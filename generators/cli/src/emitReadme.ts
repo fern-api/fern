@@ -26,12 +26,13 @@ export async function emitReadme(args: {
     apiDisplayName: string | undefined;
     authBindings: DetectedAuthBinding[];
     npmPublishInfo: ResolvedNpmPublishInfo | undefined;
+    repoUrl: string | undefined;
 }): Promise<void> {
-    const { outputDir, binaryName, apiDisplayName, authBindings, npmPublishInfo } = args;
+    const { outputDir, binaryName, apiDisplayName, authBindings, npmPublishInfo, repoUrl } = args;
     const displayName = apiDisplayName ?? binaryName;
 
-    const header = generateHeader(displayName);
-    const blocks = generateBlocks({ binaryName, displayName, authBindings, npmPublishInfo });
+    const header = generateHeader({ displayName, npmPublishInfo });
+    const blocks = generateBlocks({ binaryName, displayName, authBindings, npmPublishInfo, repoUrl });
 
     const readmePath = path.join(outputDir, "README.md");
     const existing = await readExistingReadme(readmePath);
@@ -46,8 +47,25 @@ export async function emitReadme(args: {
 // Header
 // ---------------------------------------------------------------------------
 
-function generateHeader(displayName: string): string {
+function generateHeader(args: { displayName: string; npmPublishInfo: ResolvedNpmPublishInfo | undefined }): string {
+    const { displayName, npmPublishInfo } = args;
     const suffix = displayName.toUpperCase().endsWith("API") ? "" : " API";
+    const shieldLines: string[] = [];
+    if (npmPublishInfo != null) {
+        shieldLines.push(
+            `[![npm shield](https://img.shields.io/npm/v/${npmPublishInfo.packageName})](https://www.npmjs.com/package/${npmPublishInfo.packageName})`
+        );
+    }
+    if (shieldLines.length > 0) {
+        return lines(
+            `# ${displayName} CLI`,
+            "",
+            shieldLines.join("\n"),
+            "",
+            `Command-line interface for the ${displayName}${suffix}.`,
+            ""
+        );
+    }
     return lines(`# ${displayName} CLI`, "", `Command-line interface for the ${displayName}${suffix}.`, "");
 }
 
@@ -117,11 +135,12 @@ function generateBlocks(args: {
     displayName: string;
     authBindings: DetectedAuthBinding[];
     npmPublishInfo: ResolvedNpmPublishInfo | undefined;
+    repoUrl: string | undefined;
 }): Block[] {
-    const { binaryName, authBindings, npmPublishInfo } = args;
+    const { binaryName, authBindings, npmPublishInfo, repoUrl } = args;
     const envPrefix = toEnvVarPrefix(binaryName);
     return [
-        generateInstallation({ binaryName, npmPublishInfo }),
+        generateInstallation({ binaryName, npmPublishInfo, repoUrl }),
         generateAuthentication({ binaryName, authBindings }),
         generateQuickStart(binaryName),
         generateUsage(binaryName),
@@ -131,58 +150,76 @@ function generateBlocks(args: {
 }
 
 // ---------------------------------------------------------------------------
-// Installation (unchanged)
+// Installation — curl|bash always leads; npm shown only when configured.
 // ---------------------------------------------------------------------------
 
-function generateInstallation(args: { binaryName: string; npmPublishInfo: ResolvedNpmPublishInfo | undefined }): Block {
-    const { binaryName, npmPublishInfo } = args;
-    let content: string;
+function generateInstallation(args: {
+    binaryName: string;
+    npmPublishInfo: ResolvedNpmPublishInfo | undefined;
+    repoUrl: string | undefined;
+}): Block {
+    const { binaryName, npmPublishInfo, repoUrl } = args;
+
+    // Build the curl|bash one-liner pointing at the release-asset installer.
+    // If we have a repoUrl, construct the full download URL; otherwise use
+    // a placeholder that the user can fill in.
+    const installerUrl =
+        repoUrl != null
+            ? `${repoUrl}/releases/latest/download/${binaryName}-installer.sh`
+            : `https://github.com/<org>/<repo>/releases/latest/download/${binaryName}-installer.sh`;
+
+    const powershellUrl =
+        repoUrl != null
+            ? `${repoUrl}/releases/latest/download/${binaryName}-installer.ps1`
+            : `https://github.com/<org>/<repo>/releases/latest/download/${binaryName}-installer.ps1`;
+
+    const sections: string[] = [
+        "## Installation",
+        "",
+        "### Shell (macOS / Linux)",
+        "",
+        "```bash",
+        `curl --proto '=https' --tlsv1.2 -LsSf ${installerUrl} | sh`,
+        "```",
+        "",
+        "### PowerShell (Windows)",
+        "",
+        "```powershell",
+        `powershell -ExecutionPolicy ByPass -c "irm ${powershellUrl} | iex"`,
+        "```",
+        ""
+    ];
+
     if (npmPublishInfo != null) {
-        content = lines(
-            "## Installation",
-            "",
-            "Install the CLI globally via npm:",
+        sections.push(
+            "### npm",
             "",
             "```bash",
             `npm install -g ${npmPublishInfo.packageName}`,
             "```",
             "",
-            "Or run it directly without installing:",
+            "Or run directly without installing:",
             "",
             "```bash",
             `npx ${npmPublishInfo.packageName} --help`,
             "```",
-            "",
-            "### Build from source",
-            "",
-            "If you prefer to build from source, install the [Rust toolchain](https://rustup.rs/) and run:",
-            "",
-            "```bash",
-            "cargo build --release",
-            `./target/release/${binaryName} --help`,
-            "```",
-            ""
-        );
-    } else {
-        content = lines(
-            "## Installation",
-            "",
-            "Install the [Rust toolchain](https://rustup.rs/) if you don't have it:",
-            "",
-            "```bash",
-            'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh',
-            "```",
-            "",
-            "Then build from source:",
-            "",
-            "```bash",
-            "cargo build --release",
-            `./target/release/${binaryName} --help`,
-            "```",
             ""
         );
     }
-    return new Block({ id: "INSTALLATION", content });
+
+    sections.push(
+        "### Build from source",
+        "",
+        "If you prefer to build from source, install the [Rust toolchain](https://rustup.rs/) and run:",
+        "",
+        "```bash",
+        "cargo build --release",
+        `./target/release/${binaryName} --help`,
+        "```",
+        ""
+    );
+
+    return new Block({ id: "INSTALLATION", content: lines(...sections) });
 }
 
 // ---------------------------------------------------------------------------

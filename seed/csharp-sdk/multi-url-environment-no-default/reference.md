@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.Ec2.<a href="/src/SeedMultiUrlEnvironmentNoDefault/Ec2/Ec2Client.cs">BootInstanceAsync</a>(BootInstanceRequest { ... })</code></summary>
+<details><summary><code>client.Ec2.<a href="/src/SeedMultiUrlEnvironmentNoDefault/Ec2/Ec2Client.cs">BootInstanceAsync</a>(BootInstanceRequest { ... }) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

@@ -2,7 +2,7 @@ namespace SeedOauthClientCredentialsDefault;
 
 public partial interface ISimpleClient
 {
-    Task GetSomethingAsync(
+    WithRawResponseTask GetSomethingAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

@@ -20,15 +20,12 @@ public partial class ApiClient : IApiClient
         }
     }
 
-    /// <example><code>
-    /// await client.NestedNoAuth.Api.GetSomethingAsync();
-    /// </code></example>
-    public async Task GetSomethingAsync(
+    private async Task<RawResponse> GetSomethingAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        await _client
+        return await _client
             .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
                 var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
@@ -51,7 +48,12 @@ public partial class ApiClient : IApiClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    return;
+                    return new SeedOauthClientCredentials.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    };
                 }
                 {
                     var responseBody = await response
@@ -60,10 +62,27 @@ public partial class ApiClient : IApiClient
                     throw new SeedOauthClientCredentialsApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
-                        responseBody
+                        responseBody,
+                        rawResponse: new SeedOauthClientCredentials.RawResponse()
+                        {
+                            StatusCode = response.Raw.StatusCode,
+                            Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                            Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                        }
                     );
                 }
             })
             .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.NestedNoAuth.Api.GetSomethingAsync();
+    /// </code></example>
+    public WithRawResponseTask GetSomethingAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(GetSomethingAsyncCore(options, cancellationToken));
     }
 }

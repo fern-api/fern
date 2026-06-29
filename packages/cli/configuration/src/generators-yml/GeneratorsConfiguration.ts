@@ -99,6 +99,13 @@ export interface APIDefinitionSettings {
     inferForwardCompatible: boolean | undefined;
     coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
     shouldInferDiscriminatedUnionBaseProperties: boolean | undefined;
+    disambiguateRequestNames: boolean | undefined;
+}
+
+export interface GitSource {
+    repo: string;
+    ref?: string;
+    path: string;
 }
 
 export interface APIDefinitionLocation {
@@ -108,6 +115,9 @@ export interface APIDefinitionLocation {
     overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
+    gitSource?: GitSource;
+    /** Set to true when the path was resolved from a remote git source and is an absolute local path. */
+    resolvedAbsolutePath?: boolean;
 }
 
 export type APIDefinitionSchema =

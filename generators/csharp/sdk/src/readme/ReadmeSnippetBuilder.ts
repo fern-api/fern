@@ -13,6 +13,7 @@ type FeatureId = FernIr.FeatureId;
 type Type = FernIr.Type;
 
 import { Generation } from "@fern-api/csharp-codegen";
+import { isPagerPagination } from "../endpoint/utils/isPagerPagination.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
@@ -187,6 +188,17 @@ try {
 } catch (${this.Types.BaseApiException.name} e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+
+    // Access the raw HTTP response (status code, URL, headers) off the exception
+    var rawResponse = e.RawResponse;
+    if (rawResponse != null)
+    {
+        System.Console.WriteLine(rawResponse.Url);
+        if (rawResponse.Headers.TryGetValue("X-Request-Id", out var requestId))
+        {
+            System.Console.WriteLine($"Request ID: {requestId}");
+        }
+    }
 }
 `)
         );
@@ -217,6 +229,9 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 
 // For the default behavior, simply await without .WithRawResponse()
 var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
+
+// .WithRawResponse() also works on streaming endpoints (returns IAsyncEnumerable<T> + RawResponse)
+// and on endpoints with no response body (returns RawResponse only).
 `)
         );
     }
@@ -326,7 +341,8 @@ ${enumName} ${enumCamelCaseName}FromString = (${enumName})"${firstEnumValueWire}
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.pagination != null) {
+            const pagination = endpointWithFilepath.endpoint.pagination;
+            if (pagination != null && isPagerPagination(pagination)) {
                 return endpointWithFilepath;
             }
             return undefined;

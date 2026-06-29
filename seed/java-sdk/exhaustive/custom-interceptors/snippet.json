@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "b07bc8d3",
+            "example_identifier": "d027c523",
             "id": {
                 "method": "POST",
                 "path": "/container/list-of-primitives",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "fdac9ebb",
+            "example_identifier": "ebfd118b",
             "id": {
                 "method": "POST",
                 "path": "/container/list-of-objects",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "638c8d5f",
+            "example_identifier": "2b21bccf",
             "id": {
                 "method": "POST",
                 "path": "/container/set-of-primitives",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "5d48d875",
+            "example_identifier": "8fba1825",
             "id": {
                 "method": "POST",
                 "path": "/container/set-of-objects",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "baa0e67f",
+            "example_identifier": "ce9e7f2f",
             "id": {
                 "method": "POST",
                 "path": "/container/map-prim-to-prim",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "276bf059",
+            "example_identifier": "cc36e609",
             "id": {
                 "method": "POST",
                 "path": "/container/map-prim-to-object",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "4c633c5f",
+            "example_identifier": "d57d494f",
             "id": {
                 "method": "POST",
                 "path": "/container/map-prim-to-union",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "e3741b1b",
+            "example_identifier": "5cea1cb",
             "id": {
                 "method": "POST",
                 "path": "/container/opt-objects",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "6d2eae78",
+            "example_identifier": "2781ed28",
             "id": {
                 "method": "POST",
                 "path": "/foo/bar",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "6d2eae78",
+            "example_identifier": "2781ed28",
             "id": {
                 "method": "POST",
                 "path": "/foo/baz",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "950e289b",
+            "example_identifier": "5565160b",
             "id": {
                 "method": "POST",
                 "path": "/enum",
@@ -144,7 +144,7 @@
             }
         },
         {
-            "example_identifier": "cbd386bb",
+            "example_identifier": "afaed85b",
             "id": {
                 "method": "GET",
                 "path": "/http-methods/{id}",
@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "d5925de4",
+            "example_identifier": "1ee0ae54",
             "id": {
                 "method": "POST",
                 "path": "/http-methods",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "17411d4a",
+            "example_identifier": "6b525e4a",
             "id": {
                 "method": "PUT",
                 "path": "/http-methods/{id}",
@@ -183,7 +183,7 @@
             }
         },
         {
-            "example_identifier": "5853ee71",
+            "example_identifier": "342e2a31",
             "id": {
                 "method": "PATCH",
                 "path": "/http-methods/{id}",
@@ -196,7 +196,7 @@
             }
         },
         {
-            "example_identifier": "75d0bb44",
+            "example_identifier": "1404ab24",
             "id": {
                 "method": "DELETE",
                 "path": "/http-methods/{id}",
@@ -209,7 +209,7 @@
             }
         },
         {
-            "example_identifier": "114cc607",
+            "example_identifier": "d6beb177",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-with-optional-field",
@@ -222,7 +222,7 @@
             }
         },
         {
-            "example_identifier": "f16c47b",
+            "example_identifier": "151df06b",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-with-required-field",
@@ -235,7 +235,7 @@
             }
         },
         {
-            "example_identifier": "67d98fff",
+            "example_identifier": "d9405baf",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-with-map-of-map",
@@ -248,7 +248,7 @@
             }
         },
         {
-            "example_identifier": "26d2c7ff",
+            "example_identifier": "8e720a2f",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-nested-with-optional-field",
@@ -261,7 +261,7 @@
             }
         },
         {
-            "example_identifier": "7dd80f99",
+            "example_identifier": "5f48279",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-nested-with-required-field/{string}",
@@ -274,7 +274,7 @@
             }
         },
         {
-            "example_identifier": "549e214e",
+            "example_identifier": "4b2dd0be",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-nested-with-required-field-list",
@@ -300,7 +300,7 @@
             }
         },
         {
-            "example_identifier": "75f55e6b",
+            "example_identifier": "3f685fb",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-with-documented-unknown-type",
@@ -313,7 +313,7 @@
             }
         },
         {
-            "example_identifier": "47385897",
+            "example_identifier": "a4a25e67",
             "id": {
                 "method": "POST",
                 "path": "/object/get-and-return-map-of-documented-unknown-type",
@@ -365,7 +365,7 @@
             }
         },
         {
-            "example_identifier": "82d9b4d0",
+            "example_identifier": "b71a59a0",
             "id": {
                 "method": "GET",
                 "path": "/pagination",
@@ -378,7 +378,7 @@
             }
         },
         {
-            "example_identifier": "59976c27",
+            "example_identifier": "5cd55167",
             "id": {
                 "method": "GET",
                 "path": "/params/path/{param}",
@@ -391,7 +391,7 @@
             }
         },
         {
-            "example_identifier": "59976c27",
+            "example_identifier": "5cd55167",
             "id": {
                 "method": "GET",
                 "path": "/params/path/{param}",
@@ -404,7 +404,7 @@
             }
         },
         {
-            "example_identifier": "cbf60b2e",
+            "example_identifier": "e99efb2e",
             "id": {
                 "method": "GET",
                 "path": "/params",
@@ -417,7 +417,7 @@
             }
         },
         {
-            "example_identifier": "a497824e",
+            "example_identifier": "2a102e",
             "id": {
                 "method": "GET",
                 "path": "/params",
@@ -430,7 +430,7 @@
             }
         },
         {
-            "example_identifier": "7ac7b87",
+            "example_identifier": "1394f747",
             "id": {
                 "method": "GET",
                 "path": "/params/path-query/{param}",
@@ -443,7 +443,7 @@
             }
         },
         {
-            "example_identifier": "7ac7b87",
+            "example_identifier": "1394f747",
             "id": {
                 "method": "GET",
                 "path": "/params/path-query/{param}",
@@ -456,7 +456,7 @@
             }
         },
         {
-            "example_identifier": "eb5b1e57",
+            "example_identifier": "6e3468b7",
             "id": {
                 "method": "PUT",
                 "path": "/params/path/{param}",
@@ -469,7 +469,7 @@
             }
         },
         {
-            "example_identifier": "eb5b1e57",
+            "example_identifier": "6e3468b7",
             "id": {
                 "method": "PUT",
                 "path": "/params/path/{param}",
@@ -495,7 +495,20 @@
             }
         },
         {
-            "example_identifier": "89cf23de",
+            "example_identifier": "4426602d",
+            "id": {
+                "method": "POST",
+                "path": "/params/body-and-query",
+                "identifier_override": "endpoint_endpoints/params.createWithBodyAndQuery"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().createWithBodyAndQuery(\n            CreateWithBodyAndQuery\n                .builder()\n                .body(\n                    ObjectWithRequiredField\n                        .builder()\n                        .string(\"string\")\n                        .build()\n                )\n                .fields(\"_fields\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.endpoints.params.requests.CreateWithBodyAndQuery;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().createWithBodyAndQuery(\n            CreateWithBodyAndQuery\n                .builder()\n                .body(\n                    ObjectWithRequiredField\n                        .builder()\n                        .string(\"string\")\n                        .build()\n                )\n                .fields(\"_fields\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "b08339be",
             "id": {
                 "method": "GET",
                 "path": "/params/path-bool/{param}",
@@ -508,7 +521,7 @@
             }
         },
         {
-            "example_identifier": "59976c27",
+            "example_identifier": "5cd55167",
             "id": {
                 "method": "GET",
                 "path": "/params/path/{param}",
@@ -521,7 +534,7 @@
             }
         },
         {
-            "example_identifier": "d8492cb1",
+            "example_identifier": "f9cf49e1",
             "id": {
                 "method": "POST",
                 "path": "/primitive/string",
@@ -534,7 +547,7 @@
             }
         },
         {
-            "example_identifier": "44f8b59b",
+            "example_identifier": "38740cab",
             "id": {
                 "method": "POST",
                 "path": "/primitive/integer",
@@ -547,7 +560,7 @@
             }
         },
         {
-            "example_identifier": "6757feff",
+            "example_identifier": "6371c64f",
             "id": {
                 "method": "POST",
                 "path": "/primitive/long",
@@ -560,7 +573,7 @@
             }
         },
         {
-            "example_identifier": "9c532ef",
+            "example_identifier": "a311febf",
             "id": {
                 "method": "POST",
                 "path": "/primitive/double",
@@ -573,7 +586,7 @@
             }
         },
         {
-            "example_identifier": "653ac8bb",
+            "example_identifier": "f353028b",
             "id": {
                 "method": "POST",
                 "path": "/primitive/boolean",
@@ -586,7 +599,7 @@
             }
         },
         {
-            "example_identifier": "c4328e7f",
+            "example_identifier": "a3160a8f",
             "id": {
                 "method": "POST",
                 "path": "/primitive/datetime",
@@ -599,7 +612,7 @@
             }
         },
         {
-            "example_identifier": "aa994713",
+            "example_identifier": "4d07d0e3",
             "id": {
                 "method": "POST",
                 "path": "/primitive/date",
@@ -612,7 +625,7 @@
             }
         },
         {
-            "example_identifier": "c723c473",
+            "example_identifier": "59b6e903",
             "id": {
                 "method": "POST",
                 "path": "/primitive/uuid",
@@ -625,7 +638,7 @@
             }
         },
         {
-            "example_identifier": "51535e73",
+            "example_identifier": "e7874543",
             "id": {
                 "method": "POST",
                 "path": "/primitive/base64",
@@ -638,7 +651,7 @@
             }
         },
         {
-            "example_identifier": "e9d2ae72",
+            "example_identifier": "efa1ea32",
             "id": {
                 "method": "PUT",
                 "path": "/{id}",
@@ -651,7 +664,7 @@
             }
         },
         {
-            "example_identifier": "2fff63df",
+            "example_identifier": "9da5060f",
             "id": {
                 "method": "POST",
                 "path": "/union",
@@ -664,7 +677,7 @@
             }
         },
         {
-            "example_identifier": "34d92e75",
+            "example_identifier": "6f306605",
             "id": {
                 "method": "GET",
                 "path": "/urls/MixedCase",
@@ -677,7 +690,7 @@
             }
         },
         {
-            "example_identifier": "34d92e75",
+            "example_identifier": "6f306605",
             "id": {
                 "method": "GET",
                 "path": "/urls/no-ending-slash",
@@ -690,7 +703,7 @@
             }
         },
         {
-            "example_identifier": "34d92e75",
+            "example_identifier": "6f306605",
             "id": {
                 "method": "GET",
                 "path": "/urls/with-ending-slash/",
@@ -703,7 +716,7 @@
             }
         },
         {
-            "example_identifier": "34d92e75",
+            "example_identifier": "6f306605",
             "id": {
                 "method": "GET",
                 "path": "/urls/with_underscores",
@@ -716,7 +729,7 @@
             }
         },
         {
-            "example_identifier": "35a47ee2",
+            "example_identifier": "af506932",
             "id": {
                 "method": "POST",
                 "path": "/req-bodies/object",
@@ -729,7 +742,20 @@
             }
         },
         {
-            "example_identifier": "91843eb7",
+            "example_identifier": "44880629",
+            "id": {
+                "method": "POST",
+                "path": "/req-bodies/array-body-with-headers",
+                "identifier_override": "endpoint_inlined-requests.postWithArrayBodyAndHeaders"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithArrayBodyAndHeaders(\n            PostWithArrayBodyAndHeaders\n                .builder()\n                .body(\n                    Arrays.asList(\"string\", \"string\")\n                )\n                .xCustomHeader(\"X-Custom-Header\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.SeedExhaustiveClient;\nimport com.seed.exhaustive.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.inlinedRequests().postWithArrayBodyAndHeaders(\n            PostWithArrayBodyAndHeaders\n                .builder()\n                .body(\n                    Arrays.asList(\"string\", \"string\")\n                )\n                .xCustomHeader(\"X-Custom-Header\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1c752737",
             "id": {
                 "method": "POST",
                 "path": "/no-auth",
@@ -742,7 +768,7 @@
             }
         },
         {
-            "example_identifier": "3d2c2d55",
+            "example_identifier": "33f25755",
             "id": {
                 "method": "GET",
                 "path": "/no-req-body",
@@ -755,7 +781,7 @@
             }
         },
         {
-            "example_identifier": "34d92e75",
+            "example_identifier": "6f306605",
             "id": {
                 "method": "POST",
                 "path": "/no-req-body",
@@ -768,7 +794,7 @@
             }
         },
         {
-            "example_identifier": "9d22bd38",
+            "example_identifier": "2f09fef8",
             "id": {
                 "method": "POST",
                 "path": "/test-headers/custom-header",

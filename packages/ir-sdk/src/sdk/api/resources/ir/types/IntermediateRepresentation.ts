@@ -9,6 +9,11 @@ export interface IntermediateRepresentation {
     /** The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered. */
     fdrApiDefinitionId: string | undefined;
     apiVersion: FernIr.ApiVersionScheme | undefined;
+    /**
+     * The document version from the OpenAPI `info.version` field.
+     * Preserved as-is (supports semver, CalVer, or any free-form string).
+     */
+    specVersion: string | undefined;
     /** This is the human readable unique id for the API. */
     apiName: FernIr.NameOrString;
     apiDisplayName: string | undefined;

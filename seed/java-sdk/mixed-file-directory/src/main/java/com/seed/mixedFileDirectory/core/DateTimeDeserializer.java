@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalQueries;
 
@@ -42,8 +43,15 @@ class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
         if (token == JsonToken.VALUE_NUMBER_INT) {
             return OffsetDateTime.ofInstant(Instant.ofEpochSecond(parser.getValueAsLong()), ZoneOffset.UTC);
         } else {
-            TemporalAccessor temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(
-                    parser.getValueAsString(), OffsetDateTime::from, LocalDateTime::from);
+            String value = parser.getValueAsString();
+            TemporalAccessor temporal;
+            try {
+                temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(value, OffsetDateTime::from, LocalDateTime::from);
+            } catch (DateTimeParseException e) {
+                // Fall back to space-separated format (e.g. "2025-02-15 10:30:00+00:00").
+                temporal = DateTimeFormatter.ISO_DATE_TIME.parseBest(
+                        value.replace(' ', 'T'), OffsetDateTime::from, LocalDateTime::from);
+            }
 
             if (temporal.query(TemporalQueries.offset()) == null) {
                 return LocalDateTime.from(temporal).atOffset(ZoneOffset.UTC);

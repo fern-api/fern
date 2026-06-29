@@ -1,0 +1,5 @@
+- summary: |
+    Add npm version badge to the generated CLI README header when npm
+    publish info is configured, matching the badge behavior of generated
+    TypeScript SDKs.
+  type: feat

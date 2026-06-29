@@ -1,4 +1,5 @@
-import { GeneratorNotificationService, GeneratorError } from "@fern-api/base-generator";
+import { GeneratorNotificationService, GeneratorError, GeneratorExecParsing } from "@fern-api/base-generator";
+import { readFile } from "fs/promises";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -36,6 +37,45 @@ import { WireTestGenerator } from "./wire-tests/index.js";
 const execAsync = promisify(exec);
 
 export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
+    // ===========================
+    // IN-PROCESS LIBRARY API
+    // ===========================
+
+    /**
+     * Run the full SDK generation pipeline and return the populated context.
+     *
+     * Used by the CLI generator to invoke the Rust SDK generator in-process
+     * (rather than as a subprocess) and read resolved client names directly
+     * from the context's filename registry.
+     */
+    public async generateAndReturnContext(configPath: string): Promise<SdkGeneratorContext> {
+        const rawConfig = await readFile(configPath, "utf-8");
+        const validatedConfig = await GeneratorExecParsing.GeneratorConfig.parse(JSON.parse(rawConfig), {
+            unrecognizedObjectKeys: "passthrough"
+        });
+        if (!validatedConfig.ok) {
+            throw new Error(
+                `Invalid generator config: ${validatedConfig.errors.map((e) => (typeof e === "object" ? JSON.stringify(e) : String(e))).join(", ")}`
+            );
+        }
+        const config = validatedConfig.value;
+
+        const ir = await this.parseIntermediateRepresentation(config.irFilepath);
+        const customConfig = this.parseCustomConfigOrThrow(config.customConfig);
+        const generatorNotificationService = new GeneratorNotificationService(
+            FernGeneratorExec.GeneratorEnvironment.local()
+        );
+        const context = this.constructContext({
+            ir,
+            customConfig,
+            generatorConfig: config,
+            generatorNotificationService
+        });
+
+        await this.generate(context);
+        return context;
+    }
+
     // ===========================
     // LIFECYCLE METHODS
     // ===========================
@@ -205,19 +245,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug(`Generated ${projectFiles.length} project files`);
         context.project.addSourceFiles(...projectFiles);
 
-        context.logger.debug("Generating README.md with code examples...");
-        // Generate README if configured
-        await this.generateReadme(context);
+        // Standalone doc generation requires static assets (features.yml, asIs/)
+        // that are only available in the standalone Docker image. Skip when running
+        // as an embedded SDK inside the CLI generator.
+        if (!context.customConfig.cliEmbedded) {
+            context.logger.debug("Generating README.md with code examples...");
+            await this.generateReadme(context);
 
-        context.logger.debug("Generating reference.md documentation...");
-        // Generate reference.md if configured
-        await this.generateReference(context);
+            context.logger.debug("Generating reference.md documentation...");
+            await this.generateReference(context);
 
-        if (!context.config.whitelabel) {
-            try {
-                await this.generateContributing(context);
-            } catch (error) {
-                throw GeneratorError.internalError(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`);
+            if (!context.config.whitelabel) {
+                try {
+                    await this.generateContributing(context);
+                } catch (error) {
+                    throw GeneratorError.internalError(
+                        `Failed to generate CONTRIBUTING.md: ${extractErrorMessage(error)}`
+                    );
+                }
             }
         }
 

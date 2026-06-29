@@ -63,7 +63,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -93,7 +93,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
-        var request = new JsonRequest
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -122,7 +122,7 @@ public class RetriesTests
             .WillSetStateTo("Server Error")
             .RespondWith(WireMockResponse.Create().WithStatusCode(429).WithBody("Failure"));
 
-        var request = new StreamRequest{
+        var request = new <%= namespaces.qualifiedCore %>.StreamRequest{
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
             Path = "/test",
@@ -189,7 +189,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest{
+                var request = new <%= namespaces.qualifiedCore %>.MultipartFormRequest{
                     BaseUrl = _baseUrl,
                     Method = HttpMethod.Post,
                     Path = "/test",
@@ -227,7 +227,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -266,7 +266,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -305,7 +305,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new EmptyRequest
+        var request = new <%= namespaces.qualifiedCore %>.EmptyRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Get,
@@ -338,7 +338,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = new JsonRequest
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
         {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -377,7 +377,7 @@ public class RetriesTests
             .WhenStateIs("Success")
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-                var request = new <%= context.namespaces.qualifiedCore %>.MultipartFormRequest
+                var request = new <%= namespaces.qualifiedCore %>.MultipartFormRequest
                 {
             BaseUrl = _baseUrl,
             Method = HttpMethod.Post,
@@ -401,10 +401,140 @@ public class RetriesTests
         }
     }
 
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRetry_WhenHandlerDisposesRequestContent()
+    {
+        // ContentDisposingHandler simulates HTTP/2's disposal of request.Content after send;
+        // WireMock's loopback HTTP/1.1 path does not exhibit that on its own.
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentRetry")
+            .WillSetStateTo("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentRetry")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        using var disposingClient = new HttpClient(
+            new ContentDisposingHandler(new HttpClientHandler())
+        );
+        var rawClient = new RawClient(
+            new ClientOptions { HttpClient = disposingClient, MaxRetries = MaxRetries<%= clientOptionsRequiredDefaults %> }
+        )
+        {
+            BaseRetryDelay = 0,
+        };
+
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+            Body = new { key = "value" },
+        };
+
+        var response = await rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+
+            var retriedEntry = _server.LogEntries.ElementAt(1);
+            using var actualJson = JsonDocument.Parse(retriedEntry.RequestMessage.Body!);
+            Assert.That(actualJson.RootElement.GetProperty("key").GetString(), Is.EqualTo("value"));
+        }
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRetry_WhenHandlerDisposesRequestContent_AcrossMultipleRetries()
+    {
+        // Exercises 2nd and 3rd clones — the single-retry variant can pass if those break.
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WillSetStateTo("Second")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WhenStateIs("Second")
+            .WillSetStateTo("Third")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WhenStateIs("Third")
+            .WillSetStateTo("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(<%= retryStatusCodes === "recommended" ? 503 : 500 %>));
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
+            .InScenario("DisposeContentMultiRetry")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        using var disposingClient = new HttpClient(
+            new ContentDisposingHandler(new HttpClientHandler())
+        );
+        var rawClient = new RawClient(
+            new ClientOptions { HttpClient = disposingClient, MaxRetries = MaxRetries<%= clientOptionsRequiredDefaults %> }
+        )
+        {
+            BaseRetryDelay = 0,
+        };
+
+        var request = new <%= namespaces.qualifiedCore %>.JsonRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Post,
+            Path = "/test",
+            Body = new { key = "value" },
+        };
+
+        var response = await rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        using (Assert.EnterMultipleScope())
+        {
+            // Initial attempt + 3 retries == 4 requests reaching the server.
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(MaxRetries + 1));
+
+            // Every retried request must have preserved the original body.
+            foreach (var entry in _server.LogEntries)
+            {
+                using var actualJson = JsonDocument.Parse(entry.RequestMessage.Body!);
+                Assert.That(actualJson.RootElement.GetProperty("key").GetString(), Is.EqualTo("value"));
+            }
+        }
+    }
+
     [TearDown]
     public void TearDown()
     {
         _server.Dispose();
         _httpClient.Dispose();
+    }
+
+    private sealed class ContentDisposingHandler : DelegatingHandler
+    {
+        public ContentDisposingHandler(HttpMessageHandler inner) : base(inner) { }
+
+        protected override async global::System.Threading.Tasks.Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken
+        )
+        {
+            var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            request.Content?.Dispose();
+            return response;
+        }
     }
 }

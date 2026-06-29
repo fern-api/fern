@@ -3638,6 +3638,7 @@ types:
                 },
               },
               "response": {
+                "content-type": undefined,
                 "docs": "Ok",
                 "status-code": 200,
                 "type": "text",
@@ -4838,4 +4839,5 @@ auth-schemes:
 auth: auth0
 ",
   },
+  "specVersion": "0.0.1",
 }

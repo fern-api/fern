@@ -1,7 +1,13 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError } from "@fern-api/task-context";
 import { copyFile, rm } from "fs/promises";
-import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { join } from "path";
+import {
+    CONTAINER_SPECS_DIRECTORY,
+    TYPE_RELOCATIONS_FILENAME,
+    TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR
+} from "./constants.js";
+import { ExecutionEnvironment, SourceMount } from "./ExecutionEnvironment.js";
 
 const LICENSE_MOUNT_PATH = "/tmp/LICENSE";
 
@@ -35,6 +41,7 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
         snippetPath,
         snippetTemplatePath,
         licenseFilePath,
+        sourceMounts,
         context,
         inspect
     }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
@@ -55,6 +62,20 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                 );
             }
         }
+
+        // Resolve source-mount env vars for native execution. In container mode these
+        // become Docker volume mounts; natively we expose them as environment variables
+        // so generators can locate mounted directories (e.g. FERN_SPECS_DIR).
+        const specsMount = sourceMounts?.find((m: SourceMount) => m.containerPath === CONTAINER_SPECS_DIRECTORY);
+        const specsEnv = specsMount != null ? { FERN_SPECS_DIR: specsMount.hostPath } : {};
+
+        // Generators that relocate types to break import cycles write the
+        // relocations here (directly in the host output dir). The host applies
+        // them to its dynamic snippet IR and deletes the file before copying
+        // generated output.
+        const relocationsEnv = {
+            [TYPE_RELOCATIONS_OUTPUT_FILEPATH_ENV_VAR]: join(outputPath, TYPE_RELOCATIONS_FILENAME)
+        };
 
         try {
             for (const command of this.commands) {
@@ -79,6 +100,8 @@ export class NativeExecutionEnvironment implements ExecutionEnvironment {
                     env: {
                         ...process.env,
                         ...this.env,
+                        ...specsEnv,
+                        ...relocationsEnv,
                         IR_PATH: irPath,
                         CONFIG_PATH: configPath,
                         OUTPUT_PATH: outputPath,

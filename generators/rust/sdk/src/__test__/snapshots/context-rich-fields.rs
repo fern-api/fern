@@ -2,20 +2,22 @@ use thiserror::{Error};
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("UnauthorizedError: Authentication failed - {{message}}")]
+    #[error("UnauthorizedError: Authentication failed - {message}")]
     UnauthorizedError { message: String, auth_type: Option<String> },
-    #[error("NotFoundError: Resource not found - {{message}}")]
+    #[error("NotFoundError: Resource not found - {message}")]
     NotFoundError { message: String, resource_id: Option<String>, resource_type: Option<String> },
-    #[error("ValidationError: Unprocessable entity - {{message}}")]
+    #[error("ValidationError: Unprocessable entity - {message}")]
     ValidationError { message: String, field: Option<String>, validation_error: Option<String> },
-    #[error("RateLimitError: Rate limit exceeded - {{message}}")]
+    #[error("RateLimitError: Rate limit exceeded - {message}")]
     RateLimitError { message: String, retry_after_seconds: Option<u64>, limit_type: Option<String> },
-    #[error("InternalServerError: Internal server error - {{message}}")]
+    #[error("InternalServerError: Internal server error - {message}")]
     InternalServerError { message: String, error_id: Option<String> },
     #[error("HTTP error {status}: {message}")]
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
+    #[error("Request executor error: {0}")]
+    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]
@@ -41,7 +43,7 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::UnauthorizedError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        auth_type: parsed.get("auth_type").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        auth_type: parsed.get("authType").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -56,8 +58,8 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::NotFoundError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        resource_id: parsed.get("resource_id").and_then(|v| v.as_str().map(|s| s.to_string())),
-                        resource_type: parsed.get("resource_type").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        resource_id: parsed.get("resourceId").and_then(|v| v.as_str().map(|s| s.to_string())),
+                        resource_type: parsed.get("resourceType").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -74,7 +76,7 @@ impl ApiError {
                     return Self::ValidationError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
                         field: parsed.get("field").and_then(|v| v.as_str().map(|s| s.to_string())),
-                        validation_error: parsed.get("validation_error").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        validation_error: parsed.get("validationError").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -90,8 +92,8 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::RateLimitError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        retry_after_seconds: parsed.get("retry_after_seconds").and_then(|v| v.as_u64()),
-                        limit_type: parsed.get("limit_type").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        retry_after_seconds: parsed.get("retryAfterSeconds").and_then(|v| v.as_u64()),
+                        limit_type: parsed.get("limitType").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -107,7 +109,7 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::InternalServerError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        error_id: parsed.get("error_id").and_then(|v| v.as_str().map(|s| s.to_string()))
+                        error_id: parsed.get("errorId").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }

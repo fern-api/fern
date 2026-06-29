@@ -1,7 +1,7 @@
 import { getOriginalName, getWireValue, GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { RustFile } from "@fern-api/rust-base";
+import { escapeRustKeyword, RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
@@ -897,8 +897,14 @@ export class SubClientGenerator {
 
         if (isFileUpload) {
             // Use multipart request for file uploads
-            executeMethod = "execute_multipart_request";
             const multipartBody = "request.clone().to_multipart()";
+            if (responseType === "binary") {
+                // Multipart upload with binary/streaming response (e.g., audio conversion)
+                executeMethod = "execute_multipart_stream_request";
+            } else {
+                // Multipart upload with JSON-deserializable response
+                executeMethod = "execute_multipart_request";
+            }
             executeArgs = `
             Method::${httpMethod},
             ${pathExpression},
@@ -961,7 +967,9 @@ export class SubClientGenerator {
         }
 
         return {
-            name: this.context.case.snakeSafe(endpoint.name),
+            // Escape Rust reserved keywords (e.g. an endpoint named "move"
+            // becomes `r#move`) so the generated `pub async fn` parses.
+            name: escapeRustKeyword(this.context.case.snakeSafe(endpoint.name)),
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
@@ -1100,8 +1108,10 @@ export class SubClientGenerator {
                     return generateRustTypeForTypeReference(reference.requestBodyType, this.context);
                 },
                 fileUpload: () => {
-                    // For file uploads, use a structured type instead of generic Value
-                    const requestTypeName = this.getRequestTypeName(endpoint);
+                    const requestTypeName =
+                        endpoint.queryParameters.length > 0
+                            ? this.context.getFileUploadRequestTypeName(endpoint.id)
+                            : this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
                 bytes: () => {

@@ -618,7 +618,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             FernIr.AuthScheme.inferred(this.authScheme)
         );
         return authTokenParams.map((param) => ({
-            name: param.name,
+            name: param.wireKey,
             safeName: param.name,
             type: param.type,
             isOptional: param.isOptional,

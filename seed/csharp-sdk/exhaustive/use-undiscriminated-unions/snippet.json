@@ -460,6 +460,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params/body-and-query",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.createWithBodyAndQuery"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Endpoints;\nusing SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.CreateWithBodyAndQueryAsync(\n    new CreateWithBodyAndQuery\n    {\n        Fields = \"_fields\",\n        Body = new ObjectWithRequiredField { String = \"string\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/params/path-bool/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"
@@ -671,6 +683,18 @@
             "snippet": {
                 "type": "csharp",
                 "client": "using SeedExhaustive.Types;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.InlinedRequests.PostWithObjectBodyandResponseAsync(\n    new PostWithObjectBody\n    {\n        String = \"string\",\n        Integer = 1,\n        NestedObject = new ObjectWithOptionalField\n        {\n            String = \"string\",\n            Integer = 1,\n            Long = 1000000,\n            Double = 1.1,\n            Bool = true,\n            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n            Date = new DateOnly(2023, 1, 15),\n            Uuid = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            Base64 = \"SGVsbG8gd29ybGQh\",\n            List = new List<string>() { \"list\", \"list\" },\n            Set = new HashSet<string>() { \"set\" },\n            Map = new Dictionary<int, string>() { { 1, \"map\" } },\n            Bigint = \"1000000\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/req-bodies/array-body-with-headers",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithArrayBodyAndHeaders"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.InlinedRequests.PostWithArrayBodyAndHeadersAsync(\n    new PostWithArrayBodyAndHeaders\n    {\n        XCustomHeader = \"X-Custom-Header\",\n        Body = new List<string>() { \"string\", \"string\" },\n    }\n);\n"
             }
         },
         {

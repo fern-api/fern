@@ -100,7 +100,7 @@ await client.Auth.RefreshTokenAsync(
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.NestedNoAuth.Api.<a href="/src/SeedOauthClientCredentialsWithVariables/NestedNoAuth/Api/ApiClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.NestedNoAuth.Api.<a href="/src/SeedOauthClientCredentialsWithVariables/NestedNoAuth/Api/ApiClient.cs">GetSomethingAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -126,7 +126,7 @@ await client.NestedNoAuth.Api.GetSomethingAsync();
 </details>
 
 ## Nested Api
-<details><summary><code>client.Nested.Api.<a href="/src/SeedOauthClientCredentialsWithVariables/Nested/Api/ApiClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Nested.Api.<a href="/src/SeedOauthClientCredentialsWithVariables/Nested/Api/ApiClient.cs">GetSomethingAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -152,7 +152,7 @@ await client.Nested.Api.GetSomethingAsync();
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedOauthClientCredentialsWithVariables/Service/ServiceClient.cs">PostAsync</a>(endpointParam)</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedOauthClientCredentialsWithVariables/Service/ServiceClient.cs">PostAsync</a>(endpointParam) -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -193,7 +193,7 @@ await client.Service.PostAsync("endpointParam");
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.<a href="/src/SeedOauthClientCredentialsWithVariables/Simple/SimpleClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedOauthClientCredentialsWithVariables/Simple/SimpleClient.cs">GetSomethingAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

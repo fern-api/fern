@@ -345,6 +345,12 @@ export class DynamicTypeInstantiationMapper {
         );
     }
 
+    // Materializes a literal value (e.g. a literal path parameter), as opposed to
+    // convert(), which treats literals as a no-op since they are usually omitted.
+    public convertLiteral(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
+        return this.convertLiteralValue(literal);
+    }
+
     private convertLiteralValue(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
         switch (literal.type) {
             case "boolean":

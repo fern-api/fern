@@ -891,6 +891,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
                 const headerNameVal = header.name;
                 const headerField = `${this.getRequestParameterName({ endpoint })}.${this.context.getFieldName(headerNameVal)}`;
+                // Undiscriminated unions are added to the header as a string via their
+                // generated String() method, since the union struct itself isn't a string.
+                if (this.context.maybeUndiscriminatedUnion(header.valueType) != null) {
+                    const isOptional = this.context.maybeUnwrapOptionalOrNullable(header.valueType) != null;
+                    const headerValue = this.addHeaderValue({
+                        wireValue: getWireValue(header.name),
+                        value: go.codeblock(`${headerField}.String()`)
+                    });
+                    if (isOptional) {
+                        writer.writeNewLineIfLastLineNot();
+                        writer.writeLine(`if ${headerField} != nil {`);
+                        writer.indent();
+                        writer.writeNode(headerValue);
+                        writer.newLine();
+                        writer.dedent();
+                        writer.writeLine("}");
+                    } else {
+                        writer.writeNode(headerValue);
+                    }
+                    continue;
+                }
                 const format = this.context.goValueFormatter.convert({
                     reference: header.valueType,
                     value: go.codeblock(headerField)
@@ -1005,6 +1026,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         this.context.goTypeMapper.convert({ reference: responseBody.value.responseBodyType })
                     );
                 });
+            case "bytes":
             case "fileDownload":
             case "text":
                 return go.codeblock((writer) => {
@@ -1013,7 +1035,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 });
             case "streaming":
             case "streamParameter":
-            case "bytes":
                 return undefined;
             default:
                 assertNever(responseBody);
@@ -1090,11 +1111,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         switch (responseBody.type) {
             case "json":
                 return this.getResponseBodyReferenceForJson({ jsonResponse: responseBody.value });
-            case "bytes":
             case "fileDownload":
             case "streaming":
             case "streamParameter":
                 return go.codeblock("response");
+            case "bytes":
+                return go.codeblock("response.Bytes()");
             case "text":
                 return go.codeblock("response.String()");
             default:
@@ -1263,9 +1285,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private addQueryValue({ wireValue, value }: { wireValue: string; value: string }): go.CodeBlock {
+        // `value` is already a fully-formed Go string expression (e.g. the quoted
+        // output of getLiteralAsString), so it is written verbatim rather than
+        // being wrapped in another set of quotes.
         return go.codeblock((writer) => {
             writer.writeNewLineIfLastLineNot();
-            writer.write(`queryParams.Add("${wireValue}", "${value}")`);
+            writer.write(`queryParams.Add("${wireValue}", ${value})`);
         });
     }
 

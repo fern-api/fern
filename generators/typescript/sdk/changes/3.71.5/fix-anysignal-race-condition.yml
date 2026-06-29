@@ -1,0 +1,5 @@
+- summary: |
+    Fix race condition in anySignal() where abort events could be silently
+    dropped when a source signal aborts between the aborted check and
+    addEventListener registration.
+  type: fix

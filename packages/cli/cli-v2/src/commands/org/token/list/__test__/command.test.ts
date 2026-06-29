@@ -79,8 +79,8 @@ describe("ListTokensCommand", () => {
         expect(createVenusService).toHaveBeenCalledWith(
             expect.objectContaining({ headers: { "X-Request-Id": "test-request-id" } })
         );
-        expect(mockGet).toHaveBeenCalledWith("acme");
-        expect(mockGetTokens).toHaveBeenCalledWith("org_abc123");
+        expect(mockGet).toHaveBeenCalledWith({ orgId: "acme" });
+        expect(mockGetTokens).toHaveBeenCalledWith({ organizationId: "org_abc123" });
         expect(context.stdout.info).toHaveBeenCalledTimes(2);
     });
 
@@ -154,9 +154,7 @@ describe("ListTokensCommand", () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
-            }
+            rawResponse: { status: 403 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet }
@@ -175,9 +173,7 @@ describe("ListTokensCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { unauthorizedError: () => void }) => visitor.unauthorizedError()
-            }
+            rawResponse: { status: 403 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
@@ -197,9 +193,7 @@ describe("ListTokensCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { organizationNotFoundError: () => void }) => visitor.organizationNotFoundError()
-            }
+            rawResponse: { status: 404 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },
@@ -217,9 +211,7 @@ describe("ListTokensCommand", () => {
         const mockGet = mockOrgLookupSuccess();
         const mockGetTokens = vi.fn().mockResolvedValue({
             ok: false,
-            error: {
-                _visit: (visitor: { _other: () => void }) => visitor._other()
-            }
+            rawResponse: { status: 500 }
         });
         vi.mocked(createVenusService).mockReturnValue({
             organization: { get: mockGet },

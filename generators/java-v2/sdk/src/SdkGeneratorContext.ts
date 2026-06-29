@@ -1,6 +1,6 @@
 import { GeneratorError, GeneratorNotificationService, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { java } from "@fern-api/java-ast";
+import { escapeJavaKeyword, java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -78,27 +78,26 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             case "bytes":
                 throw GeneratorError.internalError("Returning bytes is not supported");
             case "streaming":
-                switch (responseBody.value.type) {
-                    case "text":
-                        throw GeneratorError.internalError("Returning streamed text is not supported");
-                    case "json":
-                        return java.Type.iterable(
-                            this.javaTypeMapper.convert({ reference: responseBody.value.payload })
-                        );
-                    case "sse":
-                        return java.Type.iterable(
-                            this.javaTypeMapper.convert({ reference: responseBody.value.payload })
-                        );
-                    default:
-                        assertNever(responseBody.value);
-                        throw GeneratorError.internalError("Unknown streaming type");
-                }
+                return this.getStreamingReturnType(responseBody.value);
             case "fileDownload":
                 return java.Type.inputStream();
             case "streamParameter":
-                throw GeneratorError.internalError("Returning stream parameter is not supported");
+                return this.getStreamingReturnType(responseBody.streamResponse);
             default:
                 assertNever(responseBody);
+        }
+    }
+
+    private getStreamingReturnType(streamingResponse: FernIr.StreamingResponse): java.Type {
+        switch (streamingResponse.type) {
+            case "text":
+                throw GeneratorError.internalError("Returning streamed text is not supported");
+            case "json":
+            case "sse":
+                return java.Type.iterable(this.javaTypeMapper.convert({ reference: streamingResponse.payload }));
+            default:
+                assertNever(streamingResponse);
+                throw GeneratorError.internalError("Unknown streaming type");
         }
     }
 
@@ -305,7 +304,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     private joinPackageTokens(tokens: string[]): string {
         const sanitizedTokens = tokens.map((token) => {
-            return this.startsWithNumber(token) ? "_" + token : token;
+            return this.startsWithNumber(token) ? "_" + token : escapeJavaKeyword(token);
         });
         return sanitizedTokens.join(".");
     }

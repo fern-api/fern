@@ -52,7 +52,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 return new WithRawResponse<string>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -66,7 +66,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     null,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -77,7 +83,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -118,7 +130,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 return new WithRawResponse<ObjectWithOptionalField>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -132,7 +144,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     null,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -143,7 +161,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -188,7 +212,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 return new WithRawResponse<ObjectWithOptionalField>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -202,7 +226,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     null,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -213,7 +243,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -258,7 +294,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 return new WithRawResponse<ObjectWithOptionalField>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -272,7 +308,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     null,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -283,7 +325,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -326,7 +374,7 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                 return new WithRawResponse<bool>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedExhaustive.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -340,7 +388,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     null,
-                    e
+                    e,
+                    rawResponse: new SeedExhaustive.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -351,7 +405,13 @@ public partial class HttpMethodsClient : IHttpMethodsClient
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedExhaustive.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

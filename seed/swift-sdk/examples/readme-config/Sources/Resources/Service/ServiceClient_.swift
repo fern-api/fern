@@ -26,7 +26,7 @@ public final class ServiceClient_: Sendable {
         )
     }
 
-    public func getMetadata(xApiVersion: String, shallow: Bool? = nil, tag: String? = nil, requestOptions: RequestOptions? = nil) async throws -> MetadataType {
+    public func getMetadata(xApiVersion: String, shallow: Bool? = nil, tag: [String]? = nil, requestOptions: RequestOptions? = nil) async throws -> MetadataType {
         return try await httpClient.performRequest(
             method: .get,
             path: "/metadata",
@@ -35,7 +35,7 @@ public final class ServiceClient_: Sendable {
             ],
             queryParams: [
                 "shallow": shallow.map { .bool($0) }, 
-                "tag": tag.map { .string($0) }
+                "tag": tag.map { .stringArray($0) }
             ],
             requestOptions: requestOptions,
             responseType: MetadataType.self
@@ -52,7 +52,7 @@ public final class ServiceClient_: Sendable {
         )
     }
 
-    public func refreshToken(request: RefreshTokenRequest?, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func refreshToken(request: RefreshTokenRequest? = nil, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/refresh-token",

@@ -211,6 +211,24 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
             }
         }
 
+        // Add request types for endpoints with referenced body AND query parameters
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "reference" && endpoint.queryParameters.length > 0) {
+                    const filename = context.getFilenameForReferencedRequestWithQuery(endpoint.id);
+                    const rawModuleName = filename.replace(".rs", "");
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+                    const typeName = context.getReferencedRequestWithQueryTypeName(endpoint.id);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleExports.push({ moduleName: escapedModuleName, typeName });
+                        requestTypeCount++;
+                    }
+                }
+            }
+        }
+
         // Add bytes request body types
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {

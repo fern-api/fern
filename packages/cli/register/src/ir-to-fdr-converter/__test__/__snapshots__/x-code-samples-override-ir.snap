@@ -225,6 +225,7 @@
             "_visit": [Function],
             "type": "openapi",
           },
+          "subtitle": undefined,
           "transport": undefined,
           "userSpecifiedExamples": [],
           "v2BaseUrls": undefined,
@@ -357,6 +358,7 @@ puts user.name",
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {},
   "types": {
     "getUser_Response_200": {

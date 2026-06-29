@@ -16,7 +16,7 @@ Edit the right-hand column to match whatever vocabulary you actually use.
 
 ## Devin handoff
 
-When AFK execution is the next step, hand off to Devin. **Prefer the `devin` CLI when `DEVIN_API_KEY` is set** (scopes the session to the user's own Devin dashboard; better observed performance); otherwise fall back to applying one of the synced `Devin Playbooks` macro labels in Linear. See `docs/agents/issue-tracker.md` for the CLI vs. label decision and the exact commands. Mapping from canonical role to Devin macro (the label fallback):
+When AFK execution is the next step, hand off to Devin. **Prefer the `devin-api` CLI when `DEVIN_API_KEY` is set** (scopes the session to the user's own Devin dashboard; better observed performance); otherwise fall back to applying one of the synced `Devin Playbooks` macro labels in Linear. See `docs/agents/issue-tracker.md` for the CLI vs. label decision and the exact commands. Mapping from canonical role to Devin macro (the label fallback):
 
 | Canonical role | Devin macro to apply | Notes |
 | --- | --- | --- |

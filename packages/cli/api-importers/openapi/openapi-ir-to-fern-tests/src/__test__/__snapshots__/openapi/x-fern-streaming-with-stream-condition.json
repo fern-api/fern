@@ -609,4 +609,5 @@ environments:
 default-environment: Default
 ",
   },
+  "specVersion": "0.1.0",
 }

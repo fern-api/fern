@@ -175,7 +175,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await loggingExeca(
             this.context.logger,
             csharpier,
-            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--syntax-errors-as-warnings"],
             {
                 doNotPipeOutput: false,
                 cwd: absolutePathToSrcDirectory
@@ -295,6 +295,11 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
+        const useOidc = this.context.publishConfig?.apiKeyEnvironmentVariable === "<USE_OIDC>";
+        const shouldWritePublishBlock =
+            this.context.publishConfig != null &&
+            (this.context.publishConfig.shouldGeneratePublishWorkflow == null ||
+                this.context.publishConfig.shouldGeneratePublishWorkflow === true);
         const githubWorkflow = eta
             .renderString(githubWorkflowTemplate, {
                 projectName: this.name,
@@ -305,10 +310,12 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                     this.names.files.testProject,
                     `${this.names.files.testProject}.csproj`
                 ),
-                shouldWritePublishBlock: this.context.publishConfig != null,
+                shouldWritePublishBlock,
+                useOidc,
                 nugetTokenEnvvar:
                     this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
-                    this.context.publishConfig?.apiKeyEnvironmentVariable === ""
+                    this.context.publishConfig?.apiKeyEnvironmentVariable === "" ||
+                    useOidc
                         ? "NUGET_API_TOKEN"
                         : this.context.publishConfig.apiKeyEnvironmentVariable
             })

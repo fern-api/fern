@@ -11,13 +11,7 @@ public partial class AdminClient : IAdminClient
         _client = client;
     }
 
-    /// <example><code>
-    /// await client.Admin.UpdateTestSubmissionStatusAsync(
-    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
-    /// );
-    /// </code></example>
-    public async Task UpdateTestSubmissionStatusAsync(
+    private async Task<RawResponse> UpdateTestSubmissionStatusAsyncCore(
         string submissionId,
         TestSubmissionStatus request,
         RequestOptions? options = null,
@@ -48,7 +42,12 @@ public partial class AdminClient : IAdminClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -57,24 +56,18 @@ public partial class AdminClient : IAdminClient
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
 
-    /// <example><code>
-    /// await client.Admin.SendTestSubmissionUpdateAsync(
-    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new TestSubmissionUpdate
-    ///     {
-    ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         UpdateInfo = new TestSubmissionUpdateInfo(
-    ///             new TestSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
-    ///         ),
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task SendTestSubmissionUpdateAsync(
+    private async Task<RawResponse> SendTestSubmissionUpdateAsyncCore(
         string submissionId,
         TestSubmissionUpdate request,
         RequestOptions? options = null,
@@ -105,7 +98,12 @@ public partial class AdminClient : IAdminClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -114,18 +112,18 @@ public partial class AdminClient : IAdminClient
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
 
-    /// <example><code>
-    /// await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
-    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
-    /// );
-    /// </code></example>
-    public async Task UpdateWorkspaceSubmissionStatusAsync(
+    private async Task<RawResponse> UpdateWorkspaceSubmissionStatusAsyncCore(
         string submissionId,
         WorkspaceSubmissionStatus request,
         RequestOptions? options = null,
@@ -156,7 +154,12 @@ public partial class AdminClient : IAdminClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -165,24 +168,18 @@ public partial class AdminClient : IAdminClient
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
 
-    /// <example><code>
-    /// await client.Admin.SendWorkspaceSubmissionUpdateAsync(
-    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ///     new WorkspaceSubmissionUpdate
-    ///     {
-    ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         UpdateInfo = new WorkspaceSubmissionUpdateInfo(
-    ///             new WorkspaceSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
-    ///         ),
-    ///     }
-    /// );
-    /// </code></example>
-    public async Task SendWorkspaceSubmissionUpdateAsync(
+    private async Task<RawResponse> SendWorkspaceSubmissionUpdateAsyncCore(
         string submissionId,
         WorkspaceSubmissionUpdate request,
         RequestOptions? options = null,
@@ -213,7 +210,12 @@ public partial class AdminClient : IAdminClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            return;
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
         }
         {
             var responseBody = await response
@@ -222,9 +224,337 @@ public partial class AdminClient : IAdminClient
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
+    }
+
+    private async Task<RawResponse> StoreTracedTestCaseAsyncCore(
+        string submissionId,
+        string testCaseId,
+        StoreTracedTestCaseRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = string.Format(
+                        "/admin/store-test-trace/submission/{0}/testCase/{1}",
+                        ValueConvert.ToPathParameterString(submissionId),
+                        ValueConvert.ToPathParameterString(testCaseId)
+                    ),
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    private async Task<RawResponse> StoreTracedTestCaseV2AsyncCore(
+        string submissionId,
+        string testCaseId,
+        IEnumerable<TraceResponseV2> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = string.Format(
+                        "/admin/store-test-trace-v2/submission/{0}/testCase/{1}",
+                        ValueConvert.ToPathParameterString(submissionId),
+                        ValueConvert.ToPathParameterString(testCaseId)
+                    ),
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    private async Task<RawResponse> StoreTracedWorkspaceAsyncCore(
+        string submissionId,
+        StoreTracedWorkspaceRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = string.Format(
+                        "/admin/store-workspace-trace/submission/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    private async Task<RawResponse> StoreTracedWorkspaceV2AsyncCore(
+        string submissionId,
+        IEnumerable<TraceResponseV2> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = string.Format(
+                        "/admin/store-workspace-trace-v2/submission/{0}",
+                        ValueConvert.ToPathParameterString(submissionId)
+                    ),
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return new SeedTrace.RawResponse()
+            {
+                StatusCode = response.Raw.StatusCode,
+                Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+            };
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody,
+                rawResponse: new SeedTrace.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.Admin.UpdateTestSubmissionStatusAsync(
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     new TestSubmissionStatus(new TestSubmissionStatus.Stopped())
+    /// );
+    /// </code></example>
+    public WithRawResponseTask UpdateTestSubmissionStatusAsync(
+        string submissionId,
+        TestSubmissionStatus request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            UpdateTestSubmissionStatusAsyncCore(submissionId, request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Admin.SendTestSubmissionUpdateAsync(
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     new TestSubmissionUpdate
+    ///     {
+    ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         UpdateInfo = new TestSubmissionUpdateInfo(
+    ///             new TestSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+    ///         ),
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask SendTestSubmissionUpdateAsync(
+        string submissionId,
+        TestSubmissionUpdate request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            SendTestSubmissionUpdateAsyncCore(submissionId, request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Admin.UpdateWorkspaceSubmissionStatusAsync(
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     new WorkspaceSubmissionStatus(new WorkspaceSubmissionStatus.Stopped())
+    /// );
+    /// </code></example>
+    public WithRawResponseTask UpdateWorkspaceSubmissionStatusAsync(
+        string submissionId,
+        WorkspaceSubmissionStatus request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            UpdateWorkspaceSubmissionStatusAsyncCore(
+                submissionId,
+                request,
+                options,
+                cancellationToken
+            )
+        );
+    }
+
+    /// <example><code>
+    /// await client.Admin.SendWorkspaceSubmissionUpdateAsync(
+    ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///     new WorkspaceSubmissionUpdate
+    ///     {
+    ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         UpdateInfo = new WorkspaceSubmissionUpdateInfo(
+    ///             new WorkspaceSubmissionUpdateInfo.Running(RunningSubmissionState.QueueingSubmission)
+    ///         ),
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask SendWorkspaceSubmissionUpdateAsync(
+        string submissionId,
+        WorkspaceSubmissionUpdate request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask(
+            SendWorkspaceSubmissionUpdateAsyncCore(
+                submissionId,
+                request,
+                options,
+                cancellationToken
+            )
+        );
     }
 
     /// <example><code>
@@ -341,7 +671,7 @@ public partial class AdminClient : IAdminClient
     ///     }
     /// );
     /// </code></example>
-    public async Task StoreTracedTestCaseAsync(
+    public WithRawResponseTask StoreTracedTestCaseAsync(
         string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request,
@@ -349,43 +679,15 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-test-trace/submission/{0}/testCase/{1}",
-                        ValueConvert.ToPathParameterString(submissionId),
-                        ValueConvert.ToPathParameterString(testCaseId)
-                    ),
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
+        return new WithRawResponseTask(
+            StoreTracedTestCaseAsyncCore(
+                submissionId,
+                testCaseId,
+                request,
+                options,
                 cancellationToken
             )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        );
     }
 
     /// <example><code>
@@ -479,7 +781,7 @@ public partial class AdminClient : IAdminClient
     ///     }
     /// );
     /// </code></example>
-    public async Task StoreTracedTestCaseV2Async(
+    public WithRawResponseTask StoreTracedTestCaseV2Async(
         string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request,
@@ -487,43 +789,15 @@ public partial class AdminClient : IAdminClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-test-trace-v2/submission/{0}/testCase/{1}",
-                        ValueConvert.ToPathParameterString(submissionId),
-                        ValueConvert.ToPathParameterString(testCaseId)
-                    ),
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
+        return new WithRawResponseTask(
+            StoreTracedTestCaseV2AsyncCore(
+                submissionId,
+                testCaseId,
+                request,
+                options,
                 cancellationToken
             )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        );
     }
 
     /// <example><code>
@@ -645,49 +919,16 @@ public partial class AdminClient : IAdminClient
     ///     }
     /// );
     /// </code></example>
-    public async Task StoreTracedWorkspaceAsync(
+    public WithRawResponseTask StoreTracedWorkspaceAsync(
         string submissionId,
         StoreTracedWorkspaceRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-workspace-trace/submission/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask(
+            StoreTracedWorkspaceAsyncCore(submissionId, request, options, cancellationToken)
+        );
     }
 
     /// <example><code>
@@ -780,48 +1021,15 @@ public partial class AdminClient : IAdminClient
     ///     }
     /// );
     /// </code></example>
-    public async Task StoreTracedWorkspaceV2Async(
+    public WithRawResponseTask StoreTracedWorkspaceV2Async(
         string submissionId,
         IEnumerable<TraceResponseV2> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = await new SeedTrace.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = string.Format(
-                        "/admin/store-workspace-trace-v2/submission/{0}",
-                        ValueConvert.ToPathParameterString(submissionId)
-                    ),
-                    Body = request,
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            return;
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedTraceApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return new WithRawResponseTask(
+            StoreTracedWorkspaceV2AsyncCore(submissionId, request, options, cancellationToken)
+        );
     }
 }

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "34d92e75",
+            "example_identifier": "6f306605",
             "id": {
                 "method": "GET",
                 "path": "/ping",

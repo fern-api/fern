@@ -6,7 +6,7 @@ import Exhaustive
     @Test func getAndReturnListOfPrimitives1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   "string",
@@ -37,7 +37,7 @@ import Exhaustive
     @Test func getAndReturnListOfObjects1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -80,7 +80,7 @@ import Exhaustive
     @Test func getAndReturnSetOfPrimitives1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   "string"
@@ -93,15 +93,22 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = []
-        let response = try await client.endpoints.container.getAndReturnSetOfPrimitives(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let expectedResponse = JSONValue.array([
+            JSONValue.string("string")
+        ])
+        let response = try await client.endpoints.container.getAndReturnSetOfPrimitives(
+            request: .array([
+                .string("string")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getAndReturnSetOfObjects1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -116,15 +123,28 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = []
-        let response = try await client.endpoints.container.getAndReturnSetOfObjects(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let expectedResponse = JSONValue.array([
+            JSONValue.object(
+                [
+                    "string": JSONValue.string("string")
+                ]
+            )
+        ])
+        let response = try await client.endpoints.container.getAndReturnSetOfObjects(
+            request: .array([
+                .object([
+                    "string": .string("string")
+                ])
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
     @Test func getAndReturnMapPrimToPrim1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string"
@@ -152,7 +172,7 @@ import Exhaustive
     @Test func getAndReturnMapOfPrimToObject1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": {
@@ -186,7 +206,7 @@ import Exhaustive
     @Test func getAndReturnMapOfPrimToUndiscriminatedUnion1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": 1.1
@@ -218,7 +238,7 @@ import Exhaustive
     @Test func getAndReturnOptional1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "string": "string"

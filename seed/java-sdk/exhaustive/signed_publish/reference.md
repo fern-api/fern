@@ -2210,6 +2210,79 @@ client.endpoints().params().uploadWithPath("upload-path", "".getBytes());
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.createWithBodyAndQuery(request) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with referenced body + query params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().params().createWithBodyAndQuery(
+    CreateWithBodyAndQuery
+        .builder()
+        .body(
+            ObjectWithRequiredField
+                .builder()
+                .string("string")
+                .build()
+        )
+        .fields("_fields")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**fields:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.params.getWithBooleanPath(param) -> String</code></summary>
 <dl>
 <dd>
@@ -2971,6 +3044,76 @@ client.inlinedRequests().postWithObjectBodyandResponse(
 <dd>
 
 **nestedObject:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inlinedRequests.postWithArrayBodyAndHeaders(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST with root-level array body and header params
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.inlinedRequests().postWithArrayBodyAndHeaders(
+    PostWithArrayBodyAndHeaders
+        .builder()
+        .body(
+            Arrays.asList("string", "string")
+        )
+        .xCustomHeader("X-Custom-Header")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xCustomHeader:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `List<String>` 
     
 </dd>
 </dl>

@@ -6,9 +6,9 @@ import Exhaustive
     @Test func getAndReturnEnum1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
-                SUNNY
+                "SUNNY"
                 """#.utf8
             )
         )
@@ -17,7 +17,7 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .sunny
+        let expectedResponse = WeatherReport.sunny
         let response = try await client.endpoints.enum.getAndReturnEnum(
             request: .sunny,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

@@ -1,7 +1,19 @@
+pub mod package_backup_config;
+pub mod package_backup_override;
+pub mod package_custom_sip_header;
+pub mod package_dependency_item;
+pub mod package_known_dependency;
 pub mod package_package;
 pub mod package_record;
+pub mod package_sip_header_action;
 pub mod test_query_request;
 
+pub use package_backup_config::BackupConfig;
+pub use package_backup_override::BackupOverride;
+pub use package_custom_sip_header::CustomSipHeader;
+pub use package_dependency_item::DependencyItem;
+pub use package_known_dependency::KnownDependency;
 pub use package_package::Package;
 pub use package_record::Record;
+pub use package_sip_header_action::SipHeaderAction;
 pub use test_query_request::TestQueryRequest;

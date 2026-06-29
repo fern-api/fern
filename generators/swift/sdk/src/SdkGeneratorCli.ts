@@ -2,10 +2,11 @@ import { File, GeneratorError, GeneratorNotificationService, getWireValue } from
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, RootAsIsFiles, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
-import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
+import { sanitizeSwiftIdentifier, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
     AliasGenerator,
+    CodingKeyRepresentableExtensionGenerator,
     DiscriminatedUnionGenerator,
     LiteralEnumGenerator,
     ObjectGenerator,
@@ -295,7 +296,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                     return fileProperty._visit({
                                         file: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(
+                                                unsafeName: sanitizeSwiftIdentifier(
                                                     context.caseConverter.camelUnsafe(property.key)
                                                 ),
                                                 accessLevel: "public",
@@ -308,7 +309,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         },
                                         fileArray: (property) => {
                                             return swift.property({
-                                                unsafeName: sanitizeSelf(
+                                                unsafeName: sanitizeSwiftIdentifier(
                                                     context.caseConverter.camelUnsafe(property.key)
                                                 ),
                                                 accessLevel: "public",
@@ -326,7 +327,9 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 },
                                 bodyProperty: (property) => {
                                     return swift.property({
-                                        unsafeName: sanitizeSelf(context.caseConverter.camelUnsafe(property.name)),
+                                        unsafeName: sanitizeSwiftIdentifier(
+                                            context.caseConverter.camelUnsafe(property.name)
+                                        ),
                                         accessLevel: "public",
                                         declarationType: "let",
                                         type: context.getSwiftTypeReferenceFromScope(
@@ -472,6 +475,15 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private generateSourceSchemaFiles(context: SdkGeneratorContext): void {
+        const mapKeyTypeIds = context.getSchemaTypeIdsUsedAsNonStringMapKeys();
+        const buildSchemaFileContents = (typeId: string, primary: swift.FileComponent): swift.FileComponent[] => {
+            if (!mapKeyTypeIds.has(typeId)) {
+                return [primary];
+            }
+            const symbol = context.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+            const extension = new CodingKeyRepresentableExtensionGenerator({ name: symbol.name }).generate();
+            return [primary, swift.LineBreak.double(), extension];
+        };
         for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             typeDeclaration.shape._visit({
                 alias: (atd) => {
@@ -533,7 +545,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        contents: [enum_]
+                        contents: buildSchemaFileContents(typeId, enum_)
                     });
                 },
                 object: (otd) => {
@@ -564,7 +576,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     context.project.addSourceFile({
                         nameCandidateWithoutExtension: enum_.name,
                         directory: context.schemasDirectory,
-                        contents: [enum_]
+                        contents: buildSchemaFileContents(typeId, enum_)
                     });
                 },
                 union: (utd) => {

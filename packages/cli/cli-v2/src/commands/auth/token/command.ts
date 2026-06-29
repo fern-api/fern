@@ -39,36 +39,33 @@ export class TokenCommand {
             return;
         }
 
-        response.error._visit({
-            organizationNotFoundError: () => {
-                process.stderr.write(`${Icons.error} Organization "${orgId}" was not found.\n`);
-                throw new CliError({
-                    code: CliError.Code.ConfigError
-                });
-            },
-            unauthorizedError: () => {
-                process.stderr.write(`${Icons.error} You do not have access to organization "${orgId}".\n`);
-                throw new CliError({
-                    code: CliError.Code.AuthError
-                });
-            },
-            missingOrgPermissionsError: () => {
-                process.stderr.write(
-                    `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
-                );
-                throw new CliError({
-                    code: CliError.Code.AuthError
-                });
-            },
-            _other: () => {
-                process.stderr.write(
-                    `${Icons.error} Failed to generate token.\n` +
-                        `\n  Please contact support@buildwithfern.com for assistance.\n`
-                );
-                throw new CliError({
-                    code: CliError.Code.InternalError
-                });
-            }
+        const status = response.rawResponse.status;
+        if (status === 404) {
+            process.stderr.write(`${Icons.error} Organization "${orgId}" was not found.\n`);
+            throw new CliError({
+                code: CliError.Code.ConfigError
+            });
+        }
+        if (status === 401) {
+            process.stderr.write(`${Icons.error} You do not have access to organization "${orgId}".\n`);
+            throw new CliError({
+                code: CliError.Code.AuthError
+            });
+        }
+        if (status === 403) {
+            process.stderr.write(
+                `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
+            );
+            throw new CliError({
+                code: CliError.Code.AuthError
+            });
+        }
+        process.stderr.write(
+            `${Icons.error} Failed to generate token.\n` +
+                `\n  Please contact support@buildwithfern.com for assistance.\n`
+        );
+        throw new CliError({
+            code: CliError.Code.InternalError
         });
     }
 

@@ -16,28 +16,27 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options?.[TOKEN_PARAM] != null;
     }
 
-    public async getAuthRequest({
-        endpointMetadata,
-    }: {
-        endpointMetadata?: core.EndpointMetadata;
-    } = {}): Promise<core.AuthRequest> {
-        const token = await core.Supplier.get(this.options[TOKEN_PARAM]);
-        if (token == null) {
-            throw new errors.SeedExamplesError({
-                message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
-            });
-        }
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
 
-        return {
-            headers: { Authorization: `Bearer ${token}` },
-        };
+                const token = await core.Supplier.get(this.options[TOKEN_PARAM]);
+                if (token == null) {
+                    throw new errors.SeedExamplesError({
+                        message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { Authorization: `Bearer ${token}` },
+                };
+                
     }
 }
 
 export namespace BearerAuthProvider {
     export const AUTH_SCHEME = "bearer" as const;
-    export const AUTH_CONFIG_ERROR_MESSAGE: string =
-        `Please provide '${TOKEN_PARAM}' when initializing the client` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = `Please provide '${TOKEN_PARAM}' when initializing the client` as const;
     export type Options = AuthOptions;
     export type AuthOptions = { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> };
 

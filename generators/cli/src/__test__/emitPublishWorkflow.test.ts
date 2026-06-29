@@ -24,8 +24,12 @@ describe("emitPublishWorkflow", () => {
         await rm(tmpDir, { recursive: true, force: true });
     });
 
-    async function emitAndRead(npmPublishInfo: ResolvedNpmPublishInfo, binaryName = "acme"): Promise<string> {
-        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo });
+    async function emitAndRead(
+        npmPublishInfo: ResolvedNpmPublishInfo,
+        binaryName = "acme",
+        repoUrl: string | undefined = undefined
+    ): Promise<string> {
+        await emitPublishWorkflow({ outputDir, binaryName, npmPublishInfo, repoUrl });
         return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
     }
 
@@ -161,6 +165,19 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).toContain("musl-tools");
         expect(yaml).toContain("--no-default-features --features rustls");
         expect(yaml).not.toContain("gcc-aarch64-linux-gnu");
+    });
+
+    it("includes repository.url in package.json when repoUrl is provided", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", "https://github.com/acme/acme-cli");
+
+        expect(yaml).toContain('"repository"');
+        expect(yaml).toContain('"url": "https://github.com/acme/acme-cli"');
+    });
+
+    it("omits repository field from package.json when repoUrl is undefined", async () => {
+        const yaml = await emitAndRead(baseInfo, "acme", undefined);
+
+        expect(yaml).not.toContain('"repository"');
     });
 
     it("both publish steps define a publish() helper and backport logic", async () => {

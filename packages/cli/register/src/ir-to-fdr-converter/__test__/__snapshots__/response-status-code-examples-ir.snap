@@ -407,6 +407,7 @@
             "_visit": [Function],
             "type": "openapi",
           },
+          "subtitle": undefined,
           "transport": undefined,
           "userSpecifiedExamples": [],
           "v2BaseUrls": undefined,
@@ -537,6 +538,7 @@
     },
   },
   "sourceConfig": undefined,
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_sessions": {
       "displayName": undefined,

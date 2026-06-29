@@ -4,14 +4,24 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/base-generator";
-import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
+import { assertDefined, assertNever, entries, noop } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
+import {
+    BaseSwiftCustomConfigSchema,
+    NameRegistry,
+    Referencer,
+    swift,
+    UndiscriminatedUnion
+} from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs.js";
 import { SwiftProject } from "../project/index.js";
 import { CycleDetector } from "./cycle-detector.js";
-import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
+import {
+    registerLiteralEnums,
+    registerLiteralEnumsForObjectProperties,
+    registerLiteralEnumsForTypeReference
+} from "./register-literal-enums.js";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
 export abstract class AbstractSwiftGeneratorContext<
@@ -22,6 +32,7 @@ export abstract class AbstractSwiftGeneratorContext<
     private readonly indirectPropertiesMapping: Map<FernIr.TypeId, Set<string>>;
     private readonly schemaTypeIdBySymbolId: Map<string, FernIr.TypeId>;
     private readonly recursiveTypeIdsForSwiftEnums: Set<FernIr.TypeId>;
+    private nonStringMapKeyTypeIds?: Set<FernIr.TypeId>;
 
     public constructor(
         public readonly ir: FernIr.IntermediateRepresentation,
@@ -156,12 +167,52 @@ export abstract class AbstractSwiftGeneratorContext<
             });
         });
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
-            nameRegistry.registerSubClientSymbol({
+            const subClientSymbol = nameRegistry.registerSubClientSymbol({
                 subpackageId,
                 fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map((name) =>
                     this.caseConverter.pascalUnsafe(name)
                 ),
                 subpackageNamePascalCase: this.caseConverter.pascalUnsafe(subpackage.name)
+            });
+            if (subpackage.service != null) {
+                this.registerEndpointParameterLiteralEnums({
+                    parentSymbol: subClientSymbol,
+                    service: ir.services[subpackage.service],
+                    registry: nameRegistry
+                });
+            }
+        });
+        if (ir.rootPackage.service != null) {
+            this.registerEndpointParameterLiteralEnums({
+                parentSymbol: nameRegistry.getRootClientSymbolOrThrow(),
+                service: ir.services[ir.rootPackage.service],
+                registry: nameRegistry
+            });
+        }
+    }
+
+    /**
+     * Inline literal query parameters become method parameters on the generated client, so their
+     * literal enums must be registered under the owning client symbol (matching the scope used to
+     * resolve the parameter's Swift type). Otherwise the parameter falls back to `JSONValue` while
+     * snippets and wire tests emit the literal enum case, producing a type mismatch.
+     */
+    private registerEndpointParameterLiteralEnums({
+        parentSymbol,
+        service,
+        registry
+    }: {
+        parentSymbol: swift.Symbol;
+        service: FernIr.HttpService | undefined;
+        registry: NameRegistry;
+    }): void {
+        service?.endpoints.forEach((endpoint) => {
+            endpoint.queryParameters.forEach((queryParam) => {
+                registerLiteralEnumsForTypeReference({
+                    parentSymbol,
+                    registry,
+                    typeReference: queryParam.valueType
+                });
             });
         });
     }
@@ -214,6 +265,181 @@ export abstract class AbstractSwiftGeneratorContext<
         const typeDeclaration = this.ir.types[typeId];
         assertDefined(typeDeclaration, `Type declaration with the id '${typeId}' not found`);
         return typeDeclaration;
+    }
+
+    /**
+     * Returns the set of schema type IDs that are used as the key type of a map and
+     * are represented in Swift as an `enum` (raw values) or an undiscriminated union
+     * (enum with associated values). Swift's `Dictionary` only encodes/decodes as a
+     * JSON object when its key is `String`/`Int` or conforms to `CodingKeyRepresentable`,
+     * so these key types need that conformance in order to round-trip correctly.
+     */
+    public getSchemaTypeIdsUsedAsNonStringMapKeys(): Set<FernIr.TypeId> {
+        if (this.nonStringMapKeyTypeIds == null) {
+            const candidateTypeIds = new Set<FernIr.TypeId>();
+            const visitTypeReference = (typeReference: FernIr.TypeReference): void => {
+                typeReference._visit({
+                    container: (ct) => {
+                        ct._visit({
+                            map: (mt) => {
+                                if (mt.keyType.type === "named") {
+                                    candidateTypeIds.add(mt.keyType.typeId);
+                                }
+                                visitTypeReference(mt.keyType);
+                                visitTypeReference(mt.valueType);
+                            },
+                            list: (lt) => visitTypeReference(lt),
+                            set: (st) => visitTypeReference(st),
+                            optional: (ot) => visitTypeReference(ot),
+                            nullable: (nt) => visitTypeReference(nt),
+                            literal: noop,
+                            _other: noop
+                        });
+                    },
+                    named: noop,
+                    primitive: noop,
+                    unknown: noop,
+                    _other: noop
+                });
+            };
+            const visitJsonResponse = (jsonResponse: FernIr.JsonResponse): void => {
+                jsonResponse._visit({
+                    response: (r) => visitTypeReference(r.responseBodyType),
+                    nestedPropertyAsResponse: (r) => visitTypeReference(r.responseBodyType),
+                    _other: noop
+                });
+            };
+            const visitStreamingResponse = (streaming: FernIr.StreamingResponse): void => {
+                streaming._visit({
+                    json: (chunk) => visitTypeReference(chunk.payload),
+                    sse: (chunk) => visitTypeReference(chunk.payload),
+                    text: noop,
+                    _other: noop
+                });
+            };
+
+            // Map key types can appear in type declarations as well as directly on endpoints
+            // (inlined request bodies, file-upload bodies, responses, and parameters) without
+            // being reachable through `ir.types`, so both are scanned.
+            Object.values(this.ir.types).forEach((typeDeclaration) => {
+                typeDeclaration.shape._visit({
+                    alias: (atd) => visitTypeReference(atd.aliasOf),
+                    object: (otd) => {
+                        [...(otd.extendedProperties ?? []), ...otd.properties].forEach((property) => {
+                            visitTypeReference(property.valueType);
+                        });
+                    },
+                    union: (utd) => {
+                        utd.types.forEach((type) => {
+                            type.shape._visit({
+                                noProperties: noop,
+                                samePropertiesAsObject: noop,
+                                singleProperty: (p) => visitTypeReference(p.type),
+                                _other: noop
+                            });
+                        });
+                    },
+                    undiscriminatedUnion: (uutd) => {
+                        uutd.members.forEach((member) => visitTypeReference(member.type));
+                    },
+                    enum: noop,
+                    _other: noop
+                });
+            });
+            Object.values(this.ir.services).forEach((service) => {
+                service.endpoints.forEach((endpoint) => {
+                    [...endpoint.headers, ...endpoint.queryParameters, ...endpoint.allPathParameters].forEach(
+                        (parameter) => visitTypeReference(parameter.valueType)
+                    );
+                    endpoint.requestBody?._visit({
+                        inlinedRequestBody: (body) => {
+                            [...(body.extendedProperties ?? []), ...body.properties].forEach((property) => {
+                                visitTypeReference(property.valueType);
+                            });
+                        },
+                        reference: (body) => visitTypeReference(body.requestBodyType),
+                        fileUpload: (body) => {
+                            body.properties.forEach((property) => {
+                                property._visit({
+                                    file: noop,
+                                    bodyProperty: (bodyProperty) => visitTypeReference(bodyProperty.valueType),
+                                    _other: noop
+                                });
+                            });
+                        },
+                        bytes: noop,
+                        _other: noop
+                    });
+                    endpoint.response?.body?._visit({
+                        json: (jsonResponse) => visitJsonResponse(jsonResponse),
+                        streaming: (streaming) => visitStreamingResponse(streaming),
+                        streamParameter: (sp) => {
+                            sp.nonStreamResponse._visit({
+                                json: (jsonResponse) => visitJsonResponse(jsonResponse),
+                                fileDownload: noop,
+                                text: noop,
+                                bytes: noop,
+                                _other: noop
+                            });
+                            visitStreamingResponse(sp.streamResponse);
+                        },
+                        fileDownload: noop,
+                        text: noop,
+                        bytes: noop,
+                        _other: noop
+                    });
+                });
+            });
+            Object.values(this.ir.errors).forEach((error) => {
+                if (error.type != null) {
+                    visitTypeReference(error.type);
+                }
+            });
+
+            this.nonStringMapKeyTypeIds = new Set(
+                [...candidateTypeIds]
+                    .map((typeId) => this.resolveToNonStringMapKeyTypeId(typeId))
+                    .filter((typeId): typeId is FernIr.TypeId => typeId != null)
+            );
+        }
+        return this.nonStringMapKeyTypeIds;
+    }
+
+    /**
+     * Resolves a type used as a map key to the underlying schema type ID that must carry the
+     * `CodingKeyRepresentable` conformance, or `undefined` if no conformance is needed.
+     *
+     * Enum (raw values) and undiscriminated-union types receive the conformance directly. Aliases
+     * are transparent in Swift (a `typealias` does not create a new type), so an alias resolving to
+     * an enum or undiscriminated union points at the underlying type declaration that needs it.
+     * Discriminated unions (`"union"`) are intentionally excluded: they generate as Swift enums with
+     * associated values, which cannot be serialized to a single string and so cannot implement
+     * `CodingKeyRepresentable` safely.
+     */
+    private resolveToNonStringMapKeyTypeId(typeId: FernIr.TypeId): FernIr.TypeId | undefined {
+        const shape = this.ir.types[typeId]?.shape;
+        if (shape == null) {
+            return undefined;
+        }
+        return shape._visit({
+            enum: () => typeId,
+            undiscriminatedUnion: () => typeId,
+            alias: (atd) =>
+                atd.resolvedType._visit({
+                    named: (resolved) =>
+                        resolved.shape === FernIr.ShapeType.Enum ||
+                        resolved.shape === FernIr.ShapeType.UndiscriminatedUnion
+                            ? resolved.name.typeId
+                            : undefined,
+                    container: () => undefined,
+                    primitive: () => undefined,
+                    unknown: () => undefined,
+                    _other: () => undefined
+                }),
+            object: () => undefined,
+            union: () => undefined,
+            _other: () => undefined
+        });
     }
 
     public getPropertiesOfDiscriminatedUnionVariant(typeId: FernIr.TypeId): FernIr.ObjectProperty[] {
@@ -282,12 +508,15 @@ export abstract class AbstractSwiftGeneratorContext<
                 return typeReference.container._visit({
                     literal: (literal) =>
                         literal._visit({
-                            boolean: () => referencer.referenceAsIsType("JSONValue"),
+                            boolean: () => referencer.referenceSwiftType("Bool"),
                             string: (literalValue) => {
-                                const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbolOrThrow(
+                                const symbol = this.project.nameRegistry.getNestedLiteralEnumSymbol(
                                     fromSymbol,
                                     literalValue
                                 );
+                                if (symbol == null) {
+                                    return referencer.referenceAsIsType("JSONValue");
+                                }
                                 return referencer.referenceType(symbol);
                             },
                             _other: () => referencer.referenceAsIsType("JSONValue")

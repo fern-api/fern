@@ -64,12 +64,10 @@ export async function copySpecs(args: {
     binaryName: string;
     authBindings: DetectedAuthBinding[];
     specsDir?: string;
-    /** When true, emit `mod custom;` + `custom::register(app)` in main.rs. */
-    embedTypes?: boolean;
-    /** When true, emit `mod sdk_glue;` in main.rs for the SDK bridge. */
-    embedSdk?: boolean;
+    /** When true, emit `mod custom;` + `mod sdk;` + `custom::register(app)` in main.rs. */
+    customCommands?: boolean;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir, embedTypes, embedSdk } = args;
+    const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -96,14 +94,13 @@ export async function copySpecs(args: {
             binaryName,
             entries,
             authBindings,
-            embedTypes: embedTypes ?? false,
-            embedSdk: embedSdk ?? false
+            customCommands: customCommands ?? false
         })
     );
 
     // Scaffold custom.rs for user-authored command handlers.
-    if (embedTypes === true) {
-        await scaffoldCustomRs(binDir, binaryName, embedSdk ?? false);
+    if (customCommands === true) {
+        await scaffoldCustomRs(binDir, binaryName);
     }
 }
 
@@ -117,7 +114,7 @@ interface SpecEntry {
  * own async command handlers. Listed in `.fernignore` so `fern generate`
  * never overwrites user changes.
  */
-async function scaffoldCustomRs(binDir: string, binaryName: string, embedSdk: boolean): Promise<void> {
+async function scaffoldCustomRs(binDir: string, binaryName: string): Promise<void> {
     const customRsPath = path.join(binDir, "custom.rs");
     // Only create if it doesn't already exist (respects .fernignore).
     try {
@@ -127,8 +124,7 @@ async function scaffoldCustomRs(binDir: string, binaryName: string, embedSdk: bo
         // does not exist — scaffold it below
     }
     const sdkCrate = `${binaryName.replace(/-/g, "_")}_sdk`;
-    const content = embedSdk ? renderCustomRsWithSdk(sdkCrate) : renderCustomRsTypesOnly(binaryName);
-    await writeFile(customRsPath, content);
+    await writeFile(customRsPath, renderCustomRsWithSdk(sdkCrate));
 }
 
 /** Scaffold when the SDK crate is available (default). */
@@ -142,9 +138,9 @@ function renderCustomRsWithSdk(sdkCrate: string): string {
         "//! The generated `main.rs` calls `custom::register(app)` at",
         "//! startup, composing your commands into the CLI at compile time.",
         "//!",
-        "//! Each handler receives an `AppContext`. Use `sdk_glue::sdk_client(ctx)`",
+        "//! Each handler receives an `AppContext`. Use `super::sdk::client(ctx)`",
         "//! to get a fully-wired SDK client that inherits the CLI's auth,",
-        "//! retries, TLS, and global headers. Use `sdk_glue::block_on(future)`",
+        "//! retries, TLS, and global headers. Use `super::sdk::block_on(future)`",
         "//! to run async SDK calls from synchronous handler context.",
         `//! Types are available via \`${sdkCrate}::api::*\`.`,
         "",
@@ -165,66 +161,11 @@ function renderCustomRsWithSdk(sdkCrate: string): string {
         '    //         .arg(clap::Arg::new("plant-id").required(true)),',
         "    //     |matches, ctx| {",
         '    //         let plant_id = matches.get_one::<String>("plant-id").unwrap();',
-        "    //         let client = super::sdk_glue::sdk_client(ctx);",
-        "    //         let plant = super::sdk_glue::block_on(",
+        "    //         let client = super::sdk::client(ctx);",
+        "    //         let plant = super::sdk::block_on(",
         "    //             client.plants.get_plant(plant_id, None),",
         "    //         )?;",
         '    //         println!("{}", serde_json::to_string_pretty(&plant).unwrap());',
-        "    //         Ok(())",
-        "    //     },",
-        "    // );",
-        "    app",
-        "}",
-        ""
-    ].join("\n");
-}
-
-/** Scaffold when only the types crate is available (embedSdk: false). */
-function renderCustomRsTypesOnly(binaryName: string): string {
-    const typesCrate = `${binaryName.replace(/-/g, "_")}_types`;
-    return [
-        "//! Custom command handlers.",
-        "//!",
-        "//! This file is yours to edit — add it to `.fernignore` so",
-        "//! `fern generate` will never overwrite your changes.",
-        "//!",
-        "//! The generated `main.rs` calls `custom::register(app)` at",
-        "//! startup, composing your commands into the CLI at compile time.",
-        "//!",
-        "//! Each handler receives an `AppContext` whose `invoke()` and",
-        "//! `execute()` methods use the CLI's native HTTP executor.",
-        `//! Combine these with the typed structs from \`${typesCrate}\``,
-        "//! for strongly-typed request/response serialization.",
-        "",
-        "use fern_cli_sdk::app::CliApp;",
-        "",
-        "/// Register custom commands on the CLI app builder.",
-        "///",
-        "/// Called from `main.rs` during startup. Uncomment the example",
-        "/// below and adapt it to your API to get started.",
-        "pub fn register(app: CliApp) -> CliApp {",
-        "    // Example: fetch a resource using the native CLI executor",
-        "    // with typed response deserialization.",
-        "    //",
-        `    // use ${typesCrate}::*;`,
-        "    //",
-        "    // let app = app.command(",
-        '    //     clap::Command::new("get-plant")',
-        '    //         .about("Fetch a plant by its ID")',
-        '    //         .arg(clap::Arg::new("plant-id").required(true)),',
-        "    //     |matches, ctx| {",
-        '    //         let plant_id = matches.get_one::<String>("plant-id").unwrap();',
-        '    //         let method = ctx.find_method("plants", "get")?;',
-        "    //         let params = serde_json::json!({",
-        '    //             "plantId": plant_id,',
-        "    //         });",
-        "    //         let result = ctx.invoke(",
-        "    //             method,",
-        "    //             Some(&params.to_string()),",
-        "    //             None,",
-        "    //             None,",
-        "    //         )?;",
-        '    //         println!("{}", serde_json::to_string_pretty(&result).unwrap());',
         "    //         Ok(())",
         "    //     },",
         "    // );",
@@ -238,10 +179,9 @@ function renderMainRs(args: {
     binaryName: string;
     entries: SpecEntry[];
     authBindings: DetectedAuthBinding[];
-    embedTypes: boolean;
-    embedSdk: boolean;
+    customCommands: boolean;
 }): string {
-    const { binaryName, entries, authBindings, embedTypes, embedSdk } = args;
+    const { binaryName, entries, authBindings, customCommands } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -267,11 +207,9 @@ function renderMainRs(args: {
         ""
     ];
 
-    if (embedTypes) {
+    if (customCommands) {
         lines.push("mod custom;");
-        if (embedSdk) {
-            lines.push("mod sdk_glue;");
-        }
+        lines.push("mod sdk;");
         lines.push("");
     }
 
@@ -299,7 +237,7 @@ function renderMainRs(args: {
     // Close the binding
     lines.push("        );");
 
-    if (embedTypes) {
+    if (customCommands) {
         lines.push("");
         lines.push("    let app = custom::register(app);");
     }

@@ -57,3 +57,6 @@ download.html
 # Python bytecode (demo mock servers)
 __pycache__/
 *.pyc
+
+# MCP-vs-CLI bench run-logs (mcp-vs-cli-eval skill)
+eval-results/

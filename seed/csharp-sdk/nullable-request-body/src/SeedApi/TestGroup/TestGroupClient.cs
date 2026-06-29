@@ -58,7 +58,7 @@ public partial class TestGroupClient : ITestGroupClient
                 return new WithRawResponse<object>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -72,7 +72,13 @@ public partial class TestGroupClient : ITestGroupClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -86,7 +92,15 @@ public partial class TestGroupClient : ITestGroupClient
                 {
                     case 422:
                         throw new UnprocessableEntityError(
-                            JsonUtils.Deserialize<PlainObject>(responseBody)
+                            JsonUtils.Deserialize<PlainObject>(responseBody),
+                            rawResponse: new SeedApi.RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            }
                         );
                 }
             }
@@ -97,7 +111,13 @@ public partial class TestGroupClient : ITestGroupClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

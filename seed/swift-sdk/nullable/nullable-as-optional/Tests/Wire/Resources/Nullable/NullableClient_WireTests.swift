@@ -6,7 +6,7 @@ import Nullable
     @Test func getUsers1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -148,7 +148,16 @@ import Nullable
             )
         ]
         let response = try await client.nullable.getUsers(
+            usernames: [
+                "usernames"
+            ],
             avatar: "avatar",
+            activated: [
+                true
+            ],
+            tags: [
+                .value("tags")
+            ],
             extra: .value(true),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -158,7 +167,7 @@ import Nullable
     @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -258,7 +267,7 @@ import Nullable
     @Test func deleteUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 true
                 """#.utf8

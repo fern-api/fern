@@ -2,6 +2,7 @@
 //! [`crate::binding::Binding`] trait so it can be composed into
 //! a root-level [`crate::app::CliApp`].
 
+use std::io::IsTerminal;
 use std::sync::Arc;
 
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider};
@@ -43,6 +44,11 @@ pub struct OpenApiBinding {
     /// `dispatch()`. `Arc` so we can clone it out of the lock without
     /// holding across await.
     prepared: std::sync::Mutex<Option<Arc<Prepared>>>,
+    /// Optional namespace prefix. When set, all spec-derived subcommands
+    /// are nested under `Command::new(namespace)` in the clap tree and
+    /// the dispatch / schema paths strip the prefix before resolving
+    /// against the `RestDescription`.
+    command_namespace: Option<String>,
 }
 
 impl Default for OpenApiBinding {
@@ -50,6 +56,7 @@ impl Default for OpenApiBinding {
         Self {
             inner: super::CliApp::new(""),
             prepared: std::sync::Mutex::new(None),
+            command_namespace: None,
         }
     }
 }
@@ -198,6 +205,32 @@ impl OpenApiBinding {
         self
     }
 
+    /// Mount all spec-derived subcommands under a namespace prefix.
+    ///
+    /// Without a namespace the generated commands are top-level:
+    /// `cli users list`, `cli files get`, etc.
+    ///
+    /// With `.command_namespace("api")` they move one level down:
+    /// `cli api users list`, `cli api files get`, etc.
+    ///
+    /// The namespace node sits beside any later-grafted custom commands
+    /// (`command_under(&["recipes"], …)` stays at root). `--help` and
+    /// `--schema` reflect the nesting automatically.
+    pub fn command_namespace(mut self, namespace: impl Into<String>) -> Self {
+        let ns = namespace.into();
+        // Guard against names that collide with framework-owned
+        // subcommands grafted by `CliApp::run`. Using one of these
+        // would cause the namespace node to be silently dropped.
+        const RESERVED: &[&str] = &["completion", "man", "auth"];
+        assert!(
+            !RESERVED.contains(&ns.as_str()),
+            "command_namespace({ns:?}) collides with a reserved framework subcommand; \
+             choose a different name",
+        );
+        self.command_namespace = Some(ns);
+        self
+    }
+
     /// Prepare the binding state (idempotent; only runs once).
     /// Returns an `Arc` clone so the caller doesn't hold the lock.
     fn ensure_prepared(&self) -> Result<Arc<Prepared>, CliError> {
@@ -296,6 +329,7 @@ impl OpenApiBinding {
             f(matches, ctx)
         })
     }
+
 }
 
 impl Binding for OpenApiBinding {
@@ -350,6 +384,26 @@ impl Binding for OpenApiBinding {
         Ok(())
     }
 
+    fn spec_document(&self, raw: bool) -> Result<Option<String>, CliError> {
+        self.inner.spec_yaml(raw)
+    }
+
+    fn schema(&self, path: &[String]) -> Result<Option<serde_json::Value>, CliError> {
+        let prepared = self.ensure_prepared()?;
+        let effective_path = match &self.command_namespace {
+            Some(ns) if path.first().map(|s| s.as_str()) == Some(ns.as_str()) => &path[1..],
+            // Non-empty path that doesn't start with our namespace — this
+            // binding doesn't own it.
+            Some(_) if !path.is_empty() => return Ok(None),
+            _ => path,
+        };
+        let schema = super::help::build_schema(&prepared.doc, effective_path);
+        match (&self.command_namespace, schema) {
+            (Some(ns), Some(value)) => Ok(Some(prefix_schema_operations(value, ns))),
+            (_, schema) => Ok(schema),
+        }
+    }
+
     fn build_command(&self) -> Result<clap::Command, CliError> {
         let prepared = self.ensure_prepared()?;
         let cli = commands::build_cli(&prepared.doc)
@@ -370,27 +424,12 @@ impl Binding for OpenApiBinding {
             );
         }
 
-        Ok(cli)
-    }
-
-    fn render_json_help(
-        &self,
-        subcommand_path: &[String],
-        out: &mut dyn std::io::Write,
-    ) -> Result<bool, CliError> {
-        let prepared = self.ensure_prepared()?;
-        match super::help::write_json_help(&prepared.doc, subcommand_path, out) {
-            Ok(()) => Ok(true),
-            // "Resource not found" / "Operation not found" means the path
-            // belongs to a different binding — return false so the
-            // dispatch_pipeline loop tries the next one.
-            Err(CliError::Validation(msg))
-                if msg.contains("not found") =>
-            {
-                Ok(false)
-            }
-            Err(e) => Err(e),
+        // Wrap all spec-derived subcommands under the namespace prefix.
+        if let Some(ref ns) = self.command_namespace {
+            cli = wrap_subcommands_under_namespace(cli, ns);
         }
+
+        Ok(cli)
     }
 
     fn dispatch<'a>(
@@ -405,8 +444,16 @@ impl Binding for OpenApiBinding {
             Err(e) => return Box::pin(async move { Err(e) }),
         };
 
+        // Strip the namespace prefix from op_path for internal routing.
+        let effective_op_path: &[String] = match &self.command_namespace {
+            Some(ns) if _op_path.first().map(|s| s.as_str()) == Some(ns.as_str()) => {
+                &_op_path[1..]
+            }
+            _ => _op_path,
+        };
+
         // Intercept `generate-skills` — it's not a spec operation.
-        if _op_path == ["generate-skills"] {
+        if effective_op_path == ["generate-skills"] {
             let output_dir = _sub_matches.get_one::<String>("output-dir");
             let result = self.inner.handle_generate_skills(
                 output_dir.map(|s| s.as_str()),
@@ -445,17 +492,32 @@ impl Binding for OpenApiBinding {
             };
 
             // Walk the subcommand tree from root to find the target method.
+            // When a namespace is set the clap tree has an extra wrapper
+            // level (`cli <ns> <resource> <method>`). Skip past it so the
+            // doc's resource names align with the subcommand chain.
+            let resolve_from = match &self.command_namespace {
+                Some(ns) => root_matches
+                    .subcommand_matches(ns.as_str())
+                    .unwrap_or(root_matches),
+                None => root_matches,
+            };
             let (method, matched_args) =
-                super::resolve_method_from_matches(doc, root_matches)?;
+                super::resolve_method_from_matches(doc, resolve_from)?;
 
             let params_override = matched_args
                 .get_one::<String>("params")
                 .map(|s| s.as_str());
-            let params = super::app::collect_params_from_flags(
-                matched_args,
-                method,
-                params_override,
-            )?;
+            // `collect_params_from_flags` may call `resolve_file_refs` which
+            // performs blocking `std::fs::read` I/O. Wrap in `block_in_place`
+            // so the tokio runtime can schedule other work while the thread is
+            // parked on disk reads.
+            let params = tokio::task::block_in_place(|| {
+                super::app::collect_params_from_flags(
+                    matched_args,
+                    method,
+                    params_override,
+                )
+            })?;
             let params_json_string = serde_json::to_string(&params)
                 .map_err(|e| CliError::Validation(format!("Failed to serialize params: {e}")))?;
             let params_json: Option<&str> = if params.is_empty() {
@@ -468,8 +530,9 @@ impl Binding for OpenApiBinding {
             let body_json = body_json_owned.as_deref();
 
             let dry_run = matched_args.get_flag("dry-run");
+            let debug = root_matches.get_flag("debug");
 
-            let pagination = super::app::build_pagination_config(matched_args, doc);
+            let pagination = super::app::build_pagination_config(matched_args, doc, &self.inner.name);
 
             let no_extract = matched_args.get_flag("no-extract");
             let no_retry = matched_args.get_flag("no-retry");
@@ -491,13 +554,36 @@ impl Binding for OpenApiBinding {
                         .map(|s| s.as_str())
                 });
 
-            // Validate binary body path for dangerous characters.
+            // Validate binary body path for dangerous characters. Validate the
+            // SAME string the executor will use as the file path — for plain
+            // and `@`-prefixed values that's the input with the optional `@`
+            // (or `@file://` / `@data://` scheme) stripped; for the `\@<REST>`
+            // escape that's the literal `@<REST>`. Unlike the multipart and
+            // JSON-shorthand sites, the binary-body escape still opens a file
+            // (see `BinaryBodySource::parse` → `File { .. }`), so path-shape
+            // validation must apply in both branches. FER-10436, FER-10532.
+            //
+            // Stdin is only the `Auto`-mode `-` sentinel; an explicit scheme
+            // (`@file://-` / `@data://-`) is a literal filename and is still
+            // validated.
             if let Some(path_str) = binary_body_path {
-                let stripped = path_str.strip_prefix('@').unwrap_or(path_str);
-                if stripped != "-" {
-                    let flag = method.binary_request_body.as_ref()
-                        .map(|b| b.flag_name.as_str()).unwrap_or("file");
-                    crate::output::reject_dangerous_chars(stripped, &format!("--{flag}"))?;
+                let flag = method.binary_request_body.as_ref()
+                    .map(|b| b.flag_name.as_str()).unwrap_or("file");
+                let (inner, is_stdin) = match executor::parse_at_ref(path_str) {
+                    executor::AtRef::File { path, mode: executor::AtMode::Auto } => {
+                        let is_dash = path.as_ref() == "-";
+                        (path, is_dash)
+                    }
+                    executor::AtRef::File { path, .. } => (path, false),
+                    executor::AtRef::Escaped(literal) => {
+                        (std::borrow::Cow::Owned(literal), false)
+                    }
+                    executor::AtRef::Plain(s) => {
+                        (std::borrow::Cow::Borrowed(s), s == "-")
+                    }
+                };
+                if !is_stdin {
+                    crate::output::reject_dangerous_chars(inner.as_ref(), &format!("--{flag}"))?;
                 }
             }
 
@@ -540,8 +626,32 @@ impl Binding for OpenApiBinding {
             // that declare a `multipart/form-data` body. `None` for all others.
             let multipart_parts = super::app::collect_multipart_parts(method, matched_args)?;
 
-            // Execute with capture_output = true to get the Value back
-            // instead of printing to stdout.
+            let pipeline = crate::formatter::OutputPipeline::from_matches(
+                root_matches,
+                &self.inner.name,
+            )
+            .map_err(|e| CliError::Validation(e.to_string()))?;
+
+            if pipeline.is_raw() && pagination.page_all {
+                return Err(CliError::Validation(
+                    "--format raw is incompatible with --page-all".to_string(),
+                ));
+            }
+            if pipeline.is_http() && pagination.page_all {
+                return Err(CliError::Validation(
+                    "--format http is incompatible with --page-all".to_string(),
+                ));
+            }
+
+            // When --page-all is active on a TTY without --no-pager,
+            // let the executor write directly to the pager (capture_output
+            // = false). The executor spawns the pager and returns None,
+            // which maps to DispatchResult::Handled below.
+            let use_pager = pagination.page_all
+                && !pagination.no_pager
+                && std::io::stdout().is_terminal();
+            let capture_output = !pipeline.is_raw() && !pipeline.is_http() && !use_pager;
+
             let result = executor::execute_method(
                 doc,
                 method,
@@ -554,13 +664,14 @@ impl Binding for OpenApiBinding {
                 multipart_parts,
                 dry_run,
                 &pagination,
-                &crate::formatter::OutputPipeline::default(),
-                true,  // capture_output = true
+                &pipeline,
+                capture_output,
                 base_url_override,
                 &prepared.http_config,
                 no_extract,
                 no_retry,
                 no_stream,
+                debug,
                 &global_header_overrides,
             )
             .await?;
@@ -583,6 +694,7 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let debug = matches.get_flag("debug");
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         let ctx = super::AppContext::new(
@@ -591,7 +703,8 @@ impl Binding for OpenApiBinding {
             entry.http_config,
             entry.global_headers,
         ).with_quiet(quiet)
-         .with_base_url_override(base_url_override);
+         .with_base_url_override(base_url_override)
+         .with_debug(debug);
         Ok(Some(Box::new(ctx)))
     }
 
@@ -607,12 +720,16 @@ impl Binding for OpenApiBinding {
             .flatten()
             .copied()
             .unwrap_or(false);
+        let debug = matches.get_flag("debug");
         let base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
         match existing {
             Some(ctx_box) => match ctx_box.downcast::<super::AppContext>() {
                 Ok(mut ctx) => {
                     ctx.add_entry(entry);
+                    ctx.debug = debug;
+                    ctx.quiet = quiet;
+                    ctx.base_url_override = base_url_override;
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -624,7 +741,8 @@ impl Binding for OpenApiBinding {
                         entry.http_config,
                         entry.global_headers,
                     ).with_quiet(quiet)
-                     .with_base_url_override(base_url_override);
+                     .with_base_url_override(base_url_override)
+                     .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
                 }
@@ -636,9 +754,179 @@ impl Binding for OpenApiBinding {
                     entry.http_config,
                     entry.global_headers,
                 ).with_quiet(quiet)
-                 .with_base_url_override(base_url_override);
+                 .with_base_url_override(base_url_override)
+                 .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
         }
+    }
+}
+
+// ── Namespace helpers ──────────────────────────────────────────────
+
+/// Move all subcommands of `cmd` into an intermediate
+/// `Command::new(namespace)` wrapper, returning a rebuilt command whose
+/// sole subcommand is the namespace node. Global args, about, and
+/// after_help are preserved on the outer command.
+fn wrap_subcommands_under_namespace(cmd: clap::Command, namespace: &str) -> clap::Command {
+    let subs: Vec<clap::Command> = cmd.get_subcommands().cloned().collect();
+
+    let mut ns_cmd = clap::Command::new(namespace.to_string())
+        .about("API commands")
+        .subcommand_required(true)
+        .arg_required_else_help(true);
+    for sub in subs {
+        ns_cmd = ns_cmd.subcommand(sub);
+    }
+
+    // Rebuild the outer command: same name, global args, about, and
+    // after_help — but with only the namespace wrapper as a subcommand.
+    let mut new_cmd = clap::Command::new(cmd.get_name().to_string())
+        .term_width(200)
+        .subcommand_required(true)
+        .arg_required_else_help(true);
+    if let Some(about) = cmd.get_about() {
+        new_cmd = new_cmd.about(about.to_string());
+    }
+    if let Some(after_help) = cmd.get_after_help() {
+        new_cmd = new_cmd.after_help(after_help.to_string());
+    }
+    for arg in cmd.get_arguments() {
+        new_cmd = new_cmd.arg(arg.clone());
+    }
+    new_cmd.subcommand(ns_cmd)
+}
+
+/// Prefix the `"operation"` field of every entry in a schema value with
+/// `"<namespace>."`. Handles both the plain `[{operation, …}]` array and
+/// the `{sdkVariables, operations}` envelope.
+fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_json::Value {
+    fn prefix_ops(arr: Vec<serde_json::Value>, ns: &str) -> Vec<serde_json::Value> {
+        arr.into_iter()
+            .map(|mut entry| {
+                if let Some(op) = entry.get("operation").and_then(|v| v.as_str()) {
+                    entry["operation"] = serde_json::Value::String(
+                        format!("{ns}.{op}"),
+                    );
+                }
+                entry
+            })
+            .collect()
+    }
+
+    match value {
+        serde_json::Value::Array(arr) => {
+            serde_json::Value::Array(prefix_ops(arr, namespace))
+        }
+        serde_json::Value::Object(mut obj) => {
+            if let Some(serde_json::Value::Array(ops)) = obj.remove("operations") {
+                obj.insert(
+                    "operations".to_string(),
+                    serde_json::Value::Array(prefix_ops(ops, namespace)),
+                );
+            }
+            // Single-operation schema (leaf query) has a top-level
+            // `"operation"` key instead of the plural `"operations"`.
+            if let Some(op) = obj.get("operation").and_then(|v| v.as_str()) {
+                let prefixed = format!("{namespace}.{op}");
+                obj.insert("operation".to_string(), serde_json::Value::String(prefixed));
+            }
+            serde_json::Value::Object(obj)
+        }
+        other => other,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn prefix_schema_operations_array() {
+        let input = serde_json::json!([
+            { "operation": "users.get", "httpMethod": "GET" },
+            { "operation": "files.list", "httpMethod": "GET" },
+        ]);
+        let result = prefix_schema_operations(input, "api");
+        let arr = result.as_array().unwrap();
+        assert_eq!(arr[0]["operation"], "api.users.get");
+        assert_eq!(arr[1]["operation"], "api.files.list");
+    }
+
+    #[test]
+    fn prefix_schema_operations_envelope() {
+        let input = serde_json::json!({
+            "sdkVariables": [],
+            "operations": [
+                { "operation": "users.get", "httpMethod": "GET" },
+            ],
+        });
+        let result = prefix_schema_operations(input, "api");
+        let ops = result["operations"].as_array().unwrap();
+        assert_eq!(ops[0]["operation"], "api.users.get");
+    }
+
+    #[test]
+    fn wrap_subcommands_under_namespace_moves_subs() {
+        let cmd = clap::Command::new("test")
+            .about("Test CLI")
+            .arg(
+                clap::Arg::new("debug")
+                    .long("debug")
+                    .global(true)
+                    .action(clap::ArgAction::SetTrue),
+            )
+            .subcommand(
+                clap::Command::new("users")
+                    .subcommand(clap::Command::new("get")),
+            )
+            .subcommand(
+                clap::Command::new("files")
+                    .subcommand(clap::Command::new("list")),
+            );
+
+        let wrapped = wrap_subcommands_under_namespace(cmd, "api");
+
+        // The namespace should be the only top-level subcommand.
+        let top_names: Vec<&str> = wrapped
+            .get_subcommands()
+            .map(|s| s.get_name())
+            .collect();
+        assert_eq!(top_names, vec!["api"]);
+
+        // Original subcommands live under the namespace.
+        let ns_cmd = wrapped
+            .get_subcommands()
+            .find(|s| s.get_name() == "api")
+            .unwrap();
+        let ns_sub_names: Vec<&str> = ns_cmd
+            .get_subcommands()
+            .map(|s| s.get_name())
+            .collect();
+        assert!(ns_sub_names.contains(&"users"));
+        assert!(ns_sub_names.contains(&"files"));
+
+        // Global arg is preserved on the outer command.
+        assert!(wrapped
+            .get_arguments()
+            .any(|a| a.get_id().as_str() == "debug"));
+    }
+
+    #[test]
+    fn prefix_schema_operations_leaf_object() {
+        let input = serde_json::json!({
+            "operation": "users.get",
+            "httpMethod": "GET",
+            "parameters": [],
+        });
+        let result = prefix_schema_operations(input, "api");
+        assert_eq!(result["operation"], "api.users.get");
+        assert_eq!(result["httpMethod"], "GET");
+    }
+
+    #[test]
+    #[should_panic(expected = "collides with a reserved framework subcommand")]
+    fn command_namespace_rejects_reserved_name() {
+        OpenApiBinding::default().command_namespace("auth");
     }
 }

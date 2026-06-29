@@ -18,9 +18,12 @@ const BUILTIN_FLAG_NAMES: &[&str] = &[
     "page-all",
     "page-limit",
     "page-delay",
+    "no-pager",
     "no-retry",
     "quiet",
+    "query",
     "help",
+    "debug",
 ];
 
 /// Builds the full CLI command tree from an API description.
@@ -44,7 +47,7 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         .arg(
             clap::Arg::new("format")
                 .long("format")
-                .help("Output format: json (default), table, yaml, csv")
+                .help("Output format: json, table, yaml, csv, raw, jsonl. Default: table when stdout is a TTY, json when piped. Override default with <NAME>_OUTPUT env var. raw emits unmodified server response bytes. jsonl emits one compact JSON value per line (NDJSON).")
                 .value_name("FORMAT")
                 .global(true),
         )
@@ -71,6 +74,17 @@ pub fn build_cli(doc: &RestDescription) -> Command {
                      network errors). Useful for debugging.",
                 )
                 .action(clap::ArgAction::SetTrue)
+                .global(true),
+        )
+        .arg(
+            clap::Arg::new("query")
+                .long("query")
+                .help(
+                    "JMESPath expression applied to the response before formatting. \
+                     For streaming responses, events whose projection is null are \
+                     suppressed (use as a per-event filter).",
+                )
+                .value_name("EXPR")
                 .global(true),
         );
 
@@ -147,6 +161,12 @@ fn build_resource_command(name: &str, resource: &RestResource) -> Option<Command
                     .help("Delay in milliseconds between page fetches (default: 100)")
                     .value_name("MS")
                     .value_parser(clap::value_parser!(u64)),
+            )
+            .arg(
+                Arg::new("no-pager")
+                    .long("no-pager")
+                    .help("Disable pager even on interactive terminals")
+                    .action(clap::ArgAction::SetTrue),
             );
 
         // Generate individual flags from method parameters

@@ -29,24 +29,20 @@ export class ListMembersCommand {
 
         const response = await withSpinner({
             message: `Fetching members of organization "${args.org}"`,
-            operation: () => venus.organization.get(args.org)
+            operation: () => venus.organization.get({ orgId: args.org })
         });
 
         if (!response.ok) {
-            response.error._visit({
-                unauthorizedError: () => {
-                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                    throw new CliError({ code: CliError.Code.AuthError });
-                },
-                _other: () => {
-                    context.stderr.error(
-                        `${Icons.error} Failed to list members.\n` +
-                            `\n  Please contact support@buildwithfern.com for assistance.`
-                    );
-                    throw CliError.internalError();
-                }
-            });
-            return;
+            const status = response.rawResponse.status;
+            if (status === 401 || status === 403) {
+                context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                throw new CliError({ code: CliError.Code.AuthError });
+            }
+            context.stderr.error(
+                `${Icons.error} Failed to list members.\n` +
+                    `\n  Please contact support@buildwithfern.com for assistance.`
+            );
+            throw CliError.internalError();
         }
 
         const members = response.body.users;

@@ -424,6 +424,17 @@
         },
         {
             "id": {
+                "path": "/params/body-and-query",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.createWithBodyAndQuery"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.createWithBodyAndQuery({\n    fields: \"_fields\",\n    body: {\n        string: \"string\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/params/path-bool/{param}",
                 "method": "GET",
                 "identifier_override": "endpoint_endpoints/params.getWithBooleanPath"
@@ -618,6 +629,17 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlinedRequests.postWithObjectBodyandResponse({\n    string: \"string\",\n    integer: 1,\n    NestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: 1000000,\n        double: 1.1,\n        bool: true,\n        datetime: \"2024-01-15T09:30:00Z\",\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"list\", \"list\"],\n        set: [\"set\"],\n        map: {\n            1: \"map\"\n        },\n        bigint: \"1000000\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/req-bodies/array-body-with-headers",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithArrayBodyAndHeaders"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.inlinedRequests.postWithArrayBodyAndHeaders({\n    x_custom_header: \"X-Custom-Header\",\n    body: [\"string\", \"string\"]\n});\n"
             }
         },
         {

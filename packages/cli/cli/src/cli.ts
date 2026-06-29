@@ -42,6 +42,7 @@ import {
 } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
+import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -1359,28 +1360,50 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false
                 }),
         async (argv) => {
-            // Docs validation may reference APIs outside `--api`; apply the filter
-            // only to API-level validation.
-            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineApiWorkspace: undefined,
-                defaultToAllApiWorkspaces: true
-            });
-
-            if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
-                cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
-                    code: CliError.Code.ConfigError
+            let project: Project | undefined;
+            try {
+                // Docs validation may reference APIs outside `--api`; apply the filter
+                // only to API-level validation.
+                project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: undefined,
+                    defaultToAllApiWorkspaces: true
                 });
-            }
 
-            await validateWorkspaces({
-                project,
-                cliContext,
-                logWarnings: argv.warnings,
-                brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi,
-                commandLineApiWorkspace: argv.api
-            });
+                if (argv.api != null && !project.apiWorkspaces.some((ws) => ws.workspaceName === argv.api)) {
+                    cliContext.instrumentPostHogEvent({
+                        command: "fern check",
+                        properties: {
+                            passed: false,
+                            abortReason: `API does not exist: ${argv.api}`
+                        }
+                    });
+                    cliContext.failAndThrow(`API does not exist: ${argv.api}`, undefined, {
+                        code: CliError.Code.ConfigError
+                    });
+                }
+
+                await validateWorkspaces({
+                    project,
+                    cliContext,
+                    logWarnings: argv.warnings,
+                    brokenLinks: argv.brokenLinks,
+                    errorOnBrokenLinks: argv.strictBrokenLinks,
+                    directFromOpenapi: argv.fromOpenapi,
+                    commandLineApiWorkspace: argv.api
+                });
+            } catch (error) {
+                if (project == null) {
+                    const reason = error instanceof Error ? error.message.slice(0, 100) : "project load failed";
+                    cliContext.instrumentPostHogEvent({
+                        command: "fern check",
+                        properties: {
+                            passed: false,
+                            abortReason: reason
+                        }
+                    });
+                }
+                throw error;
+            }
         }
     );
 }
@@ -1952,10 +1975,16 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
         "generate",
         "[Beta] Generate MDX documentation from library source code. Requires 'libraries' config in docs.yml.",
         (yargs) =>
-            yargs.option("library", {
-                type: "string",
-                description: "Name of a specific library defined in docs.yml to generate docs for"
-            }),
+            yargs
+                .option("library", {
+                    type: "string",
+                    description: "Name of a specific library defined in docs.yml to generate docs for"
+                })
+                .option("local", {
+                    boolean: true,
+                    default: false,
+                    description: "Run the library parser(s) locally using Docker instead of Fern's servers"
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern docs md generate"
@@ -1969,7 +1998,8 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
             await generateLibraryDocs({
                 project,
                 cliContext,
-                library: argv.library
+                library: argv.library,
+                local: argv.local
             });
         }
     );
@@ -3606,7 +3636,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
             try {
                 // --all mode
                 if (argv.all) {
-                    const result = replayForget({ outputDir, options: { all: true, dryRun } });
+                    const result = await replayForget({ outputDir, options: { all: true, dryRun } });
 
                     if (!result.initialized) {
                         cliContext.logger.info("Replay is not initialized. Nothing to forget.");
@@ -3634,7 +3664,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
 
                 // Patch ID mode: all args start with "patch-"
                 if (args.length > 0 && args.every((a) => a.startsWith("patch-"))) {
-                    const result = replayForget({ outputDir, options: { patchIds: args, dryRun } });
+                    const result = await replayForget({ outputDir, options: { patchIds: args, dryRun } });
 
                     if (!result.initialized) {
                         cliContext.logger.info("Replay is not initialized. Nothing to forget.");
@@ -3658,7 +3688,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
 
                 // Search/pattern mode or no-args mode
                 const pattern = args.length === 1 ? args[0] : undefined;
-                const result = replayForget({ outputDir, options: { pattern } });
+                const result = await replayForget({ outputDir, options: { pattern } });
 
                 if (!result.initialized) {
                     cliContext.logger.info("Replay is not initialized. Nothing to forget.");
@@ -3711,7 +3741,7 @@ function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCont
 
                 // Actually remove the matched patches
                 const patchIds = matched.map((p) => p.id);
-                const removeResult = replayForget({ outputDir, options: { patchIds, dryRun: false } });
+                const removeResult = await replayForget({ outputDir, options: { patchIds, dryRun: false } });
 
                 cliContext.logger.info(
                     `Removed ${removeResult.removed.length} patch(es). ${removeResult.remaining} remaining.`

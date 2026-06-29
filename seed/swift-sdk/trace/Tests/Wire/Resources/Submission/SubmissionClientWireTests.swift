@@ -6,7 +6,7 @@ import Trace
     @Test func createExecutionSession1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "sessionId": "sessionId",
@@ -25,8 +25,8 @@ import Trace
         let expectedResponse = ExecutionSessionResponse(
             sessionId: "sessionId",
             executionSessionUrl: Optional("executionSessionUrl"),
-            language: .java,
-            status: .creatingContainer
+            language: Language.java,
+            status: ExecutionSessionStatus.creatingContainer
         )
         let response = try await client.submission.createExecutionSession(
             language: "JAVA",
@@ -38,7 +38,7 @@ import Trace
     @Test func getExecutionSession1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "sessionId": "sessionId",
@@ -57,8 +57,8 @@ import Trace
         let expectedResponse = Optional(ExecutionSessionResponse(
             sessionId: "sessionId",
             executionSessionUrl: Optional("executionSessionUrl"),
-            language: .java,
-            status: .creatingContainer
+            language: Language.java,
+            status: ExecutionSessionStatus.creatingContainer
         ))
         let response = try await client.submission.getExecutionSession(
             sessionId: "sessionId",
@@ -70,7 +70,7 @@ import Trace
     @Test func getExecutionSessionsState1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "states": {
@@ -104,8 +104,8 @@ import Trace
                     sessionId: "sessionId",
                     isWarmInstance: true,
                     awsTaskId: Optional("awsTaskId"),
-                    language: .java,
-                    status: .creatingContainer
+                    language: Language.java,
+                    status: ExecutionSessionStatus.creatingContainer
                 )
             ],
             numWarmingInstances: Optional(1),

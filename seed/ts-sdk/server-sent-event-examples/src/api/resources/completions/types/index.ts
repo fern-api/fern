@@ -3,7 +3,7 @@ export * from "./ErrorEvent.js";
 export * from "./EventEvent.js";
 export * from "./GroupCreatedEvent.js";
 export * from "./GroupDeletedEvent.js";
+export * from "./StreamedCompletion.js";
 export * from "./StreamEvent.js";
 export * from "./StreamEventContextProtocol.js";
 export * from "./StreamEventDiscriminantInData.js";
-export * from "./StreamedCompletion.js";

@@ -61,6 +61,7 @@
             "forwardCompatible": null
         }
     },
+    "specVersion": null,
     "apiName": "version",
     "apiDisplayName": null,
     "apiDocs": null,
@@ -240,6 +241,7 @@
                     "id": "endpoint_user.getUser",
                     "name": "getUser",
                     "displayName": null,
+                    "subtitle": null,
                     "auth": false,
                     "security": null,
                     "idempotent": false,

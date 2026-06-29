@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fixed endpoints that return a `text/plain` response so the generated method
+    returns `String` instead of the placeholder `JSONValue`. The HTTP client
+    already decodes a `String` response type from the raw UTF-8 body, so the
+    generated wire tests now compile and pass (previously `response == "string"`
+    failed because the response was typed as `JSONValue`).
+  type: fix

@@ -13,6 +13,11 @@
 > (see [README.md](./README.md) for activation steps). The playbook
 > below is runtime-neutral — any model with access to those four
 > sources can execute it.
+>
+> **Repo context.** The CLI generator and its architecture docs now live
+> inside the `fern-api/fern` monorepo under `generators/cli/sdk/`. The
+> former standalone repo `fern-api/cli-sdk` is archived and read-only.
+> All paths below are relative to the `fern-api/fern` repo root.
 
 ---
 
@@ -35,7 +40,7 @@ that:
 
 The agent is empowered to **propose** doc changes. It is **not**
 empowered to make architectural decisions, close tickets, or modify any
-file outside `docs/architecture/`.
+file outside `generators/cli/sdk/docs/architecture/`.
 
 ---
 
@@ -53,22 +58,51 @@ timestamp.
 
 ---
 
+## Prerequisites
+
+Before starting the methodology, ensure:
+
+1. **Repository**: clone or check out `fern-api/fern`. All commands and
+   file paths in this playbook assume the repo root as the working
+   directory.
+2. **Scope**: the CLI generator lives under `generators/cli/sdk/`. Only
+   files within this subtree are relevant to the agent.
+3. **Configuration**: read
+   `generators/cli/sdk/docs/architecture/automation/sources.yml` for
+   runtime parameters (repo, scope prefix, Linear project, Slack
+   channels, significant paths, output constraints).
+4. **Do not** clone or reference `fern-api/cli-sdk` — that repo is
+   archived and read-only.
+
+---
+
 ## Sources (read-only)
 
 Configured in [`sources.yml`](./sources.yml). All sources are queried in
 parallel.
 
-### 1. GitHub (`fern-api/cli-sdk`)
+### 1. GitHub (`fern-api/fern`, scoped to `generators/cli/sdk/`)
 
-- **Merged PRs in window**: `gh pr list --state merged --search 'merged:>=<since>'`.
+Because the CLI generator now lives inside the `fern-api/fern` monorepo,
+the agent must scope its GitHub queries to changes under
+`generators/cli/sdk/`.
+
+- **Merged PRs in window**: identify PRs that touch files under
+  `generators/cli/sdk/` using
+  `git log --since=<since> --merges --format='%H' -- generators/cli/sdk/`
+  then resolve each merge commit to its PR number. Alternatively,
+  `gh pr list -R fern-api/fern --state merged --search 'merged:>=<since>'`
+  filtered to only PRs whose changed files intersect `generators/cli/sdk/`.
   For each PR, capture: number, title, body, merged-by, files changed,
   commit messages, the linked Linear ticket(s) (regex `FER-\d+` in title
   and body).
-- **Closed issues in window**: `gh issue list --state closed --search 'closed:>=<since>'`.
+- **Closed issues in window**: `gh issue list -R fern-api/fern --state closed --search 'closed:>=<since>'`
+  filtered to issues mentioning `cli-sdk`, `cli-generator`, or
+  `generators/cli/`.
 - **Diffstat on architecturally significant paths**: see [the path list
   below](#architecturally-significant-paths).
 
-### 2. Linear (`Fern` team → `[SDKs] CLI Generator` project)
+### 2. Linear (`Fern` team -> `[SDKs] CLI Generator` project)
 
 - All tickets that changed status to `Done` in the window.
 - All tickets in `In Progress` *that mention or are linked from* a merged
@@ -134,21 +168,24 @@ For each change packet, decide one of:
 
 | Class | Action |
 |---|---|
-| **Shape change** | Affects `ARCHITECTURE.md` §3 (context), §5 (building blocks), or §6 (runtime view). Propose a patch. |
-| **Cross-cutting concept change** | Affects `ARCHITECTURE.md` §8. Propose a patch. |
+| **Shape change** | Affects `ARCHITECTURE.md` S3 (context), S5 (building blocks), or S6 (runtime view). Propose a patch. |
+| **Cross-cutting concept change** | Affects `ARCHITECTURE.md` S8. Propose a patch. |
 | **New formal ADR opportunity** | A load-bearing reversible decision has been made. Propose a new row in `decisions/INDEX.md` under "Implicit decisions" with provenance, and flag it as a candidate for promotion. |
-| **Risk surface change** | Affects `ARCHITECTURE.md` §11. Propose a patch. |
+| **Risk surface change** | Affects `ARCHITECTURE.md` S11. Propose a patch. |
 | **No architectural impact** | Skip. Do not list in the PR. (Counted in the Slack digest as "N PRs with no arch impact".) |
 
 ### Step 4: Compose the PR
 
 The PR contains exactly these changes:
 
-1. Patches to `docs/architecture/*.md` (no other file paths).
-2. A new entry in `docs/architecture/CHANGELOG-ARCH.md` under
+1. Patches to `generators/cli/sdk/docs/architecture/*.md` (no other file paths).
+2. A new entry in `generators/cli/sdk/docs/architecture/CHANGELOG-ARCH.md` under
    `## [Unreleased]` (or under a date heading if the human approved a
    freeze).
 3. Updated `<!-- last-run: ... -->` marker.
+
+The PR must be opened against `fern-api/fern` (not the archived
+`fern-api/cli-sdk`).
 
 **Citation requirement.** Every claim in the PR must link to its source.
 No claim without at least one of:
@@ -164,12 +201,12 @@ If a claim depends on multiple sources, link all of them.
 After the PR is opened, post to `#project-cli-generator`:
 
 ```
-🏗️ Weekly architecture digest — <since> to <now>
+Weekly architecture digest — <since> to <now>
 
-📦 <N> merged PRs · <M> with architectural impact
-🎯 <K> new implicit decisions surfaced
-🔄 <R> reversals or revisions to existing entries
-👻 <O> out-of-band signals (Slack/Notion without a matching PR)
+<N> merged PRs · <M> with architectural impact
+<K> new implicit decisions surfaced
+<R> reversals or revisions to existing entries
+<O> out-of-band signals (Slack/Notion without a matching PR)
 
 PR: <github-url>
 ```
@@ -182,36 +219,43 @@ just the notification.
 ## Architecturally significant paths
 
 When deciding if a PR has architectural impact, give extra weight to
-diffs in these paths. (This is a heuristic — a PR that touches *only*
-peripheral code can still be architecturally significant if the
-accompanying Slack/Notion/Linear signal says so.)
+diffs in these paths (all relative to the `fern-api/fern` repo root).
+(This is a heuristic — a PR that touches *only* peripheral code can
+still be architecturally significant if the accompanying
+Slack/Notion/Linear signal says so.)
 
 ```
-src/lib.rs
-src/openapi/app.rs
-src/openapi/parser.rs
-src/openapi/discovery.rs
-src/openapi/executor.rs
-src/openapi/overlay.rs
-src/openapi/commands.rs
-src/graphql/app.rs
-src/graphql/parser.rs
-src/graphql/discovery.rs
-src/graphql/executor.rs
-src/graphql/commands.rs
-src/auth/provider.rs
-src/auth/credential.rs
-src/auth/compose.rs
-src/auth/oauth2.rs
-src/http.rs
-src/websocket/**
-src/formatter.rs
-src/validate.rs
-src/error.rs
-src/custom_commands.rs
-src/early_intercept.rs
-Cargo.toml
-docs/adr/**
+generators/cli/sdk/src/lib.rs
+generators/cli/sdk/src/openapi/app.rs
+generators/cli/sdk/src/openapi/parser.rs
+generators/cli/sdk/src/openapi/discovery.rs
+generators/cli/sdk/src/openapi/executor.rs
+generators/cli/sdk/src/openapi/overlay.rs
+generators/cli/sdk/src/openapi/commands.rs
+generators/cli/sdk/src/graphql/app.rs
+generators/cli/sdk/src/graphql/parser.rs
+generators/cli/sdk/src/graphql/discovery.rs
+generators/cli/sdk/src/graphql/executor.rs
+generators/cli/sdk/src/graphql/commands.rs
+generators/cli/sdk/src/asyncapi/app.rs
+generators/cli/sdk/src/asyncapi/parser.rs
+generators/cli/sdk/src/asyncapi/discovery.rs
+generators/cli/sdk/src/asyncapi/executor.rs
+generators/cli/sdk/src/asyncapi/overlay.rs
+generators/cli/sdk/src/asyncapi/commands.rs
+generators/cli/sdk/src/auth/provider.rs
+generators/cli/sdk/src/auth/credential.rs
+generators/cli/sdk/src/auth/compose.rs
+generators/cli/sdk/src/auth/oauth2.rs
+generators/cli/sdk/src/http.rs
+generators/cli/sdk/src/websocket/**
+generators/cli/sdk/src/formatter.rs
+generators/cli/sdk/src/validate.rs
+generators/cli/sdk/src/error.rs
+generators/cli/sdk/src/custom_commands.rs
+generators/cli/sdk/src/early_intercept.rs
+generators/cli/sdk/Cargo.toml
+generators/cli/sdk/docs/adr/**
 ```
 
 When this list needs updates (new module, removed module), it's a
@@ -224,9 +268,9 @@ candidate change itself — surface it in the PR.
 ### The agent MUST
 
 - Cite every claim. No source = no claim.
-- Stay inside `docs/architecture/**`. Never edit code, `Cargo.toml`,
-  workflows, or any file elsewhere in the repo.
-- Open the PR as **draft**. Never use `--auto-merge`.
+- Stay inside `generators/cli/sdk/docs/architecture/**`. Never edit
+  code, `Cargo.toml`, workflows, or any file elsewhere in the repo.
+- Open the PR as **draft** against `fern-api/fern`. Never use `--auto-merge`.
 - Update the `<!-- last-run: ... -->` marker before exiting.
 - Distinguish *decisions* from *features*. Adding `x-fern-foo` extension
   support is a feature; deciding *not* to share extension parsing
@@ -240,30 +284,31 @@ candidate change itself — surface it in the PR.
   for next run` section in the PR body.
 - Make architectural claims that aren't supported by at least one
   cited source.
-- Modify or rewrite existing ADRs in `docs/adr/`. New ADRs are a
-  human-authored act; the agent only proposes "promote D-X to ADR" in
-  `decisions/INDEX.md`.
+- Push to or open PRs against the archived `fern-api/cli-sdk` repo.
+- Modify or rewrite existing ADRs in `generators/cli/sdk/docs/adr/`.
+  New ADRs are a human-authored act; the agent only proposes "promote
+  D-X to ADR" in `decisions/INDEX.md`.
 - Touch the bootstrap-era implicit decisions (D-A through D-P) except
   to add `**Promoted to ADR-NNNN**` notes when a human has promoted
   one, or to add reversal notes when the team has reversed one.
 
 ### Recoverable failures
 
-- A source times out → note it, continue.
-- The branch already exists from a prior failed run → push to it
+- A source times out -> note it, continue.
+- The branch already exists from a prior failed run -> push to it
   (`git push --force-with-lease`) and reopen the PR if needed.
-- No architectural changes detected → still open a PR with just the
+- No architectural changes detected -> still open a PR with just the
   `<!-- last-run: ... -->` bump and a `### No architectural changes in
   window` note in `CHANGELOG-ARCH.md`. (This is intentional: it gives
   the team a heartbeat that the agent ran and saw nothing.)
 
 ### Hard failures (stop and alert)
 
-- GitHub auth failure → post `❌ arch-doc-refresh failed: auth` to
+- GitHub auth failure -> post `arch-doc-refresh failed: auth` to
   `#project-cli-generator`, exit non-zero.
-- Multiple consecutive runs find no signal across all four sources →
+- Multiple consecutive runs find no signal across all four sources ->
   the watch window is probably wrong; alert and ask a human.
-- A claim cannot be cited → drop the claim. Do not invent a citation.
+- A claim cannot be cited -> drop the claim. Do not invent a citation.
 
 ---
 
@@ -273,13 +318,14 @@ The text below is what the model sees. Variables in `{{double-braces}}`
 are substituted at invocation.
 
 ````markdown
-You are the architecture-doc refresh agent for `fern-api/cli-sdk`.
+You are the architecture-doc refresh agent for the CLI generator
+embedded in `fern-api/fern` (under `generators/cli/sdk/`).
 
 ## Current state of the docs
 
-<!-- contents of docs/architecture/ARCHITECTURE.md -->
-<!-- contents of docs/architecture/decisions/INDEX.md -->
-<!-- contents of docs/architecture/CHANGELOG-ARCH.md -->
+<!-- contents of generators/cli/sdk/docs/architecture/ARCHITECTURE.md -->
+<!-- contents of generators/cli/sdk/docs/architecture/decisions/INDEX.md -->
+<!-- contents of generators/cli/sdk/docs/architecture/CHANGELOG-ARCH.md -->
 
 ## Window
 
@@ -288,7 +334,7 @@ To:   {{now-iso}}
 
 ## Source data
 
-### GitHub merged PRs
+### GitHub merged PRs (touching generators/cli/sdk/)
 {{github-prs}}
 
 ### Linear tickets
@@ -302,17 +348,18 @@ To:   {{now-iso}}
 
 ## Your task
 
-Follow the methodology in `docs/architecture/automation/PLAYBOOK.md`,
-specifically Steps 2–4. Output:
+Follow the methodology in
+`generators/cli/sdk/docs/architecture/automation/PLAYBOOK.md`,
+specifically Steps 2-4. Output:
 
-1. A unified diff against `docs/architecture/**` only.
-2. A Slack digest in the exact format under §"Slack digest".
+1. A unified diff against `generators/cli/sdk/docs/architecture/**` only.
+2. A Slack digest in the exact format under S"Slack digest".
 3. A list of `## TODO for next run` items if anything didn't fit.
 
 Constraints:
 - Every claim must cite at least one source URL.
-- Stay inside `docs/architecture/**`.
-- Open the PR as draft.
+- Stay inside `generators/cli/sdk/docs/architecture/**`.
+- Open the PR as draft against `fern-api/fern`.
 - Update the `<!-- last-run: -->` marker.
 ````
 
@@ -335,8 +382,8 @@ a release.
 
 ## How to edit this playbook
 
-Open a PR that modifies this file. CODEOWNERS (if/when configured)
-should require an architecture owner's review. The Devin schedule
-will pick up the new playbook on its next run — no schedule restart
-needed because the schedule references the repo path, not a frozen
-snapshot.
+Open a PR against `fern-api/fern` that modifies this file. CODEOWNERS
+(if/when configured) should require an architecture owner's review. The
+Devin schedule will pick up the new playbook on its next run — no
+schedule restart needed because the schedule references the repo path,
+not a frozen snapshot.

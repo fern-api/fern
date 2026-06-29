@@ -6,7 +6,7 @@ import AnyAuth
     @Test func get1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -43,7 +43,7 @@ import AnyAuth
     @Test func getAdmins1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {

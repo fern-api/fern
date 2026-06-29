@@ -53,11 +53,12 @@ export async function emitPublishWorkflow(args: {
     outputDir: string;
     binaryName: string;
     npmPublishInfo: ResolvedNpmPublishInfo;
+    repoUrl: string | undefined;
 }): Promise<void> {
-    const { outputDir, binaryName, npmPublishInfo } = args;
+    const { outputDir, binaryName, npmPublishInfo, repoUrl } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo });
+    const yaml = constructWorkflowYaml({ binaryName, npmPublishInfo, repoUrl });
     await writeFile(path.join(workflowsDir, "ci.yml"), yaml);
 }
 
@@ -116,8 +117,12 @@ jobs:
 `;
 }
 
-function constructWorkflowYaml(args: { binaryName: string; npmPublishInfo: ResolvedNpmPublishInfo }): string {
-    const { binaryName, npmPublishInfo } = args;
+function constructWorkflowYaml(args: {
+    binaryName: string;
+    npmPublishInfo: ResolvedNpmPublishInfo;
+    repoUrl: string | undefined;
+}): string {
+    const { binaryName, npmPublishInfo, repoUrl } = args;
     const { useOidc } = npmPublishInfo;
     const tokenVar = npmPublishInfo.tokenEnvironmentVariable;
 
@@ -232,10 +237,10 @@ ${matrixIncludes}
         shell: bash
         run: |
           if [[ "\${{ matrix.rust-target }}" == *-linux-musl ]]; then
-            cargo build --release --locked --target \${{ matrix.rust-target }} \\
+            cargo build --release --target \${{ matrix.rust-target }} \\
               --no-default-features --features rustls
           else
-            cargo build --release --locked --target \${{ matrix.rust-target }}
+            cargo build --release --target \${{ matrix.rust-target }}
           fi
 
       - name: Package and publish npm platform package${tokenEnvBlock}
@@ -260,7 +265,15 @@ ${matrixIncludes}
           {
             "name": "\${PLATFORM_PKG}",
             "version": "\${VERSION}",
-            "description": "Platform-specific binary for ${binaryName} (\${{ matrix.npm-platform-suffix }})",
+            "description": "Platform-specific binary for ${binaryName} (\${{ matrix.npm-platform-suffix }})",${
+                repoUrl != null
+                    ? `
+            "repository": {
+              "type": "git",
+              "url": "${repoUrl}"
+            },`
+                    : ""
+            }
             "os": ["\$(echo \${{ matrix.npm-platform-suffix }} | cut -d- -f1)"],
             "cpu": ["\$(echo \${{ matrix.npm-platform-suffix }} | cut -d- -f2)"],
             "main": "\${BINARY_NAME}",
@@ -324,7 +337,15 @@ ${optionalDepsLines}
           {
             "name": "${npmPublishInfo.packageName}",
             "version": "\${VERSION}",
-            "description": "CLI for ${binaryName}",
+            "description": "CLI for ${binaryName}",${
+                repoUrl != null
+                    ? `
+            "repository": {
+              "type": "git",
+              "url": "${repoUrl}"
+            },`
+                    : ""
+            }
             "bin": {
               "${binaryName}": "bin/cli.js"
             },

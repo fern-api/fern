@@ -956,10 +956,32 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
-        if (additionalPropertyKeys.length > 0) {
+        // If the schema declares `patternProperties`, accept all otherwise-undefined keys and
+        // preserve their values. We don't implement first-class `patternProperties` support and
+        // deliberately don't compile or match the patterns themselves — the presence of
+        // `patternProperties` simply means example keys should not be rejected as unexpected
+        // additional properties (e.g. under `additionalProperties: false`).
+        const hasPatternProperties = this.schemaHasPatternProperties(resolvedSchema);
+        const patternMatchedKeys = hasPatternProperties ? additionalPropertyKeys : [];
+        const remainingAdditionalKeys = hasPatternProperties ? [] : additionalPropertyKeys;
+
+        patternMatchedKeys.forEach((key) => {
+            additionalPropertiesResults.push({
+                key,
+                result: {
+                    isValid: true,
+                    coerced: false,
+                    usedProvidedExample: true,
+                    validExample: exampleObj[key],
+                    errors: []
+                }
+            });
+        });
+
+        if (remainingAdditionalKeys.length > 0) {
             if (resolvedSchema.additionalProperties === false) {
                 // Additional properties are not allowed, create errors for each extra property
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     const breadcrumbPath = [...this.breadcrumbs, key].join(".");
                     const error = {
                         message: `Found unexpected property '${key}' in example. This property does not exist in the schema${breadcrumbPath ? ` at path: ${breadcrumbPath}` : ""}`,
@@ -981,7 +1003,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 resolvedSchema.additionalProperties === undefined
             ) {
                 // additionalProperties: true or undefined - preserve values without validation
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     additionalPropertiesResults.push({
                         key,
                         result: {
@@ -996,7 +1018,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             } else {
                 // additionalProperties is a schema object - validate each additional property against it
                 const additionalPropsSchema = resolvedSchema.additionalProperties as OpenAPIV3_1.SchemaObject;
-                additionalPropertyKeys.forEach((key) => {
+                remainingAdditionalKeys.forEach((key) => {
                     const exampleConverter = new ExampleConverter({
                         breadcrumbs: [...this.breadcrumbs, key],
                         context: this.context,
@@ -1593,5 +1615,35 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         return propertyKeys;
+    }
+
+    /**
+     * Returns true if the schema declares any `patternProperties`, including via allOf, oneOf,
+     * and anyOf compositions. The patterns themselves are intentionally not compiled or matched.
+     */
+    private schemaHasPatternProperties(schema: OpenAPIV3_1.SchemaObject, visited: Set<string> = new Set()): boolean {
+        const patternProperties = (schema as { patternProperties?: Record<string, unknown> }).patternProperties;
+        if (patternProperties && typeof patternProperties === "object" && Object.keys(patternProperties).length > 0) {
+            return true;
+        }
+
+        for (const subSchema of [...(schema.allOf ?? []), ...(schema.oneOf ?? []), ...(schema.anyOf ?? [])]) {
+            const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: subSchema,
+                breadcrumbs: this.breadcrumbs,
+                skipErrorCollector: true
+            });
+            if (resolved) {
+                const refKey = this.context.isReferenceObject(subSchema) ? subSchema.$ref : JSON.stringify(resolved);
+                if (!visited.has(refKey)) {
+                    visited.add(refKey);
+                    if (this.schemaHasPatternProperties(resolved, visited)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

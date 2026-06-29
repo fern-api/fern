@@ -2,13 +2,13 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("PlaylistIdNotFoundError: Resource not found - {{message}}")]
+    #[error("PlaylistIdNotFoundError: Resource not found - {message}")]
     PlaylistIdNotFoundError {
         message: String,
         resource_id: Option<String>,
         resource_type: Option<String>,
     },
-    #[error("UnauthorizedError: Authentication failed - {{message}}")]
+    #[error("UnauthorizedError: Authentication failed - {message}")]
     UnauthorizedError {
         message: String,
         auth_type: Option<String>,
@@ -17,6 +17,8 @@ pub enum ApiError {
     Http { status: u16, message: String },
     #[error("Network error: {0}")]
     Network(reqwest::Error),
+    #[error("Request executor error: {0}")]
+    Executor(Box<dyn std::error::Error + Send + Sync>),
     #[error("Serialization error: {0}")]
     Serialization(serde_json::Error),
     #[error("Configuration error: {0}")]
@@ -47,10 +49,10 @@ impl ApiError {
                                 .unwrap_or("Unknown error")
                                 .to_string(),
                             resource_id: parsed
-                                .get("resource_id")
+                                .get("resourceId")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                             resource_type: parsed
-                                .get("resource_type")
+                                .get("resourceType")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }
@@ -72,7 +74,7 @@ impl ApiError {
                                 .unwrap_or("Unknown error")
                                 .to_string(),
                             auth_type: parsed
-                                .get("auth_type")
+                                .get("authType")
                                 .and_then(|v| v.as_str().map(|s| s.to_string())),
                         };
                     }

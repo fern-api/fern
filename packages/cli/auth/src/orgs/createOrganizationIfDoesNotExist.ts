@@ -15,7 +15,7 @@ export async function createOrganizationIfDoesNotExist({
     headers?: Record<string, string>;
 }): Promise<boolean> {
     const venus = createVenusService({ token: token.value, headers });
-    const getOrganizationResponse = await venus.organization.get(organization);
+    const getOrganizationResponse = await venus.organization.get({ orgId: organization });
 
     if (getOrganizationResponse.ok) {
         return false;

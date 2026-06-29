@@ -18,28 +18,27 @@ export class HeaderAuthProvider implements core.AuthProvider {
         return options?.[PARAM_KEY] != null;
     }
 
-    public async getAuthRequest({
-        endpointMetadata,
-    }: {
-        endpointMetadata?: core.EndpointMetadata;
-    } = {}): Promise<core.AuthRequest> {
-        const headerValue = await core.Supplier.get(this.options[PARAM_KEY]);
-        if (headerValue == null) {
-            throw new errors.SeedHeaderTokenError({
-                message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
-            });
-        }
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
 
-        return {
-            headers: { [HEADER_NAME]: `${HEADER_PREFIX}${headerValue}` },
-        };
+                const headerValue = await core.Supplier.get(this.options[PARAM_KEY]);
+                if (headerValue == null) {
+                    throw new errors.SeedHeaderTokenError({
+                        message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { [HEADER_NAME]: `${HEADER_PREFIX}${headerValue}` },
+                };
+                
     }
 }
 
 export namespace HeaderAuthProvider {
     export const AUTH_SCHEME = "Header" as const;
-    export const AUTH_CONFIG_ERROR_MESSAGE: string =
-        `Please provide '${PARAM_KEY}' when initializing the client` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = `Please provide '${PARAM_KEY}' when initializing the client` as const;
     export type Options = AuthOptions;
     export type AuthOptions = { [PARAM_KEY]: core.Supplier<string> };
 

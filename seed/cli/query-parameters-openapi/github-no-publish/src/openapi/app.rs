@@ -304,6 +304,71 @@ fn global_header_flag_collides_with_builtin(kebab: &str) -> bool {
     crate::openapi::commands::BUILTIN_FLAG_NAMES.contains(&kebab)
 }
 
+/// Returns true when some operation command in the tree rooted at `cli`
+/// declares a flag whose long name equals `long`. A `global(true)` arg
+/// that shares a long name with a per-operation parameter makes clap
+/// panic at build time ("Long option names must be unique for each
+/// argument"), so a global-header flag that collides with a parameter on
+/// any operation cannot be registered globally — see the call site in
+/// [`CliApp::decorate_command`].
+///
+/// Only descendant (subcommand) args are inspected; the root's own global
+/// flags (`--format`, `--dry-run`, …) are screened separately by
+/// [`global_header_flag_collides_with_builtin`].
+fn global_header_long_collides_with_param(cli: &clap::Command, long: &str) -> bool {
+    cli.get_subcommands().any(|sub| command_declares_long(sub, long))
+}
+
+/// Recursive worker for [`global_header_long_collides_with_param`]: true
+/// if `cmd` or any of its descendants declares a flag with long name
+/// `long`.
+fn command_declares_long(cmd: &clap::Command, long: &str) -> bool {
+    cmd.get_arguments().any(|a| a.get_long() == Some(long))
+        || cmd
+            .get_subcommands()
+            .any(|sub| command_declares_long(sub, long))
+}
+
+/// Register `arg` (a global-header flag that is *not* marked
+/// `global(true)`) on every leaf operation command whose flags don't
+/// already include the arg's long name. Leaves that declare a same-named
+/// per-operation parameter are left untouched so the per-op parameter
+/// wins (mirroring the importer semantics documented on
+/// [`GlobalHeader`](crate::openapi::discovery::GlobalHeader)).
+///
+/// Intermediate (resource) commands are recursed into but never carry
+/// the flag themselves — the resolved value is read from the leaf's
+/// `ArgMatches` (see [`build_global_header_overrides`]), so attaching it
+/// to the leaf is what makes the flag, its env fallback, and its default
+/// available on the operations that don't collide.
+fn register_global_header_on_nonconflicting_leaves(
+    cmd: clap::Command,
+    arg: &clap::Arg,
+    long: &str,
+) -> clap::Command {
+    let sub_names: Vec<String> = cmd
+        .get_subcommands()
+        .map(|c| c.get_name().to_string())
+        .collect();
+    if sub_names.is_empty() {
+        // Leaf operation command: attach the flag unless it already
+        // declares one with the same long name (per-op param wins).
+        if cmd.get_arguments().any(|a| a.get_long() == Some(long)) {
+            return cmd;
+        }
+        return cmd.arg(arg.clone());
+    }
+    let mut out = cmd;
+    for name in sub_names {
+        let arg = arg.clone();
+        let long = long.to_string();
+        out = out.mut_subcommand(name, move |sub| {
+            register_global_header_on_nonconflicting_leaves(sub, &arg, &long)
+        });
+    }
+    out
+}
+
 /// Resolve a global header value from `matched_args`, the env, and the
 /// configured default — in that order. Returns `None` when none of the
 /// three sources produced a value, OR when the resolved value is empty
@@ -311,16 +376,26 @@ fn global_header_flag_collides_with_builtin(kebab: &str) -> bool {
 /// on the wire — that's almost always a user mistake worth surfacing as a
 /// required-header error, and matches the env-var-handling convention).
 ///
-/// `matched_args.get_one::<String>` already incorporates clap's
+/// `matched_args.try_get_one::<String>` already incorporates clap's
 /// `.env()` and `.default_value()` bindings, so the lookup is a single
 /// read; the explicit env/default fields on [`GlobalHeader`] are what
 /// feed those clap bindings at registration time.
+///
+/// Uses `try_get_one` rather than `get_one` because the flag is not
+/// guaranteed to be registered on every command: when its long name
+/// collides with a per-operation parameter, the flag is dropped from
+/// that operation's command (the per-op parameter wins — see
+/// `register_global_header_on_nonconflicting_leaves`). On such a command
+/// the arg id is unknown and `get_one` would panic; `try_get_one`
+/// returns `Err`, which we map to `None`.
 pub(crate) fn resolve_global_header_value(
     matched_args: &clap::ArgMatches,
     h: &crate::openapi::discovery::GlobalHeader,
 ) -> Option<String> {
     matched_args
-        .get_one::<String>(&global_header_arg_id(h))
+        .try_get_one::<String>(&global_header_arg_id(h))
+        .ok()
+        .flatten()
         .map(|s| s.trim())
         .filter(|s| !s.is_empty())
         .map(|s| s.to_string())
@@ -574,7 +649,7 @@ impl CliApp {
     /// `x-fern-audiences` values. Operations without an
     /// `x-fern-audiences` tag, or whose tags don't intersect this set,
     /// are dropped from the command tree at build time — they don't
-    /// appear in `--help`, JSON help, completions, or anywhere else.
+    /// appear in `--help`, `--schema`, completions, or anywhere else.
     ///
     /// Multiple audiences union (OR): an operation tagged with *any* of
     /// the listed audiences survives. Calling `.audiences([])` (or not
@@ -922,6 +997,78 @@ impl CliApp {
         Ok(doc)
     }
 
+    /// Return embedded spec(s) as a YAML string.
+    ///
+    /// - `raw == true` → byte-exact `SpecEntry.yaml` for each entry.
+    /// - `raw == false` → effective spec with overlays + overrides merged
+    ///   (same pipeline as `build_doc`, but stops before parsing to
+    ///   `RestDescription` to preserve full OpenAPI fidelity).
+    ///
+    /// Multi-spec binaries emit a YAML stream (`---`-delimited).
+    pub(crate) fn spec_yaml(&self, raw: bool) -> Result<Option<String>, crate::error::CliError> {
+        if self.specs.is_empty() {
+            return Ok(None);
+        }
+
+        let mut documents: Vec<String> = Vec::new();
+
+        for entry in &self.specs {
+            if raw {
+                documents.push(entry.yaml.clone());
+            } else {
+                // Reproduce the overlay + override merge from build_doc,
+                // stopping before parsing to RestDescription.
+                let effective = crate::openapi::overlay::apply_overlays_to_spec(
+                    &entry.yaml,
+                    &entry.overlays,
+                )?;
+
+                if entry.overrides.is_empty() {
+                    documents.push(effective);
+                } else {
+                    let mut value: serde_yaml::Value =
+                        serde_yaml::from_str(&effective).map_err(|e| {
+                            crate::error::CliError::Discovery(format!(
+                                "Failed to parse OpenAPI spec: {e}"
+                            ))
+                        })?;
+                    for ovr in &entry.overrides {
+                        let override_value: serde_yaml::Value =
+                            serde_yaml::from_str(ovr).map_err(|e| {
+                                crate::error::CliError::Discovery(format!(
+                                    "Failed to parse overrides YAML: {e}"
+                                ))
+                            })?;
+                        value = crate::openapi::deep_merge_yaml(value, override_value);
+                    }
+                    let merged = serde_yaml::to_string(&value).map_err(|e| {
+                        crate::error::CliError::Discovery(format!(
+                            "Failed to serialize merged spec: {e}"
+                        ))
+                    })?;
+                    documents.push(merged);
+                }
+            }
+        }
+
+        // Join as a YAML stream with document separators.
+        let yaml = if documents.len() == 1 {
+            documents.into_iter().next().unwrap()
+        } else {
+            let mut yaml = documents[0].clone();
+            for doc in &documents[1..] {
+                if !yaml.ends_with('\n') {
+                    yaml.push('\n');
+                }
+                yaml.push_str("---\n");
+                yaml.push_str(doc);
+            }
+            yaml
+        };
+
+        Ok(Some(yaml))
+    }
+
     /// Shorthand for `auth_scheme(name, AuthCredentialSource::from_env(env))`.
     /// Covers the 80% case — most callers bind a scheme to one env var.
     ///
@@ -1221,8 +1368,7 @@ impl CliApp {
             let prefix = format!("--{kebab} <{value_name}>");
             global_header_help_pairs.push((prefix, help_text.clone()));
             let mut arg = clap::Arg::new(arg_id)
-                .long(kebab)
-                .global(true)
+                .long(kebab.clone())
                 .hide(true)
                 .value_name(value_name)
                 .help(help_text);
@@ -1232,8 +1378,33 @@ impl CliApp {
             if let Some(def) = &h.default {
                 arg = arg.default_value(def.clone());
             }
-            cli = cli.arg(arg);
+            // A `global(true)` arg whose long name matches a per-operation
+            // parameter makes clap panic at build time ("Long option names
+            // must be unique for each argument"). When the flag collides
+            // with a parameter on some operation, register it per-command
+            // on the non-colliding leaves and let the per-op parameter win
+            // on the rest — rather than handing clap two args with the same
+            // long name (FER-11145).
+            if global_header_long_collides_with_param(&cli, &kebab) {
+                tracing::debug!(
+                    header = %h.header,
+                    flag = %kebab,
+                    "Global-header flag collides with a per-operation parameter; \
+                     registering per-command so the per-op parameter wins"
+                );
+                cli = register_global_header_on_nonconflicting_leaves(cli, &arg, &kebab);
+            } else {
+                cli = cli.arg(arg.global(true));
+            }
         }
+
+        cli = cli.arg(
+            clap::Arg::new("debug")
+                .long("debug")
+                .action(clap::ArgAction::SetTrue)
+                .global(true)
+                .help("Dump HTTP request and response to stderr")
+        );
 
         // Compose the root --help footer. Preserves the section order
         // from the old run_async path: global headers → auth → env vars.
@@ -1398,11 +1569,14 @@ pub struct AppContext {
     /// Whether `--quiet` was passed on the command line. Threaded into
     /// `OutputPipeline` by [`AppContext::execute`] so custom commands
     /// honor the flag.
-    quiet: bool,
+    pub(crate) quiet: bool,
     /// Base URL override resolved from `--base-url` / `{NAME}_BASE_URL`.
     /// Threaded into `invoke()` so custom command handlers respect the
     /// override the same way direct CLI dispatch does.
-    base_url_override: Option<String>,
+    pub(crate) base_url_override: Option<String>,
+    /// Whether `--debug` was passed on the command line. Stored for
+    /// use by the executor (DBO-1.3) to dump HTTP traffic to stderr.
+    pub(crate) debug: bool,
 }
 
 impl AppContext {
@@ -1416,6 +1590,7 @@ impl AppContext {
             entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers }],
             quiet: false,
             base_url_override: None,
+            debug: false,
         }
     }
 
@@ -1426,6 +1601,11 @@ impl AppContext {
 
     pub(crate) fn with_base_url_override(mut self, base_url_override: Option<String>) -> Self {
         self.base_url_override = base_url_override;
+        self
+    }
+
+    pub(crate) fn with_debug(mut self, debug: bool) -> Self {
+        self.debug = debug;
         self
     }
 
@@ -1518,12 +1698,15 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let pipeline = formatter::OutputPipeline {
             format: output_format.clone(),
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
+            query: None,
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
 
@@ -1570,6 +1753,7 @@ impl AppContext {
                 // streaming default; only the CLI front-end exposes the
                 // opt-in buffered toggle.
                 false,
+                self.debug,
                 &extra_headers,
             ))
         })
@@ -1604,6 +1788,8 @@ impl AppContext {
                 .pagination_token_response_path
                 .clone()
                 .unwrap_or_else(|| "nextPageToken".to_string()),
+            no_pager: true,
+            cli_name: String::new(),
         };
 
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
@@ -1641,6 +1827,9 @@ impl AppContext {
                 // buffered semantics so the captured value mirrors the
                 // unary-response shape callers already handle.
                 true,
+                // Programmatic callers (invoke) never use the debug dump —
+                // debug mode is a CLI-only surface.
+                false,
                 &extra_headers,
             ))
         })?;
@@ -1884,10 +2073,26 @@ pub(crate) fn collect_params_from_flags(
 
         if param_def.repeated {
             if let Some(values) = matched_args.get_many::<String>(&arg_id) {
-                let arr: Vec<serde_json::Value> = values
-                    .map(|v| serde_json::Value::String(v.clone()))
-                    .collect();
-                params.insert(param_name.clone(), serde_json::Value::Array(arr));
+                // A value that parses as a JSON array is spliced in element
+                // by element (`--to '["a","b"]'` ≡ `--to a --to b`); anything
+                // else — including non-array JSON like "123" — stays a
+                // literal string.
+                let mut arr: Vec<serde_json::Value> = Vec::new();
+                for v in values {
+                    match serde_json::from_str(v) {
+                        Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
+                        _ => arr.push(serde_json::Value::String(v.clone())),
+                    }
+                }
+                // For oneOf [string, array<string>] unions, a single scalar
+                // value stays a plain string — only multiple values (or an
+                // explicit JSON array) produce an array on the wire.
+                let value = if param_def.scalar_or_array && arr.len() == 1 {
+                    arr.into_iter().next().unwrap()
+                } else {
+                    serde_json::Value::Array(arr)
+                };
+                params.insert(param_name.clone(), value);
             }
             continue;
         }
@@ -1915,8 +2120,17 @@ pub(crate) fn collect_params_from_flags(
                     // so the style-aware serializer receives a `Value::Object` /
                     // `Value::Array` rather than a verbatim string. Falls back
                     // to the raw string when the value isn't valid JSON.
-                    serde_json::from_str(value.as_str())
-                        .unwrap_or_else(|_| serde_json::Value::String(value.clone()))
+                    match serde_json::from_str::<serde_json::Value>(value.as_str()) {
+                        Ok(mut parsed) => {
+                            // Resolve `@filename` references inside nested
+                            // string values — mirrors Stainless's CLI shorthand
+                            // semantics (e.g. `--profile '{"pic":"@abe.jpg"}'`).
+                            // FER-10436.
+                            executor::resolve_file_refs(&mut parsed)?;
+                            parsed
+                        }
+                        Err(_) => serde_json::Value::String(value.clone()),
+                    }
                 } else {
                     let wire = param_def
                         .resolve_enum_display_to_wire(value.as_str())
@@ -1986,10 +2200,38 @@ pub(crate) fn collect_multipart_parts(
 
         if field.is_file {
             let raw = value.as_str();
-            let stripped = raw.strip_prefix('@').unwrap_or(raw);
-            if stripped != "-" {
+            // `\@literal` — escape syntax for sending a literal `@`-prefixed
+            // value on a file-typed field (FER-10436). The value is sent as a
+            // plain text part; no file read is attempted, and the path-safety
+            // validators that normally guard file inputs are skipped because
+            // there is no path to validate.
+            if executor::is_escaped_literal(raw) {
+                let literal = executor::strip_or_escape_at(raw).into_owned();
+                parts.push(executor::MultipartPart::Text {
+                    name: field.wire_name.clone(),
+                    value: literal,
+                    content_type: field.content_type.clone(),
+                });
+                continue;
+            }
+            // Validate the inner filesystem path — the same string the executor
+            // will eventually pass to `tokio::fs::read`. `parse_at_ref` strips
+            // the `@`, `@file://`, or `@data://` prefix so an adversarial
+            // `@file://evil\x00path` is rejected before disk I/O regardless of
+            // which encoding mode was requested (FER-10532). Stdin is only the
+            // `Auto`-mode `-` sentinel; an explicit-scheme `-` is a literal
+            // filename and still gets validated.
+            let (inner, mode) = match executor::parse_at_ref(raw) {
+                executor::AtRef::File { path, mode } => (path, mode),
+                executor::AtRef::Plain(s) => (std::borrow::Cow::Borrowed(s), executor::AtMode::Auto),
+                // `\@literal` was handled above; reachable only as a defensive
+                // fallback if the escape branch is ever skipped.
+                executor::AtRef::Escaped(_) => continue,
+            };
+            let is_stdin = mode == executor::AtMode::Auto && inner.as_ref() == "-";
+            if !is_stdin {
                 crate::output::reject_dangerous_chars(
-                    stripped,
+                    inner.as_ref(),
                     &format!("--{}", crate::text::to_kebab_flag(&field.wire_name)),
                 )?;
             }
@@ -2017,6 +2259,7 @@ pub(crate) fn collect_multipart_parts(
 pub(crate) fn build_pagination_config(
     matches: &clap::ArgMatches,
     doc: &RestDescription,
+    cli_name: &str,
 ) -> executor::PaginationConfig {
     executor::PaginationConfig {
         page_all: matches.get_flag("page-all"),
@@ -2036,6 +2279,8 @@ pub(crate) fn build_pagination_config(
             .pagination_token_response_path
             .clone()
             .unwrap_or_else(|| "nextPageToken".to_string()),
+        no_pager: matches.get_flag("no-pager"),
+        cli_name: cli_name.to_string(),
     }
 }
 
@@ -2194,13 +2439,161 @@ mod tests {
         );
     }
 
+    /// `global_header_long_collides_with_param` inspects descendant
+    /// (subcommand) args only — a long shared with a per-op param is a
+    /// collision; a long that only exists as a root-level global is not.
+    #[test]
+    fn test_global_header_long_collides_with_param_scopes_to_subcommands() {
+        let cli = clap::Command::new("cli")
+            // A root-level global flag must NOT count as a collision.
+            .arg(clap::Arg::new("format").long("format").global(true))
+            .subcommand(
+                clap::Command::new("products").subcommand(
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
+                ),
+            );
+        assert!(
+            global_header_long_collides_with_param(&cli, "country"),
+            "a per-op param on a leaf must register as a collision",
+        );
+        assert!(
+            !global_header_long_collides_with_param(&cli, "format"),
+            "a root-level global flag must not register as a collision",
+        );
+        assert!(
+            !global_header_long_collides_with_param(&cli, "language"),
+            "a long that exists nowhere in the tree is not a collision",
+        );
+    }
+
+    /// `register_global_header_on_nonconflicting_leaves` attaches the flag
+    /// to leaves that don't already declare it and leaves colliding leaves
+    /// untouched.
+    #[test]
+    fn test_register_global_header_skips_conflicting_leaf() {
+        let cli = clap::Command::new("cli").subcommand(
+            clap::Command::new("products")
+                .subcommand(
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
+                )
+                .subcommand(clap::Command::new("list")),
+        );
+        let arg = clap::Arg::new("__global_header::X-Country").long("country");
+        let cli = register_global_header_on_nonconflicting_leaves(cli, &arg, "country");
+        let products = cli.find_subcommand("products").unwrap();
+        let retrieve = products.find_subcommand("retrieve").unwrap();
+        let list = products.find_subcommand("list").unwrap();
+        // retrieve already declares --country → no global-header arg added.
+        assert!(
+            !retrieve
+                .get_arguments()
+                .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
+            "colliding leaf must keep only its per-op param",
+        );
+        // list has no --country → global-header arg attached.
+        assert!(
+            list.get_arguments()
+                .any(|a| a.get_id().as_str() == "__global_header::X-Country"),
+            "non-colliding leaf must receive the global-header flag",
+        );
+    }
+
+    /// Full regression for FER-11145: a global header whose flag name
+    /// matches a per-operation parameter must not make clap panic, and the
+    /// per-op param must win on the colliding command while the global
+    /// flag stays available on non-colliding siblings.
+    #[test]
+    fn test_decorate_command_global_header_param_collision_no_panic() {
+        use crate::openapi::discovery::{
+            GlobalHeader, MethodParameter, RestDescription, RestMethod, RestResource,
+        };
+        use std::collections::HashMap;
+
+        // products.retrieve declares a per-op `country` query param.
+        let mut retrieve_params: HashMap<String, MethodParameter> = HashMap::new();
+        retrieve_params.insert(
+            "country".into(),
+            MethodParameter {
+                location: Some("query".into()),
+                param_type: Some("string".into()),
+                ..Default::default()
+            },
+        );
+        let retrieve = RestMethod {
+            http_method: "GET".into(),
+            parameters: retrieve_params,
+            ..Default::default()
+        };
+        // products.list carries no `country` param.
+        let list = RestMethod {
+            http_method: "GET".into(),
+            ..Default::default()
+        };
+        let mut products = RestResource::default();
+        products.methods.insert("retrieve".into(), retrieve);
+        products.methods.insert("list".into(), list);
+        let mut resources = HashMap::new();
+        resources.insert("products".into(), products);
+
+        let doc = RestDescription {
+            name: "channel3".into(),
+            resources,
+            global_headers: vec![GlobalHeader {
+                header: "X-Channel3-Country".into(),
+                name: Some("country".into()),
+                optional: true,
+                env: Some("CHANNEL3_COUNTRY".into()),
+                default: None,
+            }],
+            ..Default::default()
+        };
+
+        let app = CliApp::new("channel3");
+        let cli = crate::openapi::commands::build_cli(&doc);
+        let cli = app.decorate_command(&doc, cli);
+
+        // Before the fix, building this command panicked because
+        // `--country` was registered twice (global header + per-op param).
+        cli.clone().debug_assert();
+
+        // Colliding command: `--country` binds to the per-op param, and the
+        // global-header arg id is absent (per-op param wins).
+        let matches = cli
+            .clone()
+            .try_get_matches_from(["channel3", "products", "retrieve", "--country", "US"])
+            .expect("retrieve should parse --country as the per-op param");
+        let (_, products_m) = matches.subcommand().unwrap();
+        let (_, retrieve_m) = products_m.subcommand().unwrap();
+        assert_eq!(
+            retrieve_m.get_one::<String>("country").map(String::as_str),
+            Some("US"),
+        );
+        assert!(
+            resolve_global_header_value(retrieve_m, &doc.global_headers[0]).is_none(),
+            "global header must be dropped from the colliding command",
+        );
+
+        // Non-colliding sibling: `--country` binds to the global header.
+        let matches = cli
+            .try_get_matches_from(["channel3", "products", "list", "--country", "CA"])
+            .expect("list should parse --country as the global-header flag");
+        let (_, products_m) = matches.subcommand().unwrap();
+        let (_, list_m) = products_m.subcommand().unwrap();
+        assert_eq!(
+            resolve_global_header_value(list_m, &doc.global_headers[0]).as_deref(),
+            Some("CA"),
+        );
+    }
+
     #[test]
     fn test_sdk_variable_collides_with_builtin_flags() {
         // Variables whose kebab form matches any built-in per-op flag
         // must be flagged as colliding so the global registration site
         // can skip them with a warning instead of letting clap panic.
         // Cover the names that are most likely to be picked accidentally.
-        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json"] {
+        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json", "debug"] {
             assert!(
                 sdk_variable_collides_with_builtin(builtin),
                 "expected '{builtin}' to collide with a built-in flag",
@@ -2869,6 +3262,223 @@ mod tests {
     }
 
     #[test]
+    fn test_collect_params_repeated_param_json_array_value_flattened() {
+        // A repeated string flag (array body props and string|array<string>
+        // unions both lower to this shape) carrying a JSON-array literal must
+        // be parsed and its elements spliced in — not wrapped verbatim as a
+        // single array element.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches =
+            cmd.get_matches_from(vec!["test", "--to", r#"["a@example.com","b@example.com"]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+            "JSON-array value on a repeated flag must be parsed, not passed verbatim",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_mixed_json_array_and_literal() {
+        // Occurrences can mix: a JSON-array literal flattens in place while
+        // plain values stay literal strings.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test",
+            "--to",
+            r#"["a@example.com"]"#,
+            "--to",
+            "b@example.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_param_non_array_json_stays_literal() {
+        // Values that parse as non-array JSON ("123", "null", "{}") keep the
+        // old literal-string behavior — only arrays flatten.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "tags".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("tags")
+                    .long("tags")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches =
+            cmd.get_matches_from(vec!["test", "--tags", "123", "--tags", "null", "--tags", "{}"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("tags"),
+            Some(&serde_json::json!(["123", "null", "{}"])),
+            "non-array values must stay literal strings",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_single_value_stays_scalar() {
+        // For oneOf [string, array<string>] unions, a single value should be
+        // sent as a plain string, not wrapped in a length-1 array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec!["test", "--to", "a@example.com"]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!("a@example.com")),
+            "single value on scalar_or_array param must be a plain string",
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_multiple_values_become_array() {
+        // Multiple values on a scalar_or_array param should produce an array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test", "--to", "a@example.com", "--to", "b@example.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_scalar_or_array_json_array_stays_array() {
+        // A JSON-array literal on a scalar_or_array param with >1 element
+        // produces an array.
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                scalar_or_array: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new("to")
+                    .long("to")
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let matches = cmd.get_matches_from(vec![
+            "test", "--to", r#"["a@example.com","b@example.com"]"#,
+        ]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["a@example.com", "b@example.com"])),
+        );
+    }
+
+    #[test]
     fn test_collect_params_null_sentinel_does_not_apply_to_defaults() {
         // When clap injects an `x-fern-default` value that happens to be the
         // string "null", we must NOT convert it to Value::Null — the user
@@ -3066,13 +3676,18 @@ paths:
                     .long("page-delay")
                     .value_parser(clap::value_parser!(u64)),
             )
+            .arg(
+                clap::Arg::new("no-pager")
+                    .long("no-pager")
+                    .action(clap::ArgAction::SetTrue),
+            )
     }
 
     #[test]
     fn test_build_pagination_config_defaults() {
         let doc = RestDescription::default();
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert!(!config.page_all);
         assert_eq!(config.page_limit, 10);
         assert_eq!(config.page_delay_ms, 100);
@@ -3088,7 +3703,7 @@ paths:
             ..Default::default()
         };
         let matches = pagination_cmd().get_matches_from(vec!["test"]);
-        let config = build_pagination_config(&matches, &doc);
+        let config = build_pagination_config(&matches, &doc, "test");
         assert_eq!(config.token_query_param, "cursor");
         assert_eq!(config.token_response_path, "meta.next_cursor");
     }

@@ -1,4 +1,314 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.19.4
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.3
+  changelogEntry:
+    - summary: |
+        Add `cargo:` prefix to workspace members in generated `dist-workspace.toml`
+        so that `dist plan` can parse the file correctly.
+      type: fix
+    - summary: |
+        Strip the `cargo:crates/pipeline-fixture` workspace member from generated
+        `dist-workspace.toml`. That member is a cli-sdk-only release-pipeline fixture
+        that is never vendored into a user's CLI, so leaving it in made `cargo dist
+        plan` / `cargo metadata` fail with "failed to load manifest for workspace
+        member `crates/pipeline-fixture`".
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.2
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.2 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure (ENOENT on asIs templates like
+        prelude.rs, http_client.rs) by setting FERN_RUST_ASIS_DIR before
+        invoking the Rust SDK generator in-process, ensuring the bundled
+        rust-sdk-dist/asIs/ directory is discovered correctly.
+      type: fix
+    - summary: |
+        Fix embedded SDK compilation failures caused by type-name casing
+        divergence between the co-generated types and SDK crates. The embedded
+        SDK IR is now migrated to exactly v66 (the rust generators' pinned IR
+        version) instead of all the way down the migration chain; the v66→v65
+        migration inflated bare-string names into language-agnostic casing
+        (e.g. "OrderId" → "OrderID"), which only the SDK crate echoed, breaking
+        references to the types crate.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.1 updates.
+      type: fix
+    - summary: |
+        Fix embedded SDK generation failure ("failed to read feature configuration")
+        by skipping standalone doc generation (README, CONTRIBUTING, reference.md)
+        when the Rust SDK generator runs in cliEmbedded mode. Also stage features.yml
+        into the CLI dist for future extensibility.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.19.0
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.41.0 updates.
+      type: internal
+    - summary: |
+        Fix de-conflicted client names in generated sdk.rs (renamed from
+        sdk_glue.rs). Client names are now read directly from the Rust SDK
+        generator's context via in-process orchestration with backward IR
+        migration (v67→v66), eliminating independent re-derivation drift.
+        Also renames module sdk_glue→sdk, sdk_client()→client().
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 0.18.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.9 updates.
+      type: fix
+  createdAt: "2026-06-25"
+  irVersion: 67
+- version: 0.18.0
+  changelogEntry:
+    - summary: |
+        Add curl|bash installation support for generated CLIs via cargo-dist
+        release assets. Emits `.github/workflows/release.yml` unconditionally
+        for GitHub output, removes npm from dist-workspace.toml installers,
+        and updates the README Installation section to lead with shell/powershell
+        installer one-liners.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.12
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.8 updates.
+      type: fix
+    - summary: |
+        Suppress `unused import: super::*` warnings in generated type files by adding
+        `#[allow(unused_imports)]` before the injected `use super::*;` statement.
+      type: fix
+    - summary: |
+        Suppress `dead_code` warnings in the generated `sdk_glue.rs` module, which
+        contains utilities for custom command handlers that may not be used yet.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.11
+  changelogEntry:
+    - summary: |
+        Show credential source hints (e.g. env var names) in `--help` for custom auth
+        providers instead of the opaque "custom auth provider" label.
+      type: fix
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 0.17.10
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.40.7 updates.
+      type: fix
+  createdAt: "2026-06-23"
+  irVersion: 67
+- version: 0.17.9
+  changelogEntry:
+    - summary: |
+        Fix crash in reference.md generation when OpenAPI specs contain `$ref`
+        parameter references (e.g. `$ref: "#/components/parameters/LimitParam"`).
+        The generator now resolves these references from `components.parameters`
+        instead of crashing with "Cannot read properties of undefined".
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 0.17.8
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.7
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 0.17.6
+  changelogEntry:
+    - summary: |
+        Fix generated sdk_glue.rs missing `http_client` field in ApiClient
+        initializer for flat APIs (no sub-client groups), which caused Rust
+        compilation failures.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 0.17.5
+  changelogEntry:
+    - summary: |
+        Rebuild to pick up rust-sdk 0.40.6 which fixes serde imports in
+        `environment.rs` for multi-URL environments when embedded in the CLI.
+      type: chore
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 0.17.4
+  changelogEntry:
+    - summary: |
+        API-key (`header`) auth schemes now emit a `--api-key` CLI flag in
+        addition to the environment variable. The generated binding uses a
+        credential-source chain (`.source(AuthCredentialSource::any([cli,
+        env]))`) so the flag is tried first, falling back to the env var.
+        Previously the flag was env-only with no way to pass the key inline.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 0.17.3
+  changelogEntry:
+    - summary: |
+        Rebuild embedded SDK generation to pick up rust-sdk 0.40.5 error.rs
+        codegen fix — named/non-primitive error body fields now emit correct
+        imports and use serde_json::from_value() instead of as_str().
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 0.17.2
+  changelogEntry:
+    - summary: |
+        Add `reqwest` dependency to the embedded types crate when file-upload
+        (multipart/form-data) request types are generated. Previously the types
+        crate referenced `reqwest::multipart::Form` without declaring the dep.
+      type: fix
+    - summary: |
+        Fix SDK glue generation for APIs with nested `x-fern-sdk-group-name`
+        groups (2+ levels). The glue now recursively discovers sub-client
+        structs from the generated SDK's resource tree and emits correct
+        nested struct literals instead of assuming a flat client hierarchy.
+        Nested sub-clients are qualified through `api::resources::<group>`
+        (where the group modules actually live) rather than `api::<group>`,
+        which is not re-exported at the crate's `api` root.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.17.1
+  changelogEntry:
+    - summary: |
+        Populate `repository.url` in generated npm `package.json` files from
+        the GitHub output mode's `repoUrl`. Fixes npm provenance verification
+        failures (E422) when publishing with `--provenance`.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.17.0
+  changelogEntry:
+    - summary: |
+        Add npm version badge to the generated CLI README header when npm
+        publish info is configured, matching the badge behavior of generated
+        TypeScript SDKs.
+      type: feat
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.4
+  changelogEntry:
+    - summary: |
+        Update generated `sdk_glue.rs` to box `SdkError` when bridging to the SDK's
+        `RequestExecutor` trait and downcast `ApiError::Executor` back to `SdkError`
+        for structured error recovery.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.3
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.2
+  changelogEntry:
+    - summary: |
+        Remove `--locked` from `cargo check`, `cargo build`, and `cargo test`
+        commands in generated CI workflows. The lockfile produced at generation
+        time can become stale when the cli-sdk runtime is updated or users add
+        custom code, causing `--locked` builds to reject the lockfile.
+      type: fix
+  createdAt: "2026-06-09"
+  irVersion: 67
+- version: 0.16.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error in generated CLI embedded types where structs
+        incorrectly derived `Default` when containing fields whose types extend
+        base objects that don't support `Default`. Propagated from the underlying
+        Rust model generator fix.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.16.0
+  changelogEntry:
+    - summary: |
+        Replace `embedTypes` and `embedSdk` config options with a single
+        `customCommands` flag. When true (default), the generator produces
+        the full custom command infrastructure (types crate, SDK crate,
+        sdk_glue, and custom.rs scaffold). Set to false for a spec-only
+        CLI with no custom command support.
+      type: feat
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.15.0
+  changelogEntry:
+    - summary: |
+        Ship custom-command agent skills inside generated CLIs. A freshly
+        generated project now includes `.agents/skills/custom-commands/SKILL.md`
+        (symlinked into `.claude/`) with spec-aware guidance: real endpoint
+        names, typed SDK client fields, and crate names derived from the API
+        spec. Coding agents can follow the skill to author custom commands
+        without reverse-engineering the patterns.
+      type: feat
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.4
+  changelogEntry:
+    - summary: |
+        Fix local (native) seed test execution by correctly passing OpenAPI specs
+        and SDK template directory to the CLI generator via environment variables.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.3
+  changelogEntry:
+    - summary: |
+        Sync cli-sdk runtime from fern-api/cli-sdk.
+      type: chore
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.2
+  changelogEntry:
+    - summary: |
+        Add `--locked` to cargo check/build/test commands in generated CI workflow
+        so dependency resolution matches the committed lockfile (consistent with the
+        publish job which already used `--locked`).
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
+- version: 0.14.1
+  changelogEntry:
+    - summary: |
+        Remove `--locked` from `cargo build` commands in generated CI
+        publish workflows. The lockfile produced at generation time may
+        become stale when users add custom code or dev-dependencies,
+        causing `--locked` builds to reject the lockfile. CI now allows
+        Cargo to re-resolve dependencies at build time.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
 - version: 0.14.0
   changelogEntry:
     - summary: |

@@ -323,7 +323,7 @@ impl Availability {
     /// Lowercase wire identifier matching the canonical Fern spelling
     /// (`alpha`, `beta`, `pre-release`, `preview`, `generally-available`,
     /// `deprecated`, `legacy`). Used for the `availability` field
-    /// surfaced in JSON help output.
+    /// surfaced in `--schema` output.
     pub fn as_str(self) -> &'static str {
         match self {
             Availability::Alpha => "alpha",
@@ -684,6 +684,14 @@ pub struct RestMethod {
     /// parser, never round-tripped through `RestMethod` serialization.
     #[serde(default, skip)]
     pub audiences: Vec<String>,
+    /// `true` when at least one `2xx` (or `2XX` wildcard) response declares
+    /// a content media type that is not JSON. Used at command-build time to
+    /// gate the `-o, --output PATH` flag: it's only meaningful for ops that
+    /// can return a binary body (audio, octet-stream, image, etc.) and
+    /// silently no-ops on pure-JSON ops, so the help surface hides it where
+    /// it would do nothing. Empty `responses` block → `false`.
+    #[serde(default, skip)]
+    pub has_binary_response: bool,
 }
 
 /// Per-operation pagination configuration, resolved from the
@@ -933,8 +941,18 @@ pub struct MethodParameter {
     pub enum_descriptions: Option<Vec<String>>,
     #[serde(default)]
     pub repeated: bool,
-    pub minimum: Option<String>,
-    pub maximum: Option<String>,
+    /// True for `oneOf/anyOf [string, array<string>]` unions where a single
+    /// value should be sent as a scalar string, not wrapped in a length-1
+    /// array. Pure `type: array` params leave this `false`.
+    #[serde(default)]
+    pub scalar_or_array: bool,
+    /// Inclusive numeric lower bound (matches [`JsonSchemaProperty::minimum`]).
+    /// Typing the param side as `Option<f64>` keeps `--schema` output
+    /// emit min/max as JSON numbers regardless of whether the property
+    /// came from `parameters` or a request body schema.
+    pub minimum: Option<f64>,
+    /// Inclusive numeric upper bound. See [`Self::minimum`].
+    pub maximum: Option<f64>,
     #[serde(default)]
     pub deprecated: bool,
     /// OpenAPI serialization style (form, deepObject, etc.)
@@ -1087,9 +1105,21 @@ pub struct JsonSchemaProperty {
     pub items: Option<Box<JsonSchemaProperty>>,
     #[serde(default)]
     pub properties: HashMap<String, JsonSchemaProperty>,
+    /// Names of nested object properties that the source schema marks as
+    /// required. Lowered from the OpenAPI `required: [...]` keyword on
+    /// object-typed schemas. Empty when the source had no `required` list
+    /// or when this property is not an object (e.g. scalar / array).
+    /// Surfaced in `--schema` so agents constructing nested JSON bodies
+    /// can tell which sub-fields the spec mandates.
+    #[serde(default)]
+    pub required: Vec<String>,
     #[serde(default)]
     pub read_only: bool,
-    pub default: Option<String>,
+    /// OpenAPI's standard `default:` keyword. Stored as a `serde_json::Value`
+    /// (lowered from the raw YAML) so the wire type — number, boolean,
+    /// object, etc. — survives into the agent-facing `--schema` output
+    /// and is symmetric with [`MethodParameter::default_value`].
+    pub default: Option<serde_json::Value>,
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
     /// Inclusive numeric lower bound. Lowered by the parser so the OpenAPI

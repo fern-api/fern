@@ -1,4 +1,231 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.74.0
+  changelogEntry:
+    - summary: |
+        Support `resumable` flag in SSE streaming endpoints. When an endpoint has
+        `x-fern-streaming.resumable: true`, the generated SDK now includes `resumable: true`
+        in the stream event shape, plumbing the flag through to the runtime for use by
+        reconnection logic. Adds `stream: { reconnectionEnabled, maxReconnectionAttempts }`
+        request options for runtime control of reconnection behavior.
+      type: feat
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.4
+  changelogEntry:
+    - summary: |
+        Treat null values identically to undefined when serializing query string
+        parameters. Previously, null values in objects and arrays were serialized as
+        empty strings (e.g. `key=`); they are now omitted from the query string,
+        matching the existing behavior for undefined values and the
+        QueryStringBuilder API.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.3
+  changelogEntry:
+    - summary: |
+        Fix SSE event parsing to buffer data and yield on blank lines per the SSE spec.
+        Previously, the parser yielded events immediately on `data:` lines, causing
+        `id:` and `retry:` fields that follow the `data:` line to be missed or
+        associated with the wrong event.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.2
+  changelogEntry:
+    - summary: |
+        Fix a request-wrapper collision when an inlined path parameter (`inlinePathParameters: true`)
+        shares its property name with an inlined request-body property (e.g. a `{idType}` path
+        parameter and an `idType` body field). Previously the generated interface emitted a duplicate
+        member and the client destructured the path parameter out of the request, dropping the body
+        property from the payload. The colliding property is now emitted once and used for both the
+        URL path and the request body.
+      type: fix
+    - summary: |
+        Fix a naming collision in generated wire tests when the configured client class
+        name (`naming.client`) matches the error namespace export. Previously the client
+        class import and the error namespace import shared a single binding, which shadowed
+        each other and made error references (e.g. `Client.namespace.SomeError`) unresolvable.
+        The error namespace is now imported under an alternate alias when a collision is detected.
+        The same collision also produced a duplicate identifier in the root `index.ts` (the client
+        class re-export clashed with `export * as <name> from "./api/index.js"`); the colliding root
+        client re-export is now omitted (the client remains importable from `./Client.js`).
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.1
+  changelogEntry:
+    - summary: |
+        Fix generated wire tests failing to parse when a header example value contains
+        special characters (e.g. double quotes or backticks). Header values in the
+        generated mock-server `.header(...)` calls are now emitted as properly escaped
+        string literals via `JSON.stringify`, instead of being interpolated raw into a
+        double-quoted string.
+      type: fix
+  createdAt: "2026-06-26"
+  irVersion: 67
+- version: 3.73.0
+  changelogEntry:
+    - summary: |
+        Add support for SSE `id` and `retry` fields in the TypeScript SDK Stream class.
+        A new `withMetadata()` method returns an `AsyncIterable<ServerSentEvent<T>>`
+        exposing per-event `id`, `retry`, and `event` fields alongside the parsed `data`.
+        Default iteration still yields `T`, so this is fully backward compatible.
+      type: feat
+  createdAt: "2026-06-24"
+  irVersion: 67
+- version: 3.72.10
+  changelogEntry:
+    - summary: |
+        Fix inferred auth providers generating an invalid token request when the token
+        endpoint uses a referenced request body. The generated provider now sends the
+        request body keys using the same casing as the generated request type (the wire
+        value when the serde layer is disabled) instead of always camelCasing them.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.9
+  changelogEntry:
+    - summary: |
+        Fix OAuth client-credentials providers when the token endpoint request body has
+        required properties beyond the client id and secret (e.g. a scopes mapping or
+        other custom fields). Those required, non-literal properties are now surfaced on
+        the client-credentials options and forwarded to the token request, so the
+        generated provider compiles and sends a complete request.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.8
+  changelogEntry:
+    - summary: |
+        Fix the serialization layer for discriminated unions that both `extend` another
+        type and declare `base-properties`. The generated `_Base` schema now extends the
+        parent type schemas (in addition to the base properties), so its inferred raw
+        type matches the declared `Raw` type and the union schema compiles.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.7
+  changelogEntry:
+    - summary: |
+        Fixed a runtime error in the serialization layer when a type references a
+        same-named type in another package. Such references are now wrapped with
+        `lazy()`/`lazyObject()` so they are resolved through the `serializers`
+        namespace barrel after all modules have initialized, instead of being read
+        eagerly during module load (which could throw "Cannot read properties of
+        undefined").
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.6
+  changelogEntry:
+    - summary: |
+        Fixed the generated wire test for paginated endpoints when `neverThrowErrors`
+        is enabled. In that mode the SDK returns a wrapped `APIResponse` instead of a
+        `Page`, so the test no longer calls `page.data`/`page.hasNextPage()`/
+        `page.getNextPage()`; it now asserts the returned `APIResponse` directly.
+      type: fix
+  createdAt: "2026-06-22"
+  irVersion: 67
+- version: 3.72.5
+  changelogEntry:
+    - summary: |
+        Bump form-data dependency from ^4.0.4 to ^4.0.6 in generated SDKs to fix
+        CRLF injection vulnerability (CVE-2026-12143).
+      type: chore
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 3.72.4
+  changelogEntry:
+    - summary: |
+        The TypeScript SDK generator now suppresses lifted base properties from a discriminated union's synthesized `_Base` interface when every variant already inherits them via its `extends` chain. Pairs with the parser change that lifts shared-parent properties so non-structural-typing SDKs (Go, C#) can expose them; keeps the TypeScript output stable and avoids TS2320 collisions on optionality.
+      type: fix
+  createdAt: "2026-06-16"
+  irVersion: 67
+- version: 3.72.3
+  changelogEntry:
+    - summary: |
+        Bump esbuild from ~0.24.2 to ~0.28.1 to fix GHSA-gv7w-rqvm-qjhr (missing binary integrity verification).
+      type: chore
+  createdAt: "2026-06-15"
+  irVersion: 67
+- version: 3.72.2
+  changelogEntry:
+    - summary: |
+        Use string literal for `this.name` in generated error classes instead of
+        `this.constructor.name`, which gets mangled by minifiers.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.72.1
+  changelogEntry:
+    - summary: |
+        Bump bundled @fern-api/generator-cli to 0.9.39 (Replay 0.18.0) for more reliable
+        customization detection during regeneration.
+      type: chore
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.72.0
+  changelogEntry:
+    - summary: |
+        Add `serdeLayer` config option as a positive alternative to the `noSerdeLayer` double negative.
+        When both are specified, `serdeLayer` takes precedence.
+      type: feat
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.71.9
+  changelogEntry:
+    - summary: |
+        Fix request body serialization when flattenRequestParameters is enabled with
+        a non-object reference body (e.g., `list<string>`) and header parameters. Previously
+        the generated code used spread destructuring which wrapped the body in an object.
+      type: fix
+  createdAt: "2026-06-12"
+  irVersion: 67
+- version: 3.71.8
+  changelogEntry:
+    - summary: |
+        Rebuild oxlint-tsgolint 0.23.0 from source with Go 1.26.4 to fix
+        CVE-2026-42507 (net/textproto log injection) and CVE-2026-27145
+        (crypto/x509 quadratic hostname verification) in the
+        typescript-sdk-generator container.
+      type: fix
+  createdAt: "2026-06-11"
+  irVersion: 67
+- version: 3.71.7
+  changelogEntry:
+    - summary: |
+        Upgrade oxc tooling: oxlint 1.63.0 → 1.69.0, oxfmt 0.48.0 → 0.54.0,
+        oxlint-tsgolint 0.22.1 → 0.23.0. tsgolint 0.23.0 ships with go1.26.3
+        (clearing go/stdlib CVEs), so the rebuild-from-source Docker stage is
+        removed entirely.
+      type: chore
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 3.71.6
+  changelogEntry:
+    - summary: |
+        Fix `hasNextPage` for offset pagination so it no longer compares `items.length`
+        against a fabricated default when the caller omits the page-size parameter
+        (FER-11160). The previous logic substituted a generator-chosen default (often
+        `1`), which produced false-positive continuation on short pages and false-negative
+        termination when the default was non-trivial. The pager now gates the size
+        comparison on whether the caller actually provided a page-size: when supplied,
+        a short page still short-circuits (saves one round-trip at the tail); when
+        omitted, it falls back to an items-driven check. Explicit `response.hasNextPage`
+        from the API continues to take priority.
+      type: fix
+  createdAt: "2026-06-10"
+  irVersion: 67
+- version: 3.71.5
+  changelogEntry:
+    - summary: |
+        Fix race condition in anySignal() where abort events could be silently
+        dropped when a source signal aborts between the aborted check and
+        addEventListener registration.
+      type: fix
+  createdAt: "2026-06-08"
+  irVersion: 67
 - version: 3.71.4
   changelogEntry:
     - summary: |

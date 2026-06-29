@@ -62,7 +62,13 @@ public partial class SystemClient : ISystemClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -73,7 +79,13 @@ public partial class SystemClient : ISystemClient
             throw new SeedCsharpNamespaceCollisionApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -128,7 +140,13 @@ public partial class SystemClient : ISystemClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -139,7 +157,13 @@ public partial class SystemClient : ISystemClient
             throw new SeedCsharpNamespaceCollisionApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }
@@ -193,7 +217,13 @@ public partial class SystemClient : ISystemClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -204,7 +234,13 @@ public partial class SystemClient : ISystemClient
             throw new SeedCsharpNamespaceCollisionApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

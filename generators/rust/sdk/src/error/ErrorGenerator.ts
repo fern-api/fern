@@ -1,4 +1,6 @@
-import { GeneratorError } from "@fern-api/base-generator";
+import { GeneratorError, getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
+import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
     Attribute,
@@ -21,17 +23,48 @@ import {
 import { BUILD_ERROR_RS } from "@fern-api/rust-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
+/** How `from_response` reads a field's value out of the parsed JSON error body. */
+type ExtractionKind = "string" | "u64" | "json";
+
+interface ResolvedErrorField {
+    /** Rust field name (snake_case). */
+    name: string;
+    /** JSON key the value is read from (wire name). */
+    wireName: string;
+    /** Rust type of the variant field. */
+    type: Type;
+    extractionKind: ExtractionKind;
+    /** For `extractionKind === "json"`: the Rust type to deserialize into. */
+    jsonType?: string;
+    /** True when the field's Rust type only resolves with the crate prelude in scope. */
+    requiresPrelude?: boolean;
+}
+
 export class ErrorGenerator {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     public generateErrorRs(): string {
-        const errorModule = new Module({
-            useStatements: [
+        const useStatements = [
+            new UseStatement({
+                path: "thiserror",
+                items: ["Error"]
+            })
+        ];
+
+        // Error variants whose body fields reference named (non-primitive) types
+        // emit those types by bare name (e.g. `ErrorResponseDetail`) and
+        // deserialize them with `serde_json::from_value`. Bring every generated
+        // type into scope via the crate prelude so those references resolve.
+        if (this.requiresPreludeImport()) {
+            useStatements.push(
                 new UseStatement({
-                    path: "thiserror",
-                    items: ["Error"]
+                    path: "crate::prelude::*"
                 })
-            ],
+            );
+        }
+
+        const errorModule = new Module({
+            useStatements,
             enums: [this.buildErrorEnum()],
             implBlocks: [this.buildErrorImpl()]
         });
@@ -85,6 +118,9 @@ export class ErrorGenerator {
             this.buildStandardVariant("Network", "Network error: {0}", undefined, [
                 Type.reference(new Reference({ name: "reqwest::Error" }))
             ]),
+            this.buildStandardVariant("Executor", "Request executor error: {0}", undefined, [
+                Type.reference(new Reference({ name: "Box<dyn std::error::Error + Send + Sync>" }))
+            ]),
             this.buildStandardVariant("Serialization", "Serialization error: {0}", undefined, [
                 Type.reference(new Reference({ name: "serde_json::Error" }))
             ]),
@@ -132,40 +168,181 @@ export class ErrorGenerator {
     }
 
     private buildErrorFields(errorDeclaration: FernIr.ErrorDeclaration): Array<{ name: string; type: Type }> {
-        const fields = [{ name: "message", type: Type.string() }];
-
-        // Add semantic fields based on status code
-        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
-        fields.push(...statusFields);
-
-        return fields;
+        return [{ name: "message", type: Type.string() }, ...this.resolveErrorFields(errorDeclaration)];
     }
 
-    private getStatusCodeFields(statusCode: number): Array<{ name: string; type: Type }> {
-        const fieldMap: Record<number, Array<{ name: string; type: Type }>> = {
+    /**
+     * Derives error fields from the IR type definition when available, falling back to
+     * hardcoded status-code fields otherwise. Returns fields with both the Rust field
+     * name (snake_case) and the JSON wire name (camelCase from the spec).
+     */
+    private resolveErrorFields(errorDeclaration: FernIr.ErrorDeclaration): ResolvedErrorField[] {
+        if (errorDeclaration.type?.type === "named") {
+            const typeDecl = this.context.ir.types[errorDeclaration.type.typeId];
+            if (typeDecl?.shape.type === "object") {
+                return typeDecl.shape.properties
+                    .filter((p) => getWireValue(p.name) !== "message")
+                    .map((p) => this.resolveNamedBodyField(p));
+            }
+        }
+        return this.getStatusCodeFields(errorDeclaration.statusCode).map(({ name, wireName, type }) => ({
+            name,
+            wireName,
+            type,
+            extractionKind: (name === "retry_after_seconds" ? "u64" : "string") as ExtractionKind
+        }));
+    }
+
+    /**
+     * Resolves a single property of a named error-body type into a variant field.
+     *
+     * The field is always `Option<_>`: both the parse-failure path and the no-body
+     * fallback construct the variant with `None`, so a required property still needs
+     * an optional field. The extraction kind selects how `from_response` reads the
+     * value back out of the parsed JSON so it matches the field's Rust type:
+     *   - `string` / `u64`: read directly via `Value::as_str` / `Value::as_u64`
+     *   - `json`: deserialize the value into its Rust type via `serde_json::from_value`,
+     *     which is the only option that works for named (non-primitive) and other
+     *     primitive types (e.g. `i64`, `bool`). Without it the generated code would
+     *     try to read, say, an `i64` field via `as_str()` and fail to compile.
+     */
+    private resolveNamedBodyField(property: FernIr.ObjectProperty): ResolvedErrorField {
+        const innerTypeReference = this.dereferenceOptional(property.valueType);
+        const innerType = generateRustTypeForTypeReference(innerTypeReference, this.context);
+        const field = {
+            name: this.context.case.snakeSafe(property.name),
+            wireName: getWireValue(property.name),
+            type: Type.option(innerType)
+        };
+        if (this.isStringTypeReference(innerTypeReference)) {
+            return { ...field, extractionKind: "string" };
+        }
+        if (this.isU64TypeReference(innerTypeReference)) {
+            return { ...field, extractionKind: "u64" };
+        }
+        return {
+            ...field,
+            extractionKind: "json",
+            jsonType: innerType.toString(),
+            requiresPrelude: this.typeReferenceNeedsPrelude(innerTypeReference)
+        };
+    }
+
+    /**
+     * True when the field's Rust type names an identifier that only resolves with the
+     * crate prelude in scope: named types and `HashMap`/`HashSet` (re-exported via
+     * `crate::api::*` / `std::collections`), and the `chrono`/`uuid` types behind the
+     * date and uuid primitives. Built-in primitives (`i64`, `bool`, `String`, `Vec`)
+     * and the fully-qualified `serde_json::Value` / `num_bigint::BigInt` resolve without it.
+     */
+    private typeReferenceNeedsPrelude(typeRef: FernIr.TypeReference): boolean {
+        switch (typeRef.type) {
+            case "named":
+                return true;
+            case "container":
+                return typeRef.container._visit({
+                    list: (inner) => this.typeReferenceNeedsPrelude(inner),
+                    optional: (inner) => this.typeReferenceNeedsPrelude(inner),
+                    nullable: (inner) => this.typeReferenceNeedsPrelude(inner),
+                    map: () => true,
+                    set: () => true,
+                    literal: () => false,
+                    _other: () => false
+                });
+            case "primitive":
+                return FernIr.PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+                    date: () => true,
+                    dateTime: () => true,
+                    dateTimeRfc2822: () => true,
+                    uuid: () => true,
+                    integer: () => false,
+                    long: () => false,
+                    uint: () => false,
+                    uint64: () => false,
+                    float: () => false,
+                    double: () => false,
+                    boolean: () => false,
+                    string: () => false,
+                    base64: () => false,
+                    bigInteger: () => false,
+                    _other: () => false
+                });
+            case "unknown":
+                return false;
+            default:
+                return assertNever(typeRef);
+        }
+    }
+
+    /** Strips `optional`/`nullable` container wrappers to reach the underlying type. */
+    private dereferenceOptional(typeRef: FernIr.TypeReference): FernIr.TypeReference {
+        if (typeRef.type === "container") {
+            if (typeRef.container.type === "optional") {
+                return this.dereferenceOptional(typeRef.container.optional);
+            }
+            if (typeRef.container.type === "nullable") {
+                return this.dereferenceOptional(typeRef.container.nullable);
+            }
+        }
+        return typeRef;
+    }
+
+    private isStringTypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "STRING";
+        }
+        if (typeRef.type === "container" && typeRef.container.type === "optional") {
+            return this.isStringTypeReference(typeRef.container.optional);
+        }
+        return false;
+    }
+
+    /**
+     * True when any error variant has a body field whose Rust type only resolves
+     * with the crate prelude in scope (named types, `HashMap`/`HashSet`), which
+     * `generateErrorRs` then imports.
+     */
+    private requiresPreludeImport(): boolean {
+        return Object.values(this.context.ir.errors).some((errorDeclaration) =>
+            this.resolveErrorFields(errorDeclaration).some((field) => field.requiresPrelude === true)
+        );
+    }
+
+    private isU64TypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "UINT_64";
+        }
+        if (typeRef.type === "container" && typeRef.container.type === "optional") {
+            return this.isU64TypeReference(typeRef.container.optional);
+        }
+        return false;
+    }
+
+    private getStatusCodeFields(statusCode: number): Array<{ name: string; wireName: string; type: Type }> {
+        const fieldMap: Record<number, Array<{ name: string; wireName: string; type: Type }>> = {
             400: [
-                { name: "field", type: Type.option(Type.string()) },
-                { name: "details", type: Type.option(Type.string()) }
+                { name: "field", wireName: "field", type: Type.option(Type.string()) },
+                { name: "details", wireName: "details", type: Type.option(Type.string()) }
             ],
-            401: [{ name: "auth_type", type: Type.option(Type.string()) }],
+            401: [{ name: "auth_type", wireName: "authType", type: Type.option(Type.string()) }],
             403: [
-                { name: "resource", type: Type.option(Type.string()) },
-                { name: "required_permission", type: Type.option(Type.string()) }
+                { name: "resource", wireName: "resource", type: Type.option(Type.string()) },
+                { name: "required_permission", wireName: "requiredPermission", type: Type.option(Type.string()) }
             ],
             404: [
-                { name: "resource_id", type: Type.option(Type.string()) },
-                { name: "resource_type", type: Type.option(Type.string()) }
+                { name: "resource_id", wireName: "resourceId", type: Type.option(Type.string()) },
+                { name: "resource_type", wireName: "resourceType", type: Type.option(Type.string()) }
             ],
-            409: [{ name: "conflict_type", type: Type.option(Type.string()) }],
+            409: [{ name: "conflict_type", wireName: "conflictType", type: Type.option(Type.string()) }],
             422: [
-                { name: "field", type: Type.option(Type.string()) },
-                { name: "validation_error", type: Type.option(Type.string()) }
+                { name: "field", wireName: "field", type: Type.option(Type.string()) },
+                { name: "validation_error", wireName: "validationError", type: Type.option(Type.string()) }
             ],
             429: [
-                { name: "retry_after_seconds", type: Type.option(Type.primitive(PrimitiveType.U64)) },
-                { name: "limit_type", type: Type.option(Type.string()) }
+                { name: "retry_after_seconds", wireName: "retryAfterSeconds", type: Type.option(Type.primitive(PrimitiveType.U64)) },
+                { name: "limit_type", wireName: "limitType", type: Type.option(Type.string()) }
             ],
-            500: [{ name: "error_id", type: Type.option(Type.string()) }]
+            500: [{ name: "error_id", wireName: "errorId", type: Type.option(Type.string()) }]
         };
 
         return fieldMap[statusCode] || [];
@@ -280,13 +457,10 @@ export class ErrorGenerator {
     }
 
     private buildSuccessConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
-        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
-        const fieldAssignments = statusFields.map(({ name }) => ({
-            name,
-            value:
-                name === "retry_after_seconds"
-                    ? this.buildU64FieldExtraction(name)
-                    : this.buildStringFieldExtraction(name)
+        const fields = this.resolveErrorFields(errorDeclaration);
+        const fieldAssignments = fields.map((field) => ({
+            name: field.name,
+            value: this.buildFieldExtraction(field)
         }));
 
         return Expression.structConstruction(`Self::${errorName}`, [
@@ -312,8 +486,7 @@ export class ErrorGenerator {
     }
 
     private buildFallbackConstruction(errorName: string, errorDeclaration: FernIr.ErrorDeclaration): Expression {
-        const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
-        const defaultFields = statusFields.map(({ name }) => ({
+        const defaultFields = this.resolveErrorFields(errorDeclaration).map(({ name }) => ({
             name,
             value: Expression.reference("None")
         }));
@@ -360,20 +533,20 @@ export class ErrorGenerator {
                             Expression.toString(Expression.literal("Unknown error"))
                         )
                     }),
-                    // Extract error_type field if present
+                    // Extract error discriminant field if present
                     Statement.let({
                         name: "error_type",
                         value: Expression.andThen(
                             Expression.methodCall({
                                 target: Expression.variable("parsed"),
                                 method: "get",
-                                args: [Expression.literal("error_type")]
+                                args: [Expression.literal(this.getErrorDiscriminantWireName())]
                             }),
                             Expression.closure([{ name: "v" }], Expression.raw("v.as_str()"))
                         )
                     }),
                     // Build the match statement for error_type
-                    Statement.return(Expression.raw(this.buildErrorTypeMatchExpression(errors, statusCode)))
+                    Statement.return(Expression.raw(this.buildErrorTypeMatchExpression(errors)))
                 ]
             )
         );
@@ -393,7 +566,7 @@ export class ErrorGenerator {
             Statement.return(
                 Expression.structConstruction(`Self::${this.getErrorVariantName(firstError)}`, [
                     { name: "message", value: Expression.toString(Expression.literal("Unknown error")) },
-                    ...this.getStatusCodeFields(statusCode).map(({ name }) => ({
+                    ...this.resolveErrorFields(firstError).map(({ name }) => ({
                         name,
                         value: Expression.reference("None")
                     }))
@@ -404,33 +577,34 @@ export class ErrorGenerator {
         return MatchArm.withStatements(Pattern.literal(statusCode), parseBodyStatements);
     }
 
-    private buildErrorTypeMatchExpression(errors: FernIr.ErrorDeclaration[], statusCode: number): string {
-        const fields = this.buildDynamicFieldAssignments(statusCode);
+    private buildErrorTypeMatchExpression(errors: FernIr.ErrorDeclaration[]): string {
+        const [firstError] = errors;
+        if (!firstError) {
+            throw GeneratorError.internalError("Unexpected: errors array should not be empty");
+        }
 
-        // Create match arms for each error type
+        // Each variant must be constructed with its OWN body fields — errors that
+        // share a status code can have different body shapes, so the field set is
+        // derived per error rather than reused from the first one.
         const matchArms = errors.map((error) => {
             const errorName = this.getErrorVariantName(error);
             return MatchArm.withExpression(
                 Pattern.some(Pattern.literal(errorName)),
                 Expression.structConstruction(`Self::${errorName}`, [
                     { name: "message", value: Expression.variable("message") },
-                    ...fields
+                    ...this.buildDynamicFieldAssignments(error)
                 ])
             );
         });
 
         // Add default fallback to first error type
-        const [firstError] = errors;
-        if (!firstError) {
-            throw GeneratorError.internalError("Unexpected: errors array should not be empty");
-        }
         const fallbackName = this.getErrorVariantName(firstError);
         matchArms.push(
             MatchArm.withExpression(
                 Pattern.wildcard(),
                 Expression.structConstruction(`Self::${fallbackName}`, [
                     { name: "message", value: Expression.variable("message") },
-                    ...fields
+                    ...this.buildDynamicFieldAssignments(firstError)
                 ])
             )
         );
@@ -439,17 +613,24 @@ export class ErrorGenerator {
         return matchStatement.toString();
     }
 
-    private buildDynamicFieldAssignments(statusCode: number): Expression.FieldAssignment[] {
-        const fields = this.getStatusCodeFields(statusCode);
+    private buildDynamicFieldAssignments(errorDeclaration: FernIr.ErrorDeclaration): Expression.FieldAssignment[] {
+        return this.resolveErrorFields(errorDeclaration).map((field) => ({
+            name: field.name,
+            value: this.buildFieldExtraction(field)
+        }));
+    }
 
-        return fields.map(({ name }) => {
-            const fieldValue =
-                name === "retry_after_seconds"
-                    ? this.buildU64FieldExtraction(name)
-                    : this.buildStringFieldExtraction(name);
-
-            return { name, value: fieldValue };
-        });
+    private buildFieldExtraction(field: ResolvedErrorField): Expression {
+        switch (field.extractionKind) {
+            case "string":
+                return this.buildStringFieldExtraction(field.wireName);
+            case "u64":
+                return this.buildU64FieldExtraction(field.wireName);
+            case "json":
+                return this.buildJsonFieldExtraction(field.wireName, field.jsonType ?? "serde_json::Value");
+            default:
+                return assertNever(field.extractionKind);
+        }
     }
 
     private buildStringFieldExtraction(fieldName: string): Expression {
@@ -477,6 +658,23 @@ export class ErrorGenerator {
                 args: [Expression.literal(fieldName)]
             }),
             Expression.closure([{ name: "v" }], Expression.raw("v.as_u64()"))
+        );
+    }
+
+    /**
+     * Deserializes the JSON value at `fieldName` directly into `rustType` via
+     * `serde_json::from_value`, yielding `Option<rustType>` (the closure returns
+     * `None` on a type mismatch). Used for named and non-string/non-u64 primitive
+     * fields, whose Rust types `as_str()`/`as_u64()` cannot produce.
+     */
+    private buildJsonFieldExtraction(fieldName: string, rustType: string): Expression {
+        return Expression.andThen(
+            Expression.methodCall({
+                target: Expression.variable("parsed"),
+                method: "get",
+                args: [Expression.literal(fieldName)]
+            }),
+            Expression.closure([{ name: "v" }], Expression.raw(`serde_json::from_value::<${rustType}>(v.clone()).ok()`))
         );
     }
 
@@ -509,6 +707,14 @@ export class ErrorGenerator {
         });
     }
 
+    private getErrorDiscriminantWireName(): string {
+        const strategy = this.context.ir.errorDiscriminationStrategy;
+        if (strategy.type === "property") {
+            return getWireValue(strategy.discriminant);
+        }
+        return "error_type";
+    }
+
     // Helper methods
     private getErrorVariantName(errorDeclaration: FernIr.ErrorDeclaration): string {
         const safeName = this.context.case.pascalSafe(errorDeclaration.name.name);
@@ -523,17 +729,17 @@ export class ErrorGenerator {
         const statusCode = errorDeclaration.statusCode;
 
         const messageTemplates: Record<number, string> = {
-            400: "Bad request - {{message}}",
-            401: "Authentication failed - {{message}}",
-            403: "Access forbidden - {{message}}",
-            404: "Resource not found - {{message}}",
-            409: "Conflict - {{message}}",
-            422: "Unprocessable entity - {{message}}",
-            429: "Rate limit exceeded - {{message}}",
-            500: "Internal server error - {{message}}"
+            400: "Bad request - {message}",
+            401: "Authentication failed - {message}",
+            403: "Access forbidden - {message}",
+            404: "Resource not found - {message}",
+            409: "Conflict - {message}",
+            422: "Unprocessable entity - {message}",
+            429: "Rate limit exceeded - {message}",
+            500: "Internal server error - {message}"
         };
 
-        const template = messageTemplates[statusCode] || "{{message}}";
+        const template = messageTemplates[statusCode] || "{message}";
         return `${errorName}: ${template}`;
     }
 }

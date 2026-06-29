@@ -6,7 +6,7 @@ import Trace
     @Test func createPlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "playlist_id": "playlist_id",
@@ -26,13 +26,13 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = Playlist(
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
             name: "name",
             problems: [
                 "problems",
                 "problems"
-            ]
+            ],
+            playlistId: "playlist_id",
+            ownerId: "owner-id"
         )
         let response = try await client.playlist.createPlaylist(
             serviceParam: "1",
@@ -53,7 +53,7 @@ import Trace
     @Test func getPlaylists1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 [
                   {
@@ -85,22 +85,22 @@ import Trace
         )
         let expectedResponse = [
             Playlist(
-                playlistId: "playlist_id",
-                ownerId: "owner-id",
                 name: "name",
                 problems: [
                     "problems",
                     "problems"
-                ]
+                ],
+                playlistId: "playlist_id",
+                ownerId: "owner-id"
             ),
             Playlist(
-                playlistId: "playlist_id",
-                ownerId: "owner-id",
                 name: "name",
                 problems: [
                     "problems",
                     "problems"
-                ]
+                ],
+                playlistId: "playlist_id",
+                ownerId: "owner-id"
             )
         ]
         let response = try await client.playlist.getPlaylists(
@@ -108,6 +108,12 @@ import Trace
             limit: 1,
             otherField: "otherField",
             multiLineDocs: "multiLineDocs",
+            optionalMultipleField: [
+                "optionalMultipleField"
+            ],
+            multipleField: [
+                "multipleField"
+            ],
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -116,7 +122,7 @@ import Trace
     @Test func getPlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "playlist_id": "playlist_id",
@@ -136,13 +142,13 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = Playlist(
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
             name: "name",
             problems: [
                 "problems",
                 "problems"
-            ]
+            ],
+            playlistId: "playlist_id",
+            ownerId: "owner-id"
         )
         let response = try await client.playlist.getPlaylist(
             serviceParam: "1",
@@ -155,7 +161,7 @@ import Trace
     @Test func updatePlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "playlist_id": "playlist_id",
@@ -175,13 +181,13 @@ import Trace
             urlSession: stub.urlSession
         )
         let expectedResponse = Optional(Playlist(
-            playlistId: "playlist_id",
-            ownerId: "owner-id",
             name: "name",
             problems: [
                 "problems",
                 "problems"
-            ]
+            ],
+            playlistId: "playlist_id",
+            ownerId: "owner-id"
         ))
         let response = try await client.playlist.updatePlaylist(
             serviceParam: "1",

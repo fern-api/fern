@@ -53,8 +53,6 @@ export async function patchCargoToml(args: {
             // for a separate types dependency on the CLI binary.
             patched = addCrateDependency(patched, sdkCrateName);
         } else if (typesCrateName != null) {
-            // Types-only mode (embedSdk: false) — add the types crate
-            // as a direct dependency so custom commands can import it.
             patched = addCrateDependency(patched, typesCrateName);
         }
         await writeFile(cargoTomlPath, patched);

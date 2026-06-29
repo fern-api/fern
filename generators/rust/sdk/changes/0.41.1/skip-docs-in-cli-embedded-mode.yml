@@ -1,0 +1,6 @@
+- summary: |
+    Skip README, CONTRIBUTING, and reference.md generation when running in
+    cliEmbedded mode. These standalone docs require static assets (features.yml,
+    asIs/) only available in the standalone Docker image and are not needed for
+    embedded SDK crates.
+  type: fix

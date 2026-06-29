@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated wire tests failing to parse when a header example value contains
+    special characters (e.g. double quotes or backticks). Header values in the
+    generated mock-server `.header(...)` calls are now emitted as properly escaped
+    string literals via `JSON.stringify`, instead of being interpolated raw into a
+    double-quoted string.
+  type: fix

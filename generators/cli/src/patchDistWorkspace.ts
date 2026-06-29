@@ -12,6 +12,12 @@ import path from "path";
  * either fills in their own values or accepts cargo-dist's defaults
  * (no npm installer).
  *
+ * We also drop the `cargo:crates/pipeline-fixture` workspace member that
+ * the template inherits verbatim from cli-sdk's own `dist-workspace.toml`.
+ * `pipeline-fixture` is a cli-sdk-only release-pipeline smoke-test crate; it
+ * is never vendored into generated CLIs, so leaving the member in place makes
+ * `cargo metadata` / `cargo dist plan` fail to load a nonexistent manifest.
+ *
  * Everything else in the file — `targets`, `installers`, `ci`,
  * `archive` formats — is generic boilerplate worth keeping.
  *
@@ -54,11 +60,50 @@ export async function patchDistWorkspaceToml(args: {
 /**
  * Pure transformation, exported for unit-test access. Removes the two
  * Fern-branded lines (and their preceding `#` comments, when those
- * comments would otherwise dangle without context). Leaves the file
- * unchanged when neither anchor is present.
+ * comments would otherwise dangle without context), and strips `"npm"`
+ * from the `installers` array so cargo-dist only produces shell +
+ * powershell installers. Leaves the file unchanged when no anchors
+ * match and installers doesn't contain npm.
  */
 export function applyDistWorkspacePatch(distToml: string): string {
-    return distToml.replace(NPM_SCOPE_BLOCK, "").replace(NPM_PACKAGE_BLOCK, "");
+    let result = distToml.replace(NPM_SCOPE_BLOCK, "").replace(NPM_PACKAGE_BLOCK, "");
+    result = stripNpmInstaller(result);
+    result = removeWorkspaceMember(result, PIPELINE_FIXTURE_MEMBER);
+    return result;
+}
+
+/**
+ * Remove a workspace member entry from the `members = [...]` array under
+ * `[workspace]`, leaving the rest of the list intact. No-op when the
+ * `[workspace]` section, the `members` array, or the member is absent.
+ */
+export function removeWorkspaceMember(distToml: string, member: string): string {
+    return distToml.replace(
+        /(\[workspace\]\s*\nmembers\s*=\s*\[)([^\]]*)\]/,
+        (_match, prefix: string, inner: string) => {
+            const items = inner
+                .split(",")
+                .map((s) => s.trim())
+                .filter((s) => s.length > 0 && s !== `"${member}"`);
+            return `${prefix}${items.join(", ")}]`;
+        }
+    );
+}
+
+/**
+ * Defensively removes `"npm"` from the `installers = [...]` line in
+ * dist-workspace.toml. This ensures that even if an older or manually
+ * edited template still lists npm, the generated output won't include
+ * it — npm publishing is handled by the separate ci.yml pipeline.
+ */
+export function stripNpmInstaller(distToml: string): string {
+    return distToml.replace(/^(installers\s*=\s*\[)([^\]]*)\]/m, (_match, prefix: string, inner: string) => {
+        const items = inner
+            .split(",")
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0 && s !== '"npm"');
+        return `${prefix}${items.join(", ")}]`;
+    });
 }
 
 /**
@@ -67,7 +112,7 @@ export function applyDistWorkspacePatch(distToml: string): string {
  * `[workspace]` section.
  */
 export function addWorkspaceMember(distToml: string, typesCrateName: string): string {
-    const memberLine = `"${typesCrateName}"`;
+    const memberLine = `"cargo:${typesCrateName}"`;
     // Look for existing [workspace] with members = [...]
     const workspaceMatch = distToml.match(/(\[workspace\]\s*\nmembers\s*=\s*\[)([^\]]*)\]/);
     if (workspaceMatch != null) {
@@ -84,6 +129,13 @@ export function addWorkspaceMember(distToml: string, typesCrateName: string): st
     // No [workspace] section — append one
     return distToml + `\n[workspace]\nmembers = [${memberLine}]\n`;
 }
+
+/**
+ * cli-sdk-only release-pipeline smoke-test crate. It lives in cli-sdk's
+ * workspace but is never vendored into generated CLIs, so its `members`
+ * entry must be stripped from the shipped `dist-workspace.toml`.
+ */
+const PIPELINE_FIXTURE_MEMBER = "cargo:crates/pipeline-fixture";
 
 const NPM_SCOPE_BLOCK = `# A namespace to use when publishing this package to the npm registry
 npm-scope = "@fern-api"

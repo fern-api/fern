@@ -231,7 +231,11 @@ client.service.search_resources(
   limit: 1,
   offset: 1,
   query: "query",
-  filters: {}
+  filters: {
+    filters: {
+      key: "value"
+    }
+  }
 )
 ```
 </dd>
@@ -534,8 +538,16 @@ client.service.create_user(
   password: "password",
   phone_number: "phone_number",
   phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
+  user_metadata: {
+    user_metadata: {
+      key: "value"
+    }
+  },
+  app_metadata: {
+    app_metadata: {
+      key: "value"
+    }
+  },
   connection: "connection"
 )
 ```
@@ -606,8 +618,16 @@ client.service.update_user(
   username: "username",
   phone_number: "phone_number",
   phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
+  user_metadata: {
+    user_metadata: {
+      key: "value"
+    }
+  },
+  app_metadata: {
+    app_metadata: {
+      key: "value"
+    }
+  },
   password: "password",
   blocked: true
 )

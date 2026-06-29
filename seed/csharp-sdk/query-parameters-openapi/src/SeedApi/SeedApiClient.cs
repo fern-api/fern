@@ -42,13 +42,13 @@ public partial class SeedApiClient : ISeedApiClient
             .Add("deadline", request.Deadline)
             .Add("bytes", request.Bytes)
             .AddDeepObject("user", request.User)
-            .AddDeepObject("userList", request.UserList)
+            .Add("userList", request.UserList)
             .Add("optionalDeadline", request.OptionalDeadline)
             .Add("keyValue", request.KeyValue)
             .Add("optionalString", request.OptionalString)
             .AddDeepObject("nestedUser", request.NestedUser)
             .AddDeepObject("optionalUser", request.OptionalUser)
-            .AddDeepObject("excludeUser", request.ExcludeUser)
+            .Add("excludeUser", request.ExcludeUser)
             .Add("filter", request.Filter)
             .Add("tags", request.Tags)
             .Add("optionalTags", request.OptionalTags)
@@ -86,7 +86,7 @@ public partial class SeedApiClient : ISeedApiClient
                 return new WithRawResponse<SearchResponse>()
                 {
                     Data = responseData,
-                    RawResponse = new RawResponse()
+                    RawResponse = new SeedApi.RawResponse()
                     {
                         StatusCode = response.Raw.StatusCode,
                         Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
@@ -100,7 +100,13 @@ public partial class SeedApiClient : ISeedApiClient
                     "Failed to deserialize response",
                     response.StatusCode,
                     responseBody,
-                    e
+                    e,
+                    rawResponse: new SeedApi.RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    }
                 );
             }
         }
@@ -111,7 +117,13 @@ public partial class SeedApiClient : ISeedApiClient
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
-                responseBody
+                responseBody,
+                rawResponse: new SeedApi.RawResponse()
+                {
+                    StatusCode = response.Raw.StatusCode,
+                    Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                    Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                }
             );
         }
     }

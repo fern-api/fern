@@ -68,14 +68,20 @@ export interface AutoVersionStepConfig {
     /** Fallback version when no prior generation exists (first run). Defaults to "0.0.1" (or "v0.0.1" for Go). */
     baseVersion?: string;
     /**
-     * BAML AI service configuration (provider + model). Required when `enabled: true` — without it,
-     * AnalyzeSdkDiff calls will fail and the step will fall back to a PATCH bump.
+     * BAML AI service configuration (provider + model). When absent, the step calls the
+     * hosted FAI service using `fernToken` instead. If neither is supplied, AI analysis
+     * fails and the step falls back to a PATCH bump with a neutral message.
      * Shape matches `generatorsYml.AiServicesSchema` from @fern-api/configuration; typed structurally
      * to avoid pulling the configuration package into generator-cli's dep graph.
      */
     ai?: AutoVersionAiConfig;
-    /** Optional Fern API token passed through to BAML client configuration if needed by the provider. */
+    /**
+     * Fern API token used to call the hosted FAI service (`/sdks/analyze-commit-diff`)
+     * when no `ai` config is supplied — the remote-generation (fiddle) path.
+     */
     fernToken?: string;
+    /** Override for the FAI service base URL. Defaults to https://fai.buildwithfern.com. */
+    faiBaseUrl?: string;
     /** Spec repository commit message included as additional AI context. */
     specCommitMessage?: string;
     /** When true, strips "🌿 Generated with Fern" trailers from commit messages (whitelabel customers). */

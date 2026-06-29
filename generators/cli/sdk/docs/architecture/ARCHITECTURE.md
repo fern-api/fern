@@ -21,18 +21,21 @@ into a dynamic CLI at compile time. There is no codegen step: the schema is
 embedded with `include_str!`, parsed at process start, and a `clap::Command`
 tree is built in memory.
 
-Two protocols are supported, side-by-side:
+Three protocols are supported, side-by-side:
 
 - **OpenAPI** (`src/openapi/`) — YAML spec → `RestDescription` → `clap` tree.
   Shape is steered by Fern's `x-fern-*` extension family
   ([§8.1](#81-x-fern--extension-set)).
 - **GraphQL** (`src/graphql/`) — introspection JSON → `GraphQLSchema` →
   `clap` tree. Command tree is derived from `Query` / `Mutation` types.
+- **AsyncAPI** (`src/asyncapi/`) — AsyncAPI 2.6 YAML/JSON → `AsyncApiDescription`
+  → channel/operation model. Rejects non-`2.6.x` versions and non-WebSocket
+  server protocols at parse time.
 
 The crate also ships ~45 binary targets under `src/bin/<name>/` (autobins —
 no `[[bin]]` blocks in `Cargo.toml`; adding a CLI means creating
 `src/bin/<name>/` with no edit to any shared file): 32 user-facing demo CLIs
-(`box`, `linear`, `square`, `bigcommerce`, `close`, `devin`, `assemblyai`,
+(`box`, `linear`, `square`, `bigcommerce`, `close`, `devin-api`, `assemblyai`,
 `paid`, `xero`, `twilio`, `agentmail`, `mavenagi`, `coinflow`, `sarvam`,
 `icepanel`, `fifteenth`, `contentful`, `terra`, `truefoundry`, `lattice`,
 `unleash`, `videogen`, `finch`, `elevenlabs`, `fathom`, `athena`, `auth0`,
@@ -66,9 +69,9 @@ See [`diagrams/01-context.mmd`](./diagrams/01-context.mmd) for the rendered view
 
 - The **library** (`src/`) — protocol-agnostic infra (`auth`, `http`,
   `formatter`, `validate`, `error`, `logging`, `cli_args`, `custom_commands`,
-  `early_intercept`, `completions`, `man`, `output`, `text`) plus the two
-  isolated protocol modules (`openapi/`, `graphql/`) and the WebSocket
-  transport (`websocket/`).
+  `early_intercept`, `completions`, `man`, `output`, `text`) plus the three
+  isolated protocol modules (`openapi/`, `graphql/`, `asyncapi/`) and the
+  WebSocket transport (`websocket/`).
 - The **binaries** under `src/bin/<name>/` — thin (≤10-line) `main.rs` files,
   each embedding its own schema(s) via `include_str!`.
 
@@ -76,7 +79,7 @@ See [`diagrams/01-context.mmd`](./diagrams/01-context.mmd) for the rendered view
 
 | External actor / system | Direction | Interaction |
 |---|---|---|
-| **Spec authors** (customer or vendored repo) | inbound | Provide OpenAPI YAML or GraphQL introspection JSON. May supply Fern overrides (deep-merged onto base spec, [FER-10449](https://linear.app/buildwithfern/issue/FER-10449)) and OpenAPI Overlays v1.0.0. |
+| **Spec authors** (customer or vendored repo) | inbound | Provide OpenAPI YAML, GraphQL introspection JSON, or AsyncAPI 2.6 YAML/JSON. May supply Fern overrides (deep-merged onto base spec, [FER-10449](https://linear.app/buildwithfern/issue/FER-10449)) and OpenAPI/AsyncAPI overlays. |
 | **CLI users** (human, agent, CI) | inbound | Invoke `<binary> [args]`. Subset of args may come from untrusted LLM input — see §8.4. |
 | **Target HTTP/GraphQL APIs** | outbound | Each binary's spec declares the base URL and auth scheme; the CLI executes operations against these. |
 | **Target WebSocket endpoints** (e.g. ElevenLabs Convai) | outbound | NDJSON-framed bidirectional channel through `src/websocket/`. See [ADR-0002](./decisions/0002-transport-neutral-http-config-resolve.md) and [FER-10523](https://linear.app/buildwithfern/issue/FER-10523). |
@@ -102,25 +105,28 @@ The crate is a single Cargo workspace member (`fern-cli-sdk`) plus
   optional custom commands and calls `.run()`. See
   [`LIBRARY_DESIGN.md`](../../LIBRARY_DESIGN.md) for the design intent.
 
-### 5.2 Component view — shared infra (above both protocol paths)
+### 5.2 Component view — shared infra (above all protocol paths)
 
 See [`diagrams/03-component-shared.mmd`](./diagrams/03-component-shared.mmd).
 
-These modules sit above both protocol paths. They are imported by
-*both* `src/openapi/` and `src/graphql/`, by the binary harness, and by
-`src/websocket/`.
+These modules sit above all protocol paths. They are imported by
+`src/openapi/`, `src/graphql/`, and `src/asyncapi/`, by the binary harness,
+and by `src/websocket/`.
 
 | Module | Responsibility |
 |---|---|
-| [`src/auth/`](../../src/auth/) | Auth scheme model (`provider.rs`, `schemes.rs`, `oauth2.rs`), credential sources (`credential.rs`), provider composition + routing (`compose.rs`), layered auth (`LayeredAuthProvider` — [§8.11](#811-auth-layering)), builder methods bound to `CliApp` (`builder.rs`), error mapping (`error.rs`). [ADR-0001](./decisions/0001-auth-provider-no-cred-extraction.md) forbids `AuthProvider` from returning resolved credentials. |
+| [`src/auth/`](../../src/auth/) | Auth scheme model (`provider.rs`, `schemes.rs`, `oauth2.rs`), credential sources (`credential.rs`), provider composition + routing (`compose.rs`), layered auth (`LayeredAuthProvider` — [§8.11](#811-auth-layering)), builder methods bound to `CliApp` (`builder.rs`), error mapping (`error.rs`). Login flows (`login.rs`, `oauth_login.rs` — PKCE / device-code / token-paste; [§8.21](#821-first-class-oauth-login-support)), consolidated OAuth2 primitives (`oauth_common.rs`), OS keyring + file fallback storage (`keyring_store.rs`; [ADR-0008](./decisions/0008-credential-precedence-and-storage-fallback.md)). [ADR-0001](./decisions/0001-auth-provider-no-cred-extraction.md) forbids `AuthProvider` from returning resolved credentials. |
 | [`src/http.rs`](../../src/http.rs) | reqwest client builder + shared retry infrastructure (`RetryPolicy`, `decide_retry`, `parse_retry_after`, `compute_backoff_delay`, `generate_idempotency_key` — [FER-10521](https://linear.app/buildwithfern/issue/FER-10521)); `HttpConfig::resolve() → ResolvedTlsConfig` is the transport-neutral seam. Wires `<NAME>_*` env vars (CA bundle, insecure, proxy, timeouts) and User-Agent. |
 | [`src/websocket/`](../../src/websocket/) | `tokio-tungstenite` bidirectional client. NDJSON framing, app-level Ping/Pong, base64 audio extraction, graceful Ctrl+C. First non-reqwest transport. |
-| [`src/formatter.rs`](../../src/formatter.rs) | `OutputFormat` enum + `OutputPipeline` ([FER-10517](https://linear.app/buildwithfern/issue/FER-10517) step 1) — JSON / table / YAML / CSV. Subsequent steps add `--json` projection, `--jq` via `jaq`, `--template`, `NO_COLOR` handling. |
+| [`src/formatter.rs`](../../src/formatter.rs) | `OutputFormat` enum + `OutputPipeline` ([FER-10517](https://linear.app/buildwithfern/issue/FER-10517) step 1) — JSON / table / YAML / CSV / raw / JSONL / HTTP. TTY-aware default format: `--format` flag > `<NAME>_OUTPUT` env var > TTY-aware default (table when stdout is interactive, JSON when piped; [FER-10543](https://linear.app/buildwithfern/issue/FER-10543), [PR #143](https://github.com/fern-api/cli-sdk/pull/143), [§8.22](#822-tty-aware-default-output)). `--format raw` bypasses JSON parsing entirely via `RawSentinel` ([PR #199](https://github.com/fern-api/cli-sdk/pull/199), [§8.27](#827-format-raw-and-format-jsonl)). `--format http` renders the full HTTP response envelope ([PR #214](https://github.com/fern-api/cli-sdk/pull/214), [FER-11348](https://linear.app/buildwithfern/issue/FER-11348), [§8.29](#829-format-http)). `--query` applies JMESPath filtering before formatting ([PR #197](https://github.com/fern-api/cli-sdk/pull/197), [FER-10533](https://linear.app/buildwithfern/issue/FER-10533), [§8.28](#828-query-jmespath-response-filtering)). |
 | [`src/validate.rs`](../../src/validate.rs) | LLM-adversarial input validation: path traversal, control-char rejection, percent-encoding for URL path segments, resource-name validators. |
-| [`src/error.rs`](../../src/error.rs) | `CliError` + JSON-on-stdout error contract. `<cli> errors` subcommand prints the table ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518)). |
+| [`src/error.rs`](../../src/error.rs) | `CliError` + JSON-on-stdout error contract. `<cli> errors` subcommand prints the table ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518)). Rich stderr display: color-coded `error[category]:` labels, optional docs-URL link for API errors (`ErrorDisplayContext.docs_base_url`), `--help` hint for validation errors ([PR #212](https://github.com/fern-api/cli-sdk/pull/212), [FER-11381](https://linear.app/buildwithfern/issue/FER-11381), [§8.26](#826-rich-stderr-error-display)). `RawSentinel` variant for `--format raw` error passthrough ([PR #199](https://github.com/fern-api/cli-sdk/pull/199)). |
 | [`src/logging.rs`](../../src/logging.rs) | Org-scoped `tracing` setup. `<NAME>_LOG` for stderr filter; `<NAME>_LOG_FILE` for JSON-line file with daily rotation. Off by default. |
-| [`src/cli_args.rs`](../../src/cli_args.rs), [`src/early_intercept.rs`](../../src/early_intercept.rs) | Shared CLI helpers — version flag, `--base-url`, JSON-help detection, pre-parse interception for special subcommands (`completion`, `man`, `errors`, `generate-skills`). |
-| [`src/custom_commands.rs`](../../src/custom_commands.rs) | Registry + dispatch for `.command(...)` / `.command_under(...)` extensions a binary author can attach. |
+| [`src/debug.rs`](../../src/debug.rs) | Debug HTTP dump (`dump_request`, `dump_response`, `dump_error_response`, `dump_streaming_note`, `dump_graphql_request`). Invoked when `--debug` is passed; redacts sensitive headers and body keys before printing curl-style request/response to stderr. GraphQL-aware formatting shows raw query text and redacted variables ([PR #210](https://github.com/fern-api/cli-sdk/pull/210), [FER-11380](https://linear.app/buildwithfern/issue/FER-11380)). |
+| [`src/pager.rs`](../../src/pager.rs) | External pager support. `PagerConfig` resolves `$<BINARY>_PAGER` > `$PAGER` > platform default (`less`/`more`). `spawn_pager()` pipes output through the pager when `--page-all` is active on an interactive TTY; suppressed by `--no-pager` or non-TTY stdout. Wired into both OpenAPI and GraphQL pagination loops ([PR #200](https://github.com/fern-api/cli-sdk/pull/200), [FER-9858](https://linear.app/buildwithfern/issue/FER-9858), [§8.30](#830-external-pager-support)). |
+| [`src/cli_args.rs`](../../src/cli_args.rs), [`src/early_intercept.rs`](../../src/early_intercept.rs) | Shared CLI helpers — version flag, `--base-url`, `--schema` (machine-readable surface for agents — [FER-11050](https://linear.app/buildwithfern/issue/FER-11050), [PR #169](https://github.com/fern-api/cli-sdk/pull/169)), pre-parse interception for special subcommands (`completion`, `man`, `errors`, `generate-skills`). |
+| [`src/custom_commands.rs`](../../src/custom_commands.rs) | Registry + dispatch for `.command(...)` / `.command_under(...)` / `.command_typed(...)` / `.command_under_typed(...)` extensions a binary author can attach. Typed variants enforce compile-time arg↔handler agreement via `#[derive(clap::Args)]` ([FER-11009](https://linear.app/buildwithfern/issue/FER-11009), [PR #175](https://github.com/fern-api/cli-sdk/pull/175)). |
+| [`src/sdk_executor.rs`](../../src/sdk_executor.rs) | `CliExecutor` — implements the generated SDK's `RequestExecutor` trait, routing SDK-originated HTTP requests through the CLI's transport stack (same `HttpConfig`, `DynAuthProvider`, retry logic, global headers). ADR-0001 compliant. `block_on()` helper for sync→async bridging; `SdkError → CliError` error bridge. ([FER-11027](https://linear.app/buildwithfern/issue/FER-11027), [PR #168](https://github.com/fern-api/cli-sdk/pull/168).) |
 | [`src/completions.rs`](../../src/completions.rs), [`src/man.rs`](../../src/man.rs) | `clap_complete` shell completions + `clap_mangen` man pages. Wired into both OpenAPI and GraphQL CLIs ([FER-10519](https://linear.app/buildwithfern/issue/FER-10519)). |
 
 ### 5.3 Component view — OpenAPI path (`src/openapi/`)
@@ -129,11 +135,11 @@ See [`diagrams/04-component-openapi.mmd`](./diagrams/04-component-openapi.mmd).
 
 | Module | Responsibility |
 |---|---|
-| `parser.rs` | OpenAPI YAML → internal `RestDescription`. Handles 3.0 and 3.1 ([FER-10528](https://linear.app/buildwithfern/issue/FER-10528); [PR #70](https://github.com/fern-api/cli-sdk/pull/70)). Lowers all `x-fern-*` extensions, form-urlencoded bodies, and `oneOf`/`anyOf`/`allOf` composition. Emits object-shorthand flags for nested body properties ([PR #59](https://github.com/fern-api/cli-sdk/pull/59)). |
-| `discovery.rs` | Internal representation: `RestDescription`, `RestMethod`, schemas, security, pagination metadata. `BodyEncoding` enum (`Json` \| `FormUrlEncoded` \| `Multipart`) selects per-operation wire format. |
+| `parser.rs` | OpenAPI YAML → internal `RestDescription`. Handles 3.0 and 3.1 ([FER-10528](https://linear.app/buildwithfern/issue/FER-10528); [PR #70](https://github.com/fern-api/cli-sdk/pull/70)). Lowers all `x-fern-*` extensions, form-urlencoded bodies, and `oneOf`/`anyOf`/`allOf` composition. `allOf` branches flattened consumer-side via `merge_all_of_properties` ([ADR-0004](./decisions/0004-all-of-flattening-into-per-field-flags.md)); nullable-union (`oneOf: [T, null]`) promoted to null sentinel ([ADR-0005](./decisions/0005-nullable-union-promotion-via-composition.md)). `oneOf [T, array<T>]` union recognition via `recognize_scalar_or_array_union()` with `resolve_ref_chain()` ([PR #188](https://github.com/fern-api/cli-sdk/pull/188), [§8.24](#824-oneof-t-arrayt-union-recognition)). Emits object-shorthand flags for nested body properties ([PR #59](https://github.com/fern-api/cli-sdk/pull/59)). |
+| `discovery.rs` | Internal representation: `RestDescription`, `RestMethod`, schemas, security, pagination metadata. `BodyEncoding` enum (`Json` \| `FormUrlEncoded` \| `Multipart`) selects per-operation wire format. `has_binary_response` field gates `--output` flag registration ([PR #184](https://github.com/fern-api/cli-sdk/pull/184)). |
 | `overlay.rs` | OpenAPI Overlay v1.0.0 + Fern-overrides deep merge. Applied pre-parse. |
 | `commands.rs` | Recursive `clap::Command` builder. Walks `x-fern-sdk-group-name` (list) → nested subcommands; `x-fern-sdk-method-name` → leaf command. |
-| `executor.rs` | HTTP request construction, response handling, schema validation, retry executor (`x-fern-retries`), pagination, streaming (`x-fern-streaming`), idempotency (`x-fern-idempotent`). Supports JSON, form-urlencoded, and multipart/form-data body encoding ([FER-10700](https://linear.app/buildwithfern/issue/FER-10700), [FER-10727](https://linear.app/buildwithfern/issue/FER-10727), `BodyEncoding` enum). Full OpenAPI parameter style serialization across query/path/header locations ([FER-10569](https://linear.app/buildwithfern/issue/FER-10569), [§8.14](#814-parameter-style-serialization)). File/binary response handling: stdout streaming (`--output -`), Content-Disposition filename hint, audio/video MIME mapping, symlink/hardlink/FIFO safety ([FER-10871](https://linear.app/buildwithfern/issue/FER-10871), [§8.15](#815-file-binary-response-handling)). Mutually-exclusive body input validation ([§8.16](#816-body-input-mode-mutual-exclusivity)). |
+| `executor.rs` | HTTP request construction, response handling, schema validation, retry executor (`x-fern-retries`), pagination, streaming (`x-fern-streaming`), idempotency (`x-fern-idempotent`). Supports JSON, form-urlencoded, and multipart/form-data body encoding ([FER-10700](https://linear.app/buildwithfern/issue/FER-10700), [FER-10727](https://linear.app/buildwithfern/issue/FER-10727), `BodyEncoding` enum). Full OpenAPI parameter style serialization across query/path/header locations ([FER-10569](https://linear.app/buildwithfern/issue/FER-10569), [§8.14](#814-parameter-style-serialization)). File/binary response handling: stdout streaming (`--output -`), Content-Disposition filename hint, audio/video MIME mapping, symlink/hardlink/FIFO safety ([FER-10871](https://linear.app/buildwithfern/issue/FER-10871), [§8.15](#815-file-binary-response-handling)). Mutually-exclusive body input validation ([§8.16](#816-body-input-mode-mutual-exclusivity)). Debug HTTP dump via `src/debug.rs` when `--debug` is passed — curl-style request/response to stderr with sensitive-header and sensitive-key redaction ([§8.25](#825-debug-http-dump-with-redaction)). |
 | `app.rs` | `CliApp` builder for OpenAPI, `AppContext`, `HandlerFn` type. The high-level API a binary's `main.rs` consumes. Supports multi-binding composition ([PR #69](https://github.com/fern-api/cli-sdk/pull/69)). |
 | `help.rs` | Help rendering (audience filtering, group rendering, availability badges). |
 
@@ -146,13 +152,26 @@ See [`diagrams/05-component-graphql.mmd`](./diagrams/05-component-graphql.mmd).
 | `parser.rs` | Introspection JSON → `GraphQLSchema`. |
 | `discovery.rs` | Internal representation: schema, operations (`Query`/`Mutation`), input types. |
 | `commands.rs` | `clap::Command` builder from operations. Dot-notation body flags ([FER-10435](https://linear.app/buildwithfern/issue/FER-10435)). |
-| `executor.rs` | GraphQL request construction (variables map, auth, response handling, `HttpConfig` honored as of [FER-10448](https://linear.app/buildwithfern/issue/FER-10448)). |
+| `executor.rs` | GraphQL request construction (variables map, auth, response handling, `HttpConfig` honored as of [FER-10448](https://linear.app/buildwithfern/issue/FER-10448)). Debug HTTP dump via `src/debug.rs` when `--debug` is passed — uses `dump_graphql_request` for GraphQL-aware formatting ([PR #210](https://github.com/fern-api/cli-sdk/pull/210), [FER-11380](https://linear.app/buildwithfern/issue/FER-11380), [§8.25](#825-debug-http-dump-with-redaction)). |
 | `app.rs` | `CliApp` builder for GraphQL — mirror of the OpenAPI builder. |
 | `help.rs` | Help rendering. |
 
 > **GraphQL is the reference implementation.** When a feature applies to both
 > paths, implement it in GraphQL first, then mirror it in OpenAPI as a
 > separate, self-contained copy. See [§8.2](#82-protocol-path-isolation).
+
+### 5.5 Component view — AsyncAPI path (`src/asyncapi/`)
+
+| Module | Responsibility |
+|---|---|
+| `parser.rs` | AsyncAPI 2.6 YAML/JSON → `AsyncApiDescription`. Rejects non-`2.6.x` versions and non-WebSocket server protocols (`CliError::Validation`). Extracts component message refs from `publish`/`subscribe` operations (single-`$ref` and `oneOf:` shapes). |
+| `discovery.rs` | Internal representation: `AsyncApiDescription`, `Channel`, `Operation`, `Message`, `Server`, `Info`, `ChannelParameter`. Models AsyncAPI 2.6. |
+| `overlay.rs` | AsyncAPI overlay + Fern-overrides deep merge. Direct structural duplicate of `src/openapi/overlay.rs` — same `OverlayAction`/`OverlayDocument` shape and JSONPath + deep-merge semantics; lives independently per §8.2. |
+| `commands.rs` | `clap::Command` builder from `AsyncApiDescription`. Groups channels by `x-fern-sdk-group-name`, derives leaf command names from `x-fern-sdk-method-name` or kebab-cased channel name. Flags from channel parameters and the operation's message schema. |
+| `executor.rs` | WebSocket executor. Drives `WebSocketClient` against a parsed AsyncAPI channel: sends init payload, supports single-shot `--message` mode and REPL (stdin → outbound frames, server responses → stdout). |
+| `app.rs` | Slim builder state for `AsyncApiBinding`: spec text, overlay text, endpoint override, init-payload override, auth-bindings vec. Mirrors `src/graphql/app.rs` shape per §8.2. |
+| `binding.rs` | `AsyncApiBinding` — adapts the AsyncAPI path to the root `Binding` trait so it can be composed into `CliApp` alongside OpenAPI/GraphQL bindings. |
+| `mod.rs` | Re-exports the public surface (`commands`, `discovery`, `overlay`, `parser`, `binding`). |
 
 ---
 
@@ -170,9 +189,15 @@ See [`diagrams/06-runtime-request.mmd`](./diagrams/06-runtime-request.mmd).
 3. **Command tree build.** `commands.rs` walks the spec and builds a
    `clap::Command` tree.
 4. **Early intercept.** `early_intercept.rs` checks for `completion`,
-   `man`, `errors`, `generate-skills` subcommands and short-circuits
-   without auth/network. `--quiet` suppresses stdout on success
-   ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518)).
+   `man`, `errors`, `generate-skills` subcommands **and the `--schema`
+   global flag** and short-circuits without auth/network. `--schema` is
+   sniffed from raw argv before clap parses (same pre-parse pattern as
+   `--help`) so it works even on commands with required args.
+   `--quiet` suppresses stdout on success
+   ([FER-10518](https://linear.app/buildwithfern/issue/FER-10518));
+   `--schema` replaces the previous `--help --format json` overload
+   ([FER-11050](https://linear.app/buildwithfern/issue/FER-11050),
+   [PR #169](https://github.com/fern-api/cli-sdk/pull/169)).
 5. **Arg parse.** `clap` matches args against the dynamic tree.
 6. **Auth resolution.** `compose.rs` walks the operation's `security:` (an
    OR of ANDs); first requirement all bound providers can satisfy wins;
@@ -215,7 +240,7 @@ See [`diagrams/06-runtime-request.mmd`](./diagrams/06-runtime-request.mmd).
 ### 6.3 Auth credential resolution
 
 Credentials are resolved via `AuthCredentialSource` (env / CLI / file /
-literal / closure / any-chain). The provider only sees the resolved
+literal / closure / keyring / any-chain). With `auth login` ([§8.21](#821-first-class-oauth-login-support)), keyring is slotted at priority 3 in the chain (CLI > env > keyring > file; [ADR-0008](./decisions/0008-credential-precedence-and-storage-fallback.md)). The provider only sees the resolved
 value inside `apply(request)` — it never returns it back to caller code.
 This is [ADR-0001](./decisions/0001-auth-provider-no-cred-extraction.md).
 Layers that need a credential value at a different transport boundary
@@ -254,22 +279,23 @@ CLI shape. The umbrella ticket is
 
 ### 8.2 Protocol path isolation
 
-> **Do not create shared abstractions between `src/openapi/` and `src/graphql/`.
-> Duplication between these two paths is intentional and correct.**
+> **Do not create shared abstractions between `src/openapi/`, `src/graphql/`,
+> and `src/asyncapi/`. Duplication between these paths is intentional and
+> correct.**
 > — [`AGENTS.md`](../../AGENTS.md), line 93
 
 `fern-cli-sdk` is a code generator. Customers receive a snapshot of
-exactly one path — never both bundled. Therefore each path must be
-self-contained. Three similar lines in two files is better than a
+exactly one path — never multiple bundled. Therefore each path must be
+self-contained. Three similar lines in three files is better than a
 premature abstraction that couples delivery paths.
 
-The exception: modules above both paths (`src/auth/`, `src/http.rs`,
+The exception: modules above all paths (`src/auth/`, `src/http.rs`,
 `src/error.rs`, `src/formatter.rs`, `src/validate.rs`, `src/logging.rs`,
 `src/cli_args.rs`, `src/websocket/`) are shared infrastructure for the
 *binary harness*, not for the generated paths. Sharing them is fine.
 
-When a feature applies to both paths: build it in `src/graphql/` first,
-mirror it as a separate copy in `src/openapi/`.
+When a feature applies to multiple paths: build it in `src/graphql/` first,
+mirror it as a separate copy in `src/openapi/` and `src/asyncapi/` as needed.
 
 ### 8.3 Transport-neutral HTTP config
 
@@ -310,11 +336,12 @@ The **feature-matrix suite** ([FER-10569](https://linear.app/buildwithfern/issue
 [PR #125](https://github.com/fern-api/cli-sdk/pull/125)) is the canonical
 catalog: one operation per cell in `src/bin/feature-matrix-fixture/openapi.yaml`,
 encoding-exact assertions via `captured_raw_query` / `captured_raw_path` /
-`captured_header` / `captured_body_bytes` helpers. 72 active cells across 13
-areas + 8 honest gaps (cells aligned to post-FER-10521 retry/idempotency
+`captured_header` / `captured_body_bytes` helpers. 74 active cells across 14
+areas + 2 gaps (cells aligned to post-FER-10521 retry/idempotency
 contract in [PR #134](https://github.com/fern-api/cli-sdk/pull/134); query/
 path/header style cells closed in PRs #137, #138, #144, #145; file-response
-cells added in [PR #151](https://github.com/fern-api/cli-sdk/pull/151)).
+cells added in [PR #151](https://github.com/fern-api/cli-sdk/pull/151);
+composition cells added in [PR #124](https://github.com/fern-api/cli-sdk/pull/124)).
 `scripts/list-feature-matrix-gaps.sh` regenerates the gap snapshot.
 
 ### 8.6 Output pipeline
@@ -332,11 +359,29 @@ A binary attaches custom commands via `.command(cmd, handler)` or
 `.command_under(...)`. Handlers receive `&clap::ArgMatches` and an
 `&AppContext` exposing `execute(group, method, params, body)`.
 
+**Typed custom commands** ([FER-11009](https://linear.app/buildwithfern/issue/FER-11009),
+[PR #175](https://github.com/fern-api/cli-sdk/pull/175)):
+`command_typed(name, about, handler)` / `command_under_typed(path, name, about, handler)`
+accept a handler `fn(A, &C) -> Result<(), CliError>` where `A: clap::Args`.
+The `#[derive(clap::Args)]` struct *is* the arg declaration — referencing an
+undeclared/renamed arg is a compile error, not a runtime panic. The `&dyn Any`
+downcast to `&C` is internal; callers see only their typed context.
+Backward-compatible: existing untyped API remains.
+
 The **multi-binding extension surface** landed in [PR #69](https://github.com/fern-api/cli-sdk/pull/69):
 
-- `CliApp::binding(name)` attaches an OpenAPI or GraphQL spec as a named
-  binding. A single CLI can compose N bindings (e.g., the `twilio` binary
-  unifies 39 OpenAPI specs — [PR #72](https://github.com/fern-api/cli-sdk/pull/72)).
+- `CliApp::binding(name)` attaches an OpenAPI, GraphQL, or AsyncAPI spec
+  as a named binding. A single CLI can compose N bindings (e.g., the
+  `twilio` binary unifies 39 OpenAPI specs —
+  [PR #72](https://github.com/fern-api/cli-sdk/pull/72); the `elevenlabs`
+  binary composes OpenAPI + AsyncAPI for REST + WebSocket —
+  [PR #167](https://github.com/fern-api/cli-sdk/pull/167)).
+- **Cross-binding deep-merge** ([PR #167](https://github.com/fern-api/cli-sdk/pull/167),
+  [D-AC](./decisions/INDEX.md#d-ac-cross-binding-deep-merge-with-leaf-collision-detection)):
+  Two bindings can contribute disjoint subcommands under the same
+  top-level group. Identical full leaf paths error with
+  `CliError::Validation` at startup — replacing the prior silent
+  last-wins overwrite.
 - Auth is declared at the root `CliApp` level and shared across all
   bindings (`auth-at-root`).
 - Custom commands receive a `BindingContext` for dispatching into any
@@ -387,7 +432,10 @@ Shared retry infrastructure in `src/http.rs`
 
 - `RetryPolicy` (from `x-fern-retries` extension): `max_attempts` (default
   4), `base_delay_ms` (default 500). Both OpenAPI and GraphQL executors
-  share the same retry logic.
+  share the same retry logic. GraphQL parity completed in
+  [PR #142](https://github.com/fern-api/cli-sdk/pull/142): the GraphQL
+  executor now takes a configurable `retry_policy` parameter instead of
+  hardcoding the default.
 - Retryable conditions: 5xx, 408, 429, network/timeout errors.
 - Exponential backoff: `base_delay × 2^attempt` with 10% jitter.
 - `Retry-After` header respected (numeric seconds or HTTP-date).
@@ -395,7 +443,8 @@ Shared retry infrastructure in `src/http.rs`
   reused across retries for exactly-once semantics. Skipped when the
   operation declares `x-fern-idempotent` (user provides the key).
   Per-operation opt-out via `x-fern-cli-idempotency: false`.
-- `--no-retry` CLI flag disables all retries for debugging.
+- `--no-retry` CLI flag disables all retries for debugging. Honored
+  on both OpenAPI and GraphQL paths.
 - GraphQL pagination: fresh key per page, retries within a page share
   the same key.
 
@@ -449,7 +498,13 @@ The OpenAPI executor handles non-JSON response bodies end-to-end
 - **MIME dispatch:** `is_media_type` + `mime_to_extension` map Content-Type
   to file extension. Covers `audio/*`, `video/*`, `image/*`,
   `application/pdf`, `application/octet-stream`, etc.
-- **`--output PATH`:** Write response body to the given path.
+- **`--output PATH`:** Write response body to the given path. **Gated at
+  parse time** on `RestMethod::has_binary_response`: the flag is only
+  registered on operations whose 2xx response declares a non-JSON content
+  type. JSON-only operations no longer show `-o, --output` in `--help`,
+  eliminating the silent no-op trap
+  ([FER-11191](https://linear.app/buildwithfern/issue/FER-11191),
+  [PR #184](https://github.com/fern-api/cli-sdk/pull/184)).
 - **`--output -`:** Stream raw bytes to stdout (no JSON wrapper, no
   metadata), making the output pipeable to downstream programs.
 - **Content-Disposition:** RFC 6266 `filename` + RFC 5987 `filename*`
@@ -481,6 +536,101 @@ Both OpenAPI (`parse_and_validate_inputs`) and GraphQL (`build_graphql_body`)
 enforce the same rules. `coerce_graphql_value` now returns `Result` and
 JSON-parses `param_type=="object"` strings (invalid JSON is a hard error).
 
+### 8.17 SDK execution sharing (`CliExecutor`)
+
+The `CliExecutor` ([PR #168](https://github.com/fern-api/cli-sdk/pull/168),
+[FER-11027](https://linear.app/buildwithfern/issue/FER-11027)) implements the
+generated Rust SDK's `RequestExecutor` trait, enabling co-generated SDK crates
+to delegate HTTP execution through the CLI's existing transport stack:
+
+- **Level-2 behavioral parity:** Routes through `HttpConfig::build_client()`,
+  `DynAuthProvider::apply()`, `decide_retry()`, global-header injection, and
+  base-URL override — not a second stack seeded with copied config.
+- **ADR-0001 compliant:** Receives `DynAuthProvider` and calls `apply()` —
+  never extracts or exposes resolved credentials.
+- **`block_on()` helper:** `tokio::task::block_in_place` + `Handle::current()`
+  for sync→async bridging in custom command handlers.
+- **Error bridge:** `SdkError → CliError` preserving HTTP status and context.
+- **Auth fail-closed:** [PR #171](https://github.com/fern-api/cli-sdk/pull/171)
+  hardened `build_request` to return `Result` — auth errors propagate instead
+  of silently sending unauthenticated requests.
+
+Custom commands obtain a typed SDK client via `AppContext` accessors
+(`auth_provider()`, `base_url_override()`, `global_headers()`).
+
+Counterpart changes in `fern-api/fern`: transport seam
+([FER-11025](https://linear.app/buildwithfern/issue/FER-11025)),
+co-vendoring ([FER-11026](https://linear.app/buildwithfern/issue/FER-11026)),
+generated glue + verification
+([FER-11028](https://linear.app/buildwithfern/issue/FER-11028)).
+
+### 8.18 `allOf` composition lowering
+
+`allOf` composition is lowered into per-field flags consumer-side
+([PR #124](https://github.com/fern-api/cli-sdk/pull/124),
+[ADR-0004](./decisions/0004-all-of-flattening-into-per-field-flags.md)):
+
+- `merge_all_of_properties(schema, component_schemas)` walks branches
+  recursively, resolving `$ref`s, and returns the merged property bag +
+  union of `required` arrays. Last-branch-wins on property overlap.
+- Safety cap of `MAX_ALL_OF_DEPTH = 8` bounds pathological `$ref` cycles.
+- `allOf` recursion does not consume from `MAX_BODY_DEPTH = 3` — it adds
+  no user-visible nesting.
+
+Nullable-union composition (`oneOf: [T, {type: null}]`) is promoted to
+the null sentinel pattern
+([ADR-0005](./decisions/0005-nullable-union-promotion-via-composition.md)):
+`is_nullable_composition()` detects the pattern and sets
+`JsonSchemaProperty.nullable = true`, reusing the existing `--field ^`
+null sentinel from ADR-0003.
+
+Both lowerings run in `parser.rs` (flag emission) and `executor.rs`
+(body validation), independently per D-A isolation.
+
+### 8.19 `--schema` global flag — machine-readable surface
+
+`--schema` ([FER-11050](https://linear.app/buildwithfern/issue/FER-11050),
+[PR #169](https://github.com/fern-api/cli-sdk/pull/169)) is the
+agent-facing counterpart to `--help`. Every generated CLI exposes it at
+every scope:
+
+```
+<bin> --schema                  # aggregated catalog (all bindings)
+<bin> <resource> --schema       # operations in one group
+<bin> <resource> <method> --schema  # full schema for one operation
+```
+
+Implementation notes:
+- **Flag, not verb.** The choice to use a global flag (not a top-level
+  `introspect` subcommand) mirrors `--help` exactly, slots into every
+  scope without precedence rules, and avoids a namespace collision with
+  specs that have a `schema` resource tag ([D-AA](./decisions/INDEX.md#d-aa-schema-as-a-global-flag-not-a-verb)).
+- **Pre-parse intercept.** Sniffed from raw argv before clap runs
+  (bypasses required-arg validation).
+- **Multi-binding aggregation.** `Binding::schema(&[String]) ->
+  Result<Option<Value>, CliError>` — empty path means every binding
+  contributes; first binding to own a non-empty path wins. Per-binding
+  errors log via `tracing::warn!` and the walk continues.
+- **Replaces `--help --format json`.** The previous overload is removed
+  with no deprecation alias.
+
+### 8.20 Global-header collision scoping
+
+When `x-fern-global-headers` declares a flag whose long name collides
+with an operation's own parameter, the global flag is **dropped from that
+command** and the per-operation parameter wins
+([FER-11145](https://linear.app/buildwithfern/issue/FER-11145),
+[PR #180](https://github.com/fern-api/cli-sdk/pull/180)). On
+non-colliding sibling commands the global header remains registered
+as `global(true)`. `resolve_global_header_value` uses `try_get_one`
+(previously `get_one`) since the flag may be absent on specific leaves.
+
+This codifies the precedence rule already documented in `discovery.rs`:
+*"Operations may opt out of sending the header by declaring a same-named
+per-operation parameter, which takes precedence."* The prior behavior
+was a runtime clap panic when clap encountered two args sharing a long
+name.
+
 ### 8.10 SKILL.md generation
 
 `<cli> generate-skills [--out-dir PATH]` walks the parsed spec at runtime
@@ -489,16 +639,250 @@ group. Fully deterministic (Rust templates over spec data, no LLM).
 ([FER-9863](https://linear.app/buildwithfern/issue/FER-9863),
 [PR #76](https://github.com/fern-api/cli-sdk/pull/76).)
 
+### 8.21 First-class OAuth login support
+
+`auth login` / `auth logout` / `auth status` are **always grafted** on
+every Fern CLI, regardless of whether the spec declares OAuth
+([FER-9856](https://linear.app/buildwithfern/issue/FER-9856),
+[PR #191](https://github.com/fern-api/cli-sdk/pull/191),
+[ADR-0007](./decisions/0007-login-flows-one-shot-per-binary.md),
+[ADR-0008](./decisions/0008-credential-precedence-and-storage-fallback.md)).
+
+Each binary declares **exactly one** login flow at generation time:
+
+| Flow | Mechanism |
+|---|---|
+| **PKCE** | Authorization-code + PKCE, browser callback to fixed loopback port |
+| **Device code** | RFC 8628 short-code + polling |
+| **Token paste** | `auth login --with-token`, reads from stdin into keyring |
+
+Login flow is declared in the OpenAPI spec via `x-fern-cli-auth` extension
+(consumed upstream by the Fern importer, lowered to IR, emitted as builder
+calls in `main.rs`). The cli-sdk boundary is the typed builder API — no
+spec re-parsing for auth at runtime.
+
+**Credential storage:** OS keyring via `keyring-rs` (macOS Keychain /
+Windows Credential Manager / Linux secret-service). When unavailable,
+silent fallback to `~/.config/<cli>/auth-keyring.json` (0600). Entry key
+is `(service=<cli_name>, account=<scheme_name>)`.
+
+**Credential precedence:** CLI flag > env var > keyring > file
+([ADR-0008](./decisions/0008-credential-precedence-and-storage-fallback.md)).
+`auth status` lists all sources and marks shadowing explicitly. `auth login`
+warns when an env var would shadow the keyring entry.
+
+### 8.22 TTY-aware default output
+
+Default output format resolves with a three-tier precedence chain
+([FER-10543](https://linear.app/buildwithfern/issue/FER-10543),
+[FER-10541](https://linear.app/buildwithfern/issue/FER-10541),
+[PR #143](https://github.com/fern-api/cli-sdk/pull/143)):
+
+1. `--format <fmt>` CLI flag (highest priority).
+2. `<NAME>_OUTPUT` env var (e.g. `ELEVENLABS_OUTPUT=yaml`). Invalid
+   values fall through silently.
+3. TTY-aware default: `Table` when stdout is interactive, `Json` when
+   piped/redirected or `CI=true`.
+
+`resolve_default_format()` in `src/formatter.rs` implements the chain.
+
+### 8.23 `@file` resolution in body inputs
+
+File references in body flags read file contents and embed them inline
+([FER-10436](https://linear.app/buildwithfern/issue/FER-10436),
+[PR #164](https://github.com/fern-api/cli-sdk/pull/164),
+[PR #201](https://github.com/fern-api/cli-sdk/pull/201)):
+
+- `@<path>` — **auto mode**: read file; embed as UTF-8 string if valid,
+  base64 otherwise.
+- `@file://<path>` — **text mode**: read file; **require valid UTF-8 or
+  error** with a hint pointing at `@data://` and the field/flag location.
+  ([FER-10532](https://linear.app/buildwithfern/issue/FER-10532),
+  [PR #202](https://github.com/fern-api/cli-sdk/pull/202).)
+- `@data://<path>` — **data mode**: read file; **always base64-encode**,
+  even when the file is valid UTF-8 (for APIs that expect base64 of a text
+  payload). ([FER-10532](https://linear.app/buildwithfern/issue/FER-10532),
+  [PR #202](https://github.com/fern-api/cli-sdk/pull/202).)
+- `\@<path>`, `\@file://…`, `\@data://…` — escape; send the literal
+  string without reading.
+- Works at every `@`-aware site: binary body flag, multipart file field,
+  nested string inside object-shorthand JSON (`--profile '{"pic":"@./img.jpg"}'`),
+  and `--json` whole-body path.
+- Under an explicit URI scheme (`@file://`, `@data://`), `-` is a literal
+  filename — only auto-mode `@-` remains the stdin sentinel, so retries
+  stay enabled for explicit-scheme paths.
+- Dry-run JSON reports `binary_body.source.mode` (`"auto"` / `"text"` /
+  `"data"`) so agents can audit the resolved encoding mode.
+- Blocking I/O wrapped in `tokio::task::block_in_place` to avoid starving
+  the async runtime.
+
+### 8.24 `oneOf [T, array<T>]` union recognition
+
+The OpenAPI parser recognizes `oneOf: [T, array<T>]` unions for any
+scalar type T and lowers them to a single CLI flag that accepts both
+forms ([PR #188](https://github.com/fern-api/cli-sdk/pull/188)):
+
+- `recognize_scalar_or_array_union()` detects the pattern after `$ref`
+  resolution.
+- `resolve_ref_chain()` follows `$ref → $ref → … → terminal` up to
+  `MAX_REF_CHAIN_DEPTH = 8`.
+- Wire serialization: single value → JSON scalar, multiple values or
+  JSON-array literal → JSON array.
+- `--schema` renders union params with `oneOf` type annotation.
+
+### 8.25 Debug HTTP dump with redaction
+
+Every OpenAPI and GraphQL CLI exposes a global `--debug` flag that dumps the
+outgoing HTTP request and incoming response to stderr in curl-style format,
+useful for troubleshooting and agent integration verification:
+
+```
+> POST https://api.example.com/v1/users
+> authorization: Bearer [REDACTED]
+> content-type: application/json
+>
+> Request body
+> {"name":"Alice","password":"[REDACTED]"}
+>
+* HTTP/1.1 201 Created (850ms)
+< content-type: application/json
+<
+< {"id":"user_123","name":"Alice"}
+<
+```
+
+The module `src/debug.rs` provides five functions:
+
+| Function | Use |
+|---|---|
+| `dump_request()` | Print outgoing request (method, URL, headers, body) with redactions. Uses `>` prefix. |
+| `dump_graphql_request()` | GraphQL-aware variant — shows raw query text (not JSON-escaped) and redacted variables. Uses `>` prefix. ([PR #210](https://github.com/fern-api/cli-sdk/pull/210), [FER-11380](https://linear.app/buildwithfern/issue/FER-11380).) |
+| `dump_response()` | Print response status, timing, headers, and body preview. Uses `*` and `<` prefixes. |
+| `dump_error_response()` | Rich error display for non-2xx responses — status badges, body indented. |
+| `dump_streaming_note()` | Metadata note for streaming responses (chunk count, final status). |
+
+**Redaction rules:**
+
+- **Headers:** Full value redacted for auth-related headers (`Authorization`,
+  `X-API-Key`, `Cookie`, etc.) and any spec-declared custom auth header names.
+- **Request body:** Sensitive keys (`password`, `client_secret`, `id_token`,
+  `private_key`, etc. — both exact and substring matches) have their values
+  replaced with `[REDACTED]`. JSON values are parsed and redacted in-place;
+  form-encoded bodies receive the same treatment.
+- **Query parameters:** Sensitive query param names (resolved from the same
+  redaction list) are stripped from the URL before printing.
+
+The executor invokes these helpers only when `ctx.debug` is true (set by
+`AppContext::with_debug(true)` when the `--debug` flag is parsed).
+
+### 8.26 Rich stderr error display
+
+The `write_error_json()` function in `src/error.rs` enriches stderr error
+output beyond the structured JSON envelope on stdout
+([PR #212](https://github.com/fern-api/cli-sdk/pull/212),
+[FER-11381](https://linear.app/buildwithfern/issue/FER-11381)):
+
+- **Color-coded category labels:** `error[api]:`, `error[auth]:`,
+  `error[validation]:`, `error[discovery]:` — styled via ANSI when stderr
+  is a TTY.
+- **Docs URL for API errors:** When `ErrorDisplayContext.docs_base_url` is
+  set, API errors print `→ <base>/<status_code>` as a clickable link to
+  per-status-code documentation.
+- **`--help` hint for validation errors:** When
+  `ErrorDisplayContext.help_hint` is set, validation errors print
+  `Try \`<command> --help\`` to guide the user toward correct usage.
+- **Terminal safety:** All messages are sanitized via
+  `sanitize_for_terminal()` before printing.
+
+The `ErrorDisplayContext` is built by the executor from the spec's
+`x-fern-docs` URL (if present) and the matched command path. It does not
+affect the JSON envelope on stdout — the structured contract is unchanged.
+
+### 8.27 `--format raw` and `--format jsonl`
+
+Two new output formats extend the `OutputFormat` enum
+([PR #199](https://github.com/fern-api/cli-sdk/pull/199)):
+
+- **`--format raw`**: Bypasses JSON parsing entirely. The HTTP response
+  body is streamed directly to stdout as raw bytes. On error responses,
+  the error body is written to stdout and the executor returns
+  `CliError::RawSentinel { code }` — a sentinel variant that skips the
+  JSON error envelope (the bytes are already on stdout). This enables
+  piping binary or non-JSON API responses without transformation.
+- **`--format jsonl`** (alias `ndjson`): Renders each top-level array
+  element as a single-line JSON object, one per line. Non-array values
+  fall back to compact single-line JSON.
+
+Both formats honor the existing `OutputPipeline` precedence:
+`--format` flag > `<NAME>_OUTPUT` env var > TTY-aware default.
+
+### 8.28 `--query` — JMESPath response filtering
+
+A global `--query` flag applies a [JMESPath](https://jmespath.org/)
+expression to every response before formatting
+([PR #197](https://github.com/fern-api/cli-sdk/pull/197),
+[FER-10533](https://linear.app/buildwithfern/issue/FER-10533)):
+
+- Expression is compiled once per invocation via `jmespath::compile()`.
+- Applied after response parsing, before `OutputPipeline` formatting —
+  works with all `--format` variants.
+- For paginated/streaming responses, each page/event is filtered
+  independently; null results are suppressed (enabling `--query` as a
+  per-event filter).
+- Dependency: `jmespath = "0.3"` (added to `Cargo.toml`).
+
+### 8.29 `--format http`
+
+Renders the full HTTP response envelope — status line, headers, blank
+line, body — in standard HTTP/1.1 message format
+([PR #214](https://github.com/fern-api/cli-sdk/pull/214),
+[FER-11348](https://linear.app/buildwithfern/issue/FER-11348)):
+
+```
+HTTP/1.1 200 OK
+content-type: application/json
+
+{"id":"user_123","name":"Alice"}
+```
+
+The executor captures status, headers, and body before handing off to
+the formatter. Like `--format raw`, the `Http` variant is a
+pass-through — no JSON pretty-printing or table rendering. Currently
+wired in the OpenAPI path only (`src/openapi/executor.rs`).
+
+### 8.30 External pager support
+
+Paginated output can be piped through an external pager (`less`, `more`,
+or a user-chosen program) for scrollable, searchable display
+([PR #200](https://github.com/fern-api/cli-sdk/pull/200),
+[FER-9858](https://linear.app/buildwithfern/issue/FER-9858)):
+
+- **Activation:** `--page-all` on an interactive TTY. Suppressed by
+  `--no-pager` or non-TTY stdout.
+- **Resolution:** `$<BINARY>_PAGER` > `$PAGER` > platform default
+  (`less` on Unix, `more` on Windows).
+- **Module:** `src/pager.rs` — `PagerConfig::from_env()` resolves the
+  program, `spawn_pager()` returns a `PagerHandle` wrapping a child
+  process with a piped stdin. Each formatted page is written to the
+  pager; on completion the handle waits for the child.
+- **Wired into both paths:** OpenAPI (`src/openapi/executor.rs`) and
+  GraphQL (`src/graphql/executor.rs`) pagination loops spawn the pager
+  identically.
+
 ---
 
 ## 9. Architecture decisions
 
 The decisions index lives in [`decisions/INDEX.md`](./decisions/INDEX.md).
-Three formal ADRs to date:
+Eight formal ADRs to date:
 
 - [ADR-0001](./decisions/0001-auth-provider-no-cred-extraction.md) — `AuthProvider` never exposes resolved credentials
 - [ADR-0002](./decisions/0002-transport-neutral-http-config-resolve.md) — Transport-neutral `HttpConfig::resolve()` pattern
 - [ADR-0003](./decisions/0003-null-sentinel-on-nullable-scalar-body-flags.md) — Null sentinel on nullable scalar body flags
+- [ADR-0004](./decisions/0004-all-of-flattening-into-per-field-flags.md) — `allOf` flattening into per-field flags
+- [ADR-0005](./decisions/0005-nullable-union-promotion-via-composition.md) — Nullable-union promotion via composition
+- [ADR-0007](./decisions/0007-login-flows-one-shot-per-binary.md) — Login flows are one-shot per binary
+- [ADR-0008](./decisions/0008-credential-precedence-and-storage-fallback.md) — Credential precedence chain and storage fallback
 
 The decisions index also tracks **implicit ADRs** — decisions documented
 in `AGENTS.md`, commit history, and Linear that should be promoted to
@@ -510,15 +894,16 @@ ADRs over time.
 
 | # | Item | Severity | Notes |
 |---|---|---|---|
-| 1 | **Asymmetric protocol implementations.** `src/openapi/` is materially larger than `src/graphql/` (parser 282KB vs 36KB; executor 248KB vs 31KB). The isolation principle is correct but the surface area gap means features lag in GraphQL. | Medium | Mitigated by "implement in GraphQL first" rule. Track per-feature parity in the decisions index. |
+| 1 | **Asymmetric protocol implementations.** `src/openapi/` is materially larger than `src/graphql/` (parser 282KB vs 36KB; executor 248KB vs 31KB). `src/asyncapi/` adds a third path with parser, discovery, overlay, commands, executor, and binding — but covers a narrower feature set (WebSocket only, no pagination, no streaming variants). The isolation principle is correct but the surface area gaps mean features lag in GraphQL and AsyncAPI. | Medium | Mitigated by "implement in GraphQL first" rule. Track per-feature parity in the decisions index. |
 | 2 | **`HttpConfig` two writers.** Existing `build_client` reads env vars directly; `resolve()` reads them again. Drift risk acknowledged in [ADR-0002](./decisions/0002-transport-neutral-http-config-resolve.md). `EnvGuard` test covers it. | Low | Collapse into one reader when a second reqwest path emerges. |
 | 3 | **WS path under-wires `<NAME>_CA_BUNDLE` / `<NAME>_INSECURE` / `<NAME>_PROXY`.** v1 resolves them (so misconfig errors surface) but doesn't translate them to `tokio_tungstenite::Connector`. | Medium | Follow-up scoped to connector translation. |
 | 4 | **Heavy in-progress feature plans.** `LIBRARY_PLAN.md`, `LIBRARY_DESIGN.md`, `DESIGN.md`, `PLAN_A_TYPED_FLAGS.md`, `ROADMAP_TRACKER.md` all describe in-flight work. The relationship between them and ARCHITECTURE.md is not yet codified. | Low | When a plan lands, distill the durable architectural outcome into this file and either delete or archive the plan. |
 | 5 | **Two release paths.** `cargo-dist` for `fern-pipeline-fixture`; `build-cli.yml` (workflow_dispatch) for customer CLIs. cargo-dist installers don't ship man pages ([FER-10688](https://linear.app/buildwithfern/issue/FER-10688)). | Low | Documented; alternative `<cli> man > /path/to/man1` is the user path. |
-| 6 | **Auth token-store layer is new and not yet wired into a command.** [FER-10692](https://linear.app/buildwithfern/issue/FER-10692) lands `TokenStore` / `FileTokenStore` / `KeyringTokenStore` / OpenAPI OAuth2 flow parsing as foundations only. | Low | Tracked; `auth login` / `auth use` / `auth logout` will sit on top. |
+| 6 | **Auth token-store layer is now wired via `auth login` / `auth logout` / `auth status`.** [FER-9856](https://linear.app/buildwithfern/issue/FER-9856) shipped first-class OAuth login support ([PR #191](https://github.com/fern-api/cli-sdk/pull/191), [ADR-0007](./decisions/0007-login-flows-one-shot-per-binary.md), [ADR-0008](./decisions/0008-credential-precedence-and-storage-fallback.md)). Keyring storage + file fallback in production. | — | **Resolved.** |
 | 7 | **Verbose generated command names** when specs lack `x-fern-sdk-*` extensions (e.g. vendored Twilio specs). [FER-10449](https://linear.app/buildwithfern/issue/FER-10449) Fern-overrides addresses this but isn't wired into every demo CLI yet. | Low | Per-CLI overrides directory pattern documented. |
 | 8 | **`generate-skills` validation gap.** Emitted SKILL.md references are not automatically validated against the command tree; drift is caught by manual re-generation and diff. | Low | [FER-9863](https://linear.app/buildwithfern/issue/FER-9863) acceptance criterion 6 covers this. |
 | 9 | **`OAuth2Auth` silent credential drop.** When client-credentials are missing, `OAuth2Auth` may send unauthenticated requests instead of failing fast — a silent-auth-bypass risk. | Medium | [FER-10745](https://linear.app/buildwithfern/issue/FER-10745). Fix in flight ([PR #127](https://github.com/fern-api/cli-sdk/pull/127)) — wires client-credentials flow instead of silent unauth. |
+| 10 | **`jmespath` crate staleness.** The `jmespath = "0.3"` dependency (added for `--query` support, [PR #197](https://github.com/fern-api/cli-sdk/pull/197)) was last published in 2021. No known vulnerabilities, but the crate is unmaintained — a future Rust edition bump or MSRV raise may require a fork or replacement (e.g. `jmespatch` or hand-rolled subset). | Low | Monitor for CVEs; replacement candidate if it blocks a toolchain upgrade. |
 
 ---
 

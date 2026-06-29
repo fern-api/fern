@@ -1,0 +1,14 @@
+- summary: |
+    Add `reqwest` dependency to the embedded types crate when file-upload
+    (multipart/form-data) request types are generated. Previously the types
+    crate referenced `reqwest::multipart::Form` without declaring the dep.
+  type: fix
+- summary: |
+    Fix SDK glue generation for APIs with nested `x-fern-sdk-group-name`
+    groups (2+ levels). The glue now recursively discovers sub-client
+    structs from the generated SDK's resource tree and emits correct
+    nested struct literals instead of assuming a flat client hierarchy.
+    Nested sub-clients are qualified through `api::resources::<group>`
+    (where the group modules actually live) rather than `api::<group>`,
+    which is not re-exported at the crate's `api` root.
+  type: fix

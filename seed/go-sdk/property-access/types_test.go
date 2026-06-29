@@ -962,29 +962,6 @@ func TestGettersUserOrAdminDiscriminated(t *testing.T) {
 		_ = obj.GetWrite() // Should return zero value
 	})
 
-	t.Run("GetNormal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UserOrAdminDiscriminated{}
-		var expected string
-		obj.Normal = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetNormal(), "getter should return the property value")
-	})
-
-	t.Run("GetNormal_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *UserOrAdminDiscriminated
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetNormal() // Should return zero value
-	})
-
 	t.Run("GetFoo", func(t *testing.T) {
 		t.Parallel()
 		// Arrange

@@ -1,7 +1,6 @@
 package example
 
 import (
-    bytes "bytes"
     context "context"
 
     fern "github.com/bytes-upload/fern"
@@ -17,9 +16,7 @@ func do() {
     )
     request := &fern.UploadWithQueryParamsRequest{
         Model: "nova-2",
-        Body: bytes.NewReader(
-            []byte(""),
-        ),
+        Body: []byte(""),
     }
     client.Service.UploadWithQueryParams(
         context.TODO(),

@@ -236,4 +236,5 @@ error-discrimination:
 display-name: Discriminant Default Value
 ",
   },
+  "specVersion": "1.0.0",
 }

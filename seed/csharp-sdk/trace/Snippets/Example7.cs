@@ -11,8 +11,8 @@ public partial class Examples
         );
 
         await client.Admin.StoreTracedWorkspaceAsync(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            new StoreTracedWorkspaceRequest {
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            request: new StoreTracedWorkspaceRequest {
                 WorkspaceRunDetails = new WorkspaceRunDetails {
                     ExceptionV2 = new ExceptionV2(
                         new ExceptionInfo {

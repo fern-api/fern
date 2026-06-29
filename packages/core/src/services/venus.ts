@@ -6,9 +6,9 @@ export function createVenusService({
     headers
 }: {
     environment?: string;
-    token?: string;
+    token: string;
     headers?: Record<string, string>;
-} = {}): FernVenusApiClient {
+}): FernVenusApiClient {
     return new FernVenusApiClient({
         environment,
         token,

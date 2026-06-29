@@ -43,7 +43,7 @@ await client.Auth.GetTokenAsync(
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.<a href="/src/SeedOauthClientCredentialsReference/Simple/SimpleClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedOauthClientCredentialsReference/Simple/SimpleClient.cs">GetSomethingAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 

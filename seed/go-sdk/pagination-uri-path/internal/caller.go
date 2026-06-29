@@ -30,8 +30,9 @@ type Caller struct {
 
 // CallerParams represents the parameters used to constrcut a new *Caller.
 type CallerParams struct {
-	Client      core.HTTPClient
-	MaxAttempts uint
+	Client         core.HTTPClient
+	MaxAttempts    uint
+	DisableRetries bool
 }
 
 // NewCaller returns a new *Caller backed by the given parameters.
@@ -40,13 +41,9 @@ func NewCaller(params *CallerParams) *Caller {
 	if params.Client != nil {
 		httpClient = params.Client
 	}
-	var retryOptions []RetryOption
-	if params.MaxAttempts > 0 {
-		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
-	}
 	return &Caller{
 		client:  httpClient,
-		retrier: NewRetrier(retryOptions...),
+		retrier: NewRetrier(buildRetryOptions(params.MaxAttempts, params.DisableRetries)...),
 	}
 }
 
@@ -55,6 +52,7 @@ type CallParams struct {
 	URL                string
 	Method             string
 	MaxAttempts        uint
+	DisableRetries     bool
 	Headers            http.Header
 	BodyProperties     map[string]interface{}
 	QueryParameters    url.Values
@@ -97,16 +95,11 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 		client = params.Client
 	}
 
-	var retryOptions []RetryOption
-	if params.MaxAttempts > 0 {
-		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
-	}
-
 	resp, err := c.retrier.Run(
 		client.Do,
 		req,
 		params.ErrorDecoder,
-		retryOptions...,
+		buildRetryOptions(params.MaxAttempts, params.DisableRetries)...,
 	)
 	if err != nil {
 		return nil, err

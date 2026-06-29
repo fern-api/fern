@@ -108,18 +108,21 @@ describe("runPipeline", () => {
     const localFilesConfig: ResolvedOutputConfig = {
         version: "0.0.0",
         isGithubOutput: false,
+        repoUrl: undefined,
         npmPublishInfo: undefined
     };
 
     const githubConfigNoNpm: ResolvedOutputConfig = {
         version: "1.0.0",
         isGithubOutput: true,
+        repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: undefined
     };
 
     const githubConfig: ResolvedOutputConfig = {
         version: "1.5.0",
         isGithubOutput: true,
+        repoUrl: "https://github.com/acme/cli",
         npmPublishInfo: {
             packageName: "@acme/cli",
             registryUrl: "https://registry.npmjs.org",
@@ -271,6 +274,7 @@ describe("runPipeline", () => {
         const versionedConfig: ResolvedOutputConfig = {
             version: "2.3.1",
             isGithubOutput: false,
+            repoUrl: undefined,
             npmPublishInfo: undefined
         };
         await runPipeline({
@@ -327,6 +331,49 @@ describe("runPipeline", () => {
         expect(ciYml).not.toContain("publish-launcher:");
         expect(ciYml).not.toContain("NPM_TOKEN");
         expect(ciYml).not.toContain("npm");
+    });
+
+    it("emits .github/workflows/release.yml for github output (unconditionally)", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfigNoNpm,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("name: Release");
+        expect(releaseYml).toContain("cargo-dist");
+        expect(releaseYml).toContain("v0.31.0");
+        expect(releaseYml).toContain("build-local-artifacts");
+        expect(releaseYml).toContain("build-global-artifacts");
+        expect(releaseYml).toContain("Create GitHub Release");
+    });
+
+    it("emits release.yml alongside ci.yml when npm publish info is present", async () => {
+        await stageSdkTemplate();
+        await stageSpecs([{ filename: "openapi0.json", body: { openapi: "3.0.0" } }]);
+
+        await runPipeline({
+            outputDir,
+            customConfig: { binaryName: "acme" },
+            ir: ir({ apiDisplayName: "Acme" }),
+            outputConfig: githubConfig,
+            sdkTemplateDir,
+            specsDir
+        });
+
+        // Both ci.yml and release.yml should be present
+        const ciYml = await readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+        expect(ciYml).toContain("name: ci");
+
+        const releaseYml = await readFile(path.join(outputDir, ".github", "workflows", "release.yml"), "utf-8");
+        expect(releaseYml).toContain("name: Release");
     });
 
     it("emits .github/workflows/ci.yml when github mode with npm publish info", async () => {

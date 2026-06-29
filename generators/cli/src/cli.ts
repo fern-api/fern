@@ -9,7 +9,7 @@ import {
     shouldTrackLocalVariablesInSentry
 } from "@fern-api/base-generator";
 import { getCustomConfig } from "./customConfig.js";
-import { readIrSummary } from "./ir.js";
+import { readIr } from "./ir.js";
 import { resolveOutputConfig } from "./resolveOutputConfig.js";
 import { runPipeline } from "./runPipeline.js";
 
@@ -54,14 +54,16 @@ async function generate(configPath: string): Promise<void> {
                 })
             );
 
-            const ir = await readIrSummary(config.irFilepath);
+            const ir = await readIr(config.irFilepath);
             const outputConfig = resolveOutputConfig(config.output);
             const outcome = await runPipeline({
                 outputDir: config.output.path,
                 customConfig: getCustomConfig(config),
                 ir,
                 irFilepath: config.irFilepath,
-                outputConfig
+                outputConfig,
+                specsDir: process.env.FERN_SPECS_DIR,
+                sdkTemplateDir: process.env.FERN_SDK_TEMPLATE_DIR
             });
 
             if (outcome.status === "skipped") {

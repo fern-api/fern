@@ -35,7 +35,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected parseCustomConfig(customConfig: unknown, logger: Logger): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        const noSerdeLayer = parsed?.noSerdeLayer ?? true;
+        const noSerdeLayer = parsed?.serdeLayer != null ? !parsed.serdeLayer : (parsed?.noSerdeLayer ?? true);
         const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,
@@ -108,18 +108,25 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy"
         };
 
-        if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
+        if (parsed?.serdeLayer != null && parsed?.noSerdeLayer != null) {
+            logger.warn(
+                "Both `serdeLayer` and `noSerdeLayer` are set. `serdeLayer` takes precedence; consider removing `noSerdeLayer`."
+            );
+        }
+        const serdeLayerExplicitlyEnabled =
+            parsed?.serdeLayer != null ? parsed.serdeLayer === true : parsed?.noSerdeLayer === false;
+        if (serdeLayerExplicitlyEnabled && typeof parsed?.enableInlineTypes === "undefined") {
             logger.info(
-                "noSerdeLayer is explicitly false while enableInlineTypes is implicitly true. Changing enableInlineTypes to false."
+                "serdeLayer is enabled while enableInlineTypes is implicitly true. Changing enableInlineTypes to false."
             );
             config.enableInlineTypes = false;
         }
-        if (parsed?.noSerdeLayer === false && parsed?.enableInlineTypes === true) {
-            logger.error("Incompatible configuration: noSerdeLayer cannot be false while enableInlineTypes is true.");
+        if (serdeLayerExplicitlyEnabled && parsed?.enableInlineTypes === true) {
+            logger.error("Incompatible configuration: serdeLayer cannot be true while enableInlineTypes is true.");
         }
-        if (parsed?.noSerdeLayer === false && parsed?.experimentalGenerateReadWriteOnlyTypes === true) {
+        if (serdeLayerExplicitlyEnabled && parsed?.experimentalGenerateReadWriteOnlyTypes === true) {
             logger.error(
-                "Incompatible configuration: noSerdeLayer cannot be false while experimentalGenerateReadWriteOnlyTypes is true."
+                "Incompatible configuration: serdeLayer cannot be true while experimentalGenerateReadWriteOnlyTypes is true."
             );
         }
         const isUsingVitest = (parsed?.testFramework ?? "vitest") === "vitest";

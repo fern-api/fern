@@ -1,4 +1,4 @@
-FROM node:24.16-trixie-slim
+FROM node:24.17-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
 # vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
@@ -35,12 +35,22 @@ RUN cd /tmp/warm-cache \
     && pnpm install --ignore-scripts --prefer-offline \
     && rm -rf /tmp/warm-cache/node_modules
 
-# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.16 vendors 5.0.5).
+# Patch brace-expansion to 5.0.6 (GHSA-jxxr-4gwj-5jf2; node:24.17 vendors 5.0.5).
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \
     tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
     rm brace-expansion-5.0.6.tgz
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack tar@7.5.16 && \
+    rm -rf tar && \
+    mkdir tar && \
+    tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
+    rm tar-7.5.16.tgz
 
 WORKDIR /workspace

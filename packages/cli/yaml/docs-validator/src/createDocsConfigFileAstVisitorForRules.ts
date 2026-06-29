@@ -40,7 +40,7 @@ export function createDocsConfigFileAstVisitorForRules({
                     const severityOverride = severityOverrides?.get(ruleName);
                     addViolations(
                         ruleViolations.map((violation) => ({
-                            name: violation.name,
+                            name: violation.name ?? ruleName,
                             severity: severityOverride ?? violation.severity,
                             relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
                             nodePath: violation.nodePath ?? nodePath,

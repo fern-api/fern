@@ -11,6 +11,11 @@ types:
           This is intentionally typed as `unknown` so that we can
           simply echo the Fern configuration as-is.
         type: optional<unknown>
+      specVersion:
+        docs: |
+          The document version from the OpenAPI `info.version` field.
+          Preserved as-is (supports semver, CalVer, or any free-form string).
+        type: optional<string>
       title: optional<string>
       description: optional<string>
       basePath: optional<string>
@@ -326,6 +331,11 @@ types:
           This string includes templated path parameters.
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
+      subtitle:
+        type: optional<string>
+        docs: |
+          A short subtitle for the endpoint, populated from `x-fern-subtitle`.
+          Rendered below the endpoint title in the docs UI.
       operationId: optional<string>
       tags: list<commons.TagId>
       pathParameters: list<PathParameter>
@@ -706,6 +716,10 @@ types:
       - commons.WithDescription
       - commons.WithSource
       - commons.WithStatusCode
+    properties:
+      contentType:
+        type: optional<string>
+        docs: The original media type (e.g. text/csv, text/xml). Defaults to text/plain.
 
   JsonResponse:
     extends:

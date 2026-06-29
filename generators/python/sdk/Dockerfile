@@ -1,8 +1,10 @@
 # Stage 1: Copy Node.js from official image
-FROM node:24.16-trixie-slim AS node
+FROM node:24.17-trixie-slim AS node
 
 # Stage 2: Base Python image with dependencies
-FROM python:3.13.7-slim AS python-base
+# Pinned to the latest 3.13 patch release to pull in CPython security fixes
+# (e.g. CVE-2025-13836, CVE-2026-3644, CVE-2026-4224).
+FROM python:3.13.14-slim AS python-base
 
 # Copy Node.js and npm from the node stage
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
@@ -31,6 +33,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
        curl libcurl4t64 libgnutls30t64 \
        libexpat1 \
+       libssh2-1t64 libtasn1-6 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
@@ -75,6 +78,47 @@ RUN for dir in \
         tar -xzf ip-address-10.2.0.tgz && \
         mv package ip-address && \
         rm ip-address-10.2.0.tgz; \
+      fi; \
+    done
+
+# Patch undici to 6.27.0 to fix CVE-2026-12151.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/undici; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/undici/-/undici-6.27.0.tgz -o undici-6.27.0.tgz && \
+        tar -xzf undici-6.27.0.tgz && \
+        mv package undici && \
+        rm undici-6.27.0.tgz; \
+      fi; \
+    done
+
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/tar; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/tar/-/tar-7.5.16.tgz -o tar-7.5.16.tgz && \
+        tar -xzf tar-7.5.16.tgz && \
+        mv package tar && \
+        rm tar-7.5.16.tgz; \
+      fi; \
+    done
+
+# Patch @sigstore/core to 3.2.1 to fix GHSA-jfc7-64v2-mr8c.
+RUN for dir in \
+      /usr/local/lib/node_modules/npm/node_modules/@sigstore/core; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/@sigstore/core/-/core-3.2.1.tgz -o core-3.2.1.tgz && \
+        mkdir -p core && \
+        tar -xzf core-3.2.1.tgz --strip-components=1 -C core/ && \
+        rm core-3.2.1.tgz; \
       fi; \
     done
 

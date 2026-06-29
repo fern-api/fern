@@ -34,7 +34,11 @@ client.service.search_resources(
   limit: 1,
   offset: 1,
   query: "query",
-  filters: {}
+  filters: {
+    filters: {
+      key: "value"
+    }
+  }
 )
 ```
 

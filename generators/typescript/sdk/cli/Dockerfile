@@ -1,8 +1,8 @@
 # Stage 1: Rebuild oxlint-tsgolint from source under go1.26.4 so the embedded
-# go/stdlib clears vulnerability scanners. The published binaries are still
-# compiled with an older upstream Go toolchain.
+# go/stdlib clears CVE-2026-42507 and CVE-2026-27145 (fixed in 1.26.4).
+# The published 0.23.0 binaries are compiled with go1.26.3.
 FROM golang:1.26.4-trixie AS tsgolint-rebuild
-ARG TSGOLINT_VERSION=0.22.1
+ARG TSGOLINT_VERSION=0.23.0
 ENV GOTOOLCHAIN=go1.26.4
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN git config --global user.email "build@example.com" && \
@@ -10,11 +10,6 @@ RUN git config --global user.email "build@example.com" && \
     git clone --depth 1 --branch v${TSGOLINT_VERSION} \
         https://github.com/oxc-project/tsgolint.git /src/tsgolint && \
     cd /src/tsgolint && \
-    # Equivalent of `just init`: init the typescript-go submodule
-    # (NOT recursively — typescript-go's own microsoft/TypeScript
-    # sub-submodule is huge and not needed for tsgolint's build),
-    # apply patches, copy internal/collections so internal/utils can
-    # import it (the file comment explains the duplication).
     git submodule update --init --depth 1 typescript-go && \
     cd typescript-go && \
     git am --3way --no-gpg-sign ../patches/*.patch && \
@@ -24,7 +19,7 @@ RUN git config --global user.email "build@example.com" && \
     CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/tsgolint ./cmd/tsgolint && \
     ls -la /out/tsgolint
 
-FROM node:24.16-trixie-slim
+FROM node:24.17-trixie-slim
 
 # Apply latest Debian security updates so that grype-tracked OS package
 # vulnerabilities (glibc, dpkg, nghttp2, libcap2, systemd, libgcrypt20,
@@ -51,6 +46,7 @@ RUN echo "Types: deb" > /etc/apt/sources.list.d/sid.sources \
        libkrb5-3 libkrb5support0 libk5crypto3 libgssapi-krb5-2 \
        curl libcurl4t64 libgnutls30t64 \
        libexpat1 \
+       libssh2-1t64 libtasn1-6 \
        perl-base perl \
     && rm -f /etc/apt/sources.list.d/sid.sources /etc/apt/preferences.d/sid-low \
     && rm -rf /var/lib/apt/lists/*
@@ -60,7 +56,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
 ENV PNPM_HOME=/.pnpm
-ENV PATH=$PNPM_HOME:$PATH
+ENV PATH=$PNPM_HOME/bin:$PNPM_HOME:$PATH
 ARG SENTRY_DSN
 ARG SENTRY_ENVIRONMENT=production
 ARG SENTRY_RELEASE
@@ -70,28 +66,45 @@ ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 # Upgrade bundled npm and patch vendored dependencies (ip-address,
 # brace-expansion) to versions that clear vulnerability scanners.
-RUN npm install -g npm@11.13.0 --force && \
+RUN npm install -g npm@11.17.0 --force && \
     cd /usr/local/lib/node_modules/npm/node_modules && \
     npm pack ip-address@10.1.1 && \
     rm -rf ip-address && \
     mkdir ip-address && \
     tar -xzf ip-address-10.1.1.tgz --strip-components=1 -C ip-address/ && \
     rm ip-address-10.1.1.tgz && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz && \
     npm pack brace-expansion@5.0.6 && \
     rm -rf brace-expansion && \
     mkdir brace-expansion && \
     tar -xzf brace-expansion-5.0.6.tgz --strip-components=1 -C brace-expansion/ && \
     rm brace-expansion-5.0.6.tgz
 
-# pnpm 10.33.3 bundles patched picomatch, brace-expansion, tar, and ip-address.
-RUN npm install -g pnpm@10.33.3 --force
+# Patch tar to 7.5.16 to fix CVE-2026-53655 / GHSA-vmf3-w455-68vh
+# (PAX size override applied to intermediary GNU long-name/long-link headers,
+# causing tar parser interpretation differential / file smuggling).
+RUN cd /usr/local/lib/node_modules/npm/node_modules && \
+    npm pack tar@7.5.16 && \
+    rm -rf tar && \
+    mkdir tar && \
+    tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
+    rm tar-7.5.16.tgz
+
+# pnpm 11.8.0+ clears CVE-2026-55697, GHSA-fr4h-3cph-29xv, GHSA-qrv3-253h-g69c,
+# GHSA-72r4-9c5j-mj57, and bundles patched picomatch, brace-expansion, tar (7.5.16),
+# and ip-address.
+RUN npm install -g pnpm@11.8.0 --force
 RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.9.3 \
   prettier@3.8.1 \
-  oxfmt@0.48.0 \
+  oxfmt@0.54.0 \
   @biomejs/biome@2.4.10 \
-  oxlint@1.63.0 \
-  oxlint-tsgolint@0.22.1 \
+  oxlint@1.69.0 \
+  oxlint-tsgolint@0.23.0 \
   @types/node@^20.0.0 \
   ts-loader@^9.5.4 \
   webpack@^5.105.4 \
@@ -115,6 +128,17 @@ RUN chmod +x /tmp/tsgolint-rebuilt && \
         exit 1; \
     fi; \
     rm /tmp/tsgolint-rebuilt
+
+# Clean pnpm content-addressable store (holds the pre-built tsgolint
+# binary compiled with go1.26.2) and corepack cache. Patch pnpm's
+# bundled undici to 6.27.0 to clear CVE-2026-12151.
+RUN rm -rf /.pnpm/store /.pnpm-cache /root/.cache/node/corepack && \
+    cd /usr/local/lib/node_modules/pnpm/dist/node_modules && \
+    npm pack undici@6.27.0 && \
+    rm -rf undici && \
+    mkdir undici && \
+    tar -xzf undici-6.27.0.tgz --strip-components=1 -C undici/ && \
+    rm undici-6.27.0.tgz
 
 COPY generators/typescript/sdk/cli/dist/ /
 

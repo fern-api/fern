@@ -2865,6 +2865,13 @@
             },
             "mobile-toc": {
               "type": "boolean"
+            },
+            "changelog-layout": {
+              "type": "string",
+              "enum": [
+                "timeline",
+                "classic"
+              ]
             }
           },
           "additionalProperties": false
@@ -3997,6 +4004,9 @@
                       },
                       "inferDiscriminatedUnionBaseProperties": {
                         "type": "boolean"
+                      },
+                      "disambiguate-request-names": {
+                        "type": "boolean"
                       }
                     },
                     "additionalProperties": false
@@ -4570,6 +4580,9 @@
                           ]
                         },
                         "inferDiscriminatedUnionBaseProperties": {
+                          "type": "boolean"
+                        },
+                        "disambiguate-request-names": {
                           "type": "boolean"
                         }
                       },

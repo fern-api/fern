@@ -4,22 +4,26 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
+    
     test("uploadJsonDocument", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { author: "author", id: 1, tags: [{ key: "value" }], title: "title" };
-
+        const client = new SeedApiClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
+        const rawRequestBody = { };
+        const rawResponseBody = { "author" : "author" , "id" : 1 , "tags" : [ { "key" : "value" } ] , "title" : "title" };
+        
         server
             .mockEndpoint()
-            .post("/documents/upload")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/documents/upload").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.uploadJsonDocument();
-        expect(response).toEqual(rawResponseBody);
+        
+                        
+                                const response = await client.uploadJsonDocument();
+                                expect(response).toEqual(rawResponseBody);
+                              
+                    
     });
+          
 });

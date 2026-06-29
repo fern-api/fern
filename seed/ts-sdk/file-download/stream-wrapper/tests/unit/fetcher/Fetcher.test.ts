@@ -1,5 +1,7 @@
 import fs from "fs";
 import { join } from "path";
+import stream from "stream";
+import type { BinaryResponse } from "../../../src/core";
 import { type Fetcher, fetcherImpl } from "../../../src/core/fetcher/Fetcher";
 
 describe("Test fetcherImpl", () => {
@@ -73,4 +75,7 @@ describe("Test fetcherImpl", () => {
             expect(result.body).toEqual({ data: "test" });
         }
     });
+
+
+
 });

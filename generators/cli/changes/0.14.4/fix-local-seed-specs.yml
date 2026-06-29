@@ -1,0 +1,4 @@
+- summary: |
+    Fix local (native) seed test execution by correctly passing OpenAPI specs
+    and SDK template directory to the CLI generator via environment variables.
+  type: fix

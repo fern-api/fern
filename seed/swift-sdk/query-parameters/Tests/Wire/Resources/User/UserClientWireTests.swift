@@ -6,7 +6,7 @@ import QueryParameters
     @Test func getUsername1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
-            body: Data(
+            body: Foundation.Data(
                 #"""
                 {
                   "name": "name",
@@ -80,6 +80,18 @@ import QueryParameters
                     "tags"
                 ]
             ),
+            excludeUser: [
+                User(
+                    name: "name",
+                    tags: [
+                        "tags",
+                        "tags"
+                    ]
+                )
+            ],
+            filter: [
+                "filter"
+            ],
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

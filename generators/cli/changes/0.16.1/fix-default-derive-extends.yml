@@ -1,0 +1,6 @@
+- summary: |
+    Fix compilation error in generated CLI embedded types where structs
+    incorrectly derived `Default` when containing fields whose types extend
+    base objects that don't support `Default`. Propagated from the underlying
+    Rust model generator fix.
+  type: fix
