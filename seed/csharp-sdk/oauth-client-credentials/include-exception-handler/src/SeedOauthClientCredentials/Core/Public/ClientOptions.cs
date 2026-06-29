@@ -35,7 +35,10 @@ public partial class ClientOptions
 #else
         set;
 #endif
-    } = new HttpClient();
+    } =
+        new System.Net.Http.HttpClient(
+            new System.Net.Http.HttpClientHandler { AllowAutoRedirect = false }
+        );
 
     /// <summary>
     /// Additional headers to be sent with HTTP requests.

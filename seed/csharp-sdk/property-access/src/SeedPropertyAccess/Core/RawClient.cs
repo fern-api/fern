@@ -1,3 +1,4 @@
+using global::System.Collections.Generic;
 using global::System.Net.Http;
 using global::System.Net.Http.Headers;
 using global::System.Text;
@@ -12,6 +13,8 @@ internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     private const double JitterFactor = 0.2;
+    private const int MaxRedirects = 20;
+    private static readonly HashSet<int> RedirectStatusCodes = new() { 301, 302, 303, 307, 308 };
 #if NET6_0_OR_GREATER
     // Use Random.Shared for thread-safe random number generation on .NET 6+
 #else
@@ -149,6 +152,8 @@ internal partial class RawClient(ClientOptions clientOptions)
             var response = await httpClient
                 .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                 .ConfigureAwait(false);
+            response = await FollowRedirectsAsync(httpClient, request, response, cancellationToken)
+                .ConfigureAwait(false);
             return new global::SeedPropertyAccess.Core.ApiResponse
             {
                 StatusCode = (int)response.StatusCode,
@@ -176,6 +181,13 @@ internal partial class RawClient(ClientOptions clientOptions)
                     cancellationToken
                 )
                 .ConfigureAwait(false);
+            retryResponse = await FollowRedirectsAsync(
+                    httpClient,
+                    attemptRequest,
+                    retryResponse,
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
 
             if (!ShouldRetry(retryResponse))
             {
@@ -188,6 +200,85 @@ internal partial class RawClient(ClientOptions clientOptions)
             StatusCode = (int)retryResponse!.StatusCode,
             Raw = retryResponse,
         };
+    }
+
+    private async global::System.Threading.Tasks.Task<HttpResponseMessage> FollowRedirectsAsync(
+        HttpClient httpClient,
+        HttpRequestMessage originalRequest,
+        HttpResponseMessage response,
+        CancellationToken cancellationToken
+    )
+    {
+        var authHeaderKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var header in Options.Headers)
+        {
+            authHeaderKeys.Add(header.Key);
+        }
+
+        var currentUri = originalRequest.RequestUri!;
+        var redirectCount = 0;
+
+        while (
+            RedirectStatusCodes.Contains((int)response.StatusCode) && redirectCount < MaxRedirects
+        )
+        {
+            var location = response.Headers.Location;
+            if (location == null)
+            {
+                break;
+            }
+
+            var redirectUri = location.IsAbsoluteUri ? location : new Uri(currentUri, location);
+            redirectCount++;
+
+            var method = originalRequest.Method;
+            HttpContent? body = originalRequest.Content;
+
+            // 301, 302, 303: switch to GET and drop body
+            var statusCode = (int)response.StatusCode;
+            if (statusCode is 301 or 302 or 303)
+            {
+                method = HttpMethod.Get;
+                body = null;
+            }
+
+            var redirectRequest = new HttpRequestMessage(method, redirectUri);
+            redirectRequest.Content = body;
+
+            // Copy headers from original request
+            foreach (var header in originalRequest.Headers)
+            {
+                redirectRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+
+            // Strip auth headers on cross-origin redirects
+            if (!IsSameOrigin(currentUri, redirectUri))
+            {
+                foreach (var key in authHeaderKeys)
+                {
+                    redirectRequest.Headers.Remove(key);
+                }
+            }
+
+            response.Dispose();
+            currentUri = redirectUri;
+            response = await httpClient
+                .SendAsync(
+                    redirectRequest,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
+        }
+
+        return response;
+    }
+
+    private static bool IsSameOrigin(Uri uri1, Uri uri2)
+    {
+        return string.Equals(uri1.Scheme, uri2.Scheme, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(uri1.Host, uri2.Host, StringComparison.OrdinalIgnoreCase)
+            && uri1.Port == uri2.Port;
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
