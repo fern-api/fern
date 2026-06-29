@@ -480,6 +480,9 @@ async function downloadFilesForTask({
     }
 }
 
+/** Maximum time (ms) to wait for the S3 download to complete, including streaming. */
+const S3_DOWNLOAD_TIMEOUT_MS = 5 * 60 * 1_000;
+
 async function downloadZipForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput
@@ -489,7 +492,9 @@ async function downloadZipForTask({
 }): Promise<void> {
     // initiate request
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: "stream"
+        responseType: "stream",
+        timeout: 60_000,
+        signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
     });
 
     // pipe to zip
@@ -655,7 +660,9 @@ async function downloadAndExtractZipToDirectory({
     outputPath: AbsoluteFilePath;
 }): Promise<void> {
     const request = await axios.get(s3PreSignedReadUrl, {
-        responseType: "stream"
+        responseType: "stream",
+        timeout: 60_000,
+        signal: AbortSignal.timeout(S3_DOWNLOAD_TIMEOUT_MS)
     });
 
     const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
