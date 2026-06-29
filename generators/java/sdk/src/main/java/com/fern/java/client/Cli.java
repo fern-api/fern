@@ -47,6 +47,7 @@ import com.fern.java.client.generators.LogLevelGenerator;
 import com.fern.java.client.generators.LoggerGenerator;
 import com.fern.java.client.generators.LoggingInterceptorGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
+import com.fern.java.client.generators.RedirectInterceptorGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
@@ -346,6 +347,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         RetryInterceptorGenerator retryInterceptorGenerator = new RetryInterceptorGenerator(context);
         this.addGeneratedFile(retryInterceptorGenerator.generateFile());
+
+        RedirectInterceptorGenerator redirectInterceptorGenerator = new RedirectInterceptorGenerator(context);
+        this.addGeneratedFile(redirectInterceptorGenerator.generateFile());
 
         LogLevelGenerator logLevelGenerator = new LogLevelGenerator(context);
         this.addGeneratedFile(logLevelGenerator.generateFile());

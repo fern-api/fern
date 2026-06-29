@@ -1,0 +1,5 @@
+- summary: |
+    Strip SDK-injected auth headers on cross-origin HTTP redirects to prevent
+    credential leakage. A new RedirectInterceptor handles redirects manually and
+    removes auth headers when the redirect target differs in scheme, host, or port.
+  type: fix

@@ -46,9 +46,11 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -1216,6 +1218,25 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .endControlFlow()
                     .addCode("\n");
         }
+
+        // Disable OkHttp's built-in redirect following and add redirect interceptor
+        // that strips auth headers on cross-origin redirects
+        builder.addStatement(
+                        "$L.followRedirects(false)", OKHTTP_CLIENT_FIELD.name + "Builder")
+                .addStatement(
+                        "$T<$T> authHeaderKeys = new $T<>(this.$L.keySet())",
+                        Set.class,
+                        String.class,
+                        HashSet.class,
+                        HEADERS_FIELD.name)
+                .addStatement(
+                        "authHeaderKeys.addAll(this.$L.keySet())",
+                        HEADER_SUPPLIERS_FIELD.name)
+                .addStatement(
+                        "$L.addInterceptor(new $T(authHeaderKeys))",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext.getPoetClassNameFactory().getRedirectInterceptorClassName())
+                .addCode("\n");
 
         builder.addStatement("this.$L = $L.build()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name + "Builder")
                 .addStatement(

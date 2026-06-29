@@ -51,7 +51,11 @@ export class BaseOptionsGenerator extends WithGeneration {
             get: true,
             init: true,
             type: optional ? type.asOptional() : type,
-            initializer: includeInitializer ? this.System.Net.Http.HttpClient.new() : undefined,
+            initializer: includeInitializer
+                ? this.csharp.codeblock(
+                      "new System.Net.Http.HttpClient(new System.Net.Http.HttpClientHandler { AllowAutoRedirect = false })"
+                  )
+                : undefined,
             summary: "The http client used to make requests."
         });
     }

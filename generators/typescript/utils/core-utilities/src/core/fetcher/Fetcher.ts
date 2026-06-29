@@ -280,6 +280,14 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         logger.debug("Making HTTP request", metadata);
     }
 
+    // Collect auth header keys to strip on cross-origin redirects
+    const authHeaderKeysToStrip = new Set<string>();
+    if (args.headers != null) {
+        for (const key of Object.keys(args.headers)) {
+            authHeaderKeysToStrip.add(key.toLowerCase());
+        }
+    }
+
     try {
         const response = await requestWithRetries(
             async () =>
@@ -294,6 +302,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.withCredentials,
                     args.duplex,
                     args.responseType === "streaming" || args.responseType === "sse",
+                    authHeaderKeysToStrip,
                 ),
             args.maxRetries,
         );
