@@ -1,0 +1,83 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_viewer"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query.viewer()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query.viewer()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_user"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query.user(\n    id=\"id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query.user(\n        id=\"id\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_search"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query.search(\n    query=\"query\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query.search(\n        query=\"query\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_query_feed"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query.feed(\n    first=1,\n    after=\"after\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query.feed(\n        first=1,\n        after=\"after\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_mutation_createPost"
+            },
+            "snippet": {
+                "sync_client": "from seed import CreatePostInput, SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.mutation.create_post(\n    input=CreatePostInput(\n        title=\"title\",\n        body=\"body\",\n        tags=[\"tags\", \"tags\"],\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi, CreatePostInput\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.mutation.create_post(\n        input=CreatePostInput(\n            title=\"title\",\n            body=\"body\",\n            tags=[\"tags\", \"tags\"],\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/graphql",
+                "method": "POST",
+                "identifier_override": "endpoint_subscription_postAdded"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.subscription.post_added(\n    channel_id=\"channelId\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.subscription.post_added(\n        channel_id=\"channelId\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

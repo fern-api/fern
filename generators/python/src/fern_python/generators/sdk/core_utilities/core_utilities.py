@@ -1,6 +1,7 @@
 import os
 from typing import Optional, Set
 
+from fern_python.cli.graphql_transport import GraphqlTransportRegistry
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies.pydantic import (
@@ -100,6 +101,17 @@ class CoreUtilities:
             ),
             exports={"ParsingError"} if not self._exclude_types_from_init_exports else set(),
         )
+        # Only copy the GraphQL runtime helpers when the SDK actually has GraphQL endpoints.
+        if GraphqlTransportRegistry.has_any():
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="graphql.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="graphql"),
+                ),
+                exports={"GraphqlError"} if not self._exclude_types_from_init_exports else set(),
+            )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="jsonable_encoder.py",
@@ -429,6 +441,15 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(module=module, named_import="ApiError"),
+        )
+
+    def get_reference_to_graphql_error(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "graphql"),
+                named_import="GraphqlError",
+            ),
         )
 
     def get_reference_to_parsing_error(self) -> AST.ClassReference:

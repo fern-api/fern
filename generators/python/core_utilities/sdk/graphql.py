@@ -1,0 +1,36 @@
+from typing import Any, Dict, List, Optional
+
+from .api_error import ApiError
+
+
+class GraphqlError(ApiError):
+    """
+    Raised when a GraphQL response carries a non-empty top-level ``errors`` array.
+
+    GraphQL is a partial-success protocol: a single response can contain both ``data`` and
+    ``errors``. The generated SDK surfaces those errors by raising this exception, which still
+    exposes any partial ``data`` that came back alongside them.
+    """
+
+    errors: List[Dict[str, Any]]
+    data: Optional[Any]
+
+    def __init__(
+        self,
+        *,
+        errors: List[Dict[str, Any]],
+        data: Optional[Any] = None,
+        status_code: Optional[int] = None,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> None:
+        super().__init__(status_code=status_code, headers=headers, body={"errors": errors, "data": data})
+        self.errors = errors
+        self.data = data
+
+    def __str__(self) -> str:
+        messages = [
+            str(error.get("message", error)) if isinstance(error, dict) else str(error)
+            for error in (self.errors or [])
+        ]
+        joined = "; ".join(messages) if messages else "unknown error"
+        return f"GraphQL request failed: {joined}"

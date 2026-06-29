@@ -48,6 +48,7 @@ from fern_python.snippet import SnippetWriter
 from fern_python.utils.name_resolver import get_name_from_wire_value, get_original_name, get_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
+from fern_python.cli.graphql_transport import GraphqlTransportInfo, GraphqlTransportRegistry
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -596,6 +597,20 @@ class EndpointFunctionGenerator:
         parameters: List[AST.FunctionParameter],
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
+            graphql_transport = GraphqlTransportRegistry.get(endpoint.id)
+            if graphql_transport is not None:
+                self._write_graphql_endpoint_body(
+                    writer=writer,
+                    service=service,
+                    endpoint=endpoint,
+                    idempotency_headers=idempotency_headers,
+                    request_body_parameters=request_body_parameters,
+                    is_async=is_async,
+                    named_parameters=named_parameters,
+                    graphql_transport=graphql_transport,
+                )
+                return
+
             method = endpoint.method.visit(
                 get=lambda: "GET",
                 post=lambda: "POST",
@@ -789,6 +804,186 @@ class EndpointFunctionGenerator:
                     response_code_writer=response_code_writer,
                 )
                 writer.write_node(httpx_request)
+
+        return AST.CodeWriter(write)
+
+    def _write_graphql_endpoint_body(
+        self,
+        *,
+        writer: AST.NodeWriter,
+        service: ir_types.HttpService,
+        endpoint: ir_types.HttpEndpoint,
+        idempotency_headers: List[ir_types.HttpHeader],
+        request_body_parameters: Optional[AbstractRequestBodyParameters],
+        is_async: bool,
+        named_parameters: List[AST.NamedFunctionParameter],
+        graphql_transport: GraphqlTransportInfo,
+    ) -> None:
+        if graphql_transport.is_subscription:
+            # Subscriptions require a streaming (WebSocket) transport that the Python SDK does not
+            # yet implement; emit an explicit failure rather than a broken POST.
+            writer.write_line(
+                'raise NotImplementedError("GraphQL subscriptions are not yet supported by the Python SDK.")'
+            )
+            return
+
+        # The operation's arguments become the GraphQL `variables`; the query string is baked at
+        # generation time. We POST `{query, variables}` reusing the standard request machinery
+        # (auth, retries, base URL) and a GraphQL-specific response handler.
+        variables = self._get_request_body(
+            method="POST",
+            request_body_parameters=request_body_parameters,
+            writer=writer,
+        )
+
+        request_options_variable_name = EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE
+        if named_parameters and len(named_parameters) > 0:
+            request_options_variable_name = named_parameters[-1].name
+
+        query_literal = repr(graphql_transport.query)
+
+        def write_envelope(writer: AST.NodeWriter) -> None:
+            writer.write(f'{{"query": {query_literal}, "variables": ')
+            if variables is not None:
+                writer.write_node(variables)
+            else:
+                writer.write("{}")
+            writer.write("}")
+
+        request = HttpX.make_request(
+            stream_response_type=None,
+            is_async=is_async,
+            path=(self._get_path_for_endpoint(endpoint=endpoint) if not is_endpoint_path_empty(endpoint) else None),
+            content_type=None,
+            url=self._get_environment_as_str(endpoint=endpoint),
+            method="POST",
+            query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint, parent_writer=writer),
+            request_body=AST.Expression(AST.CodeWriter(write_envelope)),
+            content=None,
+            files=None,
+            response_variable_name=RESPONSE_VARIABLE,
+            request_options_variable_name=request_options_variable_name,
+            headers=self._get_headers_for_endpoint(
+                service=service,
+                endpoint=endpoint,
+                idempotency_headers=idempotency_headers,
+                parent_writer=writer,
+            ),
+            response_code_writer=self._build_graphql_response_code_writer(
+                endpoint=endpoint,
+                is_async=is_async,
+                operation_name=graphql_transport.operation_name,
+            ),
+            reference_to_client=AST.Expression(
+                f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
+            ),
+            is_default_body_parameter_used=self.is_default_body_parameter_used,
+            force_multipart=False,
+        )
+        writer.write_node(request)
+
+    def _graphql_response_type_hint(self, endpoint: ir_types.HttpEndpoint) -> Optional[AST.TypeHint]:
+        if endpoint.response is None or endpoint.response.body is None:
+            return None
+        return endpoint.response.body.visit(
+            json=lambda json_response: json_response.visit(
+                response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    response.response_body_type
+                ),
+                nested_property_as_response=lambda response: (
+                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                        response.response_body_type
+                    )
+                ),
+            ),
+            file_download=lambda _: None,
+            text=lambda _: None,
+            bytes=lambda _: None,
+            streaming=lambda _: None,
+            stream_parameter=lambda _: None,
+        )
+
+    def _instantiate_graphql_http_response(self, data: AST.Expression, is_async: bool) -> AST.AstNode:
+        response_class = "AsyncHttpResponse" if is_async else "HttpResponse"
+        return AST.ClassInstantiation(
+            class_=AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
+                    named_import=response_class,
+                ),
+            ),
+            kwargs=[("response", AST.Expression(RESPONSE_VARIABLE)), ("data", data)],
+        )
+
+    def _build_graphql_response_code_writer(
+        self,
+        *,
+        endpoint: ir_types.HttpEndpoint,
+        is_async: bool,
+        operation_name: str,
+    ) -> AST.CodeWriter:
+        response_type_hint = self._graphql_response_type_hint(endpoint)
+        response_json_var = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
+
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"if 200 <= {RESPONSE_VARIABLE}.status_code < 300:")
+            with writer.indent():
+                writer.write_line(f"{response_json_var} = {RESPONSE_VARIABLE}.json()")
+                writer.write_line(
+                    f'_graphql_errors = {response_json_var}.get("errors") '
+                    f"if isinstance({response_json_var}, dict) else None"
+                )
+                writer.write_line("if _graphql_errors:")
+                with writer.indent():
+                    writer.write("raise ")
+                    writer.write_node(
+                        AST.ClassInstantiation(
+                            class_=self._context.core_utilities.get_reference_to_graphql_error(),
+                            kwargs=[
+                                ("errors", AST.Expression("_graphql_errors")),
+                                (
+                                    "data",
+                                    AST.Expression(
+                                        f'{response_json_var}.get("data") '
+                                        f"if isinstance({response_json_var}, dict) else None"
+                                    ),
+                                ),
+                                ("status_code", AST.Expression(f"{RESPONSE_VARIABLE}.status_code")),
+                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                            ],
+                        )
+                    )
+                    writer.write_newline_if_last_line_not()
+                writer.write_line(
+                    f'_graphql_data = {response_json_var}.get("data") '
+                    f"if isinstance({response_json_var}, dict) else None"
+                )
+                data_expr = AST.Expression(f'(_graphql_data or {{}}).get("{operation_name}")')
+                parsed: AST.Expression = (
+                    self._context.core_utilities.get_construct(response_type_hint, data_expr)
+                    if response_type_hint is not None
+                    else data_expr
+                )
+                if self._is_raw_client:
+                    writer.write("_data = ")
+                    writer.write_node(parsed)
+                    writer.write_newline_if_last_line_not()
+                    writer.write("return ")
+                    writer.write_node(self._instantiate_graphql_http_response(AST.Expression("_data"), is_async))
+                else:
+                    writer.write("return ")
+                    writer.write_node(parsed)
+                writer.write_newline_if_last_line_not()
+            writer.write("raise ")
+            writer.write_node(
+                self._context.core_utilities.instantiate_api_error(
+                    headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
+                    status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
+                    body=AST.Expression(f"{RESPONSE_VARIABLE}.text"),
+                )
+            )
+            writer.write_newline_if_last_line_not()
 
         return AST.CodeWriter(write)
 

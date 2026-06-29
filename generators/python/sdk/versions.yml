@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.15.0
+  changelogEntry:
+    - summary: |
+        Add GraphQL SDK generation. When an API definition includes a GraphQL schema, the
+        generator now emits typed `client.query.*` and `client.mutation.*` methods that POST
+        a `{query, variables}` envelope to the GraphQL endpoint (reusing the SDK's auth,
+        retries, and base URL), unwrap `data[operationName]`, and return the fully-typed
+        Pydantic model. GraphQL operation errors raise a new `GraphqlError`. Type-narrowed
+        field selection is intentionally not generated (it cannot be expressed in Python's
+        type system); the baked full selection is used. GraphQL subscriptions are not yet
+        supported and raise `NotImplementedError`.
+      type: feat
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 5.14.21
   changelogEntry:
     - summary: |

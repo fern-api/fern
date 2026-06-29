@@ -1,6 +1,7 @@
 import sys
 
 from .abstract_generator import AbstractGenerator
+from .graphql_transport import load_ir_with_graphql_transports_sanitized
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 import fern.ir.resources as ir_types
@@ -27,7 +28,12 @@ class GeneratorCli:
         config = GeneratorConfig.parse_file(self.path_to_config_json)
         generator_exec_wrapper = GeneratorExecWrapper(generator_config=config)
         try:
-            ir = ir_types.IntermediateRepresentation.parse_file(config.ir_filepath)
+            # GraphQL endpoints carry a `graphql` transport that the published Python IR SDK does
+            # not yet wire into the Transport union, so we read those transports structurally and
+            # rewrite them to `http` before pydantic validates the IR. See graphql_transport.py.
+            ir = ir_types.IntermediateRepresentation.parse_obj(
+                load_ir_with_graphql_transports_sanitized(config.ir_filepath)
+            )
 
             generator_exec_wrapper.send_update(
                 GeneratorUpdate.factory.init_v_2(

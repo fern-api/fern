@@ -50,6 +50,9 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
+  python-graphql:
+    - customConfig: null
+      outputFolder: no-custom-config
   alias-extends:
     - customConfig: null
       outputFolder: no-custom-config
