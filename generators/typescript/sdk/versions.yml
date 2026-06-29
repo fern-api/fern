@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.74.1
+  changelogEntry:
+    - summary: |
+        Fix TS5076 compilation error in generated pagination code when both
+        `hasNextPage` and `step` are configured on offset pagination. The
+        `??` and `&&` operators were mixed without parentheses.
+      type: fix
+    - summary: |
+        Fix TS1484 compilation error in generated webhook code by using
+        `import type` for `SignatureEncoding` to satisfy `verbatimModuleSyntax`.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 3.74.0
   changelogEntry:
     - summary: |
