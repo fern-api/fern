@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.56.4
+  changelogEntry:
+    - summary: |
+        Fix remote generation CLI hanging indefinitely when S3 download stalls.
+        Added connection timeout (60s) and overall download timeout (5 min) to
+        both downloadZipForTask and downloadAndExtractZipToDirectory, so the CLI
+        fails with a clear error instead of blocking forever.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 5.56.3
   changelogEntry:
     - summary: |
