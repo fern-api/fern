@@ -106,7 +106,7 @@ class SeedApi:
         filter_assigned_to: typing.Optional[str] = None,
         filter_is_complete: typing.Optional[str] = None,
         filter_date: typing.Optional[str] = None,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
         bulk_update_tasks_request_is_complete: typing.Optional[bool] = OMIT,
@@ -122,7 +122,7 @@ class SeedApi:
 
         filter_date : typing.Optional[str]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
 
         bulk_update_tasks_request_assigned_to : typing.Optional[str]
@@ -154,7 +154,7 @@ class SeedApi:
             filter_assigned_to=filter_assigned_to,
             filter_is_complete=filter_is_complete,
             filter_date=filter_date,
-            fields=fields,
+            _fields=_fields,
             bulk_update_tasks_request_assigned_to=bulk_update_tasks_request_assigned_to,
             bulk_update_tasks_request_date=bulk_update_tasks_request_date,
             bulk_update_tasks_request_is_complete=bulk_update_tasks_request_is_complete,
@@ -272,7 +272,7 @@ class AsyncSeedApi:
         filter_assigned_to: typing.Optional[str] = None,
         filter_is_complete: typing.Optional[str] = None,
         filter_date: typing.Optional[str] = None,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
         bulk_update_tasks_request_is_complete: typing.Optional[bool] = OMIT,
@@ -288,7 +288,7 @@ class AsyncSeedApi:
 
         filter_date : typing.Optional[str]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
 
         bulk_update_tasks_request_assigned_to : typing.Optional[str]
@@ -328,7 +328,7 @@ class AsyncSeedApi:
             filter_assigned_to=filter_assigned_to,
             filter_is_complete=filter_is_complete,
             filter_date=filter_date,
-            fields=fields,
+            _fields=_fields,
             bulk_update_tasks_request_assigned_to=bulk_update_tasks_request_assigned_to,
             bulk_update_tasks_request_date=bulk_update_tasks_request_date,
             bulk_update_tasks_request_is_complete=bulk_update_tasks_request_is_complete,

@@ -37,10 +37,18 @@ def configure_smart_casing(enabled: bool) -> None:
 
 def _to_camel(s: str) -> str:
     snake = to_snake(s)
-    parts = snake.split("_")
+    leading_match = re.match(r"^(_+)", snake)
+    trailing_match = re.search(r"(_+)$", snake)
+    leading = leading_match.group(1) if leading_match else ""
+    trailing = trailing_match.group(1) if trailing_match else ""
+    if leading and len(leading) + len(trailing) >= len(snake):
+        return snake
+    core = snake[len(leading) : len(snake) - len(trailing) if trailing else len(snake)]
+    parts = core.split("_")
     if not parts:
-        return ""
-    return parts[0] + "".join(p.capitalize() for p in parts[1:])
+        return f"{leading}{trailing}"
+    camel = parts[0] + "".join(p.capitalize() for p in parts[1:])
+    return f"{leading}{camel}{trailing}"
 
 
 def _smart_snake(s: str) -> str:

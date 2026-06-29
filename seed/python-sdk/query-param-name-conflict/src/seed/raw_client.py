@@ -27,7 +27,7 @@ class RawSeedApi:
         filter_assigned_to: typing.Optional[str] = None,
         filter_is_complete: typing.Optional[str] = None,
         filter_date: typing.Optional[str] = None,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
         bulk_update_tasks_request_is_complete: typing.Optional[bool] = OMIT,
@@ -43,7 +43,7 @@ class RawSeedApi:
 
         filter_date : typing.Optional[str]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
 
         bulk_update_tasks_request_assigned_to : typing.Optional[str]
@@ -69,7 +69,7 @@ class RawSeedApi:
                 "assigned_to": filter_assigned_to,
                 "is_complete": filter_is_complete,
                 "date": filter_date,
-                "_fields": fields,
+                "_fields": _fields,
             },
             json={
                 "assigned_to": bulk_update_tasks_request_assigned_to,
@@ -113,7 +113,7 @@ class AsyncRawSeedApi:
         filter_assigned_to: typing.Optional[str] = None,
         filter_is_complete: typing.Optional[str] = None,
         filter_date: typing.Optional[str] = None,
-        fields: typing.Optional[str] = None,
+        _fields: typing.Optional[str] = None,
         bulk_update_tasks_request_assigned_to: typing.Optional[str] = OMIT,
         bulk_update_tasks_request_date: typing.Optional[dt.date] = OMIT,
         bulk_update_tasks_request_is_complete: typing.Optional[bool] = OMIT,
@@ -129,7 +129,7 @@ class AsyncRawSeedApi:
 
         filter_date : typing.Optional[str]
 
-        fields : typing.Optional[str]
+        _fields : typing.Optional[str]
             Comma-separated list of fields to include in the response.
 
         bulk_update_tasks_request_assigned_to : typing.Optional[str]
@@ -155,7 +155,7 @@ class AsyncRawSeedApi:
                 "assigned_to": filter_assigned_to,
                 "is_complete": filter_is_complete,
                 "date": filter_date,
-                "_fields": fields,
+                "_fields": _fields,
             },
             json={
                 "assigned_to": bulk_update_tasks_request_assigned_to,

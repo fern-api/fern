@@ -1,0 +1,7 @@
+- summary: |
+    Preserve leading and trailing underscores in generated module and identifier
+    names. Previously, names like `_agents` were incorrectly transformed to
+    `agents`, stripping the underscore. This enables using underscore-prefixed
+    namespace names (e.g. `x-fern-sdk-group-name: _agents`) to generate private
+    Python modules.
+  type: fix
