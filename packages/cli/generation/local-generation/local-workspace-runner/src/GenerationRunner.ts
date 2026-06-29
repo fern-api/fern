@@ -100,7 +100,7 @@ export class GenerationRunner {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
                 return context.runInteractiveTask(
-                    { name: generatorInvocation.name },
+                    { name: `${generatorInvocation.name}@${generatorInvocation.version}` },
                     async (interactiveTaskContext) => {
                         if (generatorInvocation.absolutePathToLocalOutput == null) {
                             interactiveTaskContext.failWithoutThrowing(
