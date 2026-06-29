@@ -1415,7 +1415,8 @@ export class DocsDefinitionResolver {
                         type: "unversioned",
                         id: this.#idgen.get(product.product),
                         collapsed: undefined,
-                        landingPage: undefined,
+                        landingPage:
+                            product.landingPage != null ? this.toLandingPageNode(product.landingPage, slug) : undefined,
                         child: await this.convertTabbedNavigation(
                             this.#idgen.get(product.product),
                             product.navigation.items,
@@ -1428,7 +1429,8 @@ export class DocsDefinitionResolver {
                         type: "unversioned",
                         id: this.#idgen.get(product.product),
                         collapsed: undefined,
-                        landingPage: undefined,
+                        landingPage:
+                            product.landingPage != null ? this.toLandingPageNode(product.landingPage, slug) : undefined,
                         child: await this.toSidebarRootNode(
                             this.#idgen.get(product.product),
                             product.navigation.items,
