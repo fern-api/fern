@@ -9,6 +9,7 @@ imports:
   environment: environment.yml
   errors: errors.yml
   generator: generator-exec/config.yml
+  global-parameters: global-parameters.yml
   http: http.yml
   proto: proto.yml
   publish: publish.yml
@@ -37,7 +38,10 @@ types:
       apiDocs: optional<string>
       auth: auth.ApiAuth
       headers:
-        docs: API Wide headers that are sent on every request
+        docs: |
+          API-wide headers sent on every request.
+          DEPRECATED: Use globalParameters with location=header instead.
+          SDK generators should migrate to reading globalParameters.
         type: list<http.HttpHeader>
       idempotencyHeaders:
         docs: Headers that are sent for idempotent endpoints
@@ -63,7 +67,18 @@ types:
       pathParameters: list<http.PathParameter>
       errorDiscriminationStrategy: ErrorDiscriminationStrategy
       sdkConfig: SdkConfig
-      variables: list<variables.VariableDeclaration>
+      variables:
+        docs: |
+          DEPRECATED: Use globalParameters with location=path instead.
+          SDK generators should migrate to reading globalParameters.
+        type: list<variables.VariableDeclaration>
+      globalParameters:
+        docs: |
+          Unified global parameters injected into requests. Covers all locations
+          (header, query, body, path). Supersedes `headers` and `variables`.
+          When `apply` is `explicit`, only operations annotated with
+          x-fern-global-parameter receive the parameter.
+        type: optional<list<global-parameters.GlobalParameter>>
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
       readmeConfig: optional<ReadmeConfig>
       sourceConfig: optional<SourceConfig>

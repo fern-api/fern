@@ -77,6 +77,7 @@ export function mergeIntermediateRepresentation(
         pathParameters: [...(ir1.pathParameters ?? []), ...(ir2.pathParameters ?? [])],
         errorDiscriminationStrategy: ir1.errorDiscriminationStrategy ?? ir2.errorDiscriminationStrategy,
         variables: [...(ir1.variables ?? []), ...(ir2.variables ?? [])],
+        globalParameters: mergeGlobalParameters(ir1.globalParameters, ir2.globalParameters),
         serviceTypeReferenceInfo: ir1.serviceTypeReferenceInfo ?? ir2.serviceTypeReferenceInfo,
         readmeConfig: ir1.readmeConfig ?? ir2.readmeConfig,
         sourceConfig: ir1.sourceConfig ?? ir2.sourceConfig,
@@ -550,6 +551,32 @@ function deduplicateHeaders(headers: FernIr.HttpHeader[]): FernIr.HttpHeader[] {
         seen.add(wireValue);
         return true;
     });
+}
+
+function mergeGlobalParameters(
+    params1: FernIr.GlobalParameter[] | undefined,
+    params2: FernIr.GlobalParameter[] | undefined
+): FernIr.GlobalParameter[] | undefined {
+    if (params1 == null && params2 == null) {
+        return undefined;
+    }
+    if (params1 == null) {
+        return params2;
+    }
+    if (params2 == null) {
+        return params1;
+    }
+    const seen = new Set<string>();
+    const merged: FernIr.GlobalParameter[] = [];
+    for (const param of [...params1, ...params2]) {
+        const wireValue = getWireValue(param.name);
+        if (seen.has(wireValue)) {
+            continue;
+        }
+        seen.add(wireValue);
+        merged.push(param);
+    }
+    return merged;
 }
 
 function generateUniqueName(id: string, existingIds: Set<string>): string {

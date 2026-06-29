@@ -19,7 +19,11 @@ export interface IntermediateRepresentation {
     apiDisplayName: string | undefined;
     apiDocs: string | undefined;
     auth: FernIr.ApiAuth;
-    /** API Wide headers that are sent on every request */
+    /**
+     * API-wide headers sent on every request.
+     * DEPRECATED: Use globalParameters with location=header instead.
+     * SDK generators should migrate to reading globalParameters.
+     */
     headers: FernIr.HttpHeader[];
     /** Headers that are sent for idempotent endpoints */
     idempotencyHeaders: FernIr.HttpHeader[];
@@ -40,7 +44,18 @@ export interface IntermediateRepresentation {
     pathParameters: FernIr.PathParameter[];
     errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
     sdkConfig: FernIr.SdkConfig;
+    /**
+     * DEPRECATED: Use globalParameters with location=path instead.
+     * SDK generators should migrate to reading globalParameters.
+     */
     variables: FernIr.VariableDeclaration[];
+    /**
+     * Unified global parameters injected into requests. Covers all locations
+     * (header, query, body, path). Supersedes `headers` and `variables`.
+     * When `apply` is `explicit`, only operations annotated with
+     * x-fern-global-parameter receive the parameter.
+     */
+    globalParameters: FernIr.GlobalParameter[] | undefined;
     serviceTypeReferenceInfo: FernIr.ServiceTypeReferenceInfo;
     readmeConfig: FernIr.ReadmeConfig | undefined;
     sourceConfig: FernIr.SourceConfig | undefined;

@@ -80,6 +80,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
             }
         },
         variables: [],
+        globalParameters: undefined,
         serviceTypeReferenceInfo: {
             typesReferencedOnlyByService: {},
             sharedTypes: []

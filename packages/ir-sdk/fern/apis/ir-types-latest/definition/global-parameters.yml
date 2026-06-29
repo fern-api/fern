@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+  types: types.yml
+
+types:
+  GlobalParameterLocation:
+    enum:
+      - body
+      - query
+      - header
+      - path
+
+  GlobalParameterApplyMode:
+    enum:
+      - auto
+      - explicit
+
+  GlobalParameter:
+    extends: commons.Declaration
+    properties:
+      name: commons.NameAndWireValueOrString
+      location: GlobalParameterLocation
+      target:
+        type: optional<string>
+        docs: |
+          Wire-level target. Only meaningful for body parameters, where it
+          specifies the dotted JSON path (e.g. "config.currency"). For
+          header/query/path, the wire name comes from `name` and this field
+          is omitted.
+      valueType: types.TypeReference
+      optional: boolean
+      env: optional<string>
+      apply: GlobalParameterApplyMode
+      clientDefault:
+        type: optional<types.Literal>
+        docs: |
+          Client-side default. When present, the SDK sends this value on the
+          wire when the caller does not provide one. Populated from the
+          `default` or `x-fern-default` field on the extension entry.
+          Scalars only (string, boolean, number). Coerced to match the
+          target field's type at import time.

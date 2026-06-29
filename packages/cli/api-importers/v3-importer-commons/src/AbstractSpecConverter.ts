@@ -64,6 +64,7 @@ export abstract class AbstractSpecConverter<
             pathParameters: [],
             errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
             variables: [],
+            globalParameters: undefined,
             serviceTypeReferenceInfo: {
                 sharedTypes: [],
                 typesReferencedOnlyByService: {}

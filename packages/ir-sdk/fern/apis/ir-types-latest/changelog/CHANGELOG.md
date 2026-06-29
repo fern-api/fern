@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.7.0] - 2026-06-29
+
+- Feature: Add optional `globalParameters` field to `IntermediateRepresentation`.
+  New `GlobalParameter` type (extends `Declaration`) with `name`, `location`,
+  `target`, `valueType`, `optional`, `env`, `apply`, and `clientDefault` fields.
+  Covers all parameter locations (header, query, body, path) under a unified
+  surface, superseding the separate `headers` and `variables` fields. New enums
+  `GlobalParameterLocation` and `GlobalParameterApplyMode` control injection
+  behavior. Deprecation docstrings added to `headers` and `variables` pointing
+  at `globalParameters`.
+
 ## [v67.6.0] - 2026-06-23
 
 - Feature: Add optional `specVersion` field to `IntermediateRepresentation`.

@@ -1,0 +1,7 @@
+- summary: |
+    Add support for `x-fern-global-parameters` OpenAPI extension. This unified
+    extension covers all parameter locations (header, query, body, path) and
+    populates a new `globalParameters` field on the IR. Existing
+    `x-fern-global-headers` specs are automatically dual-written into the new
+    field for backward compatibility.
+  type: feat

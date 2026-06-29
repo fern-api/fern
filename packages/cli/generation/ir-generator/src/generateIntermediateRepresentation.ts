@@ -192,6 +192,7 @@ export function generateIntermediateRepresentation({
                       type: rootApiFileContext.parseTypeReference(variable)
                   }))
                 : [],
+        globalParameters: undefined,
         serviceTypeReferenceInfo: {
             typesReferencedOnlyByService: {},
             sharedTypes: []

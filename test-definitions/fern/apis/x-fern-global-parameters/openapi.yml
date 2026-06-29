@@ -1,0 +1,116 @@
+openapi: 3.1.0
+info:
+  title: x-fern-global-parameters test
+  version: 1.0.0
+
+x-fern-global-parameters:
+  # Header — apply: auto, injected on all operations
+  - name: X-API-Version
+    in: header
+    parameter-name: apiVersion
+    optional: false
+    env: ACME_API_VERSION
+    default: "2024-01-01"
+    apply: auto
+
+  # Query — apply: explicit
+  - name: currency
+    in: query
+    env: ACME_CURRENCY
+    optional: true
+    apply: explicit
+
+  # Path — apply: auto
+  - name: appId
+    in: path
+    env: ACME_APP_ID
+    optional: false
+    apply: auto
+
+  # Body — apply: explicit with target
+  - name: currency
+    in: body
+    target: config.currency
+    parameter-name: currency
+    env: ACME_CURRENCY
+    default: USD
+    apply: explicit
+    type: string
+
+paths:
+  /apps/{appId}/search:
+    post:
+      operationId: search
+      x-fern-global-parameter:
+        - currency
+      parameters:
+        - name: appId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                config:
+                  type: object
+                  properties:
+                    currency:
+                      type: string
+                    locale:
+                      type: string
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+
+  /apps/{appId}/users:
+    get:
+      operationId: listUsers
+      parameters:
+        - name: appId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Users list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
