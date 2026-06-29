@@ -1,0 +1,7 @@
+- summary: |
+    GraphQL SDKs now carry `@deprecated` through from the schema. The GraphQL->IR converter reads
+    `@deprecated(reason:)` (graphql-js `deprecationReason`) on fields, enum values, arguments, and root
+    operations into the IR's availability. Deprecated fields are flagged with a `@deprecated` JSDoc tag
+    in the generated `Select` types (warning the consumer at selection time) and are excluded from the
+    default selection so regeneration never silently re-fetches a deprecated field.
+  type: feat

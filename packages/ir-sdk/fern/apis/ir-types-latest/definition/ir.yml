@@ -45,6 +45,13 @@ types:
       types:
         docs: "The types described by this API"
         type: map<commons.TypeId, types.TypeDeclaration>
+      graphqlFieldArguments:
+        docs: |
+          GraphQL field arguments, keyed by the `TypeId` of the object/interface type that owns them.
+          Populated only by the GraphQL importer; absent for all other API formats. SDK generators use
+          this to expose a typed `$args` on nested field selections and to declare the corresponding
+          GraphQL variables when building queries (pagination, filtering, sorting).
+        type: optional<map<commons.TypeId, types.GraphqlObjectFieldArguments>>
       services:
         docs: "The services exposed by this API"
         type: map<commons.ServiceId, http.HttpService>

@@ -49,6 +49,8 @@ export abstract class AbstractSpecConverter<
                 requirement: FernIr.AuthSchemesRequirement.All,
                 schemes: []
             },
+            // GraphQL-only; non-GraphQL importers leave this unset.
+            graphqlFieldArguments: undefined,
             selfHosted: false,
             types: {},
             services: {},

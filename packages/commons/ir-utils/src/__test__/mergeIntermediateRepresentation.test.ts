@@ -39,6 +39,7 @@ function makeMinimalIr(overrides: Partial<FernIr.IntermediateRepresentation> = {
         headers: [],
         idempotencyHeaders: [],
         types: {},
+        graphqlFieldArguments: undefined,
         services: {},
         webhookGroups: {},
         websocketChannels: undefined,

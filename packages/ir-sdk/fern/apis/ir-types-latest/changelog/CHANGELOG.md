@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.9.0] - 2026-06-26
+
+- Feature: Add optional `graphqlFieldArguments` to `IntermediateRepresentation` and new
+  `GraphqlFieldArgument` / `GraphqlObjectFieldArguments` types. The GraphQL importer populates this
+  (keyed by `TypeId`) with each object/interface field's arguments — name, value type, and GraphQL
+  SDL type. SDK generators use it to expose a typed `$args` on nested selections and to declare the
+  matching GraphQL variables when building queries (enabling pagination, filtering, and sorting on
+  nested fields). Additive and GraphQL-only; absent for all other API formats.
+
+## [v67.8.0] - 2026-06-25
+
+- Feature: Add optional `variableDefinitions` and `arguments` fields to `GraphqlTransport`.
+  These carry the GraphQL variable definitions (e.g. `$id: ID!`) and the root-field argument
+  passthrough (e.g. `(id: $id)`) so SDK generators can rebuild the query envelope around a
+  caller-provided field selection, instead of always sending the pre-built `query`.
+
+## [v67.7.0] - 2026-06-25
+
+- Feature: Add `graphql` variant to the `Transport` union and new `GraphqlTransport`
+  type (`graphql.yml`). Enables SDK generators to distinguish GraphQL endpoints from
+  HTTP/gRPC and to construct the proper `{query, variables}` request envelope and
+  unwrap `.data[operationName]` responses. The `GraphqlTransport` carries the
+  pre-built query string, operation type (QUERY/MUTATION/SUBSCRIPTION), and
+  operation name.
+
 ## [v67.6.0] - 2026-06-23
 
 - Feature: Add optional `specVersion` field to `IntermediateRepresentation`.

@@ -1,0 +1,9 @@
+- summary: |
+    GraphQL SDKs now apply the API's auth scheme to GraphQL operations. A GraphQL schema cannot
+    express authentication, so auth is taken from the surrounding API definition — inherited from a
+    combined OpenAPI spec or declared by the publisher in generators.yml (api.auth / auth-schemes).
+    Query and mutation operations inject the auth header on the GraphQL POST, exactly as for REST
+    endpoints. Subscriptions resolve auth lazily inside the WebSocket connect (keeping the generated
+    subscription method synchronous) and send it as both the connection_init payload and the
+    upgrade-request headers.
+  type: feat

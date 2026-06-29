@@ -141,6 +141,31 @@ types:
       - READ_ONLY
       - WRITE_ONLY
 
+  GraphqlFieldArgument:
+    docs: |
+      A single GraphQL argument on an object/interface field (e.g. `first` on `products(first: Int)`).
+      Used by SDK generators to type the field's `$args` selection and to declare the matching GraphQL
+      variable when building the query at runtime.
+    properties:
+      name: commons.NameAndWireValueOrString
+      valueType:
+        type: TypeReference
+        docs: The argument's value type, for generating the typed `$args` shape.
+      graphqlType:
+        type: string
+        docs: |
+          The argument's GraphQL SDL type, e.g. `Int`, `SortBy!`, or `[ProductFilter!]`. Used verbatim
+          to declare the GraphQL variable (`$var: <graphqlType>`) at query-build time.
+      docs: optional<string>
+
+  GraphqlObjectFieldArguments:
+    docs: |
+      The GraphQL field arguments for a single object/interface type, keyed by field wire name.
+      Populated only by the GraphQL importer; consumed by SDK generators to expose a typed `$args`
+      on nested selections.
+    properties:
+      fields: map<string, list<GraphqlFieldArgument>>
+
   UnionTypeDeclaration:
     properties:
       discriminant: commons.NameAndWireValueOrString

@@ -21,6 +21,7 @@ import { HttpPath } from "../../http/types/HttpPath.js";
 import { HttpService } from "../../http/types/HttpService.js";
 import { PathParameter } from "../../http/types/PathParameter.js";
 import { PublishingConfig } from "../../publish/types/PublishingConfig.js";
+import { GraphqlObjectFieldArguments } from "../../types/types/GraphqlObjectFieldArguments.js";
 import { TypeDeclaration } from "../../types/types/TypeDeclaration.js";
 import { VariableDeclaration } from "../../variables/types/VariableDeclaration.js";
 import { WebhookGroup } from "../../webhooks/types/WebhookGroup.js";
@@ -50,6 +51,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     headers: core.serialization.list(HttpHeader),
     idempotencyHeaders: core.serialization.list(HttpHeader),
     types: core.serialization.record(TypeId, TypeDeclaration),
+    graphqlFieldArguments: core.serialization.record(TypeId, GraphqlObjectFieldArguments).optional(),
     services: core.serialization.record(ServiceId, HttpService),
     webhookGroups: core.serialization.record(WebhookGroupId, WebhookGroup),
     websocketChannels: core.serialization.record(WebSocketChannelId, WebSocketChannel).optional(),
@@ -87,6 +89,7 @@ export declare namespace IntermediateRepresentation {
         headers: HttpHeader.Raw[];
         idempotencyHeaders: HttpHeader.Raw[];
         types: Record<TypeId.Raw, TypeDeclaration.Raw>;
+        graphqlFieldArguments?: Record<TypeId.Raw, GraphqlObjectFieldArguments.Raw> | null;
         services: Record<ServiceId.Raw, HttpService.Raw>;
         webhookGroups: Record<WebhookGroupId.Raw, WebhookGroup.Raw>;
         websocketChannels?: Record<WebSocketChannelId.Raw, WebSocketChannel.Raw> | null;

@@ -25,6 +25,13 @@ export interface IntermediateRepresentation {
     idempotencyHeaders: FernIr.HttpHeader[];
     /** The types described by this API */
     types: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
+    /**
+     * GraphQL field arguments, keyed by the `TypeId` of the object/interface type that owns them.
+     * Populated only by the GraphQL importer; absent for all other API formats. SDK generators use
+     * this to expose a typed `$args` on nested field selections and to declare the corresponding
+     * GraphQL variables when building queries (pagination, filtering, sorting).
+     */
+    graphqlFieldArguments: Record<FernIr.TypeId, FernIr.GraphqlObjectFieldArguments> | undefined;
     /** The services exposed by this API */
     services: Record<FernIr.ServiceId, FernIr.HttpService>;
     /** The webhooks sent by this API */

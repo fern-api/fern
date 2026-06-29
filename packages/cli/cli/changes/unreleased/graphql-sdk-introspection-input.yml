@@ -1,0 +1,7 @@
+- summary: |
+    GraphQL specs can now be supplied as an introspection-query JSON result, not just SDL. The
+    GraphQL->IR converter detects introspection input (a `.json` file, or content that parses to an
+    introspection result — both the bare `{ __schema }` and the `{ data: { __schema } }` envelope are
+    accepted) and builds the schema via graphql-js `buildClientSchema`; SDL continues to use
+    `buildSchema`. This lets publishers point Fern at an endpoint's downloaded introspection JSON.
+  type: feat

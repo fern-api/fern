@@ -35,6 +35,10 @@ export function mergeIntermediateRepresentation(
             ...(ir1.types ?? {}),
             ...(ir2.types ?? {})
         },
+        graphqlFieldArguments:
+            ir1.graphqlFieldArguments != null || ir2.graphqlFieldArguments != null
+                ? { ...(ir1.graphqlFieldArguments ?? {}), ...(ir2.graphqlFieldArguments ?? {}) }
+                : undefined,
         constants: {
             ...(ir1.constants ?? {}),
             ...(ir2.constants ?? {})

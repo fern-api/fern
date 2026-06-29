@@ -2,7 +2,7 @@
 
 import * as FernIr from "../../../index.js";
 
-export type Transport = FernIr.Transport.Http | FernIr.Transport.Grpc;
+export type Transport = FernIr.Transport.Http | FernIr.Transport.Grpc | FernIr.Transport.Graphql;
 
 export namespace Transport {
     export interface Http extends _Utils {
@@ -13,6 +13,10 @@ export namespace Transport {
         type: "grpc";
     }
 
+    export interface Graphql extends FernIr.GraphqlTransport, _Utils {
+        type: "graphql";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.Transport._Visitor<_Result>) => _Result;
     }
@@ -20,6 +24,7 @@ export namespace Transport {
     export interface _Visitor<_Result> {
         http: () => _Result;
         grpc: (value: FernIr.GrpcTransport) => _Result;
+        graphql: (value: FernIr.GraphqlTransport) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -44,12 +49,24 @@ export const Transport = {
         };
     },
 
+    graphql: (value: FernIr.GraphqlTransport): FernIr.Transport.Graphql => {
+        return {
+            ...value,
+            type: "graphql",
+            _visit: function <_Result>(this: FernIr.Transport.Graphql, visitor: FernIr.Transport._Visitor<_Result>) {
+                return FernIr.Transport._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.Transport, visitor: FernIr.Transport._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "http":
                 return visitor.http();
             case "grpc":
                 return visitor.grpc(value);
+            case "graphql":
+                return visitor.graphql(value);
             default:
                 return visitor._other(value);
         }

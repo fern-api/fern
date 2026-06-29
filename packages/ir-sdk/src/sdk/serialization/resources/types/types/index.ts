@@ -42,6 +42,8 @@ export * from "./ExampleUnionBaseProperty.js";
 export * from "./ExampleUnionType.js";
 export * from "./FloatType.js";
 export * from "./FloatValidationRules.js";
+export * from "./GraphqlFieldArgument.js";
+export * from "./GraphqlObjectFieldArguments.js";
 export * from "./IntegerType.js";
 export * from "./IntegerValidationRules.js";
 export * from "./JsonEncoding.js";

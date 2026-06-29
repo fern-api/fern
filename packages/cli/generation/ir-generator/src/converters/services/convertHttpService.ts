@@ -492,6 +492,12 @@ function convertTransportToEncoding(transport: Transport, service: RawSchemas.Ht
                 json: undefined,
                 proto: {}
             };
+        case "graphql":
+            // GraphQL-over-HTTP uses a JSON request/response envelope.
+            return {
+                json: {},
+                proto: undefined
+            };
         default:
             assertNever(transport);
     }

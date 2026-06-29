@@ -1,4 +1,5 @@
 // Force cache invalidation for CI - server URL templating feature
+export { applyAuthToGraphqlEndpoints } from "./applyAuthToGraphqlEndpoints.js";
 export { convertApiAuth } from "./auth/convertApiAuth.js";
 export { constructHttpPath } from "./constructHttpPath.js";
 export { convertEnvironments } from "./environments/convertEnvironments.js";

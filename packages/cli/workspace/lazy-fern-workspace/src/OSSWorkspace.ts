@@ -19,7 +19,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import type { GraphQlOperationExamplesInput } from "@fern-api/graphql-to-fdr";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
-import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
+import { applyAuthToGraphqlEndpoints, mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { type ParseOpenAPIOptions, parse } from "@fern-api/openapi-ir-parser";
 import {
@@ -35,6 +35,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 as uuidv4 } from "uuid";
+import { GraphQLIRGenerator } from "./graphql/GraphQLIRGenerator.js";
 import { loadOpenRpc } from "./loaders/index.js";
 import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator.js";
@@ -313,6 +314,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         // Start protobuf IR generation in parallel with OpenAPI processing
         const protobufIRResultsPromise = this.generateAllProtobufIRs({ context });
 
+        // Start GraphQL IR generation in parallel with OpenAPI processing
+        const graphqlIRResultsPromise = this.generateAllGraphQLIRs({ context });
+
         const specs = await this.getOpenAPISpecsCached({ context });
         const documents = await this.loader.loadDocuments({ context, specs });
 
@@ -479,6 +483,18 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 mergedIr === undefined ? ir : mergeIntermediateRepresentation(mergedIr, ir, protobufCasingsGenerator);
         }
 
+        // Await and merge GraphQL IR results (generated in parallel with OpenAPI processing)
+        const graphqlIRResults = await graphqlIRResultsPromise;
+        const graphqlCasingsGenerator = constructCasingsGenerator({
+            generationLanguage: "typescript",
+            keywords: undefined,
+            smartCasing: false
+        });
+        for (const ir of graphqlIRResults) {
+            mergedIr =
+                mergedIr === undefined ? ir : mergeIntermediateRepresentation(mergedIr, ir, graphqlCasingsGenerator);
+        }
+
         for (const errorCollector of errorCollectors) {
             if (errorCollector.hasErrors()) {
                 const errorStats = errorCollector.getErrorStats();
@@ -514,6 +530,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         if (authOverrides != null) {
             mergedIr = resolveOAuthEndpointReferences({ ir: mergedIr, authOverrides });
         }
+
+        // GraphQL operations come in with `auth: false` (a GraphQL schema cannot express auth). Now that
+        // all specs are merged, let them participate in any auth the API declares (e.g. a combined
+        // OpenAPI spec). Remove this call (and the helper) to revert GraphQL auth support.
+        mergedIr = applyAuthToGraphqlEndpoints(mergedIr);
 
         return mergedIr;
     }
@@ -557,6 +578,29 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return results;
     }
 
+    private async generateAllGraphQLIRs({ context }: { context: TaskContext }): Promise<IntermediateRepresentation[]> {
+        const graphqlSpecs = this.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+        if (graphqlSpecs.length === 0) {
+            return [];
+        }
+
+        const results: IntermediateRepresentation[] = [];
+        for (const spec of graphqlSpecs) {
+            try {
+                const graphqlIRGenerator = new GraphQLIRGenerator({ context });
+                const ir = await graphqlIRGenerator.generate({
+                    absoluteFilepath: spec.absoluteFilepath,
+                    namespace: spec.namespace
+                });
+                results.push(ir);
+            } catch (error) {
+                context.logger.log("warn", "Failed to generate GraphQL IR: " + error);
+            }
+        }
+
+        return results;
+    }
+
     public async toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: OSSWorkspace.Settings,
@@ -585,6 +629,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         const definition = await this.getDefinition({ context }, effectiveSettings);
+        // GraphQL specs convert directly to IR (not to a Fern definition), so carry the
+        // generated GraphQL IR on the FernWorkspace; generateIntermediateRepresentation()
+        // merges it. This makes GraphQL SDKs work via the standard `fern generate` pipeline
+        // without requiring the --from-openapi (direct-to-IR) path.
+        const additionalIrs = await this.generateAllGraphQLIRs({ context });
         return new FernWorkspace({
             absoluteFilePath: this.absoluteFilePath,
             workspaceName: this.workspaceName,
@@ -594,7 +643,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             },
             definition,
             cliVersion: this.cliVersion,
-            sources: this.sources
+            sources: this.sources,
+            additionalIrs
         });
     }
 

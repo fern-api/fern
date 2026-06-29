@@ -1,0 +1,7 @@
+- summary: |
+    GraphQL custom scalars now map to better default types (PRD §10.6, built-in defaults). Well-known
+    names map to native-ish primitives (DateTime/Timestamp -> datetime, Date -> date, UUID/GUID -> uuid,
+    Long -> long, BigInt -> bigint), JSON/JSONObject map to an untyped value (`unknown`) instead of a
+    misleading string, and any unrecognized custom scalar falls back to `string` with a generation-time
+    warning naming the scalar (never silently `any`).
+  type: feat

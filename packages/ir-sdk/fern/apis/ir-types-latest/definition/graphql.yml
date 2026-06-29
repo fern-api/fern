@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+types:
+  GraphqlTransport:
+    docs: |
+      Defines the transport-level information for a GraphQL endpoint. This is used
+      by SDK generators to construct the proper GraphQL request envelope (wrapping
+      variables in `{query, variables}`) and to unwrap the `.data[field]` response.
+    properties:
+      query:
+        docs: |
+          The pre-built GraphQL query/mutation string that the SDK sends at runtime.
+          Auto-generated from the schema's return type with full field selection
+          (depth-limited to avoid infinite recursion on cyclic types).
+        type: string
+      operationType:
+        docs: |
+          Whether this is a query, mutation, or subscription operation.
+        type: GraphqlOperationType
+      operationName:
+        docs: |
+          The name of the root field being queried. Used to unwrap the response
+          from `.data[operationName]`.
+        type: string
+      variableDefinitions:
+        docs: |
+          The GraphQL variable definitions for the operation, e.g. `$id: ID!, $limit: Int`
+          (without the surrounding parentheses; empty when the operation takes no arguments).
+          Lets SDKs rebuild the query envelope around a caller-provided field selection
+          instead of the pre-built `query`.
+        type: optional<string>
+      arguments:
+        docs: |
+          The GraphQL argument passthrough for the root field, e.g. `(id: $id, limit: $limit)`
+          (including the parentheses; empty when the operation takes no arguments). Paired
+          with `variableDefinitions` to rebuild the query when a caller supplies a selection.
+        type: optional<string>
+
+  GraphqlOperationType:
+    docs: The type of GraphQL operation.
+    enum:
+      - QUERY
+      - MUTATION
+      - SUBSCRIPTION
