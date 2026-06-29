@@ -15,6 +15,7 @@ import { appendFile } from "fs/promises";
 
 import { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
+import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
 import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
@@ -395,8 +396,11 @@ async function generateOne({
             });
         }
 
-        await emitPrUrlAnnotationAndSummary({
+        await emitGenerationAnnotations({
             pullRequestUrl: remoteTaskHandlerResponse?.pullRequestUrl,
+            publishTarget: remoteTaskHandlerResponse?.publishTarget,
+            noChangesDetected: remoteTaskHandlerResponse?.noChangesDetected,
+            version: remoteTaskHandlerResponse?.actualVersion,
             generatorName: generatorInvocation.name,
             groupName: generatorGroup.groupName,
             apiName: workspace.workspaceName,
@@ -461,50 +465,97 @@ async function generateOne({
     }
 }
 
-/**
- * Emits a GitHub Actions `::notice::` annotation and (for non-automation runs) appends a line
- * to `$GITHUB_STEP_SUMMARY` when a generator produces a PR URL. This makes the PR URL visible
- * in the GitHub Actions run page — currently the URL is buried in debug logs and easy to miss.
- *
- * For automation runs (`fern automations generate`), only the annotation is emitted; the step
- * summary table already includes PR links via {@link reportGenerateResults}.
- *
- * Exported for testing.
- */
-export async function emitPrUrlAnnotationAndSummary({
-    pullRequestUrl,
-    generatorName,
-    groupName,
-    apiName,
-    isAutomation
-}: {
+interface GenerationAnnotationContext {
     pullRequestUrl: string | undefined;
+    publishTarget: PublishTarget | undefined;
+    noChangesDetected: boolean | undefined;
+    version: string | undefined;
     generatorName: string;
     groupName: string;
     apiName: string | undefined;
     isAutomation: boolean;
-}): Promise<void> {
-    if (pullRequestUrl == null) {
-        return;
-    }
+}
+
+/**
+ * Emits GitHub Actions `::notice::` annotations for notable generation events and (for
+ * non-automation runs) appends corresponding lines to `$GITHUB_STEP_SUMMARY`. This makes
+ * generation outcomes visible in the GitHub Actions run page — previously these details
+ * were only visible in debug-level log output.
+ *
+ * Events annotated:
+ * - PR created (with URL)
+ * - Package published to a registry (npm, PyPI, Maven, etc.)
+ * - No changes detected (SDK repo already up to date)
+ * - Version tagged
+ *
+ * For automation runs (`fern automations generate`), only annotations are emitted; the step
+ * summary table already includes these details via {@link reportGenerateResults}.
+ *
+ * Exported for testing.
+ */
+export async function emitGenerationAnnotations(ctx: GenerationAnnotationContext): Promise<void> {
     if (!shouldEmitGithubAnnotations()) {
         return;
     }
-    const qualifiers: string[] = [`group=${groupName}`];
-    if (apiName != null && apiName.length > 0) {
-        qualifiers.push(`api=${apiName}`);
-    }
-    const title = `${generatorName} (${qualifiers.join(", ")}) → PR created`;
-    const annotation = renderGithubAnnotation("notice", pullRequestUrl, { title });
-    if (annotation != null) {
-        process.stdout.write(annotation);
+
+    const notices: Array<{ event: string; body: string; summaryLine: string }> = [];
+
+    if (ctx.pullRequestUrl != null) {
+        notices.push({
+            event: "PR created",
+            body: ctx.pullRequestUrl,
+            summaryLine: `🔀 **${ctx.generatorName}** → [PR](${ctx.pullRequestUrl})`
+        });
     }
 
-    if (!isAutomation) {
+    if (ctx.publishTarget != null) {
+        notices.push({
+            event: `Published to ${ctx.publishTarget.label}`,
+            body: `${ctx.publishTarget.version} → ${ctx.publishTarget.url}`,
+            summaryLine: `📦 **${ctx.generatorName}** → [${ctx.publishTarget.label} ${ctx.publishTarget.version}](${ctx.publishTarget.url})`
+        });
+    }
+
+    if (ctx.noChangesDetected) {
+        notices.push({
+            event: "No changes detected",
+            body: "SDK repo is already up to date",
+            summaryLine: `✅ **${ctx.generatorName}** → No changes detected`
+        });
+    }
+
+    if (ctx.version != null && ctx.publishTarget == null && ctx.pullRequestUrl == null) {
+        notices.push({
+            event: `Version ${ctx.version}`,
+            body: `Generated version ${ctx.version}`,
+            summaryLine: `🏷️ **${ctx.generatorName}** → Version ${ctx.version}`
+        });
+    }
+
+    if (notices.length === 0) {
+        return;
+    }
+
+    const qualifiers: string[] = [`group=${ctx.groupName}`];
+    if (ctx.apiName != null && ctx.apiName.length > 0) {
+        qualifiers.push(`api=${ctx.apiName}`);
+    }
+    const prefix = `${ctx.generatorName} (${qualifiers.join(", ")})`;
+
+    for (const notice of notices) {
+        const title = `${prefix} → ${notice.event}`;
+        const annotation = renderGithubAnnotation("notice", notice.body, { title });
+        if (annotation != null) {
+            process.stdout.write(annotation);
+        }
+    }
+
+    if (!ctx.isAutomation) {
         const stepSummaryPath = process.env.GITHUB_STEP_SUMMARY;
         if (stepSummaryPath != null && stepSummaryPath.length > 0) {
+            const lines = notices.map((n) => `${n.summaryLine}\n`).join("");
             try {
-                await appendFile(stepSummaryPath, `🔀 **${generatorName}** → [PR](${pullRequestUrl})\n`, "utf8");
+                await appendFile(stepSummaryPath, lines, "utf8");
             } catch (error: unknown) {
                 // Best-effort — don't fail generation for a step summary write error.
                 process.stderr.write(`[warn] Failed to append to GITHUB_STEP_SUMMARY: ${error}\n`);
