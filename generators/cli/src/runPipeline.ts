@@ -84,7 +84,15 @@ export async function runPipeline(args: {
     await patchCargoToml({ outputDir, binaryName, version: outputConfig.version });
     await patchDistWorkspaceToml({ outputDir });
     const customCommands = customConfig.customCommands !== false && irFilepath != null;
-    await copySpecs({ outputDir, binaryName, authBindings, specsDir, customCommands });
+    await copySpecs({
+        outputDir,
+        binaryName,
+        authBindings,
+        specsDir,
+        customCommands,
+        docsUrl: customConfig.docsUrl,
+        mcpUrl: customConfig.mcpUrl
+    });
     await writeGitignore(outputDir);
     await emitReadme({
         outputDir,

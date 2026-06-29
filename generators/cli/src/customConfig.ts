@@ -26,6 +26,22 @@ export interface FernCliCustomConfig {
      * support.
      */
     customCommands?: boolean;
+
+    /**
+     * Documentation site base URL. Derived automatically from `docs.yml`
+     * at generation time — set this explicitly to override the derived
+     * value or when `docs.yml` is absent. The sibling `docs` command
+     * uses this to construct resource URLs (`docs open`,
+     * `docs llms [--full]`).
+     */
+    docsUrl?: string;
+
+    /**
+     * MCP endpoint URL for the documentation site. Not derivable from
+     * `docs.yml` — must be set explicitly in `generators.yml` config.
+     * Used by the `docs mcp` subcommand.
+     */
+    mcpUrl?: string;
 }
 
 const DEFAULT_FERN_CLI_CUSTOM_CONFIG: FernCliCustomConfig = { customCommands: true };
@@ -67,6 +83,18 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             );
         }
         result.customCommands = obj.customCommands;
+    }
+    if ("docsUrl" in obj && obj.docsUrl !== undefined) {
+        if (typeof obj.docsUrl !== "string") {
+            throw new Error(`Invalid customConfig.docsUrl: expected a string, got ${typeof obj.docsUrl}.`);
+        }
+        result.docsUrl = obj.docsUrl;
+    }
+    if ("mcpUrl" in obj && obj.mcpUrl !== undefined) {
+        if (typeof obj.mcpUrl !== "string") {
+            throw new Error(`Invalid customConfig.mcpUrl: expected a string, got ${typeof obj.mcpUrl}.`);
+        }
+        result.mcpUrl = obj.mcpUrl;
     }
     return result;
 }

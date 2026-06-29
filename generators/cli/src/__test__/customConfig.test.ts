@@ -46,4 +46,38 @@ describe("validateCustomConfig", () => {
     it("throws on non-boolean customCommands", () => {
         expect(() => validateCustomConfig({ customCommands: "yes" })).toThrow(/expected a boolean, got string/);
     });
+
+    it("accepts a string docsUrl", () => {
+        expect(validateCustomConfig({ docsUrl: "https://docs.acme.com" })).toEqual({
+            docsUrl: "https://docs.acme.com"
+        });
+    });
+
+    it("throws on non-string docsUrl", () => {
+        expect(() => validateCustomConfig({ docsUrl: 42 })).toThrow(/expected a string, got number/);
+    });
+
+    it("accepts a string mcpUrl", () => {
+        expect(validateCustomConfig({ mcpUrl: "https://docs.acme.com/mcp" })).toEqual({
+            mcpUrl: "https://docs.acme.com/mcp"
+        });
+    });
+
+    it("throws on non-string mcpUrl", () => {
+        expect(() => validateCustomConfig({ mcpUrl: true })).toThrow(/expected a string, got boolean/);
+    });
+
+    it("accepts docsUrl and mcpUrl together with other fields", () => {
+        expect(
+            validateCustomConfig({
+                binaryName: "acme",
+                docsUrl: "https://docs.acme.com",
+                mcpUrl: "https://docs.acme.com/mcp"
+            })
+        ).toEqual({
+            binaryName: "acme",
+            docsUrl: "https://docs.acme.com",
+            mcpUrl: "https://docs.acme.com/mcp"
+        });
+    });
 });

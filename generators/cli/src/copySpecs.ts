@@ -66,8 +66,12 @@ export async function copySpecs(args: {
     specsDir?: string;
     /** When true, emit `mod custom;` + `mod sdk;` + `custom::register(app)` in main.rs. */
     customCommands?: boolean;
+    /** Documentation site base URL for the `docs` command group. */
+    docsUrl?: string;
+    /** MCP endpoint URL for the `docs mcp` subcommand. */
+    mcpUrl?: string;
 }): Promise<void> {
-    const { outputDir, binaryName, authBindings, specsDir, customCommands } = args;
+    const { outputDir, binaryName, authBindings, specsDir, customCommands, docsUrl, mcpUrl } = args;
     const manifest = await readSpecsManifest(specsDir);
     if (manifest == null) {
         return;
@@ -94,7 +98,9 @@ export async function copySpecs(args: {
             binaryName,
             entries,
             authBindings,
-            customCommands: customCommands ?? false
+            customCommands: customCommands ?? false,
+            docsUrl,
+            mcpUrl
         })
     );
 
@@ -180,8 +186,10 @@ function renderMainRs(args: {
     entries: SpecEntry[];
     authBindings: DetectedAuthBinding[];
     customCommands: boolean;
+    docsUrl?: string;
+    mcpUrl?: string;
 }): string {
-    const { binaryName, entries, authBindings, customCommands } = args;
+    const { binaryName, entries, authBindings, customCommands, docsUrl, mcpUrl } = args;
 
     // Separate root-level auth (typed builders) from binding-level auth
     const rootAuthBindings = authBindings.filter((b) => b.placement === "root");
@@ -215,6 +223,14 @@ function renderMainRs(args: {
 
     lines.push(...imports, "", "fn main() {", `    let app = CliApp::new("${binaryName}")`);
 
+    // Docs config (derived from docs.yml or explicit in generators.yml)
+    if (docsUrl != null) {
+        lines.push(`        .docs_url("${escapeRustStr(docsUrl)}")`);
+    }
+    if (mcpUrl != null) {
+        lines.push(`        .mcp_url("${escapeRustStr(mcpUrl)}")`);
+    }
+
     // Root-level auth bindings (typed builders)
     for (const binding of rootAuthBindings) {
         lines.push(`        ${binding.rustCall}`);
@@ -247,4 +263,9 @@ function renderMainRs(args: {
     lines.push("}");
     lines.push("");
     return lines.join("\n");
+}
+
+/** Escape a string for embedding inside a Rust double-quoted literal. */
+function escapeRustStr(value: string): string {
+    return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }

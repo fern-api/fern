@@ -10,10 +10,10 @@ import {
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { DOCS_CONFIGURATION_FILENAME, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AutoVersioningCache, isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import {
     buildReplayTelemetryProps,
@@ -34,10 +34,11 @@ import {
 } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import * as fs from "fs/promises";
+import yaml from "js-yaml";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { generatorWantsSpecs } from "./constants.js";
+import { generatorWantsSpecs, isCliGenerator } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
@@ -363,6 +364,21 @@ export async function runLocalGenerationForWorkspace({
 
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
+
+                // For the CLI generator, derive the docs base URL from
+                // docs.yml so the generated `docs` command can link to
+                // the hosted docs without the user restating the URL in
+                // generators.yml. Explicit config takes precedence.
+                if (isCliGenerator(generatorInvocation.name)) {
+                    const fernDirectory = dirname(projectConfig._absolutePath);
+                    const derivedDocsUrl = await deriveDocsUrlFromWorkspace(fernDirectory);
+                    if (derivedDocsUrl != null) {
+                        generatorInvocation = {
+                            ...generatorInvocation,
+                            config: enrichCliCustomConfig(generatorInvocation.config, derivedDocsUrl)
+                        };
+                    }
+                }
 
                 const {
                     shouldCommit,
@@ -838,4 +854,68 @@ function getSelfhostedGithubConfig(
         };
     }
     return undefined;
+}
+
+/**
+ * Derive the docs base URL from docs.yml for the CLI generator.
+ *
+ * Selection heuristic for multi-instance docs:
+ *   - prefer `customDomain` (first element if array) over `url`
+ *   - use the first docs instance
+ *   - always normalise to `https://` prefixed
+ *
+ * Returns `undefined` when docs.yml is absent or has no instances.
+ */
+async function deriveDocsUrlFromWorkspace(fernDirectory: AbsoluteFilePath): Promise<string | undefined> {
+    const docsYmlPath = join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
+    if (!(await doesPathExist(docsYmlPath))) {
+        return undefined;
+    }
+    try {
+        const contents = await fs.readFile(docsYmlPath, "utf-8");
+        const parsed = yaml.load(contents) as Record<string, unknown> | undefined;
+        if (parsed == null || typeof parsed !== "object") {
+            return undefined;
+        }
+        const instances = parsed.instances;
+        if (!Array.isArray(instances) || instances.length === 0) {
+            return undefined;
+        }
+        const first = instances[0] as Record<string, unknown>;
+        // Prefer customDomain over the default *.docs.buildwithfern.com url
+        const customDomain = first.customDomain;
+        let domain: string | undefined;
+        if (typeof customDomain === "string") {
+            domain = customDomain;
+        } else if (Array.isArray(customDomain) && customDomain.length > 0 && typeof customDomain[0] === "string") {
+            domain = customDomain[0];
+        }
+        const rawUrl = domain ?? (typeof first.url === "string" ? first.url : undefined);
+        if (rawUrl == null) {
+            return undefined;
+        }
+        return rawUrl.startsWith("http://") || rawUrl.startsWith("https://") ? rawUrl : `https://${rawUrl}`;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * For the CLI generator, enrich the customConfig with the docs URL
+ * derived from docs.yml. Explicit `docsUrl` in generators.yml takes
+ * precedence over the derived value.
+ */
+function enrichCliCustomConfig(config: unknown, derivedDocsUrl: string | undefined): unknown {
+    if (derivedDocsUrl == null) {
+        return config;
+    }
+    const existing = (config != null && typeof config === "object" && !Array.isArray(config) ? config : {}) as Record<
+        string,
+        unknown
+    >;
+    // Explicit override takes precedence
+    if (typeof existing.docsUrl === "string" && existing.docsUrl.length > 0) {
+        return config;
+    }
+    return { ...existing, docsUrl: derivedDocsUrl };
 }

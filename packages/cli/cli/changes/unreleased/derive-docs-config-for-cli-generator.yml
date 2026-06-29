@@ -1,0 +1,5 @@
+- summary: |
+    Derive docs base URL from `docs.yml` and inject it into the CLI generator's
+    custom config during local generation. The `docs` command in generated CLIs
+    now resolves its links with no restated config when `docs.yml` is present.
+  type: feat

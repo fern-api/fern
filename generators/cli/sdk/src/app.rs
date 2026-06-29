@@ -111,6 +111,14 @@ pub struct CliApp {
     /// Optional base URL for per-status-code error documentation links.
     /// When set, API errors append `<base_url>/<http_status_code>` to stderr.
     error_docs_base_url: Option<String>,
+    /// Documentation site base URL. Derived from `docs.yml` at generation
+    /// time or set explicitly in `generators.yml`. The sibling `docs`
+    /// command uses this to construct resource URLs (`/llms.txt`,
+    /// `/llms-full.txt`, etc.).
+    docs_url: Option<String>,
+    /// Optional MCP endpoint URL for the docs site. Not derivable from
+    /// the base URL — must be set explicitly in `generators.yml` config.
+    mcp_url: Option<String>,
 }
 
 impl CliApp {
@@ -126,6 +134,8 @@ impl CliApp {
             auth_bindings: Vec::new(),
             login_flows: Vec::new(),
             error_docs_base_url: None,
+            docs_url: None,
+            mcp_url: None,
         }
     }
 
@@ -149,6 +159,26 @@ impl CliApp {
     /// `  → <base_url>/<status_code>` (e.g. `https://docs.example.com/errors/401`).
     pub fn error_docs_base_url(mut self, url: &str) -> Self {
         self.error_docs_base_url = Some(url.to_string());
+        self
+    }
+
+    /// Set the documentation site base URL.
+    ///
+    /// Derived from `docs.yml` at generation time or set explicitly via
+    /// `generators.yml` config. The `docs` command group uses this to
+    /// construct resource URLs: `<url>/llms.txt`, `<url>/llms-full.txt`,
+    /// and the site itself (`docs open`).
+    pub fn docs_url(mut self, url: &str) -> Self {
+        self.docs_url = Some(url.to_string());
+        self
+    }
+
+    /// Set the MCP endpoint URL for the documentation site.
+    ///
+    /// Not derivable from the docs base URL — must be configured
+    /// explicitly in `generators.yml`.
+    pub fn mcp_url(mut self, url: &str) -> Self {
+        self.mcp_url = Some(url.to_string());
         self
     }
 

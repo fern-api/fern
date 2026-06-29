@@ -1,0 +1,7 @@
+- summary: |
+    Add `docsUrl` and `mcpUrl` to CLI generator custom config. When `docs.yml`
+    is present, the docs base URL is derived automatically and emitted as a
+    `.docs_url()` builder call in the generated `main.rs`. Explicit
+    `generators.yml` config overrides the derived value. `mcpUrl` must be set
+    explicitly (not derivable from docs.yml).
+  type: feat

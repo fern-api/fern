@@ -60,3 +60,9 @@ const GENERATORS_WANTING_SPECS: ReadonlySet<string> = new Set(["fernapi/fern-cli
 export function generatorWantsSpecs(generatorName: string): boolean {
     return GENERATORS_WANTING_SPECS.has(generatorName);
 }
+
+const CLI_GENERATOR_NAME = "fernapi/fern-cli-generator";
+
+export function isCliGenerator(generatorName: string): boolean {
+    return generatorName === CLI_GENERATOR_NAME;
+}
