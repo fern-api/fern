@@ -53,12 +53,12 @@ import {
     isGraphqlSubscription
 } from "./endpoints/default/endpoint-response/graphqlResponseBody.js";
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation.js";
-import { detectGraphqlConnection, findNestedGraphqlConnections } from "./graphql-pagination/detectGraphqlConnection.js";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation.js";
 import { GeneratedGraphqlSubscriptionEndpointImplementation } from "./endpoints/GeneratedGraphqlSubscriptionEndpointImplementation.js";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation.js";
 import { getClientDefaultValue, isLiteralHeader } from "./endpoints/utils/isLiteralHeader.js";
 import { GeneratedWrappedService } from "./GeneratedWrappedService.js";
+import { detectGraphqlConnection, findNestedGraphqlConnections } from "./graphql-pagination/detectGraphqlConnection.js";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation.js";
 
 /** Narrows a generated endpoint implementation to a GraphQL subscription. */
@@ -1196,7 +1196,8 @@ return { data: _gqlBody?.data, errors: _gqlBody?.errors };`;
                 }
                 methods.push(
                     this.buildGraphqlPaginateMethod({
-                        methodName: siblingMethodName + nested.path.map((segment) => this.case.pascalUnsafe(segment)).join(""),
+                        methodName:
+                            siblingMethodName + nested.path.map((segment) => this.case.pascalUnsafe(segment)).join(""),
                         refs,
                         paramDeclaration: `args: ${argsType}`,
                         initialAfter: "args?.after",

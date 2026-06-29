@@ -162,7 +162,10 @@ function makeFieldHasAfterArg(ir: FernIr.IntermediateRepresentation): (parentTyp
     ).graphqlFieldArguments;
     return (parentTypeId, field) => {
         const args = graphqlFieldArguments?.[parentTypeId]?.fields?.[field];
-        return args != null && args.some((arg) => (typeof arg.name === "string" ? arg.name : arg.name.wireValue) === "after");
+        return (
+            args != null &&
+            args.some((arg) => (typeof arg.name === "string" ? arg.name : arg.name.wireValue) === "after")
+        );
     };
 }
 
