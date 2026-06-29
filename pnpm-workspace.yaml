@@ -279,5 +279,4 @@ overrides:
   "@opentelemetry/core": ">=2.8.0"
   js-yaml: ">=4.2.0"
 patchedDependencies:
-  '@fern-fern/ir-sdk@67.2.0': patches/@fern-fern__ir-sdk@67.2.0.patch
   gray-matter@4.0.3: patches/gray-matter@4.0.3.patch

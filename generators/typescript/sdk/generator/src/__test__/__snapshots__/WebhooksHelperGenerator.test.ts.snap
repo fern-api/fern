@@ -345,51 +345,6 @@ export class WebhooksHelper {
 "
 `;
 
-exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with ALPHABETICAL bodySort 1`] = `
-"/**
- * Verify an asymmetric webhook signature.
- *
- * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
- * The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.
- * When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing.
- */
-export class WebhooksHelper {
-    public static async verifySignature(requestBody: string | Record<string, string>, signatureHeader: string, publicKey: string): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || publicKey == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
-        }
-
-        const bodyString = typeof requestBody === "string"
-            ? requestBody
-            : Object.keys(requestBody).sort().map(key => key + requestBody[key]).join("");
-        const payload = bodyString;
-
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
-    }
-}
-"
-`;
-
-exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with BODY-only payload format 1`] = `
-"/**
- * Verify an asymmetric webhook signature.
- *
- * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
- */
-export class WebhooksHelper {
-    public static async verifySignature(requestBody: string, signatureHeader: string, publicKey: string): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || publicKey == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
-        }
-
-        const payload = requestBody;
-
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
-    }
-}
-"
-`;
-
 exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with JWKS key source 1`] = `
 "/**
  * Verify an asymmetric webhook signature.
@@ -432,66 +387,6 @@ export class WebhooksHelper {
         const resolvedKey = await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json", keyId: keyIdHeader });
 
         return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
-    }
-}
-"
-`;
-
-exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with NOTIFICATION_URL payload component 1`] = `
-"/**
- * Verify an asymmetric webhook signature.
- *
- * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
- * Public keys are fetched from the JWKS endpoint at https://example.com/.well-known/jwks.json.
- */
-export class WebhooksHelper {
-    public static async verifySignature(requestBody: string, signatureHeader: string, notificationUrl: string): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
-        }
-
-        const payload = [notificationUrl, requestBody].join("|");
-
-        const resolvedKey = await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json" });
-
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "ECDSA_SHA256", encoding: "base64" });
-    }
-}
-"
-`;
-
-exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with multi-component payload format including TIMESTAMP 1`] = `
-"const TIMESTAMP_TOLERANCE_SECONDS = 300;
-
-/**
- * Verify an asymmetric webhook signature.
- *
- * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
- * Extract the timestamp from the "X-Timestamp" header and pass it as the timestampHeader parameter.
- */
-export class WebhooksHelper {
-    public static async verifySignature(requestBody: string, signatureHeader: string, publicKey: string, messageId: string, timestampHeader: string): Promise<boolean> {
-        if (requestBody == null || signatureHeader == null || publicKey == null) {
-            throw new Error("Missing required parameters for webhook signature verification");
-        }
-
-        if (timestampHeader == null || timestampHeader === "") {
-            throw new Error("Missing timestamp header 'X-Timestamp' for webhook signature verification");
-        }
-
-        const timestampValue = parseInt(timestampHeader, 10);
-        if (Number.isNaN(timestampValue)) {
-            throw new Error("Invalid timestamp format: expected unix seconds");
-        }
-        const timestampMs = timestampValue * 1000;
-
-        if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {
-            return false;
-        }
-
-        const payload = [messageId, timestampHeader, requestBody].join(".");
-
-        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
     }
 }
 "
