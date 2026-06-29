@@ -904,9 +904,15 @@ export async function publishDocs({
             try {
                 await runLedgerPublish();
             } catch (error) {
-                return context.failAndThrow("Failed to publish docs via ledger to " + domain, error, {
-                    code: CliError.Code.NetworkError
-                });
+                const hint =
+                    "\n\nIf this persists, set FERN_DOCS_DEPLOY_MODE=legacy in your environment to use the legacy publish path while the issue is investigated.";
+                const errorMessage =
+                    error instanceof Error ? error.message : typeof error === "string" ? error : String(error);
+                return context.failAndThrow(
+                    "Failed to publish docs via ledger to " + domain + ": " + errorMessage + hint,
+                    error,
+                    { code: CliError.Code.NetworkError }
+                );
             }
         } else if (docsRegistrationId != null) {
             try {

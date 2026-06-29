@@ -1,0 +1,9 @@
+- summary: |
+    Forward the `basepathAware` flag to the ledger docs publish path. Previously
+    multi-source / basepath-aware sites publishing via ledger mode would have their
+    S3 manifest written at the wrong key, causing the docs site to not resolve.
+  type: fix
+- summary: |
+    Improve error messages when ledger docs publishing fails: surface the actual
+    server error and suggest `FERN_DOCS_DEPLOY_MODE=legacy` as a workaround.
+  type: fix
