@@ -1592,7 +1592,8 @@ export class SdkGenerator {
                     ...common,
                     payloadFormat: {
                         components: verification.payloadFormat.components,
-                        delimiter: verification.payloadFormat.delimiter
+                        delimiter: verification.payloadFormat.delimiter,
+                        bodySort: verification.payloadFormat.bodySort
                     }
                 });
             case "asymmetric": {
@@ -1611,7 +1612,8 @@ export class SdkGenerator {
                     verification.payloadFormat != null
                         ? {
                               components: verification.payloadFormat.components,
-                              delimiter: verification.payloadFormat.delimiter
+                              delimiter: verification.payloadFormat.delimiter,
+                              bodySort: verification.payloadFormat.bodySort
                           }
                         : null;
                 return JSON.stringify({ ...common, keySource, payloadFormat });
