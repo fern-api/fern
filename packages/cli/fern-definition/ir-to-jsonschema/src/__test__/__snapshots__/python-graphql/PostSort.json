@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "NEWEST",
+    "OLDEST",
+    "TITLE"
+  ],
+  "definitions": {}
+}

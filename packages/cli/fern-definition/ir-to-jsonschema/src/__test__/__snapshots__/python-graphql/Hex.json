@@ -1,0 +1,5 @@
+{
+  "type": "string",
+  "description": "Unrecognized custom scalar → falls back to string (with a generation warning).",
+  "definitions": {}
+}

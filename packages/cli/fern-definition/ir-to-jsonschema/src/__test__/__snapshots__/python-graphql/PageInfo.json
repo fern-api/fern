@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "hasNextPage": {
+      "type": "boolean"
+    },
+    "endCursor": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "hasNextPage"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

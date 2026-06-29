@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "publishedAfter": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DateTime"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Only posts published after this time."
+    },
+    "search": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Only posts containing this text."
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "DateTime": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
