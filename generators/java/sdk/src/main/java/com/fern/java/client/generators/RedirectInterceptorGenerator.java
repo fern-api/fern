@@ -26,7 +26,9 @@ import java.nio.charset.StandardCharsets;
 public final class RedirectInterceptorGenerator extends AbstractFileGenerator {
 
     public RedirectInterceptorGenerator(ClientGeneratorContext clientGeneratorContext) {
-        super(clientGeneratorContext.getPoetClassNameFactory().getRedirectInterceptorClassName(), clientGeneratorContext);
+        super(
+                clientGeneratorContext.getPoetClassNameFactory().getRedirectInterceptorClassName(),
+                clientGeneratorContext);
     }
 
     @Override

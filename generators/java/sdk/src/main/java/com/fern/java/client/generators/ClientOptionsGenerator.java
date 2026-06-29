@@ -1221,17 +1221,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
         // Disable OkHttp's built-in redirect following and add redirect interceptor
         // that strips auth headers on cross-origin redirects
-        builder.addStatement(
-                        "$L.followRedirects(false)", OKHTTP_CLIENT_FIELD.name + "Builder")
+        builder.addStatement("$L.followRedirects(false)", OKHTTP_CLIENT_FIELD.name + "Builder")
                 .addStatement(
                         "$T<$T> authHeaderKeys = new $T<>(this.$L.keySet())",
                         Set.class,
                         String.class,
                         HashSet.class,
                         HEADERS_FIELD.name)
-                .addStatement(
-                        "authHeaderKeys.addAll(this.$L.keySet())",
-                        HEADER_SUPPLIERS_FIELD.name)
+                .addStatement("authHeaderKeys.addAll(this.$L.keySet())", HEADER_SUPPLIERS_FIELD.name)
                 .addStatement(
                         "$L.addInterceptor(new $T(authHeaderKeys))",
                         OKHTTP_CLIENT_FIELD.name + "Builder",

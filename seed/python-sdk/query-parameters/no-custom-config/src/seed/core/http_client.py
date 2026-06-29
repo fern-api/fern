@@ -7,6 +7,7 @@ import time
 import typing
 from contextlib import asynccontextmanager, contextmanager
 from random import random
+from urllib.parse import urlparse
 
 import httpx
 from .file import File, convert_file_dict_to_httpx_tuples
@@ -21,6 +22,8 @@ from httpx._types import RequestFiles
 INITIAL_RETRY_DELAY_SECONDS = 1.0
 MAX_RETRY_DELAY_SECONDS = 60.0
 JITTER_FACTOR = 0.2  # 20% random jitter
+MAX_REDIRECTS = 20
+_REDIRECT_STATUS_CODES = frozenset({301, 302, 303, 307, 308})
 
 
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
@@ -154,6 +157,39 @@ def _redact_headers(headers: typing.Dict[str, str]) -> typing.Dict[str, str]:
     return {k: ("[REDACTED]" if k.lower() in _SENSITIVE_HEADERS else v) for k, v in headers.items()}
 
 
+def _url_origin(url: str) -> typing.Tuple[str, str, typing.Optional[int]]:
+    parsed = urlparse(url)
+    return (parsed.scheme.lower(), (parsed.hostname or "").lower(), parsed.port)
+
+
+def _is_same_origin(url1: str, url2: str) -> bool:
+    return _url_origin(url1) == _url_origin(url2)
+
+
+def _resolve_redirect_url(request_url: str, location: str) -> str:
+    parsed = urlparse(location)
+    if parsed.scheme:
+        return location
+    from urllib.parse import urljoin
+
+    return urljoin(request_url, location)
+
+
+def _strip_auth_headers_for_redirect(
+    headers: typing.Dict[str, str],
+    auth_header_keys: typing.FrozenSet[str],
+    logger: typing.Any,
+    redirect_url: str,
+) -> typing.Dict[str, str]:
+    stripped = {k: v for k, v in headers.items() if k.lower() not in auth_header_keys}
+    if len(stripped) < len(headers) and logger.is_debug():
+        logger.debug(
+            "Dropped auth header(s) on cross-origin redirect",
+            redirect_url=redirect_url,
+        )
+    return stripped
+
+
 def _build_url(base_url: str, path: typing.Optional[str]) -> str:
     """
     Build a full URL by joining a base URL with a path.
@@ -280,6 +316,9 @@ class HttpClient:
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
 
+    def _get_auth_header_keys(self) -> typing.FrozenSet[str]:
+        return frozenset(k.lower() for k in self.base_headers())
+
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
         if self.base_url is not None and base_url is None:
@@ -377,6 +416,8 @@ class HttpClient:
             else self.base_max_retries
         )
 
+        auth_header_keys = self._get_auth_header_keys()
+
         try:
             response = self.httpx_client.request(
                 method=method,
@@ -388,6 +429,7 @@ class HttpClient:
                 content=content,
                 files=request_files,
                 timeout=timeout,
+                follow_redirects=False,
             )
         except (httpx.ConnectError, httpx.RemoteProtocolError):
             if retries < max_retries:
@@ -408,6 +450,51 @@ class HttpClient:
                     force_multipart=force_multipart,
                 )
             raise
+
+        # Handle redirects manually to strip auth headers on cross-origin redirects
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        redirect_count = 0
+        while response.status_code in _REDIRECT_STATUS_CODES and redirect_count < MAX_REDIRECTS:
+            location = response.headers.get("location")
+            if location is None:
+                break
+
+            redirect_url = _resolve_redirect_url(_current_url, location)
+            redirect_count += 1
+
+            # 301, 302, 303: switch to GET and drop body
+            if response.status_code in (301, 302, 303):
+                _current_method = "GET"
+                _current_json = None
+                _current_data = None
+                _current_content = None
+                _current_files = None
+
+            # Strip auth headers on cross-origin redirects
+            if not _is_same_origin(_current_url, redirect_url):
+                _current_headers = _strip_auth_headers_for_redirect(
+                    _current_headers, auth_header_keys, self.logger, redirect_url
+                )
+
+            _current_url = redirect_url
+
+            response = self.httpx_client.request(
+                method=_current_method,
+                url=_current_url,
+                headers=_current_headers,
+                json=_current_json,
+                data=_current_data,
+                content=_current_content,
+                files=_current_files,
+                timeout=timeout,
+                follow_redirects=False,
+            )
 
         if _should_retry(response=response):
             if retries < max_retries:
@@ -530,15 +617,64 @@ class HttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
+        # Check for redirects before streaming
+        auth_header_keys = self._get_auth_header_keys()
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        redirect_count = 0
+
+        while redirect_count <= MAX_REDIRECTS:
+            response = self.httpx_client.request(
+                method=_current_method,
+                url=_current_url,
+                headers=_current_headers,
+                params=_encoded_params if (_encoded_params and redirect_count == 0) else None,
+                json=_current_json,
+                data=_current_data,
+                content=_current_content,
+                files=_current_files,
+                timeout=timeout,
+                follow_redirects=False,
+            )
+
+            if response.status_code not in _REDIRECT_STATUS_CODES:
+                break
+
+            location = response.headers.get("location")
+            if location is None:
+                break
+
+            redirect_url = _resolve_redirect_url(_current_url, location)
+            redirect_count += 1
+
+            if response.status_code in (301, 302, 303):
+                _current_method = "GET"
+                _current_json = None
+                _current_data = None
+                _current_content = None
+                _current_files = None
+
+            if not _is_same_origin(_current_url, redirect_url):
+                _current_headers = _strip_auth_headers_for_redirect(
+                    _current_headers, auth_header_keys, self.logger, redirect_url
+                )
+
+            _current_url = redirect_url
+
+        # Now open the actual stream to the final URL
         with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
+            method=_current_method,
+            url=_current_url,
+            headers=_current_headers,
+            json=_current_json,
+            data=_current_data,
+            content=_current_content,
+            files=_current_files,
             timeout=timeout,
         ) as stream:
             yield stream
@@ -568,6 +704,10 @@ class AsyncHttpClient:
         if self.async_base_headers is not None:
             return await self.async_base_headers()
         return self.base_headers()
+
+    async def _get_auth_header_keys(self) -> typing.FrozenSet[str]:
+        headers = await self._get_headers()
+        return frozenset(k.lower() for k in headers)
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
@@ -669,6 +809,8 @@ class AsyncHttpClient:
             else self.base_max_retries
         )
 
+        auth_header_keys = await self._get_auth_header_keys()
+
         try:
             response = await self.httpx_client.request(
                 method=method,
@@ -680,6 +822,7 @@ class AsyncHttpClient:
                 content=content,
                 files=request_files,
                 timeout=timeout,
+                follow_redirects=False,
             )
         except (httpx.ConnectError, httpx.RemoteProtocolError):
             if retries < max_retries:
@@ -700,6 +843,49 @@ class AsyncHttpClient:
                     force_multipart=force_multipart,
                 )
             raise
+
+        # Handle redirects manually to strip auth headers on cross-origin redirects
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        redirect_count = 0
+        while response.status_code in _REDIRECT_STATUS_CODES and redirect_count < MAX_REDIRECTS:
+            location = response.headers.get("location")
+            if location is None:
+                break
+
+            redirect_url = _resolve_redirect_url(_current_url, location)
+            redirect_count += 1
+
+            if response.status_code in (301, 302, 303):
+                _current_method = "GET"
+                _current_json = None
+                _current_data = None
+                _current_content = None
+                _current_files = None
+
+            if not _is_same_origin(_current_url, redirect_url):
+                _current_headers = _strip_auth_headers_for_redirect(
+                    _current_headers, auth_header_keys, self.logger, redirect_url
+                )
+
+            _current_url = redirect_url
+
+            response = await self.httpx_client.request(
+                method=_current_method,
+                url=_current_url,
+                headers=_current_headers,
+                json=_current_json,
+                data=_current_data,
+                content=_current_content,
+                files=_current_files,
+                timeout=timeout,
+                follow_redirects=False,
+            )
 
         if _should_retry(response=response):
             if retries < max_retries:
@@ -825,15 +1011,64 @@ class AsyncHttpClient:
                 headers=_redact_headers(_request_headers),
             )
 
+        # Check for redirects before streaming
+        auth_header_keys = await self._get_auth_header_keys()
+        _current_url = _request_url
+        _current_headers = _request_headers
+        _current_method = method
+        _current_json = json_body
+        _current_data = data_body
+        _current_content = content
+        _current_files = request_files
+        redirect_count = 0
+
+        while redirect_count <= MAX_REDIRECTS:
+            response = await self.httpx_client.request(
+                method=_current_method,
+                url=_current_url,
+                headers=_current_headers,
+                params=_encoded_params if (_encoded_params and redirect_count == 0) else None,
+                json=_current_json,
+                data=_current_data,
+                content=_current_content,
+                files=_current_files,
+                timeout=timeout,
+                follow_redirects=False,
+            )
+
+            if response.status_code not in _REDIRECT_STATUS_CODES:
+                break
+
+            location = response.headers.get("location")
+            if location is None:
+                break
+
+            redirect_url = _resolve_redirect_url(_current_url, location)
+            redirect_count += 1
+
+            if response.status_code in (301, 302, 303):
+                _current_method = "GET"
+                _current_json = None
+                _current_data = None
+                _current_content = None
+                _current_files = None
+
+            if not _is_same_origin(_current_url, redirect_url):
+                _current_headers = _strip_auth_headers_for_redirect(
+                    _current_headers, auth_header_keys, self.logger, redirect_url
+                )
+
+            _current_url = redirect_url
+
+        # Now open the actual stream to the final URL
         async with self.httpx_client.stream(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
+            method=_current_method,
+            url=_current_url,
+            headers=_current_headers,
+            json=_current_json,
+            data=_current_data,
+            content=_current_content,
+            files=_current_files,
             timeout=timeout,
         ) as stream:
             yield stream

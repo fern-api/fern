@@ -6,8 +6,7 @@
     "exclude_types_from_init_exports": true
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "ci",
+  "invokedBy": "manual",
   "requestedVersion": "0.0.1",
-  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }
