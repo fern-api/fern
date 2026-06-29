@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.57.0
+  changelogEntry:
+    - summary: |
+        When running inside GitHub Actions, notable SDK generation events are now surfaced as
+        `::notice::` annotations in the workflow run page and appended to the step summary.
+        Annotated events include PR creation, package publication (npm, PyPI, Maven, etc.),
+        no-changes-detected, and version tagging. Previously, these details were only visible
+        in debug-level log output.
+      type: feat
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 5.56.4
   changelogEntry:
     - summary: |
