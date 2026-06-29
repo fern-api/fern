@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.56.2
+  changelogEntry:
+    - summary: |
+        Migrate library docs parser Docker images from `fernapi` to `fernenterprise` registry.
+      type: chore
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 5.56.1
   changelogEntry:
     - summary: |
