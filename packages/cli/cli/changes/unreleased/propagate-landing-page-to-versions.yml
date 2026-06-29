@@ -1,3 +1,0 @@
-- summary: |
-    Propagate top-level landing page to versioned navigation nodes as a fallback when no per-version landing page is configured.
-  type: feat
