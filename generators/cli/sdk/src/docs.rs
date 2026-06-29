@@ -229,8 +229,10 @@ fn open_browser(url: &str) -> Result<(), CliError> {
     }
     #[cfg(target_os = "windows")]
     {
+        // Use `start ""` so the URL is treated as a parameter to `start`,
+        // not parsed by cmd.exe. The empty string is the window title.
         std::process::Command::new("cmd")
-            .args(["/C", "start", url])
+            .args(["/C", "start", "", url])
             .spawn()
             .map_err(|e| CliError::Other(e.into()))?;
     }

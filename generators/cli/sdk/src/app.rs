@@ -1143,7 +1143,7 @@ fn graft_merged_subtree(
     //    No known spec uses these names, but the guard matches the old
     //    pre-refactor behavior and keeps us safe against adversarial specs.
     for sub in merged_subtree.get_subcommands().cloned() {
-        if matches!(sub.get_name(), "completion" | "man" | "auth") {
+        if matches!(sub.get_name(), "completion" | "man" | "auth" | "docs") {
             continue;
         }
         cli = cli.subcommand(sub);

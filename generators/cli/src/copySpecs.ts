@@ -228,6 +228,14 @@ function renderMainRs(args: {
         lines.push(`        ${binding.rustCall}`);
     }
 
+    // Docs URL — emitted only when configured in generators.yml.
+    if (docsUrl != null) {
+        lines.push(`        .docs_url("${docsUrl}")`);
+        if (docsMcpUrl != null) {
+            lines.push(`        .docs_mcp_url("${docsMcpUrl}")`);
+        }
+    }
+
     // OpenApiBinding with specs and binding-level auth
     lines.push("        .binding(");
     lines.push("            OpenApiBinding::new()");
@@ -242,16 +250,8 @@ function renderMainRs(args: {
     for (const binding of bindingAuthBindings) {
         lines.push(`                ${binding.rustCall}`);
     }
-    // Close the binding
+    // Close the binding — terminates the `let app = CliApp::new(...)...;` statement.
     lines.push("        );");
-
-    // Docs URL — emitted only when configured in generators.yml.
-    if (docsUrl != null) {
-        lines.push(`        .docs_url("${docsUrl}")`);
-        if (docsMcpUrl != null) {
-            lines.push(`        .docs_mcp_url("${docsMcpUrl}")`);
-        }
-    }
 
     if (customCommands) {
         lines.push("");
