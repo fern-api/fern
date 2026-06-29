@@ -39291,6 +39291,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
       "docs": "A 2d grid with binary values for each grid cell."
     }
   },
+  "graphqlFieldArguments": null,
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"
   },

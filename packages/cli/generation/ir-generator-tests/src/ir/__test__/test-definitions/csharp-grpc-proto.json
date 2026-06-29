@@ -1,5 +1,6 @@
 {
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": "0.0.1",

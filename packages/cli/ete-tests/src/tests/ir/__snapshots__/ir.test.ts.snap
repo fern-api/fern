@@ -3,6 +3,7 @@
 exports[`ir > {"name":"auth-header-prefix"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -116,6 +117,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
 exports[`ir > {"name":"extended-examples"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -901,6 +903,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
 exports[`ir > {"name":"file-upload"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -15350,6 +15353,7 @@ exports[`ir > {"name":"migration","version":"v53"} 1`] = `
 exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -16148,6 +16152,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
 exports[`ir > {"name":"navigation-points-to"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -16291,6 +16296,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
 exports[`ir > {"name":"nested-example-reference"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -17662,6 +17668,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
 exports[`ir > {"name":"packages"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -18629,6 +18636,7 @@ exports[`ir > {"name":"packages"} 1`] = `
 exports[`ir > {"name":"response-property"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -20091,6 +20099,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
 exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -21185,6 +21194,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
 exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -23203,6 +23213,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
 exports[`ir > {"name":"simple"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -31105,6 +31116,7 @@ exports[`ir > {"name":"simple"} 1`] = `
 exports[`ir > {"name":"streaming"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -31783,6 +31795,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
 exports[`ir > {"name":"variables"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
@@ -32547,6 +32560,7 @@ exports[`ir > {"name":"variables"} 1`] = `
 exports[`ir > {"name":"webhooks"} 1`] = `
 "{
     "selfHosted": false,
+    "graphqlFieldArguments": null,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "specVersion": null,
