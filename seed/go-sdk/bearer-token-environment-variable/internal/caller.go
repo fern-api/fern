@@ -20,7 +20,46 @@ const (
 	contentType               = "application/json"
 	contentTypeHeader         = "Content-Type"
 	contentTypeFormURLEncoded = "application/x-www-form-urlencoded"
+	maxRedirects              = 20
 )
+
+// noRedirectClient wraps an HTTPClient to prevent automatic redirect following.
+type noRedirectClient struct {
+	inner core.HTTPClient
+}
+
+func (c *noRedirectClient) Do(req *http.Request) (*http.Response, error) {
+	if httpClient, ok := c.inner.(*http.Client); ok {
+		// Create a shallow copy with redirect disabled
+		noRedirect := *httpClient
+		noRedirect.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		}
+		return noRedirect.Do(req)
+	}
+	return c.inner.Do(req)
+}
+
+func urlOrigin(u *url.URL) string {
+	port := u.Port()
+	if port == "" {
+		switch u.Scheme {
+		case "https":
+			port = "443"
+		case "http":
+			port = "80"
+		}
+	}
+	return fmt.Sprintf("%s://%s:%s", strings.ToLower(u.Scheme), strings.ToLower(u.Hostname()), port)
+}
+
+func isSameOrigin(u1, u2 *url.URL) bool {
+	return urlOrigin(u1) == urlOrigin(u2)
+}
+
+func isRedirectStatus(code int) bool {
+	return code == 301 || code == 302 || code == 303 || code == 307 || code == 308
+}
 
 // Caller calls APIs and deserializes their response, if any.
 type Caller struct {
@@ -71,10 +110,10 @@ type CallResponse struct {
 
 // Call issues an API call according to the given call parameters.
 func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, error) {
-	url := buildURL(params.URL, params.QueryParameters)
+	callURL := buildURL(params.URL, params.QueryParameters)
 	req, err := newRequest(
 		ctx,
-		url,
+		callURL,
 		params.Method,
 		params.Headers,
 		params.Request,
@@ -95,14 +134,79 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 		client = params.Client
 	}
 
+	// Wrap client to disable automatic redirect following
+	wrappedClient := &noRedirectClient{inner: client}
+
 	resp, err := c.retrier.Run(
-		client.Do,
+		wrappedClient.Do,
 		req,
 		params.ErrorDecoder,
 		buildRetryOptions(params.MaxAttempts, params.DisableRetries)...,
 	)
 	if err != nil {
 		return nil, err
+	}
+
+	// Handle redirects manually to strip auth headers on cross-origin redirects
+	authHeaderKeys := make(map[string]bool)
+	for key := range params.Headers {
+		authHeaderKeys[strings.ToLower(key)] = true
+	}
+
+	redirectCount := 0
+	for isRedirectStatus(resp.StatusCode) && redirectCount < maxRedirects {
+		location := resp.Header.Get("Location")
+		if location == "" {
+			break
+		}
+		_ = resp.Body.Close()
+
+		redirectURL, err := req.URL.Parse(location)
+		if err != nil {
+			break
+		}
+		redirectCount++
+
+		redirectMethod := req.Method
+		var redirectBody io.Reader
+		// 301, 302, 303: switch to GET and drop body
+		if resp.StatusCode == 301 || resp.StatusCode == 302 || resp.StatusCode == 303 {
+			redirectMethod = http.MethodGet
+			redirectBody = nil
+		} else if req.Body != nil {
+			// For 307/308, try to re-read body
+			if req.GetBody != nil {
+				redirectBody, err = req.GetBody()
+				if err != nil {
+					break
+				}
+			}
+		}
+
+		redirectReq, err := http.NewRequestWithContext(ctx, redirectMethod, redirectURL.String(), redirectBody)
+		if err != nil {
+			break
+		}
+
+		// Copy headers
+		for key, values := range req.Header {
+			redirectReq.Header[key] = values
+		}
+
+		// Strip auth headers on cross-origin redirects
+		if !isSameOrigin(req.URL, redirectURL) {
+			for key := range redirectReq.Header {
+				if authHeaderKeys[strings.ToLower(key)] {
+					redirectReq.Header.Del(key)
+				}
+			}
+		}
+
+		req = redirectReq
+		resp, err = wrappedClient.Do(req)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// Close the response body after we're done.
