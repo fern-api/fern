@@ -388,10 +388,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                           variable: "response",
                           isVariableOptional: true
                       });
+                      const rhs =
+                          offset.step != null
+                              ? ts.factory.createParenthesizedExpression(baseHasNextPage)
+                              : baseHasNextPage;
                       return ts.factory.createBinaryExpression(
                           hasNextPagePropertyAccess,
                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                          baseHasNextPage
+                          rhs
                       );
                   })()
                 : baseHasNextPage;
