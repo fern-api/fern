@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.56.3
+  changelogEntry:
+    - summary: |
+        Fix ledger publish path not forwarding the `basepathAware` flag for
+        multi-source docs sites, causing the manifest to be written to the
+        wrong storage key. Affected sites served stale content from the last
+        legacy publish instead of the updated ledger manifest.
+      type: fix
+  createdAt: "2026-06-29"
+  irVersion: 67
 - version: 5.56.2
   changelogEntry:
     - summary: |
