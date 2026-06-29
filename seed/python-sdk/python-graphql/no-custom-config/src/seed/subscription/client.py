@@ -4,6 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..seed.graphql_selections import PostSelection
 from ..types.post import Post
 from .raw_client import AsyncRawSubscriptionClient, RawSubscriptionClient
 
@@ -26,13 +27,22 @@ class SubscriptionClient:
         """
         return self._raw_client
 
-    def post_added(self, *, channel_id: str, request_options: typing.Optional[RequestOptions] = None) -> Post:
+    def post_added(
+        self,
+        *,
+        channel_id: str,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Post:
         """
         Stream posts as they are added to a channel.
 
         Parameters
         ----------
         channel_id : str
+
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -54,7 +64,9 @@ class SubscriptionClient:
             channel_id="channelId",
         )
         """
-        _response = self._raw_client.post_added(channel_id=channel_id, request_options=request_options)
+        _response = self._raw_client.post_added(
+            channel_id=channel_id, selection=selection, request_options=request_options
+        )
         return _response.data
 
 
@@ -73,7 +85,13 @@ class AsyncSubscriptionClient:
         """
         return self._raw_client
 
-    async def post_added(self, *, channel_id: str, request_options: typing.Optional[RequestOptions] = None) -> Post:
+    async def post_added(
+        self,
+        *,
+        channel_id: str,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[Post]:
         """
         Stream posts as they are added to a channel.
 
@@ -81,12 +99,15 @@ class AsyncSubscriptionClient:
         ----------
         channel_id : str
 
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Post
+        typing.AsyncIterator[Post]
             Stream posts as they are added to a channel.
 
         Examples
@@ -109,5 +130,7 @@ class AsyncSubscriptionClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post_added(channel_id=channel_id, request_options=request_options)
+        _response = await self._raw_client.post_added(
+            channel_id=channel_id, selection=selection, request_options=request_options
+        )
         return _response.data

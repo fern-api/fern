@@ -110,7 +110,7 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="graphql"),
                 ),
-                exports={"GraphqlError", "GraphqlSelection", "build_graphql_query"}
+                exports={"GraphqlError", "GraphqlSelection", "build_graphql_query", "subscribe_graphql"}
                 if not self._exclude_types_from_init_exports
                 else set(),
             )
@@ -471,6 +471,15 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "graphql"),
                 named_import="build_graphql_query",
+            ),
+        )
+
+    def get_reference_to_subscribe_graphql(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "graphql"),
+                named_import="subscribe_graphql",
             ),
         )
 

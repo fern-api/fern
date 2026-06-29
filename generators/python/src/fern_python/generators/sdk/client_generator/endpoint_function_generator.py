@@ -389,6 +389,12 @@ class EndpointFunctionGenerator:
         return self._get_http_response_wrapper_type(self._is_async, underlying_type_wrapped)
 
     def _get_endpoint_return_type(self, streaming_parameter: Optional[StreamingParameterType] = None) -> AST.TypeHint:
+        graphql_transport = GraphqlTransportRegistry.get(self._endpoint.id)
+        if graphql_transport is not None and graphql_transport.is_subscription:
+            payload = self._graphql_response_type_hint(self._endpoint) or AST.TypeHint.any()
+            # Async client yields events; the sync method raises (subscriptions are async-only).
+            return AST.TypeHint.async_iterator(payload) if self._is_async else payload
+
         if not self._is_raw_client and self._endpoint.method == ir_types.HttpMethod.HEAD:
             return self._context.get_head_method_return_type()
 
@@ -822,10 +828,12 @@ class EndpointFunctionGenerator:
         graphql_transport: GraphqlTransportInfo,
     ) -> None:
         if graphql_transport.is_subscription:
-            # Subscriptions require a streaming (WebSocket) transport that the Python SDK does not
-            # yet implement; emit an explicit failure rather than a broken POST.
-            writer.write_line(
-                'raise NotImplementedError("GraphQL subscriptions are not yet supported by the Python SDK.")'
+            self._write_graphql_subscription_body(
+                writer=writer,
+                endpoint=endpoint,
+                request_body_parameters=request_body_parameters,
+                is_async=is_async,
+                graphql_transport=graphql_transport,
             )
             return
 
@@ -906,6 +914,72 @@ class EndpointFunctionGenerator:
         )
         writer.write_node(request)
 
+    def _write_graphql_subscription_body(
+        self,
+        *,
+        writer: AST.NodeWriter,
+        endpoint: ir_types.HttpEndpoint,
+        request_body_parameters: Optional[AbstractRequestBodyParameters],
+        is_async: bool,
+        graphql_transport: GraphqlTransportInfo,
+    ) -> None:
+        if not is_async:
+            writer.write_line(
+                'raise RuntimeError("GraphQL subscriptions are only supported on the async client.")'
+            )
+            return
+
+        variables = self._get_request_body(
+            method="POST", request_body_parameters=request_body_parameters, writer=writer
+        )
+        query_variable = "_graphql_query"
+        builder_reference = self._graphql_selection_builder_reference(endpoint)
+        writer.write(f"{query_variable} = ")
+        writer.write_line(repr(graphql_transport.query))
+        if builder_reference is not None:
+            writer.write_line("if selection is not None:")
+            with writer.indent():
+                writer.write("_graphql_selection = ")
+                writer.write_reference(builder_reference)
+                writer.write_line("()")
+                writer.write_line("selection(_graphql_selection)")
+                writer.write(f"{query_variable} = ")
+                writer.write_reference(self._context.core_utilities.get_reference_to_build_graphql_query())
+                writer.write_line("(")
+                with writer.indent():
+                    writer.write_line(f"operation_type={repr(graphql_transport.operation_type)},")
+                    writer.write_line(f"operation_name={repr(graphql_transport.operation_name)},")
+                    writer.write_line("selection_set=_graphql_selection._render_selection_set(),")
+                    writer.write_line(f"variable_definitions={repr(graphql_transport.variable_definitions)},")
+                    writer.write_line(f"arguments={repr(graphql_transport.arguments)},")
+                writer.write_line(")")
+
+        client_wrapper = self._client_wrapper_member_name
+        writer.write_line(
+            f'_ws_url = self.{client_wrapper}.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()'
+            '.replace("https://", "wss://").replace("http://", "ws://").rstrip("/") + "/graphql"'
+        )
+        writer.write_line(
+            f"_ws_headers = dict(await self.{client_wrapper}.{ClientWrapperGenerator.ASYNC_GET_HEADERS_METHOD_NAME}())"
+        )
+        writer.write("async for _event_data in ")
+        writer.write_reference(self._context.core_utilities.get_reference_to_subscribe_graphql())
+        writer.write(f"(url=_ws_url, query={query_variable}, variables=")
+        if variables is not None:
+            writer.write_node(variables)
+        else:
+            writer.write("{}")
+        writer.write_line(", connection_params=_ws_headers):")
+        with writer.indent():
+            payload_hint = self._graphql_response_type_hint(endpoint)
+            data_expr = AST.Expression(f'(_event_data or {{}}).get("{graphql_transport.operation_name}")')
+            writer.write("yield ")
+            if payload_hint is not None:
+                writer.write_node(self._context.core_utilities.get_construct(payload_hint, data_expr))
+            else:
+                writer.write_node(data_expr)
+            writer.write_newline_if_last_line_not()
+
     def _graphql_response_type_reference(self, endpoint: ir_types.HttpEndpoint) -> Optional[ir_types.TypeReference]:
         if endpoint.response is None or endpoint.response.body is None:
             return None
@@ -931,7 +1005,7 @@ class EndpointFunctionGenerator:
         self, named_parameters: List[AST.NamedFunctionParameter]
     ) -> List[AST.NamedFunctionParameter]:
         graphql_transport = GraphqlTransportRegistry.get(self._endpoint.id)
-        if graphql_transport is None or graphql_transport.is_subscription:
+        if graphql_transport is None:
             return named_parameters
         builder_reference = self._graphql_selection_builder_reference(self._endpoint)
         if builder_reference is None:

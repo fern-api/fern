@@ -17,7 +17,12 @@
 
         Relay connections expose auto-pagination under `client.query.paginate.<field>(...)`,
         returning a `SyncPager`/`AsyncPager` that follows `pageInfo.endCursor` and yields each
-        typed node. GraphQL subscriptions are not yet supported and raise `NotImplementedError`.
+        typed node.
+
+        GraphQL subscriptions stream over the `graphql-transport-ws` protocol on the async
+        client (`client.subscription.<field>(...)` returns an `AsyncIterator` of typed events;
+        auth is sent in the connection-init params). The sync client raises a clear error
+        directing callers to the async client.
       type: feat
   createdAt: "2026-06-29"
   irVersion: 67

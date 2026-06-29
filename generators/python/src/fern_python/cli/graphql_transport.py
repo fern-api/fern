@@ -69,6 +69,10 @@ class GraphqlTransportRegistry:
         return len(cls._by_endpoint_id) > 0
 
     @classmethod
+    def has_subscription(cls) -> bool:
+        return any(info.is_subscription for info in cls._by_endpoint_id.values())
+
+    @classmethod
     def clear(cls) -> None:
         cls._by_endpoint_id = {}
 

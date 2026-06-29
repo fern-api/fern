@@ -2,9 +2,59 @@
 
 import enum
 import json
-from typing import Any, Dict, List, Optional
+from typing import Any, AsyncIterator, Dict, List, Optional
 
 from .api_error import ApiError
+
+
+def _as_graphql_error_list(payload: Any) -> List[Dict[str, Any]]:
+    if isinstance(payload, list):
+        return [error for error in payload if isinstance(error, dict)]
+    if isinstance(payload, dict):
+        return [payload]
+    return [{"message": str(payload)}] if payload is not None else []
+
+
+async def subscribe_graphql(
+    *,
+    url: str,
+    query: str,
+    variables: Optional[Dict[str, Any]] = None,
+    connection_params: Optional[Dict[str, Any]] = None,
+) -> AsyncIterator[Any]:
+    """
+    Open a GraphQL subscription over the ``graphql-transport-ws`` protocol and yield each event's
+    ``data`` payload. Auth and other connection metadata are sent in the ``connection_init`` params
+    (the standard graphql-ws auth channel). Breaking out of the iterator tears the socket down.
+    """
+    import websockets  # imported lazily so SDKs without subscriptions don't require the dependency
+
+    async with websockets.connect(url, subprotocols=["graphql-transport-ws"]) as socket:  # type: ignore[attr-defined]
+        await socket.send(json.dumps({"type": "connection_init", "payload": connection_params or {}}))
+        while True:
+            ack_message = json.loads(await socket.recv())
+            ack_type = ack_message.get("type")
+            if ack_type == "connection_ack":
+                break
+            if ack_type in ("connection_error", "error"):
+                raise GraphqlError(errors=_as_graphql_error_list(ack_message.get("payload")))
+
+        await socket.send(
+            json.dumps({"type": "subscribe", "id": "1", "payload": {"query": query, "variables": variables or {}}})
+        )
+        async for raw_message in socket:
+            message = json.loads(raw_message)
+            message_type = message.get("type")
+            if message_type == "next":
+                payload = message.get("payload") or {}
+                errors = payload.get("errors")
+                if errors:
+                    raise GraphqlError(errors=errors, data=payload.get("data"))
+                yield payload.get("data")
+            elif message_type == "error":
+                raise GraphqlError(errors=_as_graphql_error_list(message.get("payload")))
+            elif message_type == "complete":
+                break
 
 
 class GraphqlSelection:

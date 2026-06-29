@@ -10,7 +10,7 @@ if typing.TYPE_CHECKING:
     from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
     from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
-    from .graphql import GraphqlError, GraphqlSelection, build_graphql_query
+    from .graphql import GraphqlError, GraphqlSelection, build_graphql_query, subscribe_graphql
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import encode_path_param, jsonable_encoder
@@ -67,6 +67,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "parse_rfc2822_datetime": ".datetime_utils",
     "remove_none_from_dict": ".remove_none_from_dict",
     "serialize_datetime": ".datetime_utils",
+    "subscribe_graphql": ".graphql",
     "universal_field_validator": ".pydantic_utilities",
     "universal_root_validator": ".pydantic_utilities",
     "update_forward_refs": ".pydantic_utilities",
@@ -132,6 +133,7 @@ __all__ = [
     "parse_rfc2822_datetime",
     "remove_none_from_dict",
     "serialize_datetime",
+    "subscribe_graphql",
     "universal_field_validator",
     "universal_root_validator",
     "update_forward_refs",

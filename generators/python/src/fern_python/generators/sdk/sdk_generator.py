@@ -275,6 +275,8 @@ class SdkGenerator(AbstractGenerator):
 
         if GraphqlTransportRegistry.has_any():
             GraphqlSelectionGenerator(context=context).generate(project=project)
+        if GraphqlTransportRegistry.has_subscription():
+            project.add_dependency(dependency=AST.Dependency(name="websockets", version=">=12.0"))
 
         endpoint_metadata_collector = EndpointMetadataCollector()
 

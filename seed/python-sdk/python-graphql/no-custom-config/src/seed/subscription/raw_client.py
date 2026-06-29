@@ -3,8 +3,10 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.graphql import build_graphql_query, subscribe_graphql
+from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..seed.graphql_selections import PostSelection
 from ..types.post import Post
 
 # this is used as the default value for optional parameters
@@ -16,8 +18,12 @@ class RawSubscriptionClient:
         self._client_wrapper = client_wrapper
 
     def post_added(
-        self, *, channel_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Post]:
+        self,
+        *,
+        channel_id: str,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Post:
         """
         Stream posts as they are added to a channel.
 
@@ -25,15 +31,18 @@ class RawSubscriptionClient:
         ----------
         channel_id : str
 
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Post]
+        Post
             Stream posts as they are added to a channel.
         """
-        raise NotImplementedError("GraphQL subscriptions are not yet supported by the Python SDK.")
+        raise RuntimeError("GraphQL subscriptions are only supported on the async client.")
 
 
 class AsyncRawSubscriptionClient:
@@ -41,8 +50,12 @@ class AsyncRawSubscriptionClient:
         self._client_wrapper = client_wrapper
 
     async def post_added(
-        self, *, channel_id: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Post]:
+        self,
+        *,
+        channel_id: str,
+        selection: typing.Optional[typing.Callable[[PostSelection], typing.Any]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[Post]:
         """
         Stream posts as they are added to a channel.
 
@@ -50,12 +63,45 @@ class AsyncRawSubscriptionClient:
         ----------
         channel_id : str
 
+        selection : typing.Optional[typing.Callable[[PostSelection], typing.Any]]
+            A field selection; omit to fetch the default selection.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Post]
+        typing.AsyncIterator[Post]
             Stream posts as they are added to a channel.
         """
-        raise NotImplementedError("GraphQL subscriptions are not yet supported by the Python SDK.")
+        _graphql_query = "subscription postAdded($channelId: ID!) {\n  postAdded(channelId: $channelId) {\n  id\n  title\n  body\n  author {\n    id\n    name\n    email\n    role\n    posts {\n      edges {\n        cursor\n      }\n      pageInfo {\n        hasNextPage\n        endCursor\n      }\n    }\n    createdAt\n    legacyUsername\n  }\n  publishedAt\n  metadata\n  themeColor\n}\n}"
+        if selection is not None:
+            _graphql_selection = PostSelection()
+            selection(_graphql_selection)
+            _graphql_query = build_graphql_query(
+                operation_type="SUBSCRIPTION",
+                operation_name="postAdded",
+                selection_set=_graphql_selection._render_selection_set(),
+                variable_definitions="$channelId: ID!",
+                arguments="(channelId: $channelId)",
+            )
+        _ws_url = (
+            self._client_wrapper.get_base_url().replace("https://", "wss://").replace("http://", "ws://").rstrip("/")
+            + "/graphql"
+        )
+        _ws_headers = dict(await self._client_wrapper.async_get_headers())
+        async for _event_data in subscribe_graphql(
+            url=_ws_url,
+            query=_graphql_query,
+            variables={
+                "channelId": channel_id,
+            },
+            connection_params=_ws_headers,
+        ):
+            yield typing.cast(
+                Post,
+                parse_obj_as(
+                    type_=Post,  # type: ignore
+                    object_=(_event_data or {}).get("postAdded"),
+                ),
+            )
