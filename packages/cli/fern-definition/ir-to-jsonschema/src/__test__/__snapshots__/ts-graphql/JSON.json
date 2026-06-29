@@ -1,0 +1,12 @@
+{
+  "type": [
+    "string",
+    "number",
+    "boolean",
+    "object",
+    "array",
+    "null"
+  ],
+  "description": "Well-known JSON scalar → maps to an untyped value.",
+  "definitions": {}
+}

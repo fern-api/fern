@@ -1,0 +1,251 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The post's unique identifier."
+    },
+    "title": {
+      "type": "string",
+      "description": "The post title."
+    },
+    "body": {
+      "type": "string",
+      "description": "The post body content."
+    },
+    "author": {
+      "$ref": "#/definitions/User",
+      "description": "The user who authored the post."
+    },
+    "publishedAt": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DateTime"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "When the post was published, if it has been."
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/JSON"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Arbitrary structured metadata (JSON scalar → untyped value)."
+    },
+    "themeColor": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Hex"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Theme color (unrecognized scalar → string fallback)."
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "body",
+    "author"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Role": {
+      "type": "string",
+      "enum": [
+        "ADMIN",
+        "USER",
+        "GUEST"
+      ]
+    },
+    "DateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "JSON": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ],
+      "description": "Well-known JSON scalar → maps to an untyped value."
+    },
+    "Hex": {
+      "type": "string",
+      "description": "Unrecognized custom scalar → falls back to string (with a generation warning)."
+    },
+    "Post": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The post's unique identifier."
+        },
+        "title": {
+          "type": "string",
+          "description": "The post title."
+        },
+        "body": {
+          "type": "string",
+          "description": "The post body content."
+        },
+        "author": {
+          "$ref": "#/definitions/User",
+          "description": "The user who authored the post."
+        },
+        "publishedAt": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/DateTime"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When the post was published, if it has been."
+        },
+        "metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/JSON"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Arbitrary structured metadata (JSON scalar → untyped value)."
+        },
+        "themeColor": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/Hex"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Theme color (unrecognized scalar → string fallback)."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "body",
+        "author"
+      ],
+      "additionalProperties": false
+    },
+    "PostEdge": {
+      "type": "object",
+      "properties": {
+        "node": {
+          "$ref": "#/definitions/Post"
+        },
+        "cursor": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "node",
+        "cursor"
+      ],
+      "additionalProperties": false
+    },
+    "PageInfo": {
+      "type": "object",
+      "properties": {
+        "hasNextPage": {
+          "type": "boolean"
+        },
+        "endCursor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "hasNextPage"
+      ],
+      "additionalProperties": false
+    },
+    "PostConnection": {
+      "type": "object",
+      "properties": {
+        "edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PostEdge"
+          }
+        },
+        "pageInfo": {
+          "$ref": "#/definitions/PageInfo"
+        }
+      },
+      "required": [
+        "edges",
+        "pageInfo"
+      ],
+      "additionalProperties": false
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The user's unique identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's display name."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address."
+        },
+        "role": {
+          "$ref": "#/definitions/Role",
+          "description": "The user's role, controlling access."
+        },
+        "posts": {
+          "$ref": "#/definitions/PostConnection",
+          "description": "Posts authored by this user, with pagination/filter/sort arguments on a nested field."
+        },
+        "createdAt": {
+          "$ref": "#/definitions/DateTime",
+          "description": "When the user was created."
+        },
+        "legacyUsername": {
+          "type": "string",
+          "description": "Legacy login handle (exercises @deprecated → language-native deprecation)."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "role",
+        "posts",
+        "createdAt",
+        "legacyUsername"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
