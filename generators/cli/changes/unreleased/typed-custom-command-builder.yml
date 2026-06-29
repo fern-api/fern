@@ -3,7 +3,8 @@
     cohesion. Commands are authored with `#[derive(clap::Args)]` and registered
     via `app.custom_typed::<Args>("name").about().under().handler().dry_run().register()`.
     AppContext gains `output_pipeline()`, `is_dry_run()`, `is_quiet()`, and `preview()`.
-    `execute()` reads output format from context (breaking: drops `&OutputFormat` param).
+    `execute()` reads output format, quiet, and query from context (breaking: drops
+    `&OutputFormat` param; `--query` JMESPath now applies to `execute()` output).
     `build_sdk_executor()` now returns `Result` and refuses under `--dry-run`.
     Scaffold and emitted skill updated to teach the new authoring surface.
   type: feat
