@@ -1440,7 +1440,11 @@ export class DocsDefinitionResolver {
                     };
                     break;
                 case "versioned":
-                    child = await this.toVersionedNode(product.navigation, slug, this.parsedDocsConfig.landingPage);
+                    child = await this.toVersionedNode(
+                        product.navigation,
+                        slug,
+                        product.landingPage ?? this.parsedDocsConfig.landingPage
+                    );
                     break;
                 default:
                     assertNever(product.navigation);
