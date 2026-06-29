@@ -1,0 +1,5 @@
+- summary: |
+    Fix TS5076 compilation error in generated pagination code when both
+    `hasNextPage` and `step` are configured on offset pagination. The
+    `??` and `&&` operators were mixed without parentheses.
+  type: fix

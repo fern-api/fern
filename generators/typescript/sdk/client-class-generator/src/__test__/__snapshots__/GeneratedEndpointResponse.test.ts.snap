@@ -51,6 +51,8 @@ exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset paginati
 
 exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > uses hasNextPage property when available 1`] = `"response?.hasMore ?? (response?.items ?? []).length > 0"`;
 
+exports[`GeneratedThrowingEndpointResponse > getPaginationInfo > offset pagination > wraps baseHasNextPage in parens when combined with hasNextPage via ?? 1`] = `"response?.hasMore ?? ((response?.items ?? []).length > 0 && (request?.limit == null || (response?.items ?? []).length >= request?.limit))"`;
+
 exports[`GeneratedThrowingEndpointResponse > getReturnResponseStatements > generates HEAD method response with headers 1`] = `
 "if (_response.ok) {
     return { data: _response.rawResponse.headers, rawResponse: _response.rawResponse };
