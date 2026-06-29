@@ -40,6 +40,9 @@ defaultOutputMode: github
 customFixtureConfig:
   customConfig: {}
 fixtures:
+  ts-graphql:
+    - outputFolder: no-custom-config
+      customConfig: null
   webhooks:
     - outputFolder: no-custom-config
       customConfig: null
