@@ -436,7 +436,7 @@ export class UsersClient {
         return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: response => response?.hasNextPage ?? (response?.data ?? []).length > 0 && (request?.limit == null || (response?.data ?? []).length >= request?.limit),
+            hasNextPage: response => response?.hasNextPage ?? ((response?.data ?? []).length > 0 && (request?.limit == null || (response?.data ?? []).length >= request?.limit)),
             getItems: response => response?.data ?? [],
             loadPage: response => { _offset += response?.data != null ? response.data.length : 1; return list(core.setObjectProperty(request, "page", _offset)); }
         });
