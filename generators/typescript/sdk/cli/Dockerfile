@@ -94,10 +94,10 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     tar -xzf tar-7.5.16.tgz --strip-components=1 -C tar/ && \
     rm tar-7.5.16.tgz
 
-# pnpm 10.34.4 bundles patched picomatch, brace-expansion, tar (7.5.16), and ip-address.
-# 10.34.4 also fixes CVE-2026-55697, GHSA-fr4h-3cph-29xv, GHSA-qrv3-253h-g69c,
-# GHSA-72r4-9c5j-mj57.
-RUN npm install -g pnpm@10.34.4 --force
+# pnpm 11.5.3+ clears CVE-2026-55697, GHSA-fr4h-3cph-29xv, GHSA-qrv3-253h-g69c,
+# GHSA-72r4-9c5j-mj57, and bundles patched picomatch, brace-expansion, tar (7.5.16),
+# and ip-address.
+RUN npm install -g pnpm@11.5.3 --force
 RUN npm install -g yarn@1.22.22 --force
 RUN pnpm add -g typescript@~5.9.3 \
   prettier@3.8.1 \
