@@ -3,8 +3,10 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..seed.graphql_selections import PostConnectionSelection, SearchResultSelection, UserSelection
+from ..types.post import Post
 from ..types.post_connection import PostConnection
 from ..types.search_result import SearchResult
 from ..types.user import User
@@ -189,6 +191,10 @@ class QueryClient:
             first=first, after=after, selection=selection, request_options=request_options
         )
         return _response.data
+
+    @property
+    def paginate(self) -> QueryClientPaginate:
+        return QueryClientPaginate(self)
 
 
 class AsyncQueryClient:
@@ -398,3 +404,73 @@ class AsyncQueryClient:
             first=first, after=after, selection=selection, request_options=request_options
         )
         return _response.data
+
+    @property
+    def paginate(self) -> AsyncQueryClientPaginate:
+        return AsyncQueryClientPaginate(self)
+
+
+class QueryClientPaginate:
+    """
+    Auto-paginators for this client's Relay connection fields.
+    """
+
+    def __init__(self, client: typing.Any):
+        self._client = client
+
+    def feed(
+        self,
+        *,
+        first: typing.Optional[typing.Optional[int]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[Post]:
+        def _get_page(after: typing.Optional[str]) -> typing.Any:
+            _connection = self._client.feed(first=first, after=after, request_options=request_options)
+            _edges = (_connection.edges if _connection is not None else None) or []
+            _items = [_edge.node for _edge in _edges if _edge is not None and _edge.node is not None]
+            _page_info = _connection.page_info if _connection is not None else None
+            _has_next = bool(_page_info.has_next_page) if _page_info is not None else False
+            _next = _page_info.end_cursor if _page_info is not None else None
+            return SyncPager(
+                response=_connection,
+                items=_items,
+                has_next=_has_next,
+                get_next=(lambda: _get_page(_next)) if (_has_next and _next is not None) else None,
+            )
+
+        return _get_page(None)
+
+
+class AsyncQueryClientPaginate:
+    """
+    Auto-paginators for this client's Relay connection fields.
+    """
+
+    def __init__(self, client: typing.Any):
+        self._client = client
+
+    async def feed(
+        self,
+        *,
+        first: typing.Optional[typing.Optional[int]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[Post]:
+        async def _get_page(after: typing.Optional[str]) -> typing.Any:
+            _connection = await self._client.feed(first=first, after=after, request_options=request_options)
+            _edges = (_connection.edges if _connection is not None else None) or []
+            _items = [_edge.node for _edge in _edges if _edge is not None and _edge.node is not None]
+            _page_info = _connection.page_info if _connection is not None else None
+            _has_next = bool(_page_info.has_next_page) if _page_info is not None else False
+            _next = _page_info.end_cursor if _page_info is not None else None
+
+            async def _get_next() -> typing.Any:
+                return await _get_page(_next)
+
+            return AsyncPager(
+                response=_connection,
+                items=_items,
+                has_next=_has_next,
+                get_next=_get_next if (_has_next and _next is not None) else None,
+            )
+
+        return await _get_page(None)

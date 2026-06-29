@@ -273,7 +273,9 @@ class CoreUtilities:
             else set(),
         )
 
-        if self._has_standard_paginated_endpoints:
+        # GraphQL SDKs use SyncPager/AsyncPager for Relay auto-pagination even without REST
+        # paginated endpoints, so copy the pager when graphql endpoints are present too.
+        if self._has_standard_paginated_endpoints or GraphqlTransportRegistry.has_any():
             self._copy_file_to_project(
                 project=project,
                 relative_filepath_on_disk="pagination.py",

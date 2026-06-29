@@ -13,8 +13,11 @@
         exactly the fields you want as a single GraphQL document; omit it for the default
         full selection. Precision is delivered via IDE hints + runtime validation (Python
         cannot express TypeScript-style compile-time selection narrowing). A `raw()` escape
-        hatch on the root client sends hand-written documents. GraphQL subscriptions are not
-        yet supported and raise `NotImplementedError`.
+        hatch on the root client sends hand-written documents.
+
+        Relay connections expose auto-pagination under `client.query.paginate.<field>(...)`,
+        returning a `SyncPager`/`AsyncPager` that follows `pageInfo.endCursor` and yields each
+        typed node. GraphQL subscriptions are not yet supported and raise `NotImplementedError`.
       type: feat
   createdAt: "2026-06-29"
   irVersion: 67
