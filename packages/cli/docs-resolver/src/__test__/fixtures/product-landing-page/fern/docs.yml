@@ -1,0 +1,11 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+products:
+  - display-name: Sunflower API
+    icon: fa-solid fa-sun
+    path: ./products/sunflower.yml
+    slug: sunflower
+  - display-name: Cactus API
+    icon: fa-solid fa-seedling
+    path: ./products/cactus.yml
+    slug: cactus
